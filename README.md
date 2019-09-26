@@ -9,7 +9,7 @@ Your project should consist of a complete Web application, exhibiting facets of 
 
 - Static Web page content and design. You should have a project that is accessible, easily navigable, and features significant content.
 - Dynamic behavior implemented with JavaScript.
-- Server-side programming. Typically this will take the form of some sort of persistent data, authentication, and possibly server-side computation.
+- Server-side programming *using Node.js*. Typically this will take the form of some sort of persistent data, authentication, and possibly server-side computation.
 
 Additionally, you should incorporate features that you independently research, design, and implement for your project.
 
@@ -48,4 +48,4 @@ Presentations will occur during the final day of class.
 
 ## FAQs
 
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available.
+- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use node.js.
