@@ -1,9 +1,9 @@
 # Proposal
 
-Team members: Peter Jankowski, Tom Graham
+Team members: Peter Jankowski, Tom Graham, Rosana Pochat
 
 Project details:
 
-Scheduler
+Scheduler?
 
 
