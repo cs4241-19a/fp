@@ -1,2 +1,3 @@
 Randy Agudelo, René Borner, Caitlin Enright, Elie Hess final project proposal:
 
+For our final project, we will create a music-based social media application based on sharing music with others. Our website will have a global “feed” (similar to most social media sites), which will allow users to view songs recommended by others, listen to those songs, and recommend songs to the global community. Additionally, users will be able to rate songs from 1 to 5, and each song will display its average rating along with other information about the song. Finally, we will integrate with Spotify to play songs on the site. While a song is playing, the background of the site will display a simple audio visualization of the currently playing song.
