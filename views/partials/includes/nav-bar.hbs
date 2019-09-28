@@ -6,10 +6,10 @@
     <span id="userDisplayName"></span>
     <div class="nav navbar-right">
 
-        <button id="signUpBtn" class="btn" data-toggle="modal" data-target="#signUpFormModal">
+        <button id="signUpBtn" class="btn d-none" data-toggle="modal" data-target="#signUpFormModal">
             Sign Up
         </button>
-        <div id="signInMenuDiv" class="dropdown">
+        <div id="signInMenuDiv" class="dropdown d-none">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="signInMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Login Options
             </button>
@@ -26,7 +26,7 @@
                 </button>
             </div>
         </div>
-        <button id="signOutBtn" class="btn" onclick="firebaseSignOut()">
+        <button id="signOutBtn" class="btn d-none" onclick="firebaseSignOut()">
             Logout
         </button>
     </div>
