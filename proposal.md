@@ -10,4 +10,17 @@ A game website which hosts many games of various types.
 - James Plante
 
 
+## Requirements
 
+### Static
+
+Our website will have one main which a user can choose a game from.
+And also a page for each game.
+
+### Dynamic
+
+All of our games will be run in JavaScript.
+
+### Server-side
+
+Our website will have game scores stored in a database. Users will need to sign in to save their score.
