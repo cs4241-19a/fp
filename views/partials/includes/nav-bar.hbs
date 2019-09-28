@@ -1,16 +1,23 @@
-<nav class="navbar navbar-light bg-light">
+<nav style="background-color: #0055aa; color: white;" class="navbar navbar-dark">
     <a id="signinSubmitBtn" class="navbar-brand" href="/">
         <img src="/assets/images/favicon-32x32.png" width="32" height="32" class="d-inline-block align-top" alt="AJAJA">
-        GAMES
+        Games
     </a>
     <span id="userDisplayName"></span>
-    <div class="nav navbar-right">
+    <div class="nav navbar-dark navbar-right">
 
-        <button id="signUpBtn" class="btn d-none" data-toggle="modal" data-target="#signUpFormModal">
+        <button id="helpBtn" class="btn text-white">
+            Help
+        </button>
+        <button id="statsBtn" class="btn text-white">
+            Stats
+        </button>
+
+        <button id="signUpBtn" class="btn text-white d-none" data-toggle="modal" data-target="#signUpFormModal">
             Sign Up
         </button>
         <div id="signInMenuDiv" class="dropdown d-none">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="signInMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-dark dropdown-toggle" type="button" id="signInMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Login Options
             </button>
             <div class="dropdown-menu dropdown-menu-right text-white" aria-labelledby="signInMenuButton">
@@ -26,7 +33,7 @@
                 </button>
             </div>
         </div>
-        <button id="signOutBtn" class="btn d-none" onclick="firebaseSignOut()">
+        <button id="signOutBtn" class="btn text-white d-none" onclick="firebaseSignOut()">
             Logout
         </button>
     </div>
