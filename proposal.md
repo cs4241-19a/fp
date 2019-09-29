@@ -3,7 +3,7 @@
 Elizabath Kirshner 
 Alejandra Garza 
 
-###Our Idea 
+### Our Idea 
 Since we are bot CS and IMGD double majors, we want to make a game that will serve as a portfolio piece using the mini-game engine Perlenspiel, which
 was by WPI's very own Professor Brian Moriarty: https://perlenspiel.net/
 
