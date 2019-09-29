@@ -20,6 +20,7 @@ firebaseAdmin.initializeApp({
 });
 
 const authRouter = require('./routes/auth-routes');
+const gameRouter = require('./routes/game-routes');
 const gameDataRouter = require('./routes/game-data-routes');
 
 
@@ -36,15 +37,6 @@ app.set("view engine", "hbs");
 
 app.use(express.static("public"));
 
-app.get("/games/:gameId", function(req, res) {
-    // TODO: get game path and any needed context from db then render
-    if (req.params.gameId === "aGameId") {  // temporary hard coded check
-        res.render("ex-game");
-    } else {
-        res.sendStatus(404);
-    }
-});
-
 app.get("/", function(req, res) {
     res.render("index");
 });
@@ -55,6 +47,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 
 app.use('/auth', authRouter);
+app.use('/games', gameRouter);
 app.use('/submit/game', gameDataRouter);
 
 

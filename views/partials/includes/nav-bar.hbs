@@ -1,4 +1,4 @@
-<nav style="background-color: #0055aa; color: white;" class="navbar navbar-dark">
+<nav class="navbar navbar-dark">
     <a id="signinSubmitBtn" class="navbar-brand" href="/">
         <img src="/assets/images/favicon-32x32.png" width="32" height="32" class="d-inline-block align-top" alt="AJAJA">
         Games
@@ -6,21 +6,21 @@
     <span id="userDisplayName"></span>
     <div class="nav navbar-dark navbar-right">
 
-        <button id="helpBtn" class="btn text-white">
+        <button id="helpBtn" class="btn">
             Help
         </button>
-        <button id="statsBtn" class="btn text-white">
+        <button id="statsBtn" class="btn">
             Stats
         </button>
 
-        <button id="signUpBtn" class="btn text-white d-none" data-toggle="modal" data-target="#signUpFormModal">
+        <button id="signUpBtn" class="btn d-none" data-toggle="modal" data-target="#signUpFormModal">
             Sign Up
         </button>
-        <div id="signInMenuDiv" class="dropdown d-none">
+        <div id="signInMenuDiv" class="dropdown dropdown-dark d-none">
             <button class="btn btn-dark dropdown-toggle" type="button" id="signInMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Login Options
+                Login
             </button>
-            <div class="dropdown-menu dropdown-menu-right text-white" aria-labelledby="signInMenuButton">
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="signInMenuButton">
                 <button id="signInBtn" style="width: 100%; white-space: nowrap; border: 0;" class="btn-social btn-info py-1" data-toggle="modal" data-target="#signInFormModal">
                     <span style="top: 1px" class="d-inline-block py-auto"><img style="vertical-align: baseline" src="/assets/images/favicon-32x32.png" width="24" height="24" alt=""></span>
                     Login with AJAJA
@@ -33,7 +33,7 @@
                 </button>
             </div>
         </div>
-        <button id="signOutBtn" class="btn text-white d-none" onclick="firebaseSignOut()">
+        <button id="signOutBtn" class="btn d-none" onclick="firebaseSignOut()">
             Logout
         </button>
     </div>
