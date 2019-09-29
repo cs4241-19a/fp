@@ -1,9 +1,9 @@
 # Aquatic Dating Software
 
 ## The Team
-Haozhe Jiang - @PercyJiang
-Zonglin Peng - @zonglinpeng
-Rui Huang - @Ryc1x
+ - Haozhe Jiang - @PercyJiang
+ - Zonglin Peng - @zonglinpeng
+ - Rui Huang - @Ryc1x
 
 ## Overview
 An online dating software for aquatic creatures with some nice additional features. 
