@@ -4,7 +4,10 @@
   "description": "For your final project, you'll implement a course project that exhibits your mastery of the course materials. \r Similar to A4, this project gives you an opportunity to be creative and to pursue individual research and learning.",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint src/**/*.js src/**/*.jsx",
+    "lint:fix": "eslint src/**/*.js src/**/*.jsx --fix",
     "start": "node dist/server/main.js",
+    "start:dev": "nodemon dist/server/main.js",
     "clean": "rm -rf .cache dist node_modules",
     "watch": "run-p watch:client watch:server",
     "watch:client": "cross-env BABEL_ENV=client parcel watch src/client/index.html -d dist/client --public-url /dist",
@@ -25,7 +28,11 @@
   },
   "homepage": "https://github.com/Max5254/fp#readme",
   "devDependencies": {
+    "babel-eslint": "^10.0.3",
     "cross-env": "^6.0.0",
+    "eslint": "^6.5.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-react": "^7.14.3",
     "npm-run-all": "^4.1.5",
     "parcel-bundler": "^1.12.3"
   },

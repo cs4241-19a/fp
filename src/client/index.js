@@ -1,9 +1,9 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
-import App from "./components/App";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import App from './components/App';
 
-const element = document.getElementById("app");
+const element = document.getElementById('app');
 const app = (
   <BrowserRouter>
     <App />
@@ -12,6 +12,7 @@ const app = (
 
 ReactDOM.hydrate(app, element);
 
+// This enables hot reloading
 if (module.hot) {
   module.hot.accept();
 }
