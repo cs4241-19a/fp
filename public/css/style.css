@@ -1,0 +1,20 @@
+
+/* NAV */
+
+nav {
+    background-color: #0055aa;
+}
+
+
+nav button, nav a, nav span {
+    color: #fff!important;
+}
+
+#signInBtn {
+    background-color: #0055aa;
+}
+
+nav .dropdown-menu {
+    /* make dropdown background match button color */
+    background-color: #1d2124;
+}
