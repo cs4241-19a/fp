@@ -14,5 +14,7 @@ We are also looking forward to create a nice looking webapp as a user interface 
 
 For the frontend we will be using [Quasar Framework](https://quasar.dev), which is a Vue.js framework that enables the creation of Single Page Applications, Server Side Rendered webapps, and hybrid apps with a pre-configured and streamlined development and build process featuring tree shaking and hot module reloading, and comes with a suite of Material Design components
 
+For the backend we will be using an express http server with a JSON API, powered by MongoDB hosted in an mongo atlas instance.
+
 Stretch Goals:
   - Marketing website / landing page to promote our creation
