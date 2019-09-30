@@ -2,7 +2,9 @@
 
 ## The Team
 **Yicheng Yang** yyang17@wpi.edu
+
 **James J. Scherick** jjscherick@wpi.edu
+
 **Jean Claude Zarate** jzarate@wpi.edu
 
 ## Project Outline
