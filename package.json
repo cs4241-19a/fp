@@ -9,6 +9,18 @@
     "compression": "^1.7.4",
     "express": "^4.17.1",
     "helmet": "^3.21.1",
+    "i": "^0.3.6",
     "pixi.js": "^5.1.5"
+  },
+  "engines": {
+    "node": "10.x"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "babelify": "^10.0.0",
+    "browserify": "^16.5.0",
+    "gulp": "^4.0.2",
+    "vinyl-source-stream": "^2.0.0"
   }
 }
