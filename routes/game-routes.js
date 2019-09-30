@@ -4,7 +4,11 @@ const gameRouter = express.Router();
 const firebaseAdmin = require("firebase-admin");
 const db = firebaseAdmin.firestore();
 
-
+/**
+ * Get the all game data from database. Not including scores.
+ * @param {string} gameId The id of the game in the database.
+ * @returns {Promise<{gameId: *, path: *, playCount: *, name: *}>}
+ */
 async function getGame(gameId) {
     const gameDoc = db.collection("games").doc(gameId);
     return gameDoc.get()
@@ -24,6 +28,9 @@ async function getGame(gameId) {
         });
 }
 
+/**
+ * Load the game object from the database to get it's path. Then render the game page
+ */
 gameRouter.get("/:gameId", async function(req, res) {
     const gameContext = await getGame(req.params.gameId);
     if (gameContext) {

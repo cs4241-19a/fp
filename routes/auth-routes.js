@@ -5,7 +5,11 @@ const firebaseAdmin = require("firebase-admin");
 const db = firebaseAdmin.firestore();
 const auth = firebaseAdmin.auth();
 
-
+/**
+ * Create the email and password account in firebase auth.
+ * Create a user object in the database with the same id as the auth user object.
+ * Return the custom token to the front end.
+ */
 authRouter.post("/sign-up", async (req, res) => {
     const data = req.body;
     console.log(data);
@@ -41,6 +45,12 @@ authRouter.post("/sign-up", async (req, res) => {
 
 });
 
+
+/**
+ * Get a token for the user so the user can sign in.
+ * @param {Promise<UserRecord>} user The user database object.
+ * @returns {Promise<string>} The token to be used on the front end to sign in.
+ */
 async function getCustomToken(user) {
     return await firebaseAdmin.auth().createCustomToken(user.uid)
         .then(function(customToken) {

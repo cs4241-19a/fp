@@ -46,9 +46,9 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: false
 }));
 
-app.use('/auth', authRouter);
-app.use('/games', gameRouter);
-app.use('/submit/game', gameDataRouter);
+app.use('/auth', authRouter);  // handel sign ups
+app.use('/games', gameRouter);  // load game pages
+app.use('/submit/games', gameDataRouter);  // store game data
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
