@@ -16,5 +16,8 @@ For the frontend we will be using [Quasar Framework](https://quasar.dev), which 
 
 For the backend we will be using an express http server with a JSON API, powered by MongoDB hosted in an mongo atlas instance.
 
+Priorities:
+  - (last) support offline session savings
+
 Stretch Goals:
   - Marketing website / landing page to promote our creation
