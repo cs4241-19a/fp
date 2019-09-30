@@ -1,8 +1,20 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: rgba(0,0,0,0.87) !important;
 }
 
 a {
   color: #00B7FF;
+}
+h1 {
+  color: lightgray;
+}
+label {
+  color: white;
+}
+
+.profile {
+  border-radius: 50%;
+  width: 20%;
 }
