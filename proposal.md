@@ -1,6 +1,6 @@
 # AJAJA Games
 
-A game website which hosts many games of various types.
+A game website which hosts simple arcade and puzzle games that can be played in any web browser. The website's main interface will feature the games created over the course of the project as well as a way to login to save scores.
 
 ## Team
 - Andrew Bonaventura 
@@ -14,16 +14,15 @@ A game website which hosts many games of various types.
 
 ### Static
 
-Our website will have one main which a user can choose a game from.
-And also a page for each game.
+Our website will have one main webpage where users can choose a game to play as well as a page for each game.
 
 ### Dynamic
 
-All of our games will be run in JavaScript.
+All of our games will be created using JavaScript.
 
 ### Server-side
 
-Our website will have game scores stored in a database. Users will need to sign in to save their score.
+Our website will have game scores stored in a database using Firebase. Users will need to sign in to save their score.
 
 
 ## Games
@@ -48,6 +47,4 @@ Our website will have game scores stored in a database. Users will need to sign 
 - Puzzle games
 - Memory/match game
 - Typing test
-
-
 
