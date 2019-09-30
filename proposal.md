@@ -27,3 +27,33 @@ calender integration, MFP and FitBit integration, and blob storage.
 - Middleware: Passport or FirebaseAuth
 - Other libraries: D3.js, Three.js, Babylon.js, Tensorflow.js (most likely will be more)
 - Other components: Flask python server for machine learning REST API
+
+
+### Feature List
+
+- Weight & Fitness goals
+- Team Leaderboard
+- Global Leaderboard
+    - Divisions based on goals
+- Path to victory
+- Item collection e.g. think avatar clothing, gym objects, club penguin, pokemon
+- Trophies (reward system)
+- Personal Stats
+- Team Stats
+- Dashboard UI
+- D3.js graphs
+- Machine Learning
+- Responsive UI for Mobile Devices
+- Integrate with MyFitnessPal and Fitbit
+- Email notifications/reminders
+- User avatar
+- Calendar
+    - Finding times to workout
+    - Notification settings
+    - Smart reminders
+- Reminders when friends are working out
+- Body measurements
+- "Trello"-esque board
+- Firework explosion on goal/sub-goal reaching
+- Personality assessment (motivators)
+- Can be part of many teams
