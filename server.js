@@ -36,6 +36,12 @@ app.post('/login',
         res.redirect('/users/' + req.user.username);
 });
 
+app.post('/login',
+    passport.authenticate('local', { successRedirect: '/',
+        failureRedirect: '/login',
+        failureFlash: true })
+);
+
 app.listen(port, function () {
     'use strict';
     console.log(`Example app listening on port !`);
