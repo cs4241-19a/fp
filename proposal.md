@@ -22,3 +22,9 @@ The impact that you have on the environment is greater than you think. The purpo
   - data input 
   - user's data visualization 
   - comparision of all user's data 
+
+# General Goals of Projects: 
+- user friendly UI
+- asthetically pleasing visualiztion
+- impactful and thought provoking 
+- causing change 
