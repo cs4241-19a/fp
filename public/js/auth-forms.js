@@ -1,3 +1,5 @@
+import * as firebase from "firebase-admin";
+
 /**
  * Parse the form data. Handel parsing errors with warning messages and aborting the post.
  * Post the form data to the given url. Then call with handelResponse with the response data.
@@ -275,7 +277,7 @@ function googleSignIn() {
         const token = result.credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        console.log("Google user signed in ", result.credential.accessToken, result.user)
+        console.log("Google user signed in ", token, result.user)
     }).catch(function(error) {
         if (error.code === "auth/account-exists-with-different-credential") {
             alert("You have signed up with a different provider for that email.");

@@ -48,7 +48,7 @@ authRouter.post("/sign-up", async (req, res) => {
 
 /**
  * Get a token for the user so the user can sign in.
- * @param {Promise<UserRecord>} user The user database object.
+ * @param {UserRecord} user The user database object.
  * @returns {Promise<string>} The token to be used on the front end to sign in.
  */
 async function getCustomToken(user) {
