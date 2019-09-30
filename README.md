@@ -21,7 +21,7 @@ Excellent projects serve someone/some group; for this assignment you need to def
 
 ### Team members
 Amanda Ezeobiejesi
-Carla Duarte
+Carla Duarte - hi
 Sylvia Lin
 Manasi Danke
 
