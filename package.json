@@ -11,6 +11,8 @@
     "helmet": "^3.21.1",
     "passport": "^0.4.0",
     "pixi.js": "^5.1.5"
+    "pouchdb": "^7.1.1",
+    "pouchdb-upsert": "^2.2.0"
   },
   "engines": {
     "node": "10.x"
