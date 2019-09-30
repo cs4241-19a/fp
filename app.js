@@ -36,6 +36,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 
 app.use(express.static("public"));
+// app.use("/scripts", express.static(__dirname + "/node_modules/"));
 
 app.get("/", function(req, res) {
     res.render("index");

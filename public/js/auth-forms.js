@@ -1,4 +1,5 @@
-import * as firebase from "firebase-admin";
+// TODO get import to work
+// import * as firebase from "firebase-admin";
 
 /**
  * Parse the form data. Handel parsing errors with warning messages and aborting the post.
