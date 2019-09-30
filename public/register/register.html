@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Personal Information</title>
+
+    <link href="register.css" rel="stylesheet">
+</head>
+
+<body>
+    <h1 id="rightHead">Personal Information</h1>
+    <form action="">
+        <h3>Username</h3>
+        <h3>Password</h3>
+        <br>
+        <label for="username"></label><input id="username" placeholder="Username" type="text">
+        <label id="pwdLabel" for="password"></label><input id="password" placeholder="Password" type="text">
+        <br>
+        <h3>Name</h3>
+        <h3>Age</h3>
+        <br>
+        <label for="name"></label><input id="name" placeholder="Name" type="text">
+        <label id="ageLabel" for="age"></label><input id="age" placeholder="Age" type="text">
+        <br>
+        <h3>Gender</h3>
+        <br>
+        <label><input type="radio" name="gender" value="Male"></label> Male
+        <label><input type="radio" name="gender" value="Female"></label> Female
+        <br>
+        <h3>Hobby</h3>
+        <br>
+        <label><input type="radio" name="hobby" value="Sport"></label> Sport
+        <label><input type="radio" name="hobby" value="Music"></label> Music
+        <label><input type="radio" name="hobby" value="Gaming"></label> Gaming
+        <label><input type="radio" name="hobby" value="Jellyfish Hunt"></label> Jellyfish Hunt
+    </form>
+    <button id="add">Submit</button>
+    <button id="cancel">Cancel</button>
+    <br>
+    <h3 id="hint"></h3>
+</body>
+
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="register.js"></script>
+
+</html>

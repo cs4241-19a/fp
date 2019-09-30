@@ -1,0 +1,62 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background: url("img/loginBG.jpg") no-repeat;
+}
+.main-section {
+    margin-top: 140px;
+    margin-left: 80px;
+    padding: 0;
+}
+.modal-content {
+    background-color: aliceblue;
+    opacity: .95;
+    padding: 0 18px;
+    box-shadow: 0 0 3px #848484;
+}
+.user-img {
+    margin-top: -50px;
+    margin-bottom: 35px;
+}
+.user-img img {
+    height: 100px;
+    width: 100px;
+    border-radius: 5px;
+    box-shadow: 0 0 2px #848484;
+}
+.form-group {
+    margin-bottom: 25px;
+}
+.form-group input {
+    height: 42px;
+    border-radius: 5px;
+    border: 0;
+    font-size: 18px;
+    padding-left: 54px;
+}
+.form-group::before {
+    font-family: 'Font Awesome\ 5 free', serif;
+    content: "\f007";
+    position: absolute;
+    font-size: 22px;
+    color: #555e60;
+    left: 28px;
+    padding-top: 4px;
+}
+.form-group:last-of-type::before {
+    content: "\f023";
+}
+button {
+    width: 42%;
+    margin: 5px 0 25px;
+}
+.btn {
+    background-color: #008CBA;
+    color: azure;
+    font-size: 17px;
+    padding: 7px 14px;
+    border-radius: 5px;
+}
+.btn:hover, .btn:focus {
+    background-color: #008CFF;
+    color: azure;
+}

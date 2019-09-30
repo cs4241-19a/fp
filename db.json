@@ -1,0 +1,72 @@
+{
+  "allUsers": [
+    {
+      "username": "1",
+      "password": "1",
+      "name": "SpongeBob",
+      "gender": "Male",
+      "age": 10,
+      "hobby": "Jellyfish Hunt",
+      "likedList": [
+        "3"
+      ],
+      "blackList": [
+        "2"
+      ]
+    },
+    {
+      "username": "2",
+      "password": "2",
+      "name": "Patrick",
+      "age": 12,
+      "gender": "Male",
+      "hobby": "Jellyfish Hunt",
+      "likedList": [],
+      "blackList": []
+    },
+    {
+      "username": "3",
+      "password": "3",
+      "name": "Sandy",
+      "age": 15,
+      "gender": "Female",
+      "hobby": "Sport",
+      "likedList": [],
+      "blackList": []
+    },
+    {
+      "username": "foo",
+      "password": "foo",
+      "name": "bar",
+      "age": 10,
+      "gender": "Male",
+      "hobby": "Sport",
+      "likedList": [
+        "3"
+      ],
+      "blackList": [
+        "2"
+      ]
+    },
+    {
+      "username": "fail",
+      "password": "fail",
+      "name": "fail",
+      "age": 9,
+      "gender": "Male",
+      "hobby": "Sport",
+      "likedList": [],
+      "blackList": []
+    },
+    {
+      "username": "lol",
+      "password": "lol",
+      "name": "lol",
+      "age": 1,
+      "gender": "Male",
+      "hobby": "Sport",
+      "likedList": [],
+      "blackList": []
+    }
+  ]
+}

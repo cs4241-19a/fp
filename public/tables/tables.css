@@ -1,0 +1,79 @@
+body {
+    background-image: url("../img/backgroundRight.jpg");
+    background-size: 1600px 780px;
+}
+
+#logout {
+    margin-left: 10px;
+    background-color: #008CBA;
+    color: azure;
+    font-size: 15px;
+    width: 100px;
+}
+
+#logout:hover,
+#logout:focus {
+    background-color: #008CFF;
+    color: azure;
+}
+
+#modify {
+    margin-left: 1070px;
+    background-color: #008CBA;
+    color: azure;
+    font-size: 15px;
+    width: 100px;
+}
+
+#modify:hover,
+#modify:focus {
+    background-color: #008CFF;
+    color: azure;
+}
+
+.left {
+    float: left;
+}
+
+h1 {
+    margin-top: 30px;
+    margin-left: 350px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 40px;
+    color: azure;
+}
+
+#table {
+    margin-top: 30px;
+    width: 100%;
+}
+
+th {
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bold;
+    color: azure;
+    font-size: 25px;
+}
+
+td {
+    color: azure;
+    font-size: 20px;
+}
+
+table,
+th,
+td {
+    border: 1px solid white;
+    border-collapse: collapse;
+    padding: 15px;
+}
+
+.right {
+    float: right;
+}
+
+#greet {
+    font-family: 'Courier New', Courier, monospace;
+    margin-right: 30px;
+    margin-top: -2px;
+}

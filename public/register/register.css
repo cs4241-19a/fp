@@ -1,0 +1,77 @@
+body {
+    background-image: url("../img/backgroundLeft.jpg");
+    background-repeat: no-repeat;
+    background-size: 1600px 780px;
+}
+
+h1 {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 70px;
+    color: #008CBA;
+    margin-left: 850px;
+    margin-bottom: 0;
+}
+
+h3 {
+    display: inline-block;
+    color: #008CBA;
+    margin-top: 20px;
+    margin-left: 80px;
+    margin-right: 70px;
+}
+
+form {
+    margin-left: 800px;
+    font-size: 23px;
+}
+
+input {
+    height: 20px;
+    margin-left: 50px;
+}
+
+#ageLabel {
+    margin-right: 40px;
+}
+
+#pwdLabel {
+    margin-right: 90px;
+}
+
+#add {
+    background-color: #e7e7e7;
+    color: black;
+    border: none;
+    padding: 15px 32px;
+    font-size: 16px;
+    margin-top: 50px;
+    margin-left: 900px;
+    width: 150px;
+}
+
+#add:hover {
+    background-color: #008CBA;
+    color: white;
+}
+
+#cancel {
+    background-color: #e7e7e7;
+    color: black;
+    border: none;
+    padding: 15px 32px;
+    font-size: 16px;
+    margin-top: 50px;
+    margin-left: 30px;
+    width: 150px;
+}
+
+#cancel:hover {
+    background-color: crimson;
+    color: white;
+}
+
+#hint {
+    color: red;
+    float: right;
+    margin-right: 600px;
+}
