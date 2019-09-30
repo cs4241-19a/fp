@@ -10,6 +10,5 @@ The project would allow multiple players from different computers to join the ga
 - The ability to create an account in which users can change different aspects of their tanks and look at stats
 - A leaderboard system
 - An "options" system that allows users to change control settings and graphic settings
-- Something else cool
 
 
