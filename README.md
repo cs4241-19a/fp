@@ -12,5 +12,7 @@ The idea of our team is to create the 🔥🔥 ultimate 💪 final grade calcula
 
 We are also looking forward to create a nice looking webapp as a user interface for entering the information. In addition, we will create a simplistic marketing page to advertise the app
 
+For the frontend we will be using [Quasar Framework](quasar.dev), which is a Vue.js framework that enables the creation of Single Page Applications, Server Side Rendered webapps, and hybrid apps with a pre-configured and streamlined development and build process featuring tree shaking and hot module reloading, and comes with a suite of Material Design components
 
-
+Stretch Goals:
+  - Marketing website / landing page to promote our creation
