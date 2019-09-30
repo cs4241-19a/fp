@@ -1,0 +1,29 @@
+{
+    "name": "Musical Map",
+    "version": "0",
+    "description": "Spotify Song Data Visualization",
+    "author": "Michael Bosik and Hunter Caouette",
+    "scripts": {
+        "start": "npm-run-all lint browserify run",
+        "lint": "eslint \"**/*.js\" --fix --ignore-pattern node_modules/ --ignore-pattern ./js/bundle.js",
+        "browserify": "browserify -r ./js/player.js:player -r ./js/queue.js:queue -o ./js/bundle.js",
+        "run": "node js/server.js"
+    },
+    "dependencies": {
+        "cookie-parser": "^1.4.4",
+        "express": "^4.17.1",
+        "express-session": "^1.16.2",
+        "lowdb": "^1.0.0",
+        "mime": "^2.4.4",
+        "passport": "^0.4.0",
+        "passport-spotify": "^1.1.0",
+        "querystring": "^0.2.0",
+        "request": "^2.88.0"
+    },
+    "devDependencies": {
+        "browserify": "^16.5.0",
+        "eslint": "^6.5.0",
+        "eslint-config-google": "^0.14.0",
+        "npm-run-all": "^4.1.5"
+    }
+}
