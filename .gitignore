@@ -1,0 +1,7 @@
+*.DS_Store
+node_modules/
+package-lock.json
+.gitconfig
+.glitch-assets
+shrinkwrap.yaml
+public/bundle.js
