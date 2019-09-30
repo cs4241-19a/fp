@@ -19,8 +19,11 @@ Excellent projects serve someone/some group; for this assignment you need to def
 
 ## Logistics
 
-### Team size
-Students are encouraged to work in teams of 2-5 students for the project. This will allow you to build a good project without expending an excessive amount of effort. While I would expect a team of four or five students to produce a project with more features, I expect a every team's work to exhibit all of the required facets described above.
+### Team members
+Amanda Ezeobiejesi
+Carla Duarte
+Sylvia Lin
+Manasi Danke
 
 ### Deliverables
 
