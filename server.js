@@ -2,6 +2,9 @@ const express = require('express');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const compression = require('compression');
+const pouchdb = require('pouchdb');
+pouchdb.plugin(require('pouchdb-upsert'));
+const db = new pouchdb('my_db');
 
 let port = process.env.PORT || 3000;
 
@@ -21,4 +24,19 @@ app.get('/', function (request, response) {
 app.listen(port, function () {
     'use strict';
     console.log(`Example app listening on port !`);
+});
+
+db.get('users').catch(function (err) {
+    if (err.name === 'not_found') {
+        return {
+            _id: 'users',
+            users: []
+        };
+    } else { // hm, some other error
+        throw err;
+    }
+}).then(function (doc) {
+    User = doc.users;
+}).catch(err => {
+    console.log(err);
 });

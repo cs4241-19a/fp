@@ -9,7 +9,9 @@
     "compression": "^1.7.4",
     "express": "^4.17.1",
     "helmet": "^3.21.1",
-    "pixi.js": "^5.1.5"
+    "pixi.js": "^5.1.5",
+    "pouchdb": "^7.1.1",
+    "pouchdb-upsert": "^2.2.0"
   },
   "engines": {
     "node": "10.x"
