@@ -8,7 +8,7 @@
 **Jean Claude Zarate** jzarate@wpi.edu
 
 ## Project Outline
-The idea of our team is to create a grade calculator which supports multiple categoryies, supports extra credit, has permanence(save what you enter for your next session), supports dropped assignments, tells you what your worst case possible grade will be, tells you what your best case grade will be and supports different ranges for letter grades.
+The idea of our team is to create the 🔥🔥 ultimate 💪 final grade calculator 🔥🔥 (sorry we've spent too much time on product hunt) which supports multiple categoryies, supports extra credit, has permanence(save what you enter for your next session), supports dropped assignments, tells you what your worst case possible grade will be, tells you what your best case grade will be and supports different ranges for letter grades.
 We are also looking forward to create a nice looking webapp as a user interface for entering the information. In addition, we will create a simplistic marketing page to advertise the app
 
 
