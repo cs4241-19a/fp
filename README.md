@@ -3,8 +3,7 @@
  - Chris Mercer `ctmercer`
  - Danny Sullivan `djsullivan` 
 
-# GoatBooks
-
+# GoatBooks <img src="https://i.imgur.com/jk03AC1.png" alt="goat" height="75" width="75">
 
 ## Purpose Statement
 Students are often caught without textbooks at the beginning of every term. Usually not because the titles/ISBNs aren’t known, but because of the lack of books available at a reasonable price. 
