@@ -3,6 +3,8 @@ const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 
+let port = process.env.PORT || 3000;
+
 const app = express();
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -15,5 +17,6 @@ app.get('/', function(request, response) {
     response.sendFile(__dirname + '/views/index.html');
 });
 
-app.listen(3000);
-console.log('Your app is listening on port 3000');
+app.listen(port, function () {
+    console.log(`Example app listening on port !`);
+});
