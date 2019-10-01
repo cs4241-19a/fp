@@ -1,6 +1,6 @@
 # cs4241-FinalProject
 
-###### Music visualizer and social media
+### Music visualizer and social media
 
 Pedro de Vasconcellos Oporto - Oporto
 Brandon Navaro
