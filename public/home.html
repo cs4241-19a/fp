@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="stylesheets/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
     <title>Music App</title>
 </head>
 <body>
@@ -13,7 +18,8 @@
          src="images/music.png"
          alt="Application Logo">
     <a class="navbar-brand" href="#">Music App</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -26,7 +32,8 @@
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
                     Dropdown
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -40,21 +47,22 @@
     </div>
 </nav>
 <div class="container">
-     <div class="row">
+    <div class="row">
         <div class="col-4 side-container">
-            <label class = "side-container" for="exampleFormControlTextarea1">Search for a Song to Recommend</label>
+            <label class="side-container" for="exampleFormControlTextarea1">Search for a Song to Recommend</label>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
             </form>
-            <label class = "side-container" for="exampleFormControlTextarea1">Caption</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">Write a note about the song here</textarea>
+            <label class="side-container" for="exampleFormControlTextarea1">Caption</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1"
+                      rows="3">Write a note about the song here</textarea>
             <div class="post">
                 <button type="button" class="btn btn-danger">Post</button>
             </div>
         </div>
         <div class="col">
-            <p class = "text">
+            <p class="text">
                 Scrollable List of songs here
             </p>
             <div class="card">
@@ -62,15 +70,17 @@
                     username
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Song Name, Artist, Album</h5>
-                    <p class="card-text">Recomendation note</p>
-                    <a href="#" class="btn btn-primary">Play</a>
+                    <h5 class="card-title" id="current-track-name">Song Name, Artist, Album</h5>
+                    <img id="current-track" alt="image of song cover"/>
+                    <p class="card-text">Recommendation note</p>
+                    <a href="#" onclick="play()" class="btn btn-primary">Play</a>
+                    <a href="#" onclick="pause()" class="btn btn-primary">Pause</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
+<script src="js/createPlayer.js"></script>
 </body>
 </html>
