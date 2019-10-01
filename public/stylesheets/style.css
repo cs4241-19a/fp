@@ -34,5 +34,10 @@ label {
 
 .side-container {
   background-color: lightgray;
+  color: black;
+}
 
+.post {
+  text-align: center;
+  margin: 2em;
 }
