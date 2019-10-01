@@ -10,7 +10,12 @@ const express = require('express'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     app = express(),
-    favicon = require('serve-favicon')
+    favicon = require('serve-favicon'),
+    client_id = 'f250b3f0ce604150b056707b8e25a328',
+    client_secret = 'c26768e1850047ceba186a08bb061a9d', //this is VERY IMPORTANT and should NEVER be revealed in public
+    redirect_uri = 'http://localhost:3000', //redirects to this when authorization passes or fails
+    scopes = 'user-read-private user-read-email',
+    code = '?response_type=code'
 
 let currentUser = []
 
@@ -76,6 +81,28 @@ app.get("/", isLoggedIn, function (req, res) {
 app.get("/login", function (req, res) {
     res.sendFile(__dirname + "/public/login.html")
 })
+
+app.get("/spotifyAccess", function (req, res) {
+    res.redirect('https://accounts.spotify.com/authorize' +
+        code +
+        '&client_id=' + client_id +
+        (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
+        '&redirect_uri=' + encodeURIComponent(redirect_uri))//__dirname + "/spotifyInfo"))
+    console.log(code)
+})
+
+// app.post("/spotifyInfo",function(req,res){
+//     res.redirect('https://accounts.spotify.com/api/token',
+//         data: {
+//             grant_type: "authorization_code",
+//             "code":code,
+//             "redirect_uri": redirect_uri,
+//             "Authorization": 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+//         }
+//         console.log(JSON.parse(res))
+// )
+// })
+
 app.get("/register", function (req, res) {
     res.sendFile(__dirname + "/public/register.html")
 })
@@ -86,7 +113,7 @@ app.get("/logout", function (req, res) {
 app.post("/login",
     passport.authenticate("local-login", {failureRedirect: "/"}),
     function (req, res) {
-        res.redirect("/")
+        res.redirect("/spotifyAccess") //redirects to spotify access page once sign in authorizes
     })
 app.post("/register", function (req, res) {
     bcrypt.hash(req.body.password, 10, function (err, hash) {
@@ -115,4 +142,6 @@ function isLoggedIn(req, res, next) {
         return next()
     res.redirect("/login")
 }
+//added in order to run the server
+app.listen(process.env.PORT || 3000)
 module.exports = app
