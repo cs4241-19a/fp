@@ -3,6 +3,9 @@ const express = require('express'),
     cookieParser = require('cookie-parser'),
     logger = require('morgan'),
     session = require('express-session'),
+    request = require('request'),
+    cors = require('cors'),
+    querystring = require('querystring'),
     mongodb = require('mongodb'),
     mongo = require('mongodb').MongoClient,
     bcrypt = require('bcrypt'),
@@ -13,17 +16,23 @@ const express = require('express'),
     favicon = require('serve-favicon'),
     client_id = 'f250b3f0ce604150b056707b8e25a328',
     client_secret = 'c26768e1850047ceba186a08bb061a9d', //this is VERY IMPORTANT and should NEVER be revealed in public
-    redirect_uri = 'http://localhost:3000', //redirects to this when authorization passes or fails
+    redirect_uri = 'http://localhost:3000/callback', //redirects to this when authorization passes or fails
     scopes = 'user-read-private user-read-email',
-    code = '?response_type=code'
+    //code = '?response_type=code',
+    stateKey = 'spotify_auth_state'
 
-let currentUser = []
+
+
+let currentUser = [],
+    access_token = null,
+    refresh_token = null
 
 app.use(favicon(__dirname + '/public/images/favicon.ico'))
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser())
+app.use(cors())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(session({
     secret: "tHiSiSasEcRetStr",
@@ -74,6 +83,17 @@ passport.use('local-login', new LocalStrategy(
         })
     })
 )
+
+const generateRandomString = function(length) {
+    let text = '';
+    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    for (let i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+};
+
 app.get("/", isLoggedIn, function (req, res) {
     console.log("test")
     res.sendFile(__dirname + "/public/home.html")
@@ -83,25 +103,111 @@ app.get("/login", function (req, res) {
 })
 
 app.get("/spotifyAccess", function (req, res) {
-    res.redirect('https://accounts.spotify.com/authorize' +
-        code +
-        '&client_id=' + client_id +
-        (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
-        '&redirect_uri=' + encodeURIComponent(redirect_uri))//__dirname + "/spotifyInfo"))
-    console.log(code)
+    //let code = '?response_type=code'
+    let state = generateRandomString(16);
+    res.cookie(stateKey, state);
+    res.redirect('https://accounts.spotify.com/authorize?' +
+        querystring.stringify({
+            response_type: 'code',
+            client_id: client_id,
+            scope: scopes,
+            redirect_uri: redirect_uri,
+            state: state
+        }))
 })
 
-// app.post("/spotifyInfo",function(req,res){
-//     res.redirect('https://accounts.spotify.com/api/token',
-//         data: {
-//             grant_type: "authorization_code",
-//             "code":code,
-//             "redirect_uri": redirect_uri,
-//             "Authorization": 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
-//         }
-//         console.log(JSON.parse(res))
-// )
-// })
+
+app.get('/callback', function(req, res) {
+
+    // your application requests refresh and access tokens
+    // after checking the state parameter
+
+    let code = req.query.code || null;
+    let state = req.query.state || null;
+    let storedState = req.cookies ? req.cookies[stateKey] : null;
+
+    if (state === null || state !== storedState) {
+        res.redirect('/#' +
+            querystring.stringify({
+                error: 'state_mismatch'
+            }));
+    } else {
+        res.clearCookie(stateKey);
+        const authOptions = {
+            url: 'https://accounts.spotify.com/api/token',
+            form: {
+                code: code,
+                redirect_uri: redirect_uri,
+                grant_type: 'authorization_code'
+            },
+            headers: {
+                'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+            },
+            json: true
+        };
+
+        request.post(authOptions, function(error, response, body) {
+            if (!error && response.statusCode === 200) {
+
+                access_token = body.access_token
+                refresh_token = body.refresh_token;
+
+                const options = {
+                    url: 'https://api.spotify.com/v1/me',
+                    headers: {'Authorization': 'Bearer ' + access_token},
+                    json: true
+                };
+
+                // use the access token to access the Spotify Web API
+                request.get(options, function(error, response, body) {
+                    console.log(body);
+                    console.log('token = '+ access_token)
+                });
+
+                // we can also pass the token to the browser to make requests from there
+                 res.redirect('/#' +
+                    querystring.stringify({
+                        access_token: access_token,
+                        refresh_token: refresh_token
+                    }))
+            } else {
+                res.redirect('/#' +
+                    querystring.stringify({
+                        error: 'invalid_token'
+                    }));
+            }
+        });
+    }
+});
+
+
+app.get('/refresh_token', function(req, res) {
+
+    // requesting access token from refresh token
+    var refresh_token = req.query.refresh_token;
+    var authOptions = {
+        url: 'https://accounts.spotify.com/api/token',
+        headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
+        form: {
+            grant_type: 'refresh_token',
+            refresh_token: refresh_token
+        },
+        json: true
+    };
+
+    request.post(authOptions, function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+            access_token = body.access_token;
+            res.send({
+                'access_token': access_token
+            });
+        }
+    });
+});
+
+app.get("/token", function (req,res){
+    res.send(access_token)
+})
 
 app.get("/register", function (req, res) {
     res.sendFile(__dirname + "/public/register.html")
@@ -137,7 +243,7 @@ app.post("/register", function (req, res) {
 })
 
 function isLoggedIn(req, res, next) {
-    console.log(req.isAuthenticated())
+    //console.log(req.isAuthenticated())
     if (req.isAuthenticated())
         return next()
     res.redirect("/login")
