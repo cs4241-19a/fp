@@ -8,6 +8,11 @@ app.use(bodyParser.json());
 app.use(compression());
 app.use(express.static('dist'));
 
-const listener = app.listen(process.env.PORT, function() {
+// Setup socket.io
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
+require('./socket.js')(io);
+
+const listener = http.listen(process.env.PORT, function() {
 	console.log('Your app is running. Go to http://localhost:' + listener.address().port + '/index.html');
 });

@@ -1,2 +1,8 @@
 import "./styles.css";
-console.log("hello world!");
+import io from "socket.io-client";
+
+const socket = io();
+
+socket.emit('getUserCount');
+
+socket.on('sendUserCount', (count) => document.querySelector("#counter").innerHTML = count);
