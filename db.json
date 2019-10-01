@@ -1,0 +1,124 @@
+{
+  "users": [
+    {
+      "name": "Carla",
+      "email": "ciduarte@wpi.edu",
+      "password": "1234",
+      "availability": {
+        "sunday": [
+          "9:00",
+          "9:15",
+          "9:30",
+          "9:45"
+        ],
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [
+          "8:00"
+        ],
+        "thursday": [],
+        "friday": [
+          "3:00"
+        ],
+        "saturday": []
+      },
+      "archive": []
+    },
+    {
+      "name": "Sylvia",
+      "email": "ylin7@wpi.edu",
+      "password": "1234",
+      "availability": [
+        {
+          "sunday": [],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ],
+      "archive": []
+    },
+    {
+      "name": "Manasi",
+      "email": "mmdanke@wpi.edu",
+      "password": "1234",
+      "availability": [
+        {
+          "sunday": [],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ],
+      "archive": []
+    },
+    {
+      "name": "Amanda",
+      "email": "aezeobiejesi@wpi.edu",
+      "password": "1234",
+      "availability": [
+        {
+          "sunday": [],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ],
+      "archive": []
+    }
+  ],
+  "rooms": [
+    {
+      "name": "Room 1",
+      "availability": [
+        {
+          "sunday": [
+            "9:00",
+            "9:15"
+          ],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ]
+    },
+    {
+      "name": "Room 2",
+      "availability": {
+        "sunday": [],
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
+    },
+    {
+      "name": "Room 3",
+      "availability": [
+        {
+          "sunday": [],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ]
+    }
+  ]
+}
