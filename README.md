@@ -12,7 +12,8 @@ be liked and disliked.
 Each logged in user can access their own portfolio and edit it as they see fit. They can upload songs, control what visualizations are available, edit the aspects of the visualization,
 the order in which the songs appear. They can also edit their profile, like add a photo, have an about me section, link to social media. 
 
-I will be hardcoding all the html and css for this project and using an express server in node.js. For the visualizations I will use the Web Audio API and three.js.
+I will be hardcoding all the html and css for this project and using an express server in node.js and other middlewares as required. For the visualizations I will use the 
+Web Audio API and three.js.
 
 ##Team
 Manas Mehta
