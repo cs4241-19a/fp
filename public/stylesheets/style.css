@@ -4,6 +4,10 @@ body {
   background-color: rgba(0,0,0,0.87) !important;
 }
 
+nav {
+  margin-bottom: 2%;
+}
+
 a {
   color: #00B7FF;
 }
@@ -17,4 +21,23 @@ label {
 .profile {
   border-radius: 50%;
   width: 20%;
+}
+
+.logo {
+  width: 5%;
+  border-radius: 50%;
+}
+
+.text {
+  color: white;
+}
+
+.side-container {
+  background-color: lightgray;
+  color: black;
+}
+
+.post {
+  text-align: center;
+  margin: 2em;
 }
