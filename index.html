@@ -25,7 +25,7 @@
     
   function reloadData(){
     console.log("Getting Data");
-    $.get('/gamedata', function(data) {
+    $.get('/getgames', function(data) {
       console.log("Printing owned games: " + data)
       clearTable(document.getElementById("table").rows.length - 1)
       data.forEach(function(car){
@@ -47,7 +47,7 @@
 
   function getGame(game){
     console.log(game)
-    $.get('/game', game)
+    $.get('/gamedata', game)
   }
     
  function checkIfIn(name){
