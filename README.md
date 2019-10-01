@@ -1,6 +1,8 @@
 # cs4241-FinalProject
 
-##Soundcloudish
+## soundcloudish
+
+### Abstract
 
 So the plan of this project is to develop a soundcloud like platform. The application will support multiple users, each with their credentials authenticated by passport and all the
 data attached to that user stored in Firebase. 
@@ -15,5 +17,5 @@ the order in which the songs appear. They can also edit their profile, like add 
 I will be hardcoding all the html and css for this project and using an express server in node.js and other middlewares as required. For the visualizations I will use the 
 Web Audio API and three.js.
 
-##Team
+## Team
 Manas Mehta
