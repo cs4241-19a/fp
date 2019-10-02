@@ -12,29 +12,18 @@
     <img class="logo mt-2"
          src="images/music.png"
          alt="Application Logo">
-    <a class="navbar-brand" href="#">Music App</a>
+    <a class="navbar-brand" href="#"> Music App</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout" id="logoutLink">Log out<span class="sr-only">(current)</span></a>
             </li>
         </ul>
     </div>
@@ -48,7 +37,7 @@
                 <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
             </form>
             <label class = "side-container" for="exampleFormControlTextarea1">Caption</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">Write a note about the song here</textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Write a note about the song here"></textarea>
             <div class="post">
                 <button type="button" class="btn btn-danger">Post</button>
             </div>
@@ -59,11 +48,11 @@
             </p>
             <div class="card">
                 <div class="card-header">
-                    username
+
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">Song Name, Artist, Album</h5>
-                    <p class="card-text">Recomendation note</p>
+                    <p class="card-text">Recommendation note</p>
                     <a href="#" class="btn btn-primary">Play</a>
                 </div>
             </div>
@@ -73,4 +62,5 @@
 
 
 </body>
+<script src="js/home.js" type="module"></script>
 </html>
