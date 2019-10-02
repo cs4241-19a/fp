@@ -2,6 +2,12 @@
 module.exports = function (io) {
 	let userCount = 0;
 
+	const update = function() {
+		// Do stuff
+	};
+
+	const db = require('./database')(update);
+
 	const updateUserCount = function() {
 		io.emit('sendUserCount', userCount); // Emits to everyone
 	};
