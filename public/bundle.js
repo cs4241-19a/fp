@@ -44567,19 +44567,28 @@ var dog = PIXI.Sprite.from('images/dog.png'); // center the sprite's anchor poin
 paw.anchor.set(0.5); // move the sprite to the center of the screen
 
 paw.x = app.screen.width / 2;
-paw.y = app.screen.height / 2; // center the sprite's anchor point
+paw.y = app.screen.height / 2;
+paw.vx = 0;
+paw.vy = 0; // center the sprite's anchor point
 
 dog.anchor.set(0.5); // move the sprite to the center of the screen
 
 dog.x = app.screen.width / 4;
 dog.y = app.screen.height / 4;
+dog.vx = 0;
+dog.vy = 0;
 app.stage.addChild(paw);
 app.stage.addChild(dog); // Listen for animate update
 
-app.ticker.add(function (delta) {// just for fun, let's rotate mr rabbit a little
+app.ticker.add(function (delta) {
+  // just for fun, let's rotate mr rabbit a little
   // delta is 1 if running at 100% performance
   // creates frame-independent transformation
   // paw.rotation += 0.1 * delta;
+  paw.x += paw.vx;
+  paw.y += paw.vy;
+  dog.x += dog.vx;
+  dog.y += dog.vy;
 });
 
 function keyboard(value) {
@@ -44644,56 +44653,104 @@ left.press = function () {
   'use strict';
 
   document.getElementById("key").innerHTML = "left";
-  paw.x += -5;
+  paw.vx += -5;
 };
 
 right.press = function () {
   'use strict';
 
   document.getElementById("key").innerHTML = "right";
-  paw.x += 5;
+  paw.vx += 5;
 };
 
 up.press = function () {
   'use strict';
 
   document.getElementById("key").innerHTML = "up";
-  paw.y += -5;
+  paw.vy += -5;
 };
 
 down.press = function () {
   'use strict';
 
   document.getElementById("key").innerHTML = "down";
-  paw.y += 5;
+  paw.vy += 5;
 };
 
 w.press = function () {
   'use strict';
 
   document.getElementById("key2").innerHTML = "w";
-  dog.y += -5;
+  dog.vy += -5;
 };
 
 a.press = function () {
   'use strict';
 
   document.getElementById("key2").innerHTML = "a";
-  dog.x += -5;
+  dog.vx += -5;
 };
 
 s.press = function () {
   'use strict';
 
   document.getElementById("key2").innerHTML = "s";
-  dog.y += 5;
+  dog.vy += 5;
 };
 
 d.press = function () {
   'use strict';
 
   document.getElementById("key2").innerHTML = "d";
-  dog.x += 5;
+  dog.vx += 5;
+};
+
+right.release = function () {
+  'use strict';
+
+  paw.vx = 0;
+};
+
+left.release = function () {
+  'use strict';
+
+  paw.vx = 0;
+};
+
+up.release = function () {
+  'use strict';
+
+  paw.vy = 0;
+};
+
+down.release = function () {
+  'use strict';
+
+  paw.vy = 0;
+};
+
+a.release = function () {
+  'use strict';
+
+  dog.vx = 0;
+};
+
+d.release = function () {
+  'use strict';
+
+  dog.vx = 0;
+};
+
+w.release = function () {
+  'use strict';
+
+  dog.vy = 0;
+};
+
+s.release = function () {
+  'use strict';
+
+  dog.vy = 0;
 };
 
 },{"pixi.js":42}]},{},[52,53]);
