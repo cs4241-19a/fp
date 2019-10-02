@@ -26,15 +26,12 @@
   function reloadData(){
     console.log("Getting Data");
     $.get('/getgames', function(data) {
-      console.log("Printing owned games: " + data)
       clearTable(document.getElementById("table").rows.length - 1)
       data.forEach(function(car){
         if(jQuery.isEmptyObject(car))
           return
-        console.log(car)
         let name = car.name
-        console.log(name)
-        $('#table').append('<tr><td>' + car.rank +'</td><td id=name>' + car.name +'</td><td>' + car.year +'</td><td>'+ car.age +'</td></tr>')             
+        $('#table').append('<tr><td>' + car.rank +'</td><td id=name>' + car.name +'</td><td id=slug>' + car.slug +'</td><td>'+ car.age +'</td></tr>')             
       })
     });
     jQuery.ready();
@@ -46,8 +43,10 @@
   }
 
   function getGame(game){
+    let something = {}
+    something["game"] = game;
     console.log(game)
-    $.get('/gamedata', game)
+    window.location.replace("gameinfo?"+game)
   }
     
  function checkIfIn(name){
@@ -61,7 +60,7 @@
   }
 
   $(document).on("click",'#table tr', function(){
-      let game = $(this).find('#name')[0].innerText
+      let game = $(this).find('#slug')[0].innerText
       getGame(game)
     });
 

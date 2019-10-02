@@ -1,0 +1,15 @@
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
+<script>
+    let {gamedata} = {};
+    window.onload = function() {
+    game = document.URL.substring(document.URL.indexOf("?")+1)
+    let something = {}
+    something["game"] = game;
+    $.get('/gameselect', something, function(data){
+        gamedata = data[0]
+        console.log(gamedata)
+        if(typeof gamedata === 'undefined')
+            window.location.replace("catalogue")
+    })
+    } 
+</script>
