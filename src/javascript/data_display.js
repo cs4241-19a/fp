@@ -1,3 +1,8 @@
+import * as d3Base from 'd3';
+import { group } from 'd3-array';
+
+const d3 = Object.assign(d3Base, { group });
+
 // data = [{favicon: '', avg: 0.0}]
 const displayBar = function (data) {
 
