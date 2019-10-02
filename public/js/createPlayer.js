@@ -1,5 +1,15 @@
 // Set token
-let _token = 'BQDmafeFwDv8sxR9PB8-FwdurMfb_xDMm7gBDVX9d0XDjMjvqqMwBd_qISzD0bQvaUGipG4QxEMrOVWdKYPpPJJiovnfqPXU63DBZIyc4AMKgc3sp5feYDz4a5EyVlx8Tg6BjeCj6zbm6hhzaJGmtre449O7mZMp0FtIiAw'
+let _token
+
+(function getData() {
+    (async () => {
+        const rawResponse = await fetch('/token', {
+            method: 'GET'
+        })
+        _token = await rawResponse.json()
+        createPlayer(_token.token)
+    })()
+})()
 
 // Replace with your app's client ID, redirect URI and desired scopes
 const clientId = 'f250b3f0ce604150b056707b8e25a328'
@@ -11,67 +21,66 @@ const scopes = [
     'user-modify-playback-state'
 ]
 
-// If there is no token, redirect to Spotify authorization
-if (!_token) {
-    window.location = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join('%20')}&response_type=token&show_dialog=true`
-}
-
 // Set up the Web Playback SDK
-let player;
-let playerData;
-window.onSpotifyPlayerAPIReady = () => {
-    player = new Spotify.Player({
-        name: 'Web Playback SDK Template',
-        getOAuthToken: cb => {
-            cb(_token)
-        }
-    })
+let player
+let playerData
 
-    // Error handling
-    player.on('initialization_error', e => console.error(e))
-    player.on('authentication_error', e => console.error(e))
-    player.on('account_error', e => console.error(e))
-    player.on('playback_error', e => console.error(e))
+function createPlayer(_token) {
+    window.onSpotifyPlayerAPIReady = () => {
+        console.log("inside player with " + _token)
+        player = new Spotify.Player({
+            name: 'Web Playback SDK Template',
+            getOAuthToken: cb => {
+                cb(_token)
+            }
+        })
 
-    // Playback status updates
-    player.on('player_state_changed', state => {
-        console.log(state)
-        $('#current-track').attr('src', state.track_window.current_track.album.images[0].url)
-        $('#current-track-name').text(state.track_window.current_track.name)
-    })
+        // Error handling
+        player.on('initialization_error', e => console.error(e))
+        player.on('authentication_error', e => console.error(e))
+        player.on('account_error', e => console.error(e))
+        player.on('playback_error', e => console.error(e))
 
-    // Ready
-    player.on('ready', data => {
-        console.log('Ready with Device ID', data.device_id)
-        playerData = data
-        // Play a track using our new device ID
-        getAudio(data.device_id)
-    })
+        // Playback status updates
+        player.on('player_state_changed', state => {
+            console.log(state)
+            $('#current-track').attr('src', state.track_window.current_track.album.images[0].url)
+            $('#current-track-name').text(state.track_window.current_track.name)
+        })
 
-    // Connect to the player!
-    player.connect()
-}
+        // Ready
+        player.on('ready', data => {
+            console.log('Ready with Device ID', data.device_id)
+            playerData = data
+            // Play a track using our new device ID
+            getAudio(data.device_id)
+        })
 
-// Play a specified track on the Web Playback SDK's device ID
-function getAudio(device_id) {
-    $.ajax({
-        url: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
-        type: "PUT",
-        data: '{"uris": ["spotify:track:5ya2gsaIhTkAuWYEMB0nw5"]}',
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader('Authorization', 'Bearer ' + _token)
-        },
-        success: function (data) {
-            console.log(data)
-        }
-    })
-}
-function pause() {
-    player.pause().then(() => {
-        console.log('Paused!');
-    });
-}
+        // Connect to the player!
+        player.connect()
+    }
+    // Play a specified track on the Web Playback SDK's device ID
+    function getAudio(device_id) {
+        $.ajax({
+            url: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
+            type: "PUT",
+            data: '{"uris": ["spotify:track:5ya2gsaIhTkAuWYEMB0nw5"]}',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'Bearer ' + _token)
+            },
+            success: function (data) {
+                console.log(data)
+            }
+        })
+    }
 
-function play() {
-    getAudio(playerData.device_id)
+    function pause() {
+        player.pause().then(() => {
+            console.log('Paused!')
+        })
+    }
+
+    function play() {
+        getAudio(playerData.device_id)
+    }
 }
