@@ -6,30 +6,33 @@
     
   </head>
   <body>
-     <div><font size = "6"><h1 id = "title"></h1></font></div>
-    <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
-    <div>
-    </div>
+    <div><font size = "6"><h1 id = "title"></h1></font></div>
+    <div id='description'></div>
     
 </body>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
 <script>
-    let {gamedata} = {};
+    let gamedata = {};
     window.onload = function() {
     game = document.URL.substring(document.URL.indexOf("?")+1)
     let something = {}
     something["game"] = game;
-    $.get('/gameselect', something, function(data){
-        gamedata = data[0]
-        console.log(gamedata)
-        if(typeof gamedata === 'undefined')
+    $.ajaxSetup({async: false});
+    $.get('/havegame', something, function(data){
+        console.log(data)
+        if(data)
             window.location.replace("catalogue")
+    })
+    
+    $.get('/gameselect', something, function(data){
+        gamedata = data
         constructPage(gamedata)
     })
 }
     function constructPage(gamedata){
         //console.log(gamedata.name)
         $("#title").text(gamedata.name)
+        $("#description").append(gamedata.raw.description)
     }
 </script>

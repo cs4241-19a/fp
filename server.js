@@ -3,9 +3,13 @@ const express = require('express'),
       Rawger = require('rawger'),
       port = 3000,
       bodyParser = require('body-parser'),
-      url = require('url')
+      url = require('url'),
+      asyncHandler = require('express-async-handler')
 
+
+      
 let owned = null;
+let search = null;
 async function getAccount(){
 	const rawger = await Rawger();
 	const {users} = rawger;
@@ -22,7 +26,15 @@ async function getAccount(){
   }
 
 async function gameSearch(searchTerm){
-  return await owned.search(searchTerm)
+  const {games} = await Rawger();
+  gameGot = (await games.search(searchTerm)).get()
+  return await Promise.resolve(gameGot);
+}
+
+async function gameGet(gameName){
+  const {games} = await Rawger();
+  gameGot = (await games.get(gameName)).get()
+  return await Promise.resolve(gameGot);
 }
 
 getAccount()
@@ -55,13 +67,18 @@ app.get('/gamesearch', function(req,res){
   res.send(gameSearch(req.games))
 })
 
-app.get('/gameselect',  function(req, res) {
+app.get('/gameselect', asyncHandler(async (req, res, next) => {
   let gameName = req.query['game']
   console.log("You Got The Game: " + gameName)
-  var found = owned.filter(function(item) { return item.slug == gameName; });
-  console.log(found[0])
-	res.send(found)
+  gameGet(gameName).then(result => {
+    res.send(result)
+  })
+}))
+
+app.get('/havegame', function(req,res){
+  var found = owned.filter(function(item) { return item.slug == req.query['game']; });
+     console.log(found === undefined || found.length == 0)
+     res.send(found === undefined || found.length == 0)
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-
