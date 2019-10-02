@@ -69,16 +69,13 @@ app.get('/gamesearch', function(req,res){
 
 app.get('/gameselect', asyncHandler(async (req, res, next) => {
   let gameName = req.query['game']
+  var found = owned.filter(function(item) { return item.slug == req.query['game']; });
+  if(found === undefined || found.length == 0)
+  res.status(404).send('Not found');
   console.log("You Got The Game: " + gameName)
   gameGet(gameName).then(result => {
     res.send(result)
   })
 }))
-
-app.get('/havegame', function(req,res){
-  var found = owned.filter(function(item) { return item.slug == req.query['game']; });
-     console.log(found === undefined || found.length == 0)
-     res.send(found === undefined || found.length == 0)
-})
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

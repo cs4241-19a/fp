@@ -6,6 +6,7 @@
     
   </head>
   <body>
+      <button onclick="window.location.replace('catalogue')">Go Back</button>
     <div><font size = "6"><h1 id = "title"></h1></font></div>
     <div id='description'></div>
     
@@ -19,15 +20,9 @@
     let something = {}
     something["game"] = game;
     $.ajaxSetup({async: false});
-    $.get('/havegame', something, function(data){
-        console.log(data)
-        if(data)
-            window.location.replace("catalogue")
-    })
-    
     $.get('/gameselect', something, function(data){
-        gamedata = data
-        constructPage(gamedata)
+        console.log(data)
+        constructPage(data)
     })
 }
     function constructPage(gamedata){
