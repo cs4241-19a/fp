@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 const config = {
-  entry: './src/javascript/index.js',
+  entry: ['@babel/polyfill', './src/javascript/index.js'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
@@ -22,7 +22,8 @@ const config = {
         ]
       }
     ]
-  }
-}
+  },
+  watch: true
+};
 
 module.exports = config;

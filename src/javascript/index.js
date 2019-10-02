@@ -2,6 +2,8 @@ import "../css/styles.css";
 import io from "socket.io-client";
 import "./data_collection"
 
+import "@babel/polyfill"
+
 const socket = io();
 
 socket.emit('getUserCount');
