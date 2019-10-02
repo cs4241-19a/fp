@@ -1,3 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset="utf-8">
+    
+  </head>
+  <body>
+     <div><font size = "6"><h1 id = "title"></h1></font></div>
+    <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+    <div>
+    </div>
+    
+</body>
+
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
 <script>
     let {gamedata} = {};
@@ -10,6 +25,11 @@
         console.log(gamedata)
         if(typeof gamedata === 'undefined')
             window.location.replace("catalogue")
+        constructPage(gamedata)
     })
-    } 
+}
+    function constructPage(gamedata){
+        //console.log(gamedata.name)
+        $("#title").text(gamedata.name)
+    }
 </script>

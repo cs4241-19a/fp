@@ -6,12 +6,12 @@
     
   </head>
   <body>
-     <div class = "container text-center"><font size = "6"><h1>GAMES!!</h1></font></div>
+     <div><font size = "6"><h1>GAMES!!</h1></font></div>
     <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
-    <div class = "col is-center">
+    <div>
     </div>
     
-    <div class="col is-center">
+    <div>
     <table id = "table" >
     </table>
       </div>
@@ -31,7 +31,7 @@
         if(jQuery.isEmptyObject(car))
           return
         let name = car.name
-        $('#table').append('<tr><td>' + car.rank +'</td><td id=name>' + car.name +'</td><td id=slug>' + car.slug +'</td><td>'+ car.age +'</td></tr>')             
+        $('#table').append('<tr><td id=name>' + car.name +'</td><td id=slug>' + car.slug +'</td></tr>')             
       })
     });
     jQuery.ready();
@@ -48,16 +48,6 @@
     console.log(game)
     window.location.replace("gameinfo?"+game)
   }
-    
- function checkIfIn(name){
-   console.log(name)
-    for(let i = 1; i<document.getElementById("table").rows.length;i++){
-      console.log(document.getElementById("table").rows[i].cells[1].innerText)
-      if(document.getElementById("table").rows[i].cells[1].innerText == name)
-         return true
-    }
-      return false;
-  }
 
   $(document).on("click",'#table tr', function(){
       let game = $(this).find('#slug')[0].innerText
@@ -68,7 +58,5 @@
     reloadData()
   }
     
-  </script>
-  
-  
+  </script>  
 </html>

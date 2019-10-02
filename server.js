@@ -19,7 +19,12 @@ async function getAccount(){
   console.log("AMOUNT OF GAMES IS: " + (await users('WPI-GDC').games('owned')).count())
   console.log("AMOUNT IN LIST IS: ",owned.length)
 	//console.log(owned)
-	}
+  }
+
+async function gameSearch(searchTerm){
+  return await owned.search(searchTerm)
+}
+
 getAccount()
 
 app.use(bodyParser.urlencoded());
@@ -43,8 +48,11 @@ app.get('/getgames', function (req, res) {
 })
 
 app.get('/gameinfo', function(req, res){
-  console.log('Pokemom go to the polls')
   res.sendFile('/views/catalog.html', { root: '.' })
+})
+
+app.get('/gamesearch', function(req,res){
+  res.send(gameSearch(req.games))
 })
 
 app.get('/gameselect',  function(req, res) {
