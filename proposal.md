@@ -6,6 +6,7 @@ Pedro de Vasconcellos Oporto - Oporto
 Brandon Navaro
 Joseph Caltabiano
 Christian Tweed
+Manas Mehta
 
 ## Description
 
