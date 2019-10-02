@@ -36,7 +36,7 @@ You must be done in time to present before the final project demo day (October 1
 #### Turning in Your Outline / Project
 
 **NOTE: code is due before the project presentation day due to the end of term / grading schedule constraints**
-Submit a second PR on the final project repo to turn in your app and code.
+Submit a second PR on the final project repo to turn in your code.
 
 Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service.
 Folks on the same team do not need to post the same webpage, but must instead clearly state who is on the team in their proposal.
