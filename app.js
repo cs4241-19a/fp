@@ -206,7 +206,11 @@ app.get('/refresh_token', function(req, res) {
 });
 
 app.get("/token", function (req,res){
-    res.send(access_token)
+    const answerObj = {}
+    answerObj.name = "token"
+    //todo wrong token works with token from https://developer.spotify.com/documentation/web-playback-sdk/quick-start/#
+    answerObj.token = access_token
+    res.send(JSON.stringify(answerObj))
 })
 
 app.get("/register", function (req, res) {
