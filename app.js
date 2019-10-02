@@ -12,7 +12,7 @@ const port = process.env.PORT | 3000;
 
 
 
-const serviceAccount = require("./cs4241-fp-26fee-firebase-adminsdk-pqgau-d8dfed19f8.json");
+const serviceAccount = require("./private/serviceAccountCredentials.json");
 
 firebaseAdmin.initializeApp({
     credential: firebaseAdmin.credential.cert(serviceAccount),
