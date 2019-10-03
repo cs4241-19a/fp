@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-let app = new PIXI.Application(800, 600, { backgroundColor: 0x1099bb });
+let app = new PIXI.Application({ backgroundColor: 0xffffff });
 document.body.appendChild(app.view);
 const loader = new PIXI.Loader(); // you can also create your own if you want
 loader
@@ -25,10 +25,27 @@ loader
 //Add the canvas that Pixi automatically created for you to the HTML document
 document.body.appendChild(app.view);
 
+
 // create a new Sprite from an image path
 let paw = PIXI.Sprite.from('images/cat.png');
 let dog = PIXI.Sprite.from('images/dog.png');
+let pawVis = false;
+let dogVis = false;
 
+
+document.getElementById("dogBut").addEventListener("click", function(){
+    pawVis = false;
+    dogVis = true;
+    dog.x = app.screen.width / 2;
+    dog.y = app.screen.height / 2;
+})
+
+document.getElementById("pawBut").addEventListener("click", function(){
+    pawVis = true;
+    dogVis = false;
+    paw.x = app.screen.width / 2;
+    paw.y = app.screen.height / 2;
+})
 
 // center the sprite's anchor point
 paw.anchor.set(0.5);
@@ -43,8 +60,8 @@ paw.vy = 0;
 dog.anchor.set(0.5);
 
 // move the sprite to the center of the screen
-dog.x = app.screen.width / 4;
-dog.y = app.screen.height / 4;
+dog.x = app.screen.width / 2;
+dog.y = app.screen.height / 2;
 dog.vx = 0;
 dog.vy = 0;
 
@@ -62,6 +79,8 @@ app.ticker.add(function(delta) {
     paw.y += paw.vy;
     dog.x += dog.vx;
     dog.y += dog.vy;
+    paw.visible = pawVis;
+    dog.visible = dogVis;
 
 });
 
@@ -125,7 +144,8 @@ let left = keyboard("ArrowLeft"),
     w = keyboard("w"),
     a = keyboard("a"),
     s = keyboard("s"),
-    d = keyboard("d");
+    d = keyboard("d"),
+    j = keyboard("j");
 
 
 left.press = function(){
@@ -204,4 +224,14 @@ s.release = function(){
     'use strict'
     dog.vy = 0;
 }
+//
+// j.press = function(){
+//     'use strict'
+//     pawVis = false;
+// }
+//
+// j.release = function(){
+//     'use strict'
+//     pawVis = true;
+// }
 

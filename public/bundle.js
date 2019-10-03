@@ -44535,8 +44535,8 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var app = new PIXI.Application(800, 600, {
-  backgroundColor: 0x1099bb
+var app = new PIXI.Application({
+  backgroundColor: 0xffffff
 });
 document.body.appendChild(app.view);
 var loader = new PIXI.Loader(); // you can also create your own if you want
@@ -44562,7 +44562,21 @@ loader.add('cat', 'images/cat.png'); // //Aliases
 document.body.appendChild(app.view); // create a new Sprite from an image path
 
 var paw = PIXI.Sprite.from('images/cat.png');
-var dog = PIXI.Sprite.from('images/dog.png'); // center the sprite's anchor point
+var dog = PIXI.Sprite.from('images/dog.png');
+var pawVis = false;
+var dogVis = false;
+document.getElementById("dogBut").addEventListener("click", function () {
+  pawVis = false;
+  dogVis = true;
+  dog.x = app.screen.width / 2;
+  dog.y = app.screen.height / 2;
+});
+document.getElementById("pawBut").addEventListener("click", function () {
+  pawVis = true;
+  dogVis = false;
+  paw.x = app.screen.width / 2;
+  paw.y = app.screen.height / 2;
+}); // center the sprite's anchor point
 
 paw.anchor.set(0.5); // move the sprite to the center of the screen
 
@@ -44573,8 +44587,8 @@ paw.vy = 0; // center the sprite's anchor point
 
 dog.anchor.set(0.5); // move the sprite to the center of the screen
 
-dog.x = app.screen.width / 4;
-dog.y = app.screen.height / 4;
+dog.x = app.screen.width / 2;
+dog.y = app.screen.height / 2;
 dog.vx = 0;
 dog.vy = 0;
 app.stage.addChild(paw);
@@ -44589,6 +44603,8 @@ app.ticker.add(function (delta) {
   paw.y += paw.vy;
   dog.x += dog.vx;
   dog.y += dog.vy;
+  paw.visible = pawVis;
+  dog.visible = dogVis;
 });
 
 function keyboard(value) {
@@ -44647,7 +44663,8 @@ var left = keyboard("ArrowLeft"),
     w = keyboard("w"),
     a = keyboard("a"),
     s = keyboard("s"),
-    d = keyboard("d");
+    d = keyboard("d"),
+    j = keyboard("j");
 
 left.press = function () {
   'use strict';
@@ -44751,6 +44768,15 @@ s.release = function () {
   'use strict';
 
   dog.vy = 0;
-};
+}; //
+// j.press = function(){
+//     'use strict'
+//     pawVis = false;
+// }
+//
+// j.release = function(){
+//     'use strict'
+//     pawVis = true;
+// }
 
 },{"pixi.js":42}]},{},[52,53]);
