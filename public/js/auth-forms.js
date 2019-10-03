@@ -4,6 +4,7 @@
 /**
  * Parse the form data. Handel parsing errors with warning messages and aborting the post.
  * Post the form data to the given url. Then call with handelResponse with the response data.
+ * @author: jk
  * @param {Event} e The submit button press event.
  * @param {string} url The url to submit the post to.
  * @param {function} dataParser The function to parse the sign in form.
@@ -51,6 +52,7 @@ function submit(e, url, dataParser, handelResponse) {
 
 /**
  * Handel the sign in submit button event.
+ * @author: jk
  * @param {Event} e The submit button press event.
  * @param {function} dataParser The function to parse the sign in form.
  * @param {function} handelResponse The function to handel the data from a sign in.
@@ -68,6 +70,7 @@ function signInSubmit(e, dataParser, handelResponse) {
 
 /**
  * Attach onclick events for form submit buttons.
+ * @author: jk
  * @returns {Promise<void>}
  */
 window.onload = async function() {
@@ -88,6 +91,7 @@ window.onload = async function() {
 
 /**
  * Close the given modal. This will close all modal backdrops.
+ * @author: jk
  * @param modal The modal to close.
  */
 function closeModal(modal) {
@@ -100,6 +104,7 @@ function closeModal(modal) {
 // PARSE FORM //
 /**
  * Pull the data out of the sign in form.
+ * @author: jk
  * @returns {{password: *, email: *}}
  */
 function parseSignInForm() {
@@ -111,6 +116,7 @@ function parseSignInForm() {
 
 /**
  * Pull the data out of the sign up form.
+ * @author: jk
  * @returns {{password: *, name: *, email: *}}
  */
 function parseSignUpForm() {
@@ -127,6 +133,7 @@ function parseSignUpForm() {
 // sign ins are done client side
 /**
  * Sign in with the provided email and password using the firebase api.
+ * @author: jk
  * @param data Sign in forum data.
  * @returns {Promise<void>}
  */
@@ -146,6 +153,7 @@ async function handelSignInResponse(data) {
 
 /**
  * On a successful sign up, use the token to sign in. If the sign up failed, show the failure message on the form.
+ * @author: jk
  * @param data The data from the sign up response in the backend.
  * @returns {Promise<void>}
  */
@@ -171,6 +179,7 @@ const auth = firebase.auth();
 
 /**
  * Sign in using the provided custom token.
+ * @author: jk
  * @param token The token for the user authentication.
  * @returns {Promise<boolean>} True is success; false if failed.
  */
@@ -193,6 +202,7 @@ async function firebaseSignInToken(token) {
 
 /**
  * Sign in using the firebase api for email and password authentication.
+ * @author: jk
  * @param email
  * @param password
  * @returns {Promise<boolean|UserRecord>}
@@ -207,6 +217,7 @@ async function firebaseSignInEmailPassword(email, password) {
 
 /**
  * Sign out using the firebase api.
+ * @author: jk
  * @returns {Promise<boolean>} True when successful; false when not.
  */
 async function firebaseSignOut() {
@@ -227,6 +238,7 @@ firebase.auth().onAuthStateChanged(update);
 
 /**
  * Update the ui with relevant auth data: auth buttons and nav welcome message.
+ * @author: jk
  * @param {UserRecord} user The current user signed in.
  */
 function update(user) {
@@ -240,6 +252,7 @@ function update(user) {
 /**
  * Show the log out button if logged in.
  * Show the sign up and log in button if not logged in.
+ * @author: jk
  * @param {UserRecord} user The current user signed in.
  */
 function updateNavButtons(user) {
@@ -256,6 +269,7 @@ function updateNavButtons(user) {
 
 /**
  * add the welcome message to the nav bar
+ * @author: jk
  * @param {UserRecord} user The current user signed in.
  */
 function updateNavName(user) {
@@ -267,6 +281,7 @@ function updateNavName(user) {
 
 /**
  * Handel a google oAuth sign in using the firebase auth api
+ * @author: jk
  */
 function googleSignIn() {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -291,6 +306,7 @@ function googleSignIn() {
 
 /**
  * Handel a github oAuth sign in using the firebase auth api
+ * @author: jk
  */
 function githubSignIn() {
     const provider = new firebase.auth.GithubAuthProvider();
@@ -308,6 +324,3 @@ function githubSignIn() {
     });
 
 }
-
-
-

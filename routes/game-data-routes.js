@@ -6,6 +6,7 @@ const db = firebaseAdmin.firestore();
 
 /**
  * Take in data from a game and store it in the database.
+ * @author: jk
  */
 gameDataRouter.post("/:gameId", function(req, res) {
     // TODO: write this to take in game id's
