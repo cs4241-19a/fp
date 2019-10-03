@@ -169,6 +169,12 @@ app.get('/getgames', function (req, res) {
 app.get('/gameinfo', function(req, res){
   res.sendFile('/views/catalog.html', { root: '.' })
 })
+app.get('/image.jpg', function (req, res) {
+  res.sendFile('/resources/image.jpg', { root: '.' })
+})
+app.get('/new', function (req, res) {
+  res.sendFile('/resources/ARCADE.TTF', { root: '.' })
+})
 
 app.get('/gamesearch', function(req,res){
   gameToSearch = req.query
