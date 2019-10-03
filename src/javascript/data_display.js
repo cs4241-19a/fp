@@ -1,5 +1,6 @@
 import * as d3Base from 'd3';
 import { group } from 'd3-array';
+import * as topojson from 'topojson';
 
 const d3 = Object.assign(d3Base, { group });
 
@@ -27,9 +28,11 @@ const setupMap = function(width, height){
         .style("opacity", 0)
 
 
-    d3.json("us_counties.json", function (data) {
+    d3.json("http://enjalot.github.io/wwsd/data/USA/us-named.topojson").then(us => {
+        const geo = topojson.feature(us, us.objects.counties);
+
         svg.selectAll("path")
-            .data(data.features)
+            .data(geo.features)
             .enter()
             .append("path")
             .attr("d", path)
@@ -51,4 +54,4 @@ const displayMap = function(data) {
 
 export default {displayBar, displayMap}
 
-setupMap()
+setupMap(1000, 1000)
