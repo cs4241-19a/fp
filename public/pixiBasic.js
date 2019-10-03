@@ -29,6 +29,7 @@ document.body.appendChild(app.view);
 let paw = PIXI.Sprite.from('images/cat.png');
 let dog = PIXI.Sprite.from('images/dog.png');
 let activeChar = paw;
+let time = 0;
 
 
 
@@ -100,6 +101,10 @@ app.ticker.add(function(delta) {
     if(activeChar.y + activeChar.vy > 0 && activeChar.y + activeChar.height + activeChar.vy < app.screen.height){
         activeChar.y += activeChar.vy;
     }
+
+    time ++;
+    document.getElementById("timer").innerHTML = time.toString();
+
 });
 
 

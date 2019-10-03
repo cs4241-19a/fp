@@ -44562,7 +44562,8 @@ document.body.appendChild(app.view); // create a new Sprite from an image path
 
 var paw = PIXI.Sprite.from('images/cat.png');
 var dog = PIXI.Sprite.from('images/dog.png');
-var activeChar = paw; // center the sprite's anchor point
+var activeChar = paw;
+var time = 0; // center the sprite's anchor point
 // paw.anchor.set(0.5);
 // move the sprite to the center of the screen
 
@@ -44602,34 +44603,6 @@ var count = 0;
 var fallDone = true; // Listen for animate update
 
 app.ticker.add(function (delta) {
-  // if(j.isDown && count < 60 && fallDone){
-  //     paw.vy = -2;
-  //     count ++;
-  // }
-  // else{
-  //     paw.vy = 2;
-  //     if(count > 0) {
-  //         count--;
-  //         fallDone = false;
-  //     }
-  //     else if(count == 0){
-  //         fallDone = true;
-  //     }
-  // }
-  // if(paw.x + paw.vx > 0 && paw.x + paw.width + paw.vx < app.screen.width){
-  //     paw.x += paw.vx;
-  // }
-  // if(paw.y + paw.vy > 0 && paw.y + paw.height + paw.vy < app.screen.height){
-  //     paw.y += paw.vy;
-  // }
-  // if(dog.x + dog.vx > 0 && dog.x + dog.width + dog.vx < app.screen.width){
-  //     dog.x += dog.vx;
-  // }
-  // if(dog.y + dog.vy > 0 && dog.y + dog.height + dog.vy < app.screen.height){
-  //     dog.y += dog.vy;
-  // }
-  // paw.visible = pawVis;
-  // dog.visible = dogVis;
   if (j.isDown && count < 60 && fallDone) {
     activeChar.vy = -2;
     count++;
@@ -44651,6 +44624,9 @@ app.ticker.add(function (delta) {
   if (activeChar.y + activeChar.vy > 0 && activeChar.y + activeChar.height + activeChar.vy < app.screen.height) {
     activeChar.y += activeChar.vy;
   }
+
+  time++;
+  document.getElementById("timer").innerHTML = time.toString();
 });
 
 function keyboard(value) {
