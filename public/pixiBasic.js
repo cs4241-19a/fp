@@ -29,7 +29,10 @@ document.body.appendChild(app.view);
 let paw = PIXI.Sprite.from('images/cat.png');
 let dog = PIXI.Sprite.from('images/dog.png');
 let activeChar = paw;
+let tics = 0;
 let time = 0;
+let start = false;
+
 
 
 
@@ -38,72 +41,81 @@ let time = 0;
 // paw.anchor.set(0.5);
 
 // move the sprite to the center of the screen
-paw.x = app.screen.width / 2;
-paw.y = app.screen.height / 2;
-paw.vx = 0;
-paw.vy = 0;
+function resetPaw() {
+    paw.x = app.screen.width / 2;
+    paw.y = app.screen.height / 2;
+    paw.vx = 0;
+    paw.vy = 0;
+}
 
 // center the sprite's anchor point
 // dog.anchor.set(0.5);
 
 // move the sprite to the center of the screen
-dog.x = app.screen.width / 2;
-dog.y = app.screen.height / 2;
-dog.vx = 0;
-dog.vy = 0;
+function resetDog() {
+    dog.x = app.screen.width / 2;
+    dog.y = app.screen.height / 2;
+    dog.vx = 0;
+    dog.vy = 0;
+}
 
 document.getElementById("dogBut").addEventListener("click", function(){
-    // pawVis = false;
-    // dogVis = true;
-    // dog.x = app.screen.width / 2;
-    // dog.y = app.screen.height / 2;
+
+    start = true;
+    activeChar.visible = false;
+    resetDog();
     activeChar = dog;
     app.stage.addChild(activeChar);
+    startText.visible = false;
     activeChar.visible = true;
+
 })
 
 document.getElementById("pawBut").addEventListener("click", function(){
-    // pawVis = true;
-    // dogVis = false;
-    // paw.x = app.screen.width / 2;
-    // paw.y = app.screen.height / 2;
+
+    start = true;
+    activeChar.visible = false;
+    resetPaw();
     activeChar = paw;
     app.stage.addChild(activeChar);
+    startText.visible = false;
     activeChar.visible = true;
+
 })
-//
-// app.stage.addChild(paw);
-// app.stage.addChild(dog);
 
-
+let startText = new PIXI.Text('Select a character to begin',{fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'});
+app.stage.addChild(startText);
 let count = 0;
 let fallDone = true;
 
 // Listen for animate update
 app.ticker.add(function(delta) {
+    if(start) {
+        if (up.isDown && count < 60 && fallDone) {
+            activeChar.vy = -2;
+            count++;
+        } else {
+            activeChar.vy = 2;
+            if (count > 0) {
+                count--;
+                fallDone = false;
+            } else if (count == 0) {
+                fallDone = true;
+            }
+        }
+        if (activeChar.x + activeChar.vx > 0 && activeChar.x + activeChar.width + activeChar.vx < app.screen.width) {
+            activeChar.x += activeChar.vx;
+        }
+        if (activeChar.y + activeChar.vy > 0 && activeChar.y + activeChar.height + activeChar.vy < app.screen.height) {
+            activeChar.y += activeChar.vy;
+        }
 
-    if(j.isDown && count < 60 && fallDone){
-        activeChar.vy = -2;
-        count ++;
-    }
-    else {
-        activeChar.vy = 2;
-        if (count > 0) {
-            count--;
-            fallDone = false;
-        } else if (count == 0) {
-            fallDone = true;
+        tics++;
+        if (tics % 60 == 0) {
+            time++;
+            document.getElementById("timer").innerHTML = "time: " + time.toString();
         }
     }
-    if(activeChar.x + activeChar.vx > 0 && activeChar.x + activeChar.width + activeChar.vx < app.screen.width){
-        activeChar.x += activeChar.vx;
-    }
-    if(activeChar.y + activeChar.vy > 0 && activeChar.y + activeChar.height + activeChar.vy < app.screen.height){
-        activeChar.y += activeChar.vy;
-    }
-
-    time ++;
-    document.getElementById("timer").innerHTML = time.toString();
 
 });
 
@@ -152,7 +164,7 @@ function keyboard(value) {
     );
 
     // Detach event listeners
-    key.unsubscribe = () => {
+    key.unsubscribe = function(){
         window.removeEventListener("keydown", downListener);
         window.removeEventListener("keyup", upListener);
     };
@@ -173,88 +185,19 @@ let left = keyboard("ArrowLeft"),
 
 left.press = function(){
     'use strict'
-    document.getElementById("key").innerHTML = "left";
-    paw.vx += -5;
+    activeChar.vx += -5;
 }
 right.press = function(){
     'use strict'
-    document.getElementById("key").innerHTML = "right";
-    paw.vx += 5;
+    activeChar.vx += 5;
 }
-up.press = function(){
-    'use strict'
-    document.getElementById("key").innerHTML = "up";
-    paw.vy += -5;
-}
-down.press = function(){
-    'use strict'
-    document.getElementById("key").innerHTML = "down";
-    paw.vy += 5;
-}
-
-w.press = function(){
-    'use strict'
-    document.getElementById("key2").innerHTML = "w";
-    dog.vy += -5;
-}
-a.press = function(){
-    'use strict'
-    document.getElementById("key2").innerHTML = "a";
-    dog.vx += -5;
-}
-s.press = function(){
-    'use strict'
-    document.getElementById("key2").innerHTML = "s";
-    dog.vy += 5;
-}
-d.press = function(){
-    'use strict'
-    document.getElementById("key2").innerHTML = "d";
-    dog.vx += 5;
-}
-
-
 
 right.release = function(){
     'use strict'
-    paw.vx = 0;
+    activeChar.vx = 0;
 }
 left.release = function(){
     'use strict'
-    paw.vx = 0;
-}
-// up.release = function(){
-//     'use strict'
-//     paw.vy = 0;
-// }
-// down.release = function(){
-//     'use strict'
-//     paw.vy = 0;
-// }
-a.release = function(){
-    'use strict'
-    dog.vx = 0;
-}
-d.release = function(){
-    'use strict'
-    dog.vx = 0;
-}
-w.release = function(){
-    'use strict'
-    dog.vy = 0;
-}
-s.release = function(){
-    'use strict'
-    dog.vy = 0;
-}
-
-j.press = function(){
-    'use strict'
-    paw.vy += -2;
-}
-
-j.release = function(){
-    'use strict'
-    paw.vy += 2;
+    activeChar.vx = 0;
 }
 
