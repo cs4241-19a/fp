@@ -18,7 +18,7 @@ async function fetchRoomAvailability(roomName) {
     document.getElementById('room-table-label').innerText = roomName;
 
     if (availability){
-      document.getElementById('room-avail').innerText = JSON.stringify(availability);
+      // document.getElementById('room-avail').innerText = JSON.stringify(availability);
 
       /* INSERT TABLE BUILDING HERE */
       // get the table
@@ -37,12 +37,13 @@ async function fetchRoomAvailability(roomName) {
         '            </tr>' +
         '            <tbody>';
 
+      //TODO: change military time to user friendly time
       for (let i = 9; i < 18; i++) {
         // build each interval row
         htmlDiv.innerHTML += createRow(availability[0], `${i}:00`);
-        htmlDiv.innerHTML += createRow(availability[0], `${i}:15`);
+        // htmlDiv.innerHTML += createRow(availability[0], `${i}:15`);
         htmlDiv.innerHTML += createRow(availability[0], `${i}:30`);
-        htmlDiv.innerHTML += createRow(availability[0], `${i}:45`);
+        // htmlDiv.innerHTML += createRow(availability[0], `${i}:45`);
       }
 
       htmlDiv.innerHTML += '</tbody>';
@@ -309,20 +310,20 @@ function main() {
   };
 
   fetchRoomAvailability('Room 1');
-  fetchUserAvailability('ciduarte@wpi.edu');
-  fetchUserList();
-  fetchRoomList();
-  fetchCurrentUserInfo();
+  // fetchUserAvailability('ciduarte@wpi.edu');
+  // fetchUserList();
+  // fetchRoomList();
+  // fetchCurrentUserInfo();
 
-  document.getElementById('update-room-avail').addEventListener('click', function (evt) {
-    updateRoomAvailability('Room 2', newAvailability);
-  });
-
-  document.getElementById('update-user-avail').addEventListener('click', function (evt) {
-    updateUserAvailability(newAvailability);
-  });
-
-  document.getElementById('update-user-archive').addEventListener('click', function (evt) {
-    updateArchive("Default", defaultAvailability);
-  });
+  // document.getElementById('update-room-avail').addEventListener('click', function (evt) {
+  //   updateRoomAvailability('Room 2', newAvailability);
+  // });
+  //
+  // document.getElementById('update-user-avail').addEventListener('click', function (evt) {
+  //   updateUserAvailability(newAvailability);
+  // });
+  //
+  // document.getElementById('update-user-archive').addEventListener('click', function (evt) {
+  //   updateArchive("Default", defaultAvailability);
+  // });
 }

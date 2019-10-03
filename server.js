@@ -71,7 +71,7 @@ app.get('/logout', function(req, res) {
 app.post('/createAccount', function (request, response) {
   const users = db.get('users')
     .filter({email: request.body.email})
-    .map('username')
+    .map('name')
     .value();
 
   if ((users.length > 0) || (request.body.username === "")) {

@@ -1,38 +1,182 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--  <head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--    <link rel="stylesheet" href="css/bootstrap.css">-->
+<!--    <link rel="stylesheet" href="css/bootstrap-grid.css">-->
+<!--    <link rel="stylesheet" href="css/bootstrap-reboot.css">-->
+<!--    <link rel="stylesheet" href="css/style.css">-->
+<!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+<!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
+<!--  </head>-->
+<!--  <body onload="main()">-->
+<!--    <p>Test Page</p>-->
+<!--    &lt;!&ndash;    ROOM TABLE    &ndash;&gt;-->
+<!--    <div>-->
+<!--      <h3 id="room-table-label"></h3>-->
+<!--      <div>-->
+<!--        <table id="room-avail-table"></table>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash;  example methods  &ndash;&gt;-->
+<!--    <h4>/specificRoomAvailability</h4>-->
+<!--    <p id="room-avail"></p>-->
+<!--    <h4>/specificUserAvailability</h4>-->
+<!--    <p id="user-avail"></p>-->
+<!--    <h4>/allUserInfo</h4>-->
+<!--    <p id="user-list"></p>-->
+<!--    <h4>/allRoomInfo</h4>-->
+<!--    <p id="room-list"></p>-->
+<!--    <h4>/currentUserInfo</h4>-->
+<!--    <p id="current-user-info"></p>-->
+<!--    <button id="update-room-avail">add room availability</button>-->
+<!--    <button id="update-user-avail">add user availability</button>-->
+<!--    <button id="update-user-archive">add user archive</button>-->
+<!--    <script src="js/availability.js"></script>-->
+<!--  </body>-->
+<!--</html>-->
+
+
+
+<!---->
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/bootstrap-grid.css">
-    <link rel="stylesheet" href="css/bootstrap-reboot.css">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </head>
-  <body onload="main()">
-    <p>Test Page</p>
-    <!--    ORDER TABLE    -->
-    <div>
-      <h3 id="room-table-label"></h3>
-      <div>
-        <table id="room-avail-table"></table>
-      </div>
+<head>
+  <meta charset="utf-8">
+  <title>Login</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="img/favicon.png" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900|Raleway:400,300,700,900" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+    Template Name: Bolt
+    Template URL: https://templatemag.com/bolt-bootstrap-agency-template/
+    Author: TemplateMag.com
+    License: https://templatemag.com/license/
+  ======================================================= -->
+</head>
+
+<body data-spy="scroll" data-offset="80" data-target="#thenavbar" onload="main()">
+
+
+<!-- Fixed navbar -->
+<div id="thenavbar" class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><i class="fa fa-bolt"></i></a>
     </div>
-    <!--  example methods  -->
-    <h4>/specificRoomAvailability</h4>
-    <p id="room-avail"></p>
-    <h4>/specificUserAvailability</h4>
-    <p id="user-avail"></p>
-    <h4>/allUserInfo</h4>
-    <p id="user-list"></p>
-    <h4>/allRoomInfo</h4>
-    <p id="room-list"></p>
-    <h4>/currentUserInfo</h4>
-    <p id="current-user-info"></p>
-    <button id="update-room-avail">add room availability</button>
-    <button id="update-user-avail">add user availability</button>
-    <button id="update-user-archive">add user archive</button>
-    <script src="js/availability.js"></script>
-  </body>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="login.html">Logout</a></li>
+        <!--    attach this to a logout method    -->
+        <li><a href="dashboard.html">Book A Room</a></li>
+      </ul>
+    </div>
+    <!--/.nav-collapse -->
+  </div>
+</div>
+
+<div id="hello">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 centered">
+        <div class="page">
+          <h3 id="room-table-label"></h3>
+          <div>
+            <table id="room-avail-table"></table>
+          </div>
+
+          <!--  example methods  -->
+<!--          <h4>/specificRoomAvailability</h4>-->
+<!--          <p id="room-avail"></p>-->
+<!--          <h4>/specificUserAvailability</h4>-->
+<!--          <p id="user-avail"></p>-->
+<!--          <h4>/allUserInfo</h4>-->
+<!--          <p id="user-list"></p>-->
+<!--          <h4>/allRoomInfo</h4>-->
+<!--          <p id="room-list"></p>-->
+<!--          <h4>/currentUserInfo</h4>-->
+<!--          <p id="current-user-info"></p>-->
+<!--          <button id="update-room-avail">add room availability</button>-->
+<!--          <button id="update-user-avail">add user availability</button>-->
+<!--          <button id="update-user-archive">add user archive</button>-->
+        </div>
+<!--        <div class="page page_login">-->
+<!--          <form class="form" action>-->
+<!--            <div class="form__container">-->
+<!--              <div class="logo"><img class="logo__pic" src="img/logo.svg" width="45"></div>-->
+<!--              <div class="fieldset">-->
+<!--                <div class="field"><input id="username" class="input" type="email" placeholder="E-mail address"-->
+<!--                                          required></div>-->
+<!--                <div class="field"><input id="password" class="input" type="password" placeholder="Password" required>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <button id="login-btn" type="submit" class="btn btn-large">Sign in</button>-->
+<!--            </div>-->
+<!--            <div class="form__footer">Don't Have an Account? <a href="login.html">Create it</a>.</div>-->
+<!--          </form>-->
+<!--        </div>-->
+      </div>
+      <!-- /col-lg-8 -->
+    </div>
+    <!-- /row -->
+  </div>
+  <!-- /container -->
+</div>
+<!-- /hello -->
+
+
+<div id="copyrights">
+  <div class="container">
+    <p>
+      &copy; Copyrights <strong>Bolt</strong>. All Rights Reserved
+    </p>
+    <div class="credits">
+      <!--
+        You are NOT allowed to delete the credit link to TemplateMag with free version.
+        You can delete the credit link only if you bought the pro version.
+        Buy the pro version with working PHP/AJAX contact form: https://templatemag.com/bolt-bootstrap-agency-template/
+        Licensing information: https://templatemag.com/license/
+      -->
+      Created with Bolt template by <a href="https://templatemag.com/">TemplateMag</a>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/chart/chart.js"></script>
+
+
+<!-- Template Main Javascript File -->
+<!--<script src="js/login.js"></script>-->
+<script src="js/main.js"></script>
+<script src="js/availability.js"></script>
+
+</body>
 </html>
