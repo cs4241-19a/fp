@@ -46,11 +46,11 @@ const setupMap = function(width, height){
             .enter()
             .append("path")
             .attr("d", path)
-            .style("stroke", "#000")
+            .style("stroke", "#F2E085")
             .style("stroke-width", "1")
-            .style("fill", "#0FF")
+            .style("fill", "#0367A6")
 
-        displayMap([{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: 42.3601, lng: -71.0589}])
+        displayMap([{favicon: "facebook.com", avg_rtt: 20, city: "Boston", lat: 42.3601, lng: -71.0589}])
 
     })
 
@@ -61,10 +61,14 @@ const setupMap = function(width, height){
 
 // data = [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}]
 const displayMap = function(data) {
+    let gradient = d3.scaleLinear()
+        .range(["#04BF7B", "#BF303C"])
+        .domain([0,100])
     svg.selectAll("circle")
         .data(data)
         .enter()
         .append("circle")
+        .attr("class", "dataPoint")
             .attr("cx", function (d) {
                 return projection([d.lng, d.lat])[0]
             })
@@ -73,7 +77,7 @@ const displayMap = function(data) {
             })
             .attr("r", 10)
             .style("fill", function (d) {
-                let color = getRttColorValue(d.avg_rtt)
+                let color = gradient(d.avg_rtt)
                 return color
             })
 };
