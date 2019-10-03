@@ -34,7 +34,7 @@ const domains = [
 	{name: "Pornhub", domain: "www.pornhub.com/favicon.ico"},
 	{name: "Adobe", domain: "www.adobe.com/favicon.ico"},
 	/* {name: "LiveJasmine", domain: "www.livejasmine.com/favicon.ico"}, */ // Not working
-	{name: "ImDB", domain: "www.imdb.com/favicon.ico"},
+	{name: "IMDb", domain: "www.imdb.com/favicon.ico"},
 	{name: "Stackoverflow", domain: "www.stackoverflow.com/favicon.ico"},
 	{name: "AWS", domain: "a0.awsstatic.com/libra-css/images/site/fav/favicon.ico"},
 	{name: "Sohu", domain: "statics.itc.cn/web/static/images/pic/sohu-logo/favicon.ico"}, // Sohu.com
