@@ -50,10 +50,10 @@ const runCycle = async function () {
 		if (stopped) break;
 
 		const domain = domains[i];
-		await ping(domain)
+		await ping(domain.domain)
 				.then(pingTime => {
-					localData[domain].push(pingTime);
-					newData.push({favicon: domain, rtt: pingTime});
+					localData[domain.name].push(pingTime);
+					newData.push({favicon: domain.name, rtt: pingTime});
 				})
 				.catch(console.log);
 	}
@@ -106,7 +106,7 @@ document.body.onload = () => {
 	}
 
 	for (let i = 0; i < domains.length; i++) {
-		localData[domains[i]] = [];
+		localData[domains[i].name] = [];
 	}
 
 	socket.emit('getData');
