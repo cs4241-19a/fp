@@ -19,9 +19,10 @@ firebaseAdmin.initializeApp({
     databaseURL: "https://cs4241-fp-26fee.firebaseio.com"
 });
 
-const authRouter = require('./routes/auth-routes');
-const gameRouter = require('./routes/game-routes');
-const gameDataRouter = require('./routes/game-data-routes');
+const authRouter = require('./routes/auth-routes'),
+    gameRouter = require('./routes/game-routes'),
+    gameDataRouter = require('./routes/game-data-routes'),
+    indexRouter = require('./routes/index-routes');
 
 
 // morgan logger
@@ -38,18 +39,15 @@ app.set("view engine", "hbs");
 app.use(express.static("public"));
 // app.use("/scripts", express.static(__dirname + "/node_modules/"));
 
-app.get("/", function(req, res) {
-    res.render("index");
-});
-
 app.use(bodyParser.json());         // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: false
 }));
 
-app.use('/auth', authRouter);  // handel sign ups
-app.use('/games', gameRouter);  // load game pages
 app.use('/submit/games', gameDataRouter);  // store game data
+app.use('/games', gameRouter);  // load game pages
+app.use('/', indexRouter);  // load game pages
+app.use('/auth', authRouter);  // handel sign ups
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
