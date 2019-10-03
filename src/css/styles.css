@@ -36,10 +36,16 @@ h2 {
 	margin-top:5px;
 	margin-bottom:5px;
 }
-#everything{
-	width:600px;
-	margin:20px;
+#everything {
+	width: 600px;
+	margin: 20px;
 }
+
+body {
+	color: #0367A6;
+	background-color: #F2E085;
+}
+
 #chart{
 	width:600px;
 	height:400px;
