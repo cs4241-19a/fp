@@ -1,0 +1,92 @@
+.table-drag-select {
+    /* Stretch horizontally to fill parent */
+    width: 100%;
+    /* Keep columns same width */
+    table-layout: fixed;
+    /* Disable text selection */
+    user-select: none;
+    /* Center in parent */
+    margin-left: auto;
+    margin-right: auto;
+    /* Remove space between border */
+    border-collapse: collapse;
+}
+
+.table-drag-select td.major-row {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 0.5rem solid transparent;
+}
+
+.available-user {
+    color: green;
+}
+
+.busy-user {
+    color: red;
+}
+
+.availability-gradient {
+    align-self: center;
+    margin: 0px auto;
+    float: none;
+}
+
+.availability-gradient td {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* Table cells */
+.table-drag-select td {
+    text-align: center;
+    padding-bottom: 1rem;
+    /* Cut off long strings of text with ... */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    /* Make transparent gaps between cells. Better than relying on margin
+     * because clicking an element's margin doesn't trigger events */
+    border: 0.2rem solid transparent;
+    background-clip: padding-box;
+    /* Make cells reasonable size */
+    /* line-height: 3rem; */
+    /* Shows more text when text too big to fit into cell */
+    padding-left: 0rem;
+    padding-right: 0rem;
+}
+
+/* Cells that can be interacted with */
+.table-drag-select td.cell-enabled {
+    color: rgb(212, 84, 84);
+    background-color: rgb(251, 232, 232);
+    cursor: cell;
+}
+
+/* Cells that cannot be interacted with */
+.table-drag-select td.cell-disabled {
+    color: rgb(0, 0, 0);
+}
+
+/* Cells that have been selected */
+.table-drag-select td.cell-selected {
+    background-color: rgb(31, 109, 0);
+}
+
+/* Cells that are in the process of being selected */
+.table-drag-select td.cell-being-selected {
+    /* This is the blue color you see when you select text with the cursor */
+    background-color: rgb(25, 138, 14);
+}
+
+/* Cells in first row */
+.table-drag-select tr:first-child td {
+    /* Remove empty space at top of table */
+    border-top: 0;
+    line-height: 1rem;
+}
+
+/* Cells in first column */
+.table-drag-select td:first-child {
+    /* Consume less whitespace */
+    width: 5rem;
+}

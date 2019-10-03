@@ -1,6 +1,6 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-
+import React from "react";
+import { Switch, Route } from "react-router-dom";
+import FillOut from "./FillOut";
 // Please not that the contents here are just a placeholder and do not
 // represent what will be present in the actual website.
 
@@ -25,10 +25,15 @@ const NotFound = () => (
   </React.Fragment>
 );
 
+const NewEvent = function() {
+  return <FillOut currentUser="Justin"></FillOut>;
+};
+
 const App = () => (
   <Switch>
     <Route exact path="/" component={Home} />
     <Route exact path="/about" component={About} />
+    <Route exact path="/event" component={FillOut} />
     <Route path="/*" component={NotFound} />
   </Switch>
 );

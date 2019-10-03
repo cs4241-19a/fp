@@ -8,7 +8,7 @@ app.use('/dist', express.static(path.join(__dirname, '..', 'client')));
 
 app.get('/*', middleware);
 
-const port = process.env.PORT || 1234;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`App listening on port ${port}...`);
 });
