@@ -250,6 +250,26 @@ app.post("/register", function (req, res) {
     })
 })
 
+app.post("/recommendation", function (req, res) {
+    new Promise(function (resolve, reject) {
+        mongo.connect(url, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        }, (err, client) => {
+            if (err) {
+                reject(err)
+            }
+            const db = client.db('MusicApp')
+            const collection = db.collection('recommendations')
+            collection.insertOne({
+                "username": req.body.username,
+                "tracknumber": req.body.tracknumber,
+                "rating": req.body.rating,
+                "caption": req.body.rating
+            }).then(r => res.redirect("/"))
+        })
+    })
+})
 function isLoggedIn(req, res, next) {
     //console.log(req.isAuthenticated())
     if (req.isAuthenticated())
