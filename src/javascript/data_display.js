@@ -12,3 +12,5 @@ const displayBar = function (data) {
 const displayMap = function(data) {
 
 };
+
+export default {displayBar, displayMap}
