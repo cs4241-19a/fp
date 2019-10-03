@@ -12,10 +12,12 @@ let owned = null;
 let search = null;
 async function getAccount(){
 	const rawger = await Rawger();
-	const {users} = rawger;
+  const {users} = rawger;
+  //{name:'Ape Escape 2'}
   owned = (await users('WPI-GDC').games('owned')).raw();
   games = await (await users('WPI-GDC').games('owned')).next();
   while(typeof games !== 'undefined'){
+    //console.log(games.filter(function(o) { return o.name.includes("Kirby")}))
     owned = owned.concat(games.get());
     games = await games.next()
     console.log("AMOUNT IN LIST IS: ",owned.length)
@@ -25,10 +27,115 @@ async function getAccount(){
 	//console.log(owned)
   }
 
-async function gameSearch(searchTerm){
-  const {games} = await Rawger();
-  gameGot = (await games.search(searchTerm)).get()
-  return await Promise.resolve(gameGot);
+async function gameSearch(search, genre, Console){
+  const rawger = await Rawger();
+  const {users} = rawger;
+  searchTerm = search.toLowerCase()
+  let searchFound = null;
+  let filter = function(o){
+    return o.name.toLowerCase().includes(searchTerm)
+  }
+  if(search == '' && genre !='' && Console==''){
+    filter = function(o){
+      genres = o.raw.genres
+      for(i = 0; i < genres.length; i++)
+        if(genres[i].name === (genre)){
+          console.log("WHERE IN")
+          return true
+        }
+      return false
+    }
+  }else if(search ==''&& genre==''&&Console!=''){
+    filter = function(o){
+      genres = o.raw.parent_platforms
+      for(i = 0; i < genres.length; i++)
+      if(genres[i].platform.name === Console && genres[i].selected == true){
+        console.log("WHERE IN")
+        return true
+      }
+    }
+  }else if(search != '' && genre !='' && Console==''){
+    filter = function(o){
+      if(o.name.toLowerCase().includes(searchTerm) == false)
+        return false
+      let genreIn = false
+      genres = o.raw.genres
+      for(i = 0; i < genres.length; i++)
+        if(genres[i].name === (genre)){
+          console.log("WHERE IN")
+          genreIn = true
+          break;
+        }
+        return genreIn
+    }
+  }else if(search != '' && genre =='' && Console!=''){
+    filter = function(o){
+      if(o.name.toLowerCase().includes(searchTerm) == false)
+        return false
+      let genreIn = false
+      genres = o.raw.parent_platforms
+      for(i = 0; i < genres.length; i++)
+        if(genres[i].platform.name === Console && genres[i].selected == true){
+        console.log("WHERE IN")
+        genreIn = true
+        break
+      }
+        return genreIn
+    }
+  }else if(search == '' && genre !='' && Console!=''){
+    filter = function(o){
+      let genreIn = false
+      let genreIn2 = false
+      genres = o.raw.genres
+      for(i = 0; i < genres.length; i++)
+        if(genres[i].name === (genre)){
+          console.log("WHERE IN")
+          genreIn = true
+          break;
+        }
+        genres = o.raw.parent_platforms
+        for(i = 0; i < genres.length; i++)
+          if(genres[i].platform.name === Console && genres[i].selected == true){
+          console.log("WHERE IN")
+          genreIn2 = true
+          break
+        }
+        return genreIn && genreIn2
+    }
+  }else if(search != '' && genre !='' && Console!=''){
+    filter = function(o){
+      if(o.name.toLowerCase().includes(searchTerm) == false)
+        return false
+      let genreIn = false
+      let genreIn2 = false
+      genres = o.raw.genres
+      for(i = 0; i < genres.length; i++)
+        if(genres[i].name === (genre)){
+          console.log("WHERE IN")
+          genreIn = true
+          break;
+        }
+        genres = o.raw.parent_platforms
+        for(i = 0; i < genres.length; i++)
+          if(genres[i].platform.name === Console && genres[i].selected == true){
+          console.log("WHERE IN")
+          genreIn2 = true
+          break
+        }
+        return genreIn && genreIn2
+    }
+  }
+  console.log(searchTerm)
+  console.log(genre)
+  console.log(Console)
+  searchFound = (await users('WPI-GDC').games('owned')).filter(function(o){return filter(o)});
+  games = await (await users('WPI-GDC').games('owned')).next();
+  while(typeof games !== 'undefined'){
+    searchFound = searchFound.concat(games.filter(function(o){return filter(o)}));
+    games = await games.next()
+    console.log("AMOUNT IN LIST IS: ",searchFound.length)
+  }
+  return await Promise.resolve(searchFound);
 }
 
 async function gameGet(gameName){
@@ -64,7 +171,10 @@ app.get('/gameinfo', function(req, res){
 })
 
 app.get('/gamesearch', function(req,res){
-  res.send(gameSearch(req.games))
+  gameToSearch = req.query
+  gameSearch(gameToSearch['gameName'], gameToSearch['genre'], gameToSearch['console']).then(result => {
+    res.send(result)
+  })
 })
 
 app.get('/gameselect', asyncHandler(async (req, res, next) => {
@@ -77,5 +187,6 @@ app.get('/gameselect', asyncHandler(async (req, res, next) => {
     res.send(result)
   })
 }))
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
