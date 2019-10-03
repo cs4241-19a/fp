@@ -50,6 +50,8 @@ const setupMap = function(width, height){
             .style("stroke-width", "1")
             .style("fill", "#0FF")
 
+        displayMap([{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: 42.3601, lng: -71.0589}])
+
     })
 
 
@@ -74,27 +76,9 @@ const displayMap = function(data) {
                 let color = getRttColorValue(d.avg_rtt)
                 return color
             })
-
-    // for(let i = 0; i < data.length; i++){
-    //     const currentDataPoint = data[i]
-    //     svg.insert("circle")
-    //         .attr("cx", function () {
-    //             return projection([currentDataPoint.lng, currentDataPoint.lat])[0]
-    //         })
-    //         .attr("cy", function () {
-    //             return projection([currentDataPoint.lng, currentDataPoint.lat])[1]
-    //         })
-    //         .attr("r", 10)
-    //         .style("fill", function () {
-    //             let color = "rgb(0,255,0)"
-    //             return color
-    //         })
-    // }
-    //
-	// console.log("display_map", data);
 };
 
 export default {displayBar, displayMap}
 
 setupMap(1000, 1000);
-displayMap([{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: 42.3601, lng: -71.0589}])
+
