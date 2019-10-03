@@ -9,7 +9,7 @@ _Online Codenames Multiplayer Game_
 For our Final Project, we plan on implementing an online version of the card game codenames which will allow users to play together online and create their own cards and play styles.
 
 ## Codenames
-Here is a link to the rules of codenames: https://howdoyouplayit.com/codename-rules-how-do-you-play-the-codename-board-game/
+Rules of codenames: https://howdoyouplayit.com/codename-rules-how-do-you-play-the-codename-board-game/
 
 ## This project will feature:
 - HTML static pages and validations for form input, as well as for the tracking sheet interface itself.
