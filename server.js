@@ -15,6 +15,12 @@ app.get('/games', function (req, res) {
 app.get('/catalog', function (req, res) {
   res.sendFile('/views/catalog.html', { root: '.' })
 })
+app.get('/image.jpg', function (req, res) {
+  res.sendFile('/resources/image.jpg', { root: '.' })
+})
+app.get('/new', function (req, res) {
+  res.sendFile('/resources/ARCADE.TTF', { root: '.' })
+})
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

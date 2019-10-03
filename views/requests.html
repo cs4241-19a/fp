@@ -1,0 +1,45 @@
+<html>
+  <head>
+      <title>GDC Request page</title>
+  </head>
+  <style>
+    #submit:hover{
+      transform: scale(1.2);
+    }
+    @font-face { font-family: new; src: url('new'); } 
+    @font-face { font-family: new; font-weight: bold; src: url('new');}
+  </style>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+  <script src='https://www.google.com/recaptcha/api.js?hl=es'></script>
+  <body style="font-family: new;">
+    <div id="header" style="background-color: #1f5575; height: 3rem; text-align: center">
+      <nav>
+        <a href="https://www.gdc.wpi.edu" style="color: white">WPI Game Development Club</a>
+      </nav>  
+    </div>
+    <div id="body" style="background-image: url(https://gdc.wpi.edu/wp-content/uploads/2019/07/gaming-28.jpg); height: 100%;">
+      <div style="color: white; text-align: center;">
+        <header>GDC<br>Request Form </header>
+        <p>Want a game?<br>Request it here!</p>
+      </div>
+      <div>  
+        <center>
+        <form>
+          <p1>
+            <input type="text" name="name" placeholder="Name of the game" style="width: 25%"></input><br><br>
+            <input type="text" name="developer" placeholder="Name of the developer" style="width: 25%"></input><br><br>
+            <input type="text" name="platform" placeholder="Platform" style="width: 25%"></input><br><br>
+            <textarea name="paragraph_text" cols="50" rows="10" placeholder="Additional comments"></textarea><br><br>
+            <input type="submit" id="submit" value="Submit"></input>
+          </p1>
+        </form>
+        </center>
+      </div>
+      <!-- <div class="g-recaptcha" data-sitekey="6LdGibsUAAAAAGIxLxx-4dzVJ7G0cPMWYr4cYWiR"></div> -->
+    </div>
+  </body>
+</html>
