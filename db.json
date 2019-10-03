@@ -83,13 +83,19 @@
         {
           "sunday": [
             "9:00",
-            "9:15"
+            "9:15",
+            "9:30",
+            "9:45"
           ],
           "monday": [],
           "tuesday": [],
-          "wednesday": [],
+          "wednesday": [
+            "12:00"
+          ],
           "thursday": [],
-          "friday": [],
+          "friday": [
+            "16:00"
+          ],
           "saturday": []
         }
       ]

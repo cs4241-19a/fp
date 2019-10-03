@@ -13,8 +13,40 @@ async function fetchRoomAvailability(roomName) {
     });
     const data = await resp.json();
     const availability = data.data;
+
+    // change table label to requested room name
+    document.getElementById('room-table-label').innerText = roomName;
+
     if (availability){
       document.getElementById('room-avail').innerText = JSON.stringify(availability);
+
+      /* INSERT TABLE BUILDING HERE */
+      // get the table
+      let htmlDiv = document.getElementById('room-avail-table');
+
+      // build the header row
+      htmlDiv.innerHTML = '<tr>\n' +
+        '              <th role="columnheader" scope="col"></th>\n' +
+        '              <th role="columnheader" scope="col">Sunday</th>\n' +
+        '              <th role="columnheader" scope="col">Monday</th>\n' +
+        '              <th role="columnheader" scope="col">Tuesday</th>\n' +
+        '              <th role="columnheader" scope="col">Wednesday</th>\n' +
+        '              <th role="columnheader" scope="col">Thursday</th>\n' +
+        '              <th role="columnheader" scope="col">Friday</th>\n' +
+        '              <th role="columnheader" scope="col">Saturday</th>\n' +
+        '            </tr>' +
+        '            <tbody>';
+
+      for (let i = 9; i < 18; i++) {
+        // build each interval row
+        htmlDiv.innerHTML += createRow(availability[0], `${i}:00`);
+        htmlDiv.innerHTML += createRow(availability[0], `${i}:15`);
+        htmlDiv.innerHTML += createRow(availability[0], `${i}:30`);
+        htmlDiv.innerHTML += createRow(availability[0], `${i}:45`);
+      }
+
+      htmlDiv.innerHTML += '</tbody>';
+
     } else {
       document.getElementById('room-avail').innerText = "Could not find room.";
     }
@@ -22,6 +54,72 @@ async function fetchRoomAvailability(roomName) {
     console.log('Error occurred when retrieving room.')
   }
 };
+
+function createRow (availability, time) {
+  let newRow = '<tr>\n';
+
+  newRow += (`<td> ${time} </td>`);
+
+  if (availability.sunday.includes(time)) {
+    console.log('unavailable');
+    newRow += (`<td style="background-color: red;">unavailable</td>\n`);
+  } else {
+    console.log('available');
+    newRow += (`<td style="background-color: green;">available</td>\n`);
+  }
+
+  if (availability.monday.includes(time)) {
+    console.log('unavailable');
+    newRow += (`<td style="background-color: red;">unavailable</td>\n`);
+  } else {
+    console.log('available');
+    newRow += (`<td style="background-color: green;">available</td>\n`);
+  }
+
+  if (availability.tuesday.includes(time)) {
+    console.log('unavailable');
+    newRow += (`<td style="background-color: red;">unavailable</td>\n`);
+  } else {
+    console.log('available');
+    newRow += (`<td style="background-color: green;">available</td>\n`);
+  }
+
+  if (availability.wednesday.includes(time)) {
+    console.log('unavailable');
+    newRow += (`<td style="background-color: red;">unavailable</td>\n`);
+  } else {
+    console.log('available');
+    newRow += (`<td style="background-color: green;">available</td>\n`);
+  }
+
+  if (availability.thursday.includes(time)) {
+    console.log('unavailable');
+    newRow += (`<td style="background-color: red;">unavailable</td>\n`);
+  } else {
+    console.log('available');
+    newRow += (`<td style="background-color: green;">available</td>\n`);
+  }
+
+  if (availability.friday.includes(time)) {
+    console.log('unavailable');
+    newRow += (`<td style="background-color: red;">unavailable</td>\n`);
+  } else {
+    console.log('available');
+    newRow += (`<td style="background-color: green;">available</td>\n`);
+  }
+
+  if (availability.saturday.includes(time)) {
+    console.log('unavailable');
+    newRow += (`<td style="background-color: red;">unavailable</td>\n`);
+  } else {
+    console.log('available');
+    newRow += (`<td style="background-color: green;">available</td>\n`);
+  }
+
+  newRow += '</tr>';
+
+  return newRow;
+}
 
 /*
  * fetchUserAvailability()
