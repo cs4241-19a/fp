@@ -17,7 +17,7 @@ const express = require('express'),
     client_id = 'f250b3f0ce604150b056707b8e25a328',
     client_secret = 'c26768e1850047ceba186a08bb061a9d', //this is VERY IMPORTANT and should NEVER be revealed in public
     redirect_uri = 'http://localhost:3000/callback', //redirects to this when authorization passes or fails
-    scopes = 'user-read-private user-read-email',
+    scopes = 'user-read-private user-read-email streaming app-remote-control',
     //code = '?response_type=code',
     stateKey = 'spotify_auth_state'
 
@@ -116,7 +116,6 @@ app.get("/spotifyAccess", function (req, res) {
         }))
 })
 
-
 app.get('/callback', function(req, res) {
 
     // your application requests refresh and access tokens
@@ -165,7 +164,7 @@ app.get('/callback', function(req, res) {
                 });
 
                 // we can also pass the token to the browser to make requests from there
-                 res.redirect('/#' +
+                res.redirect('/#' +
                     querystring.stringify({
                         access_token: access_token,
                         refresh_token: refresh_token
@@ -208,7 +207,6 @@ app.get('/refresh_token', function(req, res) {
 app.get("/token", function (req,res){
     const answerObj = {}
     answerObj.name = "token"
-    //todo wrong token works with token from https://developer.spotify.com/documentation/web-playback-sdk/quick-start/#
     answerObj.token = access_token
     res.send(JSON.stringify(answerObj))
 })
