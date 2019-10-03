@@ -1,5 +1,9 @@
-let currentUsername = "Current User"
-
-//TODO: Need to set currentUsername to be the, well, current username
-
-document.getElementById("logoutLink").innerHTML = "Log out " + currentUsername
+(function getData() {
+    (async () => {
+        const rawResponse = await fetch('/user', {
+            method: 'GET'
+        })
+        let usr = await rawResponse.json()
+        document.getElementById("logoutLink").innerHTML = "Log out " + usr.user.username
+    })()
+})()

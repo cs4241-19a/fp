@@ -22,7 +22,6 @@ const express = require('express'),
     stateKey = 'spotify_auth_state'
 
 
-
 let currentUser = [],
     access_token = null,
     refresh_token = null
@@ -84,7 +83,7 @@ passport.use('local-login', new LocalStrategy(
     })
 )
 
-const generateRandomString = function(length) {
+const generateRandomString = function (length) {
     let text = '';
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -117,7 +116,7 @@ app.get("/spotifyAccess", function (req, res) {
 })
 
 
-app.get('/callback', function(req, res) {
+app.get('/callback', function (req, res) {
 
     // your application requests refresh and access tokens
     // after checking the state parameter
@@ -146,7 +145,7 @@ app.get('/callback', function(req, res) {
             json: true
         };
 
-        request.post(authOptions, function(error, response, body) {
+        request.post(authOptions, function (error, response, body) {
             if (!error && response.statusCode === 200) {
 
                 access_token = body.access_token
@@ -159,13 +158,13 @@ app.get('/callback', function(req, res) {
                 };
 
                 // use the access token to access the Spotify Web API
-                request.get(options, function(error, response, body) {
+                request.get(options, function (error, response, body) {
                     console.log(body);
-                    console.log('token = '+ access_token)
+                    console.log('token = ' + access_token)
                 });
 
                 // we can also pass the token to the browser to make requests from there
-                 res.redirect('/#' +
+                res.redirect('/#' +
                     querystring.stringify({
                         access_token: access_token,
                         refresh_token: refresh_token
@@ -181,13 +180,13 @@ app.get('/callback', function(req, res) {
 });
 
 
-app.get('/refresh_token', function(req, res) {
+app.get('/refresh_token', function (req, res) {
 
     // requesting access token from refresh token
     var refresh_token = req.query.refresh_token;
     var authOptions = {
         url: 'https://accounts.spotify.com/api/token',
-        headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
+        headers: {'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))},
         form: {
             grant_type: 'refresh_token',
             refresh_token: refresh_token
@@ -195,7 +194,7 @@ app.get('/refresh_token', function(req, res) {
         json: true
     };
 
-    request.post(authOptions, function(error, response, body) {
+    request.post(authOptions, function (error, response, body) {
         if (!error && response.statusCode === 200) {
             access_token = body.access_token;
             res.send({
@@ -205,7 +204,14 @@ app.get('/refresh_token', function(req, res) {
     });
 });
 
-app.get("/token", function (req,res){
+app.get("/user", function (req, res) {
+    const json = {
+        user: currentUser[0]
+    }
+    res.send(JSON.stringify(json))
+})
+
+app.get("/token", function (req, res) {
     const answerObj = {}
     answerObj.name = "token"
     //todo wrong token works with token from https://developer.spotify.com/documentation/web-playback-sdk/quick-start/#
@@ -252,6 +258,7 @@ function isLoggedIn(req, res, next) {
         return next()
     res.redirect("/login")
 }
+
 //added in order to run the server
-app.listen(process.env.PORT || 3000)
+app.listen(process.env.PORT || 3001)
 module.exports = app

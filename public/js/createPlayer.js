@@ -59,6 +59,7 @@ function createPlayer(_token) {
         // Connect to the player!
         player.connect()
     }
+
     // Play a specified track on the Web Playback SDK's device ID
     function getAudio(device_id) {
         $.ajax({
