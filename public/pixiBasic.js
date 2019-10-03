@@ -3,8 +3,7 @@ import * as PIXI from 'pixi.js';
 let app = new PIXI.Application({ backgroundColor: 0xffffff });
 document.body.appendChild(app.view);
 const loader = new PIXI.Loader(); // you can also create your own if you want
-loader
-    .add('cat', 'images/cat.png')
+
 
 // //Aliases
 // let Application = PIXI.Application,
@@ -29,26 +28,14 @@ document.body.appendChild(app.view);
 // create a new Sprite from an image path
 let paw = PIXI.Sprite.from('images/cat.png');
 let dog = PIXI.Sprite.from('images/dog.png');
-let pawVis = false;
-let dogVis = false;
+let charVis = false;
+let activeChar;
 
 
-document.getElementById("dogBut").addEventListener("click", function(){
-    pawVis = false;
-    dogVis = true;
-    dog.x = app.screen.width / 2;
-    dog.y = app.screen.height / 2;
-})
 
-document.getElementById("pawBut").addEventListener("click", function(){
-    pawVis = true;
-    dogVis = false;
-    paw.x = app.screen.width / 2;
-    paw.y = app.screen.height / 2;
-})
 
 // center the sprite's anchor point
-paw.anchor.set(0.5);
+// paw.anchor.set(0.5);
 
 // move the sprite to the center of the screen
 paw.x = app.screen.width / 2;
@@ -57,7 +44,7 @@ paw.vx = 0;
 paw.vy = 0;
 
 // center the sprite's anchor point
-dog.anchor.set(0.5);
+// dog.anchor.set(0.5);
 
 // move the sprite to the center of the screen
 dog.x = app.screen.width / 2;
@@ -65,22 +52,61 @@ dog.y = app.screen.height / 2;
 dog.vx = 0;
 dog.vy = 0;
 
-app.stage.addChild(paw);
-app.stage.addChild(dog);
+document.getElementById("dogBut").addEventListener("click", function(){
+    // pawVis = false;
+    // dogVis = true;
+    // dog.x = app.screen.width / 2;
+    // dog.y = app.screen.height / 2;
+    activeChar = dog;
+})
+
+document.getElementById("pawBut").addEventListener("click", function(){
+    // pawVis = true;
+    // dogVis = false;
+    // paw.x = app.screen.width / 2;
+    // paw.y = app.screen.height / 2;
+    activeChar = paw;
+})
+//
+// app.stage.addChild(paw);
+// app.stage.addChild(dog);
+app.stage.addChild(activeChar);
+
+let count = 0;
+let fallDone = true;
 
 // Listen for animate update
 app.ticker.add(function(delta) {
-    // just for fun, let's rotate mr rabbit a little
-    // delta is 1 if running at 100% performance
-    // creates frame-independent transformation
-    // paw.rotation += 0.1 * delta;
 
-    paw.x += paw.vx;
-    paw.y += paw.vy;
-    dog.x += dog.vx;
-    dog.y += dog.vy;
-    paw.visible = pawVis;
-    dog.visible = dogVis;
+    // if(j.isDown && count < 60 && fallDone){
+    //     paw.vy = -2;
+    //     count ++;
+    // }
+    // else{
+    //     paw.vy = 2;
+    //     if(count > 0) {
+    //         count--;
+    //         fallDone = false;
+    //     }
+    //     else if(count == 0){
+    //         fallDone = true;
+    //     }
+    // }
+    // if(paw.x + paw.vx > 0 && paw.x + paw.width + paw.vx < app.screen.width){
+    //     paw.x += paw.vx;
+    // }
+    // if(paw.y + paw.vy > 0 && paw.y + paw.height + paw.vy < app.screen.height){
+    //     paw.y += paw.vy;
+    // }
+    // if(dog.x + dog.vx > 0 && dog.x + dog.width + dog.vx < app.screen.width){
+    //     dog.x += dog.vx;
+    // }
+    // if(dog.y + dog.vy > 0 && dog.y + dog.height + dog.vy < app.screen.height){
+    //     dog.y += dog.vy;
+    // }
+    // paw.visible = pawVis;
+    // dog.visible = dogVis;
+
 
 });
 
@@ -200,14 +226,14 @@ left.release = function(){
     'use strict'
     paw.vx = 0;
 }
-up.release = function(){
-    'use strict'
-    paw.vy = 0;
-}
-down.release = function(){
-    'use strict'
-    paw.vy = 0;
-}
+// up.release = function(){
+//     'use strict'
+//     paw.vy = 0;
+// }
+// down.release = function(){
+//     'use strict'
+//     paw.vy = 0;
+// }
 a.release = function(){
     'use strict'
     dog.vx = 0;
@@ -224,14 +250,14 @@ s.release = function(){
     'use strict'
     dog.vy = 0;
 }
-//
-// j.press = function(){
-//     'use strict'
-//     pawVis = false;
-// }
-//
-// j.release = function(){
-//     'use strict'
-//     pawVis = true;
-// }
+
+j.press = function(){
+    'use strict'
+    paw.vy += -2;
+}
+
+j.release = function(){
+    'use strict'
+    paw.vy += 2;
+}
 
