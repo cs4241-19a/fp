@@ -5,7 +5,7 @@
 - Timothy Winters
 - Andrew Levy
 
-_Online Codenames Multiplayer Game_
+_Online Codenames Multiplayer Game!_
 For our Final Project, we plan on implementing an online version of the card game codenames which will allow users to play together online and create their own cards and play styles.
 
 ## Codenames
