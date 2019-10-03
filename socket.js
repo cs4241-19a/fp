@@ -28,7 +28,8 @@ module.exports = function (io) {
 		socket.on('getUserCount', () => getUserCount(socket));
 
 		socket.on('getConnectionInfo', () => {
-			socket.emit('sendConnectionInfo', socket.handshake);
+			const clientIpAddress = socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
+			socket.emit('sendConnectionInfo', clientIpAddress);
 		});
 
 		socket.on('submitNewData', data => {
