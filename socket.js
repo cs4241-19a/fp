@@ -3,7 +3,7 @@ module.exports = function (io) {
 	let userCount = 0;
 
 	const update = function() {
-		// Do stuff
+		io.emit('sendData', db.getData());
 	};
 
 	const db = require('./database')(update);
@@ -33,7 +33,12 @@ module.exports = function (io) {
 		});
 
 		socket.on('submitNewData', data => {
-			console.log(data);
+			const clientIpAddress = socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
+			data.forEach(d => d.ip = clientIpAddress);
+
+			db.insertPings(clientIpAddress);
 		});
+
+		socket.on('getData', () => socket.emit('sendData', db.getData()))
 	});
 };

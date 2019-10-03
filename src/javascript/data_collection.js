@@ -108,4 +108,8 @@ document.body.onload = () => {
 	for (let i = 0; i < domains.length; i++) {
 		localData[domains[i]] = [];
 	}
+
+	socket.emit('getData');
+
+	socket.on('sendData', data_display.displayMap);
 };
