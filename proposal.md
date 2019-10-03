@@ -2,7 +2,7 @@ Carbon Footprint
 === 
 
 # Team members:
-Georgina Gromwell, Corrin Courville, Kaitlin McDermott 
+Georgina Cromwell, Corrin Courville, Kaitlin McDermott 
 
 # Project Purpose:
 The impact that you have on the environment is greater than you think. The purpose of our web application is for a user to understand just how great their impace is on the environment. It will raise awareness to all the little things in your daily routine that can be changed. 
