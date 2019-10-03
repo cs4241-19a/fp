@@ -33,9 +33,9 @@ const setupMap = function(width, height){
             .enter()
             .append("path")
             .attr("d", path)
-            .style("stroke", "#fff")
+            .style("stroke", "#000")
             .style("stroke-width", "1")
-            .style("fill", rgb(213,222,217))
+            .style("fill", "#FF0")
 
     })
 
