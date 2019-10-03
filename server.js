@@ -10,6 +10,8 @@ const db = new pouchdb('my_db');
 
 let port = process.env.PORT || 3000;
 
+let User = [];
+
 const app = express();
 app.use(helmet());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -17,30 +19,75 @@ app.use(bodyParser.json());
 app.use(compression());
 
 app.use(express.static('public'));
+//app.use(sessions({secret: '{secret}', name: 'session_id', saveUninitialized: true, resave: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', function (request, response) {
     'use strict';
+    response.sendFile(__dirname + '/views/login.html');
+});
+
+app.get('/index', function (request, response) {
+    'use strict';
     response.sendFile(__dirname + '/views/index.html');
 });
 
-app.post('/login', passport.authenticate('local', { successRedirect: '/',
-    failureRedirect: '/login' }));
-
-app.post('/login',
-    passport.authenticate('local'),
-    function(req, res) {
-        // If this function gets called, authentication was successful.
-        // `req.user` contains the authenticated user.
-        res.redirect('/users/' + req.user.username);
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
 });
 
-app.post('/login',
-    passport.authenticate('local', { successRedirect: '/',
-        failureRedirect: '/login',
-        failureFlash: true })
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function (err, user) {
+        done(err, user);
+    });
+});
+
+passport.use(new LocalStrategy({
+        usernameField: 'email',
+        passwordField: 'passwd',
+        session: false
+    },
+    function(username, password, done) {
+        User.findOne({ username: username }, function (err, user) {
+            if (err) { return done(err); }
+            if (!user) { return done(null, false); }
+            if (!user.verifyPassword(password)) { return done(null, false); }
+            return done(null, user);
+        });
+    }
+));
+
+app.post('/',
+    passport.authenticate('local', { successRedirect: '/index',
+        failureRedirect: '/',
+        failureFlash: 'Invalid username or password' })
 );
+
+app.post('/createUser', function (req, res) {
+    let newUser = req.body;
+    const user1 = User.find(user => user.username === newUser.newUsername);
+    if (!user1) {
+        newUser = {
+            username: newUser.newUsername,
+            password: newUser.newPassword,
+        };
+        User.push(newUser);
+        let userDoc = {
+            _id: 'users',
+            users: User
+        };
+        db.upsert('users', function (doc) {
+            doc.counter = doc.counter || 0;
+            doc.counter++;
+            doc.users = User;
+            return doc;
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+    res.sendFile(__dirname + '/views/login.html');
+});
 
 app.listen(port, function () {
     'use strict';
@@ -53,7 +100,7 @@ db.get('users').catch(function (err) {
             _id: 'users',
             users: []
         };
-    } else { // hm, some other error
+    } else {
         throw err;
     }
 }).then(function (doc) {
@@ -61,3 +108,4 @@ db.get('users').catch(function (err) {
 }).catch(err => {
     console.log(err);
 });
+
