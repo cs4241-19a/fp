@@ -1,6 +1,7 @@
 const DB = require('./database');
-function testcb(){
-    console.log("insert successful?")
+
+function testcb() {
+    console.log("insert successful.")
 }
 
 const db = new DB(testcb);
@@ -11,5 +12,7 @@ const testdata = [
 ];
 db.insertPings(testdata);
 
-let gotData = db.getData();
-console.log(gotData);
+let data = db.getData();
+console.log(data);
+for (let i = 0; i < data.length; i++) console.log(data);
+

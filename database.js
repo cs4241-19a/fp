@@ -18,20 +18,21 @@ module.exports = function (callback) {
     return {
         // Data: [{favicon: "", rtt: 0, ip: ""}]
         insertPings: function (data) {
-            let newPing = new Ping({favicon: data.favicon, rtt: data.rtt, ip: data.ip});
-            newPing.save();
+            for (let i = 0; i < data.length; i++) {
+                let newPing = new Ping({favicon: data[i].favicon, rtt: data[i].rtt, ip: data[i].ip});
+                newPing.save();
+            }
             callback()
         },
         // returns [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}]
         getData: function () {
-
-            let promise = Ping.find().exec();
-            // assert.ok(promise instanceof Promise);
-            promise.then(function (data) {
-                for (let i = 0; i < data.length; i++) console.log(data[i]);
+            let allData = [];
+            Ping.find().exec(function (err, data) {
+                allData.concat(data);
+                // console.log("Got data:");
+                // console.log(data);
             });
-
-            // return  [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}];
+            return allData;
         }
     };
 };
