@@ -44562,20 +44562,7 @@ document.body.appendChild(app.view); // create a new Sprite from an image path
 
 var paw = PIXI.Sprite.from('images/cat.png');
 var dog = PIXI.Sprite.from('images/dog.png');
-var pawVis = false;
-var dogVis = false;
-document.getElementById("dogBut").addEventListener("click", function () {
-  pawVis = false;
-  dogVis = true;
-  dog.x = app.screen.width / 2;
-  dog.y = app.screen.height / 2;
-});
-document.getElementById("pawBut").addEventListener("click", function () {
-  pawVis = true;
-  dogVis = false;
-  paw.x = app.screen.width / 2;
-  paw.y = app.screen.height / 2;
-}); // center the sprite's anchor point
+var activeChar = paw; // center the sprite's anchor point
 // paw.anchor.set(0.5);
 // move the sprite to the center of the screen
 
@@ -44590,21 +44577,64 @@ dog.x = app.screen.width / 2;
 dog.y = app.screen.height / 2;
 dog.vx = 0;
 dog.vy = 0;
-app.stage.addChild(paw);
-app.stage.addChild(dog);
+document.getElementById("dogBut").addEventListener("click", function () {
+  // pawVis = false;
+  // dogVis = true;
+  // dog.x = app.screen.width / 2;
+  // dog.y = app.screen.height / 2;
+  activeChar = dog;
+  app.stage.addChild(activeChar);
+  activeChar.visible = true;
+});
+document.getElementById("pawBut").addEventListener("click", function () {
+  // pawVis = true;
+  // dogVis = false;
+  // paw.x = app.screen.width / 2;
+  // paw.y = app.screen.height / 2;
+  activeChar = paw;
+  app.stage.addChild(activeChar);
+  activeChar.visible = true;
+}); //
+// app.stage.addChild(paw);
+// app.stage.addChild(dog);
+
 var count = 0;
 var fallDone = true; // Listen for animate update
 
 app.ticker.add(function (delta) {
-  // just for fun, let's rotate mr rabbit a little
-  // delta is 1 if running at 100% performance
-  // creates frame-independent transformation
-  // paw.rotation += 0.1 * delta;
+  // if(j.isDown && count < 60 && fallDone){
+  //     paw.vy = -2;
+  //     count ++;
+  // }
+  // else{
+  //     paw.vy = 2;
+  //     if(count > 0) {
+  //         count--;
+  //         fallDone = false;
+  //     }
+  //     else if(count == 0){
+  //         fallDone = true;
+  //     }
+  // }
+  // if(paw.x + paw.vx > 0 && paw.x + paw.width + paw.vx < app.screen.width){
+  //     paw.x += paw.vx;
+  // }
+  // if(paw.y + paw.vy > 0 && paw.y + paw.height + paw.vy < app.screen.height){
+  //     paw.y += paw.vy;
+  // }
+  // if(dog.x + dog.vx > 0 && dog.x + dog.width + dog.vx < app.screen.width){
+  //     dog.x += dog.vx;
+  // }
+  // if(dog.y + dog.vy > 0 && dog.y + dog.height + dog.vy < app.screen.height){
+  //     dog.y += dog.vy;
+  // }
+  // paw.visible = pawVis;
+  // dog.visible = dogVis;
   if (j.isDown && count < 60 && fallDone) {
-    paw.vy = -2;
+    activeChar.vy = -2;
     count++;
   } else {
-    paw.vy = 2;
+    activeChar.vy = 2;
 
     if (count > 0) {
       count--;
@@ -44614,24 +44644,13 @@ app.ticker.add(function (delta) {
     }
   }
 
-  if (paw.x + paw.vx > 0 && paw.x + paw.width + paw.vx < app.screen.width) {
-    paw.x += paw.vx;
+  if (activeChar.x + activeChar.vx > 0 && activeChar.x + activeChar.width + activeChar.vx < app.screen.width) {
+    activeChar.x += activeChar.vx;
   }
 
-  if (paw.y + paw.vy > 0 && paw.y + paw.height + paw.vy < app.screen.height) {
-    paw.y += paw.vy;
+  if (activeChar.y + activeChar.vy > 0 && activeChar.y + activeChar.height + activeChar.vy < app.screen.height) {
+    activeChar.y += activeChar.vy;
   }
-
-  if (dog.x + dog.vx > 0 && dog.x + dog.width + dog.vx < app.screen.width) {
-    dog.x += dog.vx;
-  }
-
-  if (dog.y + dog.vy > 0 && dog.y + dog.height + dog.vy < app.screen.height) {
-    dog.y += dog.vy;
-  }
-
-  paw.visible = pawVis;
-  dog.visible = dogVis;
 });
 
 function keyboard(value) {
