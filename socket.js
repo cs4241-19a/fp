@@ -26,5 +26,13 @@ module.exports = function (io) {
 		});
 
 		socket.on('getUserCount', () => getUserCount(socket));
+
+		socket.on('getConnectionInfo', () => {
+			socket.emit('sendConnectionInfo', socket.handshake);
+		});
+
+		socket.on('submitNewData', data => {
+			console.log(data);
+		});
 	});
 };

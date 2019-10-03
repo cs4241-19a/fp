@@ -9,3 +9,9 @@ const socket = io();
 socket.emit('getUserCount');
 
 socket.on('sendUserCount', (count) => document.querySelector("#counter").innerHTML = count);
+
+socket.on('sendConnectionInfo', console.log);
+
+socket.emit('getConnectionInfo');
+
+export default socket;

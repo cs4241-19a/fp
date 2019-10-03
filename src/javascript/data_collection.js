@@ -2,12 +2,13 @@
 
 import data_display from "./data_display";
 import domains from "./domain_list";
+import socket from "./index";
 
 let stopped = false;
 
 const localData = {};
 const runCycle = async function () {
-	const data = [];
+	const newData = [];
 
 	/**
 	 * Creates and loads an image element by url.
@@ -48,10 +49,30 @@ const runCycle = async function () {
 	for (let i = 0; i < domains.length; i += 1) {
 		if (stopped) break;
 
-		await ping(domains[i])
-				.then(pingTime => data.push({favicon_name: domains[i], time: pingTime}))
+		const domain = domains[i];
+		await ping(domain)
+				.then(pingTime => {
+					localData[domain].push(pingTime);
+					newData.push({favicon: domain, rtt: pingTime});
+				})
 				.catch(console.log);
 	}
+
+	return newData;
+};
+
+const sum = (data, start) => {
+	return data + start;
+};
+
+const aggregateLocalData = () => {
+	const data = {};
+
+	Object.keys(localData).forEach(key => {
+		data[key] = localData[key].reduce(sum, 0) / localData[key].length;
+	});
+
+	return data;
 };
 
 const stopCollection = function () {
@@ -64,7 +85,10 @@ const startCollection = async function () {
 	console.log("Collection start");
 
 	while (!stopped) {
-		await runCycle();
+		let newData = await runCycle();
+
+		socket.emit('submitNewData', newData);
+		data_display.displayBar(aggregateLocalData());
 	}
 };
 
