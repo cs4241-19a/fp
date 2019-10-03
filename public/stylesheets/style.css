@@ -61,3 +61,8 @@ img {
     width: 200px;
     height: 200px;
 }
+
+#current-track {
+    width: 83px;
+    height: 75px;
+}
