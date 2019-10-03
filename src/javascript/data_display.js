@@ -3,29 +3,39 @@ import { group } from 'd3-array';
 import * as topojson from 'topojson';
 
 const d3 = Object.assign(d3Base, { group });
+let svg = null
+let projection = null
+let maxRtt = 100
+let minRtt = 0
 
 // data = [{favicon: '', avg: 0.0}]
 const displayBar = function (data) {
 
 };
 
+const getRttColorValue = function(rtt){
+    //TODO write this
+    return "rgb(0,255,0)"
+
+}
+
 const setupMap = function(width, height){
-    let projection = d3.geoAlbersUsa()
+    projection = d3.geoAlbersUsa()
         .translate([width/2, height/2])
-        .scale([1000])
+        .scale([1000]);
 
     let path = d3.geoPath()
-        .projection(projection)
+        .projection(projection);
 
-    let svg = d3.select("body")
+    svg = d3.select("body")
         .append("svg")
         .attr("width", width)
-        .attr("height", height)
+        .attr("height", height);
 
     let div = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
-        .style("opacity", 0)
+        .style("opacity", 0);
 
 
     d3.json("http://enjalot.github.io/wwsd/data/USA/us-named.topojson").then(us => {
@@ -38,7 +48,7 @@ const setupMap = function(width, height){
             .attr("d", path)
             .style("stroke", "#000")
             .style("stroke-width", "1")
-            .style("fill", "#FF0")
+            .style("fill", "#0FF")
 
     })
 
@@ -49,9 +59,42 @@ const setupMap = function(width, height){
 
 // data = [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}]
 const displayMap = function(data) {
-	console.log("display_map", data);
+    svg.selectAll("circle")
+        .data(data)
+        .enter()
+        .append("circle")
+            .attr("cx", function (d) {
+                return projection([d.lng, d.lat])[0]
+            })
+            .attr("cy", function (d) {
+                return projection([d.lng, d.lat])[1]
+            })
+            .attr("r", 10)
+            .style("fill", function (d) {
+                let color = getRttColorValue(d.avg_rtt)
+                return color
+            })
+
+    // for(let i = 0; i < data.length; i++){
+    //     const currentDataPoint = data[i]
+    //     svg.insert("circle")
+    //         .attr("cx", function () {
+    //             return projection([currentDataPoint.lng, currentDataPoint.lat])[0]
+    //         })
+    //         .attr("cy", function () {
+    //             return projection([currentDataPoint.lng, currentDataPoint.lat])[1]
+    //         })
+    //         .attr("r", 10)
+    //         .style("fill", function () {
+    //             let color = "rgb(0,255,0)"
+    //             return color
+    //         })
+    // }
+    //
+	// console.log("display_map", data);
 };
 
 export default {displayBar, displayMap}
 
-setupMap(1000, 1000)
+setupMap(1000, 1000);
+displayMap([{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: 42.3601, lng: -71.0589}])
