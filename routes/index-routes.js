@@ -19,7 +19,9 @@ async function getGames() {
                     return;  // bad game; return nothing
                 return {
                     name: data.name,
+                    shortDesc: data.shortDesc,
                     path: data.path,
+                    imgPath: data.imgPath,
                     playCount: data.timesPlayed,
                     gameId: doc.id,
                 };

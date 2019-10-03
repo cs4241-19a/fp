@@ -1,6 +1,17 @@
-<div class="container">
-    <h1>Welcome</h1>
-    {{#each this.gameData as |entry|}}
-        <a href="/games/{{ gameId }}">{{ name }}</a>
-    {{/each}}
-</div>
+<section>
+    <div class="container">
+        <div class="container">
+            <h1>Welcome</h1>
+            {{#each this.gameData as |entry|}}
+                <a class="gameBox" href="/games/{{ gameId }}">
+                    <img src="assets/images/{{ imgPath }}" alt="">
+                    <div class="gameMeta">
+                        <h3>{{ name }}</h3>
+                        <p>{{shortDesc}}</p>
+                    </div>
+                </a>
+            {{/each}}
+
+        </div>
+    </div>
+</section>
