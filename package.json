@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
+    "clone": "^2.1.2",
     "express": "^4.17.1",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
