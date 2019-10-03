@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset="utf-8">
+    
+  </head>
+  <body>
+     <div class = "container text-center"><font size = "6"><h1>GAMES!!</h1></font></div>
+    <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+    <div class = "col is-center">
+    </div>
+    
+    <div class="col is-center">
+    <table id = "table" >
+    </table>
+      </div>
+    
+  </body>
+  
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
+  
+  <script>
+     
+    
+  function reloadData(){
+    console.log("Getting Data");
+    $.get('/getgames', function(data) {
+      console.log("Printing owned games: " + data)
+      clearTable(document.getElementById("table").rows.length - 1)
+      data.forEach(function(car){
+        if(jQuery.isEmptyObject(car))
+          return
+        console.log(car)
+        let name = car.name
+        console.log(name)
+        $('#table').append('<tr><td>' + car.rank +'</td><td id=name>' + car.name +'</td><td>' + car.year +'</td><td>'+ car.age +'</td></tr>')             
+      })
+    });
+    jQuery.ready();
+  }
+    
+  function clearTable(rowNum){
+    for(let i = 0; i < rowNum; i++)
+      document.getElementById("table").deleteRow(1)
+  }
+
+  function getGame(game){
+    console.log(game)
+    $.get('/gamedata', game)
+  }
+    
+ function checkIfIn(name){
+   console.log(name)
+    for(let i = 1; i<document.getElementById("table").rows.length;i++){
+      console.log(document.getElementById("table").rows[i].cells[1].innerText)
+      if(document.getElementById("table").rows[i].cells[1].innerText == name)
+         return true
+    }
+      return false;
+  }
+
+  $(document).on("click",'#table tr', function(){
+      let game = $(this).find('#name')[0].innerText
+      getGame(game)
+    });
+
+  window.onload = function() {
+    reloadData()
+  }
+    
+  </script>
+  
+  
+</html>

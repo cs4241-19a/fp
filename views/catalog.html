@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset="utf-8">
+    
+  </head>
+  <body>
+      <button onclick="window.location.replace('catalogue')">Go Back</button>
+    <div><font size = "6"><h1 id = "title"></h1></font></div>
+    <div id='description'></div>
+    
+</body>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
+<script>
+    let gamedata = {};
+    window.onload = function() {
+    game = document.URL.substring(document.URL.indexOf("?")+1)
+    let something = {}
+    something["game"] = game;
+    $.ajaxSetup({async: false});
+    $.get('/gameselect', something, function(data){
+        console.log(data)
+        constructPage(data)
+    })
+}
+    function constructPage(gamedata){
+        //console.log(gamedata.name)
+        $("#title").text(gamedata.name)
+        $("#description").append(gamedata.raw.description)
+    }
+</script>

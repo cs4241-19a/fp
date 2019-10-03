@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset="utf-8">
+    
+  </head>
+  <body>
+     <div><font size = "6"><h1>GAMES!!</h1></font></div>
+    <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+    <div>
+        <input id="gameSearch" name="gameSearch">
+        <select id ="console" name="console">
+          <option value="">Console</option>
+          <option value="PC">PC</option>
+          <option value="Nintendo">Nintendo</option>
+          <option value="PlayStation">PlayStation</option>
+          <option value="Xbox">Xbox</option>
+        </select>
+        <select id="genre" name="genre">
+          <option value="">Genre</option>
+          <option value="Indie">Indie</option>
+          <option value="Racing">Racing</option>
+          <option value="Action">Action</option>
+          <option value="Adventure">Adventure</option>
+          <option value="RPG">RPG</option>
+          <option value="Puzzle">Puzzle</option>
+          <option value="Platform">Platform</option>
+          <option value="Arcade">Arcade</option>
+          <option value="Fighting">Fighting</option>
+          <option value="Casual">Casual</option>
+        </select> 
+        <button id="submit" class="inputbutton" onclick="search()" > Search </button>
+    </div>
+    
+    <div>
+    <table id = "table" >
+    </table>
+      </div>
+    
+  </body>
+  
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
+  
+  <script>
+     
+    
+  function reloadData(){
+    console.log("Getting Data");
+    $.get('/getgames', function(data) {
+      clearTable(document.getElementById("table").rows.length)
+      data.forEach(function(car){
+        if(jQuery.isEmptyObject(car))
+          return
+        let name = car.name
+        console.log(car)
+        $('#table').append('<tr><td id=name>' + car.name +'</td></tr>')             
+      })
+    });
+    jQuery.ready();
+  }
+    
+  function clearTable(rowNum){
+    for(let i = 0; i < rowNum; i++)
+      document.getElementById("table").deleteRow(0)
+  }
+
+  function getGame(game){
+    let something = {}
+    something["game"] = game;
+    console.log(game)
+    window.location.replace("gameinfo?"+game)
+  }
+
+  function search(){
+    let gameName = $('#gameSearch').val()
+    let Console = $('#console').val()
+    let genre = $('#genre').val()
+    console.log(Console)
+    console.log(genre)
+    if(gameName == '' && Console == '' && genre == '')
+      reloadData()
+    
+      let something = {}
+      something["gameName"] = gameName;
+      something["console"] = Console;
+      something['genre'] = genre
+      $.get('/gameSearch', something, function(data) {
+      clearTable(document.getElementById("table").rows.length)
+      data.forEach(function(car){
+        if(jQuery.isEmptyObject(car))
+          return
+        let name = car.name
+        console.log(car)
+        $('#table').append('<tr><td id=name>' + car.name +'</td><td id=slug>' + car.slug +'</td></tr>')             
+      })
+    });
+  }
+
+  $(document).on("click",'#table tr', function(){
+      let game = $(this).find('#slug')[0].innerText
+      getGame(game)
+    });
+
+  window.onload = function() {
+    reloadData()
+  }
+    
+  </script>  
+</html>
