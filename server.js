@@ -33,6 +33,11 @@ app.get('/index', function (request, response) {
     response.sendFile(__dirname + '/views/index.html');
 });
 
+app.get('/signup', function (request, response) {
+    'use strict';
+    response.sendFile(__dirname + '/views/signup.html');
+});
+
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
@@ -58,7 +63,7 @@ passport.use(new LocalStrategy({
     }
 ));
 
-app.post('/',
+app.post('/login',
     passport.authenticate('local', { successRedirect: '/index',
         failureRedirect: '/',
         failureFlash: 'Invalid username or password' })
