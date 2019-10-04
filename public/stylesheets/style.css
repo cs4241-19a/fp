@@ -82,3 +82,7 @@ img {
     width: 83px;
     height: 75px;
 }
+
+.id-data {
+    visibility: hidden;
+}

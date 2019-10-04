@@ -57,26 +57,32 @@
                     <tr>
                         <td>Mark</td>
                         <td>artist1</td>
+                        <td class="id-data"> id1</td>
                     </tr>
                     <tr>
                         <td>Jacob</td>
                         <td>artist1</td>
+                        <td class="id-data"> id2</td>
                     </tr>
                     <tr>
                         <td>Larry</td>
                         <td>artist1</td>
+                        <td class="id-data"> id3</td>
                     </tr>
                     <tr>
                         <td>Larry</td>
                         <td>artist1</td>
+                        <td class="id-data"> id4</td>
                     </tr>
                     <tr>
                         <td>Larry</td>
                         <td>artist1</td>
+                        <td class="id-data"> id5</td>
                     </tr>
                     <tr>
                         <td>Larry</td>
                         <td>artist1</td>
+                        <td class="id-data"> id6</td>
                     </tr>
                     </tbody>
                 </table>
@@ -110,9 +116,12 @@
     let curSong = '';
     $('#paginatedTable').on('click', 'tbody tr', function(event) {
         $(this).addClass('highlight').siblings().removeClass('highlight');
-        console.log("table row has been clicked")
-        curSong = $(this).innerText;
-        console.log("cur song is " + curSong)
+        let song =$(this).find('td:eq(0)').html();
+        let artist =  $(this).find('td:eq(1)').html();
+        let id =  $(this).find('td:eq(2)').html();
+        console.log("song: " + song + "\n" +
+            "Artist: " + artist + "\n" +
+            "Id: " + id);
     });
 </script>
 
