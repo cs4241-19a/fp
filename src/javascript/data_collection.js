@@ -4,7 +4,7 @@ import data_display from "./data_display";
 import domains from "./domain_list";
 import socket from "./index";
 
-let stopped = false;
+let stopped = true;
 
 const localData = {};
 const runCycle = async function () {
@@ -78,17 +78,23 @@ const aggregateLocalData = () => {
 const stopCollection = function () {
 	stopped = true;
 	console.log("Collection stop");
+	document.querySelector("#start_collection_button").disabled = false;
+	document.querySelector("#stop_collection_button").disabled = true;
 };
 
 const startCollection = async function () {
-	stopped = false;
-	console.log("Collection start");
+	if (stopped) {
+		document.querySelector("#start_collection_button").disabled = true;
+		document.querySelector("#stop_collection_button").disabled = false;
+		stopped = false;
+		console.log("Collection start");
 
-	while (!stopped) {
-		let newData = await runCycle();
+		while (!stopped) {
+			let newData = await runCycle();
 
-		socket.emit('submitNewData', newData);
-		data_display.displayBar(aggregateLocalData());
+			socket.emit('submitNewData', newData);
+			data_display.displayBar(aggregateLocalData());
+		}
 	}
 };
 
@@ -98,10 +104,12 @@ document.body.onload = () => {
 	const stopCollectionButton = document.querySelector("#stop_collection_button");
 
 	if (startCollectionButton !== undefined && startCollectionButton !== null) {
+		startCollectionButton.disabled = false;
 		startCollectionButton.onclick = startCollection;
 	}
 
 	if (stopCollectionButton !== undefined && stopCollectionButton !== null) {
+		stopCollectionButton.disabled = true;
 		stopCollectionButton.onclick = stopCollection;
 	}
 
@@ -112,4 +120,11 @@ document.body.onload = () => {
 	socket.emit('getData');
 
 	socket.on('sendData', data_display.displayMap);
+
+	const zero_bar = {};
+	domains.forEach(d => zero_bar[d.name] = 0);
+
+	data_display.initializeBar();
+	data_display.displayBar(zero_bar);
+	data_display.displayBar(zero_bar); // Note: bar chart has an issue where it doesn't display first call
 };

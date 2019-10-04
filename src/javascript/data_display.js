@@ -19,27 +19,25 @@ const width = 600,
 let y = null;
 let x = null;
 let bar_svg = null;
+
+const initializeBar = function() {
+    bar_initialized = true;
+    //Set up scales
+    x = d3.scaleLinear()
+        .domain([0,defaultBarWidth])
+        .range([0,width]);
+    y = d3.scaleBand()
+        .range([0, height]).round([0.1, 0]);
+
+    //Create SVG element
+    d3.select("#bar_chart").selectAll("svg").remove()
+    bar_svg = d3.select("#bar_chart").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g");
+};
+
 const displayBar = function (raw_data) {
-    if (!bar_initialized) {
-        bar_initialized = true;
-        //Set up scales
-        x = d3.scaleLinear()
-            .domain([0,defaultBarWidth])
-            .range([0,width]);
-        y = d3.scaleBand()
-            .range([0, height]).round([0.1, 0]);
-
-        //Create SVG element
-        d3.select("#bar_chart").selectAll("svg").remove()
-        bar_svg = d3.select("#bar_chart").append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .append("g");
-
-
-
-    }
-
     const data = [];
 
     for (let [key, value] of Object.entries(raw_data)) {
@@ -63,7 +61,7 @@ const displayBar = function (raw_data) {
     //Bind new data to chart rows
 
     //Create chart row and move to below the bottom of the chart
-    const chartRow = bar_svg    .selectAll("g.chartRow")
+    const chartRow = bar_svg.selectAll("g.chartRow")
         .data(data, function(d){ return d.key});
     const newRow = chartRow
         .enter()
@@ -84,10 +82,10 @@ const displayBar = function (raw_data) {
         .attr("class","label")
         .attr("y", y.bandwidth()/2)
         .attr("x",0)
-        .attr("opacity",0)
+        .attr("opacity",1)
         .attr("dy",".35em")
         .attr("dx","0.5em")
-        .text(function(d){return d.value;});
+        .text(d => d.value);
 
     //Add Headlines
     newRow.append("text")
@@ -118,7 +116,7 @@ const displayBar = function (raw_data) {
         .tween("text", function(d) {
             const i = d3.interpolate(+this.textContent.replace(/\,/g,''), +d.value);
             return function(t) {
-                this.textContent = Math.round(i(t)) + ' ms';
+                this.textContent = Math.round(d.value);
             };
         });
 
@@ -220,7 +218,7 @@ const displayMap = function(data) {
             })
 };
 
-export default {displayBar, displayMap}
+export default {displayBar, displayMap, initializeBar}
 
 setupMap(1000, 1000);
 
