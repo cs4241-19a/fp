@@ -31,10 +31,12 @@ app.get('/', function (request, response) {
     response.sendFile(__dirname + '/views/login.html');
 });
 
-app.get('/', function (request, response) {
+/*
+app.get('/login', function (request, response) {
     'use strict';
     response.sendFile(__dirname + '/views/login.html');
 });
+*/
 
 app.post('/login',
     passport.authenticate('local', { successRedirect: '/index',
@@ -52,23 +54,23 @@ app.get('/signup', function (request, response) {
     response.sendFile(__dirname + '/views/signup.html');
 });
 
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
+passport.serializeUser( ( user, done ) => done( null, user.username ) );
+
+passport.deserializeUser( ( username, done ) => {
+    const user = User.find( u => u.username === username );
+    console.log( 'deserializing:', username );
+
+    if( user !== undefined ) {
+        done( null, user )
+    }else{
+        done( null, false, { message:'user not found; session not restored' })
+    }
 });
 
-passport.deserializeUser(function(id, done) {
-    User.findById(id, function (err, user) {
-        done(err, user);
-    });
-});
-
-passport.use(new LocalStrategy({
-        usernameField: 'email',
-        passwordField: 'passwd',
-        session: false
-    },
+passport.use(new LocalStrategy(
     function(username, password, done) {
         const user1 = User.find(user => user.username === username);
+
         if (!user1) {
             return done(null, false, {message: "Incorrect user"});
         } else if (user1.password === password) {
