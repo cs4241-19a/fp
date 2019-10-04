@@ -41,6 +41,33 @@ app.get('/signup', function (request, response) {
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
+app.get('/leaderboard', function (request, response) {
+    'use strict';
+    response.sendFile(__dirname + '/views/leaderboard.html');
+});
+
+app.get('/getLeaderboardData', function (request, response) {
+    'use strict';
+    let leaderboardData = [];
+    db.get('leaderboardData').catch(err => {
+        if (err.name === 'not_found') {
+            leaderboardData = {
+                _id: 'leaderboardData',
+                leaderboardData: []
+            };
+        } else { // hm, some other error
+            throw err;
+        }
+    }).then(function (doc) {
+        leaderboardData = doc;
+    }).catch(err => {
+        console.log(err);
+    });
+    response.send(leaderboardData);
+});
+
+app.post('/login', passport.authenticate('local', { successRedirect: '/',
+    failureRedirect: '/login' }));
 
 passport.deserializeUser(function(id, done) {
     User.findById(id, function (err, user) {
