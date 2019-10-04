@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <title>Music App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="stylesheets/style.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href = 'https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css' rel="stylesheet">
+    <link href='https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css' rel="stylesheet">
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
     <script
             crossorigin="anonymous"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="stylesheets/style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <title>Music App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -22,7 +24,8 @@
          src="images/music.png"
          alt="Application Logo">
     <a class="navbar-brand" href="#">Music App</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -38,22 +41,28 @@
     </div>
 </nav>
 <div class="container">
-     <div class="row">
+    <div class="row">
         <div class="col-4 side-container">
             <label class="side-container" for="exampleFormControlTextarea1">Search for a Song to Recommend</label>
             <form class="form-inline my-2 my-lg-0">
-                <input id = "songName" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <input id="songName" class="form-control mr-sm-2" type="search" placeholder="Search"
+                       aria-label="Search">
             </form>
-            <button id = "songSearch" class="btn btn-outline-danger my-2 my-sm-0" >Search</button>
+            <button id="songSearch" class="btn btn-outline-danger my-2 my-sm-0">Search</button>
             </form>
             <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                <table id = "paginatedTable" class="table table-dark">
+                <table id="paginatedTable" class="table table-dark">
                     <tbody>
                     </tbody>
                 </table>
             </div>
-            <label class = "side-container" for="exampleFormControlTextarea1">Caption</label>
-            <textarea class="form-control" id="exampleFormControlTextarea2" rows="3">Write a note about the song here</textarea>
+            <label class="side-container" for="exampleFormControlTextarea1">Caption</label>
+            <textarea class="form-control" id="exampleFormControlTextarea2"
+                      rows="3">Write a note about the song here</textarea>
+            <div class="mt-2">
+                <div id="rating"></div>
+            </div>
+
             <div class="post">
                 <button class="btn btn-danger" type="button">Post</button>
             </div>
@@ -78,13 +87,16 @@
     </div>
 </div>
 <script>
-    let curSong = '';
-    $('#paginatedTable').on('click', 'tbody tr', function(event) {
-        $(this).addClass('highlight').siblings().removeClass('highlight');
+    let curSong = ''
+    $('#paginatedTable').on('click', 'tbody tr', function (event) {
+        $(this).addClass('highlight').siblings().removeClass('highlight')
         console.log("table row has been clicked")
-        curSong = $(this).innerText;
+        curSong = $(this).innerText
         console.log("cur song is " + curSong)
-    });
+    })
+    $(function () {
+        $("#rating").rateYo()
+    })
 </script>
 
 <script src="js/createPlayer.js"></script>
