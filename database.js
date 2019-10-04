@@ -18,9 +18,14 @@ module.exports = function (callback) {
         // returns [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}]
         getData: function (cb) {
             client.connect(function (err, db) {
-                db.db('FaviconMap').collection('pings').find().toArray(function (err, result) {
-                    cb(err, result);
-                });
+                db.db('FaviconMap').collection('pings').aggregate(
+                    { $match: { } },
+                    { $group: { "_id": { "favicon": "favicon", "city": "city"},
+                            count: { $sum: 1 },
+                            avg_rtt: { $avg: "$rtt"},
+                            max_rtt: { $max: "rtt" } } }).toArray((err, res) => {
+                                cb(err, res);
+                            });
             });
         }
     };

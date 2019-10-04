@@ -6,6 +6,8 @@ import socket from "./index";
 
 let stopped = true;
 
+const rollingNumber = 10;
+
 const localData = {};
 const runCycle = async function () {
 	const newData = [];
@@ -53,6 +55,11 @@ const runCycle = async function () {
 		await ping(domain.domain)
 				.then(pingTime => {
 					localData[`${domain.name} (${domain.rank})`].push(pingTime);
+
+					while( localData[`${domain.name} (${domain.rank})`].length > rollingNumber ) {
+						localData[`${domain.name} (${domain.rank})`].shift();
+					}
+
 					newData.push({favicon: domain.name, rtt: pingTime});
 				})
 				.catch(console.log);
@@ -65,11 +72,16 @@ const sum = (data, start) => {
 	return data + start;
 };
 
+const max = (a, b) => {
+	if (b >= a) return b;
+	return a;
+};
+
 const aggregateLocalData = () => {
 	const data = {};
 
 	Object.keys(localData).forEach(key => {
-		data[key] = localData[key].reduce(sum, 0) / localData[key].length;
+		data[key] = {avg: localData[key].reduce(sum, 0) / localData[key].length, max: localData[key].reduce(max, 0)};
 	});
 
 	return data;
@@ -123,7 +135,7 @@ document.body.onload = () => {
 	socket.on('sendData', data_display.displayMap);
 
 	const zero_bar = {};
-	domains.forEach(d => zero_bar[`${d.name} (${d.rank})`] = 0);
+	domains.forEach(d => zero_bar[`${d.name} (${d.rank})`] = {avg: 0, max: 0});
 
 	data_display.initializeBar();
 	data_display.displayBar(zero_bar);

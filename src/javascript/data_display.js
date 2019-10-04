@@ -41,16 +41,15 @@ const displayBar = function (raw_data) {
     const data = [];
 
     for (let [key, value] of Object.entries(raw_data)) {
-        data.push({key: key, value: value});
+        data.push({key: key, value: value.avg, max: value.max});
     }
 
     y.domain(data.sort(function(a,b){
         return b.value - a.value;
-    })
-        .map(function(d) { return d.key; }));
+    }).map(function(d) { return d.key; }));
 
     const barMax = d3.max(data, function(e) {
-        return e.value;
+        return e.max;
     });
     x.domain([0,barMax]);
 
@@ -68,6 +67,15 @@ const displayBar = function (raw_data) {
         .append("g")
         .attr("class", "chartRow")
         .attr("transform", "translate(0," + height + ")");
+
+    newRow.insert("rect")
+        .attr("class", "barmax")
+        .attr("x", 0)
+        .attr("y", y.bandwidth() / 4)
+        .attr("fill-opacity", .25)
+        .attr("height", y.bandwidth() / 2)
+        .attr("width", d => x(d.max))
+        .attr("fill", "red");
 
     //Add rectangles
     newRow.insert("rect")
@@ -104,6 +112,10 @@ const displayBar = function (raw_data) {
     //////////
 
     //Update bar widths
+    chartRow.select(".barmax").transition()
+        .duration(300)
+        .attr("width", function(d) { return x(d.max);})
+        .attr("opacity",1);
     chartRow.select(".bar").transition()
         .duration(300)
         .attr("width", function(d) { return x(d.value);})
@@ -144,7 +156,6 @@ const displayBar = function (raw_data) {
     const delay = function(d, i) { return 200 + i * 30; };
 
     chartRow.transition()
-        .delay(delay)
         .duration(900)
         .attr("transform", function(d){ return "translate(0," + y(d.key) + ")"; });
 };

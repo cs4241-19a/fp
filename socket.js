@@ -3,7 +3,7 @@ module.exports = function (io) {
 	let userCount = 0;
 
 	const update = function() {
-		io.emit('sendData', db.getData());
+		db.getData((err, res) => io.emit('sendData', res));
 	};
 
 	const db = require('./database')(update);
@@ -39,6 +39,6 @@ module.exports = function (io) {
 			db.insertPings(clientIpAddress);
 		});
 
-		socket.on('getData', () => socket.emit('sendData', db.getData()))
+		socket.on('getData', () => db.getData((err, res) => socket.emit('sendData', res)));
 	});
 };
