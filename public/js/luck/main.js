@@ -64,7 +64,6 @@ function create() {
         if (readingsLeft === 0) {
             const score = getAvgLuck();
             const scoreModel = $("#gameScoreFormModal");
-            console.log(score);
             const resetGame = data => {
                 readingsLeft = startReadings;
                 totalLuck = 0;

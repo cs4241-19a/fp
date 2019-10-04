@@ -7,8 +7,10 @@
  */
 function submitGameData(e, gameData, handelResponse) {
     const url = "/submit/games/" + GAMEID;
-    const data = JSON.stringify(gameData);
+    const data = JSON.stringify({userId: auth.currentUser.uid, ...gameData});
     console.log("Game data: ", data);
+
+    // TODO: check if user is logged in.
 
     const request = new Request(url, {
         method: "POST",
@@ -32,6 +34,11 @@ function submitGameData(e, gameData, handelResponse) {
     return false;
 }
 
+/**
+ * Add a string to the h3 in the forum.
+ * @author: jk
+ * @param text The string to add.
+ */
 function attachHeading(text) {
     document.querySelector("#gameScoreFormModal h3").textContent = text;
 }
