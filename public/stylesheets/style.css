@@ -65,3 +65,8 @@ img {
 .label {
   margin: 2em;
 }
+
+#current-track {
+    width: 83px;
+    height: 75px;
+}
