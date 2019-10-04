@@ -3,16 +3,47 @@
     <head>
         <title>Mapping Internet Connectivity</title>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
         <div id="app">
-            <h1>Number of Users Connected: <span id="counter"></span></h1>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>Mapping Internet Connectivity</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2>Number of Users Connected: <span id="counter"></span></h2>
+                        <h2>Your IP Address: <span id="ip_address"></span></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button id="start_collection_button" class="btn btn-success">Start</button>
+                        <button id="stop_collection_button" class="btn btn-danger">Stop</button></div>
+                    </div>
+                <div class="row">
+                    <div class="col-sm-12 col-lg-5">
+                        <div id="bar_chart_title">
+                            <h2>Rolling Average of Locally Collected Data (ms)</h2>
+                            <h3>(Page Alexa Rank)</h3>
+                        </div>
+                        <div id="bar_chart" ></div>
+                    </div>
+                    <div class="col-sm-12 col-lg-7">
+                        <div id="map_titles">
+                            <h2>Globally Collected Data</h2>
+                            <h3>(aggregated by location (city) and website)</h3>
+                        </div>
+                        <div id="map_div">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <button id="start_collection_button">Start</button>
-            <button id="stop_collection_button">Stop</button>
-
-
-            <div id="bar_chart"></div>
         </div>
         <script src="bundle.js"></script>
     </body>

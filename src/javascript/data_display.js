@@ -12,7 +12,7 @@ let minRtt = 0;
 // data = [{favicon: '', avg: 0.0}]
 let bar_initialized = false;
 //Set size of svg element and chart
-const width = 600,
+const width = 500,
       height = domains.length * 20,
       categoryIndent = 4*15 + 5,
       defaultBarWidth = 2000;
@@ -49,7 +49,7 @@ const displayBar = function (raw_data) {
     }).map(function(d) { return d.key; }));
 
     const barMax = d3.max(data, function(e) {
-        return e.max;
+        return e.value; //max
     });
     x.domain([0,barMax]);
 
@@ -68,14 +68,14 @@ const displayBar = function (raw_data) {
         .attr("class", "chartRow")
         .attr("transform", "translate(0," + height + ")");
 
-    newRow.insert("rect")
-        .attr("class", "barmax")
-        .attr("x", 0)
-        .attr("y", y.bandwidth() / 4)
-        .attr("fill-opacity", .25)
-        .attr("height", y.bandwidth() / 2)
-        .attr("width", d => x(d.max))
-        .attr("fill", "red");
+    // newRow.insert("rect")
+    //     .attr("class", "barmax")
+    //     .attr("x", 0)
+    //     .attr("y", y.bandwidth() / 4)
+    //     .attr("fill-opacity", .25)
+    //     .attr("height", y.bandwidth() / 2)
+    //     .attr("width", d => x(d.max))
+    //     .attr("fill", "red");
 
     //Add rectangles
     newRow.insert("rect")
@@ -112,10 +112,11 @@ const displayBar = function (raw_data) {
     //////////
 
     //Update bar widths
-    chartRow.select(".barmax").transition()
-        .duration(300)
-        .attr("width", function(d) { return x(d.max);})
-        .attr("opacity",1);
+    // chartRow.select(".barmax").transition()
+    //     .duration(300)
+    //     .attr("width", function(d) { return x(d.max);})
+    //     .attr("opacity",1);
+
     chartRow.select(".bar").transition()
         .duration(300)
         .attr("width", function(d) { return x(d.value);})
@@ -169,7 +170,7 @@ const setupMap = function(width, height){
     let path = d3.geoPath()
         .projection(projection);
 
-    svg = d3.select("body")
+    svg = d3.select("#map_div")
         .append("svg")
         .attr("width", width)
         .attr("height", height);
@@ -251,5 +252,5 @@ const displayMap = function(data) {
 
 export default {displayBar, displayMap, initializeBar}
 
-setupMap(1000, 1000);
+setupMap(800, 500);
 

@@ -25,16 +25,6 @@ h1 {
 	font-size:150%;
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 	font-weight: 300;
-	text-align: left;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-h2 {
-	font-size: 12px;
-	font-style: italic;
-	color: gray;
-	margin-top:5px;
-	margin-bottom:5px;
 }
 #everything {
 	width: 600px;
@@ -68,12 +58,20 @@ div.tooltip {
 	fill:#eaeaea;
 }
 text.label{
-	fill: #777777;
-	color: #777777;
+	fill: #0367A6;
+	color: #0367A6;
 	font-size: 20px;
 	font-weight: bold;
 }
 text.category{
-	fill: #222222;
+	fill: #0367A6;
 	font-size: 14px;
+}
+
+.row {
+	text-align: center;
+}
+
+#app {
+	padding-top: 10px;
 }
