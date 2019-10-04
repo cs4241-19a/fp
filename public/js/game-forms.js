@@ -6,11 +6,15 @@
  * @param {function} handelResponse The callback for when the fetch is done.
  */
 function submitGameData(e, gameData, handelResponse) {
+    // TODO: check if user is logged in.
+    if (auth.currentUser == null) {
+        console.log("We don't want you score!");
+        handelResponse({error: "no user"});
+        return false;
+    }
     const url = "/submit/games/" + GAMEID;
     const data = JSON.stringify({userId: auth.currentUser.uid, ...gameData});
     console.log("Game data: ", data);
-
-    // TODO: check if user is logged in.
 
     const request = new Request(url, {
         method: "POST",

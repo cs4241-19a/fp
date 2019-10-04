@@ -4,14 +4,23 @@ const gameDataRouter = express.Router();
 const firebaseAdmin = require("firebase-admin");
 const db = firebaseAdmin.firestore();
 
-function addScoreDefault(gameId, score, userId) {
+async function addScoreDefault(gameId, score, userId) {
     const scoreDoc = db.collection("games").doc(gameId).collection('scores').add({
         score,
         user: "users/" + userId,
         timestamp: firebaseAdmin.firestore.Timestamp.now(),
     })
         .then(function(docRef) {
-            // console.log("Document written with ID: ", docRef.id);
+            // increment timesPlayed on parent
+            db.collection("games").doc(gameId).update({
+                timesPlayed: firebaseAdmin.firestore.FieldValue.increment(1)
+            })
+                .then(function() {
+                    // console.log("Document successfully updated!");
+                })
+                .catch(function(error) {
+                    console.error("Error updating document: ", error);
+                });
             return docRef;
         })
         .catch(function(error) {
