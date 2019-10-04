@@ -44536,26 +44536,9 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var app = new PIXI.Application({
-  backgroundColor: 0xffffff
+  backgroundColor: 0x00FFFF
 });
-document.body.appendChild(app.view);
 var loader = new PIXI.Loader(); // you can also create your own if you want
-// //Aliases
-// let Application = PIXI.Application,
-//     Container = PIXI.Container,
-//     loader = PIXI.Loader(),
-//     resources = PIXI.Loader.resources,
-//     TextureCache = PIXI.utils.TextureCache,
-//     Sprite = PIXI.Sprite;
-//Create a Pixi Application
-// let app = new Application({
-//         width: 256,
-//         height: 256,
-//         antialiasing: true,
-//         transparent: false,
-//         resolution: 1
-//     }
-// );
 //Add the canvas that Pixi automatically created for you to the HTML document
 
 document.body.appendChild(app.view); // create a new Sprite from an image path
@@ -44718,12 +44701,6 @@ right.press = function () {
   activeChar.vx += 5;
 };
 
-up.press = function () {
-  'use strict';
-
-  activeChar.vy += -2;
-};
-
 right.release = function () {
   'use strict';
 
@@ -44734,12 +44711,6 @@ left.release = function () {
   'use strict';
 
   activeChar.vx = 0;
-};
-
-up.release = function () {
-  'use strict';
-
-  activeChar.vy += 2;
 };
 
 },{"pixi.js":42}]},{},[52,53]);

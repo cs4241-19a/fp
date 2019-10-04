@@ -1,46 +1,20 @@
 import * as PIXI from 'pixi.js';
 
-let app = new PIXI.Application({ backgroundColor: 0xffffff });
+//init basics
+let app = new PIXI.Application({ backgroundColor: 0x00FFFF });
+const loader = new PIXI.Loader();
 document.body.appendChild(app.view);
-const loader = new PIXI.Loader(); // you can also create your own if you want
-
-
-// //Aliases
-// let Application = PIXI.Application,
-//     Container = PIXI.Container,
-//     loader = PIXI.Loader(),
-//     resources = PIXI.Loader.resources,
-//     TextureCache = PIXI.utils.TextureCache,
-//     Sprite = PIXI.Sprite;
-//Create a Pixi Application
-// let app = new Application({
-//         width: 256,
-//         height: 256,
-//         antialiasing: true,
-//         transparent: false,
-//         resolution: 1
-//     }
-// );
-//Add the canvas that Pixi automatically created for you to the HTML document
-document.body.appendChild(app.view);
-
-
-// create a new Sprite from an image path
 let paw = PIXI.Sprite.from('images/cat.png');
 let dog = PIXI.Sprite.from('images/dog.png');
 let activeChar = paw;
 let tics = 0;
 let time = 0;
 let start = false;
+let startText = new PIXI.Text('Select a character to begin',{fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'});
+app.stage.addChild(startText);
+let count = 0;
+let fallDone = true;
 
-
-
-
-
-// center the sprite's anchor point
-// paw.anchor.set(0.5);
-
-// move the sprite to the center of the screen
 function resetPaw() {
     paw.x = app.screen.width / 2;
     paw.y = app.screen.height / 2;
@@ -48,10 +22,6 @@ function resetPaw() {
     paw.vy = 0;
 }
 
-// center the sprite's anchor point
-// dog.anchor.set(0.5);
-
-// move the sprite to the center of the screen
 function resetDog() {
     dog.x = app.screen.width / 2;
     dog.y = app.screen.height / 2;
@@ -60,7 +30,6 @@ function resetDog() {
 }
 
 document.getElementById("dogBut").addEventListener("click", function(){
-
     start = true;
     activeChar.visible = false;
     resetDog();
@@ -68,11 +37,9 @@ document.getElementById("dogBut").addEventListener("click", function(){
     app.stage.addChild(activeChar);
     startText.visible = false;
     activeChar.visible = true;
-
-})
+});
 
 document.getElementById("pawBut").addEventListener("click", function(){
-
     start = true;
     activeChar.visible = false;
     resetPaw();
@@ -80,15 +47,9 @@ document.getElementById("pawBut").addEventListener("click", function(){
     app.stage.addChild(activeChar);
     startText.visible = false;
     activeChar.visible = true;
+});
 
-})
-
-let startText = new PIXI.Text('Select a character to begin',{fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'});
-app.stage.addChild(startText);
-let count = 0;
-let fallDone = true;
-
-// Listen for animate update
+// animation loop running at 60 fps
 app.ticker.add(function(delta) {
     if(start) {
         if (up.isDown && count < 60 && fallDone) {
@@ -109,17 +70,15 @@ app.ticker.add(function(delta) {
         if (activeChar.y + activeChar.vy > 0 && activeChar.y + activeChar.height + activeChar.vy < app.screen.height) {
             activeChar.y += activeChar.vy;
         }
-
         tics++;
         if (tics % 60 == 0) {
             time++;
             document.getElementById("timer").innerHTML = "time: " + time.toString();
         }
     }
-
 });
 
-
+//create key handler
 function keyboard(value) {
     'use strict';
     let key = {};
@@ -128,7 +87,6 @@ function keyboard(value) {
     key.isUp = true;
     key.press = undefined;
     key.release = undefined;
-    //The `downHandler`
     key.downHandler = function (event) {
         if (event.key === key.value) {
             if (key.isUp && key.press) {
@@ -139,8 +97,6 @@ function keyboard(value) {
             event.preventDefault();
         }
     };
-
-    //The `upHandler`
     key.upHandler = function (event) {
         if (event.key === key.value) {
             if (key.isDown && key.release){
@@ -151,27 +107,22 @@ function keyboard(value) {
             event.preventDefault();
         }
     };
-
-    //Attach event listeners
     const downListener = key.downHandler.bind(key);
     const upListener = key.upHandler.bind(key);
-
     document.addEventListener(
         "keydown", downListener, false
     );
     document.addEventListener(
         "keyup", upListener, false
     );
-
-    // Detach event listeners
     key.unsubscribe = function(){
         window.removeEventListener("keydown", downListener);
         window.removeEventListener("keyup", upListener);
     };
-
     return key;
 }
 
+//setup input keys
 let left = keyboard("ArrowLeft"),
     up = keyboard("ArrowUp"),
     right = keyboard("ArrowRight"),
@@ -182,7 +133,7 @@ let left = keyboard("ArrowLeft"),
     d = keyboard("d"),
     j = keyboard("j");
 
-
+//key functions
 left.press = function(){
     'use strict'
     activeChar.vx += -5;
@@ -191,7 +142,6 @@ right.press = function(){
     'use strict'
     activeChar.vx += 5;
 }
-
 right.release = function(){
     'use strict'
     activeChar.vx = 0;
@@ -200,4 +150,3 @@ left.release = function(){
     'use strict'
     activeChar.vx = 0;
 }
-
