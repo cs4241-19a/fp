@@ -23,7 +23,8 @@ export default class FillOut extends React.Component {
     ];
 
     // TODO: make this pull from url
-    this.state.users.push(props.currentUser);
+    // this.state.users.push(props.currentUser);
+    this.state.users.push("hardcoded name")
     const rows = this.state.cells.length;
     const cols = this.state.cells[0].length;
     for (let i = 1; i < rows; i++) {
@@ -36,10 +37,10 @@ export default class FillOut extends React.Component {
   render = () => {
     return (
       <React.Fragment>
-        <div class="col-lg-5 calendar">
+        <div className="col-lg-5 calendar">
           <Selector onUpdate={this.onUpdate} {...this.state}></Selector>
         </div>
-        <div class="col-lg-7 calendar">
+        <div className="col-lg-7 calendar">
           <Viewer ref={this.selectorElement} {...this.state}></Viewer>
         </div>
       </React.Fragment>
@@ -47,7 +48,7 @@ export default class FillOut extends React.Component {
   };
 
   onUpdate = cells => {
-    this.selectorElement.current.updateCurrentUser(cells);
+    this.selectorElement.current.updateGrid(cells);
     // this.setState({ cells });
   };
 }

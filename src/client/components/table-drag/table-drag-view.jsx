@@ -17,7 +17,7 @@ export default class TableDragView extends React.Component {
   static propTypes = {
     value: props => {
       const error = new Error(
-        "Invalid prop `value` supplied to `TableDragSelect`. Validation failed."
+        "Invalid prop `value` supplied to `TableDragView`. Validation failed."
       );
       if (!Array.isArray(props.value)) {
         return error;
@@ -32,7 +32,7 @@ export default class TableDragView extends React.Component {
           return error;
         }
         for (const cell of row) {
-          if (typeof cell !== "boolean") {
+          if (typeof cell !== "string") {
             return error;
           }
         }
@@ -118,7 +118,7 @@ export default class TableDragView extends React.Component {
               color = this.state.value[i][j];
             }
             return (
-              <td key={j} class={className} bgcolor={color}>
+              <td key={j} className={className} bgcolor={color}>
                 {" "}
                 {cell.props.children}{" "}
               </td>

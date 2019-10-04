@@ -8,18 +8,22 @@ class Selector extends React.Component {
     this.state = {
       cells: []
     };
-    const rows = 2 + 2 * (this.props.endTime - this.props.startTime);
-    const cols = this.props.headings.length;
+    const rows =
+      1 +
+      2 * (this.props.endTime - this.props.startTime) +
+      (this.props.startTime % 1 === 0 ? 0 : 1);    
+      const cols = this.props.headings.length;
     this.state.cells = new Array(rows)
       .fill(false)
       .map(() => new Array(cols).fill(false));
+
   }
 
   renderTableHeader() {
     return (
-      <tr>
+      <tr key='selectorHeader'>
         {this.props.headings.map((heading, index) => {
-          return <td disabled>{heading}</td>;
+          return <td key={index} disabled>{heading}</td>;
         })}
       </tr>
     );
@@ -36,10 +40,10 @@ class Selector extends React.Component {
     // console.log(times);
     return times.map((time, index) => {
       return (
-        <tr>
+        <tr key={'selectorBody' + index}>
           {this.props.headings.map((heading, index) => {
             const value = index === 0 ? time : "";
-            return <td disabled={index === 0}>{value}</td>;
+            return <td key={index} disabled={index === 0}>{value}</td>;
           })}
         </tr>
       );

@@ -25,10 +25,6 @@ const NotFound = () => (
   </React.Fragment>
 );
 
-const NewEvent = function() {
-  return <FillOut currentUser="Justin"></FillOut>;
-};
-
 const App = () => (
   <Switch>
     <Route exact path="/" component={Home} />

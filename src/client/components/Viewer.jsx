@@ -58,9 +58,9 @@ export default class Viewer extends React.Component {
 
   renderTableHeader() {
     return (
-      <tr>
+      <tr key='tableHeader'>
         {this.props.headings.map((heading, index) => {
-          return <td disabled>{heading}</td>;
+          return <td key={'viewheader' + index} disabled>{heading}</td>;
         })}
       </tr>
     );
@@ -76,10 +76,10 @@ export default class Viewer extends React.Component {
     }
     return times.map((time, index) => {
       return (
-        <tr>
+        <tr key={'tbtr' + index}>
           {this.props.headings.map((heading, index) => {
             const value = index === 0 ? time : "";
-            return <td disabled={index === 0}>{value}</td>;
+            return <td key={'tablebody' + index} disabled={index === 0}>{value}</td>;
           })}
         </tr>
       );
@@ -88,45 +88,6 @@ export default class Viewer extends React.Component {
 
   handleMouseOut = e => {
     this.setState({ mouse_in: false });
-  };
-
-  updateGrid = () => {
-    console.log("updating grid");
-    const rows = this.props.cells.length;
-    const cols = this.props.cells[0].length;
-    let free_count = new Array(rows).fill(0).map(() => new Array(cols).fill(0));
-    let min_count = 10000,
-      max_count = -10000;
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < cols; j++) {
-        const current_cell = this.props.cells[i][j];
-        const current_count = 0;
-        for (let k = 0; k < current_cell.length; k++) {
-          if (current_cell[k] === "1" && this.state.active_users[k]) {
-            current_count += 1;
-          }
-        }
-        if (current_count < min_count) {
-          min_count = current_count;
-        }
-        if (current_count > max_count) {
-          max_count = current_count;
-        }
-        free_count[i][j] = current_count;
-      }
-    }
-
-    console.log(free_count);
-    console.log(max_count);
-
-    const gradient_array = computeGradient(0, max_count);
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < cols; j++) {
-        free_count[i][j] = gradient_array[free_count[i][j]];
-      }
-    }
-
-    this.setState({ gradient_array, free_count, min_count, max_count });
   };
 
   handleCheckbox = e => {
@@ -148,7 +109,7 @@ export default class Viewer extends React.Component {
         text_color = "";
       }
       return (
-        <div>
+        <div key={index}>
           <input
             name={index}
             id={user}
@@ -157,7 +118,7 @@ export default class Viewer extends React.Component {
             className={text_color}
             onChange={this.handleCheckbox}
           />
-          <label for={user} className={text_color}>
+          <label htmlFor={user} className={text_color}>
             {user}
           </label>
         </div>
@@ -168,23 +129,23 @@ export default class Viewer extends React.Component {
   renderAvailabilityGradient() {
     const num_active = this.state.active_users.filter(Boolean).length;
     return (
-      <div class="row">
-        <div class="col-lg-4 text-right">
+      <div className="row">
+        <div className="col-lg-4 text-right">
           0/{this.props.users.length} Available
         </div>
-        <div class="col-lg-4 text-center">
-          <table class="availability-gradient">
+        <div className="col-lg-4 text-center">
+          <table className="availability-gradient">
             <tbody>
-              <tr>
+              <tr key='trAvailGrad'>
                 {this.state.gradient_array.map((color, index) => {
                   const cName = color === "#339900" ? "best-time" : "";
-                  return <td className={cName} bgcolor={color}></td>;
+                  return <td key={'avagrad' + index} className={cName} bgcolor={color}></td>;
                 })}
               </tr>
             </tbody>
           </table>
         </div>
-        <div class="col-lg-4">
+        <div className="col-lg-4">
           {this.state.max_count}/{num_active} Available
         </div>
       </div>
@@ -192,24 +153,32 @@ export default class Viewer extends React.Component {
   }
 
   render() {
+    let current_value = 0;
+    const [i, j] = this.state.current_cell;
+    const current_cell = this.props.cells[i][j];
+    for (let k = 0; k < current_cell.length; k++) {
+      if (current_cell[k] === "1" && this.state.active_users[k]) {
+        current_value += 1;
+      }
+    }
     let availability_print = this.state.mouse_in
-      ? this.state.current_cell_value.count("1") +
+      ? current_value +
         "/" +
         this.state.active_users.filter(Boolean).length +
         " Available"
       : "  ";
     return (
       <React.Fragment>
-        <div class="row">
-          <div class="col-lg-3">
+        <div className="row">
+          <div className="col-lg-3">
             <h2>Individual Availability</h2>
             {/* <ul>{this.renderPeople()}</ul> */}
             {this.renderPeople()}
           </div>
-          <div class="col-lg-9" id="table-view">
-            <h2 class="text-center">Group Availability</h2>
+          <div className="col-lg-9" id="table-view">
+            <h2 className="text-center">Group Availability</h2>
             {this.renderAvailabilityGradient()}
-            <p class="text-center">Mouseover to see availability</p>
+            <p className="text-center">Mouseover to see availability</p>
             <TableDragView
               value={this.state.free_count}
               onChange={this.handleChange}
@@ -217,43 +186,82 @@ export default class Viewer extends React.Component {
               {this.renderTableHeader()}
               {this.renderTableBody()}
             </TableDragView>
-            <h3 class="text-center">{availability_print}</h3>
+            <h3 className="text-center">{availability_print}</h3>
           </div>
         </div>
       </React.Fragment>
     );
   }
 
-  updateCurrentUser = newCells => {
+  updateGrid = newCells => {
     const rows = this.props.cells.length;
     const cols = this.props.cells[0].length;
-    const k = this.props.users.length - 1;
-    let fCount = new Array(rows).fill(0).map(() => new Array(cols).fill(0));
-    this.setState({ min_count: 10000, max_count: -10000 });
+    const hasNew = typeof newCells !== "undefined";
+    const stridx = this.props.users.length - 1;
+    let free_count = new Array(rows).fill(0).map(() => new Array(cols).fill(0));
+    let min_count = 10000,
+      max_count = -10000;
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
-        this.props.cells[i][j] =
-          this.props.cells[i][j].substring(0, k) + (newCells[i][j] ? "1" : "0");
-        const current_count = this.props.cells[i][j].count("1");
-        if (current_count < this.state.min_count) {
-          this.setState({ min_count: current_count });
+        if (hasNew) {
+          this.props.cells[i][j] =
+            this.props.cells[i][j].substring(0, stridx) +
+            (newCells[i][j] ? "1" : "0");
         }
-        if (current_count > this.state.max_count) {
-          this.setState({ max_count: current_count });
+        const current_cell = this.props.cells[i][j];
+        const current_count = 0;
+        for (let k = 0; k < current_cell.length; k++) {
+          if (current_cell[k] === "1" && this.state.active_users[k]) {
+            current_count += 1;
+          }
         }
-        // console.log("current count " + current_count);
-        fCount[i][j] = current_count;
+        if (current_count < min_count) {
+          min_count = current_count;
+        }
+        if (current_count > max_count) {
+          max_count = current_count;
+        }
+        free_count[i][j] = current_count;
       }
     }
 
-    const gradient_array = computeGradient(0, this.state.max_count);
+    const gradient_array = computeGradient(0, max_count);
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
-        fCount[i][j] = gradient_array[fCount[i][j]];
+        free_count[i][j] = gradient_array[free_count[i][j]];
       }
     }
 
-    this.setState({ gradient_array: gradient_array, free_count: fCount });
+    this.setState({ gradient_array, free_count, min_count, max_count });
+    // const rows = this.props.cells.length;
+    // const cols = this.props.cells[0].length;
+    // const k = this.props.users.length - 1;
+    // let fCount = new Array(rows).fill(0).map(() => new Array(cols).fill(0));
+    // this.setState({ min_count: 10000, max_count: -10000 });
+    // for (let i = 0; i < rows; i++) {
+    //   for (let j = 0; j < cols; j++) {
+    //     this.props.cells[i][j] =
+    //       this.props.cells[i][j].substring(0, k) + (newCells[i][j] ? "1" : "0");
+    //     const current_count = this.props.cells[i][j].count("1");
+    //     if (current_count < this.state.min_count) {
+    //       this.setState({ min_count: current_count });
+    //     }
+    //     if (current_count > this.state.max_count) {
+    //       this.setState({ max_count: current_count });
+    //     }
+    //     // console.log("current count " + current_count);
+    //     fCount[i][j] = current_count;
+    //   }
+    // }
+
+    // const gradient_array = computeGradient(0, this.state.max_count);
+    // for (let i = 0; i < rows; i++) {
+    //   for (let j = 0; j < cols; j++) {
+    //     fCount[i][j] = gradient_array[fCount[i][j]];
+    //   }
+    // }
+
+    // this.setState({ gradient_array: gradient_array, free_count: fCount });
   };
 
   handleChange = (row, col) =>
