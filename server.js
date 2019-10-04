@@ -11,13 +11,15 @@ const express = require('express'),
 let owned = null;
 let search = null;
 async function getAccount(){
-	const rawger = await Rawger();
+  const rawger = await Rawger({
+    email: 'gdc-systems@wpi.edu',
+    password: 'rawgpassword'
+  });
   const {users} = rawger;
-  //{name:'Ape Escape 2'}
-  owned = (await users('WPI-GDC').games('owned')).raw();
+  //console.log((await rawger.games.search()))
+  owned = (await users('WPI-GDC').games('owned')).get();
   games = await (await users('WPI-GDC').games('owned')).next();
   while(typeof games !== 'undefined'){
-    //console.log(games.filter(function(o) { return o.name.includes("Kirby")}))
     owned = owned.concat(games.get());
     games = await games.next()
     console.log("AMOUNT IN LIST IS: ",owned.length)
@@ -138,10 +140,143 @@ async function gameSearch(search, genre, Console){
   return await Promise.resolve(searchFound);
 }
 
+async function requestSearch(search, genre, Console){
+  const Rawger = require('rawger');
+const { games } = await Rawger({});
+  searchTerm = search.toLowerCase()
+  let searchFound = null;
+  let filter = function(o){
+    return o.name.toLowerCase().includes(searchTerm)
+  }
+  if(search == '' && genre !='' && Console==''){
+    filter = function(o){
+      genres = o.raw.genres
+      for(i = 0; i < genres.length; i++)
+        if(genres[i].name === (genre)){
+          return true
+        }
+      return false
+    }
+  }else if(search ==''&& genre==''&&Console!=''){
+    filter = function(o){
+      genres = o.raw.parent_platforms
+      for(i = 0; i < genres.length; i++)
+      if(genres[i].platform.name === Console && genres[i].selected == true){
+        console.log("WHERE IN")
+        return true
+      }
+    }
+  }else if(search != '' && genre !='' && Console==''){
+    filter = function(o){
+      if(o.name.toLowerCase().includes(searchTerm) == false)
+        return false
+      let genreIn = false
+      genres = o.raw.genres
+      for(i = 0; i < genres.length; i++)
+        if(genres[i].name === (genre)){
+          console.log("WHERE IN")
+          genreIn = true
+          break;
+        }
+        return genreIn
+    }
+  }else if(search != '' && genre =='' && Console!=''){
+    filter = function(o){
+      if(o.name.toLowerCase().includes(searchTerm) == false)
+        return false
+      let genreIn = false
+      genres = o.raw.parent_platforms
+      for(i = 0; i < genres.length; i++)
+        if(genres[i].platform.name === Console && genres[i].selected == true){
+        console.log("WHERE IN")
+        genreIn = true
+        break
+      }
+        return genreIn
+    }
+  }else if(search == '' && genre !='' && Console!=''){
+    filter = function(o){
+      let genreIn = false
+      let genreIn2 = false
+      genres = o.raw.genres
+      for(i = 0; i < genres.length; i++)
+        if(genres[i].name === (genre)){
+          console.log("WHERE IN")
+          genreIn = true
+          break;
+        }
+        genres = o.raw.parent_platforms
+        for(i = 0; i < genres.length; i++)
+          if(genres[i].platform.name === Console && genres[i].selected == true){
+          console.log("WHERE IN")
+          genreIn2 = true
+          break
+        }
+        return genreIn && genreIn2
+    }
+  }else if(search != '' && genre !='' && Console!=''){
+    filter = function(o){
+      if(o.name.toLowerCase().includes(searchTerm) == false)
+        return false
+      let genreIn = false
+      let genreIn2 = false
+      genres = o.raw.genres
+      for(i = 0; i < genres.length; i++)
+        if(genres[i].name === (genre)){
+          console.log("WHERE IN")
+          genreIn = true
+          break;
+        }
+        genres = o.raw.parent_platforms
+        for(i = 0; i < genres.length; i++)
+          if(genres[i].platform.name === Console && genres[i].selected == true){
+          console.log("WHERE IN")
+          genreIn2 = true
+          break
+        }
+        return genreIn && genreIn2
+    }
+  }
+  try{
+    gameList = await (await games.search(search));
+  }
+  catch{
+    return await Promise.resolve([]);
+  }
+  searchFound = await gameList.filter(function(o){return filter(o)})
+  try{
+    gameList = await gameList.next()
+  }
+  catch{
+    return await Promise.resolve(searchFound);
+  }
+  while(typeof gameList !== 'undefined'){
+    searchFound = searchFound.concat(gameList.filter(function(o){return filter(o)}));
+    try{
+      gameList = await gameList.next()
+    }
+    catch{
+      return await Promise.resolve(searchFound);
+    }
+    console.log("AMOUNT IN LIST IS: ",searchFound.length)
+  }
+  return await Promise.resolve(searchFound);
+}
+
 async function gameGet(gameName){
   const {games} = await Rawger();
   gameGot = (await games.get(gameName)).get()
   return await Promise.resolve(gameGot);
+}
+
+async function requestGame(gameID){
+  const rawger = await Rawger({
+    email: 'gdc-systems@wpi.edu',
+    password: 'rawgpassword'
+  });
+  const {users} = rawger;
+  console.log('requesting: '+gameID)
+  await users('WPI-GDC').update().game(gameID, {status:'toplay'})
 }
 
 getAccount()
@@ -154,6 +289,9 @@ app.get('/', function (req, res) {
 })
 app.get('/requests', function (req, res) {
   res.sendFile('/views/requests.html', { root: '.' })
+})
+app.get('/request', function (req, res) {
+  res.sendFile('/views/request.html', { root: '.' })
 })
 app.get('/games', function (req, res) {
   res.sendFile('/views/games.html', { root: '.' })
@@ -175,14 +313,18 @@ app.get('/image.jpg', function (req, res) {
 app.get('/new', function (req, res) {
   res.sendFile('/resources/ARCADE.TTF', { root: '.' })
 })
-
 app.get('/gamesearch', function(req,res){
   gameToSearch = req.query
   gameSearch(gameToSearch['gameName'], gameToSearch['genre'], gameToSearch['console']).then(result => {
     res.send(result)
   })
 })
-
+app.get('/requestsearch', function(req,res){
+  gameToSearch = req.query
+  requestSearch(gameToSearch['gameName'], gameToSearch['genre'], gameToSearch['console']).then(result => {
+    res.send(result)
+  })
+})
 app.get('/gameselect', asyncHandler(async (req, res, next) => {
   let gameName = req.query['game']
   var found = owned.filter(function(item) { return item.slug == req.query['game']; });
@@ -193,6 +335,12 @@ app.get('/gameselect', asyncHandler(async (req, res, next) => {
     res.send(result)
   })
 }))
+
+app.get('/requestgame',function(req,res){
+  requestGame(req.query['gameId']).then(result => {
+    res.send(result)
+  })
+})
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
