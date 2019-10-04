@@ -115,7 +115,7 @@ app.get("/spotifyAccess", function (req, res) {
         }))
 })
 
-app.get('/callback', function(req, res) {
+app.get('/callback', function (req, res) {
 
     // your application requests refresh and access tokens
     // after checking the state parameter
@@ -139,7 +139,8 @@ app.get('/callback', function(req, res) {
                 grant_type: 'authorization_code'
             },
             headers: {
-                'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+                //'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+                'Authorization': 'Basic ' + (Buffer.from(client_id + ':' + client_secret).toString('base64'))
             },
             json: true
         };
@@ -177,7 +178,6 @@ app.get('/callback', function(req, res) {
         });
     }
 });
-
 
 app.get('/refresh_token', function (req, res) {
 
@@ -220,15 +220,56 @@ app.get("/token", function (req, res) {
 app.get("/register", function (req, res) {
     res.sendFile(__dirname + "/public/register.html")
 })
+
 app.get("/logout", function (req, res) {
     req.logout()
     res.redirect("/")
 })
+
+app.get("/recommendation", function (req, res) {
+    new Promise(function (resolve, reject) {
+        mongo.connect(url, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        }, (err, client) => {
+            if (err) {
+                reject(err)
+            }
+            const db = client.db('MusicApp')
+            const collection = db.collection('recommendations')
+
+            const response = {}
+            collection.find({}).toArray(function (err, result) {
+                if (err) throw err;
+                console.log("potatoes!!")
+                result.forEach(function (element) {
+                    const temp = JSON.stringify(element)
+                    console.log("element: " + temp)
+                    if (temp.username == null)
+                        console.log("null username")
+                    else if (temp.tracknumber == null)
+                        console.log("null tracknumber")
+                    else if (temp.rating == null)
+                        console.log("null rating")
+                    else if (temp.caption == null)
+                        console.log("null caption")
+                    else
+                        response.add(temp)
+                })
+                console.log("result: " + result);
+                res.send(JSON.stringify(result))
+            });
+        })
+    })
+})
+
 app.post("/login",
     passport.authenticate("local-login", {failureRedirect: "/"}),
     function (req, res) {
         res.redirect("/spotifyAccess") //redirects to spotify access page once sign in authorizes
-    })
+    }
+)
+
 app.post("/register", function (req, res) {
     bcrypt.hash(req.body.password, 10, function (err, hash) {
         new Promise(function (resolve, reject) {
@@ -265,11 +306,12 @@ app.post("/recommendation", function (req, res) {
                 "username": req.body.username,
                 "tracknumber": req.body.tracknumber,
                 "rating": req.body.rating,
-                "caption": req.body.rating
+                "caption": req.body.caption
             }).then(r => res.redirect("/"))
         })
     })
 })
+
 function isLoggedIn(req, res, next) {
     //console.log(req.isAuthenticated())
     if (req.isAuthenticated())
