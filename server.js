@@ -28,6 +28,17 @@ app.get('/', function (request, response) {
     response.sendFile(__dirname + '/views/login.html');
 });
 
+app.get('/login', function (request, response) {
+    'use strict';
+    response.sendFile(__dirname + '/views/login.html');
+});
+
+app.post('/login',
+    passport.authenticate('local', { successRedirect: '/index',
+        failureRedirect: '/',
+        failureFlash: 'Invalid username or password' })
+);
+
 app.get('/index', function (request, response) {
     'use strict';
     response.sendFile(__dirname + '/views/index.html');
@@ -54,20 +65,16 @@ passport.use(new LocalStrategy({
         session: false
     },
     function(username, password, done) {
-        User.findOne({ username: username }, function (err, user) {
-            if (err) { return done(err); }
-            if (!user) { return done(null, false); }
-            if (!user.verifyPassword(password)) { return done(null, false); }
-            return done(null, user);
-        });
+        const user1 = User.find(user => user.username === username);
+        if (!user1) {
+            return done(null, false, {message: "Incorrect user"});
+        } else if (user1.password === password) {
+            return done(null, {username, password});
+        } else {
+            return done(null, false, {message: "Incorrect password"});
+        }
     }
 ));
-
-app.post('/login',
-    passport.authenticate('local', { successRedirect: '/index',
-        failureRedirect: '/',
-        failureFlash: 'Invalid username or password' })
-);
 
 app.post('/createUser', function (req, res) {
     let newUser = req.body;
