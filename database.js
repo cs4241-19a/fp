@@ -23,6 +23,10 @@ module.exports = function (callback) {
                     { $match: { } },
                     { $group: { "_id": { "favicon": "$favicon", "city": "$city"},
                             count: { $sum: 1 },
+                            favicon: "$favicon",
+                            city: "$city",
+                            lat: { $avg: "$lat" },
+                            lng: { $avg: "lng" },
                             avg_rtt: { $avg: "$rtt"},
                             max_rtt: { $max: "$rtt" } } }]).toArray((err, res) => {
                                 console.log(res);
