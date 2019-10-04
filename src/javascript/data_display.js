@@ -149,11 +149,6 @@ const displayBar = function (raw_data) {
         .attr("transform", function(d){ return "translate(0," + y(d.key) + ")"; });
 };
 
-const getRttColorValue = function(rtt){
-    //TODO write this
-    return "rgb(0,255,0)"
-
-};
 
 const setupMap = function(width, height){
     projection = d3.geoAlbersUsa()
@@ -168,27 +163,30 @@ const setupMap = function(width, height){
         .attr("width", width)
         .attr("height", height);
 
-    let div = d3.select("body")
-        .append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
-
 
     d3.json("http://enjalot.github.io/wwsd/data/USA/us-named.topojson").then(us => {
-        const geo = topojson.feature(us, us.objects.counties);
-
+        const counties = topojson.feature(us, us.objects.counties);
         svg.selectAll("path")
-            .data(geo.features)
+            .data(counties.features)
             .enter()
             .append("path")
             .attr("d", path)
-            .style("stroke", "#F2E085")
-            .style("stroke-width", "1")
-            .style("fill", "#0367A6")
+            //.style("stroke", "#F2E085")
+            //.style("stroke-width", "1")
+            //.style("stroke-opacity", 0)
+            .style("fill", "#0367A6");
 
-        displayMap([{favicon: "facebook.com", avg_rtt: 20, city: "Boston", lat: 42.3601, lng: -71.0589}])
+        svg.append("path")
+            .datum(topojson.mesh(us, us.objects.states, (a, b) => a !== b))
+            .attr("fill", "none")
+            .attr("stroke", "white")
+            .attr("stroke-linejoin", "round")
+            .attr("d", path);
 
-    })
+
+        displayMap([{favicon: "facebook.com", avg_rtt: 20, city: "Boston", lat: 42.3601, lng: -71.0589}, {favicon: "facebook.com", avg_rtt: 75, city: "LA", lat: 34.0522, lng: -118.2437}])
+
+        })
 
 
 
@@ -197,25 +195,47 @@ const setupMap = function(width, height){
 
 // data = [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}]
 const displayMap = function(data) {
+
+    data = [{favicon: "facebook.com", avg_rtt: 20, city: "Boston", lat: 42.3601, lng: -71.0589}, {favicon: "facebook.com", avg_rtt: 75, city: "LA", lat: 34.0522, lng: -118.2437}];
+
+    let div = d3.select("body")
+        .append("div")
+        .attr('class', "tooltip")
+        .style("opacity", 0);
+
+    console.log(data);
     let gradient = d3.scaleLinear()
         .range(["#04BF7B", "#BF303C"])
-        .domain([0,100])
+        .domain([0, 100]);
+
     svg.selectAll("circle")
         .data(data)
         .enter()
         .append("circle")
-        .attr("class", "dataPoint")
-            .attr("cx", function (d) {
-                return projection([d.lng, d.lat])[0]
-            })
-            .attr("cy", function (d) {
-                return projection([d.lng, d.lat])[1]
-            })
-            .attr("r", 10)
-            .style("fill", function (d) {
-                let color = gradient(d.avg_rtt)
-                return color
-            })
+        .attr("cx", function (d) {
+            return projection([d.lng, d.lat])[0]
+        })
+        .attr("cy", function (d) {
+            return projection([d.lng, d.lat])[1]
+        })
+        .attr("r", 10)
+        .style("fill", function (d) {
+            let color = gradient(d.avg_rtt);
+            return color
+        })
+        .on("mouseover", d=> {
+            div.transition()
+                .duration(200)
+                .style("opacity", .9);
+            div.text("Tooltip Test")
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+        })
+        .on("mouseout", d => {
+            div.transition()
+                .duration(200)
+                .style("opacity", 0)
+        })
 };
 
 export default {displayBar, displayMap, initializeBar}
