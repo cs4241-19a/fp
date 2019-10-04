@@ -256,8 +256,8 @@ app.get("/recommendation", function (req, res) {
                     else
                         response.add(temp)
                 })
-                console.log("result: " + result);
-                res.send(JSON.stringify(result))
+                console.log("response: " + response);
+                res.send(JSON.stringify(response))
             });
         })
     })
