@@ -25,15 +25,15 @@ nav .dropdown-menu {
 .gameBox {
     display: inline-block;
     overflow: hidden;
-    width: 300px;
-    height: 200px;
+    width: 200px;
+    height: 150px;
     text-align: center;
 }
 
 .gameBox img {
     width: 100%;
     height: 100%;
-    min-height: 200px;
+    min-height: 150px;
 }
 
 .gameMeta {
