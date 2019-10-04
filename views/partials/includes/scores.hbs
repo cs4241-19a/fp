@@ -1,0 +1,37 @@
+<div class="modal fade" id="scoreModal" tabindex="-1" role="dialog" aria-labelledby="scoreModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="scoreModalLabel">Scores</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div role="tabpanel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link active" role="tab" href="#userTab" aria-controls="userTab" data-toggle="tab">Mine</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" role="tab" href="#globalTab" aria-controls="globalTab" data-toggle="tab">Global</a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="userTab">
+                            <div id="userScores">u</div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="globalTab">
+                            <div id="globalScores">g</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary save">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
