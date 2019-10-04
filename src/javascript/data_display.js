@@ -176,7 +176,7 @@ const setupMap = function(width, height){
         .attr("height", height);
 
 
-    d3.json("http://enjalot.github.io/wwsd/data/USA/us-named.topojson").then(us => {
+    d3.json("us-named.topojson").then(us => {
         const counties = topojson.feature(us, us.objects.counties);
         svg.selectAll("path")
             .data(counties.features)
