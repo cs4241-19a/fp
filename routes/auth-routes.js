@@ -29,9 +29,9 @@ authRouter.post("/sign-up", async (req, res) => {
 
             // add user to collections
             // dont need to wait
-            db.collection("users").doc(userRecord.uid).set({
-                // no extra data needed so far
-            });
+            // db.collection("users").doc(userRecord.uid).set({
+            //     // no extra data needed so far
+            // });
 
             await res.json({
                 customToken: await getCustomToken(userRecord),

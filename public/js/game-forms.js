@@ -8,8 +8,8 @@
 function submitGameData(e, gameData, handelResponse) {
     // TODO: check if user is logged in.
     if (auth.currentUser == null) {
-        console.log("We don't want you score!");
-        handelResponse({error: "no user"});
+        console.log("no user!");
+        remoteHandel = () => {$("#gameScoreFormModal").modal("show")};  // should get called after successful sign in
         return false;
     }
     const url = "/submit/games/" + GAMEID;

@@ -1,6 +1,5 @@
 const express = require("express");
 const gameDataRouter = express.Router();
-
 const firebaseAdmin = require("firebase-admin");
 const db = firebaseAdmin.firestore();
 

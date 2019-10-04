@@ -1,6 +1,12 @@
 // TODO get import to work
 // import * as firebase from "firebase-admin";
-
+let remoteHandel;  // store callback to forum submit here for when user is not logged in.
+const handelRemoteHandel = () => {
+    if (remoteHandel) {
+        remoteHandel();
+        remoteHandel = undefined;
+    }
+};
 /**
  * Parse the form data. Handel parsing errors with warning messages and aborting the post.
  * Post the form data to the given url. Then call with handelResponse with the response data.
@@ -134,6 +140,7 @@ async function handelSignInResponse(data) {
         .then(function() {
             const modal = document.getElementById("signInFormModal");
             closeModal(modal);
+            handelRemoteHandel();
             console.log("you are now logged in");
         })
         .catch(function(error) {
@@ -153,6 +160,7 @@ async function handelSignUpResponse(data) {
     if (await firebaseSignInToken(data.customToken) === true) {
         const modal = document.getElementById("signUpFormModal");
         closeModal(modal);
+        handelRemoteHandel();
         console.log("you are now logged in");
     } else {
         console.log("sign up failed");
@@ -285,6 +293,7 @@ function googleSignIn() {
         const token = result.credential.accessToken;
         // The signed-in user info.
         const user = result.user;
+        handelRemoteHandel();
         console.log("Google user signed in ", token, result.user)
     }).catch(function(error) {
         if (error.code === "auth/account-exists-with-different-credential") {
@@ -305,6 +314,7 @@ function githubSignIn() {
     provider.addScope("read:user");
     provider.addScope("user:email");
     auth.signInWithPopup(provider).then(function(result) {
+        handelRemoteHandel();
         console.log("Github user signed in ", result.credential.accessToken, result.user)
     }).catch(function(error) {
         if (error.code === "auth/account-exists-with-different-credential") {

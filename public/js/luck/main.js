@@ -147,8 +147,7 @@ function getLuck(number) {
 function getAvgLuck() {
     if (readingsLeft !== startReadings) {
         return totalLuck / (startReadings - readingsLeft);
-    }
-    else {
+    } else {
         return 0;
     }
 }
