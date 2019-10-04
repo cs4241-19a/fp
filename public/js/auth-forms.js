@@ -34,8 +34,6 @@ function submit(e, url, dataParser, handelResponse) {
         },
     });
 
-    console.log(request);
-
     fetch(request)
         .then((resp) => resp.json())
         .then(function( data ) {
@@ -73,18 +71,12 @@ function signInSubmit(e, dataParser, handelResponse) {
  * @author: jk
  * @returns {Promise<void>}
  */
-window.onload = async function() {
-    const submitUrl = "/submit";
+addLoadEvent(async function() {
     const submitAuthSignUpUrl = "/auth/sign-up";
     // bind sign in and sign up events
     document.getElementById("signInSubmitBtn").onclick = ((e) => signInSubmit(e, parseSignInForm, handelSignInResponse));
     document.getElementById("signUpSubmitBtn").onclick = ((e) => submit(e, submitAuthSignUpUrl, parseSignUpForm, handelSignUpResponse));
-    // bind page specific events
-
-    if (document.getElementById("scoresSubmitBtn")) {
-        document.getElementById("scoresSubmitBtn").onclick = ((e) => submit(e, submitUrl, parseGameForm, handelGameResponse));
-    }
-};
+});
 
 
 // CLOSE MODAL //

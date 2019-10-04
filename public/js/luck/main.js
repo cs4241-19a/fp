@@ -2,11 +2,11 @@ const config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    parent: 'game-area',
+    parent: "game-area",
     scene: {
-        preload: preload,
-        create: create,
-        update: update
+        preload,
+        create,
+        update
     }
 };
 
@@ -20,31 +20,41 @@ let readingsLeft = startReadings;
 let totalLuck = 0;
 
 // assets from www.flaticon.com
+/**
+ * Load game assets.
+ * @author: jk
+ */
 function preload() {
-    this.load.image('potOfGold', '/assets/luck/pot-of-gold.svg');
+    this.load.image("potOfGold", "/assets/luck/pot-of-gold.svg");
 }
 
+/**
+ * Create the game objects. The game logic is written here though event callbacks.
+ * @author: jk
+ */
 function create() {
     const scene = this;
-    const playBtn = scene.add.image(250, 300, 'potOfGold').setInteractive();
+    const playBtn = scene.add.image(250, 300, "potOfGold").setInteractive();
+    const startText = scene.add.text(226, 330, "Start");
     const readingsContainer = scene.add.container(5, 5);
     readingsContainer.add(scene.add.text(0, 0, `Readings Left: ${readingsLeft}`, {fontSize: 28}));
     readingsContainer.add(scene.add.text(0, 40, `Luck: ${getAvgLuck()}`, {fontSize: 28}));
     const textContainer = scene.add.container(350, 260);
     playBtn.setScale(0.2, 0.2);
-    playBtn.on('pointerdown', function (pointer) {
+    playBtn.on("pointerdown", function (pointer) {
         this.setTint(0xffff00);
     });
-    playBtn.on('pointerout', function (pointer) {
+    playBtn.on("pointerout", function (pointer) {
         this.clearTint();
     });
-    playBtn.on('pointerup', function (pointer) {
+    playBtn.on("pointerup", function (pointer) {
         if (readingsLeft === 0) return;
         this.clearTint();
+        startText.visible = false;
         const num = getNumber();
         const luck = getLuck(num);
         textContainer.removeAll();
-        textContainer.add(scene.add.text(0, 0, `Your number is ${num}!`));
+        textContainer.add(scene.add.text(0, 0, `Your number is ${num.toFixed(0)}!`));
         textContainer.add(scene.add.text(0, 60, `Your luck is at ${luck.toFixed(3)}%`));
         readingsLeft--;
         totalLuck += luck;
@@ -52,14 +62,24 @@ function create() {
         readingsContainer.add(scene.add.text(0, 0, `Readings Left: ${readingsLeft}`, {fontSize: 28}));
         readingsContainer.add(scene.add.text(0, 40, `Luck: ${getAvgLuck()}%`, {fontSize: 28}));
         if (readingsLeft === 0) {
-            console.log(getAvgLuck());
-            alert(getAvgLuck());
-            readingsLeft = startReadings;
-            totalLuck = 0;
-            textContainer.removeAll();
-            readingsContainer.removeAll();
-            readingsContainer.add(scene.add.text(0, 0, `Readings Left: ${readingsLeft}`, {fontSize: 28}));
-            readingsContainer.add(scene.add.text(0, 40, `Luck: ${getAvgLuck()}`, {fontSize: 28}));
+            const score = getAvgLuck();
+            const scoreModel = $("#gameScoreFormModal");
+            console.log(score);
+            const resetGame = data => {
+                readingsLeft = startReadings;
+                totalLuck = 0;
+                textContainer.removeAll();
+                readingsContainer.removeAll();
+                readingsContainer.add(scene.add.text(0, 0, `Readings Left: ${readingsLeft}`, {fontSize: 28}));
+                readingsContainer.add(scene.add.text(0, 40, `Luck: ${getAvgLuck()}`, {fontSize: 28}));
+                startText.visible = true;
+            };
+            attachHeading(`Score: ${score}%`);
+            scoreModel.on("hidden.bs.modal", resetGame);
+            attachSubmit({score: score}, () => {
+                scoreModel.modal("hide");
+            });
+            scoreModel.modal("show");  // user jQuery to show the modal
         }
     });
 }
@@ -68,8 +88,13 @@ function update() {
 
 }
 
+/**
+ * Returns a number between min and max following a normal distibution
+ * @author: jk
+ * @returns {Number}
+ */
 function getNumber() {
-    return createMemberInNormalDistribution(mean, stddev).toFixed(0);
+    return createMemberInNormalDistribution(mean, stddev);
 }
 
 
@@ -91,10 +116,11 @@ function createMemberInNormalDistribution(mean, std_dev) {
     return adj;
 }
 
-/*
+/**
  * Returns random number in normal distribution centering on 0.
  * ~95% of numbers returned should fall between -2 and 2
  * ie within two standard deviations
+ * @author: https://stackoverflow.com/a/196941
  */
 function gaussRandom() {
     const u = 2 * Math.random() - 1;

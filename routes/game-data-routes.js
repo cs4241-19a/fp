@@ -13,6 +13,7 @@ gameDataRouter.post("/:gameId", function(req, res) {
     console.log("Game data submitted");
     console.log(req.params.gameId);
     console.log(req.body);
+    res.json({});
 });
 
 

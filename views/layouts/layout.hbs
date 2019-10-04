@@ -63,16 +63,24 @@
 
 <!-- Custom JS -->
 <script>
-    // These functions should be overrided by the game's js
-    function parseGameForm() {
-        return {error: "Parser function missing"};
-    }
-    async function handelGameResponse(data) {
-        return {error: "Handel function missing"};
+    const GAMEID = "{{ gameId }}";
+    function addLoadEvent(func) {
+        const oldFunc = window.onload;
+        if (typeof window.onload != "function") {
+            window.onload = func;
+        } else {
+            window.onload = function(e) {
+                if (oldFunc) {
+                    oldFunc(e);
+                }
+                func(e);
+            }
+        }
     }
 </script>
 {{{_sections.js}}}
 <script src="/js/auth-forms.js"></script>
+<script src="/js/game-forms.js"></script>
 
 
 <!-- Bootstrap -->

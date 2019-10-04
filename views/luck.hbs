@@ -8,3 +8,8 @@
     <script src="/js/luck/main.js"></script>
 {{/section}}
 
+{{#> layouts/modal-layout type="gameScore" title="Submit Score" submitText="Submit" }}
+    {{#*inline "form-content"}}
+        {{> includes/game-submit-default }}
+    {{/inline}}
+{{/layouts/modal-layout}}

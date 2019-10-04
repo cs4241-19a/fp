@@ -38,7 +38,7 @@ async function getGame(gameId) {
 gameRouter.get("/:gameId", async function(req, res) {
     const gameContext = await getGame(req.params.gameId);
     if (gameContext) {
-        res.render(gameContext.path);
+        res.render(gameContext.path, gameContext);
     } else {
         res.render("not-found", {msg: "We apologise. This game does not exist."});
     }

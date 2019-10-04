@@ -10,7 +10,7 @@ const db = firebaseAdmin.firestore();
  * @returns Array[{Promise<{gameId: *, path: *, playCount: *, name: *}>}]
  */
 async function getGames() {
-    const gamesQuery = db.collection("games").orderBy('timesPlayed', 'desc');
+    const gamesQuery = db.collection("games").orderBy("timesPlayed", "desc");
     return await Promise.all(await gamesQuery.get()
         .then(snapshot => {
             return snapshot.docs.map(function(doc) {
@@ -29,7 +29,7 @@ async function getGames() {
             });
         })
         .catch(err => {
-            console.log('Error getting Game documents', err);
+            console.log("Error getting Game documents", err);
         }));
 }
 
