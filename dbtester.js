@@ -12,7 +12,10 @@ const testdata = [
 ];
 db.insertPings(testdata);
 
-let data = db.getData();
-console.log(data);
-for (let i = 0; i < data.length; i++) console.log(data);
+
+//example of calling getData
+db.getData(function (err, data) {
+    if (err) throw err;
+    console.log(data)
+});
 

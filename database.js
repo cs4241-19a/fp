@@ -1,38 +1,27 @@
-const mongoose = require('mongoose');
+const MongoClient = require('mongodb').MongoClient;
+const url = "mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASS + "@faviconmap-j8xwi.mongodb.net/FaviconMap?retryWrites=true&w=majority&authSource=admin";
 module.exports = function (callback) {
-    mongoose.connect("mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASS + "@faviconmap-j8xwi.mongodb.net/FaviconMap?retryWrites=true&w=majority",
-        {useNewUrlParser: true, useUnifiedTopology: true});
-    let Ping;
-    const db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error:'));
-    // db.once('open', function () {
-    console.log("Creating Schema!");
-    module.exports.PingSchema = new mongoose.Schema({
-        favicon: String,
-        rtt: Number,
-        ip: String
+    const client = new MongoClient(url, {useNewUrlParser: true, useUnifiedTopology: true});
+    client.connect().then(() => {
+        client.db('FaviconMap').createCollection('pings')
     });
-    Ping = mongoose.model('Ping', module.exports.PingSchema);
 
-    // };
     return {
         // Data: [{favicon: "", rtt: 0, ip: ""}]
         insertPings: function (data) {
-            for (let i = 0; i < data.length; i++) {
-                let newPing = new Ping({favicon: data[i].favicon, rtt: data[i].rtt, ip: data[i].ip});
-                newPing.save();
-            }
-            callback()
+            client.connect(function (err, db) {
+                db.db('FaviconMap').collection('pings').insertMany(data).then(()=> {
+                    callback();
+                });
+            });
         },
         // returns [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}]
-        getData: function () {
-            let allData = [];
-            Ping.find().exec(function (err, data) {
-                allData.concat(data);
-                // console.log("Got data:");
-                // console.log(data);
+        getData: function (cb) {
+            client.connect(function (err, db) {
+                db.db('FaviconMap').collection('pings').find().toArray(function (err, result) {
+                    cb(err, result);
+                });
             });
-            return allData;
         }
     };
 };
