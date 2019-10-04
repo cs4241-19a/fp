@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <title>Music App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="stylesheets/style.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href = 'https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css' rel="stylesheet">
+    <link href='https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css' rel="stylesheet">
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
     <script
             crossorigin="anonymous"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="stylesheets/style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <title>Music App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -52,8 +54,13 @@
                     </tbody>
                 </table>
             </div>
-            <label class = "side-container" for="exampleFormControlTextarea1">Caption</label>
-            <textarea class="form-control" id="exampleFormControlTextarea2" rows="3">Write a note about the song here</textarea>
+            <label class="side-container" for="exampleFormControlTextarea1">Caption</label>
+            <textarea class="form-control" id="exampleFormControlTextarea2"
+                      rows="3">Write a note about the song here</textarea>
+            <div class="mt-2">
+                <div id="rating"></div>
+            </div>
+
             <div class="post">
                 <button class="btn btn-danger" type="button">Post</button>
             </div>
@@ -88,6 +95,9 @@
                     "artist: " + artistName + "\n\t\t" +
                     "id: " + idNumber + "\n\t\t" )
     });
+    $(function () {
+        $("#rating").rateYo()
+    })
 </script>
 
 <script src="js/createPlayer.js"></script>
