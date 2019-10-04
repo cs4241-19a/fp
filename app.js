@@ -37,7 +37,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 
 app.use(express.static("public"));
-// app.use("/scripts", express.static(__dirname + "/node_modules/"));
+app.use("/scripts", express.static(__dirname + "/node_modules/"));
 
 app.use(bodyParser.json());         // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
