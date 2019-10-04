@@ -238,27 +238,35 @@ app.get("/recommendation", function (req, res) {
             const db = client.db('MusicApp')
             const collection = db.collection('recommendations')
 
-            const response = {}
-            collection.find({}).toArray(function (err, result) {
-                if (err) throw err;
-                console.log("potatoes!!")
-                result.forEach(function (element) {
-                    const temp = JSON.stringify(element)
-                    console.log("element: " + temp)
-                    if (temp.username == null)
-                        console.log("null username")
-                    else if (temp.tracknumber == null)
-                        console.log("null tracknumber")
-                    else if (temp.rating == null)
-                        console.log("null rating")
-                    else if (temp.caption == null)
-                        console.log("null caption")
-                    else
-                        response.add(temp)
-                })
-                console.log("response: " + response);
-                res.send(JSON.stringify(response))
-            });
+            let arr = []
+            collection.find({}).forEach(function (element) {
+                const temp = JSON.stringify(element)
+                //console.log("element: " + temp)
+
+                if (JSON.parse(temp).username == null)
+                    console.log("null username")
+                else if (JSON.parse(temp).tracknumber == null)
+                    console.log("null tracknumber")
+                else if (JSON.parse(temp).rating == null)
+                    console.log("null rating")
+                else if (JSON.parse(temp).caption == null)
+                    console.log("null caption")
+                else {
+                    let thingy = {}
+                    thingy.username = JSON.parse(temp).username
+                    thingy.tracknumber = JSON.parse(temp).tracknumber
+                    thingy.rating = JSON.parse(temp).rating
+                    thingy.caption = JSON.parse(temp).caption
+                    console.log(thingy)
+                    arr.push(thingy)
+                    /*console.log("unparsed: " + temp)
+                    arr.push(temp)
+                    console.log("parsed: " + JSON.parse(temp))
+                    //arr.push(JSON.parse(temp))*/
+                }
+            })
+            console.log("response: " + arr + ", length: " + arr.length);
+            res.send(JSON.stringify(arr))
         })
     })
 })

@@ -39,9 +39,10 @@
         <div class="col-4 side-container">
             <label class="side-container" for="exampleFormControlTextarea1">Search for a Song to Recommend</label>
             <form class="form-inline my-2 my-lg-0">
-                <input aria-label="Search" class="form-control mr-sm-2" placeholder="Search" type="search">
+                <!--input aria-label="Search" class="form-control mr-sm-2" placeholder="Search" type="search"-->
                 <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
             </form>
+            <button id = "songSearch" class="btn btn-outline-danger my-2 my-sm-0" >Search</button>
             <table class="table table-striped table-dark" id="paginatedTable">
                 <thead>
                 <tr>
@@ -70,7 +71,7 @@
             </table>
             <label class="side-container" for="exampleFormControlTextarea1">Caption</label>
             <textarea class="form-control" id="exampleFormControlTextarea1"
-                      rows="3">Write a note about the song here</textarea>
+                      rows="3" placeholder="Write a note about the song here"></textarea>
             <div class="post">
                 <button class="btn btn-danger" type="button">Post</button>
             </div>
