@@ -78,3 +78,7 @@ img {
 .table tbody tr.highlight td {
     background-color: #ddd;
 }
+#current-track {
+    width: 83px;
+    height: 75px;
+}

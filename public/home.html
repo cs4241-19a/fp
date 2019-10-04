@@ -11,16 +11,23 @@
             crossorigin="anonymous"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+
+    <script type="text/javascript" src="tracks.js"></script>
+    <script type="text/javascript" src="search.js"></script>
+
     <title>Music App</title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <img alt="Application Logo"
-         class="logo mt-2"
-         src="images/music.png">
+    <img class="logo mt-2"
+         src="images/music.png"
+         alt="Application Logo">
     <a class="navbar-brand" href="#">Music App</a>
-    <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
-            data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -36,14 +43,14 @@
     </div>
 </nav>
 <div class="container">
-    <div class="row">
+     <div class="row">
         <div class="col-4 side-container">
             <label class="side-container" for="exampleFormControlTextarea1">Search for a Song to Recommend</label>
             <form class="form-inline my-2 my-lg-0">
                 <input id = "songName" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
             </form>
-            <label class="side-container" for="exampleFormControlTextarea1">Caption</label>
+            <button id = "songSearch" class="btn btn-outline-danger my-2 my-sm-0" >Search</button>
+            </form>
             <div class="table-wrapper-scroll-y my-custom-scrollbar">
                 <table id = "paginatedTable" class="table table-dark">
                     <tbody>
@@ -90,7 +97,7 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-title" id="current-track-name">Song Name, Artist, Album</h5>
-                    <img alt="image of song cover" id="current-track"/>
+                    <img src="images/songnotfound.png" alt="image of song cover" id="current-track"/>
                     <p class="card-text">Recommendation note</p>
                     <a class="btn btn-primary" href="#" onclick="play()">Play</a>
                     <a class="btn btn-primary" href="#" onclick="pause()">Pause</a>
