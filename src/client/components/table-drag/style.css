@@ -12,6 +12,10 @@
     border-collapse: collapse;
 }
 
+.table-drag-select td.best-time {
+    border-color: #4287f5;
+}
+
 .table-drag-select td.major-row {
     margin-bottom: 10px;
     padding-bottom: 10px;

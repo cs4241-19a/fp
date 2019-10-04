@@ -11,3 +11,7 @@
 section {
     padding: 65px 0;
 }
+
+input {
+    margin: .4rem;
+}

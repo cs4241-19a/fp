@@ -22,6 +22,7 @@ export default class FillOut extends React.Component {
       ["", "1010", "1110"]
     ];
 
+    // TODO: make this pull from url
     this.state.users.push(props.currentUser);
     const rows = this.state.cells.length;
     const cols = this.state.cells[0].length;

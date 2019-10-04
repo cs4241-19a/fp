@@ -12,8 +12,10 @@ export default class Viewer extends React.Component {
       max_count: -1000000,
       current_cell: [0, 0],
       current_cell_value: "",
-      gradient_array: []
+      gradient_array: [],
+      active_users: []
     };
+    this.state.active_users = new Array(this.props.users.length).fill(true);
     const rows =
       1 +
       2 * (this.props.endTime - this.props.startTime) +
@@ -22,8 +24,6 @@ export default class Viewer extends React.Component {
     this.state.free_count = new Array(rows)
       .fill("")
       .map(() => new Array(cols).fill(""));
-    console.log(this.props.cells);
-    console.log(this.state.free_count);
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
         const current_count = this.props.cells[i][j].count("1");
@@ -34,8 +34,6 @@ export default class Viewer extends React.Component {
         this.state.free_count[i][j] = current_count;
       }
     }
-    console.log(this.state.min_count);
-    console.log(this.state.max_count);
     this.state.gradient_array = computeGradient(0, this.state.max_count);
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
@@ -92,6 +90,54 @@ export default class Viewer extends React.Component {
     this.setState({ mouse_in: false });
   };
 
+  updateGrid = () => {
+    console.log("updating grid");
+    const rows = this.props.cells.length;
+    const cols = this.props.cells[0].length;
+    let free_count = new Array(rows).fill(0).map(() => new Array(cols).fill(0));
+    let min_count = 10000,
+      max_count = -10000;
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        const current_cell = this.props.cells[i][j];
+        const current_count = 0;
+        for (let k = 0; k < current_cell.length; k++) {
+          if (current_cell[k] === "1" && this.state.active_users[k]) {
+            current_count += 1;
+          }
+        }
+        if (current_count < min_count) {
+          min_count = current_count;
+        }
+        if (current_count > max_count) {
+          max_count = current_count;
+        }
+        free_count[i][j] = current_count;
+      }
+    }
+
+    console.log(free_count);
+    console.log(max_count);
+
+    const gradient_array = computeGradient(0, max_count);
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        free_count[i][j] = gradient_array[free_count[i][j]];
+      }
+    }
+
+    this.setState({ gradient_array, free_count, min_count, max_count });
+  };
+
+  handleCheckbox = e => {
+    const id = e.target.name;
+    const isChecked = e.target.checked;
+    const active_users = this.state.active_users;
+    active_users[id] = isChecked;
+    this.setState({ active_users });
+    this.updateGrid();
+  };
+
   renderPeople() {
     return this.props.users.map((user, index) => {
       const [i, j] = this.state.current_cell;
@@ -101,11 +147,26 @@ export default class Viewer extends React.Component {
       if (!this.state.mouse_in) {
         text_color = "";
       }
-      return <li class={text_color}>{user}</li>;
+      return (
+        <div>
+          <input
+            name={index}
+            id={user}
+            type="checkbox"
+            checked={this.state.active_users[index]}
+            className={text_color}
+            onChange={this.handleCheckbox}
+          />
+          <label for={user} className={text_color}>
+            {user}
+          </label>
+        </div>
+      );
     });
   }
 
   renderAvailabilityGradient() {
+    const num_active = this.state.active_users.filter(Boolean).length;
     return (
       <div class="row">
         <div class="col-lg-4 text-right">
@@ -116,14 +177,15 @@ export default class Viewer extends React.Component {
             <tbody>
               <tr>
                 {this.state.gradient_array.map((color, index) => {
-                  return <td bgcolor={color}></td>;
+                  const cName = color === "#339900" ? "best-time" : "";
+                  return <td className={cName} bgcolor={color}></td>;
                 })}
               </tr>
             </tbody>
           </table>
         </div>
         <div class="col-lg-4">
-          {this.state.max_count}/{this.props.users.length} Available
+          {this.state.max_count}/{num_active} Available
         </div>
       </div>
     );
@@ -133,7 +195,7 @@ export default class Viewer extends React.Component {
     let availability_print = this.state.mouse_in
       ? this.state.current_cell_value.count("1") +
         "/" +
-        this.props.users.length +
+        this.state.active_users.filter(Boolean).length +
         " Available"
       : "  ";
     return (
@@ -141,7 +203,8 @@ export default class Viewer extends React.Component {
         <div class="row">
           <div class="col-lg-3">
             <h2>Individual Availability</h2>
-            <ul>{this.renderPeople()}</ul>
+            {/* <ul>{this.renderPeople()}</ul> */}
+            {this.renderPeople()}
           </div>
           <div class="col-lg-9" id="table-view">
             <h2 class="text-center">Group Availability</h2>
@@ -257,5 +320,6 @@ const computeGradient = function(min, max) {
     gradient_out.push(hexCode);
   }
   //   console.log(gradient_out);
+  // gradient_out[gradient_out.length - 1] = "#4287f5";
   return gradient_out;
 };
