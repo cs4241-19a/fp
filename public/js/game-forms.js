@@ -6,7 +6,6 @@
  * @param {function} handelResponse The callback for when the fetch is done.
  */
 function submitGameData(e, gameData, handelResponse) {
-    // TODO: check if user is logged in.
     if (auth.currentUser == null) {
         console.log("no user!");
         remoteHandel = () => {$("#gameScoreFormModal").modal("show")};  // should get called after successful sign in
@@ -56,13 +55,3 @@ function attachHeading(text) {
 function attachSubmit(data, handelResponse) {
     document.getElementById("gameScoreSubmitBtn").onclick = e => submitGameData(e, data, handelResponse);
 }
-
-// using embedded gameId from backend
-// /**
-//  * Get gameId from url.
-//  * @author: jk
-//  * @returns {string} The gameId.
-//  */
-// function getGameId() {
-//     return window.location.pathname.split("/").filter(s => s !== "").pop();
-// }
