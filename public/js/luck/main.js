@@ -131,10 +131,19 @@ function gaussRandom() {
     return u * c;
 }
 
+/**
+ * Calculate the percentage from the mean linearly.
+ * @param number The number generated.
+ * @returns {number} The luck percentage.
+ */
 function getLuck(number) {
     return (100 * Math.abs(mean - number) / mean);
 }
 
+/**
+ * Average the luck over the number of readings.
+ * @returns {number} The average Luck percentage.
+ */
 function getAvgLuck() {
     if (readingsLeft !== startReadings) {
         return totalLuck / (startReadings - readingsLeft);

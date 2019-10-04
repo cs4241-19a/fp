@@ -4,8 +4,15 @@ const gameDataRouter = express.Router();
 const firebaseAdmin = require("firebase-admin");
 const db = firebaseAdmin.firestore();
 
-async function addScoreDefault(gameId, score, userId) {
-    const scoreDoc = db.collection("games").doc(gameId).collection('scores').add({
+/**
+ * Create a score document in the score subcollection given of the game.
+ * @param gameId The id of the game the score is for.
+ * @param score The score.
+ * @param userId The uid of the player.
+ * @returns {Promise<FirebaseFirestore.DocumentReference>} The score document that was just created.
+ */
+function addScoreDefault(gameId, score, userId) {
+    return db.collection("games").doc(gameId).collection('scores').add({
         score,
         user: "users/" + userId,
         timestamp: firebaseAdmin.firestore.Timestamp.now(),
