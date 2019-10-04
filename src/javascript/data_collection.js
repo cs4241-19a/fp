@@ -52,7 +52,7 @@ const runCycle = async function () {
 		const domain = domains[i];
 		await ping(domain.domain)
 				.then(pingTime => {
-					localData[domain.name].push(pingTime);
+					localData[`${domain.name} (${domain.rank})`].push(pingTime);
 					newData.push({favicon: domain.name, rtt: pingTime});
 				})
 				.catch(console.log);
@@ -114,7 +114,8 @@ document.body.onload = () => {
 	}
 
 	for (let i = 0; i < domains.length; i++) {
-		localData[domains[i].name] = [];
+		const d = domains[i];
+		localData[`${d.name} (${d.rank})`] = [];
 	}
 
 	socket.emit('getData');
@@ -122,7 +123,7 @@ document.body.onload = () => {
 	socket.on('sendData', data_display.displayMap);
 
 	const zero_bar = {};
-	domains.forEach(d => zero_bar[d.name] = 0);
+	domains.forEach(d => zero_bar[`${d.name} (${d.rank})`] = 0);
 
 	data_display.initializeBar();
 	data_display.displayBar(zero_bar);
