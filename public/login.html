@@ -25,9 +25,10 @@
     <form action='/login' method='post'>
         <div class="form-group">
             <label for="username">Username</label>
-            <input class="form-control col-12" id="username"
-                   name='username' pattern=".{0}|.{4,15}" required
-                   title="Username should be between 4 - 15 characters" type='text'/>
+            <input autofocus class="form-control col-12"
+                   id="username" name='username' pattern=".{0}|.{4,15}"
+                   required title="Username should be between 4 - 15 characters"
+                   type='text'/>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
