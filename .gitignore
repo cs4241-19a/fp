@@ -91,3 +91,4 @@ typings/
 
 .idea/*
 package-lock.json
+my_db/*
