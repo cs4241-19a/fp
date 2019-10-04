@@ -140,4 +140,14 @@ document.body.onload = () => {
 	data_display.initializeBar();
 	data_display.displayBar(zero_bar);
 	data_display.displayBar(zero_bar); // Note: bar chart has an issue where it doesn't display first call
+
+	document.querySelector("#collect_location_button").onclick = () =>	{
+		navigator.geolocation.getCurrentPosition(position => {
+			// Approximately accurate within 6 miles
+			socket.emit('postPosition', {
+				lat: position.coords.latitude.toFixed(2),
+				lng: position.coords.longitude.toFixed(2)
+			})
+		});
+	}
 };

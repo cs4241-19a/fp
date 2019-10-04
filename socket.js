@@ -40,5 +40,7 @@ module.exports = function (io) {
 		});
 
 		socket.on('getData', () => db.getData((err, res) => socket.emit('sendData', res)));
+
+		socket.on('postPosition', console.log );
 	});
 };
