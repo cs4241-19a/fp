@@ -74,14 +74,13 @@ function createPlayer(_token) {
             }
         })
     }
+}
+function pause() {
+    player.pause().then(() => {
+        console.log('Paused!')
+    })
+}
 
-    function pause() {
-        player.pause().then(() => {
-            console.log('Paused!')
-        })
-    }
-
-    function play() {
-        getAudio(playerData.device_id)
-    }
+function play() {
+    getAudio(playerData.device_id)
 }
