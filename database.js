@@ -9,21 +9,23 @@ module.exports = function (callback) {
     return {
         // Data: [{favicon: "", rtt: 0, ip: ""}]
         insertPings: function (data) {
-            client.connect(function (err, db) {
-                db.db('FaviconMap').collection('pings').insertMany(data).then(() => {
-                    callback();
-                });
-            });
+            // client.connect(function (err, db) {
+            //     db.db('FaviconMap').collection('pings').insertMany(data).then(() => {
+            //         callback();
+            //     });
+            // });
+            callback();
         },
         // returns [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}]
         getData: function (cb) {
             client.connect(function (err, db) {
-                db.db('FaviconMap').collection('pings').aggregate(
+                db.db('FaviconMap').collection('pings').aggregate([
                     { $match: { } },
-                    { $group: { "_id": { "favicon": "favicon", "city": "city"},
+                    { $group: { "_id": { "favicon": "$favicon", "city": "$city"},
                             count: { $sum: 1 },
                             avg_rtt: { $avg: "$rtt"},
-                            max_rtt: { $max: "rtt" } } }).toArray((err, res) => {
+                            max_rtt: { $max: "$rtt" } } }]).toArray((err, res) => {
+                                console.log(res);
                                 cb(err, res);
                             });
             });
