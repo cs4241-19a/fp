@@ -9,7 +9,12 @@ function submitGameData(e, gameData, handelResponse) {
     if (auth.currentUser == null) {
         console.log("no user!");
         remoteHandel = () => {$("#gameScoreFormModal").modal("show")};  // should get called after successful sign in
+        document.querySelector("#game-submit-alert > span").textContent = "Please sign in to submit your score.";
+        document.getElementById("game-submit-alert").classList.remove("d-none");
         return false;
+    } else {
+        document.querySelector("#game-submit-alert > span").textContent = "";
+        document.getElementById("game-submit-alert").classList.add("d-none");
     }
     const url = "/submit/games/" + GAMEID;
     const data = JSON.stringify({userId: auth.currentUser.uid, ...gameData});
