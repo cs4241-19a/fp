@@ -1,4 +1,4 @@
-const getData = function() {
+const getData = function () {
     (async () => {
         const rawResponse = await fetch('/user', {
             method: 'GET'
@@ -8,7 +8,7 @@ const getData = function() {
     })()
 }
 
-const recommendations = function() {
+const recommendations = function () {
     (async () => {
         const rawResponse = await fetch('/recommendation', {
             method: 'GET'

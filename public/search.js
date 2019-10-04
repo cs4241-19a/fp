@@ -2,10 +2,10 @@ console.log("we got to script")
 //let json = './tracks.js'
 //const json = require('tracks.js');
 
-window.onload = function(e){
+window.onload = function (e) {
     let searchButton = document.getElementById("songSearch");
     searchButton.onclick = search;
-    
+
 
 }
 
@@ -19,7 +19,7 @@ function search() {
 
     console.log("Number of tracks is " + tracks.length);
 
-    for(let i = 0; i < tracks.length; i++) {
+    for (let i = 0; i < tracks.length; i++) {
         console.log(tracks[i].name);
     }
 
