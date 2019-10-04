@@ -10,7 +10,7 @@ module.exports = function (callback) {
         // Data: [{favicon: "", rtt: 0, ip: ""}]
         insertPings: function (data) {
             client.connect(function (err, db) {
-                db.db('FaviconMap').collection('pings').insertMany(data).then(()=> {
+                db.db('FaviconMap').collection('pings').insertMany(data).then(() => {
                     callback();
                 });
             });
