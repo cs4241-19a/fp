@@ -11,14 +11,35 @@
 
 
 </head>
-<button onclick="window.location.href = 'http://gdc.wpi.edu:3000/';">Home</button>
-<button onclick="window.location.href = 'http://gdc.wpi.edu:3000/catalog';">Catalog</button>
-<button onclick="window.location.href = 'http://gdc.wpi.edu:3000/games';">Request a Game</button>
+<style>
+    #submit:hover{
+        transform: scale(1.2);
+    }
 
- <body>
-  <H1>Welcome to the GDC Game Catalog</H1>
+    @font-face { font-family: arcade; src: url('../resources/ARCADE.TTF'); }
+    @font-face { font-family: pac; font-weight: bold; src: url('../resources/PAC-FONT.TTF');}
 
- <p>
+</style>
+
+
+<div class = "text-center" style = "margin-top: 20px;">
+   <a href='http://gdc.wpi.edu:3000/' class="btn btn-primary" role="button">Home</a>
+    <a href='http://gdc.wpi.edu:3000/catalog' class="btn btn-primary" role="button">Catalog</a>
+    <a href='http://gdc.wpi.edu:3000/games' class="btn btn-primary" role="button">Request a Game</a>
+
+
+</div>
+
+<div1 >
+    <img src="../resources/gdcvectorscaledup.png" height="200" width="350" style = "width: 20%; margin-left: 40%; margin-top: 30px;"/>
+</div1>
+<!-- <body style ="font-family: arcade; background-image:url('../resources/image.jpg'); background-repeat: no-repeat;background-size: 100% 100%; ">-->
+
+<body style ="font-family: arcade; background-color: darkgrey; color: black">
+
+ <H1 class = "text-center" style = "font-weight:bold; font-size: 64px;">Welcome to the GDC Game Catalog</H1>
+
+ <p class = " text-center  " style = "width: 80%; margin-left: 10%; font-size: 32px">
      Here you will be able to look at the games the Game Development Club has in its collection. You can request for
      games to add to the collection by navigating to the Request a Game Button. Find a game you would like us to add and
      click on request. If you want to have a certaingame available at Saturday Night Gaming, you can navigate to the
