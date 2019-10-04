@@ -81,9 +81,12 @@
     let curSong = '';
     $('#paginatedTable').on('click', 'tbody tr', function(event) {
         $(this).addClass('highlight').siblings().removeClass('highlight');
-        console.log("table row has been clicked")
-        curSong = $(this).innerText;
-        console.log("cur song is " + curSong)
+        let songName = $(this).find('td:eq(0)').html();
+        let artistName = $(this).find('td:eq(1)').html();
+        let idNumber = $(this).find('td:eq(2)').html();
+        console.log("currently selected song: " + songName + "\n\t\t" +
+                    "artist: " + artistName + "\n\t\t" +
+                    "id: " + idNumber + "\n\t\t" )
     });
 </script>
 

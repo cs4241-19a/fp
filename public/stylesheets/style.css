@@ -82,3 +82,6 @@ img {
     width: 83px;
     height: 75px;
 }
+.hidden-data {
+    visibility: hidden;
+}

@@ -48,6 +48,7 @@ function search(json) {
         $("tbody").append("<tr>" +
             "                   <td>" + tracks[i].name + "</td>\n" +
             "                   <td>" + tracks[i].artists[0].name + "</td>" +
+            "                   <td class = 'hidden-data'>" + tracks[i].artists[0].id + "</td>" +
             "             </tr>"
         )
     }
