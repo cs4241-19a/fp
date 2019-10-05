@@ -36,6 +36,7 @@ const login = async function( e ) {
  * Input: none (retrieves information from form values and creates a base, empty user)
  * Output: none (creates a new account, can be used to redirect to login form or to "dashboard.html")
 */
+
 const create = async function( e ) {
   e.preventDefault();
 
@@ -78,4 +79,7 @@ const create = async function( e ) {
 window.onload = function() {
   const loginButton = document.getElementById('login-btn');
   loginButton.onclick = login;
+  
+  const registerButton= document.getElementById('register-btn');
+  registerButton.onclick=create;
 };
