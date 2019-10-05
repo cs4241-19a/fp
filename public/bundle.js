@@ -44540,7 +44540,7 @@ var app = new PIXI.Application({
   backgroundColor: 0x00FFFF
 });
 var loader = new PIXI.Loader();
-document.body.appendChild(app.view);
+document.getElementById("pixi").appendChild(app.view);
 var paw = PIXI.Sprite.from('images/cat.png');
 var dog = PIXI.Sprite.from('images/dog.png');
 var finish = PIXI.Sprite.from('images/finish.png');
