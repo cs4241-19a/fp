@@ -21,6 +21,12 @@ time, mark, audio, video {
 	font-weight: inherit;
 }
 
+
+#selected_favicon_display {
+	fill: #0367A6;
+	font: bold 30px sans-serif;
+}
+
 h1 {
 	font-size:150%;
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;

@@ -9,7 +9,7 @@ let projection = null;
 let maxRtt = 100;
 let minRtt = 0;
 let data = [{favicon: "Facebook", avg_rtt: 20, city: "Boston", lat: 42.3601, lng: -71.0589}, {favicon: "Google", avg_rtt: 75, city: "LA", lat: 34.0522, lng: -118.2437}]
-let currentFavicon = "Google"
+let currentFavicon = "Google";
 
 // data = [{favicon: '', avg: 0.0}]
 let bar_initialized = false;
@@ -90,7 +90,7 @@ const displayBar = function (raw_data) {
 
     //Add Headlines
     newRow.append("text")
-        .attr("class","category")
+        .attr("class", "category")
         .attr("text-overflow","ellipsis")
         .attr("y", y.bandwidth()/2)
         .attr("x", categoryIndent)
@@ -99,6 +99,7 @@ const displayBar = function (raw_data) {
         .attr("dx","0.5em")
         .on("click", d => {
             currentFavicon = d.key.split(" ")[0];
+            document.querySelector("#selected_favicon_display").textContent = d.key.split(" ")[0];
             updateMap();
         })
         .text(function(d){return d.key});
@@ -160,6 +161,14 @@ const setupMap = function(width, height){
         .append("svg")
         .attr("width", width)
         .attr("height", height);
+
+    svg.append('text')
+        .attr("id", "selected_favicon_display")
+        .attr("dominant-baseline", "hanging")
+        .attr("text-anchor", "center")
+        .attr("y", 25)
+        .attr("x", width/2 - 60)
+        .text(currentFavicon);
 
 
     d3.json("us-named.topojson").then(us => {
