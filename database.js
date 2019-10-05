@@ -44,7 +44,26 @@ module.exports = function () {
         // returns [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}]
         getData: function () {
             return new Promise((resolve, reject) => {
-                PingsCollection().then(col => resolve(col.find().toArray())).catch(error => reject(error))
+                PingsCollection().then(col =>
+                    col.aggregate([
+                        {$match: {}},
+                        {
+                            $group: {
+                                "_id": {"favicon": "$favicon", "city": "$city"},
+                                count: {$sum: 1},
+                                lat: {$avg: "$lat"},
+                                lng: {$avg: "$lng"},
+                                avg_rtt: {$avg: "$rtt"},
+                                max_rtt: {$max: "$rtt"}
+                            }
+                        }]).toArray((err, res) => {
+                        res.forEach(d => {
+                            d.favicon = d._id.favicon;
+                            d.city = d._id.city
+                        });
+                        resolve(res);
+                    })
+                )
             });
         }
     };
