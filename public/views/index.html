@@ -6,11 +6,55 @@
     <link type="text/css" rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
     <script src="../js/click.js"></script>
+    <script src="../js/scripts.js"></script>
 </head>
 <body>
-    <div class="container">
-        <button class="main-button" onclick="mainClick()">Click This!</button>
+    <div id="leaderboard-button">
+        <button>Leaderboard</button>
+    </div>
+
+    <div id="main-button-container">
+        <button id="main-button" onclick="mainClick()">Click This!</button>
         <p class="point">+1</p>
     </div>
+
+    <div id="login">
+        <h2>Please login!</h2>
+        <h3>If you haven't played before, this will create your username and password.</h3>
+        <h3>Make sure to remember your login info so you can continue your play session!</h3>
+        <form action="">
+            <div class="input">
+                <label for="login-username" class="label">Username:</label>
+                <input type='text' id='login-username' required>
+            </div>
+
+            <div class="input">
+                <label for="password" class="label">Password:</label>
+                <input type='text' id='password' required>
+            </div>
+
+            <div id="login-button">
+                <button>Login</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="table">
+        <h2>Leaderboard</h2>
+        <table id="leaderboard"></table>
+    </div>
 </body>
+
+<script>
+
+    window.onload = function() {
+        const viewLeaderboardButton = document.getElementById( 'leaderboard-button' );
+        viewLeaderboardButton.onclick = viewLeaderboard;
+
+        const loginButton = document.getElementById( 'login-button' );
+        loginButton.onclick = login;
+    }
+
+</script>
+
 </html>
