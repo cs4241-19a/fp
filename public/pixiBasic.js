@@ -13,11 +13,8 @@ let time = 0;
 let start = false;
 let startText = new PIXI.Text('Select a character to begin',{fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'});
 let pixiTimer = new PIXI.Text("time:" + time.toString(),{fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'});
-let victory = new PIXI.Text("You Win!! Your final time was: "+ time.toString(),{fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'});
 app.stage.addChild(startText);
 app.stage.addChild(pixiTimer);
-app.stage.addChild(victory);
-victory.visible = false;
 pixiTimer.visible = false;
 let count = 0;
 let fallDone = true;
@@ -81,6 +78,8 @@ app.ticker.add(function(delta) {
     if(start) {
         pixiTimer.visible = true;
         if(collisionDetect(activeChar, finish)){
+            let victory = new PIXI.Text("You Win!! Your final time was: "+ time.toString(),{fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'});
+            app.stage.addChild(victory);
             pixiTimer.visible = false;
             victory.visible = true;
             start = false;
