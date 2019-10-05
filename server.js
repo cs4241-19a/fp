@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const compression = require('compression');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const flash = require('connect-flash');
+const sessions = require('express-session');
 const pouchdb = require('pouchdb');
 pouchdb.plugin(require('pouchdb-upsert'));
 const db = new pouchdb('my_db');
@@ -13,13 +15,14 @@ let port = process.env.PORT || 3000;
 let User = [];
 
 const app = express();
+app.use(flash());
 app.use(helmet());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(compression());
 
 app.use(express.static('public'));
-//app.use(sessions({secret: '{secret}', name: 'session_id', saveUninitialized: true, resave: true}));
+app.use(sessions({secret: '{secret}', name: 'session_id', saveUninitialized: true, resave: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -28,19 +31,11 @@ app.get('/', function (request, response) {
     response.sendFile(__dirname + '/views/login.html');
 });
 
-app.get('/index', function (request, response) {
+app.get('/login', function (request, response) {
     'use strict';
-    response.sendFile(__dirname + '/views/index.html');
+    response.sendFile(__dirname + '/views/login.html');
 });
 
-app.get('/signup', function (request, response) {
-    'use strict';
-    response.sendFile(__dirname + '/views/signup.html');
-});
-
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-});
 app.get('/leaderboard', function (request, response) {
     'use strict';
     response.sendFile(__dirname + '/views/leaderboard.html');
@@ -66,35 +61,42 @@ app.get('/getLeaderboardData', function (request, response) {
     response.send(leaderboardData);
 });
 
-app.post('/login', passport.authenticate('local', { successRedirect: '/',
-    failureRedirect: '/login' }));
+app.post('/login', passport.authenticate('local', {
+    successRedirect: '/index', failureRedirect: '/', failureFlash: 'Invalid username or password'
+}));
 
-passport.deserializeUser(function(id, done) {
-    User.findById(id, function (err, user) {
-        done(err, user);
-    });
+app.get('/index', function (request, response) {
+    'use strict';
+    response.sendFile(__dirname + '/views/index.html');
 });
 
-passport.use(new LocalStrategy({
-        usernameField: 'email',
-        passwordField: 'passwd',
-        session: false
-    },
-    function(username, password, done) {
-        User.findOne({ username: username }, function (err, user) {
-            if (err) { return done(err); }
-            if (!user) { return done(null, false); }
-            if (!user.verifyPassword(password)) { return done(null, false); }
-            return done(null, user);
-        });
-    }
-));
+app.get('/signup', function (request, response) {
+    'use strict';
+    response.sendFile(__dirname + '/views/signup.html');
+});
 
-app.post('/login',
-    passport.authenticate('local', { successRedirect: '/index',
-        failureRedirect: '/',
-        failureFlash: 'Invalid username or password' })
-);
+passport.serializeUser((user, done) => done(null, user.username));
+
+passport.deserializeUser((username, done) => {
+    const user = User.find(u => u.username === username);
+    console.log('deserializing:', username);
+    if (user !== undefined) {
+        done(null, user)
+    } else {
+        done(null, false, {message: 'user not found; session not restored'})
+    }
+});
+
+passport.use(new LocalStrategy(function (username, password, done) {
+    const user1 = User.find(user => user.username === username);
+    if (!user1) {
+        return done(null, false, {message: "Incorrect user"});
+    } else if (user1.password === password) {
+        return done(null, {username, password});
+    } else {
+        return done(null, false, {message: "Incorrect password"});
+    }
+}));
 
 app.post('/createUser', function (req, res) {
     let newUser = req.body;
@@ -123,7 +125,7 @@ app.post('/createUser', function (req, res) {
 
 app.listen(port, function () {
     'use strict';
-    console.log(`Example app listening on port !`);
+    console.log(`Example app listening on port`, port);
 });
 
 db.get('users').catch(function (err) {
@@ -140,4 +142,3 @@ db.get('users').catch(function (err) {
 }).catch(err => {
     console.log(err);
 });
-
