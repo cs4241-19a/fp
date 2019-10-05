@@ -241,7 +241,4 @@ const updateMapData = function(newData) {
 	updateMap();
 };
 
-export default {displayBar, updateMap, initializeBar, updateMapData}
-
-setupMap(800, 500);
-
+export default {displayBar, updateMap, initializeBar, updateMapData, setupMap}
