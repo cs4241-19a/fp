@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js';
 //init basics
 let app = new PIXI.Application({ backgroundColor: 0x00FFFF });
 const loader = new PIXI.Loader();
-document.body.appendChild(app.view);
+document.getElementById("pixi").appendChild(app.view);
 let paw = PIXI.Sprite.from('images/cat.png');
 let dog = PIXI.Sprite.from('images/dog.png');
 let finish = PIXI.Sprite.from('images/finish.png');
