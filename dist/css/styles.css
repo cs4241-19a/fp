@@ -55,17 +55,18 @@ div.tooltip {
 	height:400px;
 }
 .bar{
-	fill:#eaeaea;
+	fill:#0367A5;
 }
 text.label{
-	fill: #0367A6;
-	color: #0367A6;
+	fill: #eaeaea;
+	color: #eaeaea;
 	font-size: 20px;
 	font-weight: bold;
 }
 text.category{
-	fill: #0367A6;
+	fill: white;
 	font-size: 14px;
+	cursor: pointer;
 }
 
 .row {

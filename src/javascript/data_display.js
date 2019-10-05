@@ -104,6 +104,7 @@ const displayBar = function (raw_data) {
         .attr("opacity",0)
         .attr("dy",".35em")
         .attr("dx","0.5em")
+        .on("click", d => {console.log(d.key.split(" ")[0])})
         .text(function(d){return d.key});
 
 
