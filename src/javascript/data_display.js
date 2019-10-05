@@ -8,8 +8,8 @@ let svg = null;
 let projection = null;
 let maxRtt = 100;
 let minRtt = 0;
-let data = []
-let currentFavicon = "Google"
+let data = [];
+let currentFavicon = "Google";
 
 // data = [{favicon: '', avg: 0.0}]
 let bar_initialized = false;
@@ -32,7 +32,7 @@ const initializeBar = function() {
         .range([0, height]).round([0.1, 0]);
 
     //Create SVG element
-    d3.select("#bar_chart").selectAll("svg").remove()
+    d3.select("#bar_chart").selectAll("svg").remove();
     bar_svg = d3.select("#bar_chart").append("svg")
         .attr("width", width)
         .attr("height", height)
@@ -106,7 +106,10 @@ const displayBar = function (raw_data) {
         .attr("opacity",0)
         .attr("dy",".35em")
         .attr("dx","0.5em")
-        .on("click", d => {console.log(d.key.split(" ")[0])})
+        .on("click", d => {
+            currentFavicon = d.key.split(" ")[0];
+            updateMap();
+        })
         .text(function(d){return d.key});
 
 
