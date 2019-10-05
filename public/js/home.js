@@ -1,3 +1,5 @@
+const MAXIMUM_ENTRIES_LOADED = 25
+
 const getData = function () {
     (async () => {
         const rawResponse = await fetch('/user', {
@@ -15,8 +17,12 @@ const getRecommendations = function () {
         })
         let res = await rawResponse.json()
         let list = document.getElementById("recommendation-list")
-        let i = 0;
-        res.forEach(function (element) {
+
+        let maxEntries = res.length
+        if (maxEntries > MAXIMUM_ENTRIES_LOADED) maxEntries = MAXIMUM_ENTRIES_LOADED
+
+        for (let i = 0; i < maxEntries; i++) {
+            let element = res[i]
             let songname = element.tracknumber //TODO: Replace with code getting song name from Spotify
             let username = element.username
             let rating = element.rating
@@ -41,8 +47,7 @@ const getRecommendations = function () {
                 `      <p class="card-text"><i>` + "\"" + caption + "\"" + `</i></p>\n` +
                 `   </div>\n` +
                 `</div>`;
-            i++
-        })
+        }
     })()
 }
 
