@@ -64,9 +64,10 @@
                         <div class="form__container">
                           <h2 style="color: #74cfae; font-size:48px "><strong>Register</strong><h2>
                             <div class="fieldset">
-                              <div class="field"><input id="firstlastname" class="input" type="name" placeholder="Your Username"
+                              <div class="field"><input id="name" class="input" type="name" placeholder="Your Username"
                                                           required></div>
-                                <div class="field"><input id="username" class="input" type="email" placeholder="E-mail Address"
+                                <!--        I'm assuming you want this id to be email, not username          -->
+                                <div class="field"><input id="email" class="input" type="email" placeholder="E-mail Address"
                                                           required></div>
                                 <div class="field"><input id="password" class="input" type="password" placeholder="Password" required>
                                 </div>
@@ -102,7 +103,37 @@
         </div>
     </div>
 </div>
+<!--Adding in server code-->
+<!--<script>
+const create = async function( e ) {
+      e.preventDefault();
 
+      const userData = {
+        username: document.getElementById( 'username' ).value,
+        password: document.getElementById( 'password' ).value,
+        //orders: []
+      };
+
+      try {
+        const resp = await fetch( '/createAccount', {
+          method:'POST',
+          body: JSON.stringify(userData),
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        const data = await resp.json();
+
+        if (data.status === true) {
+          //document.getElementById('account-creation-success').style.display = "block";
+          //viewLoginForm();
+        } else {
+          //document.getElementById('duplicate-account-error').style.display = "block";
+        }
+      } catch {}
+
+      return false;
+    };
+</script>-->
 <!-- JavaScript Libraries -->
 <script src="lib/jquery/jquery.min.js"></script>
 <script src="lib/bootstrap/js/bootstrap.min.js"></script>
@@ -111,6 +142,7 @@
 
 <!-- Template Main Javascript File -->
 <script src="js/login.js"></script>
+<!--<script src="js/register.js"></script>-->
 <script src="js/main.js"></script>
 
 </body>
