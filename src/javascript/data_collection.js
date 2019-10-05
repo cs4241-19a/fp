@@ -132,7 +132,7 @@ document.body.onload = () => {
 
 	socket.emit('getData');
 
-	socket.on('sendData', data_display.displayMap);
+	socket.on('sendData', data_display.updateMapData);
 
 	const zero_bar = {};
 	domains.forEach(d => zero_bar[`${d.name} (${d.rank})`] = {avg: 0, max: 0});
