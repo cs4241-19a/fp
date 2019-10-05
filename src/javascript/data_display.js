@@ -197,6 +197,7 @@ const setupMap = function(width, height){
 
 };
 
+// data = [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}]
 const updateMap = function() {
     let div = d3.select("body")
         .append("div")

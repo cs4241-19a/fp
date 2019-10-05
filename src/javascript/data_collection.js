@@ -90,13 +90,13 @@ const aggregateLocalData = () => {
 const stopCollection = function () {
 	stopped = true;
 	console.log("Collection stop");
-	document.querySelector("#start_collection_button").disabled = false;
+	document.querySelector("#start_collection_button_modal").disabled = false;
 	document.querySelector("#stop_collection_button").disabled = true;
 };
 
 const startCollection = async function () {
 	if (stopped) {
-		document.querySelector("#start_collection_button").disabled = true;
+		document.querySelector("#start_collection_button_modal").disabled = true;
 		document.querySelector("#stop_collection_button").disabled = false;
 		stopped = false;
 		console.log("Collection start");
