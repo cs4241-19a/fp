@@ -8,8 +8,8 @@ let svg = null;
 let projection = null;
 let maxRtt = 100;
 let minRtt = 0;
-let data = [];
-let currentFavicon = "Google";
+let data = [{favicon: "Facebook", avg_rtt: 20, city: "Boston", lat: 42.3601, lng: -71.0589}, {favicon: "Google", avg_rtt: 75, city: "LA", lat: 34.0522, lng: -118.2437}]
+let currentFavicon = "Google"
 
 // data = [{favicon: '', avg: 0.0}]
 let bar_initialized = false;
@@ -212,10 +212,7 @@ const setupMap = function(width, height){
 };
 
 // data = [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}]
-const updateMap = function(data) {
-
-    data = [{favicon: "Facebook", avg_rtt: 20, city: "Boston", lat: 42.3601, lng: -71.0589}, {favicon: "Google", avg_rtt: 75, city: "LA", lat: 34.0522, lng: -118.2437}];
-
+const updateMap = function() {
     let div = d3.select("body")
         .append("div")
         .attr('class', "tooltip")
