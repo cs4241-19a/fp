@@ -1,0 +1,15 @@
+<div class="container">
+    <h1>BRICK DESTROYER!</h1>
+    <div id="game-area"></div>
+</div>
+
+{{#section 'js'}}
+    <script src="/scripts/phaser/dist/phaser.js"></script>
+    <script src="/js/bdest/main.js"></script>
+{{/section}}
+
+{{#> layouts/modal-layout type="gameScore" title="Submit Score" submitText="Submit" }}
+    {{#*inline "form-content"}}
+        {{> includes/game-submit-default }}
+    {{/inline}}
+{{/layouts/modal-layout}}
