@@ -6,7 +6,7 @@ const express = require('express'),
     request = require('request'),
     cors = require('cors'),
     querystring = require('querystring'),
-    mongodb = require('mongodb'),
+    //mongodb = require('mongodb'),
     mongo = require('mongodb').MongoClient,
     bcrypt = require('bcrypt'),
     url = "mongodb+srv://root:admin@cluster0-qdoiu.azure.mongodb.net/test?retryWrites=true&w=majority",
@@ -238,28 +238,28 @@ app.get("/recommendation", function (req, res) {
             const db = client.db('MusicApp')
             const collection = db.collection('recommendations')
             collection.find({}).toArray().then(function (arr) {
-                let resp = []
-                arr.forEach( function (element) {
-                    const temp = JSON.parse(JSON.stringify(element))
-                    if (temp.username == null)
+                let response = []
+                arr.forEach(function (element) {
+                    const jaysawn = JSON.parse(JSON.stringify(element))
+                    if (jaysawn.username == null)
                         console.log("null username")
-                    else if (temp.tracknumber == null)
+                    else if (jaysawn.tracknumber == null)
                         console.log("null tracknumber")
-                    else if (temp.rating == null)
+                    else if (jaysawn.rating == null)
                         console.log("null rating")
-                    else if (temp.caption == null)
+                    else if (jaysawn.caption == null)
                         console.log("null caption")
                     else {
-                        let thingy = {
-                            username: temp.username,
-                            tracknumber: temp.tracknumber,
-                            rating: temp.rating,
-                            caption: temp.caption
+                        let entry = {
+                            username: jaysawn.username,
+                            tracknumber: jaysawn.tracknumber,
+                            rating: jaysawn.rating,
+                            caption: jaysawn.caption
                         }
-                        resp.push(thingy)
+                        response.push(entry)
                     }
                 })
-                res.send(JSON.stringify(resp))
+                res.send(JSON.stringify(response))
             })
         })
     })
