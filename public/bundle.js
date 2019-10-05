@@ -44535,38 +44535,76 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+//init basics
 var app = new PIXI.Application({
   backgroundColor: 0x00FFFF
 });
-var loader = new PIXI.Loader(); // you can also create your own if you want
-//Add the canvas that Pixi automatically created for you to the HTML document
-
-document.body.appendChild(app.view); // create a new Sprite from an image path
-
+var loader = new PIXI.Loader();
+document.body.appendChild(app.view);
 var paw = PIXI.Sprite.from('images/cat.png');
 var dog = PIXI.Sprite.from('images/dog.png');
+var finish = PIXI.Sprite.from('images/finish.png');
 var activeChar = paw;
 var tics = 0;
 var time = 0;
-var start = false; // center the sprite's anchor point
-// paw.anchor.set(0.5);
-// move the sprite to the center of the screen
+var start = false;
+var startText = new PIXI.Text('Select a character to begin', {
+  fontFamily: 'Arial',
+  fontSize: 24,
+  fill: 0xff1010,
+  align: 'center'
+});
+var pixiTimer = new PIXI.Text("time:" + time.toString(), {
+  fontFamily: 'Arial',
+  fontSize: 24,
+  fill: 0xff1010,
+  align: 'center'
+});
+var victory = new PIXI.Text("You Win!! Your final time was: " + time.toString(), {
+  fontFamily: 'Arial',
+  fontSize: 24,
+  fill: 0xff1010,
+  align: 'center'
+});
+app.stage.addChild(startText);
+app.stage.addChild(pixiTimer);
+app.stage.addChild(victory);
+victory.visible = false;
+pixiTimer.visible = false;
+var count = 0;
+var fallDone = true;
 
 function resetPaw() {
   paw.x = app.screen.width / 2;
   paw.y = app.screen.height / 2;
   paw.vx = 0;
   paw.vy = 0;
-} // center the sprite's anchor point
-// dog.anchor.set(0.5);
-// move the sprite to the center of the screen
-
+  time = 0;
+  tics = 0;
+}
 
 function resetDog() {
   dog.x = app.screen.width / 2;
   dog.y = app.screen.height / 2;
   dog.vx = 0;
   dog.vy = 0;
+  time = 0;
+  tics = 0;
+} //setup finish
+
+
+app.stage.addChild(finish);
+finish.anchor.set(1);
+finish.x = app.screen.width;
+finish.y = app.screen.height;
+finish.vx = 0;
+finish.vy = 0;
+finish.visible = true;
+
+function collisionDetect(a, b) {
+  var ab = a.getBounds();
+  var bb = b.getBounds();
+  return ab.x + ab.width > bb.x && ab.x < bb.x + bb.width && ab.y + ab.height > bb.y && ab.y < bb.y + bb.height;
 }
 
 document.getElementById("dogBut").addEventListener("click", function () {
@@ -44586,19 +44624,18 @@ document.getElementById("pawBut").addEventListener("click", function () {
   app.stage.addChild(activeChar);
   startText.visible = false;
   activeChar.visible = true;
-});
-var startText = new PIXI.Text('Select a character to begin', {
-  fontFamily: 'Arial',
-  fontSize: 24,
-  fill: 0xff1010,
-  align: 'center'
-});
-app.stage.addChild(startText);
-var count = 0;
-var fallDone = true; // Listen for animate update
+}); // animation loop running at 60 fps
 
 app.ticker.add(function (delta) {
   if (start) {
+    pixiTimer.visible = true;
+
+    if (collisionDetect(activeChar, finish)) {
+      pixiTimer.visible = false;
+      victory.visible = true;
+      start = false;
+    }
+
     if (up.isDown && count < 60 && fallDone) {
       activeChar.vy = -2;
       count++;
@@ -44625,10 +44662,10 @@ app.ticker.add(function (delta) {
 
     if (tics % 60 == 0) {
       time++;
-      document.getElementById("timer").innerHTML = "time: " + time.toString();
+      pixiTimer.text = "time:" + time.toString();
     }
   }
-});
+}); //create key handler
 
 function keyboard(value) {
   'use strict';
@@ -44638,7 +44675,7 @@ function keyboard(value) {
   key.isDown = false;
   key.isUp = true;
   key.press = undefined;
-  key.release = undefined; //The `downHandler`
+  key.release = undefined;
 
   key.downHandler = function (event) {
     if (event.key === key.value) {
@@ -44650,8 +44687,7 @@ function keyboard(value) {
       key.isUp = false;
       event.preventDefault();
     }
-  }; //The `upHandler`
-
+  };
 
   key.upHandler = function (event) {
     if (event.key === key.value) {
@@ -44663,13 +44699,12 @@ function keyboard(value) {
       key.isUp = true;
       event.preventDefault();
     }
-  }; //Attach event listeners
-
+  };
 
   var downListener = key.downHandler.bind(key);
   var upListener = key.upHandler.bind(key);
   document.addEventListener("keydown", downListener, false);
-  document.addEventListener("keyup", upListener, false); // Detach event listeners
+  document.addEventListener("keyup", upListener, false);
 
   key.unsubscribe = function () {
     window.removeEventListener("keydown", downListener);
@@ -44677,7 +44712,8 @@ function keyboard(value) {
   };
 
   return key;
-}
+} //setup input keys
+
 
 var left = keyboard("ArrowLeft"),
     up = keyboard("ArrowUp"),
@@ -44687,7 +44723,7 @@ var left = keyboard("ArrowLeft"),
     a = keyboard("a"),
     s = keyboard("s"),
     d = keyboard("d"),
-    j = keyboard("j");
+    j = keyboard("j"); //key functions
 
 left.press = function () {
   'use strict';

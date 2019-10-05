@@ -6,12 +6,19 @@ const loader = new PIXI.Loader();
 document.body.appendChild(app.view);
 let paw = PIXI.Sprite.from('images/cat.png');
 let dog = PIXI.Sprite.from('images/dog.png');
+let finish = PIXI.Sprite.from('images/finish.png');
 let activeChar = paw;
 let tics = 0;
 let time = 0;
 let start = false;
 let startText = new PIXI.Text('Select a character to begin',{fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'});
+let pixiTimer = new PIXI.Text("time:" + time.toString(),{fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'});
+let victory = new PIXI.Text("You Win!! Your final time was: "+ time.toString(),{fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'});
 app.stage.addChild(startText);
+app.stage.addChild(pixiTimer);
+app.stage.addChild(victory);
+victory.visible = false;
+pixiTimer.visible = false;
 let count = 0;
 let fallDone = true;
 
@@ -20,6 +27,8 @@ function resetPaw() {
     paw.y = app.screen.height / 2;
     paw.vx = 0;
     paw.vy = 0;
+    time = 0;
+    tics = 0;
 }
 
 function resetDog() {
@@ -27,6 +36,24 @@ function resetDog() {
     dog.y = app.screen.height / 2;
     dog.vx = 0;
     dog.vy = 0;
+    time = 0;
+    tics = 0;
+}
+
+//setup finish
+app.stage.addChild(finish);
+finish.anchor.set(1);
+finish.x = app.screen.width;
+finish.y = app.screen.height;
+finish.vx = 0;
+finish.vy = 0;
+finish.visible = true;
+
+function collisionDetect(a, b)
+{
+    let ab = a.getBounds();
+    let bb = b.getBounds();
+    return ab.x + ab.width > bb.x && ab.x < bb.x + bb.width && ab.y + ab.height > bb.y && ab.y < bb.y + bb.height;
 }
 
 document.getElementById("dogBut").addEventListener("click", function(){
@@ -52,6 +79,12 @@ document.getElementById("pawBut").addEventListener("click", function(){
 // animation loop running at 60 fps
 app.ticker.add(function(delta) {
     if(start) {
+        pixiTimer.visible = true;
+        if(collisionDetect(activeChar, finish)){
+            pixiTimer.visible = false;
+            victory.visible = true;
+            start = false;
+        }
         if (up.isDown && count < 60 && fallDone) {
             activeChar.vy = -2;
             count++;
@@ -73,7 +106,7 @@ app.ticker.add(function(delta) {
         tics++;
         if (tics % 60 == 0) {
             time++;
-            document.getElementById("timer").innerHTML = "time: " + time.toString();
+            pixiTimer.text = "time:" + time.toString();
         }
     }
 });
