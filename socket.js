@@ -73,16 +73,16 @@ module.exports = function (io) {
 			});
 		}
 	};
-	addFalseData();
-
-	setInterval(() => {
-		addFalseData();
-		update();
-	}, 2000);
+	// addFalseData();
+	//
+	// setInterval(() => {
+	// 	addFalseData();
+	// 	update();
+	// }, 2000);
 
 	const update = function() {
-		io.emit('sendData', falseData);
-		//db.getData((err, res) => io.emit('sendData', res));
+		// io.emit('sendData', falseData);
+		db.getData().then((data) => io.emit('sendData', data));
 	};
 
 	const db = require('./database')(update);
@@ -115,11 +115,11 @@ module.exports = function (io) {
 			const clientIpAddress = socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
 			data.forEach(d => d.ip = clientIpAddress);
 
-			db.insertPings(clientIpAddress);
+			db.insertPings(clientIpAddress).then();
 		});
 
-		//socket.on('getData', () => db.getData((err, res) => socket.emit('sendData', res)));
-		socket.on('getData', () => socket.emit('sendData', falseData));
+		socket.on('getData', () => db.getData().then(data => socket.emit('sendData', data)));
+		//socket.on('getData', () => socket.emit('sendData', falseData));
 
 		socket.on('postPosition', console.log );
 	});
