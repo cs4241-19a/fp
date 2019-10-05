@@ -44560,16 +44560,8 @@ var pixiTimer = new PIXI.Text("time:" + time.toString(), {
   fill: 0xff1010,
   align: 'center'
 });
-var victory = new PIXI.Text("You Win!! Your final time was: " + time.toString(), {
-  fontFamily: 'Arial',
-  fontSize: 24,
-  fill: 0xff1010,
-  align: 'center'
-});
 app.stage.addChild(startText);
 app.stage.addChild(pixiTimer);
-app.stage.addChild(victory);
-victory.visible = false;
 pixiTimer.visible = false;
 var count = 0;
 var fallDone = true;
@@ -44631,6 +44623,13 @@ app.ticker.add(function (delta) {
     pixiTimer.visible = true;
 
     if (collisionDetect(activeChar, finish)) {
+      var victory = new PIXI.Text("You Win!! Your final time was: " + time.toString(), {
+        fontFamily: 'Arial',
+        fontSize: 24,
+        fill: 0xff1010,
+        align: 'center'
+      });
+      app.stage.addChild(victory);
       pixiTimer.visible = false;
       victory.visible = true;
       start = false;
