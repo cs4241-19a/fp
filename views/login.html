@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="Refresh" content="7; url=signup" />
+</head>
+<body>
+
+<div class="w-full max-w-xs">
+    <form action="/login" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="mb-4">
+            <label>Username:</label>
+            <input type="text" name="username" class="bg-gray focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+                   placeholder="username"/>
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password" class="bg-gray focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+                   placeholder="password"/>
+        </div>
+        <div>
+            <input type="submit" value="Log In" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"/>
+        </div>
+    </form>
+
+</div>
+
+<p>If you are a new user, please <a href="signup">sign up</a> here.</p>
+
+</body>
+<script src="bundle.js"></script>
+</html>
