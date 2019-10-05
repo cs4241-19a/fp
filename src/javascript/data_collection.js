@@ -130,9 +130,10 @@ document.body.onload = () => {
 		localData[`${d.name} (${d.rank})`] = [];
 	}
 
-	socket.emit('getData');
 
 	socket.on('sendData', data_display.updateMapData);
+	socket.emit('getData');
+	socket.emit('getData');
 
 	const zero_bar = {};
 	domains.forEach(d => zero_bar[`${d.name} (${d.rank})`] = {avg: 0, max: 0});
@@ -141,8 +142,6 @@ document.body.onload = () => {
 	data_display.displayBar(zero_bar);
 	data_display.displayBar(zero_bar); // Note: bar chart has an issue where it doesn't display first call
 	data_display.setupMap(800, 500);
-	data_display.updateMap();
-	data_display.updateMap();
 
 	document.querySelector("#collect_location_button").onclick = () =>	{
 		navigator.geolocation.getCurrentPosition(position => {
