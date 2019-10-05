@@ -227,7 +227,10 @@ const updateMap = function() {
         .data(data)
         .enter()
         .append("circle")
-        .filter(d => d.favicon === currentFavicon)
+        .filter(d => {
+            console.log(d.favicon + " " + currentFavicon)
+            return d.favicon === currentFavicon
+        })
         .attr("cx", function (d) {
             return projection([d.lng, d.lat])[0]
         })
