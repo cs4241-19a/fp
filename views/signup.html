@@ -20,21 +20,31 @@
     }
 </style>
 <body>
-<form action="/createUser" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-    <div>
-        <label>Choose a Username</label>
-        <input type="text" name="newUsername" class="bg-gray focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
-               placeholder="username"/>
+<div class="row content">
+    <div class="col s12 z-depth-3">
+        <form action="/createUser" method="post" class="col s12">
+            <div class="row">
+                <div class="input-field">
+                    <label>Choose a Username</label>
+                    <input type="text" name="newUsername" class="bg-gray focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+                           placeholder="username"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <label>Choose a Password</label>
+                    <input type="text" name="newPassword" class="bg-gray focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
+                           placeholder="password"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6 offset-s3">
+                    <button type="submit" value="Create User" class="btn waves-effect waves-light">Create User</button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div>
-        <label>Choose a Password</label>
-        <input type="text" name="newPassword" class="bg-gray focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
-               placeholder="password"/>
-    </div>
-    <div>
-        <input type="submit" value="Create User" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"/>
-    </div>
-</form>
+</div>
 
 <footer class="page-footer footer">
     <div class="container">
@@ -46,10 +56,9 @@
             <div class="col l4 offset-l2 s12">
                 <h5 class="white-text">Links</h5>
                 <ul>
-                    <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Cooper's Github</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Kristen's Github</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Noble's github</a></li>
                 </ul>
             </div>
         </div>
