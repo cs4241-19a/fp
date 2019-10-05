@@ -238,7 +238,7 @@ app.get("/recommendation", function (req, res) {
             const db = client.db('MusicApp')
             const collection = db.collection('recommendations')
             collection.find({}).toArray().then(function (arr) {
-                let response = []
+                let entries = []
                 arr.forEach(function (element) {
                     const jaysawn = JSON.parse(JSON.stringify(element))
                     if (jaysawn.username == null)
@@ -256,10 +256,10 @@ app.get("/recommendation", function (req, res) {
                             rating: jaysawn.rating,
                             caption: jaysawn.caption
                         }
-                        response.push(entry)
+                        entries.push(entry)
                     }
                 })
-                res.send(JSON.stringify(response))
+                res.send(JSON.stringify(entries))
             })
         })
     })
