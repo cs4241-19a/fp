@@ -125,7 +125,7 @@ app.post('/createUser', function (req, res) {
 
 app.listen(port, function () {
     'use strict';
-    console.log(`Example app listening on port !`);
+    console.log(`Example app listening on port`, port);
 });
 
 db.get('users').catch(function (err) {
