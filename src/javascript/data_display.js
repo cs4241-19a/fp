@@ -1,5 +1,5 @@
 import * as d3Base from 'd3';
-import { group } from 'd3-array';
+import {group} from 'd3-array';
 import * as topojson from 'topojson';
 import domains from './domain_list'
 
@@ -70,15 +70,6 @@ const displayBar = function (raw_data) {
         .attr("class", "chartRow")
         .attr("transform", "translate(0," + height + ")");
 
-    // newRow.insert("rect")
-    //     .attr("class", "barmax")
-    //     .attr("x", 0)
-    //     .attr("y", y.bandwidth() / 4)
-    //     .attr("fill-opacity", .25)
-    //     .attr("height", y.bandwidth() / 2)
-    //     .attr("width", d => x(d.max))
-    //     .attr("fill", "red");
-
     //Add rectangles
     newRow.insert("rect")
         .attr("class","bar")
@@ -111,17 +102,6 @@ const displayBar = function (raw_data) {
             updateMap();
         })
         .text(function(d){return d.key});
-
-
-    //////////
-    //UPDATE//
-    //////////
-
-    //Update bar widths
-    // chartRow.select(".barmax").transition()
-    //     .duration(300)
-    //     .attr("width", function(d) { return x(d.max);})
-    //     .attr("opacity",1);
 
     chartRow.select(".bar").transition()
         .duration(300)
@@ -201,36 +181,44 @@ const setupMap = function(width, height){
             .attr("stroke-linejoin", "round")
             .attr("d", path);
 
+        updateMap();
+        updateMap();
 
-        updateMap([{favicon: "facebook.com", avg_rtt: 20, city: "Boston", lat: 42.3601, lng: -71.0589}, {favicon: "facebook.com", avg_rtt: 75, city: "LA", lat: 34.0522, lng: -118.2437}])
-
-        })
-
-
-
+        });
 
 };
 
-// data = [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}]
 const updateMap = function() {
     let div = d3.select("body")
         .append("div")
         .attr('class', "tooltip")
         .style("opacity", 0);
 
-    console.log(data);
-    let gradient = d3.scaleLinear()
-        .range(["#04BF7B", "#BF303C"])
-        .domain([0, 100]);
+    const filtered = data.filter(d => d.favicon === currentFavicon);
 
-    svg.selectAll("circle")
-        .data(data)
-        .enter()
+    let gradient = d3.scaleLinear()
+        .range(["#fff", "#BF303C"])
+        .domain([0, d3.max(filtered, d => d.avg_rtt)]);
+
+    const mapPoint = svg.selectAll("circle").data(filtered);
+    mapPoint.exit().remove();
+    mapPoint.enter()
         .append("circle")
-        .filter(d => {
-            console.log(d.favicon + " " + currentFavicon)
-            return d.favicon === currentFavicon
+        .on("mouseover", d=> {
+            div.transition()
+                .duration(200)
+                .style("opacity", .9);
+            div.text(d.city + "\n" + Math.round(d.avg_rtt) + " ms")
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
         })
+        .on("mouseout", d => {
+            div.transition()
+                .duration(200)
+                .style("opacity", 0)
+        });
+
+    mapPoint.transition().duration(0)
         .attr("cx", function (d) {
             return projection([d.lng, d.lat])[0]
         })
@@ -239,22 +227,8 @@ const updateMap = function() {
         })
         .attr("r", 10)
         .style("fill", function (d) {
-            let color = gradient(d.avg_rtt);
-            return color
-        })
-        .on("mouseover", d=> {
-            div.transition()
-                .duration(200)
-                .style("opacity", .9);
-            div.text(d.favicon)
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
-        })
-        .on("mouseout", d => {
-            div.transition()
-                .duration(200)
-                .style("opacity", 0)
-        })
+            return gradient(d.avg_rtt)
+        });
 };
 
 const updateMapData = function(newData) {
