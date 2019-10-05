@@ -60,18 +60,20 @@ module.exports = function (io) {
 	const falseData = [];
 
 	const addFalseData = function (){
-		const city = cities[Math.floor(Math.random() * cities.length)];
-		favicons.forEach(d => {
-			falseData.push({
-				favicon: d.favicon,
-				avg_rtt: Math.random() * 500,
-				city: city[0],
-				lat: city[1],
-				lng: city[2]
-			})
-		});
+		if (cities.length > 0) {
+			const city = cities.splice(Math.floor(Math.random() * cities.length), 1)[0];
+			favicons.forEach(d => {
+				falseData.push({
+					favicon: d.favicon,
+					avg_rtt: Math.random() * 500,
+					city: city[0],
+					lat: city[1],
+					lng: city[2]
+				})
+			});
+		}
 	};
-	addFalseData()
+	addFalseData();
 
 	setInterval(() => {
 		addFalseData();
