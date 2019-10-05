@@ -115,7 +115,7 @@ module.exports = function (io) {
 			const clientIpAddress = socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
 			data.forEach(d => d.ip = clientIpAddress);
 
-			db.insertPings(clientIpAddress).then();
+			db.insertPings(data).then(update);
 		});
 
 		socket.on('getData', () => db.getData().then(data => socket.emit('sendData', data)));

@@ -6,9 +6,7 @@ import domains from './domain_list'
 const d3 = Object.assign(d3Base, { group });
 let svg = null;
 let projection = null;
-let maxRtt = 100;
-let minRtt = 0;
-let data = [{favicon: "Facebook", avg_rtt: 20, city: "Boston", lat: 42.3601, lng: -71.0589}, {favicon: "Google", avg_rtt: 75, city: "LA", lat: 34.0522, lng: -118.2437}]
+let data = [];
 let currentFavicon = "Google";
 
 // data = [{favicon: '', avg: 0.0}]
@@ -178,9 +176,6 @@ const setupMap = function(width, height){
             .enter()
             .append("path")
             .attr("d", path)
-            //.style("stroke", "#F2E085")
-            //.style("stroke-width", "1")
-            //.style("stroke-opacity", 0)
             .style("fill", "#0367A6");
 
         svg.append("path")

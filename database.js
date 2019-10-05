@@ -38,6 +38,7 @@ module.exports = function () {
         // Data: [{favicon: "", rtt: 0, ip: ""}]
         insertPings: function (data) {
             return new Promise((resolve) => {
+                console.log("Inserting", data);
                 getCity(data).then(data => PingsCollection().then(col => resolve(col.insertMany(data))));
             });
         },
