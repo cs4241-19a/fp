@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="scoreModalLabel">Scores</h5>
+                <h2 class="modal-title" id="scoreModalLabel">Scores</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -10,14 +10,26 @@
             <div class="modal-body">
                 <div role="tabpanel">
                     <!-- Nav tabs -->
-                    <ul class="nav nav-pills">
-                        <li class="nav-item">
-                            <a class="nav-link active" role="tab" href="#userTab" aria-controls="userTab" data-toggle="tab">Mine</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" role="tab" href="#globalTab" aria-controls="globalTab" data-toggle="tab">Global</a>
-                        </li>
-                    </ul>
+                    <div class="nav navbar">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link active" role="tab" href="#userTab" aria-controls="userTab" data-toggle="tab">Mine</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" role="tab" href="#globalTab" aria-controls="globalTab" data-toggle="tab">Global</a>
+                            </li>
+                        </ul>
+                        <div class="navbar-right">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="scoresGameDropdownBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Game</button>
+                                <div class="dropdown-menu" aria-labelledby="scoresGameDropdownBtn">
+                                    {{#each this.scoresGameDropdownData as |game|}}
+                                        <button class="dropdown-item" type="button" title="{{ shortDesc }}" data-gameId="{{ gameId }}">{{ name }}</button>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="userTab">
