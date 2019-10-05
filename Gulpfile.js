@@ -3,10 +3,11 @@ const source = require('vinyl-source-stream');
 const browserify = require('browserify');
 const babelify = require('babelify');
 
+
 const build = function () {
     'use strict';
     return new Promise(function (resolve, reject) {
-        browserify({entries: ['./public/index.js']})
+        browserify({entries: ['./public/index.js', './public/pixiBasic.js']})
             .transform("babelify", {presets: ["@babel/preset-env"]})
             // create Node.js stream using browserify output
             .bundle()
