@@ -238,11 +238,37 @@ app.get("/recommendation", function (req, res) {
             const db = client.db('MusicApp')
             const collection = db.collection('recommendations')
 
-            let arr = []
-            collection.find({}).forEach(function (element) {
+            let resp = []
+            collection.find({}).toArray().then(function (arr) {
+                arr.forEach( function (element) {
+                    const temp = JSON.stringify(element)
+                    console.log("element: " + temp)
+                    if (JSON.parse(temp).username == null)
+                        console.log("null username")
+                    else if (JSON.parse(temp).tracknumber == null)
+                        console.log("null tracknumber")
+                    else if (JSON.parse(temp).rating == null)
+                        console.log("null rating")
+                    else if (JSON.parse(temp).caption == null)
+                        console.log("null caption")
+                    else {
+                        let thingy = {
+                            username: JSON.parse(temp).username,
+                            tracknumber: JSON.parse(temp).tracknumber,
+                            rating: JSON.parse(temp).rating,
+                            caption: JSON.parse(temp).caption
+                        }
+                        console.log(thingy)
+                        resp.push(thingy)
+                    }
+                })
+                console.log("response: " + resp + ", length: " + resp.length);
+                res.send(JSON.stringify(resp))
+            })
+
+            /*collection.find({}).toArray().forEach(function (element) {
                 const temp = JSON.stringify(element)
                 //console.log("element: " + temp)
-
                 if (JSON.parse(temp).username == null)
                     console.log("null username")
                 else if (JSON.parse(temp).tracknumber == null)
@@ -252,21 +278,18 @@ app.get("/recommendation", function (req, res) {
                 else if (JSON.parse(temp).caption == null)
                     console.log("null caption")
                 else {
-                    let thingy = {}
-                    thingy.username = JSON.parse(temp).username
-                    thingy.tracknumber = JSON.parse(temp).tracknumber
-                    thingy.rating = JSON.parse(temp).rating
-                    thingy.caption = JSON.parse(temp).caption
+                    let thingy = {
+                        username: JSON.parse(temp).username,
+                        tracknumber: JSON.parse(temp).tracknumber,
+                        rating: JSON.parse(temp).rating,
+                        caption: JSON.parse(temp).caption
+                    }
                     console.log(thingy)
                     arr.push(thingy)
-                    /*console.log("unparsed: " + temp)
-                    arr.push(temp)
-                    console.log("parsed: " + JSON.parse(temp))
-                    //arr.push(JSON.parse(temp))*/
                 }
             })
             console.log("response: " + arr + ", length: " + arr.length);
-            res.send(JSON.stringify(arr))
+            res.send(JSON.stringify(arr))*/
         })
     })
 })
