@@ -1,6 +1,7 @@
 
 console.log('This is printed.')
 
+/* Value to configurable information about the current board */
 let board  = {
   initialize: function () {
     this.score = 0;
@@ -8,9 +9,6 @@ let board  = {
     this.active = false;
     this.ballVelY = 500; // Constant starting velocity Y
     this.ballVelX = 200; // Constant starting velocity X
-  },
-  reloadBoard: function() {
-
   }
 };
 
@@ -38,6 +36,7 @@ const path = "/assets/bdest/"
 let input;
 let ball;
 let paddle;
+let bricks = [];
 let cursors;
 
 function preload () {
@@ -79,7 +78,9 @@ function update () {
  * Function to move the paddle with the arrow keys.
  */
 function repositionPaddle () {
+  /* Enable the paddle to move when a key is pressed */
   paddle.setImmovable(false);
+
   if (cursors.left.isDown) {
     paddle.setVelocityX(-200);
   } else if (cursors.right.isDown) {
@@ -87,7 +88,19 @@ function repositionPaddle () {
   } else {
     paddle.setVelocityX(0);
   }
+  /* Disable movement to prevent collision */
   paddle.setImmovable();
+}
+
+/***
+ * Function to initialize the array of bricks that store the information of
+ * each brick on the board.
+ * @param {Array} bricks - empty array of bricks
+ * @param {Integer} brickX - length of the bricks
+ * @param {integer} brickY - height of the bricks
+ */
+function initializeBricksArray (bricks, brickX, brickY) {
+
 }
 
 /***
