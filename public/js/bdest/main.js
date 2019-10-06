@@ -5,13 +5,15 @@ console.log('This is printed.')
 let board = {
     initialize: function () {
         this.score = 0; // Current score
+        this.level = 1; // Current level
         this.lives = 5; // Current lives
         this.active = false; // Whether the ball is in play
-        this.ballVelY = 500; // Constant starting velocity Y
-        this.ballVelX = 200; // Constant starting velocity X
+        this.ballVelY = -500; // Constant starting velocity Y
+        this.ballVelX = -200; // Constant starting velocity X
         this.paddleSpeed = 300; // Constant paddle speed.
         this.barXScale = 0.225; // X scale for bars
         this.barYScale = 0.5; // Y scale for bars
+        this.bricksLeft = 1;
         // Current board configuration
         this.rowConfiguration = ["r_bar", "o_bar", "o_bar", "y_bar", "y_bar"];
     }
@@ -43,6 +45,7 @@ let ball;
 let paddle;
 let bricks = [];
 let cursors;
+let scoreText;
 
 function preload() {
     let ball = this.load.image("ball", path + "ball.png");
@@ -59,19 +62,19 @@ function create() {
     // Keyboard Controls;
     input = this.input;
 
+    // Add paddle to game
+    paddle = this.physics.add.image(300, 750, "paddle").setScale(0.5);
+    paddle.setCollideWorldBounds(true);
+    paddle.body.setAllowGravity(false);
+    
     // Add ball to game
-    ball = this.physics.add.image(100, 100, "ball").setScale(0.075);
+    ball = this.physics.add.image(paddle.x, 750 - 23*0.5, "ball").setScale(0.075);
     ball.setCollideWorldBounds(true);
     ball.setVelocityX(board.ballVelX);
     ball.setVelocityY(board.ballVelY);
     ball.body.setAllowGravity(false);
     ball.setBounce(1, 1);
 
-    // Add paddle to game
-    paddle = this.physics.add.image(300, 750, "paddle").setScale(0.5);
-    paddle.setCollideWorldBounds(true);
-    paddle.body.setAllowGravity(false);
-    
     // Keyboard controls
     cursors = this.input.keyboard.createCursorKeys();
 
@@ -80,13 +83,18 @@ function create() {
 
     // Get bricks onto the field
     initializeBricksArrayBound(bricks, board.barXScale, board.barYScale, board.rowConfiguration);
+    board.bricksLeft = bricks.length;
 
     // Add collision
     this.physics.add.collider(ball, paddle, collisionWithBall, null);
+
+    // Add score HUD
+    scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
 }
 
 function update() {
     repositionPaddle();
+
 }
 
 /***
@@ -122,10 +130,13 @@ const initializeBricksArray = function (bricks, brickX, brickY, rows) {
         let currentX = 10 + (320 * brickX / 2);
         for (let j = 0; j < 8; j++)
         {
-            let currBrickWrapper = new Brick(bricks);
+            let currBrickWrapper = new Brick(bricks, rows[i]);
             let brickObj = this.physics.add.image(currentX, currentY, rows[i]).setScale(brickX, brickY);
             brickObj.body.setAllowGravity(false);
-            currBrickWrapper.brick = brickObj;
+            brickObj.setImmovable();
+            // Add collision
+            this.physics.add.collider(ball, brickObj, barCollision, null);
+            brickObj.brick = currBrickWrapper;
             bricks.push(currBrickWrapper);
             currentX += 320 * brickX;
         }
@@ -137,15 +148,24 @@ const initializeBricksArray = function (bricks, brickX, brickY, rows) {
 /**
  * Brick object constructor
  * @param {Array} bricks - array of bricks
+ * @param {String} color - type of bar
  */
-function Brick(bricks) {
+function Brick(bricks, color) {
     currId = Math.random() * Number.MAX_SAFE_INTEGER;
     this.id = currId;
+    /* Set score based on color */
+    if (color === "r_bar") {
+        this.score = 200;
+    } else if (color === "o_bar") {
+        this.score = 100;
+    } else if (color === "y_bar") {
+        this.score = 50;
+    }
     /* Generate a random brick ID */
     if (!bricks.length === 0) {
         let breakLoop = false;
         while (!breakLoop) {
-            if (bricks.filter(brick => { brick.id != currID; }).length == 0) {
+            if (bricks.filter(brick => { brick.brick.id !== currID; }).length == 0) {
                 breakLoop = true;
             } else {
                 currId = Math.random * Number.MAX_SAFE_INTEGER;
@@ -175,4 +195,12 @@ function collisionWithBall(ball, paddle) {
 
     ball.setVelocityX(Xreflect * currentVelocity * Math.cos(reflectionAngle));
     ball.setVelocityY(-currentVelocity * Math.sin(reflectionAngle));
+}
+
+
+function barCollision(ball, bar) {
+    board.score += bar.brick.score;
+    scoreText.setText("Score: " + board.score);
+    board.bricksLeft--;
+    bar.destroy();
 }
