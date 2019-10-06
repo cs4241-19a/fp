@@ -3,12 +3,20 @@
   <head>
     <title>CS4241 Assignment 3</title>
     <meta charset="utf-8">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
   </head>
-  <body>
-     <div><font size = "6"><h1>GAMES!!</h1></font></div>
+  <style>
+
+    @font-face { font-family: arcade; src: url('../resources/ARCADE.TTF'); }
+
+
+  </style>
+  <body style = 'font-family: arcade; background-color: darkgrey; color: black;'>
+     <div><font size = "6"><h1 class = "text-center" style ="font-weight: bold; font-size: 64px;">Our Games!!</h1></font></div>
     <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
-    <div>
+    <div class = " text-center  " style = "width: 80%; margin-left: 10%; font-size: 24px">
         <input id="gameSearch" name="gameSearch">
         <select id ="console" name="console">
           <option value="">Console</option>
@@ -30,10 +38,10 @@
           <option value="Fighting">Fighting</option>
           <option value="Casual">Casual</option>
         </select> 
-        <button id="submit" class="inputbutton" onclick="search()" > Search </button>
+        <button id="submit" class="btn btn-primary" onclick="search()" > Search </button>
     </div>
     
-    <div>
+    <div  style = "width: 50%; margin-left: 15%; margin-top: 5%; font-size: 32px">
     <table id = "table" >
     </table>
       </div>
