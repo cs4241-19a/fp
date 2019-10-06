@@ -2,12 +2,15 @@ import * as d3Base from 'd3';
 import {group} from 'd3-array';
 import * as topojson from 'topojson';
 import domains from './domain_list'
+import constant from "d3-array/src/constant";
+import {max} from "d3";
 
 const d3 = Object.assign(d3Base, { group });
 let svg = null;
 let projection = null;
 let data = [];
 let currentFavicon = "Google";
+let mapHeight
 
 // data = [{favicon: '', avg: 0.0}]
 let bar_initialized = false;
@@ -148,6 +151,7 @@ const displayBar = function (raw_data) {
 
 
 const setupMap = function(width, height){
+    mapHeight = height
     projection = d3.geoAlbersUsa()
         .translate([width/2, height/2])
         .scale([1000]);
@@ -199,11 +203,19 @@ const updateMap = function() {
         .attr('class', "tooltip")
         .style("opacity", 0);
 
-    const filtered = data.filter(d => d.favicon === currentFavicon);
+    const minScaleLabel = d3.select("body")
+        .append("div")
+        .attr('class', "scaleLabel")
 
-    let gradient = d3.scaleLinear()
-        .range(["#fff", "#BF303C"])
-        .domain([0, d3.max(filtered, d => d.avg_rtt)]);
+    const maxScaleLabel = d3.select("body")
+        .append("div")
+        .attr('class', "scaleLabel")
+
+    const filtered = data.filter(d => d.favicon === currentFavicon);
+    const maxValue = d3.max(filtered, d => d.avg_rtt)
+    let gradient = d3.scaleSequential(d3.interpolateCool)
+        //.range(["#fff", "#BF303C"])
+        .domain([0, maxValue])
 
     const mapPoint = svg.selectAll("circle").data(filtered);
     mapPoint.exit().remove();
@@ -215,7 +227,8 @@ const updateMap = function() {
                 .style("opacity", .9);
             div.text(d.city + "\n" + Math.round(d.avg_rtt) + " ms")
                 .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
+                .style("top", (d3.event.pageY - 28) + "px")
+                .style("font-size", "15px")
         })
         .on("mouseout", d => {
             div.transition()
@@ -234,6 +247,35 @@ const updateMap = function() {
         .style("fill", function (d) {
             return gradient(d.avg_rtt)
         });
+    console.log(maxValue)
+    let bars = svg.selectAll(".bars")
+        .data(d3.range(0, maxValue), d => d)
+    bars.exit().remove()
+    bars.enter()
+        .append("rect")
+        .attr("class", "bars")
+        .attr("x", function(d, i) { return i+20; })
+        .attr("y", mapHeight-20)
+        .attr("height", 20)
+        .attr("width", 1)
+        .style("fill", function(d, i ) { return gradient(d); })
+
+    //TODO: Fix scale labels
+    /*
+    const svgX = svg.getBoundingClientRect().left
+    const svgY = svg.getBoundingClientRect().top
+    console.log(svgX + " ," + svgY)
+    minScaleLabel.text(minValue + "ms")
+        .style("left", svgX)
+        .style("top", svgY + mapHeight-20)
+        .style("font-size", "15px")
+
+    maxScaleLabel.text(maxValue + "ms")
+        .style("left", svgX + maxValue-minValue+10)
+        .style("top", svgY + mapHeight-20)
+        .style("font-size", "15px")
+*/
+
 };
 
 const updateMapData = function(newData) {
