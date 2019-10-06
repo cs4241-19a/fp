@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7d783fb3-c0bd-43c4-9844-e447bcdcbe9e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/catalog.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/catalog.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/catalogue.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/catalogue.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/request.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/request.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,6 +22,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="index.html" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1RqYMWoBiqNEiYMgvgj28WMgUK8" />
@@ -59,7 +66,8 @@
       <workItem from="1569960033350" duration="1242000" />
       <workItem from="1570144196604" duration="700000" />
       <workItem from="1570145627769" duration="8206000" />
-      <workItem from="1570396049405" duration="550000" />
+      <workItem from="1570396049405" duration="868000" />
+      <workItem from="1570396994559" duration="2012000" />
     </task>
     <servers />
   </component>
@@ -71,7 +79,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
