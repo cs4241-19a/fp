@@ -54,7 +54,7 @@
           return
         let name = car.name
         console.log(car)
-        $('#table').append('<tr><td id=name>' + car.name +'</td><td id=slug hidden>' + car.slug +'</td></tr>')             
+        $('#table').append('<tr><td id=name>' + car.name +'</td><td><button onclick=request('+car.raw.id+')>Request</button></td></tr>')             
       })
     });
     jQuery.ready();
@@ -63,13 +63,6 @@
   function clearTable(rowNum){
     for(let i = 0; i < rowNum; i++)
       document.getElementById("table").deleteRow(0)
-  }
-
-  function getGame(game){
-    let something = {}
-    something["game"] = game;
-    console.log(game)
-    window.location.replace("gameinfo?"+game)
   }
 
   function search(){
@@ -85,26 +78,25 @@
       something["gameName"] = gameName;
       something["console"] = Console;
       something['genre'] = genre
-      $.get('/gameSearch', something, function(data) {
+      $.get('/requestSearch', something, function(data) {
       clearTable(document.getElementById("table").rows.length)
       data.forEach(function(car){
         if(jQuery.isEmptyObject(car))
           return
         let name = car.name
         console.log(car)
-        $('#table').append('<tr><td id=name>' + car.name +'</td><td id=slug hidden>' + car.slug +'</td></tr>')             
+        $('#table').append('<tr><td id=name>' + car.name +'</td><td><button onclick=request('+car.raw.id+')>Request</button></td></tr>')             
       })
     });
+    jQuery.ready();
   }
 
-  $(document).on("click",'#table tr', function(){
-      let game = $(this).find('#slug')[0].innerText
-      getGame(game)
-    });
-
-  window.onload = function() {
-    reloadData()
-  }
+  function request(gameId){
+      console.log(gameId)
+    let something = {}
+      something["gameId"] = gameId
+    $.get('/requestgame', something, function(data) {alert("Thanks for requesting a game")})
+}
     
   </script>  
 </html>
