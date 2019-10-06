@@ -289,7 +289,7 @@ function googleSignIn() {
         // The signed-in user info.
         const user = result.user;
         handelRemoteHandel();
-        console.log("Google user signed in ", token, result.user)
+        // console.log("Google user signed in ", token, result.user)
     }).catch(function(error) {
         if (error.code === "auth/account-exists-with-different-credential") {
             alert("You have signed up with a different provider for that email.");
@@ -310,7 +310,7 @@ function githubSignIn() {
     provider.addScope("user:email");
     auth.signInWithPopup(provider).then(function(result) {
         handelRemoteHandel();
-        console.log("Github user signed in ", result.credential.accessToken, result.user)
+        // console.log("Github user signed in ", result.credential.accessToken, result.user)
     }).catch(function(error) {
         if (error.code === "auth/account-exists-with-different-credential") {
             alert("You have signed up with a different provider for that email.");
