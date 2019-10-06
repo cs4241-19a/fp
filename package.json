@@ -1,0 +1,50 @@
+{
+  "name": "cs-4241-a4-creative-coding",
+  "version": "0.1.0",
+  "description": "WPI CS4241 fourth assignment",
+  "author": "Kent Libby (klibby@wpi.edu)",
+  "scripts": {
+    "start-dev": "npm-run-all --parallel start",
+    "test": "node -r esm ../a4-creativecoding/jasmineTestRunner.js",
+    "start": "npm-run-all browser-babel-ify run-server",
+    "browser-babel-ify": "browserify public/scripts/main.js -o public/bundle/bundle.js -t [ babelify --presets [@babel/preset-env] ]",
+    "run-server": "node ../fp/server.js"
+  },
+  "dependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "babelify": "^10.0.0",
+    "body-parser": "^1.19.0",
+    "browserify": "^16.5.0",
+    "compression": "^1.7.4",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "helmet": "^3.21.1",
+    "jasmine": "^3.4.0",
+    "materialize-css": "^1.0.0",
+    "morgan": "^1.9.1",
+    "npm-run-all": "^4.1.5",
+    "phaser": "^3.19.0",
+    "postprocessing": "^6.7.0",
+    "serve-favicon": "^2.5.0",
+    "three": "^0.108.0"
+  },
+  "nodemonConfig": {
+    "exec": "npm run start-dev",
+    "ext": "js",
+    "ignore": [
+      "public/bundle/bundle.js"
+    ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.5.5"
+  },
+  "engines": {
+    "node": "12.x"
+  },
+  "babel": {
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
+    ]
+  }
+}
