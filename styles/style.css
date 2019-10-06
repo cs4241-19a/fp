@@ -1,0 +1,50 @@
+html, body {
+  background-color: #181818 !important; }
+
+h1, h2, h3, h4, h5, h6, p, a, button, td, input[type=text] {
+  color: #F3F3F3;
+  font-family: "Montserrat", sans-serif; }
+
+header {
+  top: 0;
+  left: 0;
+  padding: 20px;
+  width: 100%; }
+  header h1 {
+    float: left; }
+  header button {
+    float: right; }
+
+main {
+  width: 100%; }
+  main .modal {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: black;
+    background-color: rgba(0, 0, 0, 0.4); }
+  main .modal-content {
+    background-color: #535353;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; }
+    main .modal-content .log-in.btn {
+      display: flex;
+      flex-flow: column wrap;
+      text-decoration: none;
+      align-content: center;
+      justify-content: center;
+      font-size: 25px;
+      height: 75px;
+      width: 300px;
+      border-radius: 30px;
+      background-color: black;
+      margin-top: 20px; }
+
+/*# sourceMappingURL=style.css.map */
