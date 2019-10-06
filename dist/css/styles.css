@@ -83,3 +83,11 @@ text.category{
 #app {
 	padding-top: 10px;
 }
+
+
+.modal-body>h3 {
+	font-size: 16px;
+	font-weight: bold;
+	margin-top: 8px;
+	margin-bottom: 4px;
+}

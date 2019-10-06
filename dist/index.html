@@ -1,79 +1,103 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Mapping Internet Connectivity</title>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/styles.css">
-    </head>
-    <body>
-        <div id="app">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h1>Mapping Internet Connectivity</h1>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h2>Number of Users Connected: <span id="counter"></span></h2>
-                        <h2>Your IP Address: <span id="ip_address"></span></h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <button type="button" id="start_collection_button_modal" class="btn btn-success" data-toggle="modal" data-target="#dataModal">Start</button>
-                        <button id="stop_collection_button" class="btn btn-danger">Stop</button>
-                        <button id="collect_location_button" class="btn btn-info">Collect Location</button>
-                        <!-- Modal -->
-                        <div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="dataModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Collect Data</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>
-                                        For an academic study on internet connectivity, we would like to gather data about
-                                        how long it takes for different sites to load in your browser. The data will only be
-                                        associated with your IP only and will annonomised to your city.
-                                        <br><br>If you would like to continue, please click "Collect Data", <br>If not please click "Not Today", and continue exploring
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Not Today</button>
-                                        <button type="button" id ="start_collection_button" class="btn btn-primary" data-dismiss="modal">Collect Data</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 col-lg-5">
-                        <div id="bar_chart_title">
-                            <h2>Rolling Average of Locally Collected Data (ms)</h2>
-                            <h3>(Page Alexa Rank)</h3>
-                        </div>
-                        <div id="bar_chart" ></div>
-                    </div>
-                    <div class="col-sm-12 col-lg-7">
-                        <div id="map_titles">
-                            <h2>Globally Collected Data</h2>
-                            <h3>(aggregated by location (city) and website)</h3>
-                        </div>
-                        <div id="map_div">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script src="bundle.js"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    </body>
+<head>
+	<title>Mapping Internet Connectivity</title>
+	<meta charset="utf-8">
+	<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+	<link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+<div id="app">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12">
+				<h1>Mapping Internet Connectivity</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<h2>Number of Users Connected: <span id="counter"></span></h2>
+				<h2>Your IP Address: <span id="ip_address"></span></h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<button class="btn btn-success" data-target="#dataModal" data-toggle="modal"
+				        id="start_collection_button_modal" type="button">Start
+				</button>
+				<button class="btn btn-danger" id="stop_collection_button">Stop</button>
+				<button class="btn btn-info" id="collect_location_button">Collect Location</button>
+				<!-- Modal -->
+				<div aria-hidden="true" aria-labelledby="dataModalLabel" class="modal fade" id="dataModal" role="dialog"
+				     tabindex="-1">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1 class="modal-title" id="exampleModalLabel">Collect Data</h1>
+								<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body" style="text-align: left">
+								<h3>About Us</h3>
+								<p>This site is one part of a Computer Science <a
+										href="https://www.wpi.edu/academics/undergraduate/major-qualifying-project">MQP</a>
+									being run at <a href="https://www.wpi.edu">Worcester Polytechnic Institute</a>.
+									Our goal is to measure internet connectivity in the United States and this
+									website is one of the ways we want to do that.</p>
+								<h3>Data Collection and Usage</h3>
+								<p>The primary function of this page is to collect ping times between your
+									computer and the top websites in the United States (as determined by <a
+											href="https://www.alexa.com/topsites/countries/US">Alexa</a>).
+									To do this, this page will load a favicon from each site and record the time
+									it took to load. This time is then sent to the server where it is stored
+									with your IP address. With your IP, we use a third-party database
+									to approximate your location.</p>
+								<p>Optionally, you may choose to submit a potentially more precise value for
+									your location using the "Collect Location". Your browser may ask you to give
+									permission.</p>
+								<h3>Consent</h3>
+								<p>If you would like to continue, click "Collect Data", otherwise, click "Not
+									Today". You may choose to stop collection at any point by pressing the
+									"Stop" button on the main page.</p>
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-secondary" data-dismiss="modal" type="button">Not Today</button>
+								<button class="btn btn-primary" data-dismiss="modal" id="start_collection_button"
+								        type="button">Collect Data
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12 col-lg-5">
+				<div id="bar_chart_title">
+					<h2>Rolling Average of Locally Collected Data (ms)</h2>
+					<h3>(Page Alexa Rank)</h3>
+				</div>
+				<div id="bar_chart"></div>
+			</div>
+			<div class="col-sm-12 col-lg-7">
+				<div id="map_titles">
+					<h2>Globally Collected Data</h2>
+					<h3>(aggregated by location (city) and website)</h3>
+				</div>
+				<div id="map_div">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="bundle.js"></script>
+<script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
 </html>
