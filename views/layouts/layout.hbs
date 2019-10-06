@@ -95,12 +95,18 @@
     Handlebars.registerHelper('add1', function(num) {
         return (num + 1).toString();
     });
-    Handlebars.registerHelper('formatTimestamp', function(timestamp) {
-        return new Date(timestamp.getSeconds() * 1000).toLocaleString()
+    Handlebars.registerHelper('ts', function(ctx) {
+        // TODO: figure out why the timestamp wouldn't get passed in
+        // console.log(ctx);
+        // return new Date(timestamp._seconds * 1000).toLocaleString()
+        return new Date(ctx.data.root.scoresData[ctx.data.index].timestamp._seconds * 1000).toLocaleString()
     });
 </script>
-<script id="scoresBodyTemplate" type="text/x-handlebars-template">
-    {{> includes/scores-body }}
+<script id="userScoresBodyTemplate" type="text/x-handlebars-template">
+    {{> includes/scores-body-user }}
+</script>
+<script id="globalScoresBodyTemplate" type="text/x-handlebars-template">
+    {{> includes/scores-body-global }}
 </script>
 <script src="/js/scores.js"></script>
 

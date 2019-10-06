@@ -11,12 +11,24 @@ async function fillScores(game) {
         const dataSet = document.getElementById("scoreGameDD").firstElementChild.dataset;
         game = {gameId: dataSet.gameId, name: dataSet.name}
     }
-    const context = {scoresData: await getScores(game.gameId)};
-    console.log(context);
-    const source = document.getElementById("scoresBodyTemplate").innerHTML;
-    const template = Handlebars.compile(source);
-    document.getElementById("userScores").innerHTML = template(context);
-    document.getElementById("globalScores").innerHTML = template(context);
+    setScoresHeader(game.name);
+    const allScoresData = await getScores(game.gameId);
+    const globalContext = {scoresData: allScoresData};
+    const globalSource = document.getElementById("globalScoresBodyTemplate").innerHTML;
+    const globalTemplate = Handlebars.compile(globalSource);
+    document.getElementById("globalScores").innerHTML = globalTemplate(globalContext);
+    let userScoresData;
+    if (auth.currentUser) {
+        userScoresData = allScoresData.filter(score => score.user.uid === auth.currentUser.uid);
+    } else {
+        userScoresData = [];
+        // TODO: Show waring about not being signed in
+    }
+    const userContext = {scoresData: userScoresData};
+    const userSource = document.getElementById("userScoresBodyTemplate").innerHTML;
+    const userTemplate = Handlebars.compile(userSource);
+    document.getElementById("userScores").innerHTML = userTemplate(userContext);
+
 }
 
 async function getScores(gameId) {
@@ -24,7 +36,6 @@ async function getScores(gameId) {
     const request = new Request(url, {
         method: "GET",
     });
-
     return fetch(request)
         .then((resp) => resp.json())
         .then(function( arr ) {
@@ -38,4 +49,8 @@ async function getScores(gameId) {
 
 async function onGameChange(elm) {
     fillScores({gameId: elm.dataset.gameId, name: elm.dataset.name});
+}
+
+function setScoresHeader(gameName) {
+    document.querySelector("#scoreModal .modal-header .modal-title").textContent = gameName + " Scores"
 }

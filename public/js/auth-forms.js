@@ -64,12 +64,7 @@ function submit(e, url, dataParser, handelResponse) {
 function signInSubmit(e, dataParser, handelResponse) {
     console.log(e, dataParser, handelResponse);
     e.preventDefault();  // prevent url form submission
-
-    const data = dataParser();
-    console.log("signing in: ", data);
-    console.log( data );
-    handelResponse(data);
-
+    handelResponse(dataParser());
 }
 
 /**

@@ -115,7 +115,7 @@ async function getUserData(uid) {
  * Get necessary game data and sort it alphabetically.
  * @author: jk
  * @param games The list of all games with the full game data. (from getGames)
- * @returns {Object[]} The sorted list of filtered games.
+ * @returns {Object[]} The sorted list of games with filtered data.
  */
 function getGameDropdownData(games) {
     return games.map(function(data) {
