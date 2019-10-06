@@ -11,8 +11,13 @@
     "dev": "nodemon server.js"
   },
   "dependencies": {
+    "body-parser": "latest",
     "express": "^4.16.4",
-    "nodemon": "^1.19.3"
+    "lowdb": "latest",
+    "mime": "latest",
+    "nodemon": "^1.19.3",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
   },
   "engines": {
     "node": "8.x"
@@ -22,5 +27,8 @@
     "node",
     "glitch",
     "express"
-  ]
+  ],
+  "devDependencies": {
+    "express-session": "^1.16.2"
+  }
 }

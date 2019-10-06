@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+      "username": "jarod",
+      "password": "hello",
+      "score": 100,
+      "gameState": {}
+    },
+    {
+      "username": "cem",
+      "password": "hello",
+      "score": 75,
+      "gameState": {}
+    }
+  ]
+}
