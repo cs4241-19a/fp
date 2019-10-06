@@ -4,12 +4,16 @@ console.log('This is printed.')
 /* Value to configurable information about the current board */
 let board = {
     initialize: function () {
-        this.score = 0;
-        this.lives = 5;
-        this.active = false;
+        this.score = 0; // Current score
+        this.lives = 5; // Current lives
+        this.active = false; // Whether the ball is in play
         this.ballVelY = 500; // Constant starting velocity Y
         this.ballVelX = 200; // Constant starting velocity X
         this.paddleSpeed = 300; // Constant paddle speed.
+        this.barXScale = 0.225; // X scale for bars
+        this.barYScale = 0.5; // Y scale for bars
+        // Current board configuration
+        this.rowConfiguration = ["r_bar", "o_bar", "o_bar", "y_bar", "y_bar"];
     }
 };
 
@@ -50,9 +54,11 @@ function preload() {
 }
 
 function create() {
+    board.initialize();
+
+    // Keyboard Controls;
     input = this.input;
 
-    board.initialize();
     // Add ball to game
     ball = this.physics.add.image(100, 100, "ball").setScale(0.075);
     ball.setCollideWorldBounds(true);
@@ -65,9 +71,17 @@ function create() {
     paddle = this.physics.add.image(300, 750, "paddle").setScale(0.5);
     paddle.setCollideWorldBounds(true);
     paddle.body.setAllowGravity(false);
-
+    
+    // Keyboard controls
     cursors = this.input.keyboard.createCursorKeys();
 
+    // HARD BINDING !!!!
+    let initializeBricksArrayBound = initializeBricksArray.bind(this);
+
+    // Get bricks onto the field
+    initializeBricksArrayBound(bricks, board.barXScale, board.barYScale, board.rowConfiguration);
+
+    // Add collision
     this.physics.add.collider(ball, paddle, collisionWithBall, null);
 }
 
@@ -97,11 +111,48 @@ function repositionPaddle() {
  * Function to initialize the array of bricks that store the information of
  * each brick on the board.
  * @param {Array} bricks - empty array of bricks
- * @param {Integer} brickX - length of the bricks
- * @param {integer} brickY - height of the bricks
+ * @param {Number} brickX - X scale of the bricks
+ * @param {Number} brickY - Y scale of the bricks
  */
-function initializeBricksArray(bricks, brickX, brickY) {
+const initializeBricksArray = function (bricks, brickX, brickY, rows) {
 
+    let currentY = 100;
+    for (let i = 0; i < rows.length; i++)
+    {
+        let currentX = 10 + (320 * brickX / 2);
+        for (let j = 0; j < 8; j++)
+        {
+            let currBrickWrapper = new Brick(bricks);
+            let brickObj = this.physics.add.image(currentX, currentY, rows[i]).setScale(brickX, brickY);
+            brickObj.body.setAllowGravity(false);
+            currBrickWrapper.brick = brickObj;
+            bricks.push(currBrickWrapper);
+            currentX += 320 * brickX;
+        }
+
+        currentY += 100 * brickY;
+    }
+}
+
+/**
+ * Brick object constructor
+ * @param {Array} bricks - array of bricks
+ */
+function Brick(bricks) {
+    currId = Math.random() * Number.MAX_SAFE_INTEGER;
+    this.id = currId;
+    /* Generate a random brick ID */
+    if (!bricks.length === 0) {
+        let breakLoop = false;
+        while (!breakLoop) {
+            if (bricks.filter(brick => { brick.id != currID; }).length == 0) {
+                breakLoop = true;
+            } else {
+                currId = Math.random * Number.MAX_SAFE_INTEGER;
+                this.id = currId;
+            }
+        }
+    }
 }
 
 /***
