@@ -1,5 +1,6 @@
 const firebaseAdmin = require("firebase-admin");
 const db = firebaseAdmin.firestore();
+const auth = firebaseAdmin.auth();
 
 /**
  * Get the all game data from database. Not including scores.
@@ -53,7 +54,60 @@ async function getGame(gameId) {
             };
         })
         .catch(err => {
-            console.log('Error getting documents', err);
+            console.log("Error getting documents", err);
+        });
+}
+
+/**
+ * Get the game scores for the given game.
+ * @author: jk
+ * @param {string} gameId The id of the game to get.
+ */
+async function getGameScores(gameId) {
+    const scoresQuery = db.collection(`games/${gameId}/scores`).orderBy("score", "desc");
+    return Promise.all(await scoresQuery.get()
+        .then(snapshot => {
+            return snapshot.docs.map(async function(doc) {
+                const data = doc.data();
+                if (!data)
+                    return;  // bad game; return nothing
+                return {
+                    scoreId: doc.id,
+                    score: data.score,
+                    timestamp: data.timestamp,
+                    user: await getUserData(data.user),
+                };
+            });
+        })
+        .catch(err => {
+            console.log("Error getting Game documents", err);
+        }));
+}
+
+/**
+ * Get the necessary user data from the given uid.
+ * @param uid The user id to get the data for.
+ * @returns {Promise<{uid: *, memberSince: *, name: *, email: *} | {uid: *, memberSince: string, name: string, email: string}>}
+ */
+async function getUserData(uid) {
+    return auth.getUser(uid)
+        .then(function(userRecord) {
+            // console.log('Successfully fetched user data:', userRecord.toJSON());
+            return {
+                uid: uid,
+                name: userRecord.displayName,
+                email: userRecord.email,
+                memberSince: userRecord.metadata.creationTime,  // creation time is already a string in GMT
+            }
+        })
+        .catch(function(error) {
+            console.log(`Error fetching user data for ${uid}\n`, error);
+            return {
+                uid: uid,
+                name: "[deleted]",
+                email: "[deleted]",
+                memberSince: "[deleted]",
+            };
         });
 }
 
@@ -77,4 +131,6 @@ module.exports = {
     getGames,
     getGame,
     getGameDropdownData,
+    getUserData,
+    getGameScores,
 };

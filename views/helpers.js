@@ -6,6 +6,10 @@ const helpers = {
         this._sections[name] = options.fn(this);
         return null;
     },
+    // Take in a expression and dont return it as is. Allows have {{ }} in a rendered document without being evaluated
+    noeval: function(expression) {
+        return expression;
+    },
 };
 
 

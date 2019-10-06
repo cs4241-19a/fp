@@ -22,9 +22,9 @@
                         <div class="navbar-right">
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="scoresGameDropdownBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Game</button>
-                                <div class="dropdown-menu" aria-labelledby="scoresGameDropdownBtn">
+                                <div id="scoreGameDD" class="dropdown-menu" aria-labelledby="scoresGameDropdownBtn">
                                     {{#each this.scoresGameDropdownData as |game|}}
-                                        <button class="dropdown-item" type="button" title="{{ shortDesc }}" data-gameId="{{ gameId }}">{{ name }}</button>
+                                        <button class="dropdown-item" type="button" onclick="onGameChange(this)" title="{{ shortDesc }}" data-game-id="{{ gameId }}" data-name="{{ name }}">{{ name }}</button>
                                     {{/each}}
                                 </div>
                             </div>
@@ -33,16 +33,16 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="userTab">
-                            <div id="userScores">u</div>
+                            <div id="userScores"></div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="globalTab">
-                            <div id="globalScores">g</div>
+                            <div id="globalScores"></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary save">Close</button>
+                <button type="button" class="btn btn-primary save"  data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

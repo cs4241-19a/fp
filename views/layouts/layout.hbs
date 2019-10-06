@@ -64,7 +64,7 @@
 
 <!-- Custom JS -->
 <script>
-    const GAMEID = "{{ gameId }}";
+    const CURGAME = { gameId: "{{ gameId }}", name: "{{ gameName }}" };
     function addLoadEvent(func) {
         const oldFunc = window.onload;
         if (typeof window.onload != "function") {
@@ -82,7 +82,27 @@
 {{{_sections.js}}}
 <script src="/js/auth-forms.js"></script>{{!-- auths shuld go before game --}}
 <script src="/js/game-forms.js"></script>
-
+<script src="/scripts/handlebars/dist/handlebars.js"></script>
+<script>
+    // Handlebars helpers
+    // Handlebars.registerHelper('sum', function(context) {
+    //     let result = 0;
+    //     for (let i = 0, j = context.length; i < j; i++) {
+    //         result += context[i];
+    //     }
+    //     return result.toString();
+    // });
+    Handlebars.registerHelper('add1', function(num) {
+        return (num + 1).toString();
+    });
+    Handlebars.registerHelper('formatTimestamp', function(timestamp) {
+        return new Date(timestamp.getSeconds() * 1000).toLocaleString()
+    });
+</script>
+<script id="scoresBodyTemplate" type="text/x-handlebars-template">
+    {{> includes/scores-body }}
+</script>
+<script src="/js/scores.js"></script>
 
 <!-- Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
