@@ -120,7 +120,9 @@ document.body.onload = () => {
 
 	window.onfocus = () => {
 		data_display.displayBar(aggregateLocalData());
-		startCollection().then();
+		if (runningBeforeUnblur) {
+			startCollection().then();
+		}
 	};
 
 	const startCollectionButton = document.querySelector("#start_collection_button");
