@@ -111,7 +111,18 @@ const startCollection = async function () {
 };
 
 // Enter point
+let runningBeforeUnblur = false;
 document.body.onload = () => {
+	window.onblur = () => {
+		runningBeforeUnblur = stopped === false;
+		stopCollection();
+	};
+
+	window.onfocus = () => {
+		data_display.displayBar(aggregateLocalData());
+		startCollection().then();
+	};
+
 	const startCollectionButton = document.querySelector("#start_collection_button");
 	const stopCollectionButton = document.querySelector("#stop_collection_button");
 
