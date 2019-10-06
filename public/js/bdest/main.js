@@ -45,7 +45,9 @@ let ball;
 let paddle;
 let bricks = [];
 let cursors;
+let spaceBar;
 let scoreText;
+let livesText;
 
 function preload() {
     let ball = this.load.image("ball", path + "ball.png");
@@ -66,17 +68,20 @@ function create() {
     paddle = this.physics.add.image(300, 750, "paddle").setScale(0.5);
     paddle.setCollideWorldBounds(true);
     paddle.body.setAllowGravity(false);
-    
+
     // Add ball to game
-    ball = this.physics.add.image(paddle.x, 750 - 23*0.5, "ball").setScale(0.075);
+    ball = this.physics.add.image(paddle.x, 700 - 23*0.5, "ball").setScale(0.075);
     ball.setCollideWorldBounds(true);
-    ball.setVelocityX(board.ballVelX);
-    ball.setVelocityY(board.ballVelY);
     ball.body.setAllowGravity(false);
     ball.setBounce(1, 1);
+    ball.setVisible(false);
 
+    // Add collision
+    this.physics.add.collider(ball, paddle, collisionWithBall, null);
+    
     // Keyboard controls
     cursors = this.input.keyboard.createCursorKeys();
+    spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
     // HARD BINDING !!!!
     let initializeBricksArrayBound = initializeBricksArray.bind(this);
@@ -85,22 +90,47 @@ function create() {
     initializeBricksArrayBound(bricks, board.barXScale, board.barYScale, board.rowConfiguration);
     board.bricksLeft = bricks.length;
 
-    // Add collision
-    this.physics.add.collider(ball, paddle, collisionWithBall, null);
-
     // Add score HUD
     scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
+    livesText = this.add.text(450, 16, 'Lives: 5', { fontSize: '32px', fill: '#fff' });
+
 }
 
 function update() {
-    repositionPaddle();
+    let paddleActions = repositionPaddle.bind(this);
+    paddleActions();
 
+    if (ball !== undefined)
+    {
+        if (ball.y > 780) {
+            // Update lives counter
+            board.lives -= 1;
+            livesText.setText("Lives :" + board.lives);
+            // Make ball stop and invisible
+            ball.setVisible(false);
+            ball.setY(700);
+            ball.setVelocityY(0);
+            ball.setVelocityX(0);
+            board.active = false;
+        }
+    }
+
+}
+
+const addBall = function () {
+    console.log("Adding ball");
+    ball.setVisible(true);
+    ball.setImmovable(false);
+    ball.setX(paddle.x);
+    ball.setY(750 - 23*0.5);
+    ball.setVelocityX(board.ballVelX);
+    ball.setVelocityY(board.ballVelY);
 }
 
 /***
  * Function to move the paddle with the arrow keys.
  */
-function repositionPaddle() {
+const repositionPaddle = function() {
     /* Enable the paddle to move when a key is pressed */
     paddle.setImmovable(false);
 
@@ -108,7 +138,12 @@ function repositionPaddle() {
         paddle.setVelocityX(-board.paddleSpeed);
     } else if (cursors.right.isDown) {
         paddle.setVelocityX(board.paddleSpeed);
-    } else {
+    } else if (spaceBar.isDown && !board.active && board.lives !== 0) {
+        let addBallBound = addBall.bind(this);
+        addBallBound();
+        board.active = true;
+    }
+    else {
         paddle.setVelocityX(0);
     }
     /* Disable movement to prevent collision */
