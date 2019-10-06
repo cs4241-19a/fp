@@ -161,7 +161,12 @@ app.get('/games', function (req, res) {
 app.get('/catalogue', function (req, res) {
   res.sendFile('/views/catalogue.html', { root: '.' })
 })
-
+app.get('/resources/gdcvectorscaledup.png',function (req, res){
+  res.sendFile('/resources/gdcvectorscaledup.png', {root: '.'})
+})
+app.get('/resources/ARCADE.TTF',function (req, res) {
+  res.sendFile('/resources/ARCADE.TTF', {root: '.'})
+})
 app.get('/getgames', function (req, res) {
   res.send(owned);
 })
