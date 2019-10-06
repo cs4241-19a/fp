@@ -11,5 +11,7 @@
     <orderEntry type="library" name="jquery-3.4.1" level="application" />
     <orderEntry type="library" name="spotify-player" level="application" />
     <orderEntry type="library" name="jquery.rateyo" level="application" />
+    <orderEntry type="library" name="@types/express" level="application" />
+    <orderEntry type="library" name="jquery.rateyo" level="application" />
   </component>
 </module>
