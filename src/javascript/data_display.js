@@ -114,7 +114,7 @@ const displayBar = function (raw_data) {
         .tween("text", function(d) {
             const i = d3.interpolate(+this.textContent.replace(/\,/g,''), +d.value);
             return function(t) {
-                this.textContent = Math.round(d.value);
+                this.textContent = isNaN(Math.round(d.value)) ? "-" : Math.round(d.value) ;
             };
         });
 

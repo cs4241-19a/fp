@@ -147,7 +147,7 @@ document.body.onload = () => {
 	socket.emit('getData');
 
 	const zero_bar = {};
-	domains.forEach(d => zero_bar[`${d.name} (${d.rank})`] = {avg: 0, max: 0});
+	domains.forEach(d => zero_bar[`${d.name} (${d.rank})`] = {avg: NaN, max: NaN});
 
 	data_display.initializeBar();
 	data_display.displayBar(zero_bar);
