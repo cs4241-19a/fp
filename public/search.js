@@ -16,8 +16,36 @@ let token
 
 window.onload = function (e) {
     let searchButton = document.getElementById("songSearch")
+
+    // searchButton.submit(function(e){
+    //     console.log("Default action is prevented")
+    //     e.preventDefault();
+    // });
+
     searchButton.onclick = searchSpotify
+    let searchInput = document.getElementById("songName")
+
+    searchInput.addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("songSearch").click();
+            console.log("search button was clicked by key press")
+        }
+    });
+
+    searchInput.onsubmit = searchSpotify
 }
+
+$('#scrollable-table').on('click', 'tbody tr', function(event) {
+    $(this).addClass('highlight').siblings().removeClass('highlight');
+    let songName = $(this).find('td:eq(0)').html();
+    let artistName = $(this).find('td:eq(1)').html();
+    let idNumber = $(this).find('td:eq(2)').html();
+    console.log("currently selected song: " + songName + "\n\t\t" +
+        "artist: " + artistName + "\n\t\t" +
+        "id: " + idNumber + "\n\t\t" )
+});
 
 function searchSpotify() {
     let songName = document.getElementById("songName").value
@@ -39,6 +67,7 @@ function searchSpotify() {
 }
 
 function search(json) {
+
     let listOfSongNames = []
     let tracks = json.tracks.items
     console.log("Number of tracks is " + tracks.length)

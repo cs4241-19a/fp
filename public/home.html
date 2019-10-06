@@ -40,22 +40,19 @@
 <div class="container">
      <div class="row">
         <div class="col-4 side-container">
-            <label class="side-container" for="exampleFormControlTextarea1">Search for a Song to Recommend</label>
-            <form class="form-inline my-2 my-lg-0">
-                <input id = "songName" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <form class="form-inline my-2 my-lg-0 leftJustify">
+                <input id = "songName" class="form-control mr-sm-2 songInput" type="search" placeholder="Search for a Song" aria-label="Search">
+                <button type = "button" id = "songSearch" class="btn btn-outline-danger my-2 my-sm-0 searchButton" >Search</button>
             </form>
-            <button id = "songSearch" class="btn btn-outline-danger my-2 my-sm-0" >Search</button>
-            </form>
-            <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                <table id = "paginatedTable" class="table table-dark">
+            <div class="table-wrapper-scroll-y my-custom-scrollbar results-table">
+                <table id = "scrollable-table" class="table table-dark">
                     <tbody>
                     </tbody>
                 </table>
             </div>
-            <label class = "side-container" for="exampleFormControlTextarea1">Caption</label>
-            <textarea class="form-control" id="exampleFormControlTextarea2" rows="3">Write a note about the song here</textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" placeholder="Write a note about the song here"></textarea>
             <div class="post">
-                <button class="btn btn-danger" type="button">Post</button>
+                <button class="btn btn-danger" type="button">Make Recomendation</button>
             </div>
         </div>
         <div class="col">
@@ -77,19 +74,6 @@
         </div>
     </div>
 </div>
-<script>
-    let curSong = '';
-    $('#paginatedTable').on('click', 'tbody tr', function(event) {
-        $(this).addClass('highlight').siblings().removeClass('highlight');
-        let songName = $(this).find('td:eq(0)').html();
-        let artistName = $(this).find('td:eq(1)').html();
-        let idNumber = $(this).find('td:eq(2)').html();
-        console.log("currently selected song: " + songName + "\n\t\t" +
-                    "artist: " + artistName + "\n\t\t" +
-                    "id: " + idNumber + "\n\t\t" )
-    });
-</script>
-
 <script src="js/createPlayer.js"></script>
 <script src="js/home.js" type="module"></script>
 <script type="text/javascript" src="tracks.js"></script>

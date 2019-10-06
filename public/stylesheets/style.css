@@ -35,7 +35,7 @@ label {
 }
 
 .side-container {
-    background-color: lightgray;
+    background-color: #F8F9FA;
     color: black;
 }
 
@@ -84,4 +84,19 @@ img {
 }
 .hidden-data {
     visibility: hidden;
+
+}
+
+.songInput {
+    float: left;
+    margin: 1em;
+}
+
+.leftJustify {
+    float: left;
+}
+
+.results-table {
+    clear: left;
+    float: left;
 }
