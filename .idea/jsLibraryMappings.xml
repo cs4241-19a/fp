@@ -2,5 +2,6 @@
 <project version="4">
   <component name="JavaScriptLibraryMappings">
     <file url="PROJECT" libraries="{@types/express, jquery-3.4.1, spotify-player}" />
+    <file url="PROJECT" libraries="{jquery-3.4.1, jquery.rateyo, spotify-player}" />
   </component>
 </project>

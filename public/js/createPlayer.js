@@ -75,7 +75,6 @@ function createPlayer(_token) {
         })
     }
 }
-
 function pause() {
     player.pause().then(() => {
         console.log('Paused!')

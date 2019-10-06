@@ -1,26 +1,56 @@
 console.log("we got to script")
 //let json = './tracks.js'
 //const json = require('tracks.js');
+let token
+
+(function getData() {
+    (async () => {
+        const rawResponse = await fetch('/token', {
+            method: 'GET'
+        })
+        let response = await rawResponse.json()
+        console.log("token inside search token fetch " + response.token)
+        token = response.token
+    })()
+})()
 
 window.onload = function (e) {
-    let searchButton = document.getElementById("songSearch");
-    searchButton.onclick = search;
+    let searchButton = document.getElementById("songSearch")
+    searchButton.onclick = searchSpotify
+}
 
+function searchSpotify() {
+    let songName = document.getElementById("songName").value
+
+    console.log("do we have the token access here? " + token)
+    const BASE_URL = 'https://api.spotify.com/v1/search?'
+    const FETCH_URL = `${BASE_URL}q=${songName}&type=track&market=US&limit=10`
+
+    fetch(FETCH_URL, {
+        method: 'GET',
+        headers: new Headers({
+            Accept: "application/json",
+            Authorization: "Bearer " + token
+        })
+    })
+        .then(response => response.json())
+        .then(json => search(json))
 
 }
 
-function search() {
-    let songName = document.getElementById("songName").value
-
+function search(json) {
     let listOfSongNames = []
-    let tracks = tracksJson.tracks.items;
-
-    console.log(tracksJson);
-
-    console.log("Number of tracks is " + tracks.length);
-
+    let tracks = json.tracks.items
+    console.log("Number of tracks is " + tracks.length)
+    console.log("tracks in search: " + tracks)
+    $("tbody").empty()
     for (let i = 0; i < tracks.length; i++) {
-        console.log(tracks[i].name);
+        $("tbody").append("<tr>" +
+            "                   <td>" + tracks[i].name + "</td>\n" +
+            "                   <td>" + tracks[i].artists[0].name + "</td>" +
+            "                   <td class = 'hidden-data'>" + tracks[i].artists[0].id + "</td>" +
+            "             </tr>"
+        )
     }
 
 
