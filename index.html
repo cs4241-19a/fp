@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="http://d3js.org/d3.v5.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>The Bard's Tale</title>
+    <link rel="stylesheet" href="./resources/css/tooltip.css">
+    <link rel="stylesheet" href="./resources/css/main.css">
+</head>
+<body>
+<svg id="backgroundSvg" style="z-index: -1; position: absolute; width: 100%; height: 100%; pointer-events: none; display: flex; justify-content: center; align-items: center">
+    <image id="backgroundImg" style="position: inherit; width: 100%; height: auto"></image>
+</svg>
+<div class="tooltip">
+    HELP
+    <span class="tooltiptext" style="width: 800px">
+            Select a track, select a difficulty, and click anywhere else. To pick a different track, refresh the page.
+    </span>
+</div>
+<div class="box">
+    <div class="row header" id = "banner" style="height: fit-content; display: flex; justify-content: center; align-items: center">
+        <svg id = "background" style="height: 192px; width: 400px; display: flex; justify-content: right; align-items: center"></svg>
+        <div id = "trackSelectContainer" style="display: flex; flex-direction: column">
+            <label for="trackSelect">Track Selection</label>
+            <select id="trackSelect" size="4"></select>
+        </div>
+        <div id = "difficultySelectContainer" style="display: flex; flex-direction: column">
+            <label for="difficultySelect">Difficulty Selection</label>
+            <select id="difficultySelect" size="4"></select>
+        </div>
+        <div id = "songParametersContainer" style="display: flex; flex-direction: column">
+            <button id = "playbutton">Play</button>
+            <button id = "pausebutton">Pause</button>
+            <button id = "stopbutton">Stop</button>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+            <label style="background: bisque">Score</label>
+            <label id = "score" style="background: bisque">0</label>
+        </div>
+    </div>
+    <div class = "row content">
+        <svg id="notearea" style="height: 100%; width: 300px"></svg>
+    </div>
+</div>
+</body>
+<script>
+
+    let background = d3.select("#background")
+        .append("image")
+        .attr("id", "firstimage")
+        .attr("xlink:href", "./resources/images/wanbard_small.png")
+        .style("opacity", 1.0)
+        .append("image")
+        .attr("id", "#secondimage")
+        .style("opacity", 0.0);
+    d3.select("#background").attr("width", d3.select("#firstimage").attr("width"))
+        .attr("height", d3.select("#firstimage").attr("height"));
+
+    // let selectedTrack = d3.select("#selectedTrack")
+        // .append("svg")
+        // .attr("id", "selectedTrackSvg")
+        // .attr("width", "100%")
+        // .attr("height", "100%")
+        // .append("image")
+        // .style("opacity", 0.0);
+        // .append("rect")
+        // .attr("id", "selectedTrackRect")
+        // .attr("width", "100%")
+        // .attr("height", "100%")
+        // .attr("fill", "#000")
+        // .style("opacity", 0.0);
+
+    let life = 500;
+    let score = 0;
+    let currCombo = 0;
+    let timerStatus = "alive";
+    // let timer = d3.timer().stop();
+    let currNotes = [[],[],[],[]];
+
+    function getComboMultiplier(currCombo){
+        if(currCombo > 20)
+        {
+            return 8;
+        }else if(currCombo > 10)
+        {
+            return 4;
+        }else if(currCombo > 5)
+        {
+            return 2;
+        }else{
+            return 1;
+        }
+    }
+
+    function calculateLife(val){
+        if(val <= 25){
+            currCombo = 0;
+            if(val === 25){
+                life -= 25;
+            }else if(val === 0){
+                life -= 50;
+            }
+        }else{
+            life += val / 1000 * getComboMultiplier(currCombo);
+            if(life > 1000){ life = 1000 }
+        }
+        //Game Over
+        return life > 0;
+
+    }
+
+    function checkCollision(noteYPos) {
+        let arrowYPos = 400;
+        //TODO: Change calculation from position-based to direct timing-based in the future
+        let diff = Math.abs(noteYPos - arrowYPos);
+        if(diff > 200){
+            //no note collision detected
+            return -1;
+        }else if(diff > 50){
+            return 25; //"Bad"
+        }else if(diff > 25){
+            return 50; //"Good"
+        }else if(diff > 10){
+            return 100; //"Great"
+        }else if(diff > 5){
+            return 250; //"Perfect"
+        }
+    }
+
+    function pressedLeftKey(){
+        let collisionScore = checkCollision(currNotes[0][0].arrowShape.attr("y"));
+        //if note collided with arrow
+        if(collisionScore !== -1){
+            currNotes[0][0].arrowShape.remove();
+            currNotes[0].shift();
+            //if it's not a "good" or "bad" hit
+            if(collisionScore > 50){
+                currCombo++;
+            }
+            score += getComboMultiplier(currCombo);
+            document.getElementById('score').innerText = score;
+            if(!calculateLife(collisionScore)){
+                timerStatus = "dead";
+            }
+        }
+    }
+
+    function pressedDownKey(){
+        let collisionScore = checkCollision(currNotes[1][0].arrowShape.attr("y"));
+        //if note collided with arrow
+        if(collisionScore !== -1){
+            currNotes[1][0].arrowShape.remove();
+            currNotes[1].shift();
+            //if it's not a "good" or "bad" hit
+            if(collisionScore > 50){
+                currCombo++;
+            }
+            score += getComboMultiplier(currCombo);
+            document.getElementById('score').innerText = score;
+            if(!calculateLife(collisionScore)){
+                timerStatus = "dead";
+            }
+        }
+    }
+
+    function pressedUpKey(){
+
+        let collisionScore = checkCollision(currNotes[2][0].arrowShape.attr("y"));
+        //if note collided with arrow
+        if(collisionScore !== -1){
+            currNotes[2][0].arrowShape.remove();
+            currNotes[2].shift();
+            //if it's not a "good" or "bad" hit
+            if(collisionScore > 50){
+                currCombo++;
+            }
+            score += getComboMultiplier(currCombo);
+            document.getElementById('score').innerText = score;
+            if(!calculateLife(collisionScore)){
+                timerStatus = "dead";
+            }
+        }
+    }
+
+    function pressedRightKey(){
+        // leftArrow.transition()
+        //     .duration(100)
+        //     .attr("transform", "scale(1.3)")
+        //     .ease(d3.easeExpOut)
+        //     .on("end", function endtrans() {
+        //         d3.active(this).transition()
+        //             .duration(100)
+        //             .attr("transform", "scale(1.0)")
+        //             .ease(d3.easeExpIn);
+        //     });
+
+        let collisionScore = checkCollision(currNotes[3][0].arrowShape.attr("y"));
+        //if note collided with arrow
+        if(collisionScore !== -1){
+            currNotes[3][0].arrowShape.remove();
+            currNotes[3].shift();
+            //if it's not a "good" or "bad" hit
+            if(collisionScore > 50){
+                currCombo++;
+            }
+            score += getComboMultiplier(currCombo);
+            document.getElementById('score').innerText = score;
+            if(!calculateLife(collisionScore)){
+                timerStatus = "dead";
+            }
+        }
+    }
+    document.addEventListener('keydown', keyPressed); // first
+
+    function keyPressed(e) {
+        console.log(e);
+        switch (e.key) {
+            case "ArrowLeft":
+                pressedLeftKey();
+                break;
+            case "ArrowUp":
+                pressedUpKey();
+                break;
+            case "ArrowDown":
+                pressedDownKey();
+                break;
+            case "ArrowRight":
+                pressedRightKey();
+                break;
+        }
+    }
+
+    d3.select("#notearea")
+        .append("image")
+        .attr("y", 400)
+        .attr("x", 0)
+        .attr("xlink:href", "./resources/images/blank_arrow_left.png");
+
+    d3.select("#notearea")
+        .append("image")
+        .attr("y", 400)
+        .attr("x", 72)
+        .attr("xlink:href", "./resources/images/blank_arrow_down.png");
+
+    d3.select("#notearea")
+        .append("image")
+        .attr("y", 400)
+        .attr("x", 144)
+        .attr("xlink:href", "./resources/images/blank_arrow_up.png");
+
+    d3.select("#notearea")
+        .append("image")
+        .attr("y", 400)
+        .attr("x", 216)
+        .attr("xlink:href", "./resources/images/blank_arrow_right.png");
+
+
+    function makeid(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
+
+    function Note(noteNumber, startTime){
+        //denotes the exact number
+        this.startTime = startTime;
+        let image;
+        let xpos;
+        switch(noteNumber){
+            case 0:
+                image = "./resources/images/arrow_left.png";
+                xpos = 0;
+                break;
+            case 1:
+                image = "./resources/images/arrow_down.png";
+                xpos = 72;
+                break;
+            case 2:
+                image = "./resources/images/arrow_up.png";
+                xpos = 144;
+                break;
+            case 3:
+                image = "./resources/images/arrow_right.png";
+                xpos = 216;
+                break;
+            default:
+                //this shouldn't happen
+        }
+        let tempid = makeid(12);
+        d3.select("#notearea")
+            // .enter()
+            .append("image")
+            .attr("id", tempid) //should be unique
+            .attr("y", 0)
+            .attr("x", xpos)
+            .attr("xlink:href", image);
+
+        this.arrowShape = d3.select("#" + tempid);
+    }
+
+    function populateDifficulty(songJson){
+        let difficultySelect = document.querySelector('#difficultySelect');
+        let allCharts = songJson["charts"];
+        for(let i = 0; i < allCharts.length; i++){
+            let newOption = document.createElement('option');
+            newOption.innerText = allCharts[i]["diff"];
+            newOption.value = i.toString();
+            difficultySelect.appendChild(newOption);
+        }
+        difficultySelect.addEventListener("change", changeDifficulty);
+    }
+    function changeDifficulty(){
+        let currTrack = document.getElementById("trackSelect");
+        let trackVal = currTrack.value;
+        let dir = './resources/audio/songs/'+trackVal+'/'+trackVal;
+        let prevImgURL = d3.select('#firstimage')
+            .attr("xlink:href");
+
+        console.log(prevImgURL);
+        d3.select('#firstimage')
+            .attr('xlink:href', dir+'.png')
+            .style("opacity", 1e-6)
+            .transition(fadeIn)
+            .style("opacity", 1.0);
+
+        d3.select('#secondimage')
+            .attr('xlink:href', prevImgURL)
+            .style("opacity", 1.0)
+            .transition(fadeOut)
+            .style("opacity", 1e-6);
+
+        d3.select('#backgroundImg')
+            .attr('xlink:href', dir+"-bg.png")
+            .style("opacity", 0.7);
+
+
+        $.getJSON(dir+'.json', function(songJson) {
+            playSong(songJson, dir);
+        });
+    }
+
+    async function playSong(songJson, dir){
+        currCombo = 0;
+        life = 500;
+        score = 0;
+
+        console.log(songJson["times"]["offset"]);
+        console.log(songJson["changes"]["bpm"]);
+        console.log(songJson["changes"]["bpm"][0][1]);
+        let charts = songJson["charts"];
+        let noteArea = d3.select("#notearea");
+        charts.forEach(function(chart, index){
+            console.log(chart);
+        });
+
+        let leftArrow = d3.select("#leftarrow");
+        let downArrow = d3.select("#downarrow");
+        let upArrow = d3.select("#uparrow");
+        let rightArrow = d3.select("#rightarrow");
+
+        let speed = 1;
+        let notes = songJson["charts"][1]["notes"]; //aka notes of the selected chart
+        let currMeasure = 0;
+        let currBeat = -1;
+        let currNumBeat = notes[0][1].length - 1;
+        let bpm = songJson["changes"]["bpm"][0][1];
+        let barTimeToAdd = 60/bpm*4/notes[0][1].length * 1000;
+        let nextBarTime = barTimeToAdd - barTimeToAdd*speed;
+        let offset = songJson["times"]["offset"] * 1000 + 50;
+        let bar;
+        console.log(barTimeToAdd);
+        audio.src = dir+'.mp3';
+        audio.load();
+        let returnVal = await audio.play().then(function(){
+            d3.timer(function (currTime) {
+                for(let i = 0; i < 4; i++){
+                    currNotes[i].forEach( function (note, index) {
+                        let time = currTime - note.startTime;
+                        if(time > 1050){
+                            // note.arrowShape;
+                            //note was missed
+                            //remove itself from array
+                            note.arrowShape.remove();
+                            currNotes[i].shift();
+                            calculateLife(0);
+                        }else{
+                            note.arrowShape.attr("y", time/1000*400);
+                        }
+                    })
+                }
+
+                if(currTime > (nextBarTime + offset)){
+                    currBeat++;
+                    nextBarTime += barTimeToAdd;
+                    bar = notes[currMeasure][1][currBeat];
+                    if(bar[0] !== "0")
+                    {
+                        currNotes[0].push(new Note(0, currTime));
+                        // leftArrow.transition()
+                        //     .duration(100)
+                        //     .attr("transform", "scale(1.3)")
+                        //     .ease(d3.easeExpOut)
+                        //     .on("end", function endtrans() {
+                        //         d3.active(this).transition()
+                        //             .duration(100)
+                        //             .attr("transform", "scale(1.0)")
+                        //             .ease(d3.easeExpIn);
+                        //     });
+                    }
+                    if(bar[1] !== "0")
+                    {
+                        currNotes[1].push(new Note(1, currTime));
+                        // upArrow.transition()
+                        //     .duration(100)
+                        //     .attr("transform", "scale(1.3)")
+                        //     .ease(d3.easeExpOut)
+                        //     .on("end", function endtrans() {
+                        //         d3.active(this).transition()
+                        //             .duration(100)
+                        //             .attr("transform", "scale(1.0)")
+                        //             .ease(d3.easeExpIn);
+                        //     });
+                    }
+                    if(bar[2] !== "0")
+                    {
+                        currNotes[2].push(new Note(2, currTime));
+                        // downArrow.transition()
+                        //     .duration(100)
+                        //     .attr("transform", "scale(1.3)")
+                        //     .ease(d3.easeExpOut)
+                        //     .on("end", function endtrans() {
+                        //         d3.active(this).transition()
+                        //             .duration(100)
+                        //             .attr("transform", "scale(1.0)")
+                        //             .ease(d3.easeExpIn);
+                        //     })
+                    }
+                    if(bar[3] !== "0")
+                    {
+                        currNotes[3].push(new Note(3, currTime));
+                        // rightArrow.transition()
+                        //     .duration(100)
+                        //     .attr("transform", "scale(1.3)")
+                        //     .ease(d3.easeExpOut)
+                        //     .on("end", function endtrans() {
+                        //         d3.active(this).transition()
+                        //             .duration(100)
+                        //             .attr("transform", "scale(1.0)")
+                        //             .ease(d3.easeExpIn);
+                        //     });
+                    }
+                }
+                //timerStatus = victory;
+                //move notes
+
+                if(currBeat === currNumBeat){
+                    currMeasure++;
+                    currBeat = -1;
+                    currNumBeat = notes[currMeasure][1].length - 1;
+                    barTimeToAdd = 60*1000/(bpm*4/(currNumBeat+1));
+                }
+            });
+        });
+    }
+
+    /*
+        function loadSound(url){
+            window.fetch(url)
+                .then(response => response.arrayBuffer())
+                .then(arrayBuffer => audio.decodeAudioData(arrayBuffer))
+                .then(audioBuffer => {
+                    source.connect(audio.destination);
+                });
+        }
+    */
+
+    let audio = new Audio();
+
+    window.onload = function() {
+        const playbutton = document.querySelector( '#playbutton' );
+        const pausebutton = document.querySelector( '#pausebutton' );
+        const stopbutton = document.querySelector( '#stopbutton' );
+
+        playbutton.onclick = play;
+        pausebutton.onclick = pause;
+        stopbutton.onclick = stop;
+    };
+
+    function play(){
+        audio.play();
+    }
+
+    function pause(){
+        audio.pause();
+    }
+
+    function stop(){
+        audio.stop();
+    }
+
+
+    // window.addEventListener("load", createSongSelect);
+    const body = JSON.stringify({ "username" : "anonymous" });
+    // (async function() {
+    fetch('songRequest', {
+        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        body
+    }).then(function (response) {
+        console.log(response);
+        response.json().then(function(parsedJson) {
+            console.log('This is the parsed json', parsedJson);
+            let songList = parsedJson["songs"];
+            let trackSelect = document.querySelector('#trackSelect');
+            console.log(songList);
+            songList.forEach(function (song, index) {
+                let newOption = document.createElement('option');
+                newOption.innerText = song;
+                newOption.value = song;
+                trackSelect.appendChild(newOption);
+            });
+            trackSelect.addEventListener("change", changeTrack);
+
+            // Functions
+        });
+    });
+
+
+    function changeTrack(event){
+        let dir = './resources/audio/songs/'+event.target.value+'/'+event.target.value;
+        $.getJSON(dir+'.json', function(songJson) {
+            populateDifficulty(songJson);
+        });
+
+    }
+</script>
+</html>
