@@ -4,7 +4,7 @@ const express = require("express"),
     morgan = require("morgan"),
     compression = require("compression"),
     helmet = require("helmet"),
-    bodyParser = require('body-parser'),
+    bodyParser = require("body-parser"),
     firebaseAdmin = require("firebase-admin");
 
 const app = express();
@@ -17,10 +17,10 @@ firebaseAdmin.initializeApp({
     databaseURL: "https://cs4241-fp-26fee.firebaseio.com"
 });
 
-const authRouter = require('./routes/auth-routes'),
-    gameRouter = require('./routes/game-routes'),
-    gameDataRouter = require('./routes/game-data-routes'),
-    indexRouter = require('./routes/index-routes');
+const authRouter = require("./routes/auth-routes"),
+    gameRouter = require("./routes/game-routes"),
+    gameDataRouter = require("./routes/game-data-routes"),
+    indexRouter = require("./routes/index-routes");
 
 
 // morgan logger
@@ -42,10 +42,10 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: false
 }));
 
-app.use('/submit/games', gameDataRouter);  // store game data
-app.use('/games', gameRouter);  // load game pages
-app.use('/', indexRouter);  // load game pages
-app.use('/auth', authRouter);  // handel sign ups
+app.use("/data/games", gameDataRouter);  // store game data
+app.use("/games", gameRouter);  // load game pages
+app.use("/", indexRouter);  // load game pages
+app.use("/auth", authRouter);  // handel sign ups
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

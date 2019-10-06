@@ -1,0 +1,49 @@
+<div class="modal fade" id="scoreModal" tabindex="-1" role="dialog" aria-labelledby="scoreModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="scoreModalLabel">Scores</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div role="tabpanel">
+                    <!-- Nav tabs -->
+                    <div class="nav navbar">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link" role="tab" href="#userTab" aria-controls="userTab" data-toggle="tab">Mine</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" role="tab" href="#globalTab" aria-controls="globalTab" data-toggle="tab">Global</a>
+                            </li>
+                        </ul>
+                        <div class="navbar-right">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="scoresGameDropdownBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Game</button>
+                                <div id="scoreGameDD" class="dropdown-menu" aria-labelledby="scoresGameDropdownBtn">
+                                    {{#each this.scoresGameDropdownData as |game|}}
+                                        <button class="dropdown-item" type="button" onclick="onGameChange(this)" title="{{ shortDesc }}" data-game-id="{{ gameId }}" data-name="{{ name }}">{{ name }}</button>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane" id="userTab">
+                            <div id="userScores"></div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane active" id="globalTab">
+                            <div id="globalScores"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary save"  data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

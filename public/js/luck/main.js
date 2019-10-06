@@ -60,7 +60,7 @@ function create() {
         totalLuck += luck;
         readingsContainer.removeAll();
         readingsContainer.add(scene.add.text(0, 0, `Readings Left: ${readingsLeft}`, {fontSize: 28}));
-        readingsContainer.add(scene.add.text(0, 40, `Luck: ${getAvgLuck()}%`, {fontSize: 28}));
+        readingsContainer.add(scene.add.text(0, 40, `Luck: ${getAvgLuck().toFixed(3)}%`, {fontSize: 28}));
         if (readingsLeft === 0) {
             const score = getAvgLuck();
             const scoreModel = $("#gameScoreFormModal");
@@ -73,7 +73,7 @@ function create() {
                 readingsContainer.add(scene.add.text(0, 40, `Luck: ${getAvgLuck()}`, {fontSize: 28}));
                 startText.visible = true;
             };
-            attachHeading(`Score: ${score}%`);
+            attachHeading(`Score: ${score.toFixed(3)}%`);
             scoreModel.on("hidden.bs.modal", resetGame);
             attachSubmit({score: score}, () => {
                 scoreModel.modal("hide");

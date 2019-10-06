@@ -16,7 +16,7 @@ function submitGameData(e, gameData, handelResponse) {
         document.querySelector("#game-submit-alert > span").textContent = "";
         document.getElementById("game-submit-alert").classList.add("d-none");
     }
-    const url = "/submit/games/" + GAMEID;
+    const url = "/data/games/" + CURGAME.gameId;
     const data = JSON.stringify({userId: auth.currentUser.uid, ...gameData});
     console.log("Game data: ", data);
 

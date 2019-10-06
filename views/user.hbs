@@ -1,0 +1,8 @@
+<div class="container mt-2">
+    <h2>User Profile</h2>
+    <ul class="list-group list-group-flush">
+        {{#each this.userData as |data|}}
+            <li class="list-group-item">{{ data }}</li>
+        {{/each}}
+    </ul>
+</div>
