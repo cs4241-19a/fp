@@ -6,6 +6,7 @@ const express = require('express'),
     request = require('request'),
     cors = require('cors'),
     querystring = require('querystring'),
+    //TODO: delete comment if possible
     //mongodb = require('mongodb'),
     mongo = require('mongodb').MongoClient,
     bcrypt = require('bcrypt'),
@@ -18,6 +19,7 @@ const express = require('express'),
     client_secret = 'c26768e1850047ceba186a08bb061a9d', //this is VERY IMPORTANT and should NEVER be revealed in public
     redirect_uri = 'http://localhost:3000/callback', //redirects to this when authorization passes or fails
     scopes = 'user-read-private user-read-email streaming app-remote-control',
+    //TODO: delete comment if possible
     //code = '?response_type=code',
     stateKey = 'spotify_auth_state'
 
@@ -102,6 +104,7 @@ app.get("/login", function (req, res) {
 })
 
 app.get("/spotifyAccess", function (req, res) {
+    //TODO: delete comment if possible
     //let code = '?response_type=code'
     let state = generateRandomString(16);
     res.cookie(stateKey, state);
@@ -139,6 +142,7 @@ app.get('/callback', function (req, res) {
                 grant_type: 'authorization_code'
             },
             headers: {
+                //TODO: delete comment if possible
                 //'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
                 'Authorization': 'Basic ' + (Buffer.from(client_id + ':' + client_secret).toString('base64'))
             },
@@ -315,6 +319,7 @@ app.post("/recommendation", function (req, res) {
 })
 
 function isLoggedIn(req, res, next) {
+    //TODO: delete comment if possible
     //console.log(req.isAuthenticated())
     if (req.isAuthenticated())
         return next()
