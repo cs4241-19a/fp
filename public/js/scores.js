@@ -47,7 +47,7 @@ async function getScores(gameId) {
         });
 }
 
-async function onGameChange(elm) {
+function onGameChange(elm) {
     fillScores({gameId: elm.dataset.gameId, name: elm.dataset.name});
 }
 
