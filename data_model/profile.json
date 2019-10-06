@@ -1,0 +1,22 @@
+{
+    "Profile": 
+    {
+        "User": {
+            "Name": "Bob",
+            "Username": "Bob277",
+            "Password": "123"
+            
+        },
+        "Songs": [
+            {
+            "Item-id": 1,
+            "Audio file": "aaa",
+            "uploaded": "09/20/2019",
+            "Visualizer-id": {
+                "Bar height": 200,
+                "Length": 10
+            }
+            }
+        ]
+    }
+}
