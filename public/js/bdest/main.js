@@ -6,8 +6,8 @@ let board  = {
     this.score = 0;
     this.lives = 5;
     this.active = false;
-    this.ballVelY = 300;
-    this.ballVelX = 100;
+    this.ballVelY = 500; // Constant starting velocity Y
+    this.ballVelX = 200; // Constant starting velocity X
   },
   reloadBoard: function() {
 
@@ -54,7 +54,7 @@ function create () {
 
   board.initialize();
   // Add ball to game
-  ball = this.physics.add.image(100, 100, "ball").setScale(0.1);
+  ball = this.physics.add.image(100, 100, "ball").setScale(0.075);
   ball.setCollideWorldBounds(true);
   ball.setVelocityX(board.ballVelX);
   ball.setVelocityY(board.ballVelY);
@@ -62,7 +62,7 @@ function create () {
   ball.setBounce(1, 1);
 
   // Add paddle to game
-  paddle = this.physics.add.image(300, 750, "paddle").setScale(0.75);
+  paddle = this.physics.add.image(300, 750, "paddle").setScale(0.5);
   paddle.setCollideWorldBounds(true);
   paddle.body.setAllowGravity(false);
 
@@ -81,9 +81,9 @@ function update () {
 function repositionPaddle () {
   paddle.setImmovable(false);
   if (cursors.left.isDown) {
-    paddle.setVelocityX(-150);
+    paddle.setVelocityX(-200);
   } else if (cursors.right.isDown) {
-    paddle.setVelocityX(150);
+    paddle.setVelocityX(200);
   } else {
     paddle.setVelocityX(0);
   }
@@ -98,8 +98,16 @@ function repositionPaddle () {
 function collisionWithBall (ball, paddle) {
   /* The paddle should stay where it is */
   console.log(paddle.y)
-  board.ballVelY = -board.ballVelY;
-  board.ballVelX = -board.ballVelX;
-  ball.setVelocityY(board.ballVelY);
-  ball.setVelocityX(board.ballVelX);
+  let currentVelocity = Math.sqrt(board.ballVelX ** 2 + board.ballVelY ** 2)
+  /* Get the angle from the center of the center of the paddle to the ball */
+  let reflectionAngle = Math.atan(Math.abs(ball.y - paddle.y)/Math.abs(paddle.x - ball.x));
+
+  let Xreflect = (paddle.x - ball.x < 0) ? 1 : -1;
+
+  /* Set a default velocity from 0.75 to 1.25 from current */
+  const rand = Math.random() * 50;
+  currentVelocity  = (rand > 25) ? currentVelocity * 1.25 : currentVelocity * 0.75;
+
+  ball.setVelocityX(Xreflect * currentVelocity * Math.cos(reflectionAngle));
+  ball.setVelocityY(-currentVelocity * Math.sin(reflectionAngle));
 }
