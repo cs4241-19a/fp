@@ -103,37 +103,6 @@
         </div>
     </div>
 </div>
-<!--Adding in server code-->
-<!--<script>
-const create = async function( e ) {
-      e.preventDefault();
-
-      const userData = {
-        username: document.getElementById( 'username' ).value,
-        password: document.getElementById( 'password' ).value,
-        //orders: []
-      };
-
-      try {
-        const resp = await fetch( '/createAccount', {
-          method:'POST',
-          body: JSON.stringify(userData),
-          headers: { 'Content-Type': 'application/json' },
-        });
-
-        const data = await resp.json();
-
-        if (data.status === true) {
-          //document.getElementById('account-creation-success').style.display = "block";
-          //viewLoginForm();
-        } else {
-          //document.getElementById('duplicate-account-error').style.display = "block";
-        }
-      } catch {}
-
-      return false;
-    };
-</script>-->
 <!-- JavaScript Libraries -->
 <script src="lib/jquery/jquery.min.js"></script>
 <script src="lib/bootstrap/js/bootstrap.min.js"></script>
@@ -141,7 +110,7 @@ const create = async function( e ) {
 <script src="lib/chart/chart.js"></script>
 
 <!-- Template Main Javascript File -->
-<script src="js/login.js"></script>
+<script src="js/register.js"></script>
 <!--<script src="js/register.js"></script>-->
 <script src="js/main.js"></script>
 
