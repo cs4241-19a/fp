@@ -296,7 +296,7 @@ app.get('/request', function (req, res) {
 app.get('/games', function (req, res) {
   res.sendFile('/views/games.html', { root: '.' })
 })
-app.get('/catalogue', function (req, res) {
+app.get('/catalog', function (req, res) {
   res.sendFile('/views/catalogue.html', { root: '.' })
 })
 app.get('/resources/gdcvectorscaledup.png',function (req, res){
