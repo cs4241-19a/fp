@@ -1,0 +1,25 @@
+.vessel {
+    display: flex;
+    justify-content: center;
+}
+
+.field {
+    height: 15px;
+    align-self: center;
+    margin-left: 10px;
+}
+
+.outer {
+    margin-top: 80px; 
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+}
+
+.button {
+    background-color: #f44336;
+    border-radius: 10px;
+    color: white;
+    margin-top: 10px;
+    font-size: 14px;
+}
