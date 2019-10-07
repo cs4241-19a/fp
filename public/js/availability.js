@@ -56,6 +56,31 @@ async function fetchRoomAvailability(roomName) {
   }
 };
 
+async function fetchRoomAvailabilityJSON(roomName) {
+  try {
+    const body = JSON.stringify({name: roomName});
+    const resp = await fetch('/specificRoomAvailability', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body
+    });
+    const data = await resp.json();
+    const availability = data.data;
+
+    // change table label to requested room name
+    document.getElementById('room-table-label').innerText = roomName;
+
+    if (availability){
+      return availability;
+
+    } else {
+      document.getElementById('room-avail').innerText = "Could not find room.";
+    }
+  } catch (err) {
+    console.log('Error occurred when retrieving room.')
+  }
+}
+
 function createRow (availability, time) {
   let newRow = '<tr>\n' +
     `<th scope="row">${time}</th>`;
@@ -179,7 +204,8 @@ async function fetchRoomList() {
     });
     const data = await resp.json();
     const rooms = data.data;
-    document.getElementById('room-list').innerText = JSON.stringify(rooms);
+    return rooms;
+    // document.getElementById('room-list').innerText = JSON.stringify(rooms);
   } catch (err) {
     console.log('Error occurred when retrieving room list.');
   }

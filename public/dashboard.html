@@ -56,7 +56,7 @@
 <!--        <div class="column col-12 col-md-6 col-lg-6 col-xl-6">-->
 <!--          <a href="dashboard.html" style="color: #777; padding: 15px;">Book A Room</a>-->
 <!--        </div>-->
-          <ul class="nav navbar-nav justify-content-end" style="width: 100%; margin: 0;">
+        <ul class="nav navbar-nav justify-content-end" style="width: 100%; margin: 0px;">
           <li class="nav-item active"><a href="login.html">Log Out</a></li>
           <!--    attach this to a logout method    -->
           <li class="nav-item"><a href="dashboard.html">Book A Room</a></li>
@@ -189,9 +189,8 @@
                         }
                     }
 
-                    time = i + ":00";
-                    times.push(time);
-                    //alert(times);
+          time = i + ":00";
+          times.push(time);
 
                     var selectChild = document.getElementById("selectChild");
 
@@ -200,29 +199,106 @@
                         start_loop = 2;
                     }
 
-                    for (var i = start_loop; i < times.length; i++) {
-                        var option = document.createElement("OPTION"),
-                            txt = document.createTextNode(times[i]);
-                        option.appendChild(txt);
-                        option.setAttribute("value", times[i]);
-                        selectChild.insertBefore(option, selectChild.lastChild);
-                    }
-                }
-            </script>
-            <!--            </div>-->
-            <!--                        <div class="col-md-1 col-md-offset-1" style="display:inline-block">-->
-            <!--                        </div>-->
-            <div class="page col-md-offset-1 column col-1">
-                <h3 id="room-table-label"></h3>
-                <div>
-                    <table id="room-avail-table" class="table table-hover table-sm"></table>
-                </div>
-            </div>
-            <!-- /col-lg-8 -->
+          for (var i = start_loop; i < times.length; i++) {
+            var option = document.createElement("OPTION"),
+                    txt = document.createTextNode(times[i]);
+            option.appendChild(txt);
+            option.setAttribute("value", times[i]);
+            selectChild.insertBefore(option, selectChild.lastChild);
+          }
+        }
+
+        function submitButtonClicked() {
+          var selected_room = document.getElementById('roomNum').value;
+          var selected_day = document.getElementById("selectDay").value;
+          var selected_start_time = document.getElementById("select").value;
+          var selected_end_time = document.getElementById("selectChild").value;
+          var selectedStartTime = selected_start_time.split(":");
+          var selectedEndTime = selected_end_time.split(":");
+          var minutes = selectedStartTime[1];
+          start_value = selectedStartTime[0];
+          start_value = parseInt(start_value);// + 1;
+          var end_hour = selectedEndTime[0];
+          var end_minutes = selectedEndTime[1];
+          var halfHours = ["00","30"];
+          var times = [];
+          for(var i = start_value; i < end_hour; i++){
+            for(var j = 0; j < 2; j++){
+              var time = i + ":" + halfHours[j];
+              if(i < 10){
+                time = "0" + time;
+              }
+              times.push(time);
+            }
+          }
+          time = i + ":00";
+          times.push(time);
+          var start_loop = 0;
+          if(minutes == "30") {
+            start_loop = 1;
+          }
+          var out_put_times = [];
+          for(var i = start_loop; i < times.length; i++){
+            out_put_times.push('"' + times[i] +  '"')
+          }
+          if(end_minutes == "30") {
+            out_put_times.push('"' + selected_end_time + '"');
+          }
+          out_put_times.pop();
+          console.log(selected_day + " :[" + out_put_times + "]");
+          const newAvailability = {
+            room: selected_room,
+            day: selected_day,
+            times: out_put_times
+          };
+          alert(selected_day + ": [" + out_put_times + "]");
+          buildAvailability(newAvailability);
+        }
+
+        function buildAvailability(availability) {
+          const roomAvail = fetchRoomAvailabilityJSON(availability.room);
+          switch(availability.day) {
+            case "Sunday":
+              roomAvail.sunday.push(roomAvail.times);
+              break;
+            case "Monday":
+              roomAvail.monday.push(roomAvail.times);
+              break;
+            case "Tuesday":
+              roomAvail.tuesday.push(roomAvail.times);
+              break;
+            case "Wednesday":
+              roomAvail.wednesday.push(roomAvail.times);
+              break;
+            case "Thursday":
+              roomAvail.thursday.push(roomAvail.times);
+              break;
+            case "Friday":
+              roomAvail.friday.push(roomAvail.times);
+              break;
+            case "Saturday":
+              roomAvail.saturday.push(roomAvail.times);
+              break;
+            default:
+              break;
+          }
+          // add this all into a single JSON
+        }
+      </script>
+      <!--            </div>-->
+      <!--            <div class="col-md-1 col-md-offset-1" style="display:inline-block">-->
+      <!--            </div>-->
+      <div class="page column col-5">
+        <h3 id="room-table-label"></h3>
+        <div>
+          <table id="room-avail-table" class="table table-hover table-sm"></table>
         </div>
-        <!-- /row -->
+      </div>
+      <!-- /col-lg-8 -->
     </div>
-    <!-- /container -->
+    <!-- /row -->
+  </div>
+  <!-- /container -->
 </div>
 <!-- /hello -->
 
