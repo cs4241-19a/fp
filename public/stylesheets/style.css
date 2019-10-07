@@ -71,6 +71,7 @@ img {
     height: 200px;
     overflow: auto;
 }
+
 .table-wrapper-scroll-y {
     display: block;
 }
@@ -78,10 +79,12 @@ img {
 .table tbody tr.highlight td {
     background-color: #ddd;
 }
+
 #current-track {
     width: 83px;
     height: 75px;
 }
+
 .hidden-data {
     visibility: hidden;
 
