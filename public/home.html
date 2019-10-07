@@ -8,7 +8,6 @@
     <link href="stylesheets/style.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css' rel="stylesheet">
-    <link href='https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css' rel="stylesheet">
     <link rel="stylesheet" href="stylesheets/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
@@ -90,12 +89,22 @@
             <label class="side-container" for="exampleFormControlTextarea1">Caption</label>
             <textarea class="form-control" id="exampleFormControlTextarea1"
                       placeholder="Write a note about the song here" rows="3"></textarea>
+            <form class="form-inline my-2 my-lg-0 leftJustify">
+                <input id = "songName" class="form-control mr-sm-2 songInput" type="search" placeholder="Search for a Song" aria-label="Search">
+                <button type = "button" id = "songSearch" class="btn btn-outline-danger my-2 my-sm-0 searchButton" >Search</button>
+            </form>
+            <div class="table-wrapper-scroll-y my-custom-scrollbar results-table">
+                <table id = "scrollable-table" class="table table-dark">
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" placeholder="Write a note about the song here"></textarea>
             <div class="mt-2">
                 <div id="rating"></div>
             </div>
-
             <div class="post">
-                <button class="btn btn-danger" type="button">Post</button>
+                <button class="btn btn-danger" type="button">Make Recomendation</button>
             </div>
         </div>
         <div class="col">
@@ -121,23 +130,10 @@
         </div>
     </div>
 </div>
-<script>
-    let curSong = '';
-    $('#paginatedTable').on('click', 'tbody tr', function(event) {
-        $(this).addClass('highlight').siblings().removeClass('highlight');
-        let songName = $(this).find('td:eq(0)').html();
-        let artistName = $(this).find('td:eq(1)').html();
-        let idNumber = $(this).find('td:eq(2)').html();
-        console.log("currently selected song: " + songName + "\n\t\t" +
-                    "artist: " + artistName + "\n\t\t" +
-                    "id: " + idNumber + "\n\t\t" )
-    });
-    $(function () {
-        $("#rating").rateYo()
-    })
-</script>
 
 <script src="js/createPlayer.js"></script>
 <script src="js/home.js" type="module"></script>
+<script type="text/javascript" src="tracks.js"></script>
+<script type="text/javascript" src="search.js"></script>
 </body>
 </html>
