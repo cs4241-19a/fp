@@ -296,7 +296,7 @@ app.get('/request', function (req, res) {
 app.get('/games', function (req, res) {
   res.sendFile('/views/games.html', { root: '.' })
 })
-app.get('/catalogue', function (req, res) {
+app.get('/catalog', function (req, res) {
   res.sendFile('/views/catalogue.html', { root: '.' })
 })
 app.get('/resources/gdcvectorscaledup.png',function (req, res){
@@ -345,6 +345,18 @@ app.get('/requestgame',function(req,res){
   requestGame(req.query['gameId']).then(result => {
     res.send(result)
   })
+})
+
+app.get('/gamescreenshots', function(req,res){
+  let gameName = req.query['game']
+  let photos = null
+  owned.forEach(element => {
+    if(element.slug == gameName){
+      console.log(gameName)
+      photos = element.raw.short_screenshots
+    }
+  });
+  res.send(photos)
 })
 
 

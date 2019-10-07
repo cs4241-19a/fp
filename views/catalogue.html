@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>CS4241 Assignment 3</title>
+    <title>GDC Game Catalog</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
@@ -14,6 +14,13 @@
 
   </style>
   <body style = 'font-family: arcade; background-color: darkgrey; color: black;'>
+      <div class = "text-center" style = "margin-top: 20px;">
+          <a href='/' class="btn btn-primary" role="button">Home</a>
+           <a href='/catalog' class="btn btn-primary" role="button">Catalog</a>
+           <a href='/request' class="btn btn-primary" role="button">Request a Game</a>
+       
+       
+       </div>
      <div><font size = "6"><h1 class = "text-center" style ="font-weight: bold; font-size: 64px;">Our Games!!</h1></font></div>
     <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
     <div class = " text-center  " style = "width: 80%; margin-left: 10%; font-size: 24px">
@@ -41,8 +48,10 @@
         <button id="submit" class="btn btn-primary" onclick="search()" > Search </button>
     </div>
     
-    <div  style = "width: 50%; margin-left: 15%; margin-top: 5%; font-size: 32px">
-    <table id = "table" >
+    <div  style = "width: 50%; margin: 0 auto; margin-top: 5%; font-size: 32px">
+    <table id = "table" class="table table-bordered table-hover" >
+      <tbody>
+      </tbody>
     </table>
       </div>
     
@@ -61,8 +70,23 @@
         if(jQuery.isEmptyObject(car))
           return
         let name = car.name
+        let parentP = car.raw.parent_platforms
+        platform = "";
+        for(var i = 0; i < parentP.length;i++){
+          if(parentP[i].selected == true){
+            if(parentP[i].platform.name == "PC")
+              platform = "https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg"
+            else if(parentP[i].platform.name == "Xbox")
+            platform = "https://upload.wikimedia.org/wikipedia/commons/f/f9/Xbox_one_logo.svg"
+            else if(parentP[i].platform.name == "PlayStation")
+            platform = "https://upload.wikimedia.org/wikipedia/commons/4/4e/Playstation_logo_colour.svg"
+            else if(parentP[i].platform.name == "Nintendo")
+            platform = "https://www.ssbwiki.com/images/8/83/NintendoSymbol.svg"
+            break
+          }
+        }
         console.log(car)
-        $('#table').append('<tr><td id=name>' + car.name +'</td><td id=slug hidden>' + car.slug +'</td></tr>')             
+        $('#table').append('<tr><td><svg width="30" height="30"><image xlink:href=' + platform + ' width="30" height="30"/></svg></td><td id=name>' + car.name +'</td><td id=slug hidden>' + car.slug +'</td></tr>')             
       })
     });
     jQuery.ready();
@@ -99,8 +123,23 @@
         if(jQuery.isEmptyObject(car))
           return
         let name = car.name
+        let parentP = car.raw.parent_platforms
+        platform = "";
+        for(var i = 0; i < parentP.length;i++){
+          if(parentP[i].selected == true){
+            if(parentP[i].platform.name == "PC")
+              platform = "https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg"
+            else if(parentP[i].platform.name == "Xbox")
+            platform = "https://upload.wikimedia.org/wikipedia/commons/f/f9/Xbox_one_logo.svg"
+            else if(parentP[i].platform.name == "PlayStation")
+            platform = "https://upload.wikimedia.org/wikipedia/commons/4/4e/Playstation_logo_colour.svg"
+            else if(parentP[i].platform.name == "Nintendo")
+            platform = "https://www.ssbwiki.com/images/8/83/NintendoSymbol.svg"
+            break
+          }
+        }
         console.log(car)
-        $('#table').append('<tr><td id=name>' + car.name +'</td><td id=slug hidden>' + car.slug +'</td></tr>')             
+        $('#table').append('<tr><td><svg width="30" height="30"><image xlink:href=' + platform + ' width="30" height="30"/></svg></td><td id=name>' + car.name +'</td><td id=slug hidden>' + car.slug +'</td></tr>')             
       })
     });
   }
