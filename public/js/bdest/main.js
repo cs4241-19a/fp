@@ -1,5 +1,5 @@
+"use strict"
 
-console.log('This is printed.')
 
 /* Value to configurable information about the current board */
 let board = {
@@ -23,6 +23,7 @@ let config = {
     type: Phaser.AUTO,
     width: 600,
     height: 800,
+    parent: "game-area",
     physics: {
         default: 'arcade',
         arcade: {
@@ -48,6 +49,7 @@ let cursors;
 let spaceBar;
 let scoreText;
 let livesText;
+let gameOverText;
 
 function preload() {
     let ball = this.load.image("ball", path + "ball.png");
@@ -92,33 +94,47 @@ function create() {
 
     // Add score HUD
     scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
-    livesText = this.add.text(450, 16, 'Lives: 5', { fontSize: '32px', fill: '#fff' });
-
+    livesText = this.add.text(400, 16, 'Lives: 5', { fontSize: '32px', fill: '#fff' });
+    gameOverText = this.add.text(85, 400, 'GAME OVER', {fontSize: '64px', fill:'#fff'});
+    gameOverText.setVisible(false);
 }
 
 function update() {
     let paddleActions = repositionPaddle.bind(this);
     paddleActions();
 
+    if (board.lives === 0)
+    {
+        gameOverText.setVisible(true);
+    }
+
     if (ball !== undefined)
     {
         if (ball.y > 780) {
             // Update lives counter
             board.lives -= 1;
-            livesText.setText("Lives :" + board.lives);
+            livesText.setText("Lives: " + board.lives);
             // Make ball stop and invisible
             ball.setVisible(false);
             ball.setY(700);
             ball.setVelocityY(0);
             ball.setVelocityX(0);
             board.active = false;
+        } else if (board.bricksLeft === 0){
+            // Make ball stop and invisible
+            ball.setVisible(false);
+            ball.setY(700);
+            ball.setVelocityY(0);
+            ball.setVelocityX(0);
+
+            // Reset all of the bricks
+            resetBricks(bricks);
+            board.active = false;
         }
     }
-
 }
 
 const addBall = function () {
-    console.log("Adding ball");
     ball.setVisible(true);
     ball.setImmovable(false);
     ball.setX(paddle.x);
@@ -138,10 +154,15 @@ const repositionPaddle = function() {
         paddle.setVelocityX(-board.paddleSpeed);
     } else if (cursors.right.isDown) {
         paddle.setVelocityX(board.paddleSpeed);
-    } else if (spaceBar.isDown && !board.active && board.lives !== 0) {
+    } else if (spaceBar.isDown && !board.active && board.lives > 0) {
         let addBallBound = addBall.bind(this);
         addBallBound();
         board.active = true;
+    } else if (spaceBar.isDown && board.lives === 0)
+    {
+        resetBoard();
+        let addBallBound = addBall.bind(this);
+        addBallBound();
     }
     else {
         paddle.setVelocityX(0);
@@ -162,7 +183,7 @@ const initializeBricksArray = function (bricks, brickX, brickY, rows) {
     let currentY = 100;
     for (let i = 0; i < rows.length; i++)
     {
-        let currentX = 10 + (320 * brickX / 2);
+        let currentX = 14 + (320 * brickX / 2);
         for (let j = 0; j < 8; j++)
         {
             let currBrickWrapper = new Brick(bricks, rows[i]);
@@ -172,7 +193,7 @@ const initializeBricksArray = function (bricks, brickX, brickY, rows) {
             // Add collision
             this.physics.add.collider(ball, brickObj, barCollision, null);
             brickObj.brick = currBrickWrapper;
-            bricks.push(currBrickWrapper);
+            bricks.push(brickObj);
             currentX += 320 * brickX;
         }
 
@@ -186,8 +207,6 @@ const initializeBricksArray = function (bricks, brickX, brickY, rows) {
  * @param {String} color - type of bar
  */
 function Brick(bricks, color) {
-    currId = Math.random() * Number.MAX_SAFE_INTEGER;
-    this.id = currId;
     /* Set score based on color */
     if (color === "r_bar") {
         this.score = 200;
@@ -195,18 +214,6 @@ function Brick(bricks, color) {
         this.score = 100;
     } else if (color === "y_bar") {
         this.score = 50;
-    }
-    /* Generate a random brick ID */
-    if (!bricks.length === 0) {
-        let breakLoop = false;
-        while (!breakLoop) {
-            if (bricks.filter(brick => { brick.brick.id !== currID; }).length == 0) {
-                breakLoop = true;
-            } else {
-                currId = Math.random * Number.MAX_SAFE_INTEGER;
-                this.id = currId;
-            }
-        }
     }
 }
 
@@ -217,7 +224,6 @@ function Brick(bricks, color) {
  */
 function collisionWithBall(ball, paddle) {
     /* The paddle should stay where it is */
-    console.log(paddle.y)
     let currentVelocity = Math.sqrt(board.ballVelX ** 2 + board.ballVelY ** 2)
     /* Get the angle from the center of the center of the paddle to the ball */
     let reflectionAngle = Math.atan(Math.abs(ball.y - paddle.y) / Math.abs(paddle.x - ball.x));
@@ -232,10 +238,38 @@ function collisionWithBall(ball, paddle) {
     ball.setVelocityY(-currentVelocity * Math.sin(reflectionAngle));
 }
 
-
-function barCollision(ball, bar) {
-    board.score += bar.brick.score;
+/***
+ * Callback to handle collisions.
+ */
+function barCollision(ball, brick) {
+    board.score += brick.brick.score;
     scoreText.setText("Score: " + board.score);
     board.bricksLeft--;
-    bar.destroy();
+    brick.disableBody(true, true);
+}
+
+function resetBoard () {
+    board.active = true;
+
+    resetBricks(bricks);
+    // Reset lives counter
+    board.lives = 5;
+    livesText.setText("Lives: " + board.lives);
+
+    // Reset score counter
+    board.score = 0;
+    scoreText.setText("Score: " + board.score);
+
+    gameOverText.setVisible(false);
+}
+
+/***
+ * Reset all of the bricks on the board.
+ * @param {Array} bricks - Array of Brick objects.
+ */
+function resetBricks (bricks) {
+    for (let i = 0; i < bricks.length; i++) {
+        bricks[i].enableBody(true, bricks[i].x, bricks[i].y, true, true);
+    }
+    board.bricksLeft = bricks.length;
 }
