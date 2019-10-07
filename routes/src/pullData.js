@@ -68,7 +68,7 @@ async function getGame(gameId) {
  */
 async function getGameScores(gameId, orderDir) {
     if (orderDir !== "asc" || orderDir !== "desc") {
-        orderDir = "asc";
+        orderDir = "desc";
     }
     const scoresQuery = db.collection(`games/${gameId}/scores`).orderBy("score", orderDir);
     return Promise.all(await scoresQuery.get()
@@ -129,6 +129,7 @@ function getGameDropdownData(games) {
             name: data.name,
             shortDesc: data.shortDesc,
             gameId: data.gameId,
+            scoreOrder: data.scoreOrder,
         };
     }).sort((a, b) => (a.name > b.name) ? 1 : -1);
 }

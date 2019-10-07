@@ -13,9 +13,13 @@ async function fillScores(game) {
     }
     setScoresHeader(game.name);
     const allScoresDataPromise = getScores(game.gameId, game.orderDir);
+    document.getElementById("globalScores").innerHTML = "";
+    document.getElementById("userScores").innerHTML = "";
+    document.getElementById("scoresLoading").classList.remove("d-none");
     const globalSource = document.getElementById("globalScoresBodyTemplate").innerHTML;
     const globalTemplate = Handlebars.compile(globalSource);
     const allScoresData = await allScoresDataPromise;
+    document.getElementById("scoresLoading").classList.add("d-none");
     document.getElementById("globalScores").innerHTML = globalTemplate({scoresData: allScoresData});
     let userScoresData;
     if (auth.currentUser) {
@@ -40,6 +44,7 @@ async function getScores(gameId, orderDir) {
             "Content-Type": "application/json",
         },
     });
+    console.log(request);
     return fetch(request)
         .then((resp) => resp.json())
         .then(function( arr ) {
@@ -52,7 +57,7 @@ async function getScores(gameId, orderDir) {
 }
 
 function onGameChange(elm) {
-    fillScores({gameId: elm.dataset.gameId, name: elm.dataset.name});
+    fillScores({gameId: elm.dataset.gameId, name: elm.dataset.name, orderDir: elm.dataset.orderDir});
 }
 
 function setScoresHeader(gameName) {

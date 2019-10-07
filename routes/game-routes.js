@@ -10,6 +10,7 @@ gameRouter.get("/:gameId", async function(req, res) {
     const gameData = await pull.getGames();
     const dropdownData = pull.getGameDropdownData(gameData);
     const game = gameData.find(game => game.gameId === req.params.gameId);
+    console.log(gameData);
     if (game) {
         res.render(game.path, {gameId: game.gameId, gameName: game.name, gameOrderDir: game.scoreOrder, scoresGameDropdownData: dropdownData});
     } else {
