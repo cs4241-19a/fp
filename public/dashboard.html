@@ -62,7 +62,8 @@
 
   <!-- Libraries CSS Files -->
   <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css">
+<!--  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css">-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <!-- Main Stylesheet File -->
   <link href="css/style.css" rel="stylesheet">
@@ -103,43 +104,104 @@
 <div id="hello">
   <div class="container">
     <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 centered">
+      <div class="column col-6">
+        <form style="color: black;" action="/">
+          <script> var start_time = 9;</script>
+          Your booking is from
+          <select id="select" onchange="childDropDown();">
+            <option value="select">--select--</option>
+          </select>
+          &nbsp;to&nbsp;
+          <select id="selectChild">
+            <option value="select">--select--</option>
+          </select>
+
+          <br><br>
+
+          <button id="submit_times" name="submit_times" style="background-color:green; padding: 10px 20px 10px 20px">
+            <strong>Submit Times</strong>
+          </button>
+        </form>
+
+        <script>
+          var start_value = 9;
+          var halfHours = ["00", "30"];
+          var times = [];
+
+          for (var i = start_value; i < 17; i++) {
+            for(var j = 0; j < 2; j++){
+              var time = i + ":" + halfHours[j];
+              if(i < 10){
+                time = "0" + time;
+              }
+              times.push(time);
+            }
+          }
+
+          time = i + ":00";
+          times.push(time);
+
+          var select = document.getElementById("select");
+
+          for(var i = 0; i < times.length; i++) {
+            var option = document.createElement("OPTION"),
+              txt = document.createTextNode(times[i]);
+            option.appendChild(txt);
+            option.setAttribute("value",times[i]);
+            select.insertBefore(option,select.lastChild);
+          }
+
+
+          function childDropDown() {
+            var start_value =  document.getElementById("select").value;
+            document.getElementById("selectChild").options.length = 0;
+
+            var selectedTime = start_value.split(":");
+            var minutes = selectedTime[1];
+            start_value = selectedTime[0];
+
+            start_value = parseInt(start_value);// + 1;
+
+            var halfHours = ["00","30"];
+            var times = [];
+            for(var i = start_value; i < 18; i++){
+              for(var j = 0; j < 2; j++){
+                var time = i + ":" + halfHours[j];
+                if(i < 10){
+                  time = "0" + time;
+                }
+                times.push(time);
+              }
+            }
+
+            time = i + ":00";
+            times.push(time);
+            //alert(times);
+
+            var selectChild = document.getElementById("selectChild");
+
+            var start_loop = 1;
+            if(minutes == "30") {
+              start_loop = 2;
+            }
+
+            for(var i = start_loop; i < times.length; i++){
+              var option = document.createElement("OPTION"),
+                txt = document.createTextNode(times[i]);
+              option.appendChild(txt);
+              option.setAttribute("value",times[i]);
+              selectChild.insertBefore(option,selectChild.lastChild);
+            }
+          }
+        </script>
+      </div>
+      <div class="col-lg-6 centered">
         <div class="page">
           <h3 id="room-table-label"></h3>
           <div>
-            <table id="room-avail-table" data-toggle="table table-hover" ></table>
+            <table id="room-avail-table" class="table table-hover table-sm" ></table>
           </div>
-
-          <!--  example methods  -->
-<!--          <h4>/specificRoomAvailability</h4>-->
-<!--          <p id="room-avail"></p>-->
-<!--          <h4>/specificUserAvailability</h4>-->
-<!--          <p id="user-avail"></p>-->
-<!--          <h4>/allUserInfo</h4>-->
-<!--          <p id="user-list"></p>-->
-<!--          <h4>/allRoomInfo</h4>-->
-<!--          <p id="room-list"></p>-->
-<!--          <h4>/currentUserInfo</h4>-->
-<!--          <p id="current-user-info"></p>-->
-<!--          <button id="update-room-avail">add room availability</button>-->
-<!--          <button id="update-user-avail">add user availability</button>-->
-<!--          <button id="update-user-archive">add user archive</button>-->
         </div>
-<!--        <div class="page page_login">-->
-<!--          <form class="form" action>-->
-<!--            <div class="form__container">-->
-<!--              <div class="logo"><img class="logo__pic" src="img/logo.svg" width="45"></div>-->
-<!--              <div class="fieldset">-->
-<!--                <div class="field"><input id="username" class="input" type="email" placeholder="E-mail address"-->
-<!--                                          required></div>-->
-<!--                <div class="field"><input id="password" class="input" type="password" placeholder="Password" required>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <button id="login-btn" type="submit" class="btn btn-large">Sign in</button>-->
-<!--            </div>-->
-<!--            <div class="form__footer">Don't Have an Account? <a href="login.html">Create it</a>.</div>-->
-<!--          </form>-->
-<!--        </div>-->
       </div>
       <!-- /col-lg-8 -->
     </div>
@@ -169,10 +231,14 @@
 
 <!-- JavaScript Libraries -->
 <script src="lib/jquery/jquery.min.js"></script>
-<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+<!--<script src="lib/bootstrap/js/bootstrap.min.js"></script>-->
 <script src="lib/easing/easing.min.js"></script>
 <script src="lib/chart/chart.js"></script>
-<script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
+<!--<script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>-->
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
 <!-- Template Main Javascript File -->

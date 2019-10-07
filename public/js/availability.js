@@ -57,64 +57,65 @@ async function fetchRoomAvailability(roomName) {
 };
 
 function createRow (availability, time) {
-  let newRow = '<tr>\n';
+  let newRow = '<tr>\n' +
+    `<th scope="row">${time}</th>`;
 
-  newRow += (`<td style="background-color: #777777"> ${time} </td>`);
+  // newRow += (`<!--<th scope="row" style="background-color: #777777"> ${time} </th>-->`);
 
   if (availability.sunday.includes(time)) {
     console.log('unavailable');
-    newRow += (`<td style="background-color: #823E2F;">unavailable</td>\n`);
+    newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
   } else {
     console.log('available');
-    newRow += (`<td style="background-color: #3C8268;">available</td>\n`);
+    newRow += (`<td style="background-color: #3C8268;"></td>\n`);
   }
 
   if (availability.monday.includes(time)) {
     console.log('unavailable');
-    newRow += (`<td style="background-color: #823E2F;">unavailable</td>\n`);
+    newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
   } else {
     console.log('available');
-    newRow += (`<td style="background-color: #3C8268;">available</td>\n`);
+    newRow += (`<td style="background-color: #3C8268;"></td>\n`);
   }
 
   if (availability.tuesday.includes(time)) {
     console.log('unavailable');
-    newRow += (`<td style="background-color: #823E2F;">unavailable</td>\n`);
+    newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
   } else {
     console.log('available');
-    newRow += (`<td style="background-color: #3C8268;">available</td>\n`);
+    newRow += (`<td style="background-color: #3C8268;"></td>\n`);
   }
 
   if (availability.wednesday.includes(time)) {
     console.log('unavailable');
-    newRow += (`<td style="background-color: #823E2F;">unavailable</td>\n`);
+    newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
   } else {
     console.log('available');
-    newRow += (`<td style="background-color: #3C8268;">available</td>\n`);
+    newRow += (`<td style="background-color: #3C8268;"></td>\n`);
   }
 
   if (availability.thursday.includes(time)) {
     console.log('unavailable');
-    newRow += (`<td style="background-color: #823E2F;">unavailable</td>\n`);
+    newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
   } else {
     console.log('available');
-    newRow += (`<td style="background-color: #3C8268;">available</td>\n`);
+    newRow += (`<td style="background-color: #3C8268;"></td>\n`);
   }
 
   if (availability.friday.includes(time)) {
     console.log('unavailable');
-    newRow += (`<td style="background-color: #823E2F;">unavailable</td>\n`);
+    newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
   } else {
     console.log('available');
-    newRow += (`<td style="background-color: #3C8268;">available</td>\n`);
+    newRow += (`<td style="background-color: #3C8268;"></td>\n`);
   }
 
   if (availability.saturday.includes(time)) {
     console.log('unavailable');
-    newRow += (`<td style="background-color: #823E2F;">unavailable</td>\n`);
+    newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
   } else {
     console.log('available');
-    newRow += (`<td style="background-color: #3C8268;">available</td>\n`);
+    newRow += (`<td style="background-color: #3C8268;"></td>\n`);
   }
 
   newRow += '</tr>';
