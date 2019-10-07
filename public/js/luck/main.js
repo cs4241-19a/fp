@@ -19,12 +19,12 @@ const startReadings = 10;
 let readingsLeft = startReadings;
 let totalLuck = 0;
 
-// assets from www.flaticon.com
 /**
  * Load game assets.
  * @author: jk
  */
 function preload() {
+    // assets from www.flaticon.com
     this.load.image("potOfGold", "/assets/luck/pot-of-gold.svg");
 }
 
