@@ -11,6 +11,12 @@
       "password": "hello",
       "score": 75,
       "gameState": {}
+    },
+    {
+      "username": "alp",
+      "password": "hello",
+      "score": 87,
+      "gameState": {}
     }
   ]
 }

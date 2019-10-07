@@ -42,6 +42,24 @@ app.get("/js/click.js", function(req, res) {
     res.sendFile(path.join(__dirname + "/js/click.js"));
 });
 
+app.post("/update", function(req, res) {
+    let dataString = '';
+    req.on( 'data', function( data ) {
+        dataString += data
+    });
+
+    req.on( 'end', function() {
+        const updatedUser = JSON.parse(dataString);
+        db.get('users')
+            .find({ username: updatedUser.username })
+            .assign({ score: updatedUser.score, gameState: updatedUser.gameState})
+            .write();
+
+        res.writeHead( 200, "OK", {'Content-Type': 'text/plain' });
+        res.end();
+    })
+});
+
 app.get("/leaderboard", function(req, res) {
     const state = db.getState();
     const str = JSON.stringify(state, null, 2);

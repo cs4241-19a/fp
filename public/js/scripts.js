@@ -1,6 +1,35 @@
-//const user = db.get('users').find({ username: document.getElementById('current-username').value}).value();
-// user.score += 63;
-// db.get( 'users' ).push(user).write();
+const updatePlayer = function() {
+
+    // Add logic here for gamestate and/or score
+    const pObj = {
+        attack: 7,
+        crit: 0.11,
+        helpers: 0
+    };
+
+    const eObj = {
+        health: 70,
+        filepath: "../img/ganondorf.png",
+        tier: 2
+    };
+
+    const currentState = {
+        PlayerObj: pObj,
+        EnemyObj: eObj
+    };
+
+    const updatedUser = {
+        username: document.getElementById('current-username').value,
+        score: 100, // CHANGE HERE
+        gameState: currentState // CHANGE HERE
+    };
+
+    const body = JSON.stringify(updatedUser);
+    fetch( '/update', {
+        method:'POST',
+        body
+    })
+};
 
 const viewLeaderboard = function() {
     document.getElementById('table').style.display = "flex";
