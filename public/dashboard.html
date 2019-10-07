@@ -1,45 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--  <head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Title</title>-->
-<!--    <link rel="stylesheet" href="css/bootstrap.css">-->
-<!--    <link rel="stylesheet" href="css/bootstrap-grid.css">-->
-<!--    <link rel="stylesheet" href="css/bootstrap-reboot.css">-->
-<!--    <link rel="stylesheet" href="css/style.css">-->
-<!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
-<!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
-<!--  </head>-->
-<!--  <body onload="main()">-->
-<!--    <p>Test Page</p>-->
-<!--    &lt;!&ndash;    ROOM TABLE    &ndash;&gt;-->
-<!--    <div>-->
-<!--      <h3 id="room-table-label"></h3>-->
-<!--      <div>-->
-<!--        <table id="room-avail-table"></table>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    &lt;!&ndash;  example methods  &ndash;&gt;-->
-<!--    <h4>/specificRoomAvailability</h4>-->
-<!--    <p id="room-avail"></p>-->
-<!--    <h4>/specificUserAvailability</h4>-->
-<!--    <p id="user-avail"></p>-->
-<!--    <h4>/allUserInfo</h4>-->
-<!--    <p id="user-list"></p>-->
-<!--    <h4>/allRoomInfo</h4>-->
-<!--    <p id="room-list"></p>-->
-<!--    <h4>/currentUserInfo</h4>-->
-<!--    <p id="current-user-info"></p>-->
-<!--    <button id="update-room-avail">add room availability</button>-->
-<!--    <button id="update-user-avail">add user availability</button>-->
-<!--    <button id="update-user-archive">add user archive</button>-->
-<!--    <script src="js/availability.js"></script>-->
-<!--  </body>-->
-<!--</html>-->
-
-
-<!---->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,8 +39,8 @@
 
 <!-- Fixed navbar -->
 <div id="thenavbar" class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
+  <div class="container row justify-content-center">
+    <div class="column col-12 col-lg-6 col-md-6 navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -90,12 +48,20 @@
       </button>
       <a class="navbar-brand" href="#"><i class="fa fa-bolt"></i></a>
     </div>
-    <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li class="active"><a href="login.html">Log Out</a></li>
-        <!--    attach this to a logout method    -->
-        <li><a href="dashboard.html">Book A Room</a></li>
-      </ul>
+    <div class="column col-12 col-md-6 col-lg-6 navbar-collapse collapse">
+      <div class="row justify-content-center">
+<!--        <div class="column col-12 col-md-6 col-lg-6 col-xl-6">-->
+<!--          <a class="active" href="login.html" style="color: white; background-color: #74cfae; padding: 15px;">Log Out</a>-->
+<!--        </div>-->
+<!--        <div class="column col-12 col-md-6 col-lg-6 col-xl-6">-->
+<!--          <a href="dashboard.html" style="color: #777; padding: 15px;">Book A Room</a>-->
+<!--        </div>-->
+        <ul class="nav navbar-nav justify-content-end" style="width: 100%; margin: 0px;">
+          <li class="nav-item active"><a href="login.html">Log Out</a></li>
+          <!--    attach this to a logout method    -->
+          <li class="nav-item"><a href="dashboard.html">Book A Room</a></li>
+        </ul>
+      </div>
     </div>
     <!--/.nav-collapse -->
   </div>
