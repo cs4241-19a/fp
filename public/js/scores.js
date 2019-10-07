@@ -9,14 +9,14 @@ addLoadEvent(() => {
 async function fillScores(game) {
     if (!game.gameId) {  // get game info off first game in dropdown
         const dataSet = document.getElementById("scoreGameDD").firstElementChild.dataset;
-        game = {gameId: dataSet.gameId, name: dataSet.name}
+        game = {gameId: dataSet.gameId, name: dataSet.name, orderDir: dataSet.orderDir}
     }
     setScoresHeader(game.name);
-    const allScoresData = await getScores(game.gameId);
-    const globalContext = {scoresData: allScoresData};
+    const allScoresDataPromise = getScores(game.gameId, game.orderDir);
     const globalSource = document.getElementById("globalScoresBodyTemplate").innerHTML;
     const globalTemplate = Handlebars.compile(globalSource);
-    document.getElementById("globalScores").innerHTML = globalTemplate(globalContext);
+    const allScoresData = await allScoresDataPromise;
+    document.getElementById("globalScores").innerHTML = globalTemplate({scoresData: allScoresData});
     let userScoresData;
     if (auth.currentUser) {
         userScoresData = allScoresData.filter(score => score.user.uid === auth.currentUser.uid);
@@ -31,10 +31,14 @@ async function fillScores(game) {
 
 }
 
-async function getScores(gameId) {
+async function getScores(gameId, orderDir) {
     const url = `/data/games/${gameId}/scores`;
     const request = new Request(url, {
-        method: "GET",
+        method: "POST",
+        body: JSON.stringify({orderDir}),
+        headers: {
+            "Content-Type": "application/json",
+        },
     });
     return fetch(request)
         .then((resp) => resp.json())
