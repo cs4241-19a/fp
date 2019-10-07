@@ -51,6 +51,7 @@ async function getGame(gameId) {
                 imgPath: data.imgPath,
                 playCount: data.timesPlayed,
                 gameId: snapshot.id,
+                scoreOrder: data.scoreOrder,
             };
         })
         .catch(err => {
@@ -64,7 +65,8 @@ async function getGame(gameId) {
  * @param {string} gameId The id of the game to get.
  */
 async function getGameScores(gameId) {
-    const scoresQuery = db.collection(`games/${gameId}/scores`).orderBy("score", "desc");
+    const gameData = await getGame(gameId);
+    const scoresQuery = db.collection(`games/${gameId}/scores`).orderBy("score", gameData.scoreOrder);
     return Promise.all(await scoresQuery.get()
         .then(snapshot => {
             return snapshot.docs.map(async function(doc) {
