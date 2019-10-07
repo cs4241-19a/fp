@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-feature-settings: "liga", "kern";
+            font-feature-settings: "liga", "kern";
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+    background: linear-gradient(90deg, #FC5C7D, #6A82FB) fixed;
+}
+  
+body {
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+button {
+    background: linear-gradient(90deg, #FC5C7D, #6A82FB) fixed;
+}
