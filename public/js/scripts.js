@@ -50,3 +50,77 @@ const login = function (e) {
         document.getElementById('login').style.display = "none";
     });
 };
+
+function findEnemy(tier) {
+    const random = Math.random();
+    let filepath;
+
+    if (tier === 1) {
+        switch(true) {
+            case random > 0.9:
+                filepath = "../img/bokoblin.png";
+                break;
+            case (random > 0.8 && random <= 0.9):
+                filepath = "../img/bomb.png";
+                break;
+            case (random > 0.7 && random <= 0.8):
+                filepath = "../img/eggrobot.png";
+                break;
+            case (random > 0.6 && random <= 0.7):
+                filepath = "../img/goomba.png";
+                break;
+            case (random > 0.5 && random <= 0.6):
+                filepath = "../img/heartless.png";
+                break;
+            case (random > 0.4 && random <= 0.5):
+                filepath = "../img/met.png";
+                break;
+            case (random > 0.3 && random <= 0.4):
+                filepath = "../img/pacman-ghost.png";
+                break;
+            case (random > 0.2 && random <= 0.3):
+                filepath = "../img/rattata.png";
+                break;
+            case (random > 0.1 && random <= 0.2):
+                filepath = "../img/slime.png";
+                break;
+            case random <= 0.1:
+                filepath = "../img/waddle-dee.png";
+                break;
+        }
+    }
+    if (tier === 2) {
+        switch(true) {
+            case random > 0.8:
+                filepath = "../img/bowser-jr.png";
+                break;
+            case (random > 0.6 && random <= 0.8):
+                filepath = "../img/charizard.png";
+                break;
+            case (random > 0.4 && random <= 0.6):
+                filepath = "../img/shadow.png";
+                break;
+            case (random > 0.2 && random <= 0.4):
+                filepath = "../img/zero.png";
+                break;
+            case random <= 0.2:
+                filepath = "../img/waddle-dee.png";
+                break;
+        }
+    }
+    if (tier === 3) {
+        switch(true) {
+            case random > 0.67:
+                filepath = "../img/bowser.png";
+                break;
+            case (random > 0.33 && random <= 0.67):
+                filepath = "../img/ganondorf.png";
+                break;
+            case random <= 0.33:
+                filepath = "../img/eggman.png";
+                break;
+        }
+    }
+
+    return filepath;
+}
