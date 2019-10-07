@@ -5,7 +5,7 @@ import domains from './domain_list'
 import constant from "d3-array/src/constant";
 import {max} from "d3";
 
-const d3 = Object.assign(d3Base, { group });
+const d3 = Object.assign(d3Base, {group});
 let svg = null;
 let projection = null;
 let data = [];
@@ -16,269 +16,321 @@ let mapHeight
 let bar_initialized = false;
 //Set size of svg element and chart
 const width = 500,
-      height = domains.length * 20,
-      categoryIndent = 4*15 + 5,
-      defaultBarWidth = 2000;
+	height = domains.length * 20,
+	categoryIndent = 4 * 15 + 5,
+	defaultBarWidth = 2000;
 let y = null;
 let x = null;
 let bar_svg = null;
 
-const initializeBar = function() {
-    bar_initialized = true;
-    //Set up scales
-    x = d3.scaleLinear()
-        .domain([0,defaultBarWidth])
-        .range([0,width]);
-    y = d3.scaleBand()
-        .range([0, height]).round([0.1, 0]);
+const initializeBar = function () {
+	bar_initialized = true;
+	//Set up scales
+	x = d3.scaleLinear()
+		.domain([0, defaultBarWidth])
+		.range([0, width]);
+	y = d3.scaleBand()
+		.range([0, height]).round([0.1, 0]);
 
-    //Create SVG element
-    d3.select("#bar_chart").selectAll("svg").remove();
-    bar_svg = d3.select("#bar_chart").append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .append("g");
+	//Create SVG element
+	d3.select("#bar_chart").selectAll("svg").remove();
+	bar_svg = d3.select("#bar_chart").append("svg")
+		.attr("width", width)
+		.attr("height", height + chartHeader)
+		.append("g");
+
+
+	bar_svg.append('text')
+		.attr("class", "chart-header")
+		.attr("dominant-baseline", "hanging")
+		.attr("text-anchor", "middle")
+		.attr("font-size", 18)
+		.attr("font-weight", "bold")
+		.attr("fill", "#0367A6")
+		.attr("y", 5)
+		.attr("x", width / 2)
+		.text("Rolling Average of Locally Collected Data (ms)");
+
+	bar_svg.append('text')
+		.attr("class", "chart-header")
+		.attr("dominant-baseline", "hanging")
+		.attr("text-anchor", "middle")
+		.attr("font-size", 16)
+		.attr("fill", "#0367A6")
+		.attr("y", 30)
+		.attr("x", width / 2)
+		.text("(Page Alexa Rank)");
 };
 
 const displayBar = function (raw_data) {
-    const data = [];
+	const data = [];
 
-    for (let [key, value] of Object.entries(raw_data)) {
-        data.push({key: key, value: value.avg, max: value.max});
-    }
+	for (let [key, value] of Object.entries(raw_data)) {
+		data.push({key: key, value: value.avg, max: value.max});
+	}
 
-    y.domain(data.sort(function(a,b){
-        return b.value - a.value;
-    }).map(function(d) { return d.key; }));
+	y.domain(data.sort(function (a, b) {
+		return b.value - a.value;
+	}).map(function (d) {
+		return d.key;
+	}));
 
-    const barMax = d3.max(data, function(e) {
-        return e.value; //max
-    });
-    x.domain([0,barMax]);
+	const barMax = d3.max(data, function (e) {
+		return e.value; //max
+	});
+	x.domain([0, barMax]);
 
-    /////////
-    //ENTER//
-    /////////
+	/////////
+	//ENTER//
+	/////////
 
-    //Bind new data to chart rows
+	//Bind new data to chart rows
 
-    //Create chart row and move to below the bottom of the chart
-    const chartRow = bar_svg.selectAll("g.chartRow")
-        .data(data, function(d){ return d.key});
-    const newRow = chartRow
-        .enter()
-        .append("g")
-        .attr("class", "chartRow")
-        .attr("transform", "translate(0," + height + ")");
+	//Create chart row and move to below the bottom of the chart
+	const chartRow = bar_svg.selectAll("g.chartRow")
+		.data(data, function (d) {
+			return d.key
+		});
+	const newRow = chartRow
+		.enter()
+		.append("g")
+		.attr("class", "chartRow")
+		.attr("transform", "translate(0," + height + chartHeader + ")");
 
-    //Add rectangles
-    newRow.insert("rect")
-        .attr("class","bar")
-        .attr("x", 0)
-        .attr("opacity",0)
-        .attr("height", y.bandwidth())
-        .attr("width", function(d) { return x(d.value);});
+	//Add rectangles
+	newRow.insert("rect")
+		.attr("class", "bar")
+		.attr("x", 0)
+		.attr("opacity", 0)
+		.attr("height", y.bandwidth())
+		.attr("width", function (d) {
+			return x(d.value);
+		});
 
-    //Add value labels
-    newRow.append("text")
-        .attr("class","label")
-        .attr("y", y.bandwidth()/2)
-        .attr("x",0)
-        .attr("opacity",1)
-        .attr("dy",".35em")
-        .attr("dx","0.5em")
-        .text(d => d.value);
+	//Add value labels
+	newRow.append("text")
+		.attr("class", "label")
+		.attr("y", y.bandwidth() / 2)
+		.attr("x", 0)
+		.attr("opacity", 1)
+		.attr("dy", ".35em")
+		.attr("dx", "0.5em")
+		.text(d => d.value);
 
-    //Add Headlines
-    newRow.append("text")
-        .attr("class", "category")
-        .attr("text-overflow","ellipsis")
-        .attr("y", y.bandwidth()/2)
-        .attr("x", categoryIndent)
-        .attr("opacity",0)
-        .attr("dy",".35em")
-        .attr("dx","0.5em")
-        .on("click", d => {
-            currentFavicon = d.key.split(" ")[0];
-            document.querySelector("#selected_favicon_display").textContent = d.key.split(" ")[0];
-            updateMap();
-        })
-        .text(function(d){return d.key});
+	//Add Headlines
+	newRow.append("text")
+		.attr("class", "category")
+		.attr("text-overflow", "ellipsis")
+		.attr("y", y.bandwidth() / 2)
+		.attr("x", categoryIndent)
+		.attr("opacity", 0)
+		.attr("dy", ".35em")
+		.attr("dx", "0.5em")
+		.on("click", d => {
+			currentFavicon = d.key.split(" ")[0];
+			document.querySelector("#selected_favicon_display").textContent = d.key.split(" ")[0];
+			updateMap();
+		})
+		.text(function (d) {
+			return d.key
+		});
 
-    chartRow.select(".bar").transition()
-        .duration(300)
-        .attr("width", function(d) { return x(d.value);})
-        .attr("opacity",1);
+	chartRow.select(".bar").transition()
+		.duration(300)
+		.attr("width", function (d) {
+			return x(d.value);
+		})
+		.attr("opacity", 1);
 
-    //Update data labels
-    chartRow.select(".label").transition()
-        .duration(300)
-        .attr("opacity",1)
-        .tween("text", function(d) {
-            const i = d3.interpolate(+this.textContent.replace(/\,/g,''), +d.value);
-            return function(t) {
-                this.textContent = isNaN(Math.round(d.value)) ? "-" : Math.round(d.value) ;
-            };
-        });
+	//Update data labels
+	chartRow.select(".label").transition()
+		.duration(300)
+		.attr("opacity", 1)
+		.tween("text", function (d) {
+			+this.textContent.replace(/,/g, '');
+			return () => {
+				this.textContent = isNaN(Math.round(d.value)) ? "-" : Math.round(d.value);
+			};
+		});
 
-    //Fade in categories
-    chartRow.select(".category").transition()
-        .duration(300)
-        .attr("opacity",1);
-
-
-    ////////
-    //EXIT//
-    ////////
-
-    //Fade out and remove exit elements
-    chartRow.exit().transition()
-        .style("opacity","0")
-        .attr("transform", "translate(0," + height + ")")
-        .remove();
+	//Fade in categories
+	chartRow.select(".category").transition()
+		.duration(300)
+		.attr("opacity", 1);
 
 
-    ////////////////
-    //REORDER ROWS//
-    ////////////////
+	////////
+	//EXIT//
+	////////
 
-    const delay = function(d, i) { return 200 + i * 30; };
+	//Fade out and remove exit elements
+	chartRow.exit().transition()
+		.style("opacity", "0")
+		.attr("transform", "translate(0," + height + ")")
+		.remove();
 
-    chartRow.transition()
-        .duration(900)
-        .attr("transform", function(d){ return "translate(0," + y(d.key) + ")"; });
+	chartRow.transition()
+		.duration(900)
+		.attr("transform", function (d) {
+			return "translate(0," + (y(d.key) + chartHeader) + ")";
+		});
 };
 
+const chartHeader = 60;
+const setupMap = function (width, height) {
+	mapHeight = height;
+	projection = d3.geoAlbersUsa()
+		.translate([width / 2, height / 2 + chartHeader])
+		.scale([1000]);
 
-const setupMap = function(width, height){
-    mapHeight = height
-    projection = d3.geoAlbersUsa()
-        .translate([width/2, height/2])
-        .scale([1000]);
+	let path = d3.geoPath()
+		.projection(projection);
 
-    let path = d3.geoPath()
-        .projection(projection);
+	svg = d3.select("#map_div")
+		.append("svg")
+		.attr("width", width)
+		.attr("height", height + chartHeader);
 
-    svg = d3.select("#map_div")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height);
+	svg.append('text')
+		.attr("class", "chart-header")
+		.attr("dominant-baseline", "hanging")
+		.attr("text-anchor", "middle")
+		.attr("font-size", 18)
+		.attr("font-weight", "bold")
+		.attr("fill", "#0367A6")
+		.attr("y", 5)
+		.attr("x", width / 2)
+		.text("Country-wide Data Aggregated by City and Website");
 
-    svg.append('text')
-        .attr("id", "selected_favicon_display")
-        .attr("dominant-baseline", "hanging")
-        .attr("text-anchor", "center")
-        .attr("y", 25)
-        .attr("x", width/2 - 60)
-        .text(currentFavicon);
+	svg.append('text')
+		.attr("class", "chart-header")
+		.attr("dominant-baseline", "hanging")
+		.attr("text-anchor", "middle")
+		.attr("font-size", 16)
+		.attr("fill", "#0367A6")
+		.attr("y", 30)
+		.attr("x", width / 2)
+		.text("Use the bar chart to select a different site");
+
+	svg.append('text')
+		.attr("id", "selected_favicon_display")
+		.attr("dominant-baseline", "hanging")
+		.attr("text-anchor", "middle")
+		.attr("y", 25 + chartHeader)
+		.attr("x", width / 2)
+		.text(currentFavicon);
 
 
-    d3.json("us-named.topojson").then(us => {
-        const counties = topojson.feature(us, us.objects.counties);
-        svg.selectAll("path")
-            .data(counties.features)
-            .enter()
-            .append("path")
-            .attr("d", path)
-            .style("fill", "#0367A6");
+	d3.json("us-named.topojson").then(us => {
+		const counties = topojson.feature(us, us.objects.counties);
+		svg.selectAll("path")
+			.data(counties.features)
+			.enter()
+			.append("path")
+			.attr("d", path)
+			.style("fill", "#0367A6");
 
-        svg.append("path")
-            .datum(topojson.mesh(us, us.objects.states, (a, b) => a !== b))
-            .attr("fill", "none")
-            .attr("stroke", "white")
-            .attr("stroke-linejoin", "round")
-            .attr("d", path);
+		svg.append("path")
+			.datum(topojson.mesh(us, us.objects.states, (a, b) => a !== b))
+			.attr("fill", "none")
+			.attr("stroke", "white")
+			.attr("stroke-linejoin", "round")
+			.attr("d", path);
 
-        updateMap();
-        updateMap();
+		updateMap();
+		updateMap();
 
-        });
+	});
 
 };
 
 // data = [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}]
-const updateMap = function() {
-    let div = d3.select("body")
-        .append("div")
-        .attr('class', "tooltip")
-        .style("opacity", 0);
+const updateMap = function () {
+	let div = d3.select("body")
+		.append("div")
+		.attr('class', "tooltip")
+		.style("opacity", 0);
 
-    const minScaleLabel = d3.select("body")
-        .append("div")
-        .attr('class', "scaleLabel")
+	const minScaleLabel = d3.select("body")
+		.append("div")
+		.attr('class', "scaleLabel");
 
-    const maxScaleLabel = d3.select("body")
-        .append("div")
-        .attr('class', "scaleLabel")
+	const maxScaleLabel = d3.select("body")
+		.append("div")
+		.attr('class', "scaleLabel");
 
-    const filtered = data.filter(d => d.favicon === currentFavicon);
-    const maxValue = d3.max(filtered, d => d.avg_rtt)
-    let gradient = d3.scaleSequential(d3.interpolateCool)
-        //.range(["#fff", "#BF303C"])
-        .domain([0, maxValue])
+	const filtered = data.filter(d => d.favicon === currentFavicon);
+	const maxValue = d3.max(filtered, d => d.avg_rtt);
+	let gradient = d3.scaleSequential(d3.interpolateCool)
+	//.range(["#fff", "#BF303C"])
+		.domain([0, maxValue]);
 
-    const mapPoint = svg.selectAll("circle").data(filtered);
-    mapPoint.exit().remove();
-    mapPoint.enter()
-        .append("circle")
-        .on("mouseover", d=> {
-            div.transition()
-                .duration(200)
-                .style("opacity", .9);
-            div.text(d.city + "\n" + Math.round(d.avg_rtt) + " ms")
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px")
-                .style("font-size", "15px")
-        })
-        .on("mouseout", d => {
-            div.transition()
-                .duration(200)
-                .style("opacity", 0)
-        });
+	const mapPoint = svg.selectAll("circle").data(filtered);
+	mapPoint.exit().remove();
+	mapPoint.enter()
+		.append("circle")
+		.on("mouseover", d => {
+			div.transition()
+				.duration(200)
+				.style("opacity", .9);
+			div.text(d.city + "\n" + Math.round(d.avg_rtt) + " ms")
+				.style("left", (d3.event.pageX) + "px")
+				.style("top", (d3.event.pageY - 28) + "px")
+				.style("font-size", "15px")
+		})
+		.on("mouseout", d => {
+			div.transition()
+				.duration(200)
+				.style("opacity", 0)
+		});
 
-    mapPoint.transition().duration(0)
-        .attr("cx", function (d) {
-            return projection([d.lng, d.lat])[0]
-        })
-        .attr("cy", function (d) {
-            return projection([d.lng, d.lat])[1]
-        })
-        .attr("r", 10)
-        .style("fill", function (d) {
-            return gradient(d.avg_rtt)
-        });
-    console.log(maxValue)
-    let bars = svg.selectAll(".bars")
-        .data(d3.range(0, maxValue), d => d)
-    bars.exit().remove()
-    bars.enter()
-        .append("rect")
-        .attr("class", "bars")
-        .attr("x", function(d, i) { return i+20; })
-        .attr("y", mapHeight-20)
-        .attr("height", 20)
-        .attr("width", 1)
-        .style("fill", function(d, i ) { return gradient(d); })
+	mapPoint.transition().duration(0)
+		.attr("cx", function (d) {
+			return projection([d.lng, d.lat])[0]
+		})
+		.attr("cy", function (d) {
+			return projection([d.lng, d.lat])[1]
+		})
+		.attr("r", 10)
+		.style("fill", function (d) {
+			return gradient(d.avg_rtt)
+		});
+	console.log(maxValue)
+	let bars = svg.selectAll(".bars")
+		.data(d3.range(0, maxValue), d => d);
+	bars.exit().remove();
+	bars.enter()
+		.append("rect")
+		.attr("class", "bars")
+		.attr("x", function (d, i) {
+			return i + 20;
+		})
+		.attr("y", mapHeight - 20 + chartHeader)
+		.attr("height", 20)
+		.attr("width", 1)
+		.style("fill", function (d, i) {
+			return gradient(d);
+		})
 
-    //TODO: Fix scale labels
-    /*
-    const svgX = svg.getBoundingClientRect().left
-    const svgY = svg.getBoundingClientRect().top
-    console.log(svgX + " ," + svgY)
-    minScaleLabel.text(minValue + "ms")
-        .style("left", svgX)
-        .style("top", svgY + mapHeight-20)
-        .style("font-size", "15px")
+	//TODO: Fix scale labels
+	/*
+	const svgX = svg.getBoundingClientRect().left
+	const svgY = svg.getBoundingClientRect().top
+	console.log(svgX + " ," + svgY)
+	minScaleLabel.text(minValue + "ms")
+		.style("left", svgX)
+		.style("top", svgY + mapHeight-20)
+		.style("font-size", "15px")
 
-    maxScaleLabel.text(maxValue + "ms")
-        .style("left", svgX + maxValue-minValue+10)
-        .style("top", svgY + mapHeight-20)
-        .style("font-size", "15px")
+	maxScaleLabel.text(maxValue + "ms")
+		.style("left", svgX + maxValue-minValue+10)
+		.style("top", svgY + mapHeight-20)
+		.style("font-size", "15px")
 */
 
 };
 
-const updateMapData = function(newData) {
+const updateMapData = function (newData) {
 	data = newData;
 	updateMap();
 };

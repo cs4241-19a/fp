@@ -91,3 +91,7 @@ text.category{
 	margin-top: 8px;
 	margin-bottom: 4px;
 }
+
+#bar_chart, #map_div {
+	margin-top: 30px;
+}
