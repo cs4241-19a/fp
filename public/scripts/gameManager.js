@@ -4,15 +4,20 @@ import getRandomInt from "./utility/random";
 class GameManager {
   static _instance = null;
   characterNames = ['blue', 'orange', 'purple', 'red', 'yellow'];
-  playerOnePieces;
-  playerTwoPieces;
-  // buy state objects
+  p1Pieces;
+  p2Pieces;
+  // buy-state objects
   buyList;
-  // setup state objects
+  // setup-state objects
+  // placement is where each player can put their pieces to start
   p1Placement;
   p2Placement;
   activePiece;
-  state; stateTransitionKey; confirmKey;
+  //fight-state objects
+  // general resources
+  state;
+  stateTransitionKey;
+  confirmKey;
   //resources are used as health and currency, once they hit 0 the player loses
   playerOneResources;
   playerOneResourceText;
@@ -24,8 +29,8 @@ class GameManager {
    * Initialize the player resources, pieces and state
    */
   constructor() {
-    this.playerOnePieces = [];
-    this.playerTwoPieces = [];
+    this.p1Pieces = [];
+    this.p2Pieces = [];
     this.buyList = [];
     this.state = CONSTANTS.STATES.buy;
     this.playerOneResources = this.playerTwoResources = CONSTANTS.INIT_RESOURCES;
@@ -47,56 +52,55 @@ class GameManager {
     //put all of the characters into the list
     this._populateBuyList(scene);
     // change which list is added to depending on the character adding stuff
-    let pieceList = this.playerOnePieces;
+    let pieceList = this.p1Pieces;
     let resources = this.playerOneResources;
     let text = this.playerOneResourceText;
-    if (player === CONSTANTS.P2){
-      pieceList = this.playerTwoPieces;
+    if (player === CONSTANTS.P2) {
+      pieceList = this.p2Pieces;
       resources = this.playerTwoResources;
       text = this.playerTwoResourceText;
     }
     // the game starts on player1's buy turn so we will have it add the child to that player's pieces
     // then remove the object from the scene
     let that = this;
-    this.buyList.getChildren().forEach((child)=>{
-      child.setInteractive().on('pointerup', function(pointer, localX, localY, event){
+    this.buyList.getChildren().forEach((child) => {
+      child.setInteractive().on('pointerup', function (pointer, localX, localY, event) {
         if (resources > child.data.values.price && pieceList.getChildren().length < CONSTANTS.MAX_PIECES) {
+          // remove all listeners attached to this object (so we can reset it later)
+          this.setInteractive().removeAllListeners('pointerup');
           pieceList.add(child);
           resources -= child.data.values.price;
           text.setText('Resources: ' + resources);
           console.log('added child!!');
           // remove the interactivity, then the child
-          child.removeInteractive();
           that.buyList.remove(child);
           // get rid of the interactivity on the gameobject
 
           that.populatePieceLists();
-        }
-        else {
+        } else {
           console.log('cant afford or too many characters');
         }
       })
     })
   }
 
-  populatePieceLists(){
-    const p1YPos = CONSTANTS.SETUP_AREA_HEIGHT/2;
-    const p2YPos = CONSTANTS.HEIGHT - CONSTANTS.SETUP_AREA_HEIGHT/2;
-    const initXPos = CONSTANTS.WIDTH/2;
+  populatePieceLists() {
+    const p1YPos = CONSTANTS.SETUP_AREA_HEIGHT / 2;
+    const p2YPos = CONSTANTS.HEIGHT - CONSTANTS.SETUP_AREA_HEIGHT / 2;
+    const initXPos = CONSTANTS.WIDTH / 2;
     let curXPos = initXPos;
-    this.playerOnePieces.getChildren().forEach((child)=>{
+    this.p1Pieces.getChildren().forEach((child) => {
       child.setPosition(curXPos, p1YPos);
-      curXPos += CONSTANTS.SPRITE_SIZE+10;
+      curXPos += CONSTANTS.SPRITE_SIZE + 10;
     });
     curXPos = initXPos;
-    this.playerTwoPieces.getChildren().forEach((child)=>{
-      console.log(`adding piece to player 2 ${curXPos}, ${p2YPos}`);
+    this.p2Pieces.getChildren().forEach((child) => {
       child.setPosition(curXPos, p2YPos);
-      curXPos += CONSTANTS.SPRITE_SIZE+10;
+      curXPos += CONSTANTS.SPRITE_SIZE + 10;
     })
   }
 
-  clearBuyList(){
+  clearBuyList() {
     // remove the interactivity then clear the list
     this.buyList.getChildren().map((child) => {
       child.removeInteractive();
@@ -105,16 +109,16 @@ class GameManager {
     this.buyList.clear(true);
   }
 
-  _populateBuyList(scene){
+  _populateBuyList(scene) {
     // pick 3 random characters and center them across the screen for the player to click and purchase
-    let x = CONSTANTS.WIDTH/4;
+    let x = CONSTANTS.WIDTH / 4;
     let that = this;
     for (let i = 0; i < 3; i++) {
       //how do we inject the state object into this?
       let character = scene.physics.add.sprite(x,
-          CONSTANTS.HEIGHT/2, this.characterNames[getRandomInt(this.characterNames.length)]);
+          CONSTANTS.HEIGHT / 2, this.characterNames[getRandomInt(this.characterNames.length)]);
       // set a health and strength for the character. The price is how many resources it costs
-      character.setData({ health: 100, strength: 12, price: 5});
+      character.setData({health: 100, strength: 12, price: 5});
       this.buyList.add(character);
       x += 100; //this is an arbitrary length based off the size of the character
     }
