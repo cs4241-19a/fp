@@ -42,7 +42,8 @@ const submit = function(e) {
                 gender: gender,
                 hobby: hobby,
                 likedList: [],
-                blackList: []
+                blackList: [],
+                comments: []
             }
             fetch(`/add`, {
                 method: 'POST',

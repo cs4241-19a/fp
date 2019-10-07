@@ -31,7 +31,7 @@ const makeBody = function() {
 }
 updateBtn.onclick = function(e) {
     let body = makeBody()
-    fetch(`/update`, {
+    fetch(`/updateInfo`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body

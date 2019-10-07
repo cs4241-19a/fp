@@ -1,27 +1,32 @@
-const logout = document.getElementById('logout')
-logout.onclick = function(e) {
+document.getElementById('logout').onclick = function(e) {
     location.href = '../index.html'
     e.preventDefault()
     return false
 }
-
-const modify = document.getElementById('modify')
-modify.onclick = function(e) {
+document.getElementById('modify').onclick = function(e) {
     location.href = '../modify/modify.html'
     e.preventDefault()
     return false
 }
 
 const updateYou = function(you) {
-    console.log('front you: ', you)
-    let body = JSON.stringify(you)
     fetch('/updateYou', {
         method: 'POST',
-        body,
+        body: JSON.stringify(you),
         headers: { 'Content-Type': 'application/json' }
     }).then(function(response) {
         console.log("Post sent to server: " + response)
     })
+}
+
+const createNode = function(element) { return document.createElement(element) }
+const append = function(parent, el) { return parent.appendChild(el) }
+
+const makeGender = function(row) {
+    let gender = createNode('i')
+    if (row.gender === 'Male') gender.className = 'fa fa-male'
+    else gender.className = 'fa fa-female'
+    return gender
 }
 
 fetch('/getYou', {
@@ -39,12 +44,6 @@ fetch('/getYou', {
 
     greet.innerHTML = 'Hello ' + you.name + '!'
 
-    const createNode = function(element) {
-        return document.createElement(element);
-    };
-    const append = function(parent, el) {
-        return parent.appendChild(el);
-    };
     const makeHeadings = function() {
         let th1 = createNode('th');
         let th2 = createNode('th');
@@ -64,12 +63,7 @@ fetch('/getYou', {
         append(tr, th5);
         append(table, tr);
     };
-    const makeGender = function(row) {
-        let gender = createNode('i');
-        if (row.gender === 'Male') gender.className = 'fa fa-male';
-        else gender.className = 'fa fa-female';
-        return gender;
-    };
+
     const makeHeart = function(row) {
         let heart = createNode('i');
         if (you.likedList.includes(row.username)) heart.className = 'fa fa-heart';
@@ -99,13 +93,13 @@ fetch('/getYou', {
 
         bomb.onclick = function(e) {
             if (bomb.className === 'fa fa-bomb') {
-                you.blackList.push(row.username);
+                you.blackList.push(row.username)
                 updateYou(you)
-                refresh();
+                refresh()
             } else {
-                you.blackList = you.blackList.filter((value => { return value !== row.username }));
+                you.blackList = you.blackList.filter((value => { return value !== row.username }))
                 updateYou(you)
-                refresh();
+                refresh()
             }
             e.preventDefault();
             return false;

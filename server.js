@@ -83,12 +83,9 @@ app.post('/login', passport.authenticate('local'), function(req, res) {
 
 // ================================================================================
 
-// Register Page
-app.post('/add', function(request, response) {
-    collection.insertOne(request.body).then(result => {
-        response.json(result)
-        copyAllUsers()
-    })
+// GET
+app.get('/', function(request, response) {
+    response.sendFile(__dirname + '/index.html');
 })
 app.get('/checkDup', function(request, response) {
     let usernames = []
@@ -97,25 +94,24 @@ app.get('/checkDup', function(request, response) {
     }
     response.send(usernames)
 })
+app.get('/refreshAll', function(request, response) {
+    response.send(allUsers)
+})
+app.get('/getYou', function(request, response) {
+    you = allUsers.find(__user => __user.username === you.username)
+    response.send(you)
+})
 
 // ================================================================================
 
-// Modify Page
-app.post('/update', function(request, response) {
-    collection
-        .updateOne({ _id: mongodb.ObjectID(you._id) }, {
-            $set: {
-                name: request.body.name,
-                age: request.body.age,
-                gender: request.body.gender,
-                hobby: request.body.hobby
-            }
-        })
-        .then(result => {
-            response.json(result)
-            copyAllUsers()
-        })
+// POST
+app.post('/add', function(request, response) {
+    collection.insertOne(request.body).then(result => {
+        response.json(result)
+        copyAllUsers()
+    })
 })
+
 app.post('/delete', function(request, response) {
     collection.deleteOne({ _id: mongodb.ObjectID(you._id) }).then(result => {
         response.json(result)
@@ -123,32 +119,30 @@ app.post('/delete', function(request, response) {
     })
 })
 
-// ================================================================================
-
-// Tables Page
-app.get('/refreshAll', function(request, response) {
-    response.send(allUsers);
-});
-app.get('/getYou', function(request, response) {
-    you = allUsers.find(__user => __user.username === you.username)
-    response.send(you)
-});
-app.post('/updateYou', function(request, response) {
-    collection
-        .updateOne({ _id: mongodb.ObjectID(you._id) }, {
-            $set: {
-                likedList: request.body.likedList,
-                blackList: request.body.blackList
-            }
-        })
-        .then(result => {
-            response.json(result)
-            copyAllUsers()
-        })
+app.post('/updateInfo', function(request, response) {
+    collection.updateOne({ _id: mongodb.ObjectID(you._id) }, {
+        $set: {
+            name: request.body.name,
+            age: request.body.age,
+            gender: request.body.gender,
+            hobby: request.body.hobby
+        }
+    }).then(result => {
+        response.json(result)
+        copyAllUsers()
+    })
 })
-app.get('/', function(request, response) {
-    response.sendFile(__dirname + '/index.html');
-});
+app.post('/updateYou', function(request, response) {
+    collection.updateOne({ _id: mongodb.ObjectID(you._id) }, {
+        $set: {
+            likedList: request.body.likedList,
+            blackList: request.body.blackList
+        }
+    }).then(result => {
+        response.json(result)
+        copyAllUsers()
+    })
+})
 
 // ================================================================================
 
