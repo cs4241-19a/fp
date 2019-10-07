@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, './build')));
 
 app.get('/api/hello', (req, res) => {
     con.query("SELECT * FROM accounts;", function (err, data) {
-        (err)?res.send(err):res.json({users: data});
+        (err) ? res.send(err) : res.json({ users: data });
     })
 });
 
@@ -37,8 +37,33 @@ app.post('/api/world', (req, res) => {
     );
 });
 
-app.get('*', (req,res) =>{
-    res.sendFile(path.join(__dirname+'./build/index.html'));
+app.get('/api/home', (req, res) => {
+    res.json({
+        1: {
+            "name": "Cheese Club",
+            "requested": 3000,
+            "actual": 2500
+        },
+        2: {
+            "name": "Soccomm Movies",
+            "requested": 4500,
+            "actual": 4500
+        },
+        3: {
+            "name": "Ski Club",
+            "requested": 3600,
+            "actual": 3300
+        },
+        4: {
+            "name": "Women In ECE",
+            "requested": 400,
+            "actual": 300
+        },
+    })
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + './build/index.html'));
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
