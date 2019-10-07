@@ -89,9 +89,13 @@ export default class TableDragSelect extends React.Component {
   };
 
   render = () => {
+    const constantWidth =
+      (typeof this.props.constantWidth !== "undefined") &
+      this.props.constantWidth;
+    const name = "table-drag-select" + (constantWidth ? " week-selection" : "");
     return (
       <React.Fragment>
-        <table className="table-drag-select">
+        <table className={name}>
           <tbody> {this.renderRows()} </tbody>{" "}
         </table>
       </React.Fragment>
@@ -110,6 +114,10 @@ export default class TableDragSelect extends React.Component {
               onTouchMove={this.handleTouchMoveCell}
               selected={this.props.value[i][j]}
               beingSelected={this.isCellBeingSelected(i, j)}
+              constantWidth={
+                (typeof this.props.constantWidth !== "undefined") &
+                this.props.constantWidth
+              }
               {...cell.props}
             >
               {" "}
@@ -254,12 +262,16 @@ class Cell extends React.Component {
       selected,
       onTouchStart,
       onTouchMove,
+      constantWidth,
       ...props
     } = this.props;
     if (disabled) {
       className += " cell-disabled";
     } else {
       className += " cell-enabled";
+      if (constantWidth) {
+        className += " cell-week";
+      }
       if (selected) {
         className += " cell-selected";
       }

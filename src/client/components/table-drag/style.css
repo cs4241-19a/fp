@@ -44,7 +44,7 @@
 /* Table cells */
 .table-drag-select td {
     text-align: center;
-    padding-bottom: 1rem;
+    /* padding-bottom: 1rem; */
     /* Cut off long strings of text with ... */
     text-overflow: ellipsis;
     overflow: hidden;
@@ -57,6 +57,7 @@
     /* Shows more text when text too big to fit into cell */
     padding-left: 0rem;
     padding-right: 0rem;
+    height: 1.5rem;
 }
 
 /* Cells that can be interacted with */
@@ -69,6 +70,10 @@
 /* Cells that cannot be interacted with */
 .table-drag-select td.cell-disabled {
     color: rgb(0, 0, 0);
+}
+
+.table-drag-select td.cell-week {
+    height: 150px;
 }
 
 /* Cells that have been selected */
@@ -87,10 +92,18 @@
     /* Remove empty space at top of table */
     border-top: 0;
     line-height: 1rem;
+    font-size: 100%
 }
 
 /* Cells in first column */
+.week-selection td:first-child {
+    /* Consume less whitespace */
+    /* padding-left: 0rem; */
+    width: 14% !important
+}
+
 .table-drag-select td:first-child {
     /* Consume less whitespace */
     width: 5rem;
+    font-size: 75%
 }

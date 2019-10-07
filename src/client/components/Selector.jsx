@@ -11,19 +11,22 @@ class Selector extends React.Component {
     const rows =
       1 +
       2 * (this.props.endTime - this.props.startTime) +
-      (this.props.startTime % 1 === 0 ? 0 : 1);    
-      const cols = this.props.headings.length;
+      (this.props.startTime % 1 === 0 ? 0 : 1);
+    const cols = this.props.headings.length;
     this.state.cells = new Array(rows)
       .fill(false)
       .map(() => new Array(cols).fill(false));
-
   }
 
   renderTableHeader() {
     return (
-      <tr key='selectorHeader'>
+      <tr key="selectorHeader">
         {this.props.headings.map((heading, index) => {
-          return <td key={index} disabled>{heading}</td>;
+          return (
+            <td key={index} disabled>
+              {heading}
+            </td>
+          );
         })}
       </tr>
     );
@@ -35,15 +38,21 @@ class Selector extends React.Component {
       const ending = i < 13 ? "AM" : "PM";
       const min = i % 1 === 0 ? "00" : "30";
       const hour = (Math.trunc(i) % 13) + (i < 13 ? 0 : 1);
-      times.push(hour + ":" + min + " " + ending);
+      const timeString = hour + ":" + min + " " + ending;
+
+      times.push(i % 1 !== 0 ? "" : timeString);
     }
     // console.log(times);
     return times.map((time, index) => {
       return (
-        <tr key={'selectorBody' + index}>
+        <tr key={"selectorBody" + index}>
           {this.props.headings.map((heading, index) => {
             const value = index === 0 ? time : "";
-            return <td key={index} disabled={index === 0}>{value}</td>;
+            return (
+              <td key={index} disabled={index === 0}>
+                {value}
+              </td>
+            );
           })}
         </tr>
       );

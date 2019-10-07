@@ -58,9 +58,13 @@ export default class Viewer extends React.Component {
 
   renderTableHeader() {
     return (
-      <tr key='tableHeader'>
+      <tr key="tableHeader">
         {this.props.headings.map((heading, index) => {
-          return <td key={'viewheader' + index} disabled>{heading}</td>;
+          return (
+            <td key={"viewheader" + index} disabled>
+              {heading}
+            </td>
+          );
         })}
       </tr>
     );
@@ -72,14 +76,20 @@ export default class Viewer extends React.Component {
       const ending = i < 13 ? "AM" : "PM";
       const min = i % 1 === 0 ? "00" : "30";
       const hour = (Math.trunc(i) % 13) + (i < 13 ? 0 : 1);
-      times.push(hour + ":" + min + " " + ending);
+      const timeString = hour + ":" + min + " " + ending;
+
+      times.push(i % 1 !== 0 ? "" : timeString);
     }
     return times.map((time, index) => {
       return (
-        <tr key={'tbtr' + index}>
+        <tr key={"tbtr" + index}>
           {this.props.headings.map((heading, index) => {
             const value = index === 0 ? time : "";
-            return <td key={'tablebody' + index} disabled={index === 0}>{value}</td>;
+            return (
+              <td key={"tablebody" + index} disabled={index === 0}>
+                {value}
+              </td>
+            );
           })}
         </tr>
       );
@@ -136,10 +146,16 @@ export default class Viewer extends React.Component {
         <div className="col-lg-4 text-center">
           <table className="availability-gradient">
             <tbody>
-              <tr key='trAvailGrad'>
+              <tr key="trAvailGrad">
                 {this.state.gradient_array.map((color, index) => {
                   const cName = color === "#339900" ? "best-time" : "";
-                  return <td key={'avagrad' + index} className={cName} bgcolor={color}></td>;
+                  return (
+                    <td
+                      key={"avagrad" + index}
+                      className={cName}
+                      bgcolor={color}
+                    ></td>
+                  );
                 })}
               </tr>
             </tbody>

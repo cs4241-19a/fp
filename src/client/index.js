@@ -4,12 +4,11 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './components/App';
 import FillOut from './components/FillOut'
 
-// const element = document.getElementById('app');
-// const app = ( 
-//   <BrowserRouter >
-//     <App />
-//   </BrowserRouter>
-// );
+<link
+rel = "stylesheet"
+href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+integrity = "sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+crossorigin = "anonymous" />
 
 console.log('hydrating DOM Locally')
 // ReactDOM.hydrate(app, element);

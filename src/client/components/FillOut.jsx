@@ -2,6 +2,8 @@ import React from "react";
 import Selector from "./Selector";
 import Viewer from "./Viewer";
 import "./table-drag/style.css";
+import { Container, Row, Col } from "react-bootstrap";
+import Authentication from "./Authentication";
 
 export default class FillOut extends React.Component {
   constructor(props) {
@@ -22,9 +24,8 @@ export default class FillOut extends React.Component {
       ["", "1010", "1110"]
     ];
 
-    // TODO: make this pull from url
-    // this.state.users.push(props.currentUser);
-    this.state.users.push("hardcoded name")
+    this.state.users.push(props.match.params.name);
+    // this.state.users.push("hardcoded name")
     const rows = this.state.cells.length;
     const cols = this.state.cells[0].length;
     for (let i = 1; i < rows; i++) {
@@ -36,14 +37,18 @@ export default class FillOut extends React.Component {
 
   render = () => {
     return (
-      <React.Fragment>
-        <div className="col-lg-5 calendar">
-          <Selector onUpdate={this.onUpdate} {...this.state}></Selector>
-        </div>
-        <div className="col-lg-7 calendar">
-          <Viewer ref={this.selectorElement} {...this.state}></Viewer>
-        </div>
-      </React.Fragment>
+      <Container>
+        <h1 className="text-center">Insert Event Title Here</h1>
+        <p>Insert sharing buttons here ish</p>
+        <Row>
+          <Col lg="5">
+            <Selector onUpdate={this.onUpdate} {...this.state}></Selector>
+          </Col>
+          <Col lg="7">
+            <Viewer ref={this.selectorElement} {...this.state}></Viewer>
+          </Col>
+        </Row>
+      </Container>
     );
   };
 
