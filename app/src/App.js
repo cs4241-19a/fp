@@ -51,9 +51,34 @@ function App() {
 }
 
 class Card extends React.Component {
+  constructor(props) {
+    super(props);
+    this.changeStyle = this.changeStyle.bind(this);
+    let cardColor = "white";
+    if (this.props.team === "teamA") {
+      cardColor = "red";
+    } else if (this.props.team === "teamB") {
+      cardColor = "blue";
+    } else if (this.props.team === "assassin") {
+      cardColor = "black";
+    }
+    this.state = { color: null, cardColor: cardColor };
+  }
+
+  changeStyle(color) {
+    this.setState({
+      color: this.state.cardColor
+    });
+  }
+
   render() {
     return (
-      <button id="card" className="button">
+      <button
+        id="card"
+        className="button"
+        style={{ backgroundColor: this.state.color }}
+        onClick={() => this.changeStyle(this.props.team)}
+      >
         {this.props.value}
       </button>
     );
@@ -78,12 +103,13 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      words: this.props.words
+      words: this.props.words,
+      teams: this.props.teams
     };
   }
 
   renderCard(i) {
-    return <Card value={this.state.words[i]} />;
+    return <Card value={this.state.words[i]} team={this.state.teams[i]} />;
   }
 
   render() {
@@ -132,21 +158,38 @@ class Board extends React.Component {
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    let ingameCards = setBoard();
+    let firstteam = Math.floor(Math.random() * 2);
+    let ingame = setBoard(firstteam);
+    let ingameCards = ingame[0];
+    let ingameTeams = ingame[1];
+
     this.state = {
-      boardWords: ingameCards
+      boardWords: ingameCards,
+      boardTeams: ingameTeams,
+      firstteam: firstteam
     };
   }
 
   render() {
+    let status;
+    let order = this.state.firstteam;
+    if (order) {
+      status = "Red Team";
+    } else {
+      status = "Blue Team";
+    }
     return (
       <div className="game">
         <h1>Codenames</h1>
         <div className="game-board">
-          <Board words={this.state.boardWords} />
+          <Board words={this.state.boardWords} teams={this.state.boardTeams} />
         </div>
         <div className="chat">
           <Chat />
+        </div>
+        <br />
+        <div className="status">
+          <div>{status} goes first</div>
         </div>
       </div>
     );
@@ -154,8 +197,11 @@ class Game extends React.Component {
 }
 
 //takes full list of words and picks 25 unique for a game
-function setBoard() {
+function setBoard(order) {
   let boardWords = Array(25).fill(null);
+  let boardTeams = Array(25).fill(null);
+
+  //for setting board words
   for (let i = 0; i < 25; i++) {
     let useCheck = false;
     let counter = Math.floor(Math.random() * allWords.length);
@@ -170,7 +216,37 @@ function setBoard() {
       i--;
     }
   }
-  return boardWords;
+
+  //for words to teams
+  setTeam("teamA", order);
+  setTeam("teamB", order);
+  setTeam("assassin", order);
+  setTeam("citizen", order);
+
+  function setTeam(type, order) {
+    let amount = 7;
+    if (type === "assassin") {
+      amount = 1;
+    }
+    if (
+      (order === 0 && type === "teamA") ||
+      (order === 1 && type === "teamB")
+    ) {
+      amount += 2;
+    } else if (order === "second") {
+      amount++;
+    }
+    for (let j = 0; j < amount; j++) {
+      let counter = Math.floor(Math.random() * 25);
+      if (boardTeams[counter] == null) {
+        boardTeams[counter] = type;
+      } else {
+        j--;
+      }
+    }
+  }
+
+  return [boardWords, boardTeams];
 }
 
 export default App;

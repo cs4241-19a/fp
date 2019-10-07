@@ -57,3 +57,7 @@ h1 {
   float: left;
   margin-left: 5%;
 }
+
+.status {
+  text-align: center;
+}
