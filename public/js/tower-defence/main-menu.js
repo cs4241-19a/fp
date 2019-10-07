@@ -3,7 +3,7 @@ const mainMenuState = new Phaser.Class({
     Extends: Phaser.Scene,
     initialize:
         function MainMenu(){
-            Phaser.Scene.call(this, {key: 'MainMenu'});
+            Phaser.Scene.call(this, {key: "MainMenu"});
         },
 
     preload: function() {
@@ -12,7 +12,7 @@ const mainMenuState = new Phaser.Class({
 
     create: function() {
         console.log("MainMenu");
-        game.scene.start('GamePlay');
+        game.scene.start("GamePlay");
     },
 
     update: function() {
