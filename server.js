@@ -50,9 +50,11 @@ app.post("/update", function(req, res) {
 
     req.on( 'end', function() {
         const updatedUser = JSON.parse(dataString);
+        const currentUser = db.get('users').find({ username: updatedUser.username}).value();
+        const newScore = updatedUser.score + currentUser.score;
         db.get('users')
             .find({ username: updatedUser.username })
-            .assign({ score: updatedUser.score, gameState: updatedUser.gameState})
+            .assign({ score: newScore, gameState: updatedUser.gameState})
             .write();
 
         res.writeHead( 200, "OK", {'Content-Type': 'text/plain' });

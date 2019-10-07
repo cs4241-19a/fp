@@ -146,7 +146,7 @@ function findEnemy(tier) {
                 filepath = "../img/zero.png";
                 break;
             case random <= 0.2:
-                filepath = "../img/waddle-dee.png";
+                filepath = "../img/zant.png";
                 break;
         }
     }
