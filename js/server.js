@@ -16,7 +16,8 @@ const client_id = 'da70dd0556874f0189eb6c64543eef72';
 const client_secret = 'c11bdf5f5886434aac3b5dbe1f02984b';
 const redirect_uri = 'http://localhost:3000/callback';
 
-let client_token = '';
+let client_token = '',
+    loggedIn = '';
 
 passport.use(
     new SpotifyStrategy({
@@ -70,7 +71,7 @@ app.get('/', function(request, response) {
 });
 
 app.get('/style.css', function(request, response) {
-  sendFile( response, './styles/oldstyle.css' );
+  sendFile( response, './styles/style.css' );
 });
 
 app.get('/bundle.js', function(request, response) {
@@ -96,9 +97,13 @@ app.get('/login-spotify',
 app.get('/callback',
     passport.authenticate('spotify', {failureRedirect: '/'}),
     function(req, res) {
-      res.end('LOG-IN-SUCCESS');
+      res.redirect('/');
     }
 );
+
+app.get('/user', function(req, res){
+  res.end(loggedIn);
+});
 
 app.get('/logout', function(req, res) {
   req.session.destroy();

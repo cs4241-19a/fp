@@ -66,14 +66,14 @@ require=(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=
 
 },{}],"queue":[function(require,module,exports){
 let cooldown = 0;
-let user = 'null';
+let user = null;
 let count = 0;
 let token = null;
 const player = null;
 const queue = [];
 
 function logOut() {
-  $(document).get('/logout', function(data, status) {
+  $.get('/logout', function(data, status) {
     if (status == 'success') {
       console.log('Logged out of session.');
     }
@@ -82,8 +82,8 @@ function logOut() {
 }
 
 function search(e) {
-  document.getElementById('searchTable').innerHTML = '';
   e.preventDefault();
+  document.getElementById('searchTable').innerHTML = '';
   const q = $('#searchText').val();
   const params = $.param({q: q});
   fetch(`/search?${params}`, {
@@ -101,7 +101,7 @@ function search(e) {
   return false;
 }
 
-$(document).on('click', '.songItem', function(event) {
+function enqueue() {
   if (!cooldown) {
     cooldown = 1;
     setTimeout(function() {
@@ -122,14 +122,14 @@ $(document).on('click', '.songItem', function(event) {
         function(data, status) {
           if (status === 'success') {
             renderItem('queueTable', JSON.parse(data), user);
-            addToQ(JSON.parse(data).spotify_uri);
+            // addToQ(JSON.parse(data).spotify_uri);
           }
-        });
+        }
+    );
   }
-  event.preventDefault();
-});
+}
 
-$(document).on('click', '.delete', function(event) {
+function deleteItem() {
   if (!cooldown) {
     cooldown = 1;
     setTimeout(function() {
@@ -145,8 +145,7 @@ $(document).on('click', '.delete', function(event) {
           }
         });
   }
-  event.preventDefault();
-});
+}
 
 function renderItem(table, item, user) {
   const ms = item.duration_ms;
@@ -155,23 +154,22 @@ function renderItem(table, item, user) {
   const time = min+':'+sec;
   if (table == 'searchTable') {
     document.getElementById(table).innerHTML +=
-        '<tr class=\'songItem\' id='+item.uri+'><td class=\'song\'>'+
-        item.name+'</td><td class=\'artist\'>'+item.artists[0].name+
-        '</td><td class=\'album\'>'+item.album.name+
+        '<tr class=\'songItem\' id='+item.uri+' onclick="q.enqueue()">'+
+        '<td class=\'song\'>'+item.name+'</td><td class=\'artist\'>'+
+        item.artists[0].name+'</td><td class=\'album\'>'+item.album.name+
         '</td><td class=\'length\'>'+time+'</td></tr>';
   } else {
     document.getElementById(table).innerHTML +=
-        '<tr id='+item.spotify_uri+'><td class=\'song\'>'+item.song_name+
-        '</td><td class=\'artist\'>'+item.artist_name+
+        '<tr id='+item.spotify_uri+'><td class=\'song\'>'+
+        item.song_name+'</td><td class=\'artist\'>'+item.artist_name+
         '</td><td class=\'length\'>'+item.length+'</td><td class=\'added\'>'+
-        user+'</td><td class=\'delete\' id='+
+        user+'</td><td class=\'delete\' onclick="q.deleteItem()" id='+
         item.id+'><i class=\'fas fa-trash\'></i></td></tr>';
   }
 }
 
 function updateQueue() {
   document.getElementById('queueTable').innerHTML = '';
-  console.log('updatingqueue');
   let queue = {};
   $.get('/getQueue', function(data, status) {
     if (status == 'success') {
@@ -183,10 +181,13 @@ function updateQueue() {
   });
 }
 
-window.onload = function() {
+function init() {
   document.querySelector('#searchForm').addEventListener('submit', search);
   $.get('/user', function(data) {
     user=data;
+    if (user) {
+      document.getElementById('log-in-modal').style.display = 'none';
+    }
   });
   $.get('/queueLen', function(data) {
     count=data;
@@ -195,6 +196,8 @@ window.onload = function() {
     token=data;
   });
   updateQueue();
-};
+}
+
+module.exports = {init, logOut, search, enqueue, deleteItem};
 
 },{}]},{},[]);
