@@ -1,10 +1,18 @@
 const viewLeaderboard = function() {
     document.getElementById('table').style.display = "flex";
+    document.getElementById('back-button').style.display = "flex";
     document.getElementById('main-button-container').style.display = "none";
     document.getElementById('leaderboard-button').style.display = "none";
 
     fetchLeaderboard();
     return false;
+};
+
+const viewGame = function() {
+    document.getElementById('table').style.display = "none";
+    document.getElementById('back-button').style.display = "none";
+    document.getElementById('main-button-container').style.display = "flex";
+    document.getElementById('leaderboard-button').style.display = "flex";
 };
 
 const fetchLeaderboard = async function() {

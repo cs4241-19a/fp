@@ -13,6 +13,10 @@
         <button>Leaderboard</button>
     </div>
 
+    <div id="back-button">
+        <button>Back</button>
+    </div>
+
     <div id="main-button-container">
         <button id="main-button" onclick="mainClick()">Click This!</button>
         <p class="point">+1</p>
@@ -53,6 +57,9 @@
 
         const loginButton = document.getElementById( 'login-button' );
         loginButton.onclick = login;
+
+        const backButton = document.getElementById( 'back-button' );
+        backButton.onclick = viewGame;
     }
 
 </script>
