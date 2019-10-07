@@ -347,5 +347,17 @@ app.get('/requestgame',function(req,res){
   })
 })
 
+app.get('/gamescreenshots', function(req,res){
+  let gameName = req.query['game']
+  let photos = null
+  owned.forEach(element => {
+    if(element.slug == gameName){
+      console.log(gameName)
+      photos = element.raw.short_screenshots
+    }
+  });
+  res.send(photos)
+})
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
