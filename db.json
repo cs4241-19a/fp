@@ -74,6 +74,23 @@
         }
       ],
       "archive": []
+    },
+    {
+      "name": "test1",
+      "email": "test1@wpi.edu",
+      "password": "1234",
+      "availability": [
+        {
+          "sunday": [],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ],
+      "archive": []
     }
   ],
   "rooms": [
