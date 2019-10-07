@@ -1,11 +1,13 @@
-/*
- * fetchRoomAvailability()
- * Input: the name of a room (String)
- * Output: the availability of the given room (JSON)
+/**
+ * createAvailabilityTable()
+ * Input: no input, fetches the selected room name from the form
+ * Output: creates the availability table
 */
-async function fetchRoomAvailability(roomName) {
+const createAvailabilityTable = async function () {
+  console.log('hello');
   try {
-    const body = JSON.stringify({name: roomName});
+    let selected_room = document.getElementById('selectRoomName').value;
+    const body = JSON.stringify({name: selected_room});
     const resp = await fetch('/specificRoomAvailability', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -14,8 +16,9 @@ async function fetchRoomAvailability(roomName) {
     const data = await resp.json();
     const availability = data.data;
 
+    console.log('doing something');
     // change table label to requested room name
-    document.getElementById('room-table-label').innerText = roomName;
+    document.getElementById('room-table-label').innerText = selected_room;
 
     if (availability){
       // document.getElementById('room-avail').innerText = JSON.stringify(availability);
@@ -40,9 +43,9 @@ async function fetchRoomAvailability(roomName) {
       //TODO: change military time to user friendly time
       for (let i = 9; i < 18; i++) {
         // build each interval row
-        htmlDiv.innerHTML += createRow(availability[0], `${i}:00`);
+        htmlDiv.innerHTML += createRow(availability, `${i}:00`);
         // htmlDiv.innerHTML += createRow(availability[0], `${i}:15`);
-        htmlDiv.innerHTML += createRow(availability[0], `${i}:30`);
+        htmlDiv.innerHTML += createRow(availability, `${i}:30`);
         // htmlDiv.innerHTML += createRow(availability[0], `${i}:45`);
       }
 
@@ -56,8 +59,14 @@ async function fetchRoomAvailability(roomName) {
   }
 };
 
-async function fetchRoomAvailabilityJSON(roomName) {
+/**
+ * fetchRoomAvailability()
+ * Input: roomName (String), name of the desired room
+ * Output: an availability JSON for the given room
+ */
+async function fetchRoomAvailability(roomName) {
   try {
+    console.log(roomName);
     const body = JSON.stringify({name: roomName});
     const resp = await fetch('/specificRoomAvailability', {
       method: 'POST',
@@ -65,22 +74,26 @@ async function fetchRoomAvailabilityJSON(roomName) {
       body
     });
     const data = await resp.json();
-    const availability = data.data;
+    console.log('data');
+    console.log(data);
+    const roomAvailability = data.data;
+    console.log('roomAvailability');
+    console.log(roomAvailability);
 
-    // change table label to requested room name
-    document.getElementById('room-table-label').innerText = roomName;
-
-    if (availability){
-      return availability;
-
+    if (roomAvailability) {
+      // console.log(roomAvailability);
+      return roomAvailability;
     } else {
       document.getElementById('room-avail').innerText = "Could not find room.";
     }
   } catch (err) {
-    console.log('Error occurred when retrieving room.')
+    console.log('Error occurred when retrieving room.');
   }
 }
 
+/**
+ * helper for fetchRoomAvailability()
+ */
 function createRow (availability, time) {
   let newRow = '<tr>\n' +
     `<th scope="row">${time}</th>`;
@@ -88,58 +101,44 @@ function createRow (availability, time) {
   // newRow += (`<!--<th scope="row" style="background-color: #777777"> ${time} </th>-->`);
 
   if (availability.sunday.includes(time)) {
-    console.log('unavailable');
     newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
   } else {
-    console.log('available');
     newRow += (`<td style="background-color: #3C8268;"></td>\n`);
   }
 
   if (availability.monday.includes(time)) {
-    console.log('unavailable');
     newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
   } else {
-    console.log('available');
     newRow += (`<td style="background-color: #3C8268;"></td>\n`);
   }
 
   if (availability.tuesday.includes(time)) {
-    console.log('unavailable');
     newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
   } else {
-    console.log('available');
     newRow += (`<td style="background-color: #3C8268;"></td>\n`);
   }
 
   if (availability.wednesday.includes(time)) {
-    console.log('unavailable');
     newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
   } else {
-    console.log('available');
     newRow += (`<td style="background-color: #3C8268;"></td>\n`);
   }
 
   if (availability.thursday.includes(time)) {
-    console.log('unavailable');
     newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
   } else {
-    console.log('available');
     newRow += (`<td style="background-color: #3C8268;"></td>\n`);
   }
 
   if (availability.friday.includes(time)) {
-    console.log('unavailable');
     newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
   } else {
-    console.log('available');
     newRow += (`<td style="background-color: #3C8268;"></td>\n`);
   }
 
   if (availability.saturday.includes(time)) {
-    console.log('unavailable');
     newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
   } else {
-    console.log('available');
     newRow += (`<td style="background-color: #3C8268;"></td>\n`);
   }
 
@@ -148,145 +147,7 @@ function createRow (availability, time) {
   return newRow;
 }
 
-/*
- * fetchUserAvailability()
- * Input: the email address of a user (String)
- * Output: the availability of the given user (JSON)
-*/
-async function fetchUserAvailability(user) {
-  try {
-    const body = JSON.stringify({email: user});
-    const resp = await fetch('/specificUserAvailability', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body
-    });
-    const data = await resp.json();
-    const availability = data.data;
-    if (availability){
-      document.getElementById('user-avail').innerText = JSON.stringify(availability);
-    } else {
-      document.getElementById('user-avail').innerText = "Could not find user";
-    }
-
-  } catch (err) {
-    console.log('Error occurred when retrieving user.');
-  }
-};
-
-/*
- * fetchUserList()
- * Input: none
- * Output: the information of all users (array of JSONs)
-*/
-async function fetchUserList() {
-  try{
-    const resp = await fetch('/alluserInfo', {
-      method: 'GET'
-    });
-    const data = await resp.json();
-    const users = data.data;
-    document.getElementById('user-list').innerText = JSON.stringify(users);
-  } catch (err) {
-    console.log('Error occurred when retrieving user list.');
-  }
-}
-
-/*
- * fetchRoomList()
- * Input: none
- * Output: the availability of all rooms (array of JSONs)
-*/
-async function fetchRoomList() {
-  try{
-    const resp = await fetch('/allRoomInfo', {
-      method: 'GET'
-    });
-    const data = await resp.json();
-    const rooms = data.data;
-    return rooms;
-    // document.getElementById('room-list').innerText = JSON.stringify(rooms);
-  } catch (err) {
-    console.log('Error occurred when retrieving room list.');
-  }
-}
-
-/*
- * fetchCurrentUserInfo()
- * Input: none
- * Output: the information of the user that is currently logged in (JSON)
-*/
-async function fetchCurrentUserInfo() {
-  try{
-    const resp = await fetch('/currentUserInfo', {
-      method: 'GET'
-    });
-    const data = await resp.json();
-    const user = data.data;
-    document.getElementById('current-user-info').innerText = JSON.stringify(user);
-  } catch (err) {
-    document.getElementById('current-user-info').innerText = 'User not logged in';
-    console.log('Error occurred when retrieving current user information. Please make sure you are logged in');
-  }
-}
-
-/*
- * updateArchive()
- * Input: name of the new archive (String), availability to archive (JSON in the following format:
- *    const availability = {
- *      sunday: [],
- *      monday: [],
- *      tuesday: [],
- *      etc...
- *    }
- * Output: none
-*/
-function updateArchive(archiveName, availability) {
-  // e.preventDefault();
-
-  const newArchive = {
-    name: archiveName,
-    availability: availability
-  };
-
-  const body = JSON.stringify(newArchive);
-  fetch('/updateUserArchive', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body
-  }).then(function () {
-    fetchCurrentUserInfo();
-  });
-};
-
-/*
- * updateUserAvailability()
- * Input: availability to update (JSON in the following format:
- *    const availability = {
- *      sunday: [],
- *      monday: [],
- *      tuesday: [],
- *      etc...
- *    }
- * Output: none
-*/
-function updateUserAvailability(availability) {
-  // e.preventDefault();
-  const newAvailability = {
-    availability: availability
-  };
-
-  const body = JSON.stringify(newAvailability);
-  fetch('/updateUserAvailability', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body
-  }).then(function () {
-    fetchCurrentUserInfo();
-  });
-}
-
-/*
+/**
  * updateRoomAvailability()
  * Input: name of the room to update (String), availability to update (JSON in the following format:
  *    const availability = {
@@ -310,47 +171,207 @@ function updateRoomAvailability(roomName, availability) {
     headers: { 'Content-Type': 'application/json' },
     body
   }).then(function () {
-    fetchRoomList();
+    // fetchRoomList();
+    console.log('figure something out');
   });
 
 }
 
-function main() {
+/** BOOKING FORM METHODS **/
+function populateTimeInput() {
+  let start_value = 9;
+  let halfHours = ["00", "30"];
+  let times = [];
+  let i;
+  let j;
+  let time;
+
+  for (i = start_value; i < 17; i++) {
+    for (j = 0; j < 2; j++) {
+      time = i + ":" + halfHours[j];
+      if (i < 10) {
+        time = "0" + time;
+      }
+      times.push(time);
+    }
+  }
+
+  time = i + ":00";
+  times.push(time);
+
+  let selectStartTime = document.getElementById("selectStartTime");
+
+  for (let i = 0; i < times.length; i++) {
+    let option = document.createElement("OPTION"),
+      txt = document.createTextNode(times[i]);
+    option.appendChild(txt);
+    option.setAttribute("value", times[i]);
+    selectStartTime.insertBefore(option, selectStartTime.lastChild);
+  }
+}
+
+const childDropDown = function(e) {
+  e.preventDefault();
+  let start_value = document.getElementById("selectStartTime").value;
+  document.getElementById("selectChild").options.length = 0;
+
+  let selectedTime = start_value.split(":");
+  let minutes = selectedTime[1];
+  let i;
+  let j;
+  let time;
+  start_value = selectedTime[0];
+
+  start_value = parseInt(start_value);// + 1;
+
+  let halfHours = ["00", "30"];
+  let times = [];
+  for (i = start_value; i < 18; i++) {
+    for (j = 0; j < 2; j++) {
+      time = i + ":" + halfHours[j];
+      if (i < 10) {
+        time = "0" + time;
+      }
+      times.push(time);
+    }
+  }
+
+  time = i + ":00";
+  times.push(time);
+
+  let selectChild = document.getElementById("selectChild");
+
+  let start_loop = 1;
+  if (minutes == "30") {
+    start_loop = 2;
+  }
+
+  for (let i = start_loop; i < times.length; i++) {
+    let option = document.createElement("OPTION"),
+      txt = document.createTextNode(times[i]);
+    option.appendChild(txt);
+    option.setAttribute("value", times[i]);
+    selectChild.insertBefore(option, selectChild.lastChild);
+  }
+};
+
+const submitButtonClicked = function(e) {
+  e.preventDefault();
+  let selected_room = document.getElementById('selectRoomName').value;
+  let start_value;
+  let selected_day = document.getElementById("selectDay").value;
+  let selected_start_time = document.getElementById("selectStartTime").value;
+  let selected_end_time = document.getElementById("selectChild").value;
+  let selectedStartTime = selected_start_time.split(":");
+  let selectedEndTime = selected_end_time.split(":");
+
+  let minutes = selectedStartTime[1];
+  start_value = selectedStartTime[0];
+  start_value = parseInt(start_value);// + 1;
+  let end_hour = selectedEndTime[0];
+  let end_minutes = selectedEndTime[1];
+  let halfHours = ["00","30"];
+  let times = [];
+
+  let i, j, time;
+
+  for(i = start_value; i < end_hour; i++){
+    for(j = 0; j < 2; j++){
+      time = i + ":" + halfHours[j];
+      if(i < 10){
+        time = "0" + time;
+      }
+      times.push(time);
+    }
+  }
+  time = i + ":00";
+  times.push(time);
+  let start_loop = 0;
+  if(minutes == "30") {
+    start_loop = 1;
+  }
+  let out_put_times = [];
+  for(let i = start_loop; i < times.length; i++){
+    out_put_times.push(times[i])
+  }
+  if(end_minutes == "30") {
+    out_put_times.push(selected_end_time);
+  }
+  out_put_times.pop();
+
   const newAvailability = {
-    sunday: ["9:00", "9:15", "9:30", "9:45"],
-    monday: [],
-    tuesday: [],
-    wednesday: ["8:00"],
-    thursday: [],
-    friday: ["3:00"],
-    saturday: []
+    room: selected_room,
+    day: selected_day,
+    times: out_put_times
   };
+  alert(selected_day + ":" + out_put_times);
 
-  const defaultAvailability = {
-    sunday: [],
-    monday: [],
-    tuesday: [],
-    wednesday: ["8:00"],
-    thursday: [],
-    friday: ["3:00"],
-    saturday: []
-  };
+  buildAvailability(newAvailability).then(() => console.log('success'));
+};
 
-  fetchRoomAvailability('Room 1');
-  // fetchUserAvailability('ciduarte@wpi.edu');
-  // fetchUserList();
-  // fetchRoomList();
-  // fetchCurrentUserInfo();
+async function buildAvailability(availability) {
+  try {
+    const roomAvail = await fetchRoomAvailability(availability.room);
+    console.log(roomAvail);
+    if (roomAvail) {
+      switch(availability.day) {
+        case "Sunday":
+          availability.times.forEach((time) => {
+            roomAvail.sunday.push(time);
+          });
+          break;
+        case "Monday":
+          availability.times.forEach((time) => {
+            roomAvail.monday.push(time);
+          });
+          break;
+        case "Tuesday":
+          availability.times.forEach((time) => {
+            roomAvail.tuesday.push(time);
+          });
+          break;
+        case "Wednesday":
+          availability.times.forEach((time) => {
+            roomAvail.wednesday.push(time);
+          });
+          break;
+        case "Thursday":
+          availability.times.forEach((time) => {
+            roomAvail.thursday.push(time);
+          });
+          break;
+        case "Friday":
+          availability.times.forEach((time) => {
+            roomAvail.friday.push(time);
+          });
+          break;
+        case "Saturday":
+          availability.times.forEach((time) => {
+            roomAvail.saturday.push(time);
+          });
+          break;
+        default:
+          break;
+      }
+      updateRoomAvailability(availability.room, roomAvail);
+      createAvailabilityTable();
+    }
+  } catch {
+    console.log('Error building room availability JSON.');
+  }
+}
 
-  // document.getElementById('update-room-avail').addEventListener('click', function (evt) {
-  //   updateRoomAvailability('Room 2', newAvailability);
-  // });
-  //
-  // document.getElementById('update-user-avail').addEventListener('click', function (evt) {
-  //   updateUserAvailability(newAvailability);
-  // });
-  //
-  // document.getElementById('update-user-archive').addEventListener('click', function (evt) {
-  //   updateArchive("Default", defaultAvailability);
-  // });
+window.onload = function(){
+  const selectedRoomInput = document.getElementById('selectRoomName');
+  selectedRoomInput.onchange = createAvailabilityTable;
+
+  populateTimeInput();
+  const submissionButton = document.getElementById('submit_times');
+  submissionButton.onclick = submitButtonClicked;
+
+  const startTimeInput = document.getElementById('selectStartTime');
+  startTimeInput.onchange = childDropDown;
+};
+
+function main() {
 }
