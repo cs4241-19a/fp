@@ -25,7 +25,8 @@ const express = require('express'),
 
 let currentUser = [],
     access_token = null,
-    refresh_token = null
+    refresh_token = null,
+    product = null
 
 app.use(favicon(__dirname + '/public/images/favicon.ico'))
 app.use(logger('dev'))
@@ -105,7 +106,7 @@ app.get("/login", function (req, res) {
 app.get("/spotifyAccess", function (req, res) {
     //let code = '?response_type=code'
     let state = generateRandomString(16);
-    res.cookie(stateKey, state);
+    res.cookie(stateKey, state)//, {SameSite:'None', secure:true});
     res.redirect('https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
@@ -160,6 +161,8 @@ app.get('/callback', function(req, res) {
                 // use the access token to access the Spotify Web API
                 request.get(options, function(error, response, body) {
                     console.log(body);
+                    //console.log("The Product is: " + body.product)
+                    product = body.product
                     console.log('token = '+ access_token)
                 });
 
@@ -207,6 +210,8 @@ app.get('/refresh_token', function(req, res) {
 app.get("/token", function (req,res){
     const answerObj = {}
     answerObj.name = "token"
+    answerObj.name = "product"
+    answerObj.product = product
     answerObj.token = access_token
     res.send(JSON.stringify(answerObj))
 })
