@@ -14,18 +14,20 @@ module.exports = function () {
         return new Promise((resolve) => {
             if (client.isConnected()) resolve(client.db('FaviconMap').collection('pings'));
             else client.connect().then(() => resolve(client.db('FaviconMap').collection('pings')))
-
         })
     }
 
-    function getCity(data, cb) {
+    function getLocation(data, cb) {
         return new Promise((resolve, reject) => {
             Maxmind.open('GeoLite2-City.mmdb').then(reader => {
+                let ip = data[0].ip;
+                if (!ip) reject("MaxMind lookup failed! No IP for data[0]");
+                let location = reader.city(ip);
                 for (let i = 0; i < data.length; i++) {
-                    let city = reader.city(data[i].ip);
-                    data[i].lat = city.location.latitude;
-                    data[i].lng = city.location.longitude;
-                    data[i].city = city.city.names.en;
+                    data[i].lat = location.location.latitude;
+                    data[i].lng = location.location.longitude;
+                    data[i].city = location.city.names.en;
+                    data[i].country = location.country.isoCode;
                 }
                 resolve(data);
             }).catch(error => {
@@ -39,7 +41,7 @@ module.exports = function () {
         insertPings: function (data) {
             return new Promise((resolve) => {
                 console.log("Inserting", data);
-                getCity(data).then(data => PingsCollection().then(col => resolve(col.insertMany(data))));
+                getLocation(data).then(data => PingsCollection().then(col => resolve(col.insertMany(data))));
             });
         },
         // returns [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}]
