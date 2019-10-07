@@ -6,6 +6,7 @@ const preloadState = new Phaser.Class({
         },
     preload: function() {
         // Preload images for this state
+        this.load.svg("brick1", "/assets/tower-defence/brick1.svg", cellSize);
         this.load.svg("pistol", "/assets/tower-defence/pistol-gun.svg", cellSize);
         this.load.svg("station", "/assets/tower-defence/station.svg", {width: 2 * cellSize.width, height: 2 * cellSize.height});
     },
