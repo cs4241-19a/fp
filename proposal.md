@@ -5,14 +5,11 @@
 - Timothy Winters
 - Andrew Levy
 
-_Online Codenames Multiplayer Game!_
-For our Final Project, we plan on implementing an online version of the card game codenames which will allow users to play together online and create their own cards and play styles.
-
-## Codenames
-Rules of codenames: https://howdoyouplayit.com/codename-rules-how-do-you-play-the-codename-board-game/
+_Online **Codenames** Multiplayer Game_
+For our Final Project, we plan on implementing an online version of the card game _codenames_ which will allow users to play together online and create their own cards and play styles.
 
 ## This project will feature:
-- HTML static pages and validations for form input, as well as for the tracking sheet interface itself.
+- HTML static pages and validations for form input to prevent duplicate cards
 - A login feature, which allows users to log in and edit/produce their own personal card decks.
 - A Node.js SQLite database which hold all of the login and card deck info for all users.
 - Dynamic Javascript that will implement selectors and buttons for selecting and making cards in game as well as communicating with teammates (if necessary) 
