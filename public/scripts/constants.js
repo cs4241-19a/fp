@@ -4,6 +4,9 @@ const CONSTANTS={
   HEIGHT: 800,
   SETUP_AREA_HEIGHT: 100,
   TILE_SIZE: 10,
+  SPRITE_SIZE: 75,
+  //setup state constants
+  PLACEMENT_TEXTURE: 'placement',
   //states and resource constants
   INIT_RESOURCES: 20,
   STATES : {
@@ -17,7 +20,8 @@ const CONSTANTS={
     p2: 1,
   },
   P1: 1,
-  P2: 2
+  P2: 2,
+  MAX_PIECES: 6
 };
 //object.freeze incurs a performance penalty but its nice for
 //making sure the values don't change.

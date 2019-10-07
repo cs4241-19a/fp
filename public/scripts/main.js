@@ -1,8 +1,11 @@
-import GameManager from "./gameManager";
+
 
 const Phaser = require('phaser');
+const Setup = require('./setup_helper/setupHelper');
+import GameManager from "./gameManager";
 import createMap from "./map";
 import CONSTANTS from "./constants";
+
 
 const gameManager = GameManager.getInstance();
 
@@ -40,6 +43,7 @@ function preload() {
   this.load.image('purple', 'assets/characters/purple_guy.png');
   this.load.image('red','assets/characters/red_guy.png' );
   this.load.image('yellow', 'assets/characters/yellow_guy.png');
+  this.load.image(CONSTANTS.PLACEMENT_TEXTURE, 'assets/placement_spot.png');
 }
 
 /**
@@ -60,6 +64,10 @@ function create() {
   gameManager.buyList = this.physics.add.group();
   gameManager.playerOnePieces = this.physics.add.group();
   gameManager.playerTwoPieces = this.physics.add.group();
+  // initalize the setup state resources
+  gameManager.p1Placement = this.physics.add.group();
+  gameManager.p2Placement = this.physics.add.group();
+
   // create the initial text resource counters in the corners
   gameManager.playerOneResourceText = this.add.text(16, 16,
       `resources: ${gameManager.playerOneResources}`, { fontSize: '32px', fill: '#fff' });
@@ -69,26 +77,41 @@ function create() {
 
   //set up the space key for transitions, then initialize the buy list for the first part of the game
   gameManager.stateTransitionKey = this.input.keyboard.addKey('SPACE');  // Get key object
-  gameManager.initBuyList(gameManager.playerOnePieces, this);
+  gameManager.confirmKey = this.input.keyboard.addKey('y');
+  gameManager.initBuyList(CONSTANTS.P1, this);
 }
 
+// if the space key has been pressed, return true otherwise return false.
+function changeState(scene){
+  return (Phaser.Input.Keyboard.JustDown(gameManager.stateTransitionKey));
+}
 
 /**
  * This is run each frame
  */
 function update() {
+  // buy state
   if (gameManager.state === CONSTANTS.STATES.buy) {
     if (gameManager.turn === CONSTANTS.TURN.p1) {
       // if the user presses the space key, change who's buying
-        if(this.input.keyboard.checkDown(gameManager.stateTransitionKey, 50)){
-          gameManager.initBuyList(gameManager.playerTwoPieces, this);
+        if(changeState(this)){
+          gameManager.initBuyList(CONSTANTS.P2, this);
           gameManager.turn = CONSTANTS.TURN.p2;
           console.log('changing turns');
         }
     }
     if(gameManager.turn === CONSTANTS.TURN.p2){
-
+        if(changeState(this)){
+          gameManager.state = CONSTANTS.STATES.setup;
+          gameManager.clearBuyList();
+          // create the areas for the current player to add their pieces (as just a gameObject)
+          Setup.populateSetupSquares(this);
+          // when they click an area, remove it from the area list
+          // when you press y, it changes to the next person's setup turn
+          // once both players press space, the fight starts
+        }
     }
   }
+  // setup state
 
 }
