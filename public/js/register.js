@@ -1,9 +1,7 @@
-/* ** HAS NOT BEEN TESTED YET **
- * create()
+/* create()
  * Input: none (retrieves information from form values and creates a base, empty user)
  * Output: none (creates a new account, can be used to redirect to login form or to "dashboard.html")
 */
-
 const create = async function( e ) {
   e.preventDefault();
 
@@ -33,12 +31,7 @@ const create = async function( e ) {
 
     if (data.status === true) {
             window.location="/login.html";
-      
-
-      // document.getElementById('account-creation-success').style.display = "block";
-      // viewLoginForm();
     } else {
-      // document.getElementById('duplicate-account-error').style.display = "block";
     }
   } catch {}
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Login</title>
+  <title>Dashboard</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
   <meta content="" name="description">
@@ -19,25 +19,17 @@
 
   <!-- Libraries CSS Files -->
   <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <!--  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css">-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <!-- Main Stylesheet File -->
   <link href="css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
-    Template Name: Bolt
-    Template URL: https://templatemag.com/bolt-bootstrap-agency-template/
-    Author: TemplateMag.com
-    License: https://templatemag.com/license/
-  ======================================================= -->
 </head>
 
 <body data-spy="scroll" data-offset="80" data-target="#thenavbar" onload="main()">
 
-
-<!-- Fixed navbar -->
+<!-- NAVIGATION BAR -->
 <div id="thenavbar" class="navbar navbar-default navbar-fixed-top">
   <div class="container row justify-content-center">
     <div class="column col-12 col-lg-6 col-md-6 navbar-header">
@@ -50,161 +42,102 @@
     </div>
     <div class="column col-12 col-md-6 col-lg-6 navbar-collapse collapse">
       <div class="row justify-content-center">
-<!--        <div class="column col-12 col-md-6 col-lg-6 col-xl-6">-->
-<!--          <a class="active" href="login.html" style="color: white; background-color: #74cfae; padding: 15px;">Log Out</a>-->
-<!--        </div>-->
-<!--        <div class="column col-12 col-md-6 col-lg-6 col-xl-6">-->
-<!--          <a href="dashboard.html" style="color: #777; padding: 15px;">Book A Room</a>-->
-<!--        </div>-->
         <ul class="nav navbar-nav justify-content-end" style="width: 100%; margin: 0px;">
           <li class="nav-item active"><a href="login.html">Log Out</a></li>
-          <!--    attach this to a logout method    -->
+          <!--    TODO: attach this to a logout method    -->
           <li class="nav-item"><a href="dashboard.html">Book A Room</a></li>
         </ul>
       </div>
     </div>
-    <!--/.nav-collapse -->
   </div>
 </div>
 
+<!-- MAIN BODY -->
 <div id="hello">
   <div class="container">
     <div class="row">
-      <div class="col-4 bookForm">
-        <!--              <div class="column col-6">-->
+      <!--     BOOKING FORM     -->
+      <div class="column col-4 bookForm">
         <form class="account-form" role="form" action="/">
-          <h1 style="font-size: 32px; margin-bottom: 20px">Book A Room</h1>
-          <script> var start_time = 9;</script>
+          <h1 style="font-size: 36px; margin-bottom: 20px">Book A Room</h1>
+          <!--     SELECT ROOM     -->
           <div class="form-group row">
             <div class="column col-12">
-              <label for="select"> Booking Start Time </label>
+                <label for="selectStartTime">Room Number</label>
             </div>
             <div class="column col-12">
-              <select class="dropDownTime" id="select" onchange="childDropDown();">
-                <option value="select">-- Select Start Time --</option>
+                <select class="dropDown" id="selectRoomName">
+                    <option value="select">-- Select Room Number --</option>
+                    <option value="Room 1">Room 1</option>
+                    <option value="Room 2">Room 2</option>
+                    <option value="Room 3">Room 3</option>
+                </select>
+            </div>
+          </div>
+          <!--     SELECT DAY     -->
+          <div class="form-group row">
+            <div class="column col-12">
+              <label for="selectDay"> Day of Week </label>
+            </div>
+            <div class="column col-12">
+              <select class="dropDown" id="selectDay">
+                <option value="select">-- Select Day of Week --</option>
+                <option value="Sunday">Sunday</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
               </select>
             </div>
           </div>
-          <div class="form-group">
-            <label for="selectChild"> Booking End Time </label>
-            <select class="dropDownTime" id="selectChild">
-              <option value="select">-- Select End Time --</option>
-            </select>
+          <!--     SELECT START TIME     -->
+          <div class="form-group row">
+              <div class="column col-12">
+                  <label for="selectStartTime">Start Time</label>
+              </div>
+              <div class="column col-12">
+                  <select class="dropDown" id="selectStartTime" onchange="childDropDown();">
+                      <option value="select">-- Select Start Time --</option>
+                  </select>
+              </div>
           </div>
-          <div class="form-group">
-            <label for="selectDay"> Booking Day </label>
-            <select class="dropDownTime" id="selectDay">
-              <option value="select">-- Select Day of Week --</option>
-              <option value="Sunday">Sunday</option>
-              <option value="Monday">Monday</option>
-              <option value="Tuesday">Tuesday</option>
-              <option value="Wednesday">Wednesday</option>
-              <option value="Thursday">Thursday</option>
-              <option value="Friday">Friday</option>
-              <option value="Saturday">Saturday</option>
-            </select>
-            <!--                        <input type="date" name="date" class="form-control" id="date" style="padding-top: 0; padding-bottom: 0; !important;">-->
+          <!--     SELECT END TIME     -->
+          <div class="form-group row">
+              <div class="column col-12">
+                  <label for="selectChild">End Time</label>
+              </div>
+              <div class="column col-12">
+                  <select class="dropDown" id="selectChild">
+                      <option value="select">-- Select End Time --</option>
+                  </select>
+              </div>
           </div>
+          <!--     SELECT EMAIL     -->
           <div class="form-group">
-            <label for="emailList"> Email List </label>
-            <input type="email" name="email" class="form-control" id="emailList"
-                   placeholder="Email address to be notified" data-msg="Please enter a valid email">
+              <label for="emailList"> Email List </label>
+              <input type="email" name="email" class="form-control" id="emailList"
+                     placeholder="Email address to be notified" data-msg="Please enter a valid email">
           </div>
           <br>
           <div class="form-send">
-            <button id="submit_times" type="submit" class="btn-theme" name="submit_times">
-              <strong>Book</strong></button>
+              <button id="submit_times" type="submit" class="btn-theme" name="submit_times">
+                  <strong>Book</strong></button>
           </div>
         </form>
       </div>
-      <script>
-        var start_value = 9;
-        var halfHours = ["00", "30"];
-        var times = [];
 
-        for (var i = start_value; i < 17; i++) {
-          for (var j = 0; j < 2; j++) {
-            var time = i + ":" + halfHours[j];
-            if (i < 10) {
-              time = "0" + time;
-            }
-            times.push(time);
-          }
-        }
-
-        time = i + ":00";
-        times.push(time);
-
-        var select = document.getElementById("select");
-
-        for (var i = 0; i < times.length; i++) {
-          var option = document.createElement("OPTION"),
-                  txt = document.createTextNode(times[i]);
-          option.appendChild(txt);
-          option.setAttribute("value", times[i]);
-          select.insertBefore(option, select.lastChild);
-        }
-
-
-        function childDropDown() {
-          var start_value = document.getElementById("select").value;
-          document.getElementById("selectChild").options.length = 0;
-
-          var selectedTime = start_value.split(":");
-          var minutes = selectedTime[1];
-          start_value = selectedTime[0];
-
-          start_value = parseInt(start_value);// + 1;
-
-          var halfHours = ["00", "30"];
-          var times = [];
-          for (var i = start_value; i < 18; i++) {
-            for (var j = 0; j < 2; j++) {
-              var time = i + ":" + halfHours[j];
-              if (i < 10) {
-                time = "0" + time;
-              }
-              times.push(time);
-            }
-          }
-
-          time = i + ":00";
-          times.push(time);
-          //alert(times);
-
-          var selectChild = document.getElementById("selectChild");
-
-          var start_loop = 1;
-          if (minutes == "30") {
-            start_loop = 2;
-          }
-
-          for (var i = start_loop; i < times.length; i++) {
-            var option = document.createElement("OPTION"),
-                    txt = document.createTextNode(times[i]);
-            option.appendChild(txt);
-            option.setAttribute("value", times[i]);
-            selectChild.insertBefore(option, selectChild.lastChild);
-          }
-        }
-      </script>
-      <!--            </div>-->
-      <!--            <div class="col-md-1 col-md-offset-1" style="display:inline-block">-->
-      <!--            </div>-->
+      <!--     AVAILABILITY TABLE     -->
       <div class="page column col-5">
         <h3 id="room-table-label"></h3>
         <div>
           <table id="room-avail-table" class="table table-hover table-sm"></table>
         </div>
       </div>
-      <!-- /col-lg-8 -->
     </div>
-    <!-- /row -->
   </div>
-  <!-- /container -->
 </div>
-<!-- /hello -->
-
 
 <div id="copyrights">
   <div class="container">
@@ -212,12 +145,6 @@
       &copy; Copyrights <strong>Bolt</strong>. All Rights Reserved
     </p>
     <div class="credits">
-      <!--
-        You are NOT allowed to delete the credit link to TemplateMag with free version.
-        You can delete the credit link only if you bought the pro version.
-        Buy the pro version with working PHP/AJAX contact form: https://templatemag.com/bolt-bootstrap-agency-template/
-        Licensing information: https://templatemag.com/license/
-      -->
       Created with Bolt template by <a href="https://templatemag.com/">TemplateMag</a>
     </div>
   </div>
@@ -225,11 +152,8 @@
 
 <!-- JavaScript Libraries -->
 <script src="lib/jquery/jquery.min.js"></script>
-<!--<script src="lib/bootstrap/js/bootstrap.min.js"></script>-->
 <script src="lib/easing/easing.min.js"></script>
 <script src="lib/chart/chart.js"></script>
-<!--<script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>-->
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -240,12 +164,9 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 
-
 <!-- Template Main Javascript File -->
-<!--<script src="js/login.js"></script>-->
 <script src="js/main.js"></script>
 <script src="js/availability.js"></script>
-<!--<script src="js/register.js"></script>-->
 
 </body>
 </html>

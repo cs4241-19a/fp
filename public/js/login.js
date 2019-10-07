@@ -1,5 +1,4 @@
-/*
- * login()
+/* login()
  * Input: none (retrieves information from form values)
  * Output: none (changes the page to "dashboard.html")
 */
