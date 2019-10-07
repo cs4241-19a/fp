@@ -1,6 +1,11 @@
 const MAXIMUM_ENTRIES_LOADED = 25
 const refreshBtn = document.getElementById("refresh-btn")
+const addRecBtn = document.getElementById("add-rec-btn")
 const list = document.getElementById("recommendation-list")
+
+const addRecommendation = function () {
+    console.log("adding recommendation")
+}
 
 const getData = function () {
     (async () => {
@@ -65,3 +70,4 @@ const getRecommendations = function () {
 getData()
 getRecommendations()
 refreshBtn.onclick = getRecommendations
+addRecBtn.onclick = addRecommendation
