@@ -1,6 +1,5 @@
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
+import getRandomInt from "./utility/random";
+
 
 const createMap = function(height, width, tileSetLength, tileSize){
   const heightCount = height/tileSize;

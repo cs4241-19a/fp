@@ -1,6 +1,10 @@
+import GameManager from "./gameManager";
+
 const Phaser = require('phaser');
 import createMap from "./map";
 import CONSTANTS from "./constants";
+
+const gameManager = GameManager.getInstance();
 
 let config = {
   type: Phaser.AUTO,
@@ -30,7 +34,12 @@ let game = new Phaser.Game(config);
  * This handles getting the assets loaded in
  */
 function preload() {
-  this.load.image('tiles', 'assets/grass_tiles.png')
+  this.load.image('tiles', 'assets/grass_tiles.png');
+  this.load.image('blue', 'assets/characters/blue_guy.png');
+  this.load.image('orange', 'assets/characters/orange_guy.png');
+  this.load.image('purple', 'assets/characters/purple_guy.png');
+  this.load.image('red','assets/characters/red_guy.png' );
+  this.load.image('yellow', 'assets/characters/yellow_guy.png');
 }
 
 /**
@@ -46,12 +55,31 @@ function create() {
 
   // leave space for the setup area height
   const layer = map.createStaticLayer(0, tiles, 0, CONSTANTS.SETUP_AREA_HEIGHT);
+
+  //initialize the groups for player1, player2 and buy area.
+  gameManager.buyGroup = this.physics.add.group();
+  gameManager.playerOnePieces = this.physics.add.group();
+  gameManager.playerTwoPieces = this.physics.add.group();
+  // create the initial text resource counters in the corners
+  gameManager.playerOneResourceText = this.add.text(16, 16,
+      `resources: ${gameManager.playerOneResources}`, { fontSize: '32px', fill: '#fff' });
+  // align this 16px from the bottom margin
+  gameManager.playerTwoResourceText = this.add.text(16, CONSTANTS.HEIGHT-32-16,
+      `resources: ${gameManager.playerOneResources}`, { fontSize: '32px', fill: '#fff' });
+
+  // the game starts at buy for player 1, so populate the list
+  gameManager.populateBuyList();
 }
 
 /**
  * This is run each frame
  */
 function update() {
+  if (gameManager.state === CONSTANTS.STATES.buy) {
+    if (gameManager.turn === CONSTANTS.TURN.p1) {
 
+
+    }
+  }
 
 }
