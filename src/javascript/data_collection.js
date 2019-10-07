@@ -8,6 +8,8 @@ let stopped = true;
 
 const rollingNumber = 10;
 
+const userLocation = {lat: undefined, lng: undefined};
+
 const localData = {};
 const runCycle = async function () {
 	const newData = [];
@@ -65,6 +67,11 @@ const runCycle = async function () {
 				.catch(console.log);
 	}
 
+	newData.forEach(d => {
+		d.lat = userLocation.lat;
+		d.lng = userLocation.lng;
+	});
+
 	return newData;
 };
 
@@ -81,7 +88,7 @@ const aggregateLocalData = () => {
 	const data = {};
 
 	Object.keys(localData).forEach(key => {
-		data[key] = {avg: localData[key].reduce(sum, 0) / localData[key].length, max: localData[key].reduce(max, 0)};
+		data[key] = {avg: localData[key].reduce(sum, 0) / localData[key].length};
 	});
 
 	return data;
@@ -101,6 +108,8 @@ const startCollection = async function () {
 		stopped = false;
 		console.log("Collection start");
 
+		geoLocate();
+
 		while (!stopped) {
 			let newData = await runCycle();
 
@@ -108,6 +117,13 @@ const startCollection = async function () {
 			data_display.displayBar(aggregateLocalData());
 		}
 	}
+};
+
+const geoLocate = function() {
+	navigator.geolocation.getCurrentPosition(position => {
+			userLocation.lat = position.coords.latitude.toFixed(2);
+			userLocation.lng = position.coords.longitude.toFixed(2);
+	});
 };
 
 // Enter point
@@ -155,14 +171,4 @@ document.body.onload = () => {
 	data_display.displayBar(zero_bar);
 	data_display.displayBar(zero_bar); // Note: bar chart has an issue where it doesn't display first call
 	data_display.setupMap(800, 500);
-
-	document.querySelector("#collect_location_button").onclick = () =>	{
-		navigator.geolocation.getCurrentPosition(position => {
-			// Approximately accurate within 6 miles
-			socket.emit('postPosition', {
-				lat: position.coords.latitude.toFixed(2),
-				lng: position.coords.longitude.toFixed(2)
-			})
-		});
-	}
 };
