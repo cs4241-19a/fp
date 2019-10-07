@@ -46,27 +46,26 @@ updateBtn.onclick = function(e) {
 
 const deleteBtn = document.getElementById('delete');
 deleteBtn.onclick = function(e) {
-    fetch(`/delete`, {
-        method: 'POST'
-    }).then(function(response) {
-        swal({
-                title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover your account!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover your account!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            swal("Goodbye!", {
+                icon: "success",
+            }).then(() => {
+                fetch('/delete', {
+                    method: 'POST'
+                }).then(function(response) {
+                    console.log("Post sent to server: " + response)
+                    location.href = '../index.html'
+                })
             })
-            .then((willDelete) => {
-                if (willDelete) {
-                    swal("Goodbye!", {
-                        icon: "success",
-                    }).then((value) => location.href = '../index.html')
-                } else {
-                    swal("Great!");
-                }
-            });
-        console.log("Post sent to server: " + response);
-    });
+        } else swal("Great!")
+    })
     e.preventDefault()
     return false
 }
