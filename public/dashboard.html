@@ -38,7 +38,6 @@
 <!--</html>-->
 
 
-
 <!---->
 
 <!DOCTYPE html>
@@ -62,8 +61,9 @@
 
   <!-- Libraries CSS Files -->
   <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-<!--  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css">-->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!--  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css">-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <!-- Main Stylesheet File -->
   <link href="css/style.css" rel="stylesheet">
@@ -104,34 +104,98 @@
 <div id="hello">
   <div class="container">
     <div class="row">
-      <div class="column col-6">
-        <form style="color: black;" action="/">
+      <div class="col-4 bookForm">
+        <!--              <div class="column col-6">-->
+        <form class="account-form" role="form" action="/">
+          <h1 style="font-size: 32px; margin-bottom: 20px">Book A Room</h1>
           <script> var start_time = 9;</script>
-          Your booking is from
-          <select id="select" onchange="childDropDown();">
-            <option value="select">--select--</option>
-          </select>
-          &nbsp;to&nbsp;
-          <select id="selectChild">
-            <option value="select">--select--</option>
-          </select>
-
-          <br><br>
-
-          <button id="submit_times" name="submit_times" style="background-color:green; padding: 10px 20px 10px 20px">
-            <strong>Submit Times</strong>
-          </button>
+          <div class="form-group row">
+            <div class="column col-12">
+              <label for="select"> Booking Start Time </label>
+            </div>
+            <div class="column col-12">
+              <select class="dropDownTime" id="select" onchange="childDropDown();">
+                <option value="select">-- Select Start Time --</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="selectChild"> Booking End Time </label>
+            <select class="dropDownTime" id="selectChild">
+              <option value="select">-- Select End Time --</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="selectDay"> Booking Day </label>
+            <select class="dropDownTime" id="selectDay">
+              <option value="select">-- Select Day of Week --</option>
+              <option value="Sunday">Sunday</option>
+              <option value="Monday">Monday</option>
+              <option value="Tuesday">Tuesday</option>
+              <option value="Wednesday">Wednesday</option>
+              <option value="Thursday">Thursday</option>
+              <option value="Friday">Friday</option>
+              <option value="Saturday">Saturday</option>
+            </select>
+            <!--                        <input type="date" name="date" class="form-control" id="date" style="padding-top: 0; padding-bottom: 0; !important;">-->
+          </div>
+          <div class="form-group">
+            <label for="emailList"> Email List </label>
+            <input type="email" name="email" class="form-control" id="emailList"
+                   placeholder="Email address to be notified" data-msg="Please enter a valid email">
+          </div>
+          <br>
+          <div class="form-send">
+            <button id="submit_times" type="submit" class="btn-theme" name="submit_times">
+              <strong>Book</strong></button>
+          </div>
         </form>
+      </div>
+      <script>
+        var start_value = 9;
+        var halfHours = ["00", "30"];
+        var times = [];
 
-        <script>
-          var start_value = 9;
+        for (var i = start_value; i < 17; i++) {
+          for (var j = 0; j < 2; j++) {
+            var time = i + ":" + halfHours[j];
+            if (i < 10) {
+              time = "0" + time;
+            }
+            times.push(time);
+          }
+        }
+
+        time = i + ":00";
+        times.push(time);
+
+        var select = document.getElementById("select");
+
+        for (var i = 0; i < times.length; i++) {
+          var option = document.createElement("OPTION"),
+                  txt = document.createTextNode(times[i]);
+          option.appendChild(txt);
+          option.setAttribute("value", times[i]);
+          select.insertBefore(option, select.lastChild);
+        }
+
+
+        function childDropDown() {
+          var start_value = document.getElementById("select").value;
+          document.getElementById("selectChild").options.length = 0;
+
+          var selectedTime = start_value.split(":");
+          var minutes = selectedTime[1];
+          start_value = selectedTime[0];
+
+          start_value = parseInt(start_value);// + 1;
+
           var halfHours = ["00", "30"];
           var times = [];
-
-          for (var i = start_value; i < 17; i++) {
-            for(var j = 0; j < 2; j++){
+          for (var i = start_value; i < 18; i++) {
+            for (var j = 0; j < 2; j++) {
               var time = i + ":" + halfHours[j];
-              if(i < 10){
+              if (i < 10) {
                 time = "0" + time;
               }
               times.push(time);
@@ -140,67 +204,31 @@
 
           time = i + ":00";
           times.push(time);
+          //alert(times);
 
-          var select = document.getElementById("select");
+          var selectChild = document.getElementById("selectChild");
 
-          for(var i = 0; i < times.length; i++) {
+          var start_loop = 1;
+          if (minutes == "30") {
+            start_loop = 2;
+          }
+
+          for (var i = start_loop; i < times.length; i++) {
             var option = document.createElement("OPTION"),
-              txt = document.createTextNode(times[i]);
+                    txt = document.createTextNode(times[i]);
             option.appendChild(txt);
-            option.setAttribute("value",times[i]);
-            select.insertBefore(option,select.lastChild);
+            option.setAttribute("value", times[i]);
+            selectChild.insertBefore(option, selectChild.lastChild);
           }
-
-
-          function childDropDown() {
-            var start_value =  document.getElementById("select").value;
-            document.getElementById("selectChild").options.length = 0;
-
-            var selectedTime = start_value.split(":");
-            var minutes = selectedTime[1];
-            start_value = selectedTime[0];
-
-            start_value = parseInt(start_value);// + 1;
-
-            var halfHours = ["00","30"];
-            var times = [];
-            for(var i = start_value; i < 18; i++){
-              for(var j = 0; j < 2; j++){
-                var time = i + ":" + halfHours[j];
-                if(i < 10){
-                  time = "0" + time;
-                }
-                times.push(time);
-              }
-            }
-
-            time = i + ":00";
-            times.push(time);
-            //alert(times);
-
-            var selectChild = document.getElementById("selectChild");
-
-            var start_loop = 1;
-            if(minutes == "30") {
-              start_loop = 2;
-            }
-
-            for(var i = start_loop; i < times.length; i++){
-              var option = document.createElement("OPTION"),
-                txt = document.createTextNode(times[i]);
-              option.appendChild(txt);
-              option.setAttribute("value",times[i]);
-              selectChild.insertBefore(option,selectChild.lastChild);
-            }
-          }
-        </script>
-      </div>
-      <div class="col-lg-6 centered">
-        <div class="page">
-          <h3 id="room-table-label"></h3>
-          <div>
-            <table id="room-avail-table" class="table table-hover table-sm" ></table>
-          </div>
+        }
+      </script>
+      <!--            </div>-->
+      <!--            <div class="col-md-1 col-md-offset-1" style="display:inline-block">-->
+      <!--            </div>-->
+      <div class="page column col-5">
+        <h3 id="room-table-label"></h3>
+        <div>
+          <table id="room-avail-table" class="table table-hover table-sm"></table>
         </div>
       </div>
       <!-- /col-lg-8 -->
@@ -236,9 +264,15 @@
 <script src="lib/chart/chart.js"></script>
 <!--<script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>-->
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
 
 <!-- Template Main Javascript File -->

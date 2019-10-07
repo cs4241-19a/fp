@@ -226,7 +226,7 @@ hr {
    color: #999;
 }
 
-.account-form input, .account-form textarea {
+.account-form input, .account-form textarea, .account-form select {
   padding: 10px 12px;
   border-radius: 0;
   box-shadow: none;
@@ -479,7 +479,13 @@ html {
   -webkit-transition: opacity .2s;
   -o-transition: opacity .2s;
   transition: opacity .2s;
+    color: #ffffff;
+    margin-bottom: 0;
+    /*font-size: 18px;*/
+    /*border: 5px solid transparent;*/
 }
+
+
 
 .btn:hover {
   opacity: .7;
@@ -491,4 +497,27 @@ html {
   opacity: .7;
   font-size: 16px;
   line-height: 1.375;
+}
+
+.dropDownTime {
+    padding-top: 10px;
+    padding-right: 12px;
+    padding-bottom: 10px;
+    padding-left: 12px;
+}
+
+.form-group {
+    margin-bottom: 15px !important;
+}
+
+.bookForm {
+
+    width: auto;
+    height: auto;
+    background-color: rgba(255, 255, 255, 0.1);
+    /*max-width: auto;*/
+    padding: 2.5em;
+    margin: auto;
+    -webkit-box-shadow: 0 16px 22px -10px rgba(0, 0, 0, 0.1), 0 34px 55px 4px rgba(0, 0, 0, 0.05), 0 13px 66px 12px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 16px 22px -10px rgba(0, 0, 0, 0.1), 0 34px 55px 4px rgba(0, 0, 0, 0.05), 0 13px 66px 12px rgba(0, 0, 0, 0.07);
 }
