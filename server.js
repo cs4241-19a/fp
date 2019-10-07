@@ -27,16 +27,13 @@ const client = new mongodb.MongoClient(uri, { useNewUrlParser: true, useUnifiedT
 let collection = null
 
 let allUsers
-const copyAllUsers = function() {
-    collection.find({}).toArray().then(result => allUsers = result)
-}
-client.connect()
-    .then(() => { return client.db('percy-a5').createCollection('users') })
-    .then(__collection => {
-        collection = __collection
-        return collection.find({}).toArray()
-    })
-    .then(result => allUsers = result)
+const copyAllUsers = function() { collection.find({}).toArray().then(result => allUsers = result) }
+client.connect().then(() => {
+    return client.db('percy-a5').createCollection('users')
+}).then(__collection => {
+    collection = __collection
+    return collection.find({}).toArray()
+}).then(result => allUsers = result)
 
 app.use((req, res, next) => {
     if (collection !== null) next()
@@ -95,7 +92,7 @@ app.get('/checkDup', function(request, response) {
     response.send(usernames)
 })
 app.get('/refreshAll', function(request, response) {
-    response.send(allUsers)
+    collection.find({}).toArray().then(result => response.json(result))
 })
 app.get('/getYou', function(request, response) {
     you = allUsers.find(__user => __user.username === you.username)
@@ -132,11 +129,15 @@ app.post('/updateInfo', function(request, response) {
         copyAllUsers()
     })
 })
-app.post('/updateYou', function(request, response) {
-    collection.updateOne({ _id: mongodb.ObjectID(you._id) }, {
+app.post('/updateUser', function(request, response) {
+    // console.log(request.body)
+    collection.updateOne({ _id: mongodb.ObjectID(request.body._id) }, {
         $set: {
             likedList: request.body.likedList,
-            blackList: request.body.blackList
+            blackList: request.body.blackList,
+            comments: request.body.comments,
+            likes: request.body.likes,
+            dislikes: request.body.dislikes
         }
     }).then(result => {
         response.json(result)

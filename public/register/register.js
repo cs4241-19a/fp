@@ -43,7 +43,9 @@ const submit = function(e) {
                 hobby: hobby,
                 likedList: [],
                 blackList: [],
-                comments: []
+                comments: [],
+                likes: 0,
+                dislikes: 0
             }
             fetch(`/add`, {
                 method: 'POST',
