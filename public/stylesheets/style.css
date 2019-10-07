@@ -77,7 +77,7 @@ img {
 }
 
 .table tbody tr.highlight td {
-    background-color: #ddd;
+    background-color: #391A3F;
 }
 
 #current-track {
@@ -102,6 +102,7 @@ img {
 .results-table {
     clear: left;
     float: left;
+    margin-bottom: 1em;
 }
 
 
