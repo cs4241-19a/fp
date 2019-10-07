@@ -1,0 +1,59 @@
+h1 {
+  text-align: center;
+  font-size: 75px;
+  margin-block-start: 0em;
+  margin-block-end: 0.11em;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+#card {
+  height: 50px;
+  border-radius: 8px;
+  width: 100px;
+  margin: 20px;
+}
+
+#card.button:hover {
+  background-color: gray;
+  cursor: pointer;
+}
+
+#chat {
+  margin-top: 30%;
+  margin-left: 65%;
+}
+
+#msg {
+  resize: none;
+  width: 125px;
+}
+
+#btn {
+  width: 65px;
+}
+
+#btn:hover {
+  cursor: pointer;
+}
+
+.game-board {
+  float: left;
+  margin-left: 5%;
+}
