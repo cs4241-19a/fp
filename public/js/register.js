@@ -22,7 +22,6 @@ const create = async function( e ) {
     }],
     archive: []
   };
-
   try {
     const resp = await fetch( '/createAccount', {
       method:'POST',
@@ -33,6 +32,9 @@ const create = async function( e ) {
     const data = await resp.json();
 
     if (data.status === true) {
+            window.location="/login.html";
+      
+
       // document.getElementById('account-creation-success').style.display = "block";
       // viewLoginForm();
     } else {
