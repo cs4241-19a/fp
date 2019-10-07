@@ -42,22 +42,22 @@ app.get('/api/home', (req, res) => {
         1: {
             "name": "Cheese Club",
             "requested": 3000,
-            "actual": 2500
+            "approved": 2500
         },
         2: {
             "name": "Soccomm Movies",
             "requested": 4500,
-            "actual": 4500
+            "approved": 4500
         },
         3: {
             "name": "Ski Club",
             "requested": 3600,
-            "actual": 3300
+            "approved": 3300
         },
         4: {
             "name": "Women In ECE",
             "requested": 400,
-            "actual": 300
+            "approved": 300
         },
     })
 });
