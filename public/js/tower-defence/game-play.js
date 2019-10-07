@@ -3,7 +3,7 @@ const gamePlayState = new Phaser.Class({
     Extends: Phaser.Scene,
     initialize:
         function GamePlay(){
-            Phaser.Scene.call(this, {key: 'GamePlay'});
+            Phaser.Scene.call(this, {key: "GamePlay"});
         },
 
     preload: function() {
@@ -14,6 +14,7 @@ const gamePlayState = new Phaser.Class({
         // Create objects
         console.log("GamePlay");
         const pistol = this.add.image(250, 300, "pistol");
+        const station = this.add.image((btmLeft.x + 1) * cellSize.width, (btmLeft.y) * cellSize.height, "station");
     },
 
     update: function() {

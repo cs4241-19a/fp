@@ -2,11 +2,12 @@ const preloadState = new Phaser.Class({
     Extends: Phaser.Scene,
     initialize:
         function Preload(){
-            Phaser.Scene.call(this, {key: 'Preload'});
+            Phaser.Scene.call(this, {key: "Preload"});
         },
     preload: function() {
         // Preload images for this state
-        this.load.svg("pistol", "/assets/tower-defence/pistol-gun.svg", { width: 40, height: 40 });
+        this.load.svg("pistol", "/assets/tower-defence/pistol-gun.svg", cellSize);
+        this.load.svg("station", "/assets/tower-defence/station.svg", {width: 2 * cellSize.width, height: 2 * cellSize.height});
     },
 
     create: function() {
