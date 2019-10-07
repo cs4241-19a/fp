@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 
 class Home extends Component {
+    constructor(props) {
+        super(props);
+        this.getBudgets();
+    }
     state = {
         response: '',
-        post: '',
+        name: '',
         responseToPost: '',
         users: [],
+        budgets: []
     };
 
     componentDidMount() {
@@ -14,6 +19,7 @@ class Home extends Component {
         //   .then(res => this.setState({ response: res.express }))
         //   .catch(err => console.log(err));
     }
+
 
     callApi = async () => {
         const response = await fetch('/api/hello');
@@ -30,26 +36,40 @@ class Home extends Component {
         this.setState({ users: body.users });
     };
 
-    showUsers = user =>
-        <li key={user.id}>{user.username}</li>
+    getBudgets = async () => {
+        const response = await fetch('/api/home');
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        console.log(Object.values(body));
+        this.setState({ budgets: Object.values(body) });
+    }
+
+    showUsers = user => <li key={user.id}>{user.username}</li>
+
+
+    showBudgets = (budget, index) =>
+        <li key={index}>
+            {budget.name} - Requested ${budget.requested} - Approved ${budget.approved}
+        </li>
 
 
     handleSubmit = async e => {
         e.preventDefault();
-        const response = await fetch('/api/world', {
+        const response = await fetch('/api/addBudget', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ post: this.state.post }),
+            body: JSON.stringify({ name: this.state.name, requested: 3000, approved: 2700 }),
         });
-        const body = await response.text();
+        const body = await response;
 
-        this.setState({ responseToPost: body });
+        this.setState({ budgets: Object.values(body) });
+        this.getBudgets();
     };
 
     render() {
-        const { users } = this.state;
+        const { users, budgets } = this.state;
         return (
             <div className="App">
                 {/* <p>{this.state.response}</p> */}
@@ -59,14 +79,22 @@ class Home extends Component {
                     </ul>
                 </div>
 
+                <div>
+                    <ul>
+                        {
+                            budgets.map(this.showBudgets)
+                        }
+                    </ul>
+                </div>
+
                 <form onSubmit={this.handleSubmit}>
                     <p>
-                        <strong>Post to Server:</strong>
+                        <strong>Add budget:</strong>
                     </p>
                     <input
                         type="text"
-                        value={this.state.post}
-                        onChange={e => this.setState({ post: e.target.value })}
+                        value={this.state.name}
+                        onChange={e => this.setState({ name: e.target.value })}
                     />
                     <button type="submit">Submit</button>
                 </form>
