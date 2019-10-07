@@ -35,10 +35,16 @@ const SelectorHardcode = () => {
   const state = {
     cells: [],
     headings: ["", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-    startTime: 9,
-    endTime: 18
+    startTime: 8,
+    endTime: 24
   };
-  return <Selector onUpdate={onUpdate} {...state} />;
+  return (
+    <Row>
+      <Col lg="6">
+        <Selector onUpdate={onUpdate} {...state} />
+      </Col>
+    </Row>
+  );
 };
 
 const onUpdate = cells => {
