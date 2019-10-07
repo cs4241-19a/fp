@@ -21,6 +21,25 @@ const updateYou = function(you) {
 
 const createNode = function(element) { return document.createElement(element) }
 const append = function(parent, el) { return parent.appendChild(el) }
+const makeHeadings = function() {
+    let th1 = createNode('th');
+    let th2 = createNode('th');
+    let th3 = createNode('th');
+    let th4 = createNode('th');
+    let th5 = createNode('th');
+    th1.innerHTML = 'Name';
+    th2.innerHTML = 'Gender';
+    th3.innerHTML = 'Age';
+    th4.innerHTML = 'Hobby';
+    th5.innerHTML = 'Match Score';
+    let tr = createNode('tr');
+    append(tr, th1);
+    append(tr, th2);
+    append(tr, th3);
+    append(tr, th4);
+    append(tr, th5);
+    append(table, tr);
+};
 
 const makeGender = function(row) {
     let gender = createNode('i')
@@ -43,26 +62,6 @@ fetch('/getYou', {
     const greet = document.getElementById('greet');
 
     greet.innerHTML = 'Hello ' + you.name + '!'
-
-    const makeHeadings = function() {
-        let th1 = createNode('th');
-        let th2 = createNode('th');
-        let th3 = createNode('th');
-        let th4 = createNode('th');
-        let th5 = createNode('th');
-        th1.innerHTML = 'Name';
-        th2.innerHTML = 'Gender';
-        th3.innerHTML = 'Age';
-        th4.innerHTML = 'Hobby';
-        th5.innerHTML = 'Match Score';
-        let tr = createNode('tr');
-        append(tr, th1);
-        append(tr, th2);
-        append(tr, th3);
-        append(tr, th4);
-        append(tr, th5);
-        append(table, tr);
-    };
 
     const makeHeart = function(row) {
         let heart = createNode('i');
@@ -152,7 +151,7 @@ fetch('/getYou', {
             return response.json();
         }).then(function(data) {
             table.innerHTML = "";
-            makeHeadings();
+            makeHeadings()
             data.map(function(row) {
                 if (row.username !== you.username) {
                     switch (head.innerHTML) {
