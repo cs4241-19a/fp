@@ -1,3 +1,7 @@
+//const user = db.get('users').find({ username: document.getElementById('current-username').value}).value();
+// user.score += 63;
+// db.get( 'users' ).push(user).write();
+
 const viewLeaderboard = function() {
     document.getElementById('table').style.display = "flex";
     document.getElementById('back-button').style.display = "flex";
@@ -56,6 +60,7 @@ const login = function (e) {
         document.getElementById('main-button-container').style.display = "flex";
         document.getElementById('leaderboard-button').style.display = "flex";
         document.getElementById('login').style.display = "none";
+        document.getElementById('current-username').value = loginInfo.username;
     });
 };
 
