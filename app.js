@@ -69,7 +69,8 @@ passport.use('local-login', new LocalStrategy(
         }).then(function (result) {
             if (typeof result[0] == 'undefined') {
                 return done(null, false, {"message": "Wrong username"})
-            } else {
+            } else
+                {
                 currentUser = result
                 bcrypt.compare(password, result[0].password, function (err, res) {
                     if (res) {
