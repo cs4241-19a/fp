@@ -2,6 +2,7 @@ import * as d3Base from 'd3';
 import {group} from 'd3-array';
 import * as topojson from 'topojson';
 import domains from './domain_list'
+import socket from './index';
 import constant from "d3-array/src/constant";
 import {max} from "d3";
 
@@ -237,8 +238,8 @@ const setupMap = function (width, height) {
 			.attr("stroke-linejoin", "round")
 			.attr("d", path);
 
-		updateMap();
-		updateMap();
+		socket.emit('getData');
+		socket.emit('getData');
 
 	});
 

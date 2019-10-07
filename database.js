@@ -49,7 +49,7 @@ module.exports = function () {
             return new Promise((resolve, reject) => {
                 PingsCollection().then(col =>
                     col.aggregate([
-                        {$match: {}},
+                        {$match: {country: "US"}},
                         {
                             $group: {
                                 "_id": {"favicon": "$favicon", "city": "$city"},

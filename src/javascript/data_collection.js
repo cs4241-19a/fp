@@ -159,10 +159,7 @@ document.body.onload = () => {
 		localData[`${d.name} (${d.rank})`] = [];
 	}
 
-
 	socket.on('sendData', data_display.updateMapData);
-	socket.emit('getData');
-	socket.emit('getData');
 
 	const zero_bar = {};
 	domains.forEach(d => zero_bar[`${d.name} (${d.rank})`] = {avg: NaN, max: NaN});
