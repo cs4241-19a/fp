@@ -12,8 +12,11 @@ class GameManager {
   // placement is where each player can put their pieces to start
   p1Placement;
   p2Placement;
+  // activePiece is the character to put on the field
   activePiece;
+  p1Ready; p2Ready;
   //fight-state objects
+  p1FightPieces; p2FightPieces;
   // general resources
   state;
   stateTransitionKey;
@@ -38,6 +41,7 @@ class GameManager {
     this.p1Placement = null;
     this.p2Placement = null;
     this.activePiece = null;
+    this.p1Ready = this.p2Ready = false;
   }
 
   /**
@@ -118,7 +122,9 @@ class GameManager {
       let character = scene.physics.add.sprite(x,
           CONSTANTS.HEIGHT / 2, this.characterNames[getRandomInt(this.characterNames.length)]);
       // set a health and strength for the character. The price is how many resources it costs
-      character.setData({health: 100, strength: 12, price: 5});
+      character.setData({health: 100, strength: 1, speed:50, price: 5});
+      // make the character bounce when it hits something
+      character.setBounce(1);
       this.buyList.add(character);
       x += 100; //this is an arbitrary length based off the size of the character
     }

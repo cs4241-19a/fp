@@ -15,12 +15,13 @@ const CONSTANTS={
     fight: 'fight',
     gameOver: 'gameOver'
   },
-  TURN:{
-    p1: 0,
-    p2: 1,
-  },
   P1: 1,
   P2: 2,
+  // make sure the player, and the turn values are the same here
+  TURN:{
+    p1: 1,
+    p2: 2
+  },
   MAX_PIECES: 6
 };
 //object.freeze incurs a performance penalty but its nice for
