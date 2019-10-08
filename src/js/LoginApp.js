@@ -39,6 +39,7 @@ export default function LoginApp(props) {
 
 	return (
 		<div className="w-full">
+			<div className="w-full lg:text-center headT"> I wanna know more about soundcloudish! </div>
 			<div className="w-full padder">
 				<div className="w-full lg:max-w-full lg:flex glower">
 					<div
@@ -152,7 +153,7 @@ export default function LoginApp(props) {
 					</div>
 				</div>
 			</div>
-			<div className="w-full padder lg:text-center headT"> Get Started </div>
+			<div className="w-full lg:text-center headT"> Get Started </div>
 			<div className="w-full padder">
 				<div className="w-full glower padder rounded bg-white">
 					<div className="flex -mx-4">
