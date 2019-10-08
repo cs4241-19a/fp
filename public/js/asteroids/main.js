@@ -14,7 +14,8 @@ const ROIDS_VERT = 10; // average number of vertices on each roid
 const ROIDS_JAG = 0.3; // jaggedness of the roids (0 = none, 1 = JAGGED)
 const SHOW_CENTER_DOT = false; // show or hide ship center dot
 const SHOW_BOUNDING = false; // show or hide collision bounding
-
+const LASER_MAX = 10; // maximum number of lasers on screen at once
+const LASER_SPD = 500; // speed of lasers in pixels per sec
 
 /** @type {HTMLCanvasElement} */
 let canv = document.getElementById("gameCanvas");
@@ -55,6 +56,9 @@ function explodeShip() {
 
 function keyDown(/** @type {KeyboardEvent}  */ ev){
     switch(ev.keyCode) {
+        case 32: // space bar (shoot the laser)
+            shootLaser();
+            break;
         case 37: // left arrow (rotate ship left)
             ship.rot = TURN_SPEED / 180 * Math.PI / FPS;
             break;
@@ -70,6 +74,10 @@ function keyDown(/** @type {KeyboardEvent}  */ ev){
 
 function keyUp(/** @type {KeyboardEvent}  */ ev) {
     switch(ev.keyCode) {
+        case 32: // space bar (allow shooting again)
+            ship.canShoot = true;
+            shootLaser();
+            break;
         case 37: // left arrow (stop rotate ship left)
             ship.rot = 0;
             break;
@@ -110,6 +118,8 @@ function newShip() {
         a: 90 / 180 * Math.PI, // convert to radians
         blinkTime: Math.ceil(SHIP_BLINK_DUR * FPS),
         blinkNum: Math.ceil(SHIP_INV_DUR / SHIP_BLINK_DUR),
+        canShoot: true,
+        lasers: [],
         explodeTime: 0,
         rot: 0,
         thrusting: false,
@@ -118,6 +128,21 @@ function newShip() {
             y: 0
         }
     };
+}
+
+function shootLaser() {
+    // create the laser object
+    if(ship.canShoot && ship.lasers.length < LASER_MAX){
+        ship.lasers.push({ // from nose of the ship
+            x: ship.x + 4 / 3 * ship.r * Math.cos(ship.a),
+            y: ship.y - 4 / 3 * ship.r * Math.sin(ship.a),
+            xv: LASER_SPD * Math.cos(ship.a) / FPS,
+            yv: -LASER_SPD * Math.sin(ship.a) / FPS
+        })
+    }
+
+    // prevent further shooting
+    ship.canShoot = false;
 }
 
 function update() {
@@ -271,6 +296,14 @@ function update() {
         ctx.fillRect(ship.x - 1, ship.y - 1, 2, 2);
     }
 
+    // draw the lasers
+    for(let i = 0; i < ship.lasers.length; i++) {
+        ctx.fillStyle = "salmon";
+        ctx.beginPath();
+        ctx.arc(ship.lasers[i].x, ship.lasers[i].y, SHIP_SIZE / 15, 0, Math.PI * 2, false);
+        ctx.fill();
+    }
+
     // check for roid collision
     if(!exploding) {
         if(ship.blinkNum === 0) {
@@ -305,6 +338,12 @@ function update() {
         ship.y = canv.height + ship.r;
     } else if(ship.y > canv.height + ship.r) {
         ship.y = 0 - ship.r;
+    }
+
+    // move lasers
+    for(let i = 0; i < ship.lasers.length; i++) {
+        ship.lasers[i].x += ship.lasers[i].xv;
+        ship.lasers[i].y += ship.lasers[i].yv;
     }
 
     // move the asteroid
