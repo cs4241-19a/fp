@@ -5,6 +5,37 @@ export default function LoginApp(props) {
 	const [name, setName] = useState();
 	const [pwd, setPwd] = useState();
 
+	function signUp(e) {
+		e.preventDefault();
+
+		let body;
+
+		const inputUsername = document.querySelector( '#new-username'),
+			inputFirstName = document.querySelector( '#first-name'),
+			inputLastName = document.querySelector( '#last-name'),
+			inputPassword = document.querySelector('#new-password'),
+			json = { username: inputUsername.value, firstName: inputFirstName.value, lastName: inputLastName.value, password: inputPassword.value }
+
+		window.localStorage;
+		localStorage.setItem('currUser', inputUsername.value)
+
+		body = JSON.stringify( json );
+
+		fetch('/signup', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body
+		})
+			.then(function(res) {
+				// showToast({
+				// 	str: "Creating Profile",
+				// 	time: 2000,
+				// 	position: 'bottom'
+				// });
+				console.log( "post response: ", res )
+			})
+	}
+
 	function login() {
 
 		//TODO: fetch calls subject to change depending on server, auth
@@ -49,45 +80,45 @@ export default function LoginApp(props) {
 								<div className="flex flex-wrap -mx-3 mb-6">
 									<div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
 										<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-											   htmlFor="grid-first-name">
+											   htmlFor="first-name">
 											First Name
 										</label>
 										<input
 											className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-											id="grid-first-name" type="text" placeholder="Jane"/>
+											id="first-name" type="text" placeholder="Jane"/>
 										<p className="text-red-500 text-xs italic">Please fill out this field.</p>
 									</div>
 									<div className="w-full md:w-1/2 px-3">
 										<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-											   htmlFor="grid-last-name">
+											   htmlFor="last-name">
 											Last Name
 										</label>
 										<input
 											className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-											id="grid-last-name" type="text" placeholder="Doe"/>
+											id="last-name" type="text" placeholder="Doe"/>
 									</div>
 								</div>
 								<div className="flex flex-wrap -mx-3 mb-6">
 									<div className="w-full px-3">
 										<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-											   htmlFor="username">
+											   htmlFor="new-username">
 											Username
 										</label>
 										<input
 											className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-											id="username" type="text" placeholder="Username"/>
+											id="new-username" type="text" placeholder="Username"/>
 										<p className="text-gray-600 text-xs italic">Think of a cool name, after all it is how people will find you!</p>
 									</div>
 								</div>
 								<div className="flex flex-wrap -mx-3 mb-6">
 									<div className="w-full px-3">
 										<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-											   htmlFor="grid-password">
+											   htmlFor="new-password">
 											Password
 										</label>
 										<input
 											className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-											id="grid-password" type="password" placeholder="******************"/>
+											id="new-password" type="password" placeholder="******************"/>
 										<p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
 									</div>
 								</div>
@@ -95,6 +126,7 @@ export default function LoginApp(props) {
 									<button
 										className="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
 										type="button"
+										onClick={signUp}
 									>
 										Sign Up
 									</button>

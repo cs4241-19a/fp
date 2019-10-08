@@ -11476,8 +11476,8 @@ button {
   background: white;
   color: black !important;
   border: 2px solid black;
-  -webkit-transition: 0.9s;
-  transition: 0.9s;
+  -webkit-transition: 0.7s;
+  transition: 0.7s;
 }
 
 button:hover {

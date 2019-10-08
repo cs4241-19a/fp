@@ -9,9 +9,9 @@ exports.init = function(){
     this.firestore = admin.firestore()
 }
 
-exports.addNewProfile = function (new_profile){
-    let profiles_coll = this.firestore.collection("music_profiles")
-    profiles_coll.doc(new_profile.User.Username).set(new_profile)
+exports.addNewUserProfile = function (username, new_profile){
+    let profiles_coll = this.firestore.collection("user_profiles")
+    profiles_coll.doc(username).set(new_profile).then(r => console.log(r))
 }
 
 exports.addMusicToProfile = function (username, song){
