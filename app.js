@@ -142,8 +142,6 @@ app.get('/callback', function (req, res) {
                 grant_type: 'authorization_code'
             },
             headers: {
-                //TODO: delete comment if possible
-                //'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
                 'Authorization': 'Basic ' + (Buffer.from(client_id + ':' + client_secret).toString('base64'))
             },
             json: true
@@ -313,19 +311,19 @@ app.post("/recommendation", function (req, res) {
                 "tracknumber": req.body.tracknumber,
                 "rating": req.body.rating,
                 "caption": req.body.caption
-            }).then(r => res.redirect("/"))
+            }).then(() => {
+                res.redirect("/");
+            })
         })
     })
 })
 
 function isLoggedIn(req, res, next) {
-    //TODO: delete comment if possible
-    //console.log(req.isAuthenticated())
     if (req.isAuthenticated())
         return next()
     res.redirect("/login")
 }
 
 //added in order to run the server
-app.listen(process.env.PORT || 3000)
+app.listen(process.env.PORT || 3001)
 module.exports = app

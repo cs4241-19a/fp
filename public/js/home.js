@@ -2,9 +2,33 @@ const MAXIMUM_ENTRIES_LOADED = 25
 const refreshBtn = document.getElementById("refresh-btn")
 const addRecBtn = document.getElementById("add-rec-btn")
 const list = document.getElementById("recommendation-list")
+const recText = document.getElementById("exampleFormControlTextarea2")
 
 const addRecommendation = function () {
-    console.log("adding recommendation")
+    let rating = -1;
+    if (document.getElementById("star5").checked) rating = 5;
+    else if (document.getElementById("star4").checked) rating = 4;
+    else if (document.getElementById("star3").checked) rating = 3;
+    else if (document.getElementById("star2").checked) rating = 2;
+    else if (document.getElementById("star1").checked) rating = 1;
+    else return false
+
+    if (rating === -1) return false
+    const newRecommendation = {
+        username: "hi", //TODO: replace with actual username
+        tracknumber: 0, //TODO: replace with actual tracknumber
+        rating: rating,
+        caption: recText.value
+    }
+
+    const body = JSON.stringify(newRecommendation);
+    fetch("/recommendation", {
+        method: "POST",
+        body,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(getRecommendations)
 }
 
 const getData = function () {
