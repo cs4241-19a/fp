@@ -243,7 +243,6 @@
 
                     tdNode.appendChild(document.createTextNode(data.word));
                     tdNode2.appendChild(document.createTextNode(data.translation));
-                    tdNode3.appendChild(document.createTextNode(langFinder(data.lang)));
                     tdNode4.appendChild(editButton);
                     tdNode4.appendChild(deleteButton);
                     trNode.appendChild(tdNode);

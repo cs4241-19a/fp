@@ -30,9 +30,11 @@ router.post('/create', function (req, res) {
   if (!dbUserExists(username)) {
     dbUserAdd(username, password);
     res.cookie('username', username);
-    res.redirect("/index?alert=Account+created");
+    res.send("OK")
+   // res.redirect("/index?alert=Account+created");
   } else {
-    res.redirect("/?alert=Username+taken");
+    res.send("BAD")
+   // res.redirect("/?alert=Username+taken");
   }
 })
 
@@ -43,10 +45,8 @@ router.post('/login', function (req, res) {
   if (dbUserAuthenticate(username, password)) {
     res.cookie('username', username);
     res.send("OK")
-    //res.redirect("/index");
   } else {
     res.send("BAD")
-    //res.redirect("/?alert=Invalid+login");
   }
 })
 

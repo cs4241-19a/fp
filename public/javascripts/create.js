@@ -12,8 +12,16 @@ function createAccount(){
     method: "POST",
     body: body
   }).then(function(res){
-    //parse response?
-  })
+    res.text().then(function(str) {
+      if (str == "OK") {
+        alert("Account created!")
+        window.location = "/index";
+      }
+      if (str == "BAD") {
+        alert("User exists!");
+      }
+    });
+  });
 }
 
 window.onload = function() {

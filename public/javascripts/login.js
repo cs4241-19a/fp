@@ -12,7 +12,6 @@ function logIn() {
     body: body
   }).then(function(res) {
     res.text().then(function(str) {
-      alert(str);
       if (str == "OK") {
         window.location = "/index";
       }
