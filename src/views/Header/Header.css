@@ -1,0 +1,28 @@
+.test {
+    background-attachment: fixed;
+}
+
+.headerTab {
+    background-color: black;
+}
+
+.inactive {
+    color: white;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.is-huge {
+    font-size: 40px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.move-right {
+    display: flex;
+    justify-content: right;
+}
