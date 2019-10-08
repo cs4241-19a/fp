@@ -32,7 +32,7 @@ class Field extends Component {
                     </div>
                     <div className="column is-two-third">
                         <input  className= { this.state.success ?  "input is-success" : "input" }
-                                type="text" 
+                                type={this.props.type}
                                 name={this.props.name} 
                                 placeholder={this.props.placeholder}
                                 onInput = {this.toggle.bind(this)}
@@ -67,8 +67,8 @@ class Login extends Component {
                 <div className = "center titleContainer has-background-white">
                     <p className = "title">Sign In</p>
                 </div>
-                <Field name="Username" placeholder="Username" icon="user-lock"></Field>
-                <Field name="Password" placeholder="Password" icon="key"></Field>
+                <Field name="Username" placeholder="Username" icon="user-lock" type = "text"></Field>
+                <Field name="Password" placeholder="Password" icon="key" type = "password"></Field>
                 <div className="vessel">
                     <SignInButton></SignInButton>
                 </div>
