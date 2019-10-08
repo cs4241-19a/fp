@@ -53,6 +53,12 @@ along with the Perlenspiel devkit. If not, see <http://www.gnu.org/licenses/>.
 
 }
 
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+//VARIABLE OBJECT
+
 let variables = {
     dataArray: [[], [], [], []],
     arrayLoc: 0,
@@ -64,48 +70,42 @@ let variables = {
     playbackLength: [],
     playbackIndicies: [],
     maxLength: 0,
+    timeRemaining: null,
     currentPlaybackTime: 0,
     playingBack: false,
     playbackTimer: null,
+    countdownTimerCount: 3,
+    countdownTimer: null,
+
 }
+
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+//PS FUNCTIONS
 
 PS.init = function (system, options) {
     "use strict";
 
+    variables.timeRemaining = variables.maxSeconds;
+
     PS.gridSize(32, 32);
+    PS.gridColor(PS.COLOR_GRAY)
+
     pianoSetup();
+
+    drumSetup();
 
     PS.statusText("Shitty Garageband");
 };
 
-
-
-/*
-PS.touch ( x, y, data, options )
-Called when the left mouse button is clicked over bead(x, y), or when bead(x, y) is touched.
-This function doesn't have to do anything. Any value returned is ignored.
-[x : Number] = zero-based x-position (column) of the bead on the grid.
-[y : Number] = zero-based y-position (row) of the bead on the grid.
-[data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
-
-// UNCOMMENT the following code BLOCK to expose the PS.touch() event handler:
-
-
-
 PS.touch = function (x, y, data, options) {
-    "use strict"; // Do not remove this directive!
+    "use strict";
 
-    // Uncomment the following code line
-    // to inspect x/y parameters:
+    HighlightKey(data[0]);
 
-    // PS.debug( "PS.touch() @ " + x + ", " + y + "\n" );
-
-    // Add code here for mouse clicks/touches
-    // over a bead.
-
-    if (x < 13 && variables.recordInfo) {
+    if (data[0] !== undefined && variables.recordInfo) {
         recordData({ x: x, y: y, data: data[0] }, variables.currentTime);
     }
 
@@ -181,121 +181,96 @@ PS.touch = function (x, y, data, options) {
         case "P3":
             if (!variables.playingBack) {
                 playBackData(2);
-            } break;
+            }
+            break;
         case "P4":
             if (!variables.playingBack) {
                 playBackData(3);
-            } break;
+            }
+            break;
         case "PALL":
             if (!variables.playingBack) {
                 playBackData(null);
-            } break;
+            }
+            break;
 
     }
 };
 
+PS.release = function (x, y, data, options) {
+    "use strict"; // Do not remove this directive!
 
+    RevertKey(data[0]);
+};
+
+PS.exitGrid = function (options) {
+    "use strict"; // Do not remove this directive!
+    for (var i = 0; i < 8; i += .5) {
+        RevertKey(i)
+    }
+};
+
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+//UNUSED PS FUNCTIONS
 {
-/*
-PS.release ( x, y, data, options )
-Called when the left mouse button is released, or when a touch is lifted, over bead(x, y).
-This function doesn't have to do anything. Any value returned is ignored.
-[x : Number] = zero-based x-position (column) of the bead on the grid.
-[y : Number] = zero-based y-position (row) of the bead on the grid.
-[data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
+    /*
+    PS.enter ( x, y, button, data, options )
+    Called when the mouse cursor/touch enters bead(x, y).
+    This function doesn't have to do anything. Any value returned is ignored.
+    [x : Number] = zero-based x-position (column) of the bead on the grid.
+    [y : Number] = zero-based y-position (row) of the bead on the grid.
+    [data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
+    [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
+    */
 
-// UNCOMMENT the following code BLOCK to expose the PS.release() event handler:
+    // UNCOMMENT the following code BLOCK to expose the PS.enter() event handler:
 
-/*
+    /*
+    
+    PS.enter = function( x, y, data, options ) {
+        "use strict"; // Do not remove this directive!
+    
+        // Uncomment the following code line to inspect x/y parameters:
+    
+        // PS.debug( "PS.enter() @ " + x + ", " + y + "\n" );
+    
+        // Add code here for when the mouse cursor/touch enters a bead.
+    };
+    
+    */
 
-PS.release = function( x, y, data, options ) {
-	"use strict"; // Do not remove this directive!
+    /*
+    PS.exit ( x, y, data, options )
+    Called when the mouse cursor/touch exits bead(x, y).
+    This function doesn't have to do anything. Any value returned is ignored.
+    [x : Number] = zero-based x-position (column) of the bead on the grid.
+    [y : Number] = zero-based y-position (row) of the bead on the grid.
+    [data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
+    [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
+    */
 
-	// Uncomment the following code line to inspect x/y parameters:
+    // UNCOMMENT the following code BLOCK to expose the PS.exit() event handler:
 
-	// PS.debug( "PS.release() @ " + x + ", " + y + "\n" );
+    /*
+    
+    PS.exit = function( x, y, data, options ) {
+        "use strict"; // Do not remove this directive!
+    
+        // Uncomment the following code line to inspect x/y parameters:
+    
+        // PS.debug( "PS.exit() @ " + x + ", " + y + "\n" );
+    
+        // Add code here for when the mouse cursor/touch exits a bead.
+    };
+    
+    */
+    
+    
 
-	// Add code here for when the mouse button/touch is released over a bead.
-};
 
-*/
-
-/*
-PS.enter ( x, y, button, data, options )
-Called when the mouse cursor/touch enters bead(x, y).
-This function doesn't have to do anything. Any value returned is ignored.
-[x : Number] = zero-based x-position (column) of the bead on the grid.
-[y : Number] = zero-based y-position (row) of the bead on the grid.
-[data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
-
-// UNCOMMENT the following code BLOCK to expose the PS.enter() event handler:
-
-/*
-
-PS.enter = function( x, y, data, options ) {
-	"use strict"; // Do not remove this directive!
-
-	// Uncomment the following code line to inspect x/y parameters:
-
-	// PS.debug( "PS.enter() @ " + x + ", " + y + "\n" );
-
-	// Add code here for when the mouse cursor/touch enters a bead.
-};
-
-*/
-
-/*
-PS.exit ( x, y, data, options )
-Called when the mouse cursor/touch exits bead(x, y).
-This function doesn't have to do anything. Any value returned is ignored.
-[x : Number] = zero-based x-position (column) of the bead on the grid.
-[y : Number] = zero-based y-position (row) of the bead on the grid.
-[data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
-
-// UNCOMMENT the following code BLOCK to expose the PS.exit() event handler:
-
-/*
-
-PS.exit = function( x, y, data, options ) {
-	"use strict"; // Do not remove this directive!
-
-	// Uncomment the following code line to inspect x/y parameters:
-
-	// PS.debug( "PS.exit() @ " + x + ", " + y + "\n" );
-
-	// Add code here for when the mouse cursor/touch exits a bead.
-};
-
-*/
-
-/*
-PS.exitGrid ( options )
-Called when the mouse cursor/touch exits the grid perimeter.
-This function doesn't have to do anything. Any value returned is ignored.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
-
-// UNCOMMENT the following code BLOCK to expose the PS.exitGrid() event handler:
-
-/*
-
-PS.exitGrid = function( options ) {
-	"use strict"; // Do not remove this directive!
-
-	// Uncomment the following code line to verify operation:
-
-	// PS.debug( "PS.exitGrid() called\n" );
-
-	// Add code here for when the mouse cursor/touch moves off the grid.
-};
-
-*/
 
 /*
 PS.keyDown ( key, shift, ctrl, options )
@@ -403,22 +378,45 @@ PS.shutdown = function( options ) {
 */}
 
 
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+//RECORDING FUNCTIONS
+
+function recordingCountdown() {
+    console.log("IN COUNTDOWN")
+    if (variables.countdownTimerCount > 0) {
+        PS.audioPlay("fx_click");
+        PS.statusText("RECORDING IN: " + variables.countdownTimerCount);
+        variables.countdownTimerCount--;
+    }
+    else {
+        PS.statusText("RECORDING");
+        PS.timerStop(variables.countdownTimer)
+        variables.timer = setInterval(intervalTimerLoop, 10);
+    }
+}
+
 function startRecording(arrayPos) {
     variables.arrayLoc = arrayPos;
     variables.recordInfo = true;
     variables.currentTime = 0;
     variables.dataArray[variables.arrayLoc] = [];
-    variables.timer = setInterval(intervalTimerLoop, 10);
+    variables.countdownTimer = PS.timerStart(60, recordingCountdown);
 }
 
 function intervalTimerLoop() {
+    variables.countdownTimer = 3;
     if (variables.currentTime < variables.maxSeconds) {
         variables.currentTime += 10;
     }
+
     else {
         clearInterval(variables.timer);
         variables.recordInfo = false;
         variables.currentTime = 0;
+        variables.countdownTimerCount = 3;
     }
 }
 
@@ -485,6 +483,7 @@ function playBackData(arrayPos) {
         console.log(variables.dataArray);
         variables.playingBack = true;
         console.log("Starting playback")
+
         variables.arrayLoc = arrayPos;
         variables.currentPlaybackTime = 0;
         variables.playbackLength = []
@@ -496,15 +495,16 @@ function playBackData(arrayPos) {
             }
             variables.playbackLength.push(variables.dataArray[i].length);
         }
+        variables.timeRemaining = variables.maxSeconds;
         variables.playbackTimer = setInterval(playbackSound, 10);
     }
 
 }
 
 function playbackSound() {
-    if (variables.currentPlaybackTime % 100 === 0) {
-        variables.timeRemaining--;
-        PS.statusText(variables.timeRemaining)
+    if (variables.currentPlaybackTime % 1000 === 0) {
+        PS.statusText(variables.timeRemaining / 1000)
+        variables.timeRemaining -= 1000;
     }
     if (variables.arrayLoc !== null) {
         if (variables.currentPlaybackIndex < variables.dataArray[variables.arrayLoc].length) {
@@ -554,9 +554,13 @@ function playbackSound() {
 
 }
 
-function pianoSetup() {
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+//PIANO FUNCTIONS
 
-    PS.gridColor(PS.COLOR_GRAY)
+function pianoSetup() {
 
     for (var i = 0; i < 32; i++) {
         for (var j = 24; j < 32; j++) {
@@ -644,7 +648,7 @@ function pianoSetup() {
             PS.data(i, j, [1]);
         }
     }
-    for (var i = 3; i < 7; i++) {
+    for (var i = 3; i < 6; i++) {
         for (var j = 29; j < 32; j++) {
             PS.data(i, j, [1]);
         }
@@ -659,24 +663,24 @@ function pianoSetup() {
     }
 
     //E
-    for (var i = 7; i < 10; i++) {
+    for (var i = 7; i < 9; i++) {
         for (var j = 24; j < 32; j++) {
             PS.data(i, j, [2]);
         }
     }
-    for (var i = 6; i < 10; i++) {
+    for (var i = 6; i < 9; i++) {
         for (var j = 29; j < 32; j++) {
             PS.data(i, j, [2]);
         }
     }
 
     //F
-    for (var i = 9; i < 12; i++) {
+    for (var i = 9; i < 11; i++) {
         for (var j = 24; j < 32; j++) {
             PS.data(i, j, [3]);
         }
     }
-    for (var i = 9; i < 14; i++) {
+    for (var i = 9; i < 12; i++) {
         for (var j = 29; j < 32; j++) {
             PS.data(i, j, [3]);
         }
@@ -872,42 +876,299 @@ function pianoSetup() {
 
 }
 
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+//DRUM FUNCTIONS
+
+function drumSetup() {
+
+}
+
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+//RECOLOR FUNCTIONS
+
 function HighlightKey(data) {
     switch (data) {
         case 0:
+            //C
+            for (var i = 0; i < 2; i++) {
+                for (var j = 24; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_YELLOW);
+                }
+            }
+            for (var i = 29; i < 32; i++) {
+                PS.color(2, i, PS.COLOR_YELLOW)
+            }
             break;
         case 0.5:
+            //C#
+            for (var i = 2; i < 4; i++) {
+                for (var j = 24; j < 29; j++) {
+                    PS.color(i, j, PS.COLOR_YELLOW);
+                }
+            }
             break;
         case 1:
+            //D
+            for (var i = 4; i < 5; i++) {
+                for (var j = 24; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_YELLOW);
+                }
+            }
+            for (var i = 3; i < 6; i++) {
+                for (var j = 29; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_YELLOW);
+                }
+            }
             break;
         case 1.5:
+            //D#
+            for (var i = 5; i < 7; i++) {
+                for (var j = 24; j < 29; j++) {
+                    PS.color(i, j, PS.COLOR_YELLOW);
+                }
+            }
             break;
         case 2:
+            //E
+            for (var i = 7; i < 9; i++) {
+                for (var j = 24; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_YELLOW);
+                }
+            }
+            for (var i = 6; i < 9; i++) {
+                for (var j = 29; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_YELLOW);
+                }
+            }
             break;
         case 3:
+            //F
+            for (var i = 9; i < 11; i++) {
+                for (var j = 24; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_YELLOW);
+                }
+            }
+            for (var i = 9; i < 12; i++) {
+                for (var j = 29; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_YELLOW);
+                }
+            }
             break;
         case 3.5:
+            //F#
+            for (var i = 11; i < 13; i++) {
+                for (var j = 24; j < 29; j++) {
+                    PS.color(i, j, PS.COLOR_YELLOW);
+                }
+            }
             break;
         case 4:
+            //G
+            for (var j = 24; j < 32; j++) {
+                PS.color(13, j, PS.COLOR_YELLOW);
+            }
+            for (var i = 12; i < 15; i++) {
+                for (var j = 29; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_YELLOW);
+                }
+            }
             break;
         case 4.5:
+            //G#
+            for (var i = 14; i < 16; i++) {
+                for (var j = 24; j < 29; j++) {
+                    PS.color(i, j, PS.COLOR_YELLOW);
+                }
+            }
             break;
         case 5:
+            //A
+            for (var j = 24; j < 32; j++) {
+                PS.color(16, j, PS.COLOR_YELLOW);
+            }
+            for (var i = 15; i < 18; i++) {
+                for (var j = 29; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_YELLOW);
+                }
+            }
             break;
         case 5.5:
+            //A#
+            for (var i = 17; i < 19; i++) {
+                for (var j = 24; j < 29; j++) {
+                    PS.color(i, j, PS.COLOR_YELLOW);
+                }
+            }
             break;
         case 6:
+            //B
+            for (var i = 19; i < 21; i++) {
+                for (var j = 24; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_YELLOW);
+                }
+            }
+            for (var i = 18; i < 21; i++) {
+                for (var j = 29; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_YELLOW);
+                }
+            }
+
             break;
         case 7:
+            //C
+            for (var i = 21; i < 24; i++) {
+                for (var j = 24; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_YELLOW);
+                }
+            }
             break;
-
     }
 }
 
 function RevertKey(data) {
+    switch (data) {
+        case 0:
+            //C
+            for (var i = 0; i < 2; i++) {
+                for (var j = 24; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_WHITE);
+                }
+            }
+            for (var i = 29; i < 32; i++) {
+                PS.color(2, i, PS.COLOR_WHITE)
+            }
+            break;
+        case 0.5:
+            //C#
+            for (var i = 2; i < 4; i++) {
+                for (var j = 24; j < 29; j++) {
+                    PS.color(i, j, PS.COLOR_BLACK);
+                }
+            }
+            break;
+        case 1:
+            //D
+            for (var i = 4; i < 5; i++) {
+                for (var j = 24; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_WHITE);
+                }
+            }
+            for (var i = 3; i < 6; i++) {
+                for (var j = 29; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_WHITE);
+                }
+            }
+            break;
+        case 1.5:
+            //D#
+            for (var i = 5; i < 7; i++) {
+                for (var j = 24; j < 29; j++) {
+                    PS.color(i, j, PS.COLOR_BLACK);
+                }
+            }
+            break;
+        case 2:
+            //E
+            for (var i = 7; i < 9; i++) {
+                for (var j = 24; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_WHITE);
+                }
+            }
+            for (var i = 6; i < 9; i++) {
+                for (var j = 29; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_WHITE);
+                }
+            }
+            break;
+        case 3:
+            //F
+            for (var i = 9; i < 11; i++) {
+                for (var j = 24; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_WHITE);
+                }
+            }
+            for (var i = 9; i < 12; i++) {
+                for (var j = 29; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_WHITE);
+                }
+            }
+            break;
+        case 3.5:
+            //F#
+            for (var i = 11; i < 13; i++) {
+                for (var j = 24; j < 29; j++) {
+                    PS.color(i, j, PS.COLOR_BLACK);
+                }
+            }
+            break;
+        case 4:
+            //G
+            for (var j = 24; j < 32; j++) {
+                PS.color(13, j, PS.COLOR_WHITE);
+            }
+            for (var i = 12; i < 15; i++) {
+                for (var j = 29; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_WHITE);
+                }
+            }
+            break;
+        case 4.5:
+            //G#
+            for (var i = 14; i < 16; i++) {
+                for (var j = 24; j < 29; j++) {
+                    PS.color(i, j, PS.COLOR_BLACK);
+                }
+            }
+            break;
+        case 5:
+            //A
+            for (var j = 24; j < 32; j++) {
+                PS.color(16, j, PS.COLOR_WHITE);
+            }
+            for (var i = 15; i < 18; i++) {
+                for (var j = 29; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_WHITE);
+                }
+            }
+            break;
+        case 5.5:
+            //A#
+            for (var i = 17; i < 19; i++) {
+                for (var j = 24; j < 29; j++) {
+                    PS.color(i, j, PS.COLOR_BLACK);
+                }
+            }
+            break;
+        case 6:
+            //B
+            for (var i = 19; i < 21; i++) {
+                for (var j = 24; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_WHITE);
+                }
+            }
+            for (var i = 18; i < 21; i++) {
+                for (var j = 29; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_WHITE);
+                }
+            }
 
+            break;
+        case 7:
+            //C
+            for (var i = 21; i < 24; i++) {
+                for (var j = 24; j < 32; j++) {
+                    PS.color(i, j, PS.COLOR_WHITE);
+                }
+            }
+            break;
+    }
 }
-
 
 ////////////////////////////////////////
 ////////////////////////////////////////
