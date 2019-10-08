@@ -53,29 +53,29 @@ along with the Perlenspiel devkit. If not, see <http://www.gnu.org/licenses/>.
 
 }
 
-let variables =  {
-    dataArray : [[], [], [], []],
-    arrayLoc : 0,
-    recordInfo : false,
-    currentTime : 0,
-    timer : null,
-    maxSeconds : 5000,
-    currentPlaybackIndex : 0,
-    playbackLength : [],
-    playbackIndicies : [],
-    maxLength : 0,
-    currentPlaybackTime : 0,
-    playingBack : false,
-    playbackTimer : null,
+let variables = {
+    dataArray: [[], [], [], []],
+    arrayLoc: 0,
+    recordInfo: false,
+    currentTime: 0,
+    timer: null,
+    maxSeconds: 5000,
+    currentPlaybackIndex: 0,
+    playbackLength: [],
+    playbackIndicies: [],
+    maxLength: 0,
+    currentPlaybackTime: 0,
+    playingBack: false,
+    playbackTimer: null,
 }
 
 PS.init = function (system, options) {
     "use strict";
 
-    PS.gridSize(15, 5);
+    PS.gridSize(32, 32);
     pianoSetup();
 
-    PS.statusText("Game");
+    PS.statusText("Shitty Garageband");
 };
 
 
@@ -536,7 +536,7 @@ function playbackSound() {
                     variables.playingBack = false;
                     variables.currentPlaybackTime = 0;
                     PS.statusText("FINISHED PLAYBACK");
-                   clearInterval(variables.playbackTimer)
+                    clearInterval(variables.playbackTimer)
                 }
             }
         }
@@ -555,71 +555,358 @@ function playbackSound() {
 }
 
 function pianoSetup() {
-    for (var i = 0; i < 13; i++) {
-        for (var j = 0; j < 3; j++) {
-            PS.visible(i, j, false)
+
+    PS.gridColor(PS.COLOR_GRAY)
+
+    for (var i = 0; i < 32; i++) {
+        for (var j = 24; j < 32; j++) {
+            PS.border(i, j, 0);
         }
     }
-    PS.visible(13, 4, false);
-    PS.gridColor(PS.COLOR_GRAY)
-    PS.color(1, 3, PS.COLOR_BLACK)
-    PS.color(3, 3, PS.COLOR_BLACK)
-    PS.color(6, 3, PS.COLOR_BLACK)
-    PS.color(8, 3, PS.COLOR_BLACK)
-    PS.color(10, 3, PS.COLOR_BLACK)
 
-    PS.color(13, 0, PS.COLOR_RED)
-    PS.color(14, 0, PS.COLOR_GREEN)
-    PS.color(13, 1, PS.COLOR_RED)
-    PS.color(14, 1, PS.COLOR_GREEN)
-    PS.color(13, 2, PS.COLOR_RED)
-    PS.color(14, 2, PS.COLOR_GREEN)
-    PS.color(13, 3, PS.COLOR_RED)
-    PS.color(14, 3, PS.COLOR_GREEN)
-    PS.color(14, 4, PS.COLOR_BLUE)
+    for (var i = 0; i < 32; i++) {
+        PS.visible(i, 23, false);
+        PS.border(i, 24, {
+            top: 2,
+            left: 0,
+            bottom: 0,
+            right: 0
+        });
+    }
+
+    for (var i = 29; i < 32; i++) {
+        PS.border(2, i, {
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 2
+        });
+        PS.border(5, i, {
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 2
+        });
+        PS.border(11, i, {
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 2
+        });
+        PS.border(14, i, {
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 2
+        });
+        PS.border(17, i, {
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 2
+        });
+    }
+
+    for (var i = 24; i < 32; i++) {
+        PS.border(8, i, {
+            right: 2
+        });
+        PS.border(20, i, {
+            right: 2
+        });
+        PS.border(23, i, {
+            right: 2
+        });
+
+    }
+
+    //C
+    for (var i = 0; i < 2; i++) {
+        for (var j = 24; j < 32; j++) {
+            PS.data(i, j, [0]);
+        }
+    }
+    for (var i = 29; i < 32; i++) {
+        PS.data(2, i, [0])
+    }
+
+    //C#
+    for (var i = 2; i < 4; i++) {
+        for (var j = 24; j < 29; j++) {
+            PS.color(i, j, PS.COLOR_BLACK);
+            PS.data(i, j, [.5]);
+        }
+    }
+
+    //D
+    for (var i = 4; i < 5; i++) {
+        for (var j = 24; j < 32; j++) {
+            PS.data(i, j, [1]);
+        }
+    }
+    for (var i = 3; i < 7; i++) {
+        for (var j = 29; j < 32; j++) {
+            PS.data(i, j, [1]);
+        }
+    }
+
+    //D#
+    for (var i = 5; i < 7; i++) {
+        for (var j = 24; j < 29; j++) {
+            PS.color(i, j, PS.COLOR_BLACK);
+            PS.data(i, j, [1.5]);
+        }
+    }
+
+    //E
+    for (var i = 7; i < 10; i++) {
+        for (var j = 24; j < 32; j++) {
+            PS.data(i, j, [2]);
+        }
+    }
+    for (var i = 6; i < 10; i++) {
+        for (var j = 29; j < 32; j++) {
+            PS.data(i, j, [2]);
+        }
+    }
+
+    //F
+    for (var i = 9; i < 12; i++) {
+        for (var j = 24; j < 32; j++) {
+            PS.data(i, j, [3]);
+        }
+    }
+    for (var i = 9; i < 14; i++) {
+        for (var j = 29; j < 32; j++) {
+            PS.data(i, j, [3]);
+        }
+    }
+
+    //F#
+    for (var i = 11; i < 13; i++) {
+        for (var j = 24; j < 29; j++) {
+            PS.color(i, j, PS.COLOR_BLACK);
+            PS.data(i, j, [3.5]);
+        }
+    }
+
+    //G
+    for (var j = 24; j < 32; j++) {
+        PS.data(13, j, [4]);
+    }
+    for (var i = 12; i < 15; i++) {
+        for (var j = 29; j < 32; j++) {
+            PS.data(i, j, [4]);
+        }
+    }
+
+    //G#
+    for (var i = 14; i < 16; i++) {
+        for (var j = 24; j < 29; j++) {
+            PS.color(i, j, PS.COLOR_BLACK);
+            PS.data(i, j, [4.5]);
+        }
+    }
+
+    //A
+    for (var j = 24; j < 32; j++) {
+        PS.data(16, j, [5]);
+    }
+    for (var i = 15; i < 18; i++) {
+        for (var j = 29; j < 32; j++) {
+            PS.data(i, j, [5]);
+        }
+    }
+
+    //A#
+    for (var i = 17; i < 19; i++) {
+        for (var j = 24; j < 29; j++) {
+            PS.color(i, j, PS.COLOR_BLACK);
+            PS.data(i, j, [5.5]);
+        }
+    }
+
+    //B
+    for (var i = 19; i < 21; i++) {
+        for (var j = 24; j < 32; j++) {
+            PS.data(i, j, [6]);
+        }
+    }
+    for (var i = 18; i < 21; i++) {
+        for (var j = 29; j < 32; j++) {
+            PS.data(i, j, [6]);
+        }
+    }
+
+    //C
+    for (var i = 21; i < 24; i++) {
+        for (var j = 24; j < 32; j++) {
+            PS.data(i, j, [7]);
+        }
+    }
+
+    PS.visible(24, 24, false);
+    PS.glyph(25, 24, "R");
+    PS.glyph(26, 24, "E");
+    PS.glyph(27, 24, "C");
+    PS.glyph(28, 24, "O");
+    PS.glyph(29, 24, "R");
+    PS.glyph(30, 24, "D");
+    PS.visible(31, 24, false);
+
+    for (var i = 24; i < 32; i++) {
+        for (var j = 25; j < 27; j++) {
+            PS.color(i, j, PS.COLOR_RED);
+        }
+    }
 
 
+    for (var j = 25; j < 27; j++) {
+        PS.border(25, j, { right: 1 });
+        PS.border(27, j, { right: 1 });
+        PS.border(29, j, { right: 1 });
+    }
 
-    //ASSIGNING BEAD NOTE DATA
-    PS.data(0, 3, [0]); //C
-    PS.data(0, 4, [0]); //C
-    PS.data(1, 4, [0]); //C
-    PS.data(1, 3, [.5]); //C#
-    PS.data(2, 3, [1]); //D
-    PS.data(2, 4, [1]); //D
-    PS.data(3, 3, [1.5]); //D#
-    PS.data(3, 4, [2]); //E
-    PS.data(4, 3, [2]); //E
-    PS.data(4, 4, [2]); //E
-    PS.data(5, 4, [3]); //F
-    PS.data(5, 3, [3]); //F
-    PS.data(6, 3, [3.5]); //F#
-    PS.data(6, 4, [4]); //G
-    PS.data(7, 3, [4]); //G
-    PS.data(7, 4, [4]); //G
-    PS.data(8, 3, [4.5]); //G#
-    PS.data(8, 4, [5]); //A
-    PS.data(9, 4, [5]); //A
-    PS.data(9, 3, [5]); //A
-    PS.data(10, 3, [5.5]); //A#
-    PS.data(10, 4, [6]); //B
-    PS.data(11, 3, [6]); //B
-    PS.data(11, 4, [6]);//B
-    PS.data(12, 3, [7]); //C
-    PS.data(12, 4, [7]); //C
 
-    //BEAD RECORD/PLAYBACK DATA
-    PS.data(13, 0, ["R1"]); //R1
-    PS.data(13, 1, ["R2"]); //R2
-    PS.data(13, 2, ["R3"]); //R3
-    PS.data(13, 3, ["R4"]); //R4
-    PS.data(14, 0, ["P1"]); //P1
-    PS.data(14, 1, ["P2"]); //P2
-    PS.data(14, 2, ["P3"]); //P3
-    PS.data(14, 3, ["P4"]); //P4
-    PS.data(14, 4, ["PALL"]); //PA
+    PS.visible(24, 27, false);
+    PS.glyph(25, 27, "T");
+    PS.glyph(26, 27, "R");
+    PS.glyph(27, 27, "A");
+    PS.glyph(28, 27, "C");
+    PS.glyph(29, 27, "K");
+    PS.glyph(30, 27, "S");
+    PS.visible(31, 27, false);
+
+    for (var i = 24; i < 32; i++) {
+        for (var j = 28; j < 30; j++) {
+            PS.color(i, j, PS.COLOR_GREEN);
+        }
+    }
+
+
+    for (var j = 28; j < 30; j++) {
+        PS.border(25, j, { right: 1 });
+        PS.border(27, j, { right: 1 });
+        PS.border(29, j, { right: 1 });
+    }
+
+
+    PS.visible(24, 30, false);
+    PS.visible(25, 30, false);
+    PS.glyph(26, 30, "P");
+    PS.glyph(27, 30, "L");
+    PS.glyph(28, 30, "A");
+    PS.glyph(29, 30, "Y");
+    PS.visible(30, 30, false);
+    PS.visible(31, 30, false);
+
+    for (var i = 24; i < 32; i++) {
+        for (var j = 31; j < 32; j++) {
+            PS.color(i, j, PS.COLOR_BLUE);
+            PS.data(i, j, ["PALL"]);
+        }
+    }
+
+
+    for (var j = 28; j < 30; j++) {
+        PS.border(25, j, { right: 1 });
+        PS.border(27, j, { right: 1 });
+        PS.border(29, j, { right: 1 });
+    }
+
+    //R1
+    for (var i = 24; i < 26; i++) {
+        for (var j = 25; j < 27; j++) {
+            PS.data(i, j, ["R1"]);
+        }
+    }
+
+    //R2
+    for (var i = 26; i < 28; i++) {
+        for (var j = 25; j < 27; j++) {
+            PS.data(i, j, ["R2"]);
+        }
+    }
+
+    //R3
+    for (var i = 28; i < 30; i++) {
+        for (var j = 25; j < 27; j++) {
+            PS.data(i, j, ["R3"]);
+        }
+    }
+
+    //R4
+    for (var i = 30; i < 32; i++) {
+        for (var j = 25; j < 27; j++) {
+            PS.data(i, j, ["R4"]);
+        }
+    }
+
+    //P1
+    for (var i = 24; i < 26; i++) {
+        for (var j = 28; j < 30; j++) {
+            PS.data(i, j, ["P1"]);
+        }
+    }
+
+    //P2
+    for (var i = 26; i < 28; i++) {
+        for (var j = 28; j < 30; j++) {
+            PS.data(i, j, ["P2"]);
+        }
+    }
+
+    //P3
+    for (var i = 28; i < 30; i++) {
+        for (var j = 28; j < 30; j++) {
+            PS.data(i, j, ["P3"]);
+        }
+    }
+
+    //P4
+    for (var i = 30; i < 32; i++) {
+        for (var j = 28; j < 30; j++) {
+            PS.data(i, j, ["P4"]);
+        }
+    }
+
 }
 
+function HighlightKey(data) {
+    switch (data) {
+        case 0:
+            break;
+        case 0.5:
+            break;
+        case 1:
+            break;
+        case 1.5:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 3.5:
+            break;
+        case 4:
+            break;
+        case 4.5:
+            break;
+        case 5:
+            break;
+        case 5.5:
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+
+    }
+}
+
+function RevertKey(data) {
+
+}
 
 
 ////////////////////////////////////////
@@ -631,7 +918,7 @@ function pianoSetup() {
 //LOAD SONG
 
 //SAVE SONG
-function saveTrack(){
+function saveTrack() {
     console.log("SAVING TRACK");
     console.log(variables.dataArray);
 }
