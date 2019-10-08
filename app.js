@@ -26,7 +26,8 @@ const express = require('express'),
 
 let currentUser = [],
     access_token = null,
-    refresh_token = null
+    refresh_token = null,
+    product = null
 
 app.use(favicon(__dirname + '/public/images/favicon.ico'))
 app.use(logger('dev'))
@@ -85,7 +86,7 @@ passport.use('local-login', new LocalStrategy(
     })
 )
 
-const generateRandomString = function (length) {
+const generateRandomString = function(length) {
     let text = '';
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -149,7 +150,7 @@ app.get('/callback', function (req, res) {
             json: true
         };
 
-        request.post(authOptions, function (error, response, body) {
+        request.post(authOptions, function(error, response, body) {
             if (!error && response.statusCode === 200) {
 
                 access_token = body.access_token
@@ -162,9 +163,11 @@ app.get('/callback', function (req, res) {
                 };
 
                 // use the access token to access the Spotify Web API
-                request.get(options, function (error, response, body) {
+                request.get(options, function(error, response, body) {
                     console.log(body);
-                    console.log('token = ' + access_token)
+                    //console.log("The Product is: " + body.product)
+                    product = body.product
+                    console.log('token = '+ access_token)
                 });
 
                 // we can also pass the token to the browser to make requests from there
@@ -189,7 +192,7 @@ app.get('/refresh_token', function (req, res) {
     var refresh_token = req.query.refresh_token;
     var authOptions = {
         url: 'https://accounts.spotify.com/api/token',
-        headers: {'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))},
+        headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
         form: {
             grant_type: 'refresh_token',
             refresh_token: refresh_token
@@ -217,6 +220,8 @@ app.get("/user", function (req, res) {
 app.get("/token", function (req, res) {
     const answerObj = {}
     answerObj.name = "token"
+    answerObj.name = "product"
+    answerObj.product = product
     answerObj.token = access_token
     res.send(JSON.stringify(answerObj))
 })

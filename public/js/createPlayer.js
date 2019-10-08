@@ -1,4 +1,5 @@
 // Set token
+window.onSpotifyWebPlaybackSDKReady = () => {};
 let _token
 
 (function getData() {
@@ -7,7 +8,13 @@ let _token
             method: 'GET'
         })
         _token = await rawResponse.json()
-        createPlayer(_token.token)
+        //checks to see if the user has premium to create the music player instance
+        //'open' means free account, 'premium' means premium account
+        if (_token.product === 'open') {
+            alert("Spotify Premium Account not detected: You can't play music but you can still recommend songs")
+        } else {
+            createPlayer(_token.token)
+        }
     })()
 })()
 
@@ -26,7 +33,18 @@ let player
 let playerData
 
 function createPlayer(_token) {
-    window.onSpotifyPlayerAPIReady = () => {
+    async function waitForSpotifyWebPlaybackSDKToLoad () {
+        return new Promise(resolve => {
+            if (window.Spotify) {
+                resolve(window.Spotify);
+            } else {
+                window.onSpotifyWebPlaybackSDKReady = () => {
+                    resolve(window.Spotify);
+                };
+            }
+        });
+    };
+    (async () => {
         console.log("inside player with " + _token)
         player = new Spotify.Player({
             name: 'Web Playback SDK Template',
@@ -58,29 +76,33 @@ function createPlayer(_token) {
 
         // Connect to the player!
         player.connect()
-    }
 
-    // Play a specified track on the Web Playback SDK's device ID
-    function getAudio(device_id) {
-        $.ajax({
-            url: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
-            type: "PUT",
-            data: '{"uris": ["spotify:track:5ya2gsaIhTkAuWYEMB0nw5"]}',
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('Authorization', 'Bearer ' + _token)
-            },
-            success: function (data) {
-                console.log(data)
-            }
-        })
-    }
-}
-function pause() {
-    player.pause().then(() => {
-        console.log('Paused!')
-    })
-}
+        // Play a specified track on the Web Playback SDK's device ID
+        function getAudio(device_id) {
+            $.ajax({
+                url: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
+                type: "PUT",
+                data: '{"uris": ["spotify:track:5ya2gsaIhTkAuWYEMB0nw5"]}',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + _token)
+                },
+                success: function (data) {
+                    console.log(data)
+                },
+                error: function(error){
+                    console.log(error.responseJSON.error.message)
+                }
+            })
+        }
 
-function play() {
-    getAudio(playerData.device_id)
+        function pause() {
+            player.pause().then(() => {
+                console.log('Paused!')
+            })
+        }
+
+        function play() {
+            getAudio(playerData.device_id)
+        }
+    })()
 }
