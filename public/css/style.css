@@ -93,11 +93,6 @@ hr {
     display: inline-block;
 }
 
-.nav-item-right {
-  position:absolute;
-  padding-left: 75%;
-}
-
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
     color: #ffffff;
     background-color: #74cfae;
