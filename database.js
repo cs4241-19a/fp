@@ -3,16 +3,10 @@
  * by Terry Hearst, Demi Karavoussianis, Kyle Reese, and Tom White
  */
 
- const http = require( 'http' ),
- Sequalize = require('sequelize'),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library used in the following line of code
-      mime = require( 'mime' ),
-      dir  = 'public/',
-      port = 3000
+ const Sequelize = require('sequelize');
 
 // Simple file based db using an ORM
-const sequelize = new Sequalize({
+const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: 'database.lite',
   pool: {
@@ -23,8 +17,8 @@ const sequelize = new Sequalize({
 }
 });
 
-class User extends Sequalize.Model{}
-class Task extends Sequalize.Model{}
+class User extends Sequelize.Model{}
+class Task extends Sequelize.Model{}
 
 //-------------
 //  Databases
@@ -33,68 +27,68 @@ class Task extends Sequalize.Model{}
 // Table model for the database
 User.init({
     id: {
-        type: Sequalize.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
     salt: {
-        type: Sequalize.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
     },
     hash: {
-     type: Sequalize.STRING,
+     type: Sequelize.STRING,
      allowNull: false,
     },
     username: {
-        type: Sequalize.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
     }
 },{sequelize: sequelize, modelName: 'user'});
 
 Task.init({
     id: {
-      type: Sequalize.INTEGER,
+      type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
     title: {
-        type: Sequalize.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
     },
     priority: {
-        type: Sequalize.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
     },
     completed: {
-        type: Sequalize.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         allowNull: false,
     },
     startTime: {
-        type: Sequalize.DATE,
+        type: Sequelize.DATE,
         allowNull: false,
     },
     dueDate: {
-        type: Sequalize.DATE,
+        type: Sequelize.DATE,
         allowNull: false,
     },
     uhoh: {
-        type: Sequalize.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         allowNull: false,
     },
     description: {
-        type: Sequalize.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
     },
     doLater: {
-        type: Sequalize.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         allowNull: false,
     }
 },{sequelize: sequelize, modelName: 'task'});
 
-User.sync().then(() => {
-  return User.create();
-});
+User.sync();
+Task.sync();
 
-Task.sync().then(() => {
-  return Task.create();
-});
+//-----------
+//  Helpers
+//-----------
+
