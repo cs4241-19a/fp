@@ -96,7 +96,6 @@ const generateRandomString = function (length) {
 };
 
 app.get("/", isLoggedIn, function (req, res) {
-    console.log("test")
     res.sendFile(__dirname + "/public/home.html")
 })
 app.get("/login", function (req, res) {
@@ -142,8 +141,6 @@ app.get('/callback', function (req, res) {
                 grant_type: 'authorization_code'
             },
             headers: {
-                //TODO: delete comment if possible
-                //'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
                 'Authorization': 'Basic ' + (Buffer.from(client_id + ':' + client_secret).toString('base64'))
             },
             json: true
@@ -247,18 +244,24 @@ app.get("/recommendation", function (req, res) {
                     const jaysawn = JSON.parse(JSON.stringify(element))
                     if (jaysawn.username == null)
                         console.log("null username")
-                    else if (jaysawn.tracknumber == null)
-                        console.log("null tracknumber")
+                    else if (jaysawn.songid == null)
+                        console.log("null songid")
                     else if (jaysawn.rating == null)
                         console.log("null rating")
                     else if (jaysawn.caption == null)
                         console.log("null caption")
+                    else if (jaysawn.songname == null)
+                        console.log("null songname")
+                    else if (jaysawn.artist == null)
+                        console.log("null artist")
                     else {
                         let entry = {
                             username: jaysawn.username,
-                            tracknumber: jaysawn.tracknumber,
+                            songid: jaysawn.songid,
                             rating: jaysawn.rating,
-                            caption: jaysawn.caption
+                            caption: jaysawn.caption,
+                            songname: jaysawn.songname,
+                            artist: jaysawn.artist
                         }
                         entries.push(entry)
                     }
@@ -288,10 +291,11 @@ app.post("/register", function (req, res) {
                 }
                 const db = client.db('MusicApp')
                 const collection = db.collection('user')
+                if (req.body.username === "badUsernameZQFMGB") return
                 collection.insertOne({
                     "username": req.body.username,
                     "password": hash
-                }).then(r => res.redirect("/"))
+                }).then(() => res.redirect("/"))
             })
         })
     })
@@ -310,17 +314,21 @@ app.post("/recommendation", function (req, res) {
             const collection = db.collection('recommendations')
             collection.insertOne({
                 "username": req.body.username,
-                "tracknumber": req.body.tracknumber,
+                "songid": req.body.songid,
                 "rating": req.body.rating,
-                "caption": req.body.caption
-            }).then(r => res.redirect("/"))
+                "caption": req.body.caption,
+                "songname": req.body.songname,
+                "artist": req.body.artist
+            }).then(() => {
+                // Uncomment the next line and comment the one after it to clear all recommendations
+                //collection.deleteMany({}).then(res.redirect("/"))
+                res.redirect("/");
+            })
         })
     })
 })
 
 function isLoggedIn(req, res, next) {
-    //TODO: delete comment if possible
-    //console.log(req.isAuthenticated())
     if (req.isAuthenticated())
         return next()
     res.redirect("/login")

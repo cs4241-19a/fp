@@ -1,6 +1,50 @@
 const MAXIMUM_ENTRIES_LOADED = 25
 const refreshBtn = document.getElementById("refresh-btn")
+const addRecBtn = document.getElementById("add-rec-btn")
 const list = document.getElementById("recommendation-list")
+const recText = document.getElementById("exampleFormControlTextarea2")
+let username = "badUsernameZQFMGB"
+
+const addRecommendation = function () {
+    let rating = -1;
+    if (document.getElementById("star5").checked) rating = 5;
+    else if (document.getElementById("star4").checked) rating = 4;
+    else if (document.getElementById("star3").checked) rating = 3;
+    else if (document.getElementById("star2").checked) rating = 2;
+    else if (document.getElementById("star1").checked) rating = 1;
+    else return false
+
+    if (rating === -1) return false
+    if (username === "badUsernameZQFMGB") return false
+    let songID = document.getElementById("secretSongID").innerHTML
+    if (songID === "-1") return
+    let songname = document.getElementById("secretSongName").innerHTML
+    if (songname === "-1") return
+    let artist = document.getElementById("secretArtist").innerHTML
+    if (artist === "-1") return
+    const newRecommendation = {
+        username: username,
+        songid: songID,
+        rating: rating,
+        caption: recText.value,
+        songname: songname,
+        artist: artist
+    }
+
+    const body = JSON.stringify(newRecommendation);
+    fetch("/recommendation", {
+        method: "POST",
+        body,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(() => {
+        document.getElementById("secretSongID").innerHTML = "-1"
+        document.getElementById("secretArtist").innerHTML = "-1"
+        document.getElementById("secretSongName").innerHTML = "-1"
+        getRecommendations()
+    })
+}
 
 const getData = function () {
     (async () => {
@@ -8,7 +52,9 @@ const getData = function () {
             method: 'GET'
         })
         let usr = await rawResponse.json()
-        document.getElementById("logoutLink").innerHTML = "Log out " + usr.user.username
+        username = usr.user.username
+        document.getElementById("secretUsername").innerHTML = username
+        document.getElementById("logoutLink").innerHTML = "Log out " + username
     })()
 }
 
@@ -31,32 +77,35 @@ const getRecommendations = function () {
                 `</div>`
         } else {
             list.innerHTML = ""
-            for (let i = 0; i < numEntries; i++) {
+            for (let i = numEntries - 1; i >= 0; i--) {
                 let element = res[i]
-                let songname = element.tracknumber //TODO: Replace with code getting song name from Spotify
+                let songid = element.songid
                 let username = element.username
                 let rating = element.rating
                 let caption = element.caption
+                let songname = element.songname
+                let artist = element.artist
 
-                if (isNaN(rating)) {
-                    console.log(rating + " - Rating not a number")
-                    rating = Math.floor((Math.random() * 5) + 1)
-                } else if (rating < 1) {
-                    console.log(rating + " - Rating too low")
-                    rating = 1
-                } else if (rating > 5) {
-                    console.log(rating + " - Rating too high")
-                    rating = 5
-                }
+                if (isNaN(rating) || rating < 1 || rating > 5) continue
 
-                list.innerHTML +=
+                let newRecommendation =
                     `<div class="card" id="recommendation${i}">\n` +
                     `   <div class="card-body">\n` +
-                    `      <h5 class="card-title">` + songname + `</h5>\n` +
-                    `      <p class="card-text">` + username + " rated this song " + rating + " out of 5" + `</p>\n` +
+                    `      <h5 class="card-title">` + username + " rated \"" + songname + "\" by " + artist + `</h5>\n` +
+                    `      <p class="card-text">`;
+
+                for (let j = 0; j < rating; j++)
+                    newRecommendation += `<img src="../images/fullstar.png" alt="Star"/>`
+                for (let j = rating; j < 5; j++)
+                    newRecommendation += `<img src="../images/emptystar.png" alt="Blank Star"/>`
+
+                newRecommendation += `</p>\n` +
                     `      <p class="card-text"><i>` + "\"" + caption + "\"" + `</i></p>\n` +
+                    `      <p class="invisible" id="songid${i}">` + songid + `</p>\n` +
                     `   </div>\n` +
                     `</div>`
+
+                list.innerHTML += newRecommendation
             }
         }
     })()
@@ -65,3 +114,4 @@ const getRecommendations = function () {
 getData()
 getRecommendations()
 refreshBtn.onclick = getRecommendations
+addRecBtn.onclick = addRecommendation
