@@ -91,6 +91,23 @@
         }
       ],
       "archive": []
+    },
+    {
+      "name": "hello",
+      "email": "hello@wpi.edu",
+      "password": "hello",
+      "availability": [
+        {
+          "sunday": [],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ],
+      "archive": []
     }
   ],
   "rooms": [
@@ -105,7 +122,8 @@
           "9:00",
           "10:00",
           "10:30",
-          "11:00"
+          "11:00",
+          "11:30"
         ],
         "monday": [
           "9:00",
@@ -180,7 +198,7 @@
       ]
     },
     {
-      "name": "Claude Monet",
+      "name": "Edvard Munch",
       "availability": [
         {
           "sunday": [],
@@ -192,5 +210,76 @@
           "saturday": []
         }
       ]
+    },
+    {
+      "name": "Henri Matisse",
+      "availability": [
+        {
+          "sunday": [],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ]
+    },
+    {
+      "name": "Michelangelo",
+      "availability": [
+        {
+          "sunday": [],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ]
+    },
+    {
+      "name": "Leonardo da Vinci",
+      "availability": [
+        {
+          "sunday": [],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ]
+    },
+    {
+      "name": "Vincent van Gogh",
+      "availability": [
+        {
+          "sunday": [],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ]
+    },
+    {
+      "name": "Pablo Picasso",
+      "availability": [
+        {
+          "sunday": [],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ]
+    }
   ]
 }
