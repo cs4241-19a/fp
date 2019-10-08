@@ -148,7 +148,12 @@ fetch('/getYou', {
     }
     const makeImg = function(row) {
         let img = createNode('img')
-        if (row.pic) img.src = row.pic
+        if (row.pic) {
+            img.src = row.pic
+            console.log(img.height, img.width)
+            img.style.height = '100px'
+            img.style.width = '150px'
+        }
         return img
     }
     const makeRow = function(row) {
