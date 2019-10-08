@@ -15,6 +15,7 @@ const SpotifyStrategy = require('passport-spotify').Strategy;
 const client_id = 'da70dd0556874f0189eb6c64543eef72';
 const client_secret = 'c11bdf5f5886434aac3b5dbe1f02984b';
 const redirect_uri = 'http://localhost:3000/callback';
+const maps_api = 'AIzaSyDK0xxnlwqYth2rGPCPZ5Erl3qAkzk23qc';
 
 let client_token = '',
     loggedIn = '';
@@ -156,6 +157,10 @@ app.get('/queueLen', function(req, res) {
 app.post('/delete', function(req, res) {
   db.get('queue').remove({id: req.body.id}).write();
   res.end('Deleted item');
+});
+
+app.get('/getMapsAPI', function(req, res) {
+  res.end(maps_api);
 });
 
 app.listen( process.env.PORT || port );

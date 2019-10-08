@@ -1,17 +1,29 @@
-let earth = null;
+let activeCountries = [];
 
 function init() {
-  earth = new WE.map('earth');
-  earth.setView([46.8011, 8.2266], 2);
-  WE.tileLayer('https://webglearth.github.io/webglearth2-offline/{z}/{x}/{y}.jpg', {
-    tileSize: 256,
-    bounds: [[-85, -180], [85, 180]],
-    minZoom: 0,
-    maxZoom: 16,
-    attribution: 'WebGLEarth example',
-    tms: true,
-  }).addTo(earth);
-  console.log('init earth');
+  $.get('/getMapsAPI', function(data) {
+    google.charts.load('current', {
+      'packages': ['geochart'],
+      'mapsApiKey': data,
+    }).then(() => {
+      google.charts.setOnLoadCallback(drawRegionsMap);
+    });
+  });
 }
 
-module.exports = {init};
+function mapSong(songData) {
+  activeCountries = []; // TODO - accessed via queue.q
+}
+
+function drawRegionsMap() {
+  const data = google.visualization.arrayToDataTable(activeCountries);
+
+  const options = {};
+
+  const chart = new google.visualization.GeoChart(
+      document.getElementById('map'));
+
+  chart.draw(data, options);
+}
+
+module.exports = {init, mapSong};

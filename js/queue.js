@@ -1,6 +1,7 @@
 let cooldown = 0;
 let user = null;
 let count = 0;
+const q = [];
 
 function search(e) {
   e.preventDefault();
@@ -43,11 +44,19 @@ function queue() {
         function(data, status) {
           if (status === 'success') {
             renderItem('queueTable', JSON.parse(data), user);
-            // addToQ(JSON.parse(data).spotify_uri);
+            addToQ(JSON.parse(data));
           }
         }
     );
   }
+}
+
+function addToQ(song) {
+  q[q.length] = {
+    name: song.name,
+    uri: song.uri,
+    countries: [], // TODO - get country stats from request
+  };
 }
 
 function deleteItem() {
@@ -112,13 +121,7 @@ function init() {
       document.getElementById('log-in-modal').style.display = 'block';
     }
   });
-  $.get('/queueLen', function(data) {
-    count=data;
-  });
-  $.get('/token', function(data) {
-    token=data;
-  });
   updateQueue();
 }
 
-module.exports = {init, search, queue, deleteItem};
+module.exports = {init, search, queue, deleteItem, q};

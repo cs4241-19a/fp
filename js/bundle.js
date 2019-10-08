@@ -1,21 +1,33 @@
 require=(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({"map":[function(require,module,exports){
-let earth = null;
+let activeCountries = [];
 
 function init() {
-  earth = new WE.map('earth');
-  earth.setView([46.8011, 8.2266], 2);
-  WE.tileLayer('https://webglearth.github.io/webglearth2-offline/{z}/{x}/{y}.jpg', {
-    tileSize: 256,
-    bounds: [[-85, -180], [85, 180]],
-    minZoom: 0,
-    maxZoom: 16,
-    attribution: 'WebGLEarth example',
-    tms: true,
-  }).addTo(earth);
-  console.log('init earth');
+  $.get('/getMapsAPI', function(data) {
+    google.charts.load('current', {
+      'packages': ['geochart'],
+      'mapsApiKey': data,
+    }).then(() => {
+      google.charts.setOnLoadCallback(drawRegionsMap);
+    });
+  });
 }
 
-module.exports = {init};
+function mapSong(songData) {
+  activeCountries = []; // TODO - accessed via queue.q
+}
+
+function drawRegionsMap() {
+  const data = google.visualization.arrayToDataTable(activeCountries);
+
+  const options = {};
+
+  const chart = new google.visualization.GeoChart(
+      document.getElementById('map'));
+
+  chart.draw(data, options);
+}
+
+module.exports = {init, mapSong};
 
 },{}],"player":[function(require,module,exports){
 // const play = ({
@@ -87,6 +99,7 @@ module.exports = {init};
 let cooldown = 0;
 let user = null;
 let count = 0;
+const q = [];
 
 function search(e) {
   e.preventDefault();
@@ -129,11 +142,19 @@ function queue() {
         function(data, status) {
           if (status === 'success') {
             renderItem('queueTable', JSON.parse(data), user);
-            // addToQ(JSON.parse(data).spotify_uri);
+            addToQ(JSON.parse(data));
           }
         }
     );
   }
+}
+
+function addToQ(song) {
+  q[q.length] = {
+    name: song.name,
+    uri: song.uri,
+    countries: [], // TODO - get country stats from request
+  };
 }
 
 function deleteItem() {
@@ -198,15 +219,9 @@ function init() {
       document.getElementById('log-in-modal').style.display = 'block';
     }
   });
-  $.get('/queueLen', function(data) {
-    count=data;
-  });
-  $.get('/token', function(data) {
-    token=data;
-  });
   updateQueue();
 }
 
-module.exports = {init, search, queue, deleteItem};
+module.exports = {init, search, queue, deleteItem, q};
 
 },{}]},{},[]);
