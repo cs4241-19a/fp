@@ -2,7 +2,7 @@
  * createAvailabilityTable()
  * Input: no input, fetches the selected room name from the form
  * Output: creates the availability table
-*/
+ */
 const createAvailabilityTable = async function () {
   try {
     document.getElementById('prebookingMsg').style.display = "none";
@@ -10,7 +10,7 @@ const createAvailabilityTable = async function () {
     const body = JSON.stringify({name: selected_room});
     const resp = await fetch('/specificRoomAvailability', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json'},
       body
     });
     const data = await resp.json();
@@ -19,24 +19,24 @@ const createAvailabilityTable = async function () {
     // change table label to requested room name
     document.getElementById('room-table-label').innerText = selected_room;
 
-    if (availability){
+    if (availability) {
       // get the table
       let htmlDiv = document.getElementById('room-avail-table');
 
       // build the header row
       htmlDiv.innerHTML = '<tr>\n' +
-        '              <thead class="thead-light"></thead>\n' +
-        '                <th role="columnheader" scope="col" style="text-align: center"></th>\n' +
-        '                <th role="columnheader" scope="col" style="text-align: center">Sunday</th>\n' +
-        '                <th role="columnheader" scope="col" style="text-align: center">Monday</th>\n' +
-        '                <th role="columnheader" scope="col" style="text-align: center">Tuesday</th>\n' +
-        '                <th role="columnheader" scope="col" style="text-align: center">Wednesday</th>\n' +
-        '                <th role="columnheader" scope="col" style="text-align: center">Thursday</th>\n' +
-        '                <th role="columnheader" scope="col" style="text-align: center">Friday</th>\n' +
-        '                <th role="columnheader" scope="col" style="text-align: center">Saturday</th>\n' +
-        '              </thead>' +
-        '            </tr>' +
-        '          <tbody>';
+          '              <thead class="thead-light"></thead>\n' +
+          '                <th role="columnheader" scope="col" style="text-align: center"></th>\n' +
+          '                <th role="columnheader" scope="col" style="text-align: center">Sunday</th>\n' +
+          '                <th role="columnheader" scope="col" style="text-align: center">Monday</th>\n' +
+          '                <th role="columnheader" scope="col" style="text-align: center">Tuesday</th>\n' +
+          '                <th role="columnheader" scope="col" style="text-align: center">Wednesday</th>\n' +
+          '                <th role="columnheader" scope="col" style="text-align: center">Thursday</th>\n' +
+          '                <th role="columnheader" scope="col" style="text-align: center">Friday</th>\n' +
+          '                <th role="columnheader" scope="col" style="text-align: center">Saturday</th>\n' +
+          '              </thead>' +
+          '            </tr>' +
+          '          <tbody>';
 
       //TODO: change military time to user friendly time
       for (let i = 9; i < 18; i++) {
@@ -65,7 +65,7 @@ async function fetchRoomAvailability(roomName) {
     const body = JSON.stringify({name: roomName});
     const resp = await fetch('/specificRoomAvailability', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json'},
       body
     });
     const data = await resp.json();
@@ -84,14 +84,14 @@ async function fetchRoomAvailability(roomName) {
 /**
  * helper for fetchRoomAvailability()
  */
-function createRow (availability, time, topHalf) {
+function createRow(availability, time, topHalf) {
   let newRow;
   if (topHalf) {
     newRow = '<tr style="border-bottom: thin dotted #ddd;">\n' +
-      `<th class="time" scope="row">${time}</th>`;
+        `<th class="time" scope="row">${time}</th>`;
   } else {
     newRow = '<tr>\n' +
-      `<th class="time" scope="row">${time}</th>`;
+        `<th class="time" scope="row">${time}</th>`;
   }
 
   if (availability.sunday.includes(time)) {
@@ -151,7 +151,7 @@ function createRow (availability, time, topHalf) {
  *      etc...
  *    }
  * Output: none
-*/
+ */
 function updateRoomAvailability(roomName, availability) {
   const newAvailability = {
     name: roomName,
@@ -161,7 +161,7 @@ function updateRoomAvailability(roomName, availability) {
   const body = JSON.stringify(newAvailability);
   fetch('/updateRoomAvailability', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {'Content-Type': 'application/json'},
     body
   }).then(function () {
   });
@@ -191,14 +191,14 @@ function populateTimeInput() {
 
   for (let i = 0; i < times.length; i++) {
     let option = document.createElement("OPTION"),
-      txt = document.createTextNode(times[i]);
+        txt = document.createTextNode(times[i]);
     option.appendChild(txt);
     option.setAttribute("value", times[i]);
     selectStartTime.insertBefore(option, selectStartTime.lastChild);
   }
 }
 
-const childDropDown = function(e) {
+const childDropDown = function (e) {
   e.preventDefault();
   let start_value = document.getElementById("selectStartTime").value;
   document.getElementById("selectChild").options.length = 0;
@@ -233,14 +233,14 @@ const childDropDown = function(e) {
 
   for (let i = start_loop; i < times.length; i++) {
     let option = document.createElement("OPTION"),
-      txt = document.createTextNode(times[i]);
+        txt = document.createTextNode(times[i]);
     option.appendChild(txt);
     option.setAttribute("value", times[i]);
     selectChild.insertBefore(option, selectChild.lastChild);
   }
 };
 
-const submitButtonClicked = function(e) {
+const submitButtonClicked = function (e) {
   e.preventDefault();
   let selected_room = document.getElementById('selectRoomName').value;
   let start_value;
@@ -255,13 +255,13 @@ const submitButtonClicked = function(e) {
   start_value = parseInt(start_value);// + 1;
   let end_hour = selectedEndTime[0];
   let end_minutes = selectedEndTime[1];
-  let halfHours = ["00","30"];
+  let halfHours = ["00", "30"];
   let times = [];
 
   let i, j, time;
 
-  for(i = start_value; i < end_hour; i++){
-    for(j = 0; j < 2; j++){
+  for (i = start_value; i < end_hour; i++) {
+    for (j = 0; j < 2; j++) {
       time = i + ":" + halfHours[j];
       times.push(time);
     }
@@ -269,14 +269,14 @@ const submitButtonClicked = function(e) {
   time = i + ":00";
   times.push(time);
   let start_loop = 0;
-  if(minutes == "30") {
+  if (minutes == "30") {
     start_loop = 1;
   }
   let out_put_times = [];
-  for(let i = start_loop; i < times.length; i++){
+  for (let i = start_loop; i < times.length; i++) {
     out_put_times.push(times[i])
   }
-  if(end_minutes == "30") {
+  if (end_minutes == "30") {
     out_put_times.push(selected_end_time);
   }
   out_put_times.pop();
@@ -300,7 +300,7 @@ const submitButtonClicked = function(e) {
 };
 
 async function sendEmail(room, startTime, endTime, day, emailList) {
-  try{
+  try {
     const body = JSON.stringify({
       from: 'meetingnotification.wpi@gmail.com',
       to: emailList.toString(),
@@ -310,7 +310,7 @@ async function sendEmail(room, startTime, endTime, day, emailList) {
     console.log(body);
     await fetch('/sendEmail', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json'},
       body
     });
   } catch {
@@ -322,7 +322,7 @@ async function buildAvailability(availability) {
   try {
     const roomAvail = await fetchRoomAvailability(availability.room);
     if (roomAvail) {
-      switch(availability.day) {
+      switch (availability.day) {
         case "Sunday":
           availability.times.forEach((time) => {
             roomAvail.sunday.push(time);
@@ -369,14 +369,30 @@ async function buildAvailability(availability) {
   }
 }
 
-const addEmail = function(e) {
-  e.preventDefault();
-  const emailList = document.getElementById('emailList');
-  emailList.innerHTML += '<input type="email" name="email" class="form-control emailRecipient mt-2"\n' +
-    '                     data-msg="Please enter a valid email">';
-};
 
-window.onload = function(){
+const addEmail = function (e) {
+  e.preventDefault();
+  $("#emailList").append('<input type="email" name="email" class="form-control emailRecipient mt-2"\n' +
+      '                     data-msg="Please enter a valid email">');
+  // let add = document.querySelector("#add-email");
+  // let div = document.querySelector("#emailList");
+  // add.addEventListener('click', function () {
+  //   let input = document.createElement('input');
+  //   // console.log(input);
+  //   input.type="email";
+  //   // input.name="email";
+  //   //input.className="form-control emailRecipient mt-2";
+  //   //input.data.msg="Please enter a valid email";
+  //    let test = '<input type="email" name="email" class="form-control emailRecipient mt-2"\n' +
+  //       '                     data-msg="Please enter a valid email">';
+  //   // console.log(input);
+  //   div.appendChild(input);
+}
+// const emailList = document.querySelectorAll('emailList');
+// emailList.innerHTML += '<input type="email" name="email" class="form-control emailRecipient mt-2"\n' +
+//   '                     data-msg="Please enter a valid email">';
+
+window.onload = function () {
   const selectedRoomInput = document.getElementById('selectRoomName');
   selectedRoomInput.onchange = createAvailabilityTable;
 

@@ -279,7 +279,9 @@
         "sunday": [],
         "monday": [],
         "tuesday": [],
-        "wednesday": [],
+        "wednesday": [
+          "12:30"
+        ],
         "thursday": [],
         "friday": [],
         "saturday": []
