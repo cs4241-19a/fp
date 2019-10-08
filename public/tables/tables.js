@@ -4,24 +4,20 @@ fetch('/getYou', {
 }).then(function(response) {
     return response.json();
 }).then(function(you) {
-    document.getElementById('logout').onclick = function(e) {
-        location.href = '../index.html'
-        e.preventDefault()
-        return false
-    }
-    document.getElementById('modify').onclick = function(e) {
-        location.href = '../modify/modify.html'
-        e.preventDefault()
-        return false
+    document.getElementById('handwritten').innerHTML = 'Welcome, ' + you.name + '!'
+    document.getElementById('goTop-btn').onclick = function() {
+        document.body.scrollTop = 0
+        document.documentElement.scrollTop = 0
     }
 
-    const table = document.getElementById('table');
-    const head = document.getElementById('theHead');
-    const greet = document.getElementById('greet');
+    const table = document.getElementById('table')
 
     const createNode = function(element) { return document.createElement(element) }
     const append = function(parent, el) { return parent.appendChild(el) }
     const makeHeadings = function() {
+        let thead = createNode('thead')
+        thead.className = 'thead-dark'
+
         let th1 = createNode('th');
         let th2 = createNode('th');
         let th3 = createNode('th');
@@ -29,13 +25,17 @@ fetch('/getYou', {
         let th5 = createNode('th');
         let th6 = createNode('th');
         let th7 = createNode('th');
-        th1.innerHTML = 'Name';
-        th2.innerHTML = 'Gender';
-        th3.innerHTML = 'Age';
-        th4.innerHTML = 'Hobby';
-        th5.innerHTML = 'Match Score';
-        th6.innerHTML = 'Likes';
-        th7.innerHTML = 'Dislikes';
+        let th8 = createNode('th');
+
+        th1.innerHTML = 'Picture'
+        th2.innerHTML = 'Name'
+        th3.innerHTML = 'Gender'
+        th4.innerHTML = 'Age'
+        th5.innerHTML = 'Hobby'
+        th6.innerHTML = 'Likes'
+        th7.innerHTML = 'Dislikes'
+        th8.innerHTML = 'Match Score'
+
         let tr = createNode('tr');
         append(tr, th1);
         append(tr, th2);
@@ -44,8 +44,10 @@ fetch('/getYou', {
         append(tr, th5);
         append(tr, th6);
         append(tr, th7);
-        append(table, tr);
-    };
+        append(tr, th8);
+        append(thead, tr)
+        append(table, thead)
+    }
 
     const makeGender = function(row) {
         let gender = createNode('i')
@@ -54,10 +56,7 @@ fetch('/getYou', {
         return gender
     }
 
-    greet.innerHTML = 'Hello ' + you.name + '!'
-
     const update = function(user) {
-        // console.log(user)
         fetch('/updateUser', {
             method: 'POST',
             body: JSON.stringify(user),
@@ -91,7 +90,7 @@ fetch('/getYou', {
     };
     const makeBomb = function(row) {
         let bomb = createNode('i');
-        if (head.innerHTML === 'Black List') bomb.className = 'fa fa-recycle';
+        if (document.title === 'Black List') bomb.className = 'fa fa-recycle';
         else bomb.className = 'fa fa-bomb';
 
         bomb.onclick = function(e) {
@@ -150,9 +149,8 @@ fetch('/getYou', {
         let img = createNode('img')
         if (row.pic) {
             img.src = row.pic
-                // console.log(img.height, img.width)
-            img.style.height = '100px'
-            img.style.width = '150px'
+            img.style.height = '80px'
+            img.style.width = '100px'
         }
         return img
     }
@@ -169,18 +167,18 @@ fetch('/getYou', {
         let td9 = createNode('th')
         let td10 = createNode('th')
 
-        td1.innerHTML = row.name;
-        append(td2, makeGender(row));
-        td3.innerHTML = row.age;
-        td4.innerHTML = row.hobby;
-        td5.innerHTML = calculateScore(row)
+        append(td1, makeImg(row))
+        td2.innerHTML = row.name
+        append(td3, makeGender(row))
+        td4.innerHTML = row.age
+        td5.innerHTML = row.hobby
         td6.innerHTML = row.likes + ' '
         append(td6, makeLike(row))
         td7.innerHTML = row.dislikes + ' '
         append(td7, makeDislike(row))
-        append(td8, makeHeart(row))
-        append(td9, makeBomb(row))
-        append(td10, makeImg(row))
+        td8.innerHTML = calculateScore(row)
+        append(td9, makeHeart(row))
+        append(td10, makeBomb(row))
 
         append(tr, td1)
         append(tr, td2)
@@ -207,11 +205,12 @@ fetch('/getYou', {
             makeHeadings()
             data.map(function(row) {
                 if (row.username !== you.username) {
-                    switch (head.innerHTML) {
+                    console.log(document.title)
+                    switch (document.title) {
                         case 'Overview':
                             if (!you.blackList.includes(row.username)) append(table, makeRow(row));
                             break;
-                        case 'Liked List':
+                        case 'Favorite':
                             if (you.likedList.includes(row.username)) append(table, makeRow(row));
                             break;
                         case 'Black List':

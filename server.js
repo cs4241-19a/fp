@@ -1,10 +1,9 @@
 // Setup
-const express = require('express');
-const app = express();
+const express = require('express')
+const app = express()
 
-const bodyParser = require('body-parser');
-app.use(express.static('public'));
-// app.use(bodyParser.json())
+const bodyParser = require('body-parser')
+app.use(express.static('public'))
 app.use(bodyParser.json({ limit: '10mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }))
 

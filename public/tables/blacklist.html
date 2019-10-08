@@ -11,37 +11,83 @@
     <!--  font awesome css  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
     <link href="tables.css" rel="stylesheet">
 
     <title>Black List</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <a href="overview.html" class="navbar-brand">Overview</a>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-        <div class="collapse navbar-collapse" id="navbarMenu">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="position: sticky" id="navbar">
+        <a class="navbar-brand" href="overview.html">Overview</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a href="liked.html" class="nav-link">Liked</a>
+                    <a class="nav-link" href="liked.html">Favorate</a>
                 </li>
                 <li class="nav-item">
-                    <a href="blacklist.html" class="nav-link">BlackList</a>
+                    <a class="nav-link" href="blacklist.html">Blacklist</a>
                 </li>
-                <button id="modify" class="btn"><i class="fa fa-edit"></i> Modify</button>
-                <button id="logout" class="btn"><i class="fa fa-sign-out"></i> Logout</button>
             </ul>
+            <a class="btn btn-info" href="/modify-profile.html">Modify Profile</a>
+            <a class="btn btn-primary" href="/profile.html">Profile</a>
+            <a class="btn btn-light" href="../index.html">Logout</a>
         </div>
     </nav>
-    <div class="left">
-        <h1 id="theHead">Black List</h1>
-        <table id="table"></table>
+    <div id='background'>
     </div>
-    <div class="right">
-        <h1 id="greet"></h1>
+
+    <div class="content">
+        <div id="namebox">Aquatic Tinder</div>
+        <div id="handwritten"></div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="avatar center-block"> </div>
+                <form id="add-form">
+                    <h3 id="form-title">Add a person to the table</h3>
+                    <div class="form-group">
+                        <label for="input-name">Name</label>
+                        <input type="text" class="form-control" id="input-name" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="input-birthday">Date of Birth</label>
+                        <input type="date" class="form-control" id="input-birthday">
+                    </div>
+                    <div class="form-group">
+                        <label for="select-major">Major</label>
+                        <select class="form-control" id="select-major">
+                                <!-- WIll be filled with addDropdownMajors() -->
+                            </select>
+                    </div>
+                    <button id='add-row-btn' type="submit" class="btn btn-primary center-block">Submit</button>
+                    <div id="modify-group">
+                        Modifying: <b id="modify-id">0</b>
+                        <div id="modify-btn-group">
+                            <button id='modify-row-btn' type="submit" class="btn btn-primary center-block">Confirm</button>
+                            <button id='cancel-modify-btn' type="submit" class="btn btn-warning center-block">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-9">
+                <table class="table table-striped" id="table"></table>
+
+            </div>
+        </div>
     </div>
+    <div id="footer">
+        <p><a href="https://cs4241-19a.github.io/">CS4241</a></p>
+        <p>&copy; 2019 - Rui & Percy & Zonglin</p>
+        <p><a href="https://github.com/PercyJiang/fp">Git Repo</a></p>
+    </div>
+    <!-- Go top -->
+    <button id="goTop-btn" type='button' class="btn btn-primary to-top"><i class="fa fa-arrow-up"></i></button>
 </body>
 
 <!--  JavaScript Plugins  -->
@@ -50,5 +96,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 <script src="tables.js"></script>
+
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/e7f87a436f.js" crossorigin="anonymous"></script>
 
 </html>
