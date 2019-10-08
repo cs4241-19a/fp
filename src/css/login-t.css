@@ -57,6 +57,11 @@ body {
     background-image: url("../media/soundcloudishLogin.png");
 }
 
+#musicPic {
+    background-image: url("../media/music.jpg");
+}
+
+
 #root {
     padding-left: 100px;
     padding-right: 100px;
