@@ -77,8 +77,7 @@ const getRecommendations = function () {
                 `</div>`
         } else {
             list.innerHTML = ""
-            for (let i = 0; i < numEntries; i++) {
-            //for (let i = numEntries - 1; i <= 0; i--) {
+            for (let i = numEntries - 1; i >= 0; i--) {
                 let element = res[i]
                 let songid = element.songid
                 let username = element.username
