@@ -117,8 +117,16 @@
       something["gameName"] = gameName;
       something["console"] = Console;
       something['genre'] = genre
-      $.get('/gameSearch', something, function(data) {
       clearTable(document.getElementById("table").rows.length)
+      $('#table').append('<tr><td style="text-align:center">Searching For Games, Please Wait</td></tr>')   
+      $('body').css('cursor', 'wait');
+      $.get('/gameSearch', something, function(data) {
+        $('body').css('cursor', 'default');
+      clearTable(document.getElementById("table").rows.length)
+      if(data.length === 0){
+        $('#table').append('<tr><td style="text-align:center">No Game Found</td></tr>')      
+        return
+      }
       data.forEach(function(car){
         if(jQuery.isEmptyObject(car))
           return

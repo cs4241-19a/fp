@@ -98,14 +98,25 @@
       something["gameName"] = gameName;
       something["console"] = Console;
       something['genre'] = genre
-      $.get('/requestSearch', something, function(data) {
       clearTable(document.getElementById("table").rows.length)
+      $('#table').append('<tr><td style="text-align:center">Searching For Games, Please Wait</td></tr>') 
+      $('body').css('cursor', 'wait');    
+      $.get('/requestSearch', something, function(data) {
+      $('body').css('cursor', 'default');
+      clearTable(document.getElementById("table").rows.length)
+      if(data.length === 0){
+        $('#table').append('<tr><td style="text-align:center">No Game Found</td></tr>')      
+        return
+      }
       data.forEach(function(car){
         if(jQuery.isEmptyObject(car))
           return
         let name = car.name
         console.log(car)
-        $('#table').append('<tr><td id=name>' + car.name +'</td><td><button onclick=request('+car.raw.id+')>Request</button></td></tr>')             
+        let image = ''
+        if(car.image != null)
+          image = car.image
+        $('#table').append('<tr><td><a href ='+image+'><img src='+image+' width="65" height="65"></img></a></td><td id=name>' + car.name +'</td><td><button onclick=request('+car.raw.id+')>Request</button></td></tr>')             
       })
     });
     jQuery.ready();
