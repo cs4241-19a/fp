@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, Typography, Avatar } from '@material-ui/core';
+import { Paper, Typography, Avatar, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
@@ -41,29 +41,68 @@ export default function FeedItem(props) {
     //     </div>
     // )
 
+
+    /*
+     * Styles - 
+     *  - Optimally, I'd like to have the 'view' btn be circular and maybe diff color
+     *  - View btn is aligned to left side of paper, and avatar to right
+     *  - Title of song is a good font and color. It would be nice to have the dash
+     *      and the artist a slightly lighter shade of gray
+     *  - The avatar can be the image for a user profile (we would need to add profile imgs
+     *      to the database) or maybe some rng color
+     *  - Uploaded by could be a lighter color, aybe italic? and indented
+     * 
+     *  -------------------------------------------------------------
+     *  |                                                            |
+     *  |        Title - Artist                                      |
+     *  |  oo                                                    oo  |
+     *  | oooo                                                  oooo |
+     *  |  oo                                                    oo  |
+     *  |               uploaded by username                         |
+     *  |                                                            |
+     *  -------------------------------------------------------------
+     * 
+     * 
+     * 
+     */
     const useStyles = makeStyles({
+        container: {
+            
+        },
         paper: {
+            display: 'flex',
+            flexDirection: 'row',
             padding: '10px 10px',
             borderRadius: '15px'
         },
         avatar: {
             margin: 10,
             backgroundColor: '#141115'
+        },
+        button: {
+            // margin: '1'
         }
     })
 
     const classes = useStyles();
 
     return (
-        <div>
+        <div className={classes.container}>
             <Paper className={classes.paper}>
-
-                <Typography variant="h5">
-                    Song - Artist
-                </Typography>
-                <Typography component="p">
-                    Uploaded by {user.name}
-                </Typography>
+                <Button
+                    variant="contained"
+                    className={classes.button}
+                    color="primary">
+                        View
+                </Button>
+                <div>
+                    <Typography variant="h5">
+                        {props.song.title} - {props.song.artist}
+                    </Typography>
+                    <Typography component="p">
+                        Uploaded by {props.user.username}
+                    </Typography>
+                </div>
                 <Avatar className={classes.avatar}>N</Avatar>
             </Paper>
         </div>
