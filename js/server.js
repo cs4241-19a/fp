@@ -106,7 +106,9 @@ app.get('/user', function(req, res){
 });
 
 app.get('/logout', function(req, res) {
+  loggedIn = '';
   req.session.destroy();
+  res.redirect('/');
 });
 
 app.get('/search', (req, res) => {

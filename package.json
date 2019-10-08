@@ -6,7 +6,7 @@
     "scripts": {
         "start": "npm-run-all lint browserify run",
         "lint": "eslint \"**/*.js\" --fix --ignore-pattern js/server.js --ignore-pattern node_modules/ --ignore-pattern /js/bundle.js",
-        "browserify": "browserify -r ./js/player.js:player -r ./js/queue.js:queue -o ./js/bundle.js",
+        "browserify": "browserify -r ./js/player.js:player -r ./js/queue.js:queue -r ./js/map.js:map -o ./js/bundle.js",
         "run": "node js/server.js"
     },
     "dependencies": {

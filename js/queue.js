@@ -1,9 +1,6 @@
 let cooldown = 0;
 let user = null;
 let count = 0;
-let token = null;
-const player = null;
-const queue = [];
 
 function logOut() {
   $.get('/logout', function(data, status) {
@@ -34,7 +31,7 @@ function search(e) {
   return false;
 }
 
-function enqueue() {
+function queue() {
   if (!cooldown) {
     cooldown = 1;
     setTimeout(function() {
@@ -87,7 +84,7 @@ function renderItem(table, item, user) {
   const time = min+':'+sec;
   if (table == 'searchTable') {
     document.getElementById(table).innerHTML +=
-        '<tr class=\'songItem\' id='+item.uri+' onclick="q.enqueue()">'+
+        '<tr class=\'songItem\' id='+item.uri+' onclick="q.queue()">'+
         '<td class=\'song\'>'+item.name+'</td><td class=\'artist\'>'+
         item.artists[0].name+'</td><td class=\'album\'>'+item.album.name+
         '</td><td class=\'length\'>'+time+'</td></tr>';
@@ -120,6 +117,8 @@ function init() {
     user=data;
     if (user) {
       document.getElementById('log-in-modal').style.display = 'none';
+    } else {
+      document.getElementById('log-in-modal').style.display = 'block';
     }
   });
   $.get('/queueLen', function(data) {
@@ -131,4 +130,4 @@ function init() {
   updateQueue();
 }
 
-module.exports = {init, logOut, search, enqueue, deleteItem};
+module.exports = {init, logOut, search, queue, deleteItem};

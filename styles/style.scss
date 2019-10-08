@@ -7,19 +7,10 @@ body {
 	background-color: map-get($colors, "background") !important;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-a,
-button,
-td,
-input[type=text] {
+h1, h2, h3, h4, h5, h6, p, a, button, td, input[type=text] {
 	color: map-get($colors, "text");
 	font-family: $font;
+	padding:0;
 }
 
 .log-in-modal {
@@ -43,10 +34,13 @@ input[type=text] {
 		padding: 20px;
 		border-radius: 30px;
 		width: 40%;
-		.log-in.btn {
+		.log-in.btn{
+			p{
+				margin: auto;
+			}
+			align-self: center;
 			display: flex;
 			flex-flow: column wrap;
-			align-self: center;
 			text-decoration: none;
 			align-content: center;
 			justify-content: center;
@@ -72,22 +66,22 @@ header {
 	h1 {
 		float: left;
 	}
-	button {
+	a p{
 		float: right;
+		display: flex;
+		flex-flow: column wrap;
+		align-self: center;
 		text-decoration: none;
+		align-content: center;
+		justify-content: center;
 		font-size: 18px;
 		height: 50px;
 		width: 80px;
 		border-radius: 30px;
-		border: none;
 		background-color: map-get($colors, "primary");
 		&:hover {
-			background-color: map-get($colors, "primary-hover");
-		}
-		&:active:focus,
-		&:focus {
-			outline: none;
-			box-shadow: none;
+			text-decoration: none;
+			background-color: map-get($colors, "primary-hover")
 		}
 	}
 }
@@ -102,9 +96,11 @@ main {
 		flex-wrap: wrap;
 		justify-content: space-around;
 	}
+	.earth{height: 35vh;}
+	.search{height: 75vh;}
+	.queue{height: 35vh}
 	.search,
 	.queue {
-		height: 600px;
 		margin-top: 50px;
 		padding: 20px;
 		.searchTop,
@@ -159,6 +155,7 @@ main {
 				margin-top: 10px;
 				width: 100%;
 				thead {
+					height: 30px;
 					td {
 						font-weight: bold;
 						text-align: center;
@@ -171,7 +168,7 @@ main {
 						text-align: center;
 						td {
 							text-align: center;
-							overflow: wrap;
+							overflow: auto;
 						}
 					}
 					tr:hover {

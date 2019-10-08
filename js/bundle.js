@@ -1,4 +1,23 @@
-require=(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({"player":[function(require,module,exports){
+require=(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({"map":[function(require,module,exports){
+let earth = null;
+
+function init() {
+  earth = new WE.map('earth');
+  earth.setView([46.8011, 8.2266], 2);
+  WE.tileLayer('https://webglearth.github.io/webglearth2-offline/{z}/{x}/{y}.jpg', {
+    tileSize: 256,
+    bounds: [[-85, -180], [85, 180]],
+    minZoom: 0,
+    maxZoom: 16,
+    attribution: 'WebGLEarth example',
+    tms: true,
+  }).addTo(earth);
+  console.log('init earth');
+}
+
+module.exports = {init};
+
+},{}],"player":[function(require,module,exports){
 // const play = ({
 //   spotify_uri,
 //   playerInstance: {
@@ -68,9 +87,6 @@ require=(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=
 let cooldown = 0;
 let user = null;
 let count = 0;
-let token = null;
-const player = null;
-const queue = [];
 
 function logOut() {
   $.get('/logout', function(data, status) {
@@ -101,7 +117,7 @@ function search(e) {
   return false;
 }
 
-function enqueue() {
+function queue() {
   if (!cooldown) {
     cooldown = 1;
     setTimeout(function() {
@@ -154,7 +170,7 @@ function renderItem(table, item, user) {
   const time = min+':'+sec;
   if (table == 'searchTable') {
     document.getElementById(table).innerHTML +=
-        '<tr class=\'songItem\' id='+item.uri+' onclick="q.enqueue()">'+
+        '<tr class=\'songItem\' id='+item.uri+' onclick="q.queue()">'+
         '<td class=\'song\'>'+item.name+'</td><td class=\'artist\'>'+
         item.artists[0].name+'</td><td class=\'album\'>'+item.album.name+
         '</td><td class=\'length\'>'+time+'</td></tr>';
@@ -187,6 +203,8 @@ function init() {
     user=data;
     if (user) {
       document.getElementById('log-in-modal').style.display = 'none';
+    } else {
+      document.getElementById('log-in-modal').style.display = 'block';
     }
   });
   $.get('/queueLen', function(data) {
@@ -198,6 +216,6 @@ function init() {
   updateQueue();
 }
 
-module.exports = {init, logOut, search, enqueue, deleteItem};
+module.exports = {init, logOut, search, queue, deleteItem};
 
 },{}]},{},[]);
