@@ -141,8 +141,10 @@ hr {
 }
 
 #hello h2 {
-    color: #c0c0c0;
-    font-weight: 400;
+    font-size: 90px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #74cfae;
 }
 
 /* Green */
@@ -507,10 +509,7 @@ html {
 }
 
 .form .dropDown {
-    padding-top: 10px;
-    padding-right: 12px;
-    padding-bottom: 10px;
-    padding-left: 12px;
+    padding: 15px 20px;
     width: 100%;
 }
 
@@ -519,7 +518,6 @@ html {
 }
 
 .bookForm {
-
     width: 50%;
     height: 100%;
     background-color: rgba(255, 255, 255, 0.1);
@@ -528,4 +526,29 @@ html {
     /*margin: auto;*/
     -webkit-box-shadow: 0 16px 22px -10px rgba(0, 0, 0, 0.1), 0 34px 55px 4px rgba(0, 0, 0, 0.05), 0 13px 66px 12px rgba(0, 0, 0, 0.07);
     box-shadow: 0 16px 22px -10px rgba(0, 0, 0, 0.1), 0 34px 55px 4px rgba(0, 0, 0, 0.05), 0 13px 66px 12px rgba(0, 0, 0, 0.07);
+}
+
+#room-avail-table .unavailable {
+    color: white;
+    border-right: 1px solid #fff;
+    background-color: #9c3400;
+    text-align: center;
+}
+
+#room-avail-table .time {
+    border-right: 1px solid #ddd;
+    text-align: right;
+}
+
+#add-email {
+    color: #5e5e5e;
+    text-align: start;
+    background-color: #f2f2f2;
+    padding: 15px;
+    font-size: 14px;
+    width: 100%;
+}
+
+#prebookingMsg {
+    text-align: center;
 }

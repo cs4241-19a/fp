@@ -32,7 +32,7 @@
 <!-- NAVIGATION BAR -->
 <div id="thenavbar" class="navbar navbar-default navbar-fixed-top">
   <div class="container row justify-content-center">
-    <div class="column col-12 col-lg-6 col-md-6 navbar-header">
+    <div class="column col-12 col-xl-6 col-lg-6 col-md-6 navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -54,20 +54,20 @@
 
 <!-- MAIN BODY -->
 <div id="hello">
-  <div class="container">
-    <div class="row">
+  <div class="container-fluid pr-5 pl-5 mr-auto ml-auto">
+    <div class="row justify-content-center">
       <!--     BOOKING FORM     -->
-      <div class="column col-4 bookForm">
+      <div class="column col-12 col-md-12 col-lg-3 col-xl-3 bookForm">
         <form class="account-form" role="form" action="/">
-          <h1 style="font-size: 36px; margin-bottom: 20px">Book A Room</h1>
+          <h1 style="font-size: 36px; margin-bottom: 20px; text-align: center;">Book A Room</h1>
           <!--     SELECT ROOM     -->
           <div class="form-group row">
             <div class="column col-12">
-                <label for="selectStartTime">Room Number</label>
+                <label for="selectStartTime">Room</label>
             </div>
             <div class="column col-12">
-                <select class="dropDown" id="selectRoomName">
-                    <option value="select">-- Select Room Number --</option>
+                <select class="dropDown custom-select" id="selectRoomName">
+                    <option value="select">-- Select Room --</option>
                     <option value="Room 1">Room 1</option>
                     <option value="Room 2">Room 2</option>
                     <option value="Room 3">Room 3</option>
@@ -80,7 +80,7 @@
               <label for="selectDay"> Day of Week </label>
             </div>
             <div class="column col-12">
-              <select class="dropDown" id="selectDay">
+              <select class="dropDown custom-select" id="selectDay">
                 <option value="select">-- Select Day of Week --</option>
                 <option value="Sunday">Sunday</option>
                 <option value="Monday">Monday</option>
@@ -98,7 +98,7 @@
                   <label for="selectStartTime">Start Time</label>
               </div>
               <div class="column col-12">
-                  <select class="dropDown" id="selectStartTime" onchange="childDropDown();">
+                  <select class="dropDown custom-select" id="selectStartTime" onchange="childDropDown();">
                       <option value="select">-- Select Start Time --</option>
                   </select>
               </div>
@@ -109,16 +109,31 @@
                   <label for="selectChild">End Time</label>
               </div>
               <div class="column col-12">
-                  <select class="dropDown" id="selectChild">
+                  <select class="dropDown custom-select" id="selectChild">
                       <option value="select">-- Select End Time --</option>
                   </select>
               </div>
           </div>
           <!--     SELECT EMAIL     -->
-          <div class="form-group">
-              <label for="emailList"> Email List </label>
-              <input type="email" name="email" class="form-control" id="emailList"
-                     placeholder="Email address to be notified" data-msg="Please enter a valid email">
+          <div class="form-group row">
+            <div class="column col-12">
+              <label for="email"> Email List </label>
+            </div>
+            <div class="column col-12" id="emailList">
+              <input type="email" name="email" class="form-control emailRecipient" id="email"
+                     data-msg="Please enter a valid email">
+            </div>
+            <div class="column col-12">
+              <small class="form-text text-muted">Invite meeting participants via email</small>
+            </div>
+            <div class="column col-12">
+              <div class="row">
+                <button class="btn" id="add-email">
+                  <span class="glyphicon glyphicon-plus-sign"></span>
+                  &nbsp;Add email
+                </button>
+              </div>
+            </div>
           </div>
           <br>
           <div class="form-send">
@@ -129,10 +144,11 @@
       </div>
 
       <!--     AVAILABILITY TABLE     -->
-      <div class="page column col-5">
-        <h3 id="room-table-label"></h3>
-        <div>
-          <table id="room-avail-table" class="table table-hover table-sm"></table>
+      <div class="page column col-12 col-xl-7 col-lg-7 col-md-12 ml-xl-5 ml-lg-3">
+        <h2 id="room-table-label" style="font-size: 36px; margin-bottom: 20px; text-align: center;"></h2>
+        <div class="table-responsive-sm table-responsive-lg table-responsive-xl">
+          <h2 id="prebookingMsg" style="font-size: 36px;">Select a room to begin booking.</h2>
+          <table id="room-avail-table" class="table table-sm table-hover"></table>
         </div>
       </div>
     </div>

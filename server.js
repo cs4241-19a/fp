@@ -6,7 +6,16 @@ const express = require( 'express' ),
     Local     = require( 'passport-local' ).Strategy,
     serveStatic = require('serve-static'),
     compression = require('compression'),
+    nodemailer = require('nodemailer'),
     port = 3000;
+
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'meetingnotification.wpi@gmail.com',
+    pass: 'meetingwpi1'
+  }
+});
 
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
@@ -168,5 +177,21 @@ app.post('/updateRoomAvailability', function (request, response) {
     response.writeHead( 200, "OK", {'Content-Type': 'application/json' });
     response.end();
 });
+
+app.post('/sendEmail', function (request, response) {
+  const mailToSend = request.body;
+  console.log(mailToSend);
+  sendMail(mailToSend);
+});
+
+function sendMail(mail) {
+  transporter.sendMail(mail, function(error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: '+ info.response);
+    }
+  });
+}
 
 app.listen( port );

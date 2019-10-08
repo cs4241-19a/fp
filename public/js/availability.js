@@ -4,8 +4,8 @@
  * Output: creates the availability table
 */
 const createAvailabilityTable = async function () {
-  console.log('hello');
   try {
+    document.getElementById('prebookingMsg').style.display = "none";
     let selected_room = document.getElementById('selectRoomName').value;
     const body = JSON.stringify({name: selected_room});
     const resp = await fetch('/specificRoomAvailability', {
@@ -16,7 +16,6 @@ const createAvailabilityTable = async function () {
     const data = await resp.json();
     const availability = data.data;
 
-    console.log('doing something');
     // change table label to requested room name
     document.getElementById('room-table-label').innerText = selected_room;
 
@@ -29,24 +28,24 @@ const createAvailabilityTable = async function () {
 
       // build the header row
       htmlDiv.innerHTML = '<tr>\n' +
-        '              <th role="columnheader" scope="col" style="background-color: #777777;text-align: center"></th>\n' +
-        '              <th role="columnheader" scope="col" style="background-color: #777777;text-align: center">Sunday</th>\n' +
-        '              <th role="columnheader" scope="col" style="background-color: #777777;text-align: center">Monday</th>\n' +
-        '              <th role="columnheader" scope="col" style="background-color: #777777;text-align: center">Tuesday</th>\n' +
-        '              <th role="columnheader" scope="col" style="background-color: #777777;text-align: center">Wednesday</th>\n' +
-        '              <th role="columnheader" scope="col" style="background-color: #777777;text-align: center">Thursday</th>\n' +
-        '              <th role="columnheader" scope="col" style="background-color: #777777;text-align: center">Friday</th>\n' +
-        '              <th role="columnheader" scope="col" style="background-color: #777777;text-align: center">Saturday</th>\n' +
+        '              <thead class="thead-light"></thead>\n' +
+        '                <th role="columnheader" scope="col" style="text-align: center"></th>\n' +
+        '                <th role="columnheader" scope="col" style="text-align: center">Sunday</th>\n' +
+        '                <th role="columnheader" scope="col" style="text-align: center">Monday</th>\n' +
+        '                <th role="columnheader" scope="col" style="text-align: center">Tuesday</th>\n' +
+        '                <th role="columnheader" scope="col" style="text-align: center">Wednesday</th>\n' +
+        '                <th role="columnheader" scope="col" style="text-align: center">Thursday</th>\n' +
+        '                <th role="columnheader" scope="col" style="text-align: center">Friday</th>\n' +
+        '                <th role="columnheader" scope="col" style="text-align: center">Saturday</th>\n' +
+        '              </thead>' +
         '            </tr>' +
-        '            <tbody>';
+        '          <tbody>';
 
       //TODO: change military time to user friendly time
       for (let i = 9; i < 18; i++) {
         // build each interval row
-        htmlDiv.innerHTML += createRow(availability, `${i}:00`);
-        // htmlDiv.innerHTML += createRow(availability[0], `${i}:15`);
-        htmlDiv.innerHTML += createRow(availability, `${i}:30`);
-        // htmlDiv.innerHTML += createRow(availability[0], `${i}:45`);
+        htmlDiv.innerHTML += createRow(availability, `${i}:00`, true);
+        htmlDiv.innerHTML += createRow(availability, `${i}:30`, false);
       }
 
       htmlDiv.innerHTML += '</tbody>';
@@ -74,14 +73,9 @@ async function fetchRoomAvailability(roomName) {
       body
     });
     const data = await resp.json();
-    console.log('data');
-    console.log(data);
     const roomAvailability = data.data;
-    console.log('roomAvailability');
-    console.log(roomAvailability);
 
     if (roomAvailability) {
-      // console.log(roomAvailability);
       return roomAvailability;
     } else {
       document.getElementById('room-avail').innerText = "Could not find room.";
@@ -94,52 +88,56 @@ async function fetchRoomAvailability(roomName) {
 /**
  * helper for fetchRoomAvailability()
  */
-function createRow (availability, time) {
-  let newRow = '<tr>\n' +
-    `<th scope="row">${time}</th>`;
-
-  // newRow += (`<!--<th scope="row" style="background-color: #777777"> ${time} </th>-->`);
+function createRow (availability, time, topHalf) {
+  let newRow;
+  if (topHalf) {
+    newRow = '<tr style="border-bottom: thin dotted #ddd;">\n' +
+      `<th class="time" scope="row">${time}</th>`;
+  } else {
+    newRow = '<tr>\n' +
+      `<th class="time" scope="row">${time}</th>`;
+  }
 
   if (availability.sunday.includes(time)) {
-    newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
+    newRow += (`<td class="unavailable">unavailable</td>\n`);
   } else {
-    newRow += (`<td style="background-color: #3C8268;"></td>\n`);
+    newRow += (`<td></td>\n`);
   }
 
   if (availability.monday.includes(time)) {
-    newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
+    newRow += (`<td class="unavailable">unavailable</td>\n`);
   } else {
-    newRow += (`<td style="background-color: #3C8268;"></td>\n`);
+    newRow += (`<td ></td>\n`);
   }
 
   if (availability.tuesday.includes(time)) {
-    newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
+    newRow += (`<td class="unavailable">unavailable</td>\n`);
   } else {
-    newRow += (`<td style="background-color: #3C8268;"></td>\n`);
+    newRow += (`<td ></td>\n`);
   }
 
   if (availability.wednesday.includes(time)) {
-    newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
+    newRow += (`<td class="unavailable">unavailable</td>\n`);
   } else {
-    newRow += (`<td style="background-color: #3C8268;"></td>\n`);
+    newRow += (`<td ></td>\n`);
   }
 
   if (availability.thursday.includes(time)) {
-    newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
+    newRow += (`<td class="unavailable">unavailable</td>\n`);
   } else {
-    newRow += (`<td style="background-color: #3C8268;"></td>\n`);
+    newRow += (`<td ></td>\n`);
   }
 
   if (availability.friday.includes(time)) {
-    newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
+    newRow += (`<td class="unavailable">unavailable</td>\n`);
   } else {
-    newRow += (`<td style="background-color: #3C8268;"></td>\n`);
+    newRow += (`<td ></td>\n`);
   }
 
   if (availability.saturday.includes(time)) {
-    newRow += (`<td style="background-color: #823E2F; color= white;">unavailable</td>\n`);
+    newRow += (`<td class="unavailable">unavailable</td>\n`);
   } else {
-    newRow += (`<td style="background-color: #3C8268;"></td>\n`);
+    newRow += (`<td ></td>\n`);
   }
 
   newRow += '</tr>';
@@ -159,7 +157,6 @@ function createRow (availability, time) {
  * Output: none
 */
 function updateRoomAvailability(roomName, availability) {
-  // e.preventDefault();
   const newAvailability = {
     name: roomName,
     availability: availability
@@ -171,8 +168,6 @@ function updateRoomAvailability(roomName, availability) {
     headers: { 'Content-Type': 'application/json' },
     body
   }).then(function () {
-    // fetchRoomList();
-    console.log('figure something out');
   });
 
 }
@@ -306,13 +301,40 @@ const submitButtonClicked = function(e) {
   };
   alert(selected_day + ":" + out_put_times);
 
-  buildAvailability(newAvailability).then(() => console.log('success'));
+  buildAvailability(newAvailability).then(() => console.log(''));
+
+  const emailList = document.querySelectorAll('.emailRecipient');
+  let emailAddresses = [];
+  emailList.forEach((email) => {
+    emailAddresses.push(email.value);
+  });
+  if (emailAddresses) {
+    sendEmail(selected_room, selected_start_time, selected_end_time, selected_day, emailAddresses).then(console.log());
+  }
 };
+
+async function sendEmail(room, startTime, endTime, day, emailList) {
+  try{
+    const body = JSON.stringify({
+      from: 'meetingnotification.wpi@gmail.com',
+      to: emailList.toString(),
+      subject: `Meeting created for ${day}`,
+      text: `You have been invited to a meeting in ${room} on ${day}. The room is booked from ${startTime} to ${endTime}.`
+    });
+    console.log(body);
+    // await fetch('/sendEmail', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body
+    // });
+  } catch {
+    console.log('error sending email');
+  }
+}
 
 async function buildAvailability(availability) {
   try {
     const roomAvail = await fetchRoomAvailability(availability.room);
-    console.log(roomAvail);
     if (roomAvail) {
       switch(availability.day) {
         case "Sunday":
@@ -361,6 +383,13 @@ async function buildAvailability(availability) {
   }
 }
 
+const addEmail = function(e) {
+  e.preventDefault();
+  const emailList = document.getElementById('emailList');
+  emailList.innerHTML += '<input type="email" name="email" class="form-control emailRecipient mt-2"\n' +
+    '                     data-msg="Please enter a valid email">';
+};
+
 window.onload = function(){
   const selectedRoomInput = document.getElementById('selectRoomName');
   selectedRoomInput.onchange = createAvailabilityTable;
@@ -371,6 +400,9 @@ window.onload = function(){
 
   const startTimeInput = document.getElementById('selectStartTime');
   startTimeInput.onchange = childDropDown;
+
+  const addEmailButton = document.getElementById('add-email');
+  addEmailButton.onclick = addEmail;
 };
 
 function main() {
