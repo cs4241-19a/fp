@@ -1,3 +1,35 @@
+const updatePlayer = function() {
+
+    // Add logic here for gamestate and/or score
+    const pObj = {
+        attack: 7,
+        crit: 0.11,
+        helpers: 0
+    };
+
+    const eObj = {
+        health: 70,
+        filepath: "../img/ganondorf.png",
+        tier: 2
+    };
+
+    const currentState = {
+        PlayerObj: pObj,
+        EnemyObj: eObj
+    };
+
+    const updatedUser = {
+        username: document.getElementById('current-username').value,
+        score: 100, // CHANGE HERE
+        gameState: currentState // CHANGE HERE
+    };
+
+    const body = JSON.stringify(updatedUser);
+    fetch( '/update', {
+        method:'POST',
+        body
+    })
+};
 
 const viewLeaderboard = function() {
     document.getElementById('table').style.display = "flex";
@@ -60,7 +92,7 @@ const login = function (e) {
         document.getElementById('main-container').style.display = "flex";
         document.getElementById('leaderboard-button').style.display = "flex";
         document.getElementById('login').style.display = "none";
-        viewGame();
+        document.getElementById('current-username').value = loginInfo.username;
     });
 };
 
