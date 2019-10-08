@@ -78,17 +78,16 @@ app.use(bodyparser.json());
 passport.use(new LocalStrategy(localStrategy));
 app.use(passport.initialize());
 
-const FileStore = require('session-file-store')(session);
-app.use(session({
-  genid: function(request){
-    return uuid();
-  },
-  store: new FileStore(),
-    secret: 'derps',
-    resave: false,
-    saveUninitialized: false
-}));
-//app.use(passport.session());
+//const FileStore = require('session-file-store')(session);
+//app.use(session({
+//  genid: function(request){
+//    return uuid();
+//  },
+//  store: new FileStore(),
+//    secret: 'derps',
+//    resave: false,
+//    saveUninitialized: false
+//}));
 app.use((req,res,next) => {
   if(jobCol !== null && msgCol !== null && userCol !== null && dataCol !== null) {
     next();
@@ -138,22 +137,21 @@ app.get('/userData', function(req, res) {
   });
 });
 
+app.get('/jobList', function(req, res) {
+  await jobCol.find({}).toArray().then(jobList => {
+    res.json(result);
+  });
+});
 
 
 // Passport authentication on login
-/*app.post('/login', passport.authenticate('local'),
-  function(req, res) {
-    res.json({status: true});
-  }
-);
-*/
-
 app.post('/login', 
     (req, res, next) => {
   console.log('Inside POST /login callback')
   
   passport.authenticate('local', (err, user, info) => {   
     req.login(user, (err) => {
+      // TODO get redirect to work
       return res.redirect('/');
     })
   })(req, res, next);
@@ -170,6 +168,7 @@ app.post('/toggle', function(req, res) {
   res.sendStatus(200);
 });
 
+// Admin job modifying
 app.post('/modify', function(req, res){
     const job = req.body;
     const date = new Date(req.body.date);
@@ -188,18 +187,26 @@ app.post('/modify', function(req, res){
     }
      
     job.jobCode = day + job.jobCode;
-    job.status = {completed: false, late: false, name: ""};
-    if(job.point == ""){
+    job.status = {completed: false, late: false, signoff: ''};
+    if(job.point === ''){
       job.point = 69;
     }
     console.log(job);
-    /*
-    jobCol.findOne({name:job}, function(err, jobFound){
+    
+    jobCol.findOne({jobCode: job.jobCode}, function(err, jobFound){
       if(err){return console.log(err)};
-      //if(!jobFound){collection.insertOne(job)}
+      if(!jobFound){jobCol.insertOne(job)}
+      else {
+        jobCol.updateOne({jobCode: job.jobCode}, 
+          {$set: {name: job.name,
+            date: job.date,
+            point: job.point,
+            status: job.status}})
+      }
+      res.sendFile(__dirname + '/public/views/admin.html');
     });
-    */
-})
+    
+});
 
 
 
