@@ -19,8 +19,10 @@ app.use(helmet());
 
 fs_service.init();
 
+//TODO: Set to main.html for testing purposes, change to login.html for prod 
+//behavior
 app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/dist/login.html');
+  response.sendFile(__dirname + '/dist/main.html');
 });
 
 

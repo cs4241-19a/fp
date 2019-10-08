@@ -1,20 +1,22 @@
 {
-    "Profile": 
+    "profile": 
     {
-        "User": {
-            "Name": "Bob",
-            "Username": "Bob277",
-            "Password": "123"
+        "user": {
+            "name": "Bob",
+            "username": "Bob277",
+            "password": "123"
             
         },
-        "Songs": [
+        "songs": [
             {
-            "Item-id": 1,
-            "Audio file": "aaa",
-            "uploaded": "09/20/2019",
-            "Visualizer-id": {
-                "Bar height": 200,
-                "Length": 10
+            "id": 1,
+            "title": "foo",
+            "artist": "foo",
+            "file": "aaa",
+            "date": "09/20/2019 00:00:00",
+            "vis": {
+                "height": 200,
+                "length": 10
             }
             }
         ]

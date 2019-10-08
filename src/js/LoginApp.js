@@ -38,8 +38,8 @@ export default function LoginApp(props) {
 
 	function login() {
 
-		//TODO: fetch calls subject to change depending on server, auth
-
+		//TODO: All the fetch calls and communications with the server
+		//should be done in the store and change state only
 		const json = {
 			username: name,
 			password: pwd
