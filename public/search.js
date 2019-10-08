@@ -34,6 +34,8 @@ $('#scrollable-table').on('click', 'tbody tr', function(event) {
     let artistName = $(this).find('td:eq(1)').html();
     let idNumber = $(this).find('td:eq(2)').html();
     document.getElementById("secretSongID").innerHTML = idNumber
+    document.getElementById("secretArtist").innerHTML = artistName
+    document.getElementById("secretSongName").innerHTML = songName
     console.log("currently selected song: " + songName + "\n\t\t" +
         "artist: " + artistName + "\n\t\t" +
         "id: " + idNumber + "\n\t\t" )

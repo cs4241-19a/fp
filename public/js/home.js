@@ -18,11 +18,17 @@ const addRecommendation = function () {
     if (username === "badUsernameZQFMGB") return false
     let songID = document.getElementById("secretSongID").innerHTML
     if (songID === "-1") return
+    let songname = document.getElementById("secretSongName").innerHTML
+    if (songname === "-1") return
+    let artist = document.getElementById("secretArtist").innerHTML
+    if (artist === "-1") return
     const newRecommendation = {
         username: username,
-        tracknumber: songID,
+        songid: songID,
         rating: rating,
-        caption: recText.value
+        caption: recText.value,
+        songname: songname,
+        artist: artist
     }
 
     const body = JSON.stringify(newRecommendation);
@@ -32,7 +38,12 @@ const addRecommendation = function () {
         headers: {
             'Content-Type': 'application/json'
         }
-    }).then(getRecommendations)
+    }).then(() => {
+        document.getElementById("secretSongID").innerHTML = "-1"
+        document.getElementById("secretArtist").innerHTML = "-1"
+        document.getElementById("secretSongName").innerHTML = "-1"
+        getRecommendations()
+    })
 }
 
 const getData = function () {
@@ -67,29 +78,24 @@ const getRecommendations = function () {
         } else {
             list.innerHTML = ""
             for (let i = 0; i < numEntries; i++) {
+            //for (let i = numEntries - 1; i <= 0; i--) {
                 let element = res[i]
-                let songname = element.tracknumber //TODO: Replace with code getting song name from Spotify
+                let songid = element.songid
                 let username = element.username
                 let rating = element.rating
                 let caption = element.caption
+                let songname = element.songname
+                let artist = element.artist
 
-                if (isNaN(rating)) {
-                    //console.log(rating + " - Rating not a number")
-                    rating = Math.floor((Math.random() * 5) + 1)
-                } else if (rating < 1) {
-                    //console.log(rating + " - Rating too low")
-                    rating = 1
-                } else if (rating > 5) {
-                    //console.log(rating + " - Rating too high")
-                    rating = 5
-                }
+                if (isNaN(rating) || rating < 1 || rating > 5) continue
 
                 list.innerHTML +=
                     `<div class="card" id="recommendation${i}">\n` +
                     `   <div class="card-body">\n` +
-                    `      <h5 class="card-title">` + songname + `</h5>\n` +
+                    `      <h5 class="card-title">` + "\"" + songname + "\" by " + artist + `</h5>\n` +
                     `      <p class="card-text">` + username + " rated this song " + rating + " out of 5" + `</p>\n` +
                     `      <p class="card-text"><i>` + "\"" + caption + "\"" + `</i></p>\n` +
+                    `      <p class="invisible" id="songid${i}">` + songid + `</p>\n` +
                     `   </div>\n` +
                     `</div>`
             }

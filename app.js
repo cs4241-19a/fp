@@ -245,18 +245,24 @@ app.get("/recommendation", function (req, res) {
                     const jaysawn = JSON.parse(JSON.stringify(element))
                     if (jaysawn.username == null)
                         console.log("null username")
-                    else if (jaysawn.tracknumber == null)
-                        console.log("null tracknumber")
+                    else if (jaysawn.songid == null)
+                        console.log("null songid")
                     else if (jaysawn.rating == null)
                         console.log("null rating")
                     else if (jaysawn.caption == null)
                         console.log("null caption")
+                    else if (jaysawn.songname == null)
+                        console.log("null songname")
+                    else if (jaysawn.artist == null)
+                        console.log("null artist")
                     else {
                         let entry = {
                             username: jaysawn.username,
-                            tracknumber: jaysawn.tracknumber,
+                            songid: jaysawn.songid,
                             rating: jaysawn.rating,
-                            caption: jaysawn.caption
+                            caption: jaysawn.caption,
+                            songname: jaysawn.songname,
+                            artist: jaysawn.artist
                         }
                         entries.push(entry)
                     }
@@ -309,10 +315,14 @@ app.post("/recommendation", function (req, res) {
             const collection = db.collection('recommendations')
             collection.insertOne({
                 "username": req.body.username,
-                "tracknumber": req.body.tracknumber,
+                "songid": req.body.songid,
                 "rating": req.body.rating,
-                "caption": req.body.caption
+                "caption": req.body.caption,
+                "songname": req.body.songname,
+                "artist": req.body.artist
             }).then(() => {
+                // Uncomment the next line and comment the one after it to clear all recommendations
+                //collection.deleteMany({}).then(res.redirect("/"))
                 res.redirect("/");
             })
         })
