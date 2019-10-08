@@ -105,16 +105,6 @@ router.post('/create', function (req, res) {
   }).catch(e => {
     console.log(e)
   })
-
-  // if (!dbUserExists(username)) {
-  //   dbUserAdd(username, password);
-  //   res.cookie('username', username);
-  //   res.send("OK")
-  //  // res.redirect("/index?alert=Account+created");
-  // } else {
-  //   res.send("BAD")
-  //  // res.redirect("/?alert=Username+taken");
-  // }
 })
 
 router.post('/login', function (req, res) {
