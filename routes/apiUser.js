@@ -131,9 +131,9 @@ router.post('/login', function (req, res) {
   
   var loginSuccess = false
 
-dbUserAuthenticate(username, password).then(function(value) {
-  console.log(value);
-});
+  dbUserAuthenticate(username, password).then(function(value) {
+    console.log("this is the value: " + value);
+  });
   
   if (loginSuccess) {
     res.cookie('username', username);
