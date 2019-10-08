@@ -89,8 +89,13 @@ hr {
 }
 
 .navbar-nav {
-    width: 50%;
-    display:inline
+    width: 100%;
+    display: inline-block;
+}
+
+.nav-item-right {
+  position:absolute;
+  padding-left: 75%;
 }
 
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
@@ -391,7 +396,6 @@ html {
     -webkit-box-sizing: inherit;
     box-sizing: inherit;
 }
-
 
 .page {
     -webkit-box-orient: vertical;
