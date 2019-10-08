@@ -1,56 +1,10 @@
   
-  let count = 0;
-  document.getElementById("editScreen").style.display = "none"
+ let count = 0;
+ document.getElementById("editScreen").style.display = "none"
  let localAppData = []
  let currentUser = ""
  var loaded = 0
- 
- 
- function langFinder(str){
-   switch(str){
-     case "en-sq":
-       return "Albanian"
-       break;
-    case "en-hy":
-       return "Armenian"
-       break;
-    case "en-ar":
-       return "Arabic"
-       break;
-    case "en-bg":
-       return "Bulgarian"
-       break;
-    case "en-zh":
-       return "Chinese"
-       break;
-    case "en-nl":
-       return "Dutch"
-       break;
-    case "en-el":
-       return "Greek"
-       break;
-    case "en-ka":
-       return "Georgian"
-       break;
-    case "en-de":
-       return "German"
-       break;
-    case "en-it":
-       return "Italian"
-       break;
-    case "en-es":
-       return "Spanish"
-       break;
-    case "en-pl":
-       return "Polish"
-       break;
-    case "en-ru":
-       return "Russian"
-       break; 
-   }
- }
 
-    
   const submit = function( e ) {
     // prevent default form action from being carried out
     e.preventDefault()

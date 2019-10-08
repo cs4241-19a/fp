@@ -2,10 +2,8 @@
 
 function logIn(){
     location.href='/index'
-    /*
     let username = document.querySelector( '#username' )
     let password = document.querySelector( '#password' )
-    //send session info here
     let json = { username: username.value, password: password.value}
     let URL = "username=" +username.value +  "&password=" + password.value
   
@@ -32,12 +30,11 @@ function logIn(){
            //document.getElementById("baddy").style.display = "inline"
           }
     })
-    */
   }
   
   
   window.onload = function() {
       const button = document.getElementById( 'loginButton' )
-      button.onclick = logIn
+      button.onclick = logIn()
     }
   
