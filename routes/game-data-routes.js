@@ -25,10 +25,12 @@ gameDataRouter.post("/:gameId", function(req, res) {
  * Send back json of all scores.
  * @author: jk
  */
-gameDataRouter.get("/:gameId/scores", async function(req, res) {
+gameDataRouter.post("/:gameId/scores", async function(req, res) {
+    const data = req.body;
     console.log("Getting score data");
     console.log(req.params.gameId);
-    res.json(await pull.getGameScores(req.params.gameId));
+    console.log(data);
+    res.json(await pull.getGameScores(req.params.gameId, data.orderDir));
 });
 
 module.exports = gameDataRouter;

@@ -22,6 +22,7 @@ async function getGames() {
                     imgPath: data.imgPath,
                     playCount: data.timesPlayed,
                     gameId: doc.id,
+                    scoreOrder: data.scoreOrder,
                 };
 
             });
@@ -51,6 +52,7 @@ async function getGame(gameId) {
                 imgPath: data.imgPath,
                 playCount: data.timesPlayed,
                 gameId: snapshot.id,
+                scoreOrder: data.scoreOrder,
             };
         })
         .catch(err => {
@@ -62,9 +64,13 @@ async function getGame(gameId) {
  * Get the game scores for the given game.
  * @author: jk
  * @param {string} gameId The id of the game to get.
+ * @param {string} orderDir Direction to order. Either asc or desc. Defaults to asc.
  */
-async function getGameScores(gameId) {
-    const scoresQuery = db.collection(`games/${gameId}/scores`).orderBy("score", "desc");
+async function getGameScores(gameId, orderDir) {
+    if (orderDir !== "asc" || orderDir !== "desc") {
+        orderDir = "desc";
+    }
+    const scoresQuery = db.collection(`games/${gameId}/scores`).orderBy("score", orderDir);
     return Promise.all(await scoresQuery.get()
         .then(snapshot => {
             return snapshot.docs.map(async function(doc) {
@@ -123,6 +129,7 @@ function getGameDropdownData(games) {
             name: data.name,
             shortDesc: data.shortDesc,
             gameId: data.gameId,
+            scoreOrder: data.scoreOrder,
         };
     }).sort((a, b) => (a.name > b.name) ? 1 : -1);
 }

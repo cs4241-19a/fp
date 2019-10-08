@@ -1,22 +1,15 @@
 <div class="container">
-    <h1>Luck</h1>
+    <h1>BRICK DESTROYER!</h1>
     <div id="game-area"></div>
 </div>
 
-{{#section "js"}}
+{{#section 'js'}}
     <script src="/scripts/phaser/dist/phaser.js"></script>
-    <script src="/js/luck/main.js"></script>
+    <script src="/js/bdest/main.js"></script>
 {{/section}}
 
 {{#> layouts/modal-layout type="gameScore" title="Submit Score" submitText="Submit" }}
     {{#*inline "form-content"}}
         {{> includes/game-submit-default }}
-    {{/inline}}
-{{/layouts/modal-layout}}
-
-<!-- The help modal -->
-{{#> layouts/modal-layout type="help" title="Luck Help" }}
-    {{#*inline "form-content"}}
-        {{> includes/help/luck }}
     {{/inline}}
 {{/layouts/modal-layout}}
