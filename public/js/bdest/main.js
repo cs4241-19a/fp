@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 
 /* Value to configurable information about the current board */
@@ -16,6 +16,7 @@ let board = {
         this.bricksLeft = 1;
         // Current board configuration
         this.rowConfiguration = ["r_bar", "o_bar", "o_bar", "y_bar", "y_bar"];
+        this.over = false;  // means the game is over
     }
 };
 
@@ -38,7 +39,7 @@ let config = {
 
 let game = new Phaser.Game(config);
 
-const path = "/assets/bdest/"
+const path = "/assets/bdest/";
 let input;
 let ball;
 let paddle;
@@ -92,8 +93,8 @@ function create() {
     board.bricksLeft = bricks.length;
 
     // Add score HUD
-    scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
-    livesText = this.add.text(400, 16, 'Lives: 5', { fontSize: '32px', fill: '#fff' });
+    scoreText = this.add.text(16, 16, 'Score: ' + board.score, { fontSize: '32px', fill: '#fff' });
+    livesText = this.add.text(400, 16, 'Lives: ' + board.lives, { fontSize: '32px', fill: '#fff' });
     gameOverText = this.add.text(85, 400, 'GAME OVER', { fontSize: '64px', fill: '#fff' });
     gameOverText.setVisible(false);
     startingText = this.add.text(60, 600, 'Press the space bar to serve!', { fontSize: '32px', fill: '#fff' });
@@ -103,7 +104,8 @@ function update() {
     let paddleActions = onKeyPress.bind(this);
     paddleActions();
 
-    if (board.lives === 0) {
+    if (board.lives === 0 && !board.over) {
+        board.over = true;
         gameOverText.setVisible(true);
         startingText.setVisible(true);
         submitScore();
@@ -224,11 +226,11 @@ function Brick(bricks, color) {
 /***
  * Callback to handle the collision between the ball and paddle.
  * @param {Phaser.GameObjects.GameObject} ball - The ball
- * @param {Phaser.GameObects.GameObject} paddle - The paddle
+ * @param {Phaser.GameObjects.GameObject} paddle - The paddle
  */
 function collisionWithBall(ball, paddle) {
     /* The paddle should stay where it is */
-    let currentVelocity = Math.sqrt(board.ballVelX ** 2 + board.ballVelY ** 2)
+    let currentVelocity = Math.sqrt(board.ballVelX ** 2 + board.ballVelY ** 2);
     /* Get the angle from the center of the center of the paddle to the ball */
     let reflectionAngle = Math.atan(Math.abs(ball.y - paddle.y) / Math.abs(paddle.x - ball.x));
 
@@ -258,6 +260,7 @@ function barCollision(ball, brick) {
  */
 function resetBoard() {
     board.active = true;
+    board.over = false;
 
     resetBricks(bricks);
 
