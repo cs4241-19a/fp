@@ -60,7 +60,8 @@ along with the Perlenspiel devkit. If not, see <http://www.gnu.org/licenses/>.
 //VARIABLE OBJECT
 
 let variables = {
-    dataArray: [[], [], [], []],
+    //FOUR TRACKS FOR EACH INSTRUMENT
+    dataArray: [[], [], [], [], [], [], [], [], [], [], [], []],
     arrayLoc: 0,
     recordInfo: false,
     currentTime: 0,
@@ -76,6 +77,7 @@ let variables = {
     playbackTimer: null,
     countdownTimerCount: 3,
     countdownTimer: null,
+    guitarFiles: [],
 
 }
 
@@ -90,8 +92,11 @@ PS.init = function (system, options) {
 
     variables.timeRemaining = variables.maxSeconds;
 
+    loadGuitarAudio();
+
     PS.gridSize(32, 32);
     PS.gridColor(PS.COLOR_GRAY)
+    PS.borderColor(PS.ALL, PS.ALL, PS.COLOR_BLACK)
 
     pianoSetup();
 
@@ -111,7 +116,10 @@ PS.touch = function (x, y, data, options) {
         recordData({ x: x, y: y, data: data[0] }, variables.currentTime);
     }
 
-    switch (data[0]) {
+    playAudio(data[0]);
+
+    {/* switch (data[0]) {
+        //PIANO
         case 0:
             PS.audioPlay(PS.piano(44, false));
             break;
@@ -192,11 +200,247 @@ PS.touch = function (x, y, data, options) {
             break;
         case "PALL":
             if (!variables.playingBack) {
-                playBackData(null);
+                playBackData("PIANO");
             }
             break;
-
-    }
+        //DRUMS
+        case 8:
+            PS.audioPlay("perc_drum_bass");
+            break;
+        case 9:
+            PS.audioPlay("perc_drum_snare");
+            break;
+        case 10:
+            PS.audioPlay("perc_drum_tom1");
+            break;
+        case 11:
+            PS.audioPlay("perc_drum_tom2");
+            break;
+        case 12:
+            PS.audioPlay("perc_drum_tom3");
+            break;
+        case 13:
+            PS.audioPlay("perc_drum_tom4");
+            break;
+        case 14:
+            PS.audioPlay("perc_hihat_closed");
+            break;
+        case 15:
+            PS.audioPlay("perc_hihat_open");
+            break;
+        case 16:
+            PS.audioPlay("perc_hihat_pedal");
+            break;
+        case 17:
+            PS.audioPlay("perc_cymbal_crash1");
+            break;
+        case 18:
+            PS.audioPlay("perc_cymbal_crash2");
+            break;
+        case 19:
+            PS.audioPlay("perc_cymbal_crash3");
+            break;
+        case 20:
+            PS.audioPlay("perc_cymbal_crash4");
+            break;
+        case "DR1":
+            if (!variables.recordInfo) {
+                startRecording(4);
+            }
+            break;
+        case "DR2":
+            if (!variables.recordInfo) {
+                startRecording(5);
+            }
+            break;
+        case "DR3":
+            if (!variables.recordInfo) {
+                startRecording(6);
+            }
+            break;
+        case "DR4":
+            if (!variables.recordInfo) {
+                startRecording(7);
+            }
+            break;
+        case "DP1":
+            if (!variables.playingBack) {
+                playBackData(4);
+            }
+            break;
+        case "DP2":
+            if (!variables.playingBack) {
+                playBackData(5);
+            } break;
+        case "DP3":
+            if (!variables.playingBack) {
+                playBackData(6);
+            }
+            break;
+        case "DP4":
+            if (!variables.playingBack) {
+                playBackData(7);
+            }
+            break;
+        case "DALL":
+            if (!variables.playingBack) {
+                playBackData("DRUMS");
+            }
+            break;
+        //GUITAR
+        case 21:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 22:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 23:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 24:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 25:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 26:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 27:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 28:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 29:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 30:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 31:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 32:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 33:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 34:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 35:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 36:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 37:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 38:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 39:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 40:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 41:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 42:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 43:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 44:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 45:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 46:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 47:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 48:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 49:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 50:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 51:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 52:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 53:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 54:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 55:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 56:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case "GR1":
+            if (!variables.recordInfo) {
+                startRecording(8);
+            }
+            break;
+        case "GR2":
+            if (!variables.recordInfo) {
+                startRecording(9);
+            }
+            break;
+        case "GR3":
+            if (!variables.recordInfo) {
+                startRecording(10);
+            }
+            break;
+        case "GR4":
+            if (!variables.recordInfo) {
+                startRecording(11);
+            }
+            break;
+        case "GP1":
+            if (!variables.playingBack) {
+                playBackData(8);
+            }
+            break;
+        case "GP2":
+            if (!variables.playingBack) {
+                playBackData(9);
+            } break;
+        case "GP3":
+            if (!variables.playingBack) {
+                playBackData(10);
+            }
+            break;
+        case "GP4":
+            if (!variables.playingBack) {
+                playBackData(11);
+            }
+            break;
+        case "GALL":
+            if (!variables.playingBack) {
+                playBackData("GUITAR");
+            }
+            break;
+    }*/}
 };
 
 PS.release = function (x, y, data, options) {
@@ -212,6 +456,17 @@ PS.exitGrid = function (options) {
     }
 };
 
+
+PS.keyDown = function (key, shift, ctrl, options) {
+    "use strict"; // Do not remove this directive!
+
+    PS.audioPlay("3-oct-e", { path: "guitarAudio/" })
+    // Uncomment the following code line to inspect first three parameters:
+
+    // PS.debug( "PS.keyDown(): key=" + key + ", shift=" + shift + ", ctrl=" + ctrl + "\n" );
+
+    // Add code here for when a key is pressed.
+};
 ////////////////////////////////////////
 ////////////////////////////////////////
 ////////////////////////////////////////
@@ -269,8 +524,8 @@ PS.exitGrid = function (options) {
     };
     
     */
-    
-    
+
+
 
 
 
@@ -543,15 +798,6 @@ function playbackSound() {
             }
         }
         variables.currentPlaybackTime += 10;
-        /*
-         * if (dataArray[arrayLoc][currentPlaybackIndex].timeVal === currentPlaybackTime) {
-                console.log(dataArray[arrayLoc][currentPlaybackIndex].pianoVal);
-                PS.audioPlay(PS.piano(dataArray[arrayLoc][currentPlaybackIndex].pianoVal, false));
-                currentPlaybackIndex++;
-            }
-            currentPlaybackTime += 10;
-         * 
-         */
     }
 
 }
@@ -563,7 +809,7 @@ function playbackSound() {
 //PIANO FUNCTIONS
 
 function pianoSetup() {
-
+    //PIANO
     for (var i = 0; i < 32; i++) {
         for (var j = 24; j < 32; j++) {
             PS.border(i, j, 0);
@@ -751,6 +997,7 @@ function pianoSetup() {
         }
     }
 
+    //RECORDING AREA
     PS.visible(24, 24, false);
     PS.glyph(25, 24, "R");
     PS.glyph(26, 24, "E");
@@ -885,17 +1132,135 @@ function pianoSetup() {
 //DRUM FUNCTIONS
 
 function drumSetup() {
+    //TODO BETTER COLORS
+
+    //DRUMS
+    for (var i = 0; i < 32; i++) {
+        for (var j = 14; j < 23; j++) {
+            PS.border(i, j, 0);
+        }
+    }
+
+    //highhat
+    for (var i = 0; i < 4; i++) {
+        PS.color(i, 14, PS.COLOR_YELLOW);
+        PS.data(i, 14, [14]);
+    }
+    PS.border(0, 14, { top: 1, bottom: 1, left: 1 })
+    PS.border(1, 14, { top: 1, bottom: 1 })
+    PS.border(2, 14, { top: 1, bottom: 1 })
+    PS.border(3, 14, { top: 1, bottom: 1, right: 1 })
+    for (var i = 15; i < 23; i++) {
+        PS.border(1, i, { right: 1 });
+    }
+
+    //crash
+    for (var i = 13; i < 17; i++) {
+        PS.color(i, 14, PS.COLOR_YELLOW);
+        PS.data(i, 14, [17]);
+    }
+    PS.border(13, 14, { top: 1, bottom: 1, left: 1 })
+    PS.border(14, 14, { top: 1, bottom: 1 })
+    PS.border(15, 14, { top: 1, bottom: 1 })
+    PS.border(16, 14, { top: 1, bottom: 1, right: 1 })
+    for (var i = 15; i < 23; i++) {
+        PS.border(14, i, { right: 1 });
+    }
+
+    //tom 1
+    for (var i = 4; i < 7; i++) {
+        for (var j = 15; j < 18; j++) {
+            PS.color(i, j, PS.COLOR_CYAN);
+            PS.data(i, j, [10]);
+        }
+    }
+    PS.border(4, 15, { top: 1, left: 1 })
+    PS.border(5, 15, { top: 1 })
+    PS.border(6, 15, { top: 1, right: 1 })
+    PS.border(4, 16, { left: 1 })
+    PS.border(6, 16, { right: 1 })
+    PS.border(4, 17, { bottom: 1, left: 1 })
+    PS.border(5, 17, { bottom: 1 })
+    PS.border(6, 17, { bottom: 1, right: 1 })
+
+    //tom 2
+    for (var i = 10; i < 13; i++) {
+        for (var j = 15; j < 18; j++) {
+            PS.color(i, j, PS.COLOR_CYAN);
+            PS.data(i, j, [11]);
+        }
+    }
+    PS.border(10, 15, { top: 1, left: 1 })
+    PS.border(11, 15, { top: 1 })
+    PS.border(12, 15, { top: 1, right: 1 })
+    PS.border(10, 16, { left: 1 })
+    PS.border(12, 16, { right: 1 })
+    PS.border(10, 17, { bottom: 1, left: 1 })
+    PS.border(11, 17, { bottom: 1 })
+    PS.border(12, 17, { bottom: 1, right: 1 })
+
+    //snare
+    for (var i = 3; i < 6; i++) {
+        for (var j = 18; j < 21; j++) {
+            PS.color(i, j, PS.COLOR_MAGENTA);
+            PS.data(i, j, [9]);
+        }
+    }
+    PS.border(3, 18, { top: 1, left: 1 })
+    PS.border(4, 18, { top: 1 })
+    PS.border(5, 18, { top: 1, right: 1 })
+    PS.border(3, 19, { left: 1 })
+    PS.border(5, 19, { right: 1 })
+    PS.border(3, 20, { bottom: 1, left: 1 })
+    PS.border(4, 20, { bottom: 1 })
+    PS.border(5, 20, { bottom: 1, right: 1 })
+
+    //tom 3
+    for (var i = 11; i < 14; i++) {
+        for (var j = 18; j < 21; j++) {
+            PS.color(i, j, PS.COLOR_MAGENTA);
+            PS.data(i, j, [13]);
+        }
+    }
+    PS.border(11, 18, { top: 1, left: 1 })
+    PS.border(12, 18, { top: 1 })
+    PS.border(13, 18, { top: 1, right: 1 })
+    PS.border(11, 19, { left: 1 })
+    PS.border(13, 19, { right: 1 })
+    PS.border(11, 20, { bottom: 1, left: 1 })
+    PS.border(12, 20, { bottom: 1 })
+    PS.border(13, 20, { bottom: 1, right: 1 })
+
+    //kick
+    for (var i = 6; i < 11; i++) {
+        for (var j = 18; j < 23; j++) {
+            PS.color(i, j, PS.COLOR_ORANGE);
+            PS.data(i, j, [8]);
+        }
+    }
+    PS.border(6, 18, { top: 1, left: 1 })
+    PS.border(7, 18, { top: 1 })
+    PS.border(8, 18, { top: 1 })
+    PS.border(9, 18, { top: 1 })
+    PS.border(10, 18, { top: 1, right: 1 })
+    PS.border(6, 19, { left: 1 })
+    PS.border(10, 19, { right: 1 })
+    PS.border(6, 20, { left: 1 })
+    PS.border(10, 20, { right: 1 })
+    PS.border(6, 21, { left: 1 })
+    PS.border(10, 21, { right: 1 })
+    PS.border(6, 22, { bottom: 1, left: 1 })
+    PS.border(7, 22, { bottom: 1 })
+    PS.border(8, 22, { bottom: 1 })
+    PS.border(9, 22, { bottom: 1 })
+    PS.border(10, 22, { bottom: 1, right: 1 })
+
+    //RECORDING AREA
     for (var i = 0; i < 32; i++) {
         PS.visible(i, 13, false);
     }
     for (var i = 24; i < 32; i++) {
         PS.visible(i, 14, false);
-    }
-
-    for (var i = 0; i < 32; i++) {
-        for (var j = 14; j < 23; j++) {
-            PS.border(i, j, 0);
-        }
     }
 
 
@@ -970,56 +1335,56 @@ function drumSetup() {
 
     //R1
     for (var i = 24; i < 26; i++) {
-        for (var j = 25; j < 27; j++) {
+        for (var j = 16; j < 18; j++) {
             PS.data(i, j, ["DR1"]);
         }
     }
 
     //R2
     for (var i = 26; i < 28; i++) {
-        for (var j = 25; j < 27; j++) {
+        for (var j = 16; j < 18; j++) {
             PS.data(i, j, ["DR2"]);
         }
     }
 
     //R3
     for (var i = 28; i < 30; i++) {
-        for (var j = 25; j < 27; j++) {
+        for (var j = 16; j < 18; j++) {
             PS.data(i, j, ["DR3"]);
         }
     }
 
     //R4
     for (var i = 30; i < 32; i++) {
-        for (var j = 25; j < 27; j++) {
+        for (var j = 16; j < 18; j++) {
             PS.data(i, j, ["DR4"]);
         }
     }
 
     //P1
     for (var i = 24; i < 26; i++) {
-        for (var j = 28; j < 30; j++) {
+        for (var j = 19; j < 21; j++) {
             PS.data(i, j, ["DP1"]);
         }
     }
 
     //P2
     for (var i = 26; i < 28; i++) {
-        for (var j = 28; j < 30; j++) {
+        for (var j = 19; j < 21; j++) {
             PS.data(i, j, ["DP2"]);
         }
     }
 
     //P3
     for (var i = 28; i < 30; i++) {
-        for (var j = 28; j < 30; j++) {
+        for (var j = 19; j < 21; j++) {
             PS.data(i, j, ["DP3"]);
         }
     }
 
     //P4
     for (var i = 30; i < 32; i++) {
-        for (var j = 28; j < 30; j++) {
+        for (var j = 19; j < 21; j++) {
             PS.data(i, j, ["DP4"]);
         }
     }
@@ -1031,8 +1396,174 @@ function drumSetup() {
 ////////////////////////////////////////
 //GUITAR FUNCTIONS
 
-function guitarSetup() {
+function loadGuitarAudio() {
+    PS.audioLoad("3-oct-e", { path: "guitarAudio/" });
+}
 
+var assignName = function (data) {
+    //PS.debug(data.channel);
+    //variables.guitarFiles.push("0-oct-a");
+}
+
+
+function guitarSetup() {
+    //GUITAR
+    for (var i = 0; i < 32; i++) {
+        for (var j = 0; j < 13; j++) {
+            PS.border(i, j, 0);
+        }
+    }
+
+    for (var j = 0; j < 13; j++) {
+        PS.border(2, j, { right: 1 })
+    }
+
+    for (var i = 5; i < 23; i += 3) {
+        for (var j = 0; j < 13; j++) {
+            PS.border(i, j, { right: 1 })
+        }
+    }
+    for (var i = 0; i < 24; i++) {
+        for (var j = 1; j < 12; j += 2) {
+            PS.color(i, j, PS.COLOR_GREY)
+            PS.alpha(i, j, Math.floor(255 / 2));
+        }
+    }
+
+
+    //RECORDING AREA
+
+    for (var i = 24; i < 32; i++) {
+        for (var j = 0; j < 5; j++) {
+            PS.visible(i, j, false);
+        }
+
+    }
+
+    PS.visible(24, 5, false);
+    PS.glyph(25, 5, "R");
+    PS.glyph(26, 5, "E");
+    PS.glyph(27, 5, "C");
+    PS.glyph(28, 5, "O");
+    PS.glyph(29, 5, "R");
+    PS.glyph(30, 5, "D");
+    PS.visible(31, 5, false);
+
+    for (var i = 24; i < 32; i++) {
+        for (var j = 6; j < 8; j++) {
+            PS.color(i, j, PS.COLOR_RED);
+        }
+    }
+
+
+    for (var j = 6; j < 8; j++) {
+        PS.border(25, j, { right: 1 });
+        PS.border(27, j, { right: 1 });
+        PS.border(29, j, { right: 1 });
+    }
+
+
+    PS.visible(24, 8, false);
+    PS.glyph(25, 8, "T");
+    PS.glyph(26, 8, "R");
+    PS.glyph(27, 8, "A");
+    PS.glyph(28, 8, "C");
+    PS.glyph(29, 8, "K");
+    PS.glyph(30, 8, "S");
+    PS.visible(31, 8, false);
+
+    for (var i = 24; i < 32; i++) {
+        for (var j = 9; j < 11; j++) {
+            PS.color(i, j, PS.COLOR_GREEN);
+        }
+    }
+
+
+    for (var j = 9; j < 11; j++) {
+        PS.border(25, j, { right: 1 });
+        PS.border(27, j, { right: 1 });
+        PS.border(29, j, { right: 1 });
+    }
+
+
+    PS.visible(24, 11, false);
+    PS.visible(25, 11, false);
+    PS.glyph(26, 11, "P");
+    PS.glyph(27, 11, "L");
+    PS.glyph(28, 11, "A");
+    PS.glyph(29, 11, "Y");
+    PS.visible(30, 11, false);
+    PS.visible(31, 11, false);
+
+    for (var i = 24; i < 32; i++) {
+        for (var j = 12; j < 13; j++) {
+            PS.color(i, j, PS.COLOR_BLUE);
+            PS.data(i, j, ["GALL"]);
+        }
+    }
+
+
+    for (var j = 9; j < 11; j++) {
+        PS.border(25, j, { right: 1 });
+        PS.border(27, j, { right: 1 });
+        PS.border(29, j, { right: 1 });
+    }
+
+    //R1
+    for (var i = 24; i < 26; i++) {
+        for (var j = 6; j < 8; j++) {
+            PS.data(i, j, ["GR1"]);
+        }
+    }
+
+    //R2
+    for (var i = 26; i < 28; i++) {
+        for (var j = 6; j < 8; j++) {
+            PS.data(i, j, ["GR2"]);
+        }
+    }
+
+    //R3
+    for (var i = 28; i < 30; i++) {
+        for (var j = 6; j < 8; j++) {
+            PS.data(i, j, ["GR3"]);
+        }
+    }
+
+    //R4
+    for (var i = 30; i < 32; i++) {
+        for (var j = 6; j < 8; j++) {
+            PS.data(i, j, ["GR4"]);
+        }
+    }
+
+    //P1
+    for (var i = 24; i < 26; i++) {
+        for (var j = 9; j < 11; j++) {
+            PS.data(i, j, ["GP1"]);
+        }
+    }
+
+    //P2
+    for (var i = 26; i < 28; i++) {
+        for (var j = 9; j < 11; j++) {
+            PS.data(i, j, ["GP2"]);
+        }
+    }
+
+    //P3
+    for (var i = 28; i < 30; i++) {
+        for (var j = 9; j < 11; j++) {
+            PS.data(i, j, ["GP3"]);
+        }
+    }
+
+    //P4
+    for (var i = 30; i < 32; i++) {
+        for (var j = 9; j < 11; j++) {
+            PS.data(i, j, ["GP4"]);
+        }
+    }
 }
 
 ////////////////////////////////////////
@@ -1314,6 +1845,326 @@ function RevertKey(data) {
                 for (var j = 24; j < 32; j++) {
                     PS.color(i, j, PS.COLOR_WHITE);
                 }
+            }
+            break;
+    }
+}
+
+
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+//SOUND PLAYBACK FUNCTION
+function playAudio(data) {
+    switch (data) {
+        //PIANO
+        case 0:
+            PS.audioPlay(PS.piano(44, false));
+            break;
+        case 0.5:
+            PS.audioPlay(PS.piano(45, false));
+            break;
+        case 1:
+            PS.audioPlay(PS.piano(46, false));
+            break;
+        case 1.5:
+            PS.audioPlay(PS.piano(47, false));
+            break;
+        case 2:
+            PS.audioPlay(PS.piano(48, false));
+            break;
+        case 3:
+            PS.audioPlay(PS.piano(49, false));
+            break;
+        case 3.5:
+            PS.audioPlay(PS.piano(50, false));
+            break;
+        case 4:
+            PS.audioPlay(PS.piano(51, false));
+            break;
+        case 4.5:
+            PS.audioPlay(PS.piano(52, false));
+            break;
+        case 5:
+            PS.audioPlay(PS.piano(53, false));
+            break;
+        case 5.5:
+            PS.audioPlay(PS.piano(54, false));
+            break;
+        case 6:
+            PS.audioPlay(PS.piano(55, false));
+            break;
+        case 7:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case "R1":
+            if (!variables.recordInfo) {
+                startRecording(0);
+            }
+            break;
+        case "R2":
+            if (!variables.recordInfo) {
+                startRecording(1);
+            }
+            break;
+        case "R3":
+            if (!variables.recordInfo) {
+                startRecording(2);
+            }
+            break;
+        case "R4":
+            if (!variables.recordInfo) {
+                startRecording(3);
+            }
+            break;
+        case "P1":
+            if (!variables.playingBack) {
+                playBackData(0);
+            }
+            break;
+        case "P2":
+            if (!variables.playingBack) {
+                playBackData(1);
+            } break;
+        case "P3":
+            if (!variables.playingBack) {
+                playBackData(2);
+            }
+            break;
+        case "P4":
+            if (!variables.playingBack) {
+                playBackData(3);
+            }
+            break;
+        case "PALL":
+            if (!variables.playingBack) {
+                playBackData("PIANO");
+            }
+            break;
+        //DRUMS
+        case 8:
+            PS.audioPlay("perc_drum_bass");
+            break;
+        case 9:
+            PS.audioPlay("perc_drum_snare");
+            break;
+        case 10:
+            PS.audioPlay("perc_drum_tom1");
+            break;
+        case 11:
+            PS.audioPlay("perc_drum_tom2");
+            break;
+        case 12:
+            PS.audioPlay("perc_drum_tom3");
+            break;
+        case 13:
+            PS.audioPlay("perc_drum_tom4");
+            break;
+        case 14:
+            PS.audioPlay("perc_hihat_closed");
+            break;
+        case 15:
+            PS.audioPlay("perc_hihat_open");
+            break;
+        case 16:
+            PS.audioPlay("perc_hihat_pedal");
+            break;
+        case 17:
+            PS.audioPlay("perc_cymbal_crash1");
+            break;
+        case 18:
+            PS.audioPlay("perc_cymbal_crash2");
+            break;
+        case 19:
+            PS.audioPlay("perc_cymbal_crash3");
+            break;
+        case 20:
+            PS.audioPlay("perc_cymbal_crash4");
+            break;
+        case "DR1":
+            if (!variables.recordInfo) {
+                startRecording(4);
+            }
+            break;
+        case "DR2":
+            if (!variables.recordInfo) {
+                startRecording(5);
+            }
+            break;
+        case "DR3":
+            if (!variables.recordInfo) {
+                startRecording(6);
+            }
+            break;
+        case "DR4":
+            if (!variables.recordInfo) {
+                startRecording(7);
+            }
+            break;
+        case "DP1":
+            if (!variables.playingBack) {
+                playBackData(4);
+            }
+            break;
+        case "DP2":
+            if (!variables.playingBack) {
+                playBackData(5);
+            } break;
+        case "DP3":
+            if (!variables.playingBack) {
+                playBackData(6);
+            }
+            break;
+        case "DP4":
+            if (!variables.playingBack) {
+                playBackData(7);
+            }
+            break;
+        case "DALL":
+            if (!variables.playingBack) {
+                playBackData("DRUMS");
+            }
+            break;
+        //GUITAR
+        case 21:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 22:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 23:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 24:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 25:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 26:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 27:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 28:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 29:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 30:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 31:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 32:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 33:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 34:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 35:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 36:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 37:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 38:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 39:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 40:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 41:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 42:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 43:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 44:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 45:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 46:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 47:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 48:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 49:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 50:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 51:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case 52:
+            PS.audioPlay(PS.piano(56, false));
+            break;
+        case "GR1":
+            if (!variables.recordInfo) {
+                startRecording(8);
+            }
+            break;
+        case "GR2":
+            if (!variables.recordInfo) {
+                startRecording(9);
+            }
+            break;
+        case "GR3":
+            if (!variables.recordInfo) {
+                startRecording(10);
+            }
+            break;
+        case "GR4":
+            if (!variables.recordInfo) {
+                startRecording(11);
+            }
+            break;
+        case "GP1":
+            if (!variables.playingBack) {
+                playBackData(8);
+            }
+            break;
+        case "GP2":
+            if (!variables.playingBack) {
+                playBackData(9);
+            } break;
+        case "GP3":
+            if (!variables.playingBack) {
+                playBackData(10);
+            }
+            break;
+        case "GP4":
+            if (!variables.playingBack) {
+                playBackData(11);
+            }
+            break;
+        case "GALL":
+            if (!variables.playingBack) {
+                playBackData("GUITAR");
             }
             break;
     }
