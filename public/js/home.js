@@ -101,11 +101,13 @@ const getRecommendations = function () {
                 let newRecommendation =
                     `<div class="card" id="recommendation${i}">\n` +
                     `   <div class="card-body">\n` +
-                    `      <h5 class="card-title">` + "\"" + songname + "\" by " + artist + `</h5>\n` +
-                    `      <p class="card-text">` + username + ": ";
-                for(let j = 0; j < rating; j++) {
-                    newRecommendation += "★"
-                }
+                    `      <h5 class="card-title">` + username + " rated \"" + songname + "\" by " + artist + `</h5>\n` +
+                    `      <p class="card-text">`;
+
+                for (let j = 0; j < rating; j++)
+                    newRecommendation += `<img src="../images/fullstar.png" alt="Star"/>`
+                for (let j = rating; j < 5; j++)
+                    newRecommendation += `<img src="../images/emptystar.png" alt="Blank Star"/>`
 
                 newRecommendation += `</p>\n` +
                     `      <p class="card-text"><i>` + "\"" + caption + "\"" + `</i></p>\n` +
