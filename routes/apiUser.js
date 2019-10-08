@@ -67,44 +67,61 @@ function dbUserExists(username) {
 }
 
 // check if the user both exists and matches the given password, returning true if valid and false if not
-function dbUserAuthenticate(username, password) {
-  console.log("username: " + username)
-  console.log("password: " + password)
-  console.log("authenticating user...")
+// function dbUserAuthenticate(username, password) {
+//   console.log("username: " + username)
+//   console.log("password: " + password)
+//   console.log("authenticating user...")
   
-  const MongoClient = require('mongodb').MongoClient;
-  const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
-  const client = new MongoClient(uri, { useNewUrlParser: true });
-  try {      
-    MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) { 
-       const db = client.db('finalproject');
-       var promise = () => {
-         return new Promise((resolve, reject) => {
-            db.collection('users').find({username: username, password: password}).toArray(function(err, data) {
-                 err ? reject(err) : resolve('data');
-               });
-         });
-       };
-      var callPromise = async () => {
-          var result = await (promise());
-          console.log(result)
-          if(result.length != 0) {
-            console.log("username and password match! logged in successfully!")
-            return true
-          }
-          else {
-            console.log("username or password do not match. could not log in!")
-            return false
-          }
-       };      
-      callPromise().then(function(result) {          
-          client.close();
-       });
-    }); //end mongo client   
-   } 
-  catch (e) {
-     console.log(e)
-   }
+//   const MongoClient = require('mongodb').MongoClient;
+//   const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
+//   const client = new MongoClient(uri, { useNewUrlParser: true });
+//   try {      
+//     MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) { 
+//        const db = client.db('finalproject');
+//        var promise = () => {
+//          return new Promise((resolve, reject) => {
+//             db.collection('users').find({username: username, password: password}).toArray(function(err, data) {
+//                  err ? reject(err) : resolve('data');
+//                });
+//          });
+//        };
+//       var callPromise = async () => {
+//           var result = await (promise());
+//           console.log(result)
+//           if(result.length != 0 && result[0].username == username && result[0].password == password) {
+//             console.log("username and password match! logged in successfully!")
+//             return true
+//           }
+//           else {
+//             console.log("username or password do not match. could not log in!")
+//             return false
+//           }
+//        };      
+//       callPromise().then(function(result) {          
+//           client.close();
+//        });
+//     }); //end mongo client   
+//    } 
+//   catch (e) {
+//      console.log(e)
+//    }
+// }
+
+let dbUserAuthentication = function(arr) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if(arr.length == 2) {
+        const MongoClient = require('mongodb').MongoClient;
+        const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
+        const client = new MongoClient(uri, { useNewUrlParser: true });
+        const db = client.db('finalproject');
+        resolve(db.collection('users').find({username: arr[2], password: arr[1]}).toArray())
+      }
+      else {
+        reject(Error("invalid!"))
+      }
+    }, 3000)
+  })
 }
 
 // console.log("testing authenticate: " + dbUserAuthenticate("admin", "admin"))
@@ -131,9 +148,7 @@ router.post('/login', function (req, res) {
   
   var loginSuccess = false
 
-  dbUserAuthenticate(username, password).then(function(value) {
-    console.log("this is the value: " + value);
-  });
+  // console.log("authentication result: " + dbUserAuthenticate(username, password))
   
   if (loginSuccess) {
     res.cookie('username', username);
