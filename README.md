@@ -8,6 +8,12 @@ https://dev.to/loujaybee/using-create-react-app-with-express
     - The server now serves from the /dist/ directory. This exists only when `parcel watch` is actively being run, and gets deleted once the watch command is terminated.
 - For the final production version we will run `npm run build` which permanently builds the files into a /dist/ directory. 
 
+## 10/8 Updates
+- Brandon and Christian working on vis and gui together. Vis will be rendered from the options stored in the store. Changing options in the gui sends new options to store. Changing the store variables causes a component rerender with the new options. 
+    - Song upload: I do not think we can store the actual file of the song in the store. The store will need to contain some identifying info about the song file so that getting a new vis will include finding that vis in the database and retrieving the song file. Uploading the song will send the song file to the db as well as update the song info in the store. This update will cause the cause the vis to rerender with the new song. When the store info about the song updaets the vis will to. On a render of the vis, it should look at the store to see what song it needs, then fetch that song file from the database.
+- If a user loads another users vis, the store's current vis variable will hold the info of the song, vis options, and user. If the current user changes anythign in the vis, the user info in the store for the vis should be updated with the current user instead of the old user
+- The store should always contain the information about the current vis being displayed, because that info is what the vis uses to render itself. When a user goes to upload a new vis, the app will gather all the info about the current vis from the store and send it to the database
+
 ## State Storage
 - Implemented using easy-peasy
 - Store object model in store.js
