@@ -1,0 +1,17 @@
+footer {
+    position: absolute;
+    display: flex;
+    bottom: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: center;
+    width: 100%;
+}
+
+.METRONOME {
+    flex-basis: 100%;
+}
+
+.DATABASE_BUTTONS {
+    flex-basis: 100%;
+}
