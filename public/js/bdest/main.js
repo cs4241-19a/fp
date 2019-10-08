@@ -280,6 +280,7 @@ function resetBoard() {
 function submitScore() {
     let scoreModel = $("#gameScoreFormModal");
     attachHeading(`Score: ${board.score}`);
+    scoreModel.on("hidden.bs.modal", ()=>{});
     attachSubmit({ score: board.score }, () => {
         scoreModel.modal("hide");
     });
