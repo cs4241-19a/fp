@@ -23,9 +23,7 @@ let config = {
     type: Phaser.AUTO,
     width: 600,
     height: 800,
-    parent: "game-area",
-    physics: {
-        default: 'arcade',
+    parent: "game-area", physics: { default: 'arcade',
         arcade: {
             gravity: { y: 300 },
             debug: false
@@ -50,6 +48,7 @@ let spaceBar;
 let scoreText;
 let livesText;
 let gameOverText;
+let startingText;
 
 function preload() {
     let ball = this.load.image("ball", path + "ball.png");
@@ -72,7 +71,7 @@ function create() {
     paddle.body.setAllowGravity(false);
 
     // Add ball to game
-    ball = this.physics.add.image(paddle.x, 700 - 23*0.5, "ball").setScale(0.075);
+    ball = this.physics.add.image(paddle.x, 700 - 23 * 0.5, "ball").setScale(0.075);
     ball.setCollideWorldBounds(true);
     ball.body.setAllowGravity(false);
     ball.setBounce(1, 1);
@@ -80,7 +79,7 @@ function create() {
 
     // Add collision
     this.physics.add.collider(ball, paddle, collisionWithBall, null);
-    
+
     // Keyboard controls
     cursors = this.input.keyboard.createCursorKeys();
     spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -95,21 +94,22 @@ function create() {
     // Add score HUD
     scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
     livesText = this.add.text(400, 16, 'Lives: 5', { fontSize: '32px', fill: '#fff' });
-    gameOverText = this.add.text(85, 400, 'GAME OVER', {fontSize: '64px', fill:'#fff'});
+    gameOverText = this.add.text(85, 400, 'GAME OVER', { fontSize: '64px', fill: '#fff' });
     gameOverText.setVisible(false);
+    startingText = this.add.text(60, 600, 'Press the space bar to serve!', { fontSize: '32px', fill: '#fff' });
 }
 
 function update() {
-    let paddleActions = repositionPaddle.bind(this);
+    let paddleActions = onKeyPress.bind(this);
     paddleActions();
 
-    if (board.lives === 0)
-    {
+    if (board.lives === 0) {
         gameOverText.setVisible(true);
+        startingText.setVisible(true);
+        submitScore();
     }
 
-    if (ball !== undefined)
-    {
+    if (ball !== undefined) {
         if (ball.y > 780) {
             // Update lives counter
             board.lives -= 1;
@@ -120,7 +120,7 @@ function update() {
             ball.setVelocityY(0);
             ball.setVelocityX(0);
             board.active = false;
-        } else if (board.bricksLeft === 0){
+        } else if (board.bricksLeft === 0) {
             // Make ball stop and invisible
             ball.setVisible(false);
             ball.setY(700);
@@ -134,32 +134,38 @@ function update() {
     }
 }
 
+/***
+ * Re-enables the current ball.
+ */
 const addBall = function () {
     ball.setVisible(true);
     ball.setImmovable(false);
     ball.setX(paddle.x);
-    ball.setY(750 - 23*0.5);
+    ball.setY(750 - 23 * 0.5);
     ball.setVelocityX(board.ballVelX);
     ball.setVelocityY(board.ballVelY);
 }
 
 /***
- * Function to move the paddle with the arrow keys.
+ * Function to handle input events.
  */
-const repositionPaddle = function() {
+const onKeyPress = function () {
     /* Enable the paddle to move when a key is pressed */
     paddle.setImmovable(false);
 
+    /* Movement */
     if (cursors.left.isDown) {
         paddle.setVelocityX(-board.paddleSpeed);
     } else if (cursors.right.isDown) {
         paddle.setVelocityX(board.paddleSpeed);
+    /* Only send ball if board is not active (i.e. life is not lost or game over) */
     } else if (spaceBar.isDown && !board.active && board.lives > 0) {
+        startingText.setVisible(false);
         let addBallBound = addBall.bind(this);
         addBallBound();
         board.active = true;
-    } else if (spaceBar.isDown && board.lives === 0)
-    {
+    } else if (spaceBar.isDown && board.lives === 0) {
+        startingText.setVisible(false);
         resetBoard();
         let addBallBound = addBall.bind(this);
         addBallBound();
@@ -181,11 +187,9 @@ const repositionPaddle = function() {
 const initializeBricksArray = function (bricks, brickX, brickY, rows) {
 
     let currentY = 100;
-    for (let i = 0; i < rows.length; i++)
-    {
+    for (let i = 0; i < rows.length; i++) {
         let currentX = 14 + (320 * brickX / 2);
-        for (let j = 0; j < 8; j++)
-        {
+        for (let j = 0; j < 8; j++) {
             let currBrickWrapper = new Brick(bricks, rows[i]);
             let brickObj = this.physics.add.image(currentX, currentY, rows[i]).setScale(brickX, brickY);
             brickObj.body.setAllowGravity(false);
@@ -252,7 +256,7 @@ function barCollision(ball, brick) {
 /***
  * Function to reset the board after a game over.
  */
-function resetBoard () {
+function resetBoard() {
     board.active = true;
 
     resetBricks(bricks);
@@ -269,11 +273,24 @@ function resetBoard () {
     gameOverText.setVisible(false);
 }
 
+
+/***
+ * Submit the final score from the user
+ */
+function submitScore() {
+    let scoreModel = $("#gameScoreFormModal");
+    attachHeading(`Score: ${board.score}`);
+    attachSubmit({ score: board.score }, () => {
+        scoreModel.modal("hide");
+    });
+    scoreModel.modal("show");  // user jQuery to show the modal
+}
+
 /***
  * Reset all of the bricks on the board.
  * @param {Array} bricks - Array of Brick objects.
  */
-function resetBricks (bricks) {
+function resetBricks(bricks) {
     for (let i = 0; i < bricks.length; i++) {
         bricks[i].enableBody(true, bricks[i].x, bricks[i].y, true, true);
     }
