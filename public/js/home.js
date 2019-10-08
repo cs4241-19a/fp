@@ -88,7 +88,7 @@ const getRecommendations = function () {
 
                 if (isNaN(rating) || rating < 1 || rating > 5) continue
 
-                list.innerHTML +=
+                /*let newRecommendation =
                     `<div class="card" id="recommendation${i}">\n` +
                     `   <div class="card-body">\n` +
                     `      <h5 class="card-title">` + "\"" + songname + "\" by " + artist + `</h5>\n` +
@@ -96,7 +96,24 @@ const getRecommendations = function () {
                     `      <p class="card-text"><i>` + "\"" + caption + "\"" + `</i></p>\n` +
                     `      <p class="invisible" id="songid${i}">` + songid + `</p>\n` +
                     `   </div>\n` +
+                    `</div>`*/
+
+                let newRecommendation =
+                    `<div class="card" id="recommendation${i}">\n` +
+                    `   <div class="card-body">\n` +
+                    `      <h5 class="card-title">` + "\"" + songname + "\" by " + artist + `</h5>\n` +
+                    `      <p class="card-text">` + username + ": ";
+                for(let j = 0; j < rating; j++) {
+                    newRecommendation += "★"
+                }
+
+                newRecommendation += `</p>\n` +
+                    `      <p class="card-text"><i>` + "\"" + caption + "\"" + `</i></p>\n` +
+                    `      <p class="invisible" id="songid${i}">` + songid + `</p>\n` +
+                    `   </div>\n` +
                     `</div>`
+
+                list.innerHTML += newRecommendation
             }
         }
     })()
