@@ -1,16 +1,22 @@
 .table {
-    margin-top: 50px; 
-    display: flex;
-    align-content: center;
-    flex-direction: column;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: 15%;
+    margin-right: 15%;
 }
 
-.field {
+.fields {
+    margin-top: 80px; 
     display: flex;
     align-content: center;
+    justify-content: center;
     flex-direction: column;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.fieldInput {
+    margin-left: 5%
+}
+
+.submitButton {
+    
 }

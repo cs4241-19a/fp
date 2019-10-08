@@ -1,10 +1,10 @@
 const deleteRow = function(cell) {
-    // pop up asking to confirm changes
+    // alert asking to confirm changes (yes/no)
     // code me      
 }
 
 const modifyRow = function(cell){
-    // pop up asking to confirm changeUnits
+    // alert asking to confirm change (yes/no)
     // send modification to server
 }
 
