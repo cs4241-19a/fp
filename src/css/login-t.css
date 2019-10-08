@@ -23,7 +23,7 @@ body {
 }
 
 #navBar {
-    height: 120px;
+    height: 100px;
     overflow: hidden;
     position: -webkit-sticky; /* Safari */
     position: sticky;
@@ -33,9 +33,37 @@ body {
     box-shadow: 0 1px 10px #000000;
 }
 
-#root {
+.imgCent img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.padder {
     padding: 50px;
 }
+
+.offClr {
+    color: #00FF54;
+    background-color: black;
+    padding-top: 1px;
+    padding-bottom: 2px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 30px;
+}
+
+#introLogo {
+    background-image: url("../media/soundcloudishLogin.png");
+}
+
+#root {
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
 
 #navBar img {
     margin-left: auto;
