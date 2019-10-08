@@ -9,6 +9,7 @@ let stopped = true;
 const rollingNumber = 10;
 
 const userLocation = {lat: undefined, lng: undefined};
+const connectionData = {available: false, type: undefined, rtt: undefined, downlink: undefined, effectiveType: undefined}
 
 const localData = {};
 const runCycle = async function () {
@@ -70,6 +71,11 @@ const runCycle = async function () {
 	newData.forEach(d => {
 		d.lat = userLocation.lat;
 		d.lng = userLocation.lng;
+		d.connectionDataAvailable = connectionData.available;
+		d.connectionType = connectionData.type;
+		d.connectionEffectiveType = connectionData.effectiveType;
+		d.connectionRtt = connectionData.rtt;
+		d.connectionDownlink = connectionData.downlink;
 	});
 
 	return newData;
@@ -168,4 +174,13 @@ document.body.onload = () => {
 	data_display.displayBar(zero_bar);
 	data_display.displayBar(zero_bar); // Note: bar chart has an issue where it doesn't display first call
 	data_display.setupMap(800, 500);
+
+	const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+	if (connection) {
+		connectionData.available = true;
+		connectionData.type = connection.type;
+		connectionData.effectiveType = connection.effectiveType;
+		connectionData.rtt = connection.rtt;
+		connectionData.downlink = connection.downlink;
+	}
 };
