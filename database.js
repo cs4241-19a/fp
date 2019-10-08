@@ -63,10 +63,6 @@ Task.init({
         type: Sequelize.BOOLEAN,
         allowNull: false,
     },
-    startTime: {
-        type: Sequelize.DATE,
-        allowNull: false,
-    },
     dueDate: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -85,6 +81,8 @@ Task.init({
     }
 },{sequelize: sequelize, modelName: 'task'});
 
+Task.belongsTo(User);
+
 User.sync();
 Task.sync();
 
@@ -92,3 +90,39 @@ Task.sync();
 //  Helpers
 //-----------
 
+//getUser
+function getUser(login){
+    return User.findOne({
+        where: {username: login}
+    });
+}
+
+//getUserTasks
+function getUserTasks(login){
+    return User.getTasks({
+        where: {username: login}
+    });
+}
+
+//createUser: login(username), peper(salt), browns(hash)
+function createUser(login, pepper, browns){
+    User.create({
+        salt: pepper,
+        hash: browns,
+        username: login,
+    });
+}
+
+//createTask
+function createTask(object){
+    Task.create(object);
+}
+
+//updateTask
+function updateTask(taskId, object){
+    Task.findOne({
+        where: {id: taskId}
+    }).then(result => {
+        result.update(object)
+    });
+}
