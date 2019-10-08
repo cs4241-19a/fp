@@ -76,38 +76,38 @@ function dbUserAuthenticate(username, password) {
   const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
   const client = new MongoClient(uri, { useNewUrlParser: true });
   try {      
-    MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) { 
-      // assert.equal(null, err);
-       const db = client.db('finalproject');
-      
-       var promise = () => {
-         return new Promise((resolve, reject) => {
-            db.collection('users').find({username: username, password: password}).toArray(function(err, data) {
-                 err ? reject(err) : resolve(data);
-               });
-         });
-       };  
-      var callPromise = async () => {
-          var result = await (promise());
-          console.log(result)
-          if(result.length != 0) {
-            console.log("username and password match! logged in successfully!")
-            return true
-          }
-          else {
-            console.log("username or password do not match. could not log in!")
-            return false
-          }
-       };      
-      callPromise().then(function(result) {          
-          client.close();
-       });    
+    // MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) { 
+    //    const db = client.db('finalproject');
+    //    var promise = () => {
+    //      return new Promise((resolve, reject) => {
+    //         db.collection('users').find({username: username, password: password}).toArray(function(err, data) {
+    //              err ? reject(err) : resolve('data');
+    //            });
+    //      });
+    //    };
+    //   var callPromise = async () => {
+    //       var result = await (promise());
+    //       console.log(result)
+    //       if(result.length != 0) {
+    //         console.log("username and password match! logged in successfully!")
+    //         return true
+    //       }
+    //       else {
+    //         console.log("username or password do not match. could not log in!")
+    //         return false
+    //       }
+    //    };      
+    //   callPromise().then(function(result) {          
+    //       client.close();
+    //    });    
     }); //end mongo client   
    } 
   catch (e) {
      console.log(e)
    }
 }
+
+// console.log("testing authenticate: " + dbUserAuthenticate("admin", "admin"))
 
 /* ### ROUTES ### */
 router.post('/create', function (req, res) {
