@@ -18,15 +18,24 @@ window.onload = function() {
   // Fill in value on page
   .then(userData => {
     nameSlot.innerHTML += userData.name
-
-    // TODO Get job by looking through job list in fetch instead (won't be stored under user)
-    jobSlot.innerHTML += userData.job.name
-    daySlot.innerHTML += userData.job.day
-    statusSlot.innerHTML += userData.job.status
-
     pointSlot.innerHTML += userData.points
     rankSlot.innerHTML += userData.rank
-  })
+  });
+
+  //this.fetch('/userJob', {
+  //  method: 'GET',
+  //  credentials: 'include'
+  //})
+  //.then(res => {
+  //  return res.json();
+  //})
+  //.then(job => {
+  //  let jobName = '', day = '';
+  //
+  //  jobSlot.innerHTML += job.name
+  //  daySlot.innerHTML += job.day
+  //  statusSlot.innerHTML += userData.rank
+  //});
 
   // Insert and populate table
 };
