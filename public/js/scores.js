@@ -9,18 +9,14 @@ addLoadEvent(() => {
 async function fillScores(game) {
     if (!game.gameId) {  // get game info off first game in dropdown
         const dataSet = document.getElementById("scoreGameDD").firstElementChild.dataset;
-        game = {gameId: dataSet.gameId, name: dataSet.name, orderDir: dataSet.orderDir}
+        game = {gameId: dataSet.gameId, name: dataSet.name}
     }
     setScoresHeader(game.name);
-    const allScoresDataPromise = getScores(game.gameId, game.orderDir);
-    document.getElementById("globalScores").innerHTML = "";
-    document.getElementById("userScores").innerHTML = "";
-    document.getElementById("scoresLoading").classList.remove("d-none");
+    const allScoresData = await getScores(game.gameId);
+    const globalContext = {scoresData: allScoresData};
     const globalSource = document.getElementById("globalScoresBodyTemplate").innerHTML;
     const globalTemplate = Handlebars.compile(globalSource);
-    const allScoresData = await allScoresDataPromise;
-    document.getElementById("scoresLoading").classList.add("d-none");
-    document.getElementById("globalScores").innerHTML = globalTemplate({scoresData: allScoresData});
+    document.getElementById("globalScores").innerHTML = globalTemplate(globalContext);
     let userScoresData;
     if (auth.currentUser) {
         userScoresData = allScoresData.filter(score => score.user.uid === auth.currentUser.uid);
@@ -35,16 +31,11 @@ async function fillScores(game) {
 
 }
 
-async function getScores(gameId, orderDir) {
+async function getScores(gameId) {
     const url = `/data/games/${gameId}/scores`;
     const request = new Request(url, {
-        method: "POST",
-        body: JSON.stringify({orderDir}),
-        headers: {
-            "Content-Type": "application/json",
-        },
+        method: "GET",
     });
-    console.log(request);
     return fetch(request)
         .then((resp) => resp.json())
         .then(function( arr ) {
@@ -57,7 +48,7 @@ async function getScores(gameId, orderDir) {
 }
 
 function onGameChange(elm) {
-    fillScores({gameId: elm.dataset.gameId, name: elm.dataset.name, orderDir: elm.dataset.orderDir});
+    fillScores({gameId: elm.dataset.gameId, name: elm.dataset.name});
 }
 
 function setScoresHeader(gameName) {
