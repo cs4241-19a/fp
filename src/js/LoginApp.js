@@ -33,6 +33,7 @@ export default function LoginApp(props) {
 				// 	position: 'bottom'
 				// });
 				console.log( "post response: ", res )
+                window.location = "/main.html"
 			})
 	}
 
