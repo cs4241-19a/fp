@@ -61,6 +61,9 @@ let possibleDones = [done1,done2,done3];
 let currentPuzzle=0;
 
 let time = 0;
+/**
+ * Starts a timer
+ */
 let seconds = setInterval(function(){
     time += 1;
 
@@ -74,6 +77,9 @@ let seconds = setInterval(function(){
     }
 },1000);
 
+/**
+ * loads the sudoku board from a random start position
+ */
 function load(){
     for(let i=1;i<=81;i++){
         let elem = document.querySelector('#cell-'+i+' input');
@@ -93,6 +99,11 @@ function load(){
 
 load();
 
+/**
+ * checks if the puzzle is solved
+ *
+ * @returns {boolean} true if finished, false if not
+ */
 function checkComplete(){
     for(let i=1;i<=81;i++){
         let elem = document.querySelector('#cell-'+i+' input');
@@ -117,11 +128,19 @@ function checkComplete(){
     return true;
 }
 
+/**
+ * stops the timer
+ */
 function stopTimer(){
     clearTimeout(seconds);
 }
 
-
+/**
+ * makes sure the keyboard input
+ * is correct. Only numbers 1-9
+ *
+ * @param {e} the keyboard event
+ */
 function validate(e){
     var theEvent = e || window.e;
     // Handle key press
@@ -134,6 +153,9 @@ function validate(e){
     }
 }
 
+/**
+ * reloads the page
+ */
 function playAgain(){
     location.reload();
 }

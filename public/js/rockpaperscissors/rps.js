@@ -1,8 +1,16 @@
 let wins = 0;
 let round = 1;
 yourOptions = [];
-aiOptions = []
+aiOptions = [];
 
+/**
+ * Fired when the user makes a choice
+ * Decides who won the round and progresses
+ * the game
+ *
+ * @param {option} what the player
+ *  chose: rock, paper, or scissors
+ */
 function makeChoice(option){
     let aiOption = aiChoice();
     yourOptions.push(option);
@@ -43,6 +51,11 @@ function makeChoice(option){
     updateGameArea(option, aiOption, status);
 }
 
+/**
+ * Randomly decides what the AI will choose
+ *
+ * @returns {string} rock paper or scissors
+ */
 function aiChoice(){
     let choice = Math.floor((Math.random()*3));
     if(choice === 0){
@@ -54,6 +67,13 @@ function aiChoice(){
     }
 }
 
+/**
+ * updates the game area to display who won a round
+ *
+ * @param {option} what you chose to play
+ * @param {aiOption} what the ai chose
+ * @param {status} if you won, lost, or drew the round
+ */
 function updateGameArea(option, aiOption,status){
     let response = '';
     if(status === 'win'){
@@ -75,6 +95,10 @@ function updateGameArea(option, aiOption,status){
 
 }
 
+/**
+ * Changes the result back to the choice
+ * Also ends the game if 10 rounds have been played
+ */
 function nextRound(){
     round++;
     if(round === 11){
@@ -100,6 +124,12 @@ function nextRound(){
     }
 }
 
+/**
+ * displays the final results
+ * whether you have won, lost, or drawn
+ * and what each player played.
+ * Also gives the user the option to play again.
+ */
 function finalResults(){
     let gameArea = document.getElementById('game-area');
     if(wins === 0){
@@ -123,6 +153,9 @@ function finalResults(){
     }
 }
 
+/**
+ * Reloads the page
+ */
 function playAgain(){
     location.reload();
 }

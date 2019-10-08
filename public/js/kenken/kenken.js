@@ -18,6 +18,9 @@ let possibleDones = [done1,done2,done3];
 
 let currentPuzzle = 0;
 
+/**
+ * Loads the game board with a random start position
+ */
 function load(){
     currentPuzzle = Math.floor((Math.random()*3));
     if(currentPuzzle === 0){
@@ -31,6 +34,9 @@ function load(){
 
 load();
 
+/**
+ * sets up board option 1
+ */
 function loadBoard1(){
     let gameArea = document.getElementById('game-area');
     gameArea.innerHTML = '<table><tr><td id="cell-1" class="up left down"><div style="position:relative"><span>6+</span><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></div></td><td id="cell-2" class="up right down"><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></td><td id="cell-3" class="up down"><div style="position: relative"><span>9+</span><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></div></td><td id="cell-4" class="up down"><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></td><td id="cell-5" class="up right down"><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></td></tr>'+
@@ -40,6 +46,9 @@ function loadBoard1(){
                             '<tr><td id="cell-21" class="left bottom right"><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></td><td id="cell-22" class="bottom top"><div style="position: relative"><span>6+</span><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></div></td><td id="cell-23" class="bottom right top"><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></td><td id="cell-24" class="bottom"><div style="position: relative"><span>6+</span><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></div></td><td id="cell-25" class="bottom right"><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></td></tr>';
 }
 
+/**
+ * sets up board option 2
+ */
 function loadBoard2(){
     let gameArea = document.getElementById('game-area');
     gameArea.innerHTML = '<table><tr><td id="cell-1" class="up left down"><div style="position: relative"><span>9+</span><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></div></td><td id="cell-2" class="up right down"><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></td><td id="cell-3" class="up right"><div style="position: relative"><span>3-</span><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></div></td><td id="cell-4" class="up down"><div style="position: relative"><span>5+</span><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></div></td><td id="cell-5" class="up right down"><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></td></tr>'+
@@ -49,6 +58,9 @@ function loadBoard2(){
         '<tr><td id="cell-21" class="left bottom right"><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></td><td id="cell-22" class="bottom right"><div style="position: relative"><span>1</span><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></div></td><td id="cell-23" class="bottom"><div style="position:relative"><span>9+</span><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></div></td><td id="cell-24" class="bottom right"><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></td><td id="cell-25" class="bottom right"><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></td></tr>';
 }
 
+/**
+ * sets up board option 3
+ */
 function loadBoard3(){
     let gameArea = document.getElementById('game-area');
     gameArea.innerHTML = '<table><tr><td id="cell-1" class="up left right"><div style="position: relative"><span>5+</span><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></div></td><td id="cell-2" class="up down"><div style="position: relative"><span>15X</span><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></div></td><td id="cell-3" class="up down right"><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></td><td id="cell-4" class="up down"><div style="position: relative"><span>3-</span><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></div></td><td id="cell-5" class="up right down"><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></td></tr>'+
@@ -58,6 +70,11 @@ function loadBoard3(){
         '<tr><td id="cell-21" class="left bottom"><div style="position: relative"><span>6+</span><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></div></td><td id="cell-22" class="bottom right"><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></td><td id="cell-23" class="bottom right"><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></td><td id="cell-24" class="bottom"><div style="position: relative"><span>1-</span><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></div></td><td id="cell-25" class="bottom right"><input type="text" onkeypress=validate(event) onchange="checkComplete()" maxlength="1"></td></tr>';
 }
 
+/**
+ * checks if the puzzle has been solved
+ *
+ * @returns {boolean} true if complete, false if not
+ */
 function checkComplete(){
     for(let i=1;i<=25;i++){
         let elem = document.querySelector('#cell-'+i+' input');
@@ -84,6 +101,9 @@ function checkComplete(){
 }
 
 let time = 0;
+/**
+ * increases the timer
+ */
 let seconds = setInterval(function(){
     time += 1;
 
@@ -97,10 +117,20 @@ let seconds = setInterval(function(){
     }
 },1000);
 
+
+/**
+ * stops the timer
+ */
 function stopTimer(){
     clearTimeout(seconds);
 }
 
+/**
+ * validates keyboard input,
+ * only allows numbers 1-5
+ *
+ * @param {e} the keyboard event
+ */
 function validate(e){
     var theEvent = e || window.e;
     // Handle key press
@@ -113,6 +143,9 @@ function validate(e){
     }
 }
 
+/**
+ * reloads the page
+ */
 function playAgain(){
     location.reload();
 }
