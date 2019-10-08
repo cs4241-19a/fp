@@ -12,3 +12,10 @@
         {{/each}}
     </div>
 </div>
+
+<!-- The help modal -->
+{{#> layouts/modal-layout type="help" title="Help" }}
+    {{#*inline "form-content"}}
+        {{> includes/help/index }}
+    {{/inline}}
+{{/layouts/modal-layout}}
