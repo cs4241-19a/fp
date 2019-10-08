@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="js/admin.js" type="text/javascript"></script>
     <title>House Job Readout</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -39,51 +40,51 @@
           </tr>
           <tr>
             <td>Knobs + Rags</td>
-            <td id="tuesknob">keep</td>
+            <td contenteditable=true id="tuesknob">keep</td>
           </tr>
           <tr>
             <td>3rd Floor Bathroom</td>
-            <td id="tues3br"></td>
+            <td contenteditable=true id="tues3br"></td>
           </tr>
           <tr>
             <td>2nd Floor BR Toilet/Vanity</td>
-            <td id="tues2brVan"></td>
+            <td contenteditable=true id="tues2brVan"></td>
           </tr>
           <tr>
             <td>2nd Floor BR Showers/Floors</td>
-            <td id="tues2brFloor"></td>
+            <td contenteditable=true id="tues2brFloor"></td>
           </tr>
           <tr>
             <td>1st Floor Bathroom</td>
-            <td id="tues1br"></td>
+            <td contenteditable=true id="tues1br"></td>
           </tr>
           <tr>
             <td>Foyer + Library Floor</td>
-            <td id="tuesfoyer"></td>
+            <td contenteditable=true id="tuesfoyer"></td>
           </tr>
           <tr>
             <td>Library</td>
-            <td id="tueslib"></td>
+            <td contenteditable=true id="tueslib"></td>
           </tr>
           <tr>
             <td>Stairs</td>
-            <td id="tuesstair"></td>
+            <td contenteditable=true id="tuesstair"></td>
           </tr>
           <tr>
             <td>TV Room</td>
-            <td id="tuestv"></td>
+            <td contenteditable=true id="tuestv"></td>
           </tr>
           <tr>
             <td>2/3 Floor Halls</td>
-            <td id="tueshall"></td>
+            <td contenteditable=true id="tueshall"></td>
           </tr>
           <tr>
             <td>Basement</td>
-            <td id="tuesbase"></td>
+            <td contenteditable=true id="tuesbase"></td>
           </tr>
           <tr>
             <td>Laundry Room</td>
-            <td id="tueslaund"></td>
+            <td contenteditable=true id="tueslaund"></td>
           </tr>
         </table>
         <table id="thurReadout" class="col-sm">
@@ -92,60 +93,62 @@
           </tr>
           <tr>
             <td>Knobs + Rags</td>
-            <td id="thurknob">keep</td>
+            <td contenteditable=true id="thurknob">keep</td>
           </tr>
           <tr>
             <td>3rd Floor Bathroom</td>
-            <td id="thur3br"></td>
+            <td contenteditable=true id="thur3br"></td>
           </tr>
           <tr>
             <td>2nd Floor BR Toilet/Vanity</td>
-            <td id="thur2brVan"></td>
+            <td contenteditable=true id="thur2brVan"></td>
           </tr>
           <tr>
             <td>2nd Floor BR Showers/Floors</td>
-            <td id="thur2brFloor"></td>
+            <td contenteditable=true id="thur2brFloor"></td>
           </tr>
           <tr>
             <td>1st Floor Bathroom</td>
-            <td id="thur1br"></td>
+            <td contenteditable=true id="thur1br"></td>
           </tr>
           <tr>
             <td>Foyer + Library Floor</td>
-            <td id="thurfoyer"></td>
+            <td contenteditable=true id="thurfoyer"></td>
           </tr>
           <tr>
             <td>Library</td>
-            <td id="thurlib"></td>
+            <td contenteditable=true id="thurlib"></td>
           </tr>
           <tr>
             <td>Stairs</td>
-            <td id="thurstair"></td>
+            <td contenteditable=true id="thurstair"></td>
           </tr>
           <tr>
             <td>TV Room</td>
-            <td id="thurtv"></td>
+            <td contenteditable=true id="thurtv"></td>
           </tr>
           <tr>
             <td>2/3 Floor Halls</td>
-            <td id="thurhall"></td>
+            <td contenteditable=true id="thurhall"></td>
           </tr>
           <tr>
             <td>Basement</td>
-            <td id="thurbase"></td>
+            <td contenteditable=true id="thurbase"></td>
           </tr>
           <tr>
             <td>Laundry Room</td>
-            <td id="thurlaund"></td>
+            <td contenteditable=true id="thurlaund"></td>
           </tr>
         </table>
       </div>
     </figure>
     <section class="container">
       <h3>Edit current jobs via below form</h3>
-      <form id="adminForm">
-        Name:<input type="text" id="name"><br>
-        Job:<select id="job">
+      <form autocomplete="off" id="adminForm" action="/modify" method="POST">
+        <div class="autocomplete" style="width:300px;">
+            Name:<input id="myInput" type="text" name="name" id="name" placeholder="Type Name">
+          </div>
+        Job:<select name="jobCode" id="jobCode">
           <option value="knob">Knobs + Rags</option>
           <option value="3br">3rd Floor Bathroom</option>
           <option value="2brVan">2nd Floor Br, Toilet/Vanity</option>
@@ -159,11 +162,12 @@
           <option value="base">Basement</option>
           <option value="laund">Laundry Room</option>
         </select><br>
-        Day:
-        <input type="radio" name="day" id="tues" value="tues">Tuesday
-        <input type="radio" name="day" id="thur" value="thur">Thursday<br>
+        Date:<input type="date" name="date"><br>
+        Point Value: <input type="number" name="point"><br>
+        <input type="submit" value="Submit Mod">
       </form>
-      <button type="button" id="submitBtn" class="submit">Submit</button>
+      <button type="button" id="modifyBtn" class="modify">Modify</button>
+      <button type="button" id="submitBtn" class="submit">Submit Mods</button>
     </section>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

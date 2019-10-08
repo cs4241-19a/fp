@@ -77,7 +77,18 @@ app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());
 passport.use(new LocalStrategy(localStrategy));
 app.use(passport.initialize());
-app.use(passport.session());
+
+const FileStore = require('session-file-store')(session);
+app.use(session({
+  genid: function(request){
+    return uuid();
+  },
+  store: new FileStore(),
+    secret: 'derps',
+    resave: false,
+    saveUninitialized: false
+}));
+//app.use(passport.session());
 app.use((req,res,next) => {
   if(jobCol !== null && msgCol !== null && userCol !== null && dataCol !== null) {
     next();
@@ -102,10 +113,20 @@ app.get('/user', function(req, res) {
   res.sendFile(__dirname + '/public/views/user.html');
 });
 
-app.get('/admin', function(req, res) {
+app.get('/admin', async function(req, res) {
+  console.log(await jobCol.find({ }).toArray());
   res.sendFile(__dirname + '/public/views/admin.html');
 });
 
+app.get('/users', async function(req,res){
+  if( userCol !== null ) {
+    //console.log( await userCol.find({ }).toArray());
+    // get array and pass to res.json
+    await userCol.find({ }).toArray().then(result =>
+      res.json(result)
+      );
+  }
+})
 // Returning statistics of the user for user view page
 // TODO handle users who aren't logged in
 app.get('/userData', function(req, res) {
@@ -120,11 +141,24 @@ app.get('/userData', function(req, res) {
 
 
 // Passport authentication on login
-app.post('/login', passport.authenticate('local'),
+/*app.post('/login', passport.authenticate('local'),
   function(req, res) {
     res.json({status: true});
   }
 );
+*/
+
+app.post('/login', 
+    (req, res, next) => {
+  console.log('Inside POST /login callback')
+  
+  passport.authenticate('local', (err, user, info) => {   
+    req.login(user, (err) => {
+      return res.redirect('/');
+    })
+  })(req, res, next);
+  
+  });
 
 app.post('/signoff', function(req, res) {
   // TODO Signoff jobs here
@@ -135,6 +169,37 @@ app.post('/toggle', function(req, res) {
   active = !active;
   res.sendStatus(200);
 });
+
+app.post('/modify', function(req, res){
+    const job = req.body;
+    const date = new Date(req.body.date);
+    var day = "";
+    
+    switch(date.getDay()+ 1){
+      case 2:
+        day = "tues";
+        break;
+      case 4:
+        day = "thur";
+        break;
+      default:
+        day = "Nope"
+        break;
+    }
+     
+    job.jobCode = day + job.jobCode;
+    job.status = {completed: false, late: false, name: ""};
+    if(job.point == ""){
+      job.point = 69;
+    }
+    console.log(job);
+    /*
+    jobCol.findOne({name:job}, function(err, jobFound){
+      if(err){return console.log(err)};
+      //if(!jobFound){collection.insertOne(job)}
+    });
+    */
+})
 
 
 
