@@ -6,3 +6,10 @@
         {{/each}}
     </ul>
 </div>
+
+<!-- The help modal -->
+{{#> layouts/modal-layout type="help" title="User Help" }}
+    {{#*inline "form-content"}}
+        {{> includes/help/user }}
+    {{/inline}}
+{{/layouts/modal-layout}}
