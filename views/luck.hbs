@@ -13,3 +13,10 @@
         {{> includes/game-submit-default }}
     {{/inline}}
 {{/layouts/modal-layout}}
+
+<!-- The help modal -->
+{{#> layouts/modal-layout type="help" title="Luck Help" }}
+    {{#*inline "form-content"}}
+        {{> includes/help/luck }}
+    {{/inline}}
+{{/layouts/modal-layout}}
