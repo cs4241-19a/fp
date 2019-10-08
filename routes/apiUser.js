@@ -76,40 +76,30 @@ function dbUserAuthenticate(username, password) {
   const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
   const client = new MongoClient(uri, { useNewUrlParser: true });
   try {      
-    // MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) { 
-    //    const db = client.db('finalproject');
-    //    var promise = () => {
-    //      return new Promise((resolve, reject) => {
-    //         db.collection('users').find({username: username, password: password}).toArray(function(err, data) {
-    //              err ? reject(err) : resolve('data');
-    //            });
-    //      });
-    //    };
-    //   var callPromise = async () => {
-    //       var result = await (promise());
-    //       console.log(result)
-    //       if(result.length != 0) {
-    //         console.log("username and password match! logged in successfully!")
-    //         return true
-    //       }
-    //       else {
-    //         console.log("username or password do not match. could not log in!")
-    //         return false
-    //       }
-    //    };      
-    //   callPromise().then(function(result) {          
-    //       client.close();
-    //    });    
-       MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) { 
+    MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) { 
        const db = client.db('finalproject');
-       var promise1 = new Promise(function(resolve, reject) {
-          resolve(db.collection('users').find({username: username, password: password}).toArray());
+       var promise = () => {
+         return new Promise((resolve, reject) => {
+            db.collection('users').find({username: username, password: password}).toArray(function(err, data) {
+                 err ? reject(err) : resolve('data');
+               });
+         });
+       };
+      var callPromise = async () => {
+          var result = await (promise());
+          console.log(result)
+          if(result.length != 0) {
+            console.log("username and password match! logged in successfully!")
+            return true
+          }
+          else {
+            console.log("username or password do not match. could not log in!")
+            return false
+          }
+       };      
+      callPromise().then(function(result) {          
+          client.close();
        });
-       promise1.then(function(value) {
-         console.log("value: " + value);
-       });
-       console.log("promise: " + promise1)
-       return promise1;
     }); //end mongo client   
    } 
   catch (e) {
@@ -141,7 +131,9 @@ router.post('/login', function (req, res) {
   
   var loginSuccess = false
 
-  console.log(dbUserAuthenticate(username, password))
+  dbUserAuthenticate(username, password).then(function(value) {
+    console.log("this is the value: " + value);
+  });
   
   if (loginSuccess) {
     res.cookie('username', username);
