@@ -359,5 +359,9 @@ app.get('/gamescreenshots', function(req,res){
   res.send(photos)
 })
 
+app.get('/admin', function(req,res){
+  res.redirect("https://rawg.io/login")
+})
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
