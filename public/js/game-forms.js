@@ -28,6 +28,8 @@ function submitGameData(e, gameData, handelResponse) {
         },
     });
 
+    console.log(request);
+
     fetch(request)
         .then((resp) => resp.json())
         .then(function( data ) {
