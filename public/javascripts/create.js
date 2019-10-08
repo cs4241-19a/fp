@@ -15,7 +15,7 @@ function createAccount(){
     res.text().then(function(str) {
       if (str == "OK") {
         alert("Account created!")
-        window.location = "/index";
+        window.location = "/";
       }
       if (str == "BAD") {
         alert("User exists!");
