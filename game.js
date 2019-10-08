@@ -61,7 +61,7 @@ along with the Perlenspiel devkit. If not, see <http://www.gnu.org/licenses/>.
 
 let variables = {
     //FOUR TRACKS FOR EACH INSTRUMENT
-    dataArray: [[], [], [], [], [], [], [], [], [], [], [], []],
+    dataArray: [[], [], [], [], [], [], [], [],],
     arrayLoc: 0,
     recordInfo: false,
     currentTime: 0,
@@ -77,7 +77,6 @@ let variables = {
     playbackTimer: null,
     countdownTimerCount: 3,
     countdownTimer: null,
-    guitarFiles: [],
 
 }
 
@@ -92,8 +91,6 @@ PS.init = function (system, options) {
 
     variables.timeRemaining = variables.maxSeconds;
 
-    loadGuitarAudio();
-
     PS.gridSize(32, 32);
     PS.gridColor(PS.COLOR_GRAY)
     PS.borderColor(PS.ALL, PS.ALL, PS.COLOR_BLACK)
@@ -101,8 +98,6 @@ PS.init = function (system, options) {
     pianoSetup();
 
     drumSetup();
-
-    guitarSetup();
 
     PS.statusText("Shitty Garageband");
 };
@@ -456,17 +451,6 @@ PS.exitGrid = function (options) {
     }
 };
 
-
-PS.keyDown = function (key, shift, ctrl, options) {
-    "use strict"; // Do not remove this directive!
-
-    PS.audioPlay("3-oct-e", { path: "guitarAudio/" })
-    // Uncomment the following code line to inspect first three parameters:
-
-    // PS.debug( "PS.keyDown(): key=" + key + ", shift=" + shift + ", ctrl=" + ctrl + "\n" );
-
-    // Add code here for when a key is pressed.
-};
 ////////////////////////////////////////
 ////////////////////////////////////////
 ////////////////////////////////////////
@@ -551,6 +535,17 @@ PS.keyDown = function( key, shift, ctrl, options ) {
 	// PS.debug( "PS.keyDown(): key=" + key + ", shift=" + shift + ", ctrl=" + ctrl + "\n" );
 
 	// Add code here for when a key is pressed.
+};
+
+PS.keyDown = function (key, shift, ctrl, options) {
+    "use strict"; // Do not remove this directive!
+
+    PS.audioPlay("3-oct-e", { path: "guitarAudio/" })
+    // Uncomment the following code line to inspect first three parameters:
+
+    // PS.debug( "PS.keyDown(): key=" + key + ", shift=" + shift + ", ctrl=" + ctrl + "\n" );
+
+    // Add code here for when a key is pressed.
 };
 
 */
@@ -1394,182 +1389,6 @@ function drumSetup() {
 ////////////////////////////////////////
 ////////////////////////////////////////
 ////////////////////////////////////////
-//GUITAR FUNCTIONS
-
-function loadGuitarAudio() {
-    PS.audioLoad("3-oct-e", { path: "guitarAudio/" });
-}
-
-var assignName = function (data) {
-    //PS.debug(data.channel);
-    //variables.guitarFiles.push("0-oct-a");
-}
-
-
-function guitarSetup() {
-    //GUITAR
-    for (var i = 0; i < 32; i++) {
-        for (var j = 0; j < 13; j++) {
-            PS.border(i, j, 0);
-        }
-    }
-
-    for (var j = 0; j < 13; j++) {
-        PS.border(2, j, { right: 1 })
-    }
-
-    for (var i = 5; i < 23; i += 3) {
-        for (var j = 0; j < 13; j++) {
-            PS.border(i, j, { right: 1 })
-        }
-    }
-    for (var i = 0; i < 24; i++) {
-        for (var j = 1; j < 12; j += 2) {
-            PS.color(i, j, PS.COLOR_GREY)
-            PS.alpha(i, j, Math.floor(255 / 2));
-        }
-    }
-
-
-    //RECORDING AREA
-
-    for (var i = 24; i < 32; i++) {
-        for (var j = 0; j < 5; j++) {
-            PS.visible(i, j, false);
-        }
-
-    }
-
-    PS.visible(24, 5, false);
-    PS.glyph(25, 5, "R");
-    PS.glyph(26, 5, "E");
-    PS.glyph(27, 5, "C");
-    PS.glyph(28, 5, "O");
-    PS.glyph(29, 5, "R");
-    PS.glyph(30, 5, "D");
-    PS.visible(31, 5, false);
-
-    for (var i = 24; i < 32; i++) {
-        for (var j = 6; j < 8; j++) {
-            PS.color(i, j, PS.COLOR_RED);
-        }
-    }
-
-
-    for (var j = 6; j < 8; j++) {
-        PS.border(25, j, { right: 1 });
-        PS.border(27, j, { right: 1 });
-        PS.border(29, j, { right: 1 });
-    }
-
-
-    PS.visible(24, 8, false);
-    PS.glyph(25, 8, "T");
-    PS.glyph(26, 8, "R");
-    PS.glyph(27, 8, "A");
-    PS.glyph(28, 8, "C");
-    PS.glyph(29, 8, "K");
-    PS.glyph(30, 8, "S");
-    PS.visible(31, 8, false);
-
-    for (var i = 24; i < 32; i++) {
-        for (var j = 9; j < 11; j++) {
-            PS.color(i, j, PS.COLOR_GREEN);
-        }
-    }
-
-
-    for (var j = 9; j < 11; j++) {
-        PS.border(25, j, { right: 1 });
-        PS.border(27, j, { right: 1 });
-        PS.border(29, j, { right: 1 });
-    }
-
-
-    PS.visible(24, 11, false);
-    PS.visible(25, 11, false);
-    PS.glyph(26, 11, "P");
-    PS.glyph(27, 11, "L");
-    PS.glyph(28, 11, "A");
-    PS.glyph(29, 11, "Y");
-    PS.visible(30, 11, false);
-    PS.visible(31, 11, false);
-
-    for (var i = 24; i < 32; i++) {
-        for (var j = 12; j < 13; j++) {
-            PS.color(i, j, PS.COLOR_BLUE);
-            PS.data(i, j, ["GALL"]);
-        }
-    }
-
-
-    for (var j = 9; j < 11; j++) {
-        PS.border(25, j, { right: 1 });
-        PS.border(27, j, { right: 1 });
-        PS.border(29, j, { right: 1 });
-    }
-
-    //R1
-    for (var i = 24; i < 26; i++) {
-        for (var j = 6; j < 8; j++) {
-            PS.data(i, j, ["GR1"]);
-        }
-    }
-
-    //R2
-    for (var i = 26; i < 28; i++) {
-        for (var j = 6; j < 8; j++) {
-            PS.data(i, j, ["GR2"]);
-        }
-    }
-
-    //R3
-    for (var i = 28; i < 30; i++) {
-        for (var j = 6; j < 8; j++) {
-            PS.data(i, j, ["GR3"]);
-        }
-    }
-
-    //R4
-    for (var i = 30; i < 32; i++) {
-        for (var j = 6; j < 8; j++) {
-            PS.data(i, j, ["GR4"]);
-        }
-    }
-
-    //P1
-    for (var i = 24; i < 26; i++) {
-        for (var j = 9; j < 11; j++) {
-            PS.data(i, j, ["GP1"]);
-        }
-    }
-
-    //P2
-    for (var i = 26; i < 28; i++) {
-        for (var j = 9; j < 11; j++) {
-            PS.data(i, j, ["GP2"]);
-        }
-    }
-
-    //P3
-    for (var i = 28; i < 30; i++) {
-        for (var j = 9; j < 11; j++) {
-            PS.data(i, j, ["GP3"]);
-        }
-    }
-
-    //P4
-    for (var i = 30; i < 32; i++) {
-        for (var j = 9; j < 11; j++) {
-            PS.data(i, j, ["GP4"]);
-        }
-    }
-}
-
-////////////////////////////////////////
-////////////////////////////////////////
-////////////////////////////////////////
-////////////////////////////////////////
 //RECOLOR FUNCTIONS
 
 function HighlightKey(data) {
@@ -2026,145 +1845,10 @@ function playAudio(data) {
                 playBackData("DRUMS");
             }
             break;
-        //GUITAR
-        case 21:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 22:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 23:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 24:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 25:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 26:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 27:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 28:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 29:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 30:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 31:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 32:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 33:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 34:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 35:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 36:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 37:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 38:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 39:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 40:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 41:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 42:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 43:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 44:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 45:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 46:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 47:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 48:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 49:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 50:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 51:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 52:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case "GR1":
-            if (!variables.recordInfo) {
-                startRecording(8);
-            }
-            break;
-        case "GR2":
-            if (!variables.recordInfo) {
-                startRecording(9);
-            }
-            break;
-        case "GR3":
-            if (!variables.recordInfo) {
-                startRecording(10);
-            }
-            break;
-        case "GR4":
-            if (!variables.recordInfo) {
-                startRecording(11);
-            }
-            break;
-        case "GP1":
+        //TOTAL AUDIO
+        case "ALL":
             if (!variables.playingBack) {
-                playBackData(8);
-            }
-            break;
-        case "GP2":
-            if (!variables.playingBack) {
-                playBackData(9);
-            } break;
-        case "GP3":
-            if (!variables.playingBack) {
-                playBackData(10);
-            }
-            break;
-        case "GP4":
-            if (!variables.playingBack) {
-                playBackData(11);
-            }
-            break;
-        case "GALL":
-            if (!variables.playingBack) {
-                playBackData("GUITAR");
+                playBackData("ALL");
             }
             break;
     }
