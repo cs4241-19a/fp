@@ -10,8 +10,6 @@ function logIn() {
     },
     method: "POST",
     body: body
-  }).then(function(res){
-    res.
   })
 }
 
