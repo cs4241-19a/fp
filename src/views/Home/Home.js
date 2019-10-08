@@ -41,7 +41,7 @@ class Home extends Component {
         const body = await response.json();
         if (response.status !== 200) throw Error(body.message);
         console.log(Object.values(body));
-        this.setState({ budgets: Object.values(body) });
+        this.setState({ budgets: body.budgets });
     }
 
     showUsers = user => <li key={user.id}>{user.username}</li>
@@ -63,9 +63,9 @@ class Home extends Component {
             body: JSON.stringify({ name: this.state.name, requested: 3000, approved: 2700 }),
         });
         const body = await response;
-
-        this.setState({ budgets: Object.values(body) });
-        this.getBudgets();
+        if (body) {
+            this.getBudgets();
+        }
     };
 
     render() {
