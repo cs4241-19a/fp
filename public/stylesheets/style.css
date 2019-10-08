@@ -61,3 +61,35 @@ img {
     width: 200px;
     height: 200px;
 }
+
+.label {
+    margin: 2em;
+}
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 200px;
+    overflow: auto;
+}
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+.table tbody tr.highlight td {
+    background-color: #ddd;
+}
+#current-track {
+    width: 83px;
+    height: 75px;
+}
+.hidden-data {
+    visibility: hidden;
+}
+
+.id-data {
+    visibility: hidden;
+}
+
+#rec-btn-div {
+    text-align: center;
+}

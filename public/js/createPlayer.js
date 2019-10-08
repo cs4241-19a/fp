@@ -46,13 +46,13 @@ function createPlayer(_token) {
     };
     (async () => {
         console.log("inside player with " + _token)
-
         player = new Spotify.Player({
             name: 'Web Playback SDK Template',
             getOAuthToken: cb => {
                 cb(_token)
             }
         })
+
         // Error handling
         player.on('initialization_error', e => console.error(e))
         player.on('authentication_error', e => console.error(e))
@@ -72,7 +72,6 @@ function createPlayer(_token) {
             playerData = data
             // Play a track using our new device ID
             getAudio(data.device_id)
-
         })
 
         // Connect to the player!
