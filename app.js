@@ -137,9 +137,9 @@ app.get('/userData', function(req, res) {
   });
 });
 
-app.get('/jobList', function(req, res) {
+app.get('/jobList', async function(req, res) {
   await jobCol.find({}).toArray().then(jobList => {
-    res.json(result);
+    res.json(jobList);
   });
 });
 

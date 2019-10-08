@@ -1,27 +1,3 @@
-window.onload = async function() {
-    const button = document.querySelector('.modify');
-    button.onclick = modifyForm;
-    const button2 = document.querySelector('.submit');
-    button2.onclick = submitForm;
-
-    const names = [];
-
-    try{
-        const response = await fetch('/users');
-        data = await response.json();
-        data.forEach(function(result){
-            names.push(result.name);
-        })
-        
-        console.log(names);
-    } catch(error){
-        console.log("oopsie error");
-         console.log(error);
-    }
-    
-        autocomplete(document.getElementById("name"), names);
-}
-
 const modifyForm = function( e ) {
     // prevent default form action from being carried out
     e.preventDefault();
@@ -139,5 +115,5 @@ function autocomplete(inp, arr) {
   document.addEventListener("click", function (e) {
       closeAllLists(e.target);
   });
-  }
+}
   //End W3 Schools
