@@ -25,6 +25,7 @@ let totalLuck = 0;
  * @author: jk
  */
 function preload() {
+    // assets from www.flaticon.com
     this.load.image("potOfGold", "/assets/luck/pot-of-gold.svg");
 }
 
