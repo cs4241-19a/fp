@@ -40,7 +40,7 @@ h2{
 
 .col-sp{
     width: 480px;
-    margin: auto;
+    /*margin: auto;*/
 }
 
 .modal-dialog{
