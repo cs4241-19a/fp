@@ -41,6 +41,30 @@ h1,h3{
     align-items: center;
 }
 
+#finalResults{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    align-items: center;
+}
+
+#finalResults .result{
+    width: 50px;
+    height: 50px;
+}
+
+#finalResults2{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    align-items: center;
+}
+
+#finalResults2 .result{
+    width: 50px;
+    height: 50px;
+}
+
 #rounds{
     float:right;
     margin-right: 30px;
