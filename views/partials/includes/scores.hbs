@@ -24,7 +24,8 @@
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="scoresGameDropdownBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Game</button>
                                 <div id="scoreGameDD" class="dropdown-menu" aria-labelledby="scoresGameDropdownBtn">
                                     {{#each this.scoresGameDropdownData as |game|}}
-                                        <button class="dropdown-item" type="button" onclick="onGameChange(this)" title="{{ shortDesc }}" data-game-id="{{ gameId }}" data-name="{{ name }}" data-order-dir="{{ scoreOrder }}">{{ name }}</button>                                    {{/each}}
+                                        <button class="dropdown-item" type="button" onclick="onGameChange(this)" title="{{ shortDesc }}" data-game-id="{{ gameId }}" data-name="{{ name }}" data-order-dir="{{ scoreOrder }}">{{ name }}</button>
+                                    {{/each}}
                                 </div>
                             </div>
                         </div>
