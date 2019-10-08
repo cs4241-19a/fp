@@ -3,7 +3,60 @@ import './Dashboard.css'
 import Tabulator from "tabulator-tables"; //import Tabulator library
 import * as tableFunctions from './TableFunctions.js'
 
-class Dashboard extends Component {
+
+class Field extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    componentDidMount() {
+    }
+    
+    render() {
+        return(
+            <section class="section field">
+                <div class="columns">
+                    <div class="column">
+                        <div class="notification" id="nameBox">
+                        <form class="item" action="">
+                            <h5> Enter Club Name: </h5>
+                            <input class="selStyle" type='text' id='name'/>
+                        </form>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="notification" id="requestBox">
+                            <div class="item">
+                                <h5> Enter Requested Amount: </h5>
+                                <input class="selStyle" type='text' id='request'/>
+                            </div>              
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="notification" id="approveBox">
+                            <div class="item">
+                                <h5> Enter Approved Amount: </h5>
+                                <input class="selStyle" type='text' id='approve'/>
+                            </div>              
+                        </div>
+                    </div>
+                </div>
+            </section>)     
+    }
+}
+
+class Submit extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    componentDidMount() {
+    }
+}
+
+class Table extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -11,7 +64,7 @@ class Dashboard extends Component {
     el = React.createRef();
 
     tabulator = null; //variable to hold your table
-    budgets = [
+    budgets = [ // sample data
         {
             "id": 1,
             "name": "Cheese Club",
@@ -42,7 +95,10 @@ class Dashboard extends Component {
     componentDidMount() {
          //instantiate Tabulator when element is mounted
         this.tabulator = new Tabulator(this.el, {
-        data: this.budgets, /* TODO - change to this.getData() */
+        
+            /* TODO - change to this.getData() */
+        data: this.budgets, 
+
         layout:"fitColumns",      //fit columns to width of table
 	    responsiveLayout:"hide",  //hide columns that dont fit on the table
 	    tooltips:true,            //show tool tips on cells
@@ -95,13 +151,36 @@ class Dashboard extends Component {
         this.setState({ users: body.users });
     }
 
+    render() {
+        return (
+            <section class = "section table">
+                <div ref={el => (this.el = el)} />
+            </section>
+        )
+    }
+}
+
+class Dashboard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    componentDidMount() {
+    }
   
     //add table holder element to DOM
     render() {
       return (
-        <div class = "table">
-            <div ref={el => (this.el = el)} />
-        </div>
+        <div>
+            <br></br>
+            <h1> To do: Add submit data option on top of table </h1>
+            <h1> To do: Add export options on the bottom of the table </h1>
+            <h1> To do: Add confirmation on edit of cells </h1>
+            <br></br>
+            <Field></Field>
+            <Table></Table>
+        </div>  
       );
     }  
 }

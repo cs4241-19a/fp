@@ -6,3 +6,11 @@
     margin-left: 50px;
     margin-right: 50px;
 }
+
+.field {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    margin-left: 50px;
+    margin-right: 50px;
+}

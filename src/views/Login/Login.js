@@ -4,7 +4,6 @@ import 'bulma/css/bulma.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEnvelope, faUserLock, faKey, faAddressCard } from '@fortawesome/free-solid-svg-icons';
-
 library.add(faEnvelope, faUserLock, faKey, faAddressCard);
 
 class Field extends Component {
