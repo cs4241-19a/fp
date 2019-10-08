@@ -95,7 +95,7 @@
   ],
   "rooms": [
     {
-      "name": "Room 1",
+      "name": "Raphael",
       "availability": {
         "sunday": [
           "9:00",
@@ -141,7 +141,7 @@
       }
     },
     {
-      "name": "Room 2",
+      "name": "Frida Kahlo",
       "availability": {
         "sunday": [],
         "monday": [
@@ -166,7 +166,7 @@
       }
     },
     {
-      "name": "Room 3",
+      "name": "Claude Monet",
       "availability": [
         {
           "sunday": [],
@@ -178,6 +178,19 @@
           "saturday": []
         }
       ]
-    }
+    },
+    {
+      "name": "Claude Monet",
+      "availability": [
+        {
+          "sunday": [],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ]
   ]
 }
