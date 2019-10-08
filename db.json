@@ -1,33 +1,5 @@
 {
-  "queue": [
-    {
-      "id": "16",
-      "spotify_uri": "spotify:track:03UrZgTINDqvnUMbbIMhql",
-      "song_name": "Gangnam Style (강남스타일)",
-      "artist_name": "PSY",
-      "length": "3:39"
-    },
-    {
-      "id": "19",
-      "spotify_uri": "spotify:track:30Chv2SmIry70YwtmtaKnj",
-      "song_name": "Hello",
-      "artist_name": "J. Cole",
-      "length": "3:39"
-    },
-    {
-      "id": "20",
-      "spotify_uri": "spotify:track:0mHyWYXmmCB9iQyK18m3FQ",
-      "song_name": "Hello",
-      "artist_name": "Lionel Richie",
-      "length": "4:11"
-    }
-  ],
-  "users": [
-    {
-      "id": "mikeyboss46",
-      "displayName": "Michael Bosik",
-      "token": "BQCtXcTlJzYBqxkZws8PRO4aMozVS8RCJkS_PhzaziPpsSKj85tolvMJSYUKXHPCiLUFlR8xNur450Ug7Pd_9-LagZDT5rGWrruCkQXXEV2tFydShiVFH8Eu4PKc1yzZ1QP6E9heQ3Z5n3UxQxEU-w"
-    }
-  ],
-  "count": 21
+  "queue": [],
+  "users": [],
+  "count": 0
 }

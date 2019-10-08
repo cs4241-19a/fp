@@ -88,15 +88,6 @@ let cooldown = 0;
 let user = null;
 let count = 0;
 
-function logOut() {
-  $.get('/logout', function(data, status) {
-    if (status == 'success') {
-      console.log('Logged out of session.');
-    }
-  });
-  document.getElementById('log-in-modal').style.display = 'block';
-}
-
 function search(e) {
   e.preventDefault();
   document.getElementById('searchTable').innerHTML = '';
@@ -216,6 +207,6 @@ function init() {
   updateQueue();
 }
 
-module.exports = {init, logOut, search, queue, deleteItem};
+module.exports = {init, search, queue, deleteItem};
 
 },{}]},{},[]);

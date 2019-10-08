@@ -3,3 +3,4 @@ package.json
 package-lock.json
 styles/.sass-cache/
 styles/style.css.map
+db.json
