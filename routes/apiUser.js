@@ -26,6 +26,8 @@ function dbUserAdd(username, password) {
 
 // check if a username is taken, returning true if it is and false if not
 function dbUserExists(username) {
+  console.log("checking if username exists...")
+  
   const MongoClient = require('mongodb').MongoClient;
   const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
   const client = new MongoClient(uri, { useNewUrlParser: true });
@@ -44,7 +46,7 @@ function dbUserExists(username) {
       var callPromise = async () => {
           var result = await (promise());
           console.log(result)
-          if(result != null && result.username != undefined) {
+          if(result.length != 0) {
             console.log("user exists, returning true")
             return true
           }
@@ -66,6 +68,8 @@ function dbUserExists(username) {
 
 // check if the user both exists and matches the given password, returning true if valid and false if not
 function dbUserAuthenticate(username, password) {
+  console.log("authenticating user...")
+  
   const MongoClient = require('mongodb').MongoClient;
   const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
   const client = new MongoClient(uri, { useNewUrlParser: true });
@@ -84,10 +88,12 @@ function dbUserAuthenticate(username, password) {
       var callPromise = async () => {
           var result = await (promise());
           console.log(result)
-          if(result != null && result != undefined) {
+          if(result.length != 0) {
+            console.log("username and password match! logged in successfully!")
             return true
           }
           else {
+            console.log("username or password do not match. could not log in!")
             return false
           }
        };      
@@ -100,6 +106,9 @@ function dbUserAuthenticate(username, password) {
      console.log(e)
    }
 }
+
+dbUserExists("username", "password")
+// dbUserAuthenticate("balls", "admin")
 
 /* ### ROUTES ### */
 router.post('/create', function (req, res) {
