@@ -22,7 +22,7 @@ const CONSTANTS={
     p1: 1,
     p2: 2
   },
-  MAX_PIECES: 6
+  MAX_PIECES: 5
 };
 //object.freeze incurs a performance penalty but its nice for
 //making sure the values don't change.

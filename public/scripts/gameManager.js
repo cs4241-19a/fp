@@ -21,6 +21,8 @@ class GameManager {
   state;
   stateTransitionKey;
   confirmKey;
+  // UI information
+  uiText;
   //resources are used as health and currency, once they hit 0 the player loses
   playerOneResources;
   playerOneResourceText;
@@ -35,6 +37,7 @@ class GameManager {
     this.p1Pieces = [];
     this.p2Pieces = [];
     this.buyList = [];
+    this.uiText = [];
     this.state = CONSTANTS.STATES.buy;
     this.playerOneResources = this.playerTwoResources = CONSTANTS.INIT_RESOURCES;
     this.turn = CONSTANTS.TURN.p1;
@@ -130,7 +133,10 @@ class GameManager {
     }
   }
 
-
+  static resetInstance() {
+    GameManager._instance = new GameManager();
+    return GameManager._instance;
+  }
   /**
    * creates the instance of the GameManager
    */

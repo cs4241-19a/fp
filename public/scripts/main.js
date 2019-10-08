@@ -1,13 +1,14 @@
 const Phaser = require('phaser');
 const Setup = require('./state_helpers/setupHelper');
 const Fight = require('./state_helpers/fightHelper');
+const UIhelper = require('./state_helpers/uiHelper');
 
 import GameManager from "./gameManager";
 import createMap from "./map";
 import CONSTANTS from "./constants";
 
 
-const gameManager = GameManager.getInstance();
+let gameManager;
 
 let config = {
   type: Phaser.AUTO,
@@ -50,6 +51,8 @@ function preload() {
  * This happens once everything is read
  */
 function create() {
+  console.log('starting game');
+  gameManager = GameManager.resetInstance();
   // leave space for 2, 100px setup areas for either player
   const actualHeight = CONSTANTS.HEIGHT - CONSTANTS.SETUP_AREA_HEIGHT * 2;
   const gameBoard = createMap(actualHeight, CONSTANTS.WIDTH, 2, CONSTANTS.TILE_SIZE);
@@ -72,7 +75,6 @@ function create() {
   // initalize the fight state resources
   gameManager.p1FightPieces = this.physics.add.group();
   gameManager.p2FightPieces = this.physics.add.group();
-
   // add the collider group for the fightPieces
   this.physics.add.collider(gameManager.p1FightPieces, gameManager.p2FightPieces, Fight.attack,
       null, this);
@@ -87,6 +89,7 @@ function create() {
   gameManager.stateTransitionKey = this.input.keyboard.addKey('SPACE');  // Get key object
   gameManager.confirmKey = this.input.keyboard.addKey('y');
   gameManager.initBuyList(CONSTANTS.P1, this);
+  UIhelper.initHelper(this);
 }
 
 // if the space key has been pressed, return true otherwise return false.
@@ -102,6 +105,7 @@ function confirm(){
  * This is run each frame
  */
 function update() {
+  // add UI text to buyList items, pieces & fight Pieces
   // buy state
   if (gameManager.state === CONSTANTS.STATES.buy) {
     if (gameManager.turn === CONSTANTS.TURN.p1) {
@@ -176,8 +180,23 @@ function update() {
       gameManager.state = CONSTANTS.STATES.buy;
       gameManager.turn = CONSTANTS.TURN.p1;
       gameManager.p1Ready = gameManager.p2Ready = false;
-      console.log('returning to buy state');
+      if(gameManager.playerOneResources < 0) {
+        gameManager.state = CONSTANTS.STATES.gameOver;
+        this.add.text(CONSTANTS.WIDTH/2 - 200, CONSTANTS.HEIGHT/2 - 200,
+            `PLAYER 2 WINS\nRESTART WITH SPACE`, {fontSize: '32px', fill: '#000'});
+      }
+      if (gameManager.playerTwoResources < 0) {
+        gameManager.state = CONSTANTS.STATES.gameOver;
+        this.add.text(CONSTANTS.WIDTH/2 - 200, CONSTANTS.HEIGHT/2 - 200,
+            `PLAYER 1 WINS\nRESTART WITH SPACE`, {fontSize: '32px', fill: '#000'});
+      }
     }
   }
+  if(gameManager.state === CONSTANTS.STATES.gameOver) {
+    if(changeState()) {
+      this.scene.restart();
+    }
+  }
+  UIhelper.paintText();
 
 }
