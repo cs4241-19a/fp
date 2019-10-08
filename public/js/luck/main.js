@@ -19,7 +19,6 @@ const startReadings = 10;
 let readingsLeft = startReadings;
 let totalLuck = 0;
 
-// assets from www.flaticon.com
 /**
  * Load game assets.
  * @author: jk
