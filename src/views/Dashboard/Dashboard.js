@@ -5,6 +5,24 @@ import 'react-tabulator/lib/css/tabulator.min.css'; // theme
 import { ReactTabulator } from 'react-tabulator'; // for React 15.x, use import { React15Tabulator }
 import * as tableFunctions from './TableFunctions.js'
 
+class Graph extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    componentDidMount() {
+    }
+
+    render() {
+        return(
+            <section class="center">
+                <br></br>
+                Give me a pretty graph :)
+            </section>
+        )
+    }
+}
 
 class Field extends Component {
     constructor(props) {
@@ -59,7 +77,7 @@ class Submit extends Component {
 
     render() {
         return(
-            <section class="section center submitButton">
+            <section class=" section center submitButton">
                 <a class="button btn is-primary is-focused is-fullwidth" id="submit" disabled>Submit Data</a>
             </section>)
     }
@@ -162,6 +180,7 @@ class Dashboard extends Component {
     render() {
         return(
             <div>
+                <Graph></Graph>
                 <Field></Field>
                 <Submit></Submit>
                 <Table></Table>
