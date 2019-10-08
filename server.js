@@ -9,28 +9,32 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-let budgets = {
-    1: {
+let budgets = [
+    {
+        "id": 1,
         "name": "Cheese Club",
         "requested": 3000,
         "approved": 2500
     },
-    2: {
+    {
+        "id": 2,
         "name": "Soccomm Movies",
         "requested": 4500,
         "approved": 4500
     },
-    3: {
+    {
+        "id": 3,
         "name": "Ski Club",
         "requested": 3600,
         "approved": 3300
     },
-    4: {
+    {
+        "id": 4,
         "name": "Women In ECE",
         "requested": 400,
         "approved": 300
     },
-};
+];
 
 var con = mysql.createConnection({
     host: "localhost",
@@ -61,12 +65,13 @@ app.post('/api/world', (req, res) => {
 
 app.get('/api/home', (req, res) => {
     // Remember to add id as props when doing mysql, I want array syntax, but efficiency of a map/object
-    res.json(budgets);
+    res.json({budgets: budgets});
 });
 
 app.post('/api/addBudget', (req, res) => {
     console.log(`Adding budget for ${req.body.name}`)
-    budgets[budgets.length] = req.body;
+    req.body.id = budgets.length;
+    budgets.push(req.body);
     res.send(true);
 });
 
