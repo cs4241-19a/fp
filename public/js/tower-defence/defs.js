@@ -18,18 +18,18 @@ const cellTypes = {
 
 
 
-
 const cellSize = {width: 40, height: 40};
-const enemyEnterCoord = {x: (myGame.width / cellSize.width) - 1, y: 1};
-const btmLeft = {x: 0, y: (myGame.height / cellSize.height) - 1};  // the bottom left cell of the grid. where the base is
+const playArea = {width: myGame.width, height: myGame.height - cellSize.height};
+const enemyEnterCoord = {x: (playArea.width / cellSize.width) - 1, y: 1};
+const btmLeft = {x: 0, y: (playArea.height / cellSize.height) - 1};  // the bottom left cell of the grid. where the base is
 const baseEntrance = {x: btmLeft.x + 1, y: btmLeft.y};
 
 const grid = [];
 (() => {
-    for (let i = 0; i < myGame.height / cellSize.height; i++) {
+    for (let i = 0; i < playArea.height / cellSize.height; i++) {
         grid[i] = [];
-        for (let j = 0; j < myGame.width / cellSize.width; j++) {
-            if (i === 0 || j === 0 || i === (myGame.height / cellSize.height) - 1 || (i !== enemyEnterCoord.y && j === (myGame.width / cellSize.width) - 1)) {
+        for (let j = 0; j < playArea.width / cellSize.width; j++) {
+            if (i === 0 || j === 0 || i === (playArea.height / cellSize.height) - 1 || (i !== enemyEnterCoord.y && j === (playArea.width / cellSize.width) - 1)) {
                 // add BLOCKs to top, bottom, left, and right. Except the second one down on the right
                 grid[i][j] = cellTypes.BLOCK;
             } else {

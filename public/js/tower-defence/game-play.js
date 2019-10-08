@@ -24,7 +24,7 @@ const gamePlayState = new Phaser.Class({
 
         const truck = scene.add.image(-500, -500, "truck3b");
         truck.angle = 90;
-        scene.e1 = Enemy(truck, 0.0001);
+        scene.e1 = Enemy(truck, 0.003);
         console.log(scene.e1);
     },
 
@@ -54,13 +54,13 @@ function Enemy(sprite, moveSpeed) {
     let pathPoints;
     let moveIdx = 0;
     let atBase = false;
-    const spriteRotation = sprite.rotation;
+    const spriteRotation = sprite.rotation;  // should be passed in facing right
+
 
     function move() {
         if (!pathPoints) {
             pathPoints = getPathPoints(enemyEnterCoord);
         }
-        // console.log(pathPoints);
         if (!atBase) {
             const gx = Phaser.Math.Interpolation.CatmullRom(pathPoints.x, moveIdx);
             const gy = Phaser.Math.Interpolation.CatmullRom(pathPoints.y, moveIdx);
