@@ -61,6 +61,42 @@ app.get('/getLeaderboardData', function (request, response) {
     response.send(leaderboardData);
 });
 
+app.post('/newLeaderboardTime', function (request, response) {
+    let leaderboardData = [];
+    let newData = {
+        user: request.session.passport.user,
+        time: request.body.time
+    };
+    db.get('leaderboardData').catch(err => {
+        if (err.name === 'not_found') {
+            leaderboardData.push(newData);
+            leaderboardData = {
+                _id: 'leaderboardData',
+                leaderboardData: leaderboardData
+            };
+            db.upsert('leaderboardData', function(doc) {
+                doc.counter = doc.counter || 0;
+                doc.counter++;
+                doc.leaderboardData = leaderboardData;
+                return doc;
+            }).catch (err => {
+                console.log(err);
+            });
+        }
+    }).then(doc => {
+        leaderboardData = doc.leaderboardData;
+        leaderboardData.push(newData);
+        db.upsert('leaderboardData', function(doc) {
+            doc.counter = doc.counter || 0;
+            doc.counter++;
+            doc.leaderboardData = leaderboardData;
+            return doc;
+        }).catch (err => {
+            console.log(err);
+        });
+    });
+});
+
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/index', failureRedirect: '/', failureFlash: 'Invalid username or password'
 }));
@@ -107,10 +143,6 @@ app.post('/createUser', function (req, res) {
             password: newUser.newPassword,
         };
         User.push(newUser);
-        let userDoc = {
-            _id: 'users',
-            users: User
-        };
         db.upsert('users', function (doc) {
             doc.counter = doc.counter || 0;
             doc.counter++;

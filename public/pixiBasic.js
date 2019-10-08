@@ -92,7 +92,7 @@ app.ticker.add(function(delta) {
             if (count > 0) {
                 count--;
                 fallDone = false;
-            } else if (count == 0) {
+            } else if (count === 0) {
                 fallDone = true;
             }
         }
@@ -103,7 +103,7 @@ app.ticker.add(function(delta) {
             activeChar.y += activeChar.vy;
         }
         tics++;
-        if (tics % 60 == 0) {
+        if (tics % 60 === 0) {
             time++;
             pixiTimer.text = "time:" + time.toString();
         }
@@ -167,18 +167,18 @@ let left = keyboard("ArrowLeft"),
 
 //key functions
 left.press = function(){
-    'use strict'
+    'use strict';
     activeChar.vx += -5;
-}
+};
 right.press = function(){
-    'use strict'
+    'use strict';
     activeChar.vx += 5;
-}
+};
 right.release = function(){
-    'use strict'
+    'use strict';
     activeChar.vx = 0;
-}
+};
 left.release = function(){
-    'use strict'
+    'use strict';
     activeChar.vx = 0;
-}
+};

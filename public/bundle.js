@@ -44644,7 +44644,7 @@ app.ticker.add(function (delta) {
       if (count > 0) {
         count--;
         fallDone = false;
-      } else if (count == 0) {
+      } else if (count === 0) {
         fallDone = true;
       }
     }
@@ -44659,7 +44659,7 @@ app.ticker.add(function (delta) {
 
     tics++;
 
-    if (tics % 60 == 0) {
+    if (tics % 60 === 0) {
       time++;
       pixiTimer.text = "time:" + time.toString();
     }
