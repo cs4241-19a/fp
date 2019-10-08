@@ -20,9 +20,6 @@ const createAvailabilityTable = async function () {
     document.getElementById('room-table-label').innerText = selected_room;
 
     if (availability){
-      // document.getElementById('room-avail').innerText = JSON.stringify(availability);
-
-      /* INSERT TABLE BUILDING HERE */
       // get the table
       let htmlDiv = document.getElementById('room-avail-table');
 
@@ -44,6 +41,7 @@ const createAvailabilityTable = async function () {
       //TODO: change military time to user friendly time
       for (let i = 9; i < 18; i++) {
         // build each interval row
+        console.log(i);
         htmlDiv.innerHTML += createRow(availability, `${i}:00`, true);
         htmlDiv.innerHTML += createRow(availability, `${i}:30`, false);
       }
@@ -184,9 +182,6 @@ function populateTimeInput() {
   for (i = start_value; i < 17; i++) {
     for (j = 0; j < 2; j++) {
       time = i + ":" + halfHours[j];
-      if (i < 10) {
-        time = "0" + time;
-      }
       times.push(time);
     }
   }
@@ -224,9 +219,6 @@ const childDropDown = function(e) {
   for (i = start_value; i < 18; i++) {
     for (j = 0; j < 2; j++) {
       time = i + ":" + halfHours[j];
-      if (i < 10) {
-        time = "0" + time;
-      }
       times.push(time);
     }
   }
@@ -273,9 +265,6 @@ const submitButtonClicked = function(e) {
   for(i = start_value; i < end_hour; i++){
     for(j = 0; j < 2; j++){
       time = i + ":" + halfHours[j];
-      if(i < 10){
-        time = "0" + time;
-      }
       times.push(time);
     }
   }
@@ -299,7 +288,6 @@ const submitButtonClicked = function(e) {
     day: selected_day,
     times: out_put_times
   };
-  alert(selected_day + ":" + out_put_times);
 
   buildAvailability(newAvailability).then(() => console.log(''));
 

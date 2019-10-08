@@ -127,8 +127,7 @@
         ],
         "monday": [
           "9:00",
-          "09:30",
-          "09:30"
+          "9:30"
         ],
         "tuesday": [
           "10:00",
@@ -163,8 +162,8 @@
       "availability": {
         "sunday": [],
         "monday": [
-          "09:00",
-          "09:30",
+          "9:00",
+          "9:30",
           "10:00",
           "10:30",
           "11:00",
@@ -185,101 +184,110 @@
     },
     {
       "name": "Claude Monet",
-      "availability": [
-        {
-          "sunday": [],
-          "monday": [],
-          "tuesday": [],
-          "wednesday": [],
-          "thursday": [],
-          "friday": [],
-          "saturday": []
-        }
-      ]
+      "availability": {
+        "sunday": [],
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
     },
     {
       "name": "Edvard Munch",
-      "availability": [
-        {
-          "sunday": [],
-          "monday": [],
-          "tuesday": [],
-          "wednesday": [],
-          "thursday": [],
-          "friday": [],
-          "saturday": []
-        }
-      ]
+      "availability": {
+        "sunday": [
+          "9:00",
+          "9:30",
+          "10:00"
+        ],
+        "monday": [],
+        "tuesday": [
+          "9:00",
+          "9:30",
+          "10:00",
+          "10:30",
+          "11:00",
+          "11:30",
+          "12:00",
+          "12:30",
+          "13:00",
+          "13:30",
+          "14:00",
+          "14:30",
+          "15:00",
+          "15:30",
+          "16:00",
+          "16:30",
+          "17:00",
+          "17:30"
+        ],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
     },
     {
       "name": "Henri Matisse",
-      "availability": [
-        {
-          "sunday": [],
-          "monday": [],
-          "tuesday": [],
-          "wednesday": [],
-          "thursday": [],
-          "friday": [],
-          "saturday": []
-        }
-      ]
+      "availability": {
+        "sunday": [],
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
     },
     {
       "name": "Michelangelo",
-      "availability": [
-        {
-          "sunday": [],
-          "monday": [],
-          "tuesday": [],
-          "wednesday": [],
-          "thursday": [],
-          "friday": [],
-          "saturday": []
-        }
-      ]
+      "availability": {
+        "sunday": [],
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
     },
     {
       "name": "Leonardo da Vinci",
-      "availability": [
-        {
-          "sunday": [],
-          "monday": [],
-          "tuesday": [],
-          "wednesday": [],
-          "thursday": [],
-          "friday": [],
-          "saturday": []
-        }
-      ]
+      "availability": {
+        "sunday": [],
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
     },
     {
       "name": "Vincent van Gogh",
-      "availability": [
-        {
-          "sunday": [],
-          "monday": [],
-          "tuesday": [],
-          "wednesday": [],
-          "thursday": [],
-          "friday": [],
-          "saturday": []
-        }
-      ]
+      "availability": {
+        "sunday": [],
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
     },
     {
       "name": "Pablo Picasso",
-      "availability": [
-        {
-          "sunday": [],
-          "monday": [],
-          "tuesday": [],
-          "wednesday": [],
-          "thursday": [],
-          "friday": [],
-          "saturday": []
-        }
-      ]
+      "availability": {
+        "sunday": [],
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
     }
   ]
 }
