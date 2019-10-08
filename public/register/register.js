@@ -9,6 +9,34 @@ const age = document.querySelector('#age');
 const genderS = document.getElementsByName('gender');
 const hobbyS = document.getElementsByName('hobby');
 
+const inpFile = document.getElementById('inpFile')
+const previewContainer = document.getElementById('imagePreview')
+const previewImage = previewContainer.querySelector('.image-preview__image')
+const previewDefaultText = previewContainer.querySelector('.image-preview__default-text')
+let imgSrc
+
+inpFile.addEventListener('change', function(e) {
+    const file = this.files[0]
+    console.log(file)
+    if (file) {
+        const reader = new FileReader()
+        previewDefaultText.style.display = 'none'
+        previewImage.style.display = 'block'
+        reader.addEventListener('load', function() {
+            console.log(this)
+            imgSrc = this.result
+            previewImage.setAttribute('src', this.result)
+        })
+        reader.readAsDataURL(file)
+    } else {
+        previewDefaultText.style.display = null
+        previewImage.style.display = null
+        previewImage.setAttribute('src', '')
+    }
+    e.preventDefault()
+    return false
+})
+
 let gender
 let hobby
 
@@ -45,7 +73,8 @@ const submit = function(e) {
                 blackList: [],
                 comments: [],
                 likes: 0,
-                dislikes: 0
+                dislikes: 0,
+                pic: imgSrc
             }
             fetch(`/add`, {
                 method: 'POST',

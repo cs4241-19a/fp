@@ -145,7 +145,12 @@ fetch('/getYou', {
         else score -= 10;
         score -= Math.abs(you.age - row.age);
         return score;
-    };
+    }
+    const makeImg = function(row) {
+        let img = createNode('img')
+        if (row.pic) img.src = row.pic
+        return img
+    }
     const makeRow = function(row) {
         let tr = createNode('tr')
         let td1 = createNode('th')
@@ -158,19 +163,19 @@ fetch('/getYou', {
         let td8 = createNode('th')
         let td9 = createNode('th')
         let td10 = createNode('th')
-        let td11 = createNode('th')
 
         td1.innerHTML = row.name;
         append(td2, makeGender(row));
         td3.innerHTML = row.age;
         td4.innerHTML = row.hobby;
-        td5.innerHTML = calculateScore(row);
-        td6.innerHTML = row.likes
-        td7.innerHTML = row.dislikes
+        td5.innerHTML = calculateScore(row)
+        td6.innerHTML = row.likes + ' '
+        append(td6, makeLike(row))
+        td7.innerHTML = row.dislikes + ' '
+        append(td7, makeDislike(row))
         append(td8, makeHeart(row))
         append(td9, makeBomb(row))
-        append(td10, makeLike(row))
-        append(td11, makeDislike(row))
+        append(td10, makeImg(row))
 
         append(tr, td1)
         append(tr, td2)
@@ -182,7 +187,6 @@ fetch('/getYou', {
         append(tr, td8)
         append(tr, td9)
         append(tr, td10)
-        append(tr, td11)
 
         return tr
     }

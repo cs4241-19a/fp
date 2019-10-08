@@ -4,7 +4,9 @@ const app = express();
 
 const bodyParser = require('body-parser');
 app.use(express.static('public'));
-app.use(bodyParser.json());
+// app.use(bodyParser.json())
+app.use(bodyParser.json({ limit: '10mb', extended: true }))
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }))
 
 const morgan = require('morgan')
 app.use(morgan('tiny'))
