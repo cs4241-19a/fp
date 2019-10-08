@@ -39,67 +39,31 @@ export default function LoginApp(props) {
 
 	return (
 		<div className="w-full">
-			<div className="w-full lg:max-w-full lg:flex padder">
-				<div
-					className="w-1/4 h-64 lg:h-auto flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" id="introLogo" title="Logo">
-				</div>
-				<div className="w-3/4 h-64">
+			<div className="w-full padder">
+				<div className="w-full lg:max-w-full lg:flex glower">
 					<div
-						className="w-full h-64 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-						<div className="mb-8">
-							<p className="text-sm text-gray-600 flex items-center">
-							</p>
-							<div className="text-gray-900 font-bold text-xl mb-2">What in the world is <a className="offClr">soundcloudish</a> ?
-							</div>
-							<p className="text-gray-700 text-base">
-								It's just as the name suggests. It's a soundcloud-ish social media platform. Amazing artists (yes, you're amazing to us :D ) can
-								upload their songs and choose and configure a visualizer for it. Discover cool artists and their awesome songs right on your main feed.
-							</p>
-						</div>
-						<div className="w-full">
-						<span
-							className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#music</span>
-						<span
-							className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#visuals</span>
-						<span
-							className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">#socialmedia</span>
-						</div>
-						<div className="flex items-center">
-							<img className="w-10 h-10 rounded-full mr-4" src={require("../media/Manas.jpg")}
-								 alt="Avatar of Manas Mehta"/>
-							<div className="text-sm">
-								<p className="text-gray-900 leading-none">Manas Mehta</p>
-								<p className="text-gray-600">Oct 8</p>
-							</div>
-						</div>
+						className="w-1/4 h-64 lg:h-auto flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" id="introLogo" title="Logo">
 					</div>
-				</div>
-			</div>
-
-
-			<div className="w-full">
-				<div className="w-full lg:max-w-full lg:flex padder">
 					<div className="w-3/4 h-64">
 						<div
-							className="w-full h-64 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-t lg:rounded-t-none lg:rounded-l p-4 flex flex-col justify-between leading-normal">
+							className="w-full h-64 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
 							<div className="mb-8">
 								<p className="text-sm text-gray-600 flex items-center">
 								</p>
-								<div className="text-gray-900 font-bold text-xl mb-2">Share your sound!
+								<div className="text-gray-900 font-bold text-xl mb-2">What in the world is <a className="offClr">soundcloudish</a> ?
 								</div>
 								<p className="text-gray-700 text-base">
-									Upload your awesome creations and share them with fellow audiophiles!
+									It's just as the name suggests. It's a soundcloud-ish social media platform. Amazing artists (yes, you're amazing to us :D ) can
+									upload their songs and choose and configure a visualizer for it. Discover cool artists and their awesome songs right on your main feed.
 								</p>
 							</div>
 							<div className="w-full">
-								<span
-									className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#artist</span>
-								<span
-									className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#upload</span>
-								<span
-									className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#sound</span>
-								<span
-									className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">#share</span>
+							<span
+								className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#music</span>
+							<span
+								className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#visuals</span>
+							<span
+								className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">#socialmedia</span>
 							</div>
 							<div className="flex items-center">
 								<img className="w-10 h-10 rounded-full mr-4" src={require("../media/Manas.jpg")}
@@ -111,51 +75,86 @@ export default function LoginApp(props) {
 							</div>
 						</div>
 					</div>
-					<div
-						className="w-1/4 h-64 lg:h-auto flex-none bg-cover rounded-b lg:rounded-b-none lg:rounded-r text-center overflow-hidden" id="musicPic" title="Logo">
+				</div>
+			</div>
+			<div className="w-full">
+				<div className="w-full padder">
+					<div className="w-full lg:max-w-full lg:flex glower">
+						<div className="w-3/4 h-64">
+							<div
+								className="w-full h-64 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-t lg:rounded-t-none lg:rounded-l p-4 flex flex-col justify-between leading-normal">
+								<div className="mb-8">
+									<p className="text-sm text-gray-600 flex items-center">
+									</p>
+									<div className="text-gray-900 font-bold text-xl mb-2">Share your sound!
+									</div>
+									<p className="text-gray-700 text-base">
+										Upload your awesome creations and share them with fellow audiophiles!
+									</p>
+								</div>
+								<div className="w-full">
+									<span
+										className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#artist</span>
+									<span
+										className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#upload</span>
+									<span
+										className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#sound</span>
+									<span
+										className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">#share</span>
+								</div>
+								<div className="flex items-center">
+									<img className="w-10 h-10 rounded-full mr-4" src={require("../media/Manas.jpg")}
+										 alt="Avatar of Manas Mehta"/>
+									<div className="text-sm">
+										<p className="text-gray-900 leading-none">Manas Mehta</p>
+										<p className="text-gray-600">Oct 8</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div
+							className="w-1/4 h-64 lg:h-auto flex-none bg-cover rounded-b lg:rounded-b-none lg:rounded-r text-center overflow-hidden" id="musicPic" title="Logo">
+						</div>
 					</div>
 				</div>
 			</div>
-
-
-
-
-			<div className="px-2 padder">
-				<div className="w-full bg-white rounded overflow-hidden shadow-lg">
-					<img className="w-full" src={require("../media/appVisual.png")} alt="Vis"/>
-
-
-
-
-					<div
-						className="w-full h-64 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-t lg:rounded-t-none lg:rounded-l p-4 flex flex-col justify-between leading-normal">
-						<div className="mb-8">
-							<p className="text-sm text-gray-600 flex items-center">
-							</p>
-							<div className="text-gray-900 font-bold text-xl mb-2">We have awesome audio visualizers!</div>
-							<p className="text-gray-700 text-base">
-								Visualize the awesome tracks that you upload! We have a wide range of customizable visualizers.
-							</p>
-						</div>
-						<div className="w-full">
+			<div className="w-full padder">
+				<div className="w-full glower">
+					<div className="w-full bg-white rounded overflow-hidden shadow-lg">
+						<img className="w-full" src={require("../media/appVisual.png")} alt="Vis"/>
+						<div
+							className="w-full h-64 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-t lg:rounded-t-none lg:rounded-l p-4 flex flex-col justify-between leading-normal">
+							<div className="mb-8">
+								<p className="text-sm text-gray-600 flex items-center">
+								</p>
+								<div className="text-gray-900 font-bold text-xl mb-2">We have awesome audio visualizers!</div>
+								<p className="text-gray-700 text-base">
+									Visualize the awesome tracks that you upload! We have a wide range of customizable visualizers.
+								</p>
+							</div>
+							<div className="w-full">
+									<span
+										className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#visualize</span>
 								<span
-									className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#visualize</span>
-							<span
-								className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#graphics</span>
-							<span
-								className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#colors</span>
-						</div>
-						<div className="flex items-center">
-							<img className="w-10 h-10 rounded-full mr-4" src={require("../media/Manas.jpg")}
-								 alt="Avatar of Manas Mehta"/>
-							<div className="text-sm">
-								<p className="text-gray-900 leading-none">Manas Mehta</p>
-								<p className="text-gray-600">Oct 8</p>
+									className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#graphics</span>
+								<span
+									className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#colors</span>
+							</div>
+							<div className="flex items-center">
+								<img className="w-10 h-10 rounded-full mr-4" src={require("../media/Manas.jpg")}
+									 alt="Avatar of Manas Mehta"/>
+								<div className="text-sm">
+									<p className="text-gray-900 leading-none">Manas Mehta</p>
+									<p className="text-gray-600">Oct 8</p>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
+
+
 
 
 

@@ -23,7 +23,7 @@ body {
 }
 
 #navBar {
-    height: 100px;
+    height: 150px;
     overflow: hidden;
     position: -webkit-sticky; /* Safari */
     position: sticky;
@@ -41,6 +41,10 @@ body {
 
 .padder {
     padding: 50px;
+}
+
+.glower {
+    box-shadow: 0 10px 20px green;
 }
 
 .offClr {
