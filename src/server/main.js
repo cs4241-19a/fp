@@ -15,19 +15,20 @@ import {
 import {
   Strategy as LocalStrategy
 } from "passport-local";
-
+import morgan from "morgan";
 
 const app = express();
+app.use(morgan("tiny"));
 
 const strategy = new LocalStrategy(async (email, password, done) => {
   const user = await User.findOne({
     email
   });
-  if (user && (await comparePassword(password, user.passwordHash))) {
+  if (user && (await comparePassword(password, user.password))) {
     done(null, user);
   } else {
     done(null, null, {
-      message: AUTH_ERROR_MESSAGE
+      message: "BAD, No. Get a correct password (or email ;)) and come back."
     });
   }
 });
@@ -61,10 +62,10 @@ app.use(passport.session());
 
 
 app.use('/dist', express.static(path.join(__dirname, '..', 'client')));
+app.use("/api", api(db));
 
 app.get('/*', middleware);
 
-app.use("/api", api(db));
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

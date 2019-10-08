@@ -23,7 +23,6 @@ const api = db => {
             const users = await User.find({
                 email
             });
-            console.log("found user", users);
             if (users.length > 0) {
                 res.status(500).json({
                     message: "That email is not available."
@@ -38,26 +37,54 @@ const api = db => {
                     globalAvailability: []
 
                 })
-                console.log(newUser)
-                newUser.save(function (err, newUser) {})
+                await newUser.save();
                 next();
             }
         },
         passport.authenticate("local", {
             session: true,
             successRedirect: "/",
-            failureRedirect: "/user/login"
+            failureRedirect: "/login"
         }));
 
-    // router.get('/user/login')
-    // router.post('/user/logout')
-    // router.post('/user/:user/update')
+    router.post('/user/login', passport.authenticate("local", {
+        session: true,
+        failureRedirect: "/login",
+        successRedirect: "/new"
+    }));
+
+    router.post('/user/logout', (req, res) => {
+        const {
+            session
+        } = req;
+        if (session) {
+            session.destroy();
+        }
+        res.redirect("/");
+    });
+
+    router.post('/user/update', ensureLoggedIn, async (req, res, next) => {
+        const {
+            user,
+            body
+        } = req;
+        const {
+            globalAvailability
+        } = body;
+        console.log('updating user', globalAvailability)
+        await User.findByIdAndUpdate(user._id, {
+            $set: {
+                globalAvailability
+            }
+        })
+    });
 
     router.get('/user/:userId', async (req, res) => {
         const {
             userId
         } = req.params;
         const user = await User.findById(userId);
+        console.log('current user', user)
         if (user) {
             res.json(user);
         } else {

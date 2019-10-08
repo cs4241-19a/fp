@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Form, Button, Tabs, Tab, Col } from "react-bootstrap";
 import { Formik } from "formik";
+import { request } from "../util";
 // import "../common.css";
 
 export default class Authentication extends React.Component {
@@ -23,26 +24,25 @@ class Login extends React.Component {
     return (
       <Container className="auth-container">
         <Formik
-          initialValues={{ email: "", password: "" }}
+          initialValues={{ username: "", password: "" }}
           validate={values => {
             let errors = {};
-            if (!values.email) {
-              errors.email = "Required";
+            if (!values.username) {
+              errors.username = "Required";
             } else if (
-              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.username)
             ) {
-              errors.email = "Invalid email address";
+              errors.username = "Invalid email address";
             }
             if (!values.password) {
               errors.password = "Required";
             }
             return errors;
           }}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 400);
+          onSubmit={async (values, { setSubmitting }) => {
+            console.log("login", values);
+            await request("POST", "/api/user/login", values);
+            setSubmitting(false);
           }}
         >
           {({
@@ -60,15 +60,15 @@ class Login extends React.Component {
                 <Form.Label>Email Address</Form.Label>
                 <Form.Control
                   type="email"
-                  name="email"
+                  name="username"
                   placeholder="Email"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.email}
-                  isInvalid={touched.email && errors.email}
+                  value={values.username}
+                  isInvalid={touched.username && errors.username}
                 ></Form.Control>
                 <Form.Control.Feedback type="invalid">
-                  {errors.email}
+                  {errors.username}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group>
@@ -107,12 +107,12 @@ class SignUp extends React.Component {
           initialValues={{ email: "", password: "", passwordConfirm: "" }}
           validate={values => {
             let errors = {};
-            if (!values.email) {
-              errors.email = "Required";
+            if (!values.username) {
+              errors.username = "Required";
             } else if (
-              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.username)
             ) {
-              errors.email = "Invalid email address";
+              errors.username = "Invalid email address";
             }
             if (!values.password) {
               errors.password = "Required";
@@ -121,11 +121,9 @@ class SignUp extends React.Component {
             }
             return errors;
           }}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 400);
+          onSubmit={async (values, { setSubmitting }) => {
+            await request("POST", "/api/user/login", values);
+            setSubmitting(false);
           }}
         >
           {({
@@ -147,11 +145,11 @@ class SignUp extends React.Component {
                   placeholder="Email"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.email}
-                  isInvalid={touched.email && errors.email}
+                  value={values.username}
+                  isInvalid={touched.username && errors.username}
                 ></Form.Control>
                 <Form.Control.Feedback type="invalid">
-                  {errors.email}
+                  {errors.username}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group>

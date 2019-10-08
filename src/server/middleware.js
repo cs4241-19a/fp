@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import { Helmet } from 'react-helmet';
-import { StaticRouter } from 'react-router-dom';
+import {
+  Helmet
+} from 'react-helmet';
+import {
+  StaticRouter
+} from 'react-router-dom';
 import cheerio from 'cheerio';
 import fs from 'fs';
 import path from 'path';
@@ -21,7 +25,12 @@ const generateHtml = markup => {
 
 const middleware = (req, res) => {
   const context = {};
-  const router = <StaticRouter location={req.originalUrl} context={context}><App /></StaticRouter>;
+  const router = < StaticRouter location = {
+    req.originalUrl
+  }
+  context = {
+    context
+  } > < App / > < /StaticRouter>;
   const markup = ReactDOM.renderToString(router);
 
   if (context.url) {

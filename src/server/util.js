@@ -9,6 +9,7 @@ import bcrypt from "bcrypt";
 export const readFile = promisify(readFileDefault);
 
 export const ensureLoggedIn = returnTo => (req, res, next) => {
+    console.log("check logged in");
     if (req.isAuthenticated()) {
         next();
     } else {
