@@ -67,7 +67,8 @@ async function getGame(gameId) {
  * @param {string} orderDir Direction to order. Either asc or desc. Defaults to asc.
  */
 async function getGameScores(gameId, orderDir) {
-    if (orderDir !== "asc" || orderDir !== "desc") {
+    if (orderDir !== "asc" && orderDir !== "desc") {
+        console.log("Bad sorting value. Defaulting to 'desc'");
         orderDir = "desc";
     }
     const scoresQuery = db.collection(`games/${gameId}/scores`).orderBy("score", orderDir);
