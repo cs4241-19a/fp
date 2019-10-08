@@ -39,7 +39,107 @@ export default function LoginApp(props) {
 
 	return (
 		<div className="w-full">
-			<div className="w-full lg:text-center headT"> I wanna know more about soundcloudish! </div>
+			<div className="w-full lg:text-center headT"> Get Started </div>
+			<div className="w-full padder">
+				<div className="w-full glower padder rounded bg-white">
+					<div className="flex -mx-4">
+						<div className="w-1/2 px-4">
+							<div className="w-full lg:text-center signT"> New to soundcloudish? </div>
+							<form className="bg-white topMar shadow-md rounded px-8 pt-6 pb-8 mb-4">
+								<div className="flex flex-wrap -mx-3 mb-6">
+									<div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+										<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+											   htmlFor="grid-first-name">
+											First Name
+										</label>
+										<input
+											className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+											id="grid-first-name" type="text" placeholder="Jane"/>
+										<p className="text-red-500 text-xs italic">Please fill out this field.</p>
+									</div>
+									<div className="w-full md:w-1/2 px-3">
+										<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+											   htmlFor="grid-last-name">
+											Last Name
+										</label>
+										<input
+											className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+											id="grid-last-name" type="text" placeholder="Doe"/>
+									</div>
+								</div>
+								<div className="flex flex-wrap -mx-3 mb-6">
+									<div className="w-full px-3">
+										<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+											   htmlFor="username">
+											Username
+										</label>
+										<input
+											className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+											id="username" type="text" placeholder="Username"/>
+										<p className="text-gray-600 text-xs italic">Think of a cool name, after all it is how people will find you!</p>
+									</div>
+								</div>
+								<div className="flex flex-wrap -mx-3 mb-6">
+									<div className="w-full px-3">
+										<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+											   htmlFor="grid-password">
+											Password
+										</label>
+										<input
+											className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+											id="grid-password" type="password" placeholder="******************"/>
+										<p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
+									</div>
+								</div>
+								<div className="flex items-center justify-around">
+									<button
+										className="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+										type="button"
+									>
+										Sign Up
+									</button>
+								</div>
+							</form>
+						</div>
+						<div className="w-1/2 px-4">
+							<div className="w-full lg:text-center signT"> Already an awesome user? </div>
+							<form className="bg-white topMar shadow-md rounded px-8 pt-6 pb-8 mb-4">
+								<div className="mb-4">
+									<label className="block uppercase text-gray-700 text-xs font-bold mb-2" htmlFor="username">
+										Username
+									</label>
+									<input
+										className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+										id="username" type="text" placeholder="Username"
+										onChange={() => setName(event.target.value)}>
+									</input>
+								</div>
+								<div className="mb-6">
+									<label className="block uppercase text-gray-700 text-xs font-bold mb-2" htmlFor="password">
+										Password
+									</label>
+									<input
+										className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+										id="password" type="password" placeholder="******************"
+										onChange={() => setPwd(event.target.value)}>
+									</input>
+									<p id='bad-pwd' className='text-red-500 text-xs italic' hidden>Incorrect password</p>
+								</div>
+								<div className="flex items-center justify-around">
+									<button
+										className="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+										type="button"
+										onClick={login}
+									>
+										Sign In
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div className="w-full lg:text-center headT1"> Wait! I wanna know more about soundcloudish! </div>
 			<div className="w-full padder">
 				<div className="w-full lg:max-w-full lg:flex glower">
 					<div
@@ -149,106 +249,6 @@ export default function LoginApp(props) {
 									<p className="text-gray-600">Oct 8</p>
 								</div>
 							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div className="w-full lg:text-center headT"> Get Started </div>
-			<div className="w-full padder">
-				<div className="w-full glower padder rounded bg-white">
-					<div className="flex -mx-4">
-						<div className="w-1/2 px-4">
-							<div className="w-full lg:text-center signT"> New to soundcloudish? </div>
-							<form className="bg-white topMar shadow-md rounded px-8 pt-6 pb-8 mb-4">
-								<div className="flex flex-wrap -mx-3 mb-6">
-									<div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-										<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-											   htmlFor="grid-first-name">
-											First Name
-										</label>
-										<input
-											className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-											id="grid-first-name" type="text" placeholder="Jane"/>
-										<p className="text-red-500 text-xs italic">Please fill out this field.</p>
-									</div>
-									<div className="w-full md:w-1/2 px-3">
-										<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-											   htmlFor="grid-last-name">
-											Last Name
-										</label>
-										<input
-											className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-											id="grid-last-name" type="text" placeholder="Doe"/>
-									</div>
-								</div>
-								<div className="flex flex-wrap -mx-3 mb-6">
-									<div className="w-full px-3">
-										<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-											   htmlFor="username">
-											Username
-										</label>
-										<input
-											className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-											id="username" type="text" placeholder="Username"/>
-										<p className="text-gray-600 text-xs italic">Think of a cool name, after all it is how people will find you!</p>
-									</div>
-								</div>
-								<div className="flex flex-wrap -mx-3 mb-6">
-									<div className="w-full px-3">
-										<label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-											   htmlFor="grid-password">
-											Password
-										</label>
-										<input
-											className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-											id="grid-password" type="password" placeholder="******************"/>
-										<p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
-									</div>
-								</div>
-								<div className="flex items-center justify-around">
-									<button
-										className="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-										type="button"
-									>
-										Sign Up
-									</button>
-								</div>
-							</form>
-						</div>
-						<div className="w-1/2 px-4">
-							<div className="w-full lg:text-center signT"> Already an awesome user? </div>
-							<form className="bg-white topMar shadow-md rounded px-8 pt-6 pb-8 mb-4">
-								<div className="mb-4">
-									<label className="block uppercase text-gray-700 text-xs font-bold mb-2" htmlFor="username">
-										Username
-									</label>
-									<input
-										className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-										id="username" type="text" placeholder="Username"
-										onChange={() => setName(event.target.value)}>
-									</input>
-								</div>
-								<div className="mb-6">
-									<label className="block uppercase text-gray-700 text-xs font-bold mb-2" htmlFor="password">
-										Password
-									</label>
-									<input
-										className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-										id="password" type="password" placeholder="******************"
-										onChange={() => setPwd(event.target.value)}>
-									</input>
-									<p id='bad-pwd' className='text-red-500 text-xs italic' hidden>Incorrect password</p>
-								</div>
-								<div className="flex items-center justify-around">
-									<button
-										className="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-										type="button"
-										onClick={login}
-									>
-										Sign In
-									</button>
-								</div>
-							</form>
 						</div>
 					</div>
 				</div>

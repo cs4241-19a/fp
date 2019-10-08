@@ -11489,7 +11489,17 @@ button:hover {
   color: white;
   font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter";
   font-weight: 600;
-  font-size: 3.5em;
+  font-size: 3em;
+  margin-top: -20px;
+  margin-bottom: -20px;
+}
+
+.headT1 {
+  color: white;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter";
+  font-weight: 600;
+  font-size: 3em;
+  margin-bottom: -10px;
 }
 
 .signT {
