@@ -12,16 +12,28 @@ const gamePlayState = new Phaser.Class({
 
     create: function() {
         const scene = this;
+        scene.i = 0;
+        scene.timer1Stopped = true;
+        scene.timer1 = null;
+
         // Create objects
         console.log("GamePlay");
         const pistol = scene.add.image(250, 300, "pistol");
         const station = scene.add.image((btmLeft.x + 1) * cellSize.width, (btmLeft.y) * cellSize.height, "station");
         initFromGrid(scene);  // add bricks
+
+        const truck = scene.add.image(-500, -500, "truck3b");
+        truck.angle = 90;
+        scene.e1 = Enemy(truck, 0.0001);
+        console.log(scene.e1);
     },
 
     update: function() {
-        // Update objects & variables
-    }
+        const scene = this;
+        scene.e1.move();
+
+
+    },
 });
 
 // Create
@@ -37,7 +49,50 @@ function initFromGrid(scene) {
 }
 
 
+// Update
+function Enemy(sprite, moveSpeed) {
+    let pathPoints;
+    let moveIdx = 0;
+    let atBase = false;
+    const spriteRotation = sprite.rotation;
 
+    function move() {
+        if (!pathPoints) {
+            pathPoints = getPathPoints(enemyEnterCoord);
+        }
+        // console.log(pathPoints);
+        if (!atBase) {
+            const gx = Phaser.Math.Interpolation.CatmullRom(pathPoints.x, moveIdx);
+            const gy = Phaser.Math.Interpolation.CatmullRom(pathPoints.y, moveIdx);
+            // console.log(px, py);
+            const newX = gx * cellSize.width + (cellSize.width / 2);
+            const newY = gy * cellSize.height + (cellSize.width / 2);
+            const angle = Phaser.Math.Angle.Between(sprite.x, sprite.y, newX, newY);
+            sprite.rotation = spriteRotation + angle;
+            console.log(angle);
+            sprite.x = newX;
+            sprite.y = newY;
+            moveIdx += moveSpeed;
+            // console.log(moveIdx);
+            checkAtBase(gx, gy);
+        } else {
+            // base loses a life
+        }
+    }
+
+    /**
+     * Check if at the base
+     * @param gx Grid x coordinate
+     * @param gy Grid y coordinate
+     */
+    function checkAtBase(gx, gy) {
+        if (gx <= baseEntrance.x && gy >= baseEntrance.y) {
+            atBase = true;
+        }
+    }
+
+    return {sprite, move}
+}
 
 
 

@@ -20,9 +20,9 @@ const cellTypes = {
 
 
 const cellSize = {width: 40, height: 40};
-const enemyEnterCoord = {x: (myGame.height / cellSize.height) - 1, y: 1};
+const enemyEnterCoord = {x: (myGame.width / cellSize.width) - 1, y: 1};
 const btmLeft = {x: 0, y: (myGame.height / cellSize.height) - 1};  // the bottom left cell of the grid. where the base is
-const baseEntrance = {x: btmLeft.x + 1, y: btmLeft.y - 1};
+const baseEntrance = {x: btmLeft.x + 1, y: btmLeft.y};
 
 const grid = [];
 (() => {
@@ -43,6 +43,15 @@ const grid = [];
     grid[btmLeft.y][btmLeft.x + 1] = cellTypes.BASE;
     grid[btmLeft.y - 1][btmLeft.x] = cellTypes.BASE;
     grid[btmLeft.y - 1][btmLeft.x + 1] = cellTypes.BASE;
+
+    // test pathfinding
+    grid[1][15] = cellTypes.BLOCK;
+    grid[2][15] = cellTypes.BLOCK;
+    grid[3][15] = cellTypes.BLOCK;
+    grid[4][15] = cellTypes.BLOCK;
+    grid[5][15] = cellTypes.BLOCK;
+    grid[6][15] = cellTypes.BLOCK;
+
 })();
 console.log(grid);
 
@@ -73,11 +82,25 @@ function getGraph() {
 
 function getPath(startCoord) {
     const graphData = getGraph();
-    console.log("graph data:", graphData);
+    console.log("graph data:", graphData, startCoord);
     const graph = new Graph(graphData, {diagonal: true});
+    // x and y are switched in grid
     const start = graph.grid[startCoord.y][startCoord.x];
     const end = graph.grid[baseEntrance.y][baseEntrance.x];
     const path = astar.search(graph, start, end, {heuristic: astar.heuristics.diagonal});
     console.log("path:", path);
     return path;
+}
+
+function getPathPoints(startCoord) {
+    const pathPoints = {x: [], y: []};
+    // start off the screen and first go to the starting point
+    pathPoints.x.push(startCoord.x + 1, startCoord.x);
+    pathPoints.y.push(startCoord.y, startCoord.y);
+    getPath(startCoord).forEach(node => {
+        // x and y are switched in grid
+        pathPoints.x.push(node.y);
+        pathPoints.y.push(node.x);
+    });
+    return pathPoints
 }
