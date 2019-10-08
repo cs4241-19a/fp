@@ -97,6 +97,8 @@ PS.init = function (system, options) {
 
     drumSetup();
 
+    guitarSetup();
+
     PS.statusText("Shitty Garageband");
 };
 
@@ -883,6 +885,153 @@ function pianoSetup() {
 //DRUM FUNCTIONS
 
 function drumSetup() {
+    for (var i = 0; i < 32; i++) {
+        PS.visible(i, 13, false);
+    }
+    for (var i = 24; i < 32; i++) {
+        PS.visible(i, 14, false);
+    }
+
+    for (var i = 0; i < 32; i++) {
+        for (var j = 14; j < 23; j++) {
+            PS.border(i, j, 0);
+        }
+    }
+
+
+    PS.visible(24, 15, false);
+    PS.glyph(25, 15, "R");
+    PS.glyph(26, 15, "E");
+    PS.glyph(27, 15, "C");
+    PS.glyph(28, 15, "O");
+    PS.glyph(29, 15, "R");
+    PS.glyph(30, 15, "D");
+    PS.visible(31, 15, false);
+
+    for (var i = 24; i < 32; i++) {
+        for (var j = 16; j < 18; j++) {
+            PS.color(i, j, PS.COLOR_RED);
+        }
+    }
+
+
+    for (var j = 16; j < 18; j++) {
+        PS.border(25, j, { right: 1 });
+        PS.border(27, j, { right: 1 });
+        PS.border(29, j, { right: 1 });
+    }
+
+
+    PS.visible(24, 18, false);
+    PS.glyph(25, 18, "T");
+    PS.glyph(26, 18, "R");
+    PS.glyph(27, 18, "A");
+    PS.glyph(28, 18, "C");
+    PS.glyph(29, 18, "K");
+    PS.glyph(30, 18, "S");
+    PS.visible(31, 18, false);
+
+    for (var i = 24; i < 32; i++) {
+        for (var j = 19; j < 21; j++) {
+            PS.color(i, j, PS.COLOR_GREEN);
+        }
+    }
+
+
+    for (var j = 19; j < 21; j++) {
+        PS.border(25, j, { right: 1 });
+        PS.border(27, j, { right: 1 });
+        PS.border(29, j, { right: 1 });
+    }
+
+
+    PS.visible(24, 21, false);
+    PS.visible(25, 21, false);
+    PS.glyph(26, 21, "P");
+    PS.glyph(27, 21, "L");
+    PS.glyph(28, 21, "A");
+    PS.glyph(29, 21, "Y");
+    PS.visible(30, 21, false);
+    PS.visible(31, 21, false);
+
+    for (var i = 24; i < 32; i++) {
+        for (var j = 22; j < 23; j++) {
+            PS.color(i, j, PS.COLOR_BLUE);
+            PS.data(i, j, ["DALL"]);
+        }
+    }
+
+
+    for (var j = 19; j < 21; j++) {
+        PS.border(25, j, { right: 1 });
+        PS.border(27, j, { right: 1 });
+        PS.border(29, j, { right: 1 });
+    }
+
+    //R1
+    for (var i = 24; i < 26; i++) {
+        for (var j = 25; j < 27; j++) {
+            PS.data(i, j, ["DR1"]);
+        }
+    }
+
+    //R2
+    for (var i = 26; i < 28; i++) {
+        for (var j = 25; j < 27; j++) {
+            PS.data(i, j, ["DR2"]);
+        }
+    }
+
+    //R3
+    for (var i = 28; i < 30; i++) {
+        for (var j = 25; j < 27; j++) {
+            PS.data(i, j, ["DR3"]);
+        }
+    }
+
+    //R4
+    for (var i = 30; i < 32; i++) {
+        for (var j = 25; j < 27; j++) {
+            PS.data(i, j, ["DR4"]);
+        }
+    }
+
+    //P1
+    for (var i = 24; i < 26; i++) {
+        for (var j = 28; j < 30; j++) {
+            PS.data(i, j, ["DP1"]);
+        }
+    }
+
+    //P2
+    for (var i = 26; i < 28; i++) {
+        for (var j = 28; j < 30; j++) {
+            PS.data(i, j, ["DP2"]);
+        }
+    }
+
+    //P3
+    for (var i = 28; i < 30; i++) {
+        for (var j = 28; j < 30; j++) {
+            PS.data(i, j, ["DP3"]);
+        }
+    }
+
+    //P4
+    for (var i = 30; i < 32; i++) {
+        for (var j = 28; j < 30; j++) {
+            PS.data(i, j, ["DP4"]);
+        }
+    }
+}
+
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+////////////////////////////////////////
+//GUITAR FUNCTIONS
+
+function guitarSetup() {
 
 }
 
