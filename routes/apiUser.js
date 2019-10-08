@@ -94,6 +94,17 @@ router.post('/create', function (req, res) {
   }).catch(e => {
     console.log(e)
   })
+  
+  dbUserExists([username]).then(data => {
+    if(data.length != 0) {
+      console.log("username exists!!!")
+    }
+    else {
+      console.log("username does not exist!!!")
+    }
+  }).catch(e => {
+    console.log(e)
+  })
 
   // if (!dbUserExists(username)) {
   //   dbUserAdd(username, password);
