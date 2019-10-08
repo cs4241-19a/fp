@@ -106,8 +106,15 @@ app.get('/admin', function(req, res) {
   res.sendFile(__dirname + '/public/views/admin.html');
 });
 
-app.get('/stats', function(req, res) {
-  res.sendFile(__dirname + '/public/views/stats.html');
+// Returning statistics of the user for user view page
+// TODO handle users who aren't logged in
+app.get('/userData', function(req, res) {
+  dataCol.findOne({uuid: req.user.uuid}, function(err, result) {
+    if(err) {res.sendStatus(503)}
+    else {
+      res.json(result);
+    }
+  });
 });
 
 
