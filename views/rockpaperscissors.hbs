@@ -1,11 +1,17 @@
 <div class="container">
     <div class="col-sp">
         <h1>Rock Paper Scissors</h1>
-        <h3 id="wins">Wins:</h3>
+        <h3 id="wins">Score: 0</h3>
+        <h3 id="rounds">Round: 1</h3>
         <div id="game-area">
-            <button>Rock</button>
-            <button>Paper</button>
-            <button>Scissors</button>
+            <div id="prompt">
+                <h2>Choose your move!</h2>
+            </div>
+            <div id="options">
+                <img class="option" src="/assets/rockpaperscissors/rock.png" onclick="makeChoice('rock')">
+                <img class="option" src="/assets/rockpaperscissors/paper.png" onclick="makeChoice('paper')">
+                <img class="option" src="/assets/rockpaperscissors/scissors.png"onclick="makeChoice('scissors')">
+            </div>
         </div>
     </div>
 </div>

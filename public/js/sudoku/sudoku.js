@@ -104,6 +104,7 @@ function checkComplete(){
     console.log('solved');
     stopTimer();
     document.getElementById('win').style.display='block';
+    document.getElementById('playAgain').style.display='block';
 
     const scoreModel = $("#gameScoreFormModal");
     attachHeading(`Time: ${time} seconds`);
@@ -144,4 +145,8 @@ function validate(e){
         theEvent.returnValue = false;
         if(theEvent.preventDefault) theEvent.preventDefault();
     }
+}
+
+function playAgain(){
+    location.reload();
 }

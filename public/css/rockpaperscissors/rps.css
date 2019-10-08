@@ -5,3 +5,50 @@ h1,h3{
 #wins{
     float: right;
 }
+
+#game-area{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#prompt{
+    display: flex;
+    justify-content: center;
+}
+
+#options{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.option{
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+}
+
+.result{
+    width: 150px;
+    height: 150px;
+}
+
+#nextRound{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    align-items: center;
+}
+
+#rounds{
+    float:right;
+    margin-right: 30px;
+}
+
+#playAgain{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    align-items: center;
+}

@@ -38,6 +38,11 @@ h2{
     float: right;
 }
 
+#playAgain{
+    float: right;
+    display: none;
+}
+
 .col-sp{
     width: 480px;
     /*margin: auto;*/
