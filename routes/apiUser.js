@@ -6,20 +6,99 @@ var router = express.Router();
 
 // create a new user with their username and chosen password, returning nothing
 function dbUserAdd(username, password) {
-  //TODO
+  console.log("adding new user to the database...");
+  
+  const MongoClient = require('mongodb').MongoClient;
+  const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
+
+  MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("finalproject");
+    var myobj = { username: username, password: password };
+    dbo.collection("users").insertOne(myobj, function(err, res) {
+      if (err) throw err;
+      console.log("added new user!");
+      db.close();
+    });
+  });
   return;
 }
 
 // check if a username is taken, returning true if it is and false if not
 function dbUserExists(username) {
-  //TODO
+  const MongoClient = require('mongodb').MongoClient;
+  const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
+  const client = new MongoClient(uri, { useNewUrlParser: true });
+  try {      
+    MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) { 
+      // assert.equal(null, err);
+       const db = client.db('finalproject');
+      
+       var promise = () => {
+         return new Promise((resolve, reject) => {
+            db.collection('users').find({username: username}).toArray(function(err, data) {
+                 err ? reject(err) : resolve(data);
+               });
+         });
+       };  
+      var callPromise = async () => {
+          var result = await (promise());
+          console.log(result)
+          if(result != null && result.username != undefined) {
+            console.log("user exists, returning true")
+            return true
+          }
+          else {
+            console.log("user does not exist, returning false")
+            return false
+          }
+       };      
+      callPromise().then(function(result) {          
+          client.close();
+       });    
+    }); //end mongo client   
+   } 
+  catch (e) {
+     console.log(e)
+   }
   return true;
 }
 
 // check if the user both exists and matches the given password, returning true if valid and false if not
 function dbUserAuthenticate(username, password) {
-  //TODO
-  return true;
+  const MongoClient = require('mongodb').MongoClient;
+  const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
+  const client = new MongoClient(uri, { useNewUrlParser: true });
+  try {      
+    MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) { 
+      // assert.equal(null, err);
+       const db = client.db('finalproject');
+      
+       var promise = () => {
+         return new Promise((resolve, reject) => {
+            db.collection('users').find({username: username, password: password}).toArray(function(err, data) {
+                 err ? reject(err) : resolve(data);
+               });
+         });
+       };  
+      var callPromise = async () => {
+          var result = await (promise());
+          console.log(result)
+          if(result != null && result != undefined) {
+            return true
+          }
+          else {
+            return false
+          }
+       };      
+      callPromise().then(function(result) {          
+          client.close();
+       });    
+    }); //end mongo client   
+   } 
+  catch (e) {
+     console.log(e)
+   }
 }
 
 /* ### ROUTES ### */
