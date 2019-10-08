@@ -128,7 +128,7 @@ let dbUserAuthenticate = function(arr) {
       else {
         reject(Error("invalid!"))
       }
-    }, 3000)
+    }, 100)
   })
 }
 
@@ -160,7 +160,14 @@ router.post('/login', function (req, res) {
   
   dbUserAuthenticate(loginInfo).then(data => {
     console.log("data! " + data)
-    console.log(dbUserAuthenticate)
+    console.log("data but in string form: " + JSON.stringify(data))
+    if(data.length != 0) {
+      res.cookie('username', username);
+      res.send("OK");
+    }
+    else {
+      res.send("BAD");
+    }
   }).catch(e => {
     console.log(e)
     console.log(dbUserAuthenticate)
@@ -168,12 +175,12 @@ router.post('/login', function (req, res) {
 
   // console.log("authentication result: " + dbUserAuthenticate(username, password))
   
-  if (loginSuccess) {
-    res.cookie('username', username);
-    res.send("OK")
-  } else {
-    res.send("BAD")
-  }
+  // if (loginSuccess) {
+  //   res.cookie('username', username);
+  //   res.send("OK")
+  // } else {
+  //   res.send("BAD")
+  // }
 })
 
 router.post('/logout', function (req, res) {
