@@ -107,15 +107,23 @@ function dbUserExists(username) {
 //    }
 // }
 
-let dbUserAuthentication = function(arr) {
+let dbUserAuthenticate = function(arr) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if(arr.length == 2) {
         const MongoClient = require('mongodb').MongoClient;
         const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
         const client = new MongoClient(uri, { useNewUrlParser: true });
-        const db = client.db('finalproject');
-        resolve(db.collection('users').find({username: arr[2], password: arr[1]}).toArray())
+        try {
+          MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) { 
+            const db = client.db('finalproject');
+            resolve(db.collection('users').find({username: arr[0], password: arr[1]}).toArray())
+          })
+        }
+        catch(e) {
+          console.log(e)
+        }
+        client.close();
       }
       else {
         reject(Error("invalid!"))
@@ -147,6 +155,16 @@ router.post('/login', function (req, res) {
   const password = req.body.password;
   
   var loginSuccess = false
+  
+  let loginInfo = [username, password]
+  
+  dbUserAuthenticate(loginInfo).then(data => {
+    console.log("data! " + data)
+    console.log(dbUserAuthenticate)
+  }).catch(e => {
+    console.log(e)
+    console.log(dbUserAuthenticate)
+  })
 
   // console.log("authentication result: " + dbUserAuthenticate(username, password))
   
