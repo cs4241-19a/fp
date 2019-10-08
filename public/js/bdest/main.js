@@ -248,10 +248,15 @@ function barCollision(ball, brick) {
     brick.disableBody(true, true);
 }
 
+
+/***
+ * Function to reset the board after a game over.
+ */
 function resetBoard () {
     board.active = true;
 
     resetBricks(bricks);
+
     // Reset lives counter
     board.lives = 5;
     livesText.setText("Lives: " + board.lives);
@@ -260,6 +265,7 @@ function resetBoard () {
     board.score = 0;
     scoreText.setText("Score: " + board.score);
 
+    // Make the game over text disappear
     gameOverText.setVisible(false);
 }
 
