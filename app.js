@@ -286,6 +286,7 @@ app.post("/register", function (req, res) {
                 }
                 const db = client.db('MusicApp')
                 const collection = db.collection('user')
+                if (req.body.username === "badUsernameZQFMGB") return
                 collection.insertOne({
                     "username": req.body.username,
                     "password": hash

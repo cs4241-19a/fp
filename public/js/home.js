@@ -3,6 +3,7 @@ const refreshBtn = document.getElementById("refresh-btn")
 const addRecBtn = document.getElementById("add-rec-btn")
 const list = document.getElementById("recommendation-list")
 const recText = document.getElementById("exampleFormControlTextarea2")
+let username = "badUsernameZQFMGB"
 
 const addRecommendation = function () {
     let rating = -1;
@@ -14,9 +15,12 @@ const addRecommendation = function () {
     else return false
 
     if (rating === -1) return false
+    if (username === "badUsernameZQFMGB") return false
+    let songID = document.getElementById("secretSongID").innerHTML
+    if (songID === "-1") return
     const newRecommendation = {
-        username: "hi", //TODO: replace with actual username
-        tracknumber: 0, //TODO: replace with actual tracknumber
+        username: username,
+        tracknumber: songID,
         rating: rating,
         caption: recText.value
     }
@@ -37,7 +41,9 @@ const getData = function () {
             method: 'GET'
         })
         let usr = await rawResponse.json()
-        document.getElementById("logoutLink").innerHTML = "Log out " + usr.user.username
+        username = usr.user.username
+        document.getElementById("secretUsername").innerHTML = username
+        document.getElementById("logoutLink").innerHTML = "Log out " + username
     })()
 }
 
@@ -68,13 +74,13 @@ const getRecommendations = function () {
                 let caption = element.caption
 
                 if (isNaN(rating)) {
-                    console.log(rating + " - Rating not a number")
+                    //console.log(rating + " - Rating not a number")
                     rating = Math.floor((Math.random() * 5) + 1)
                 } else if (rating < 1) {
-                    console.log(rating + " - Rating too low")
+                    //console.log(rating + " - Rating too low")
                     rating = 1
                 } else if (rating > 5) {
-                    console.log(rating + " - Rating too high")
+                    //console.log(rating + " - Rating too high")
                     rating = 5
                 }
 
