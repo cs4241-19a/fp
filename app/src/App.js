@@ -89,8 +89,18 @@ class Chat extends React.Component {
   render() {
     return (
       <form id="chat">
-        <input placeholder="Hint.." id="msg"></input>
-        <input placeholder="Amount.." id="msg" type="number"></input>
+        <div className="container">
+          <div className="chat-container">
+            <div className="clue" style={{ color: "red" }}>
+              User: Clue Amount
+            </div>
+            <div className="clue" style={{ color: "blue" }}>
+              User: Clue Amount
+            </div>
+          </div>
+        </div>
+        <input placeholder="Clue" id="msg"></input>
+        <input placeholder="Amount" id="msg" type="number"></input>
         <button type="button" id="btn">
           Submit
         </button>
@@ -173,7 +183,7 @@ class Game extends React.Component {
   render() {
     let status;
     let order = this.state.firstteam;
-    if (order) {
+    if (!order) {
       status = "Red Team";
     } else {
       status = "Blue Team";
@@ -189,8 +199,9 @@ class Game extends React.Component {
         </div>
         <br />
         <div className="status">
-          <div>{status} goes first</div>
+          <div>{status}'s Turn</div>
         </div>
+        <br />
       </div>
     );
   }
@@ -233,7 +244,10 @@ function setBoard(order) {
       (order === 1 && type === "teamB")
     ) {
       amount += 2;
-    } else if (order === "second") {
+    } else if (
+      (order === 1 && type === "teamA") ||
+      (order === 0 && type === "teamB")
+    ) {
       amount++;
     }
     for (let j = 0; j < amount; j++) {

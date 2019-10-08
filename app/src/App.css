@@ -36,7 +36,7 @@ h1 {
 }
 
 #chat {
-  margin-top: 30%;
+  margin-top: 30px;
   margin-left: 65%;
 }
 
@@ -60,4 +60,16 @@ h1 {
 
 .status {
   text-align: center;
+}
+
+.chat-container {
+  height: 345px;
+  width: 292px;
+  color: black;
+  background-color: #dbd4d4;
+  padding: 15px;
+}
+
+.clue {
+  margin-left: 10px;
 }
