@@ -5,7 +5,7 @@ var config = {
     physics: {
         default: "arcade",
         arcade: {
-            gravity: { y: 450 },
+            gravity: { y: 500 },
             debug: false
         }
     },
@@ -35,10 +35,14 @@ let scoreText;
 let playerYVelocity;
 let newState = false;
 let rockAcc = 0.1;
+let extraJumps = 1;
+let jumpsLeft = extraJumps;
+let canJumpAgain = true;
+let pauseText;
 
 // preload images
 function preload () {
-    this.load.image("gompei", path + "gompei.jpeg");
+    this.load.image("gompei", path + "gompei.png");
     this.load.image("ground", path + "groundLong.png");
     this.load.image("rock", path + "rock.png");
 }
@@ -52,7 +56,7 @@ function create () {
     let offset = 700;
 
     // set player properties
-    player = this.physics.add.sprite(50, 450, "gompei").setScale(0.6);
+    player = this.physics.add.sprite(50, 450, "gompei").setScale(0.7);
     this.physics.add.collider(player, groundGroup);
     player.setCollideWorldBounds(true);
 
@@ -72,6 +76,12 @@ function create () {
     // Add score HUD
     scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
 
+    // Set up pause message
+    pauseText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, "PAUSED", { fontSize: '32px', fill: '#fff' });
+    pauseText.setX(this.cameras.main.centerX - pauseText.width / 2);
+    pauseText.setY(this.cameras.main.centerY - pauseText.height / 2);
+    pauseText.visible = false;
+
 }
 
 // Updates and re draws images
@@ -80,19 +90,16 @@ function update () {
     pauseKey.on('down', function(event){
         if (!newState) {
             if (state === PLAY_STATE) {
-                console.log("PAUSED");
                 state = PAUSE_STATE;
                 pauseGame();
                 newState = true;
             }
             else if (state === PAUSE_STATE) {
-                console.log("UNPAUSE");
                 state = PLAY_STATE;
-                unpauseGame();
+                resumeGame();
                 newState = true;
             }
         }
-
     })
 
     pauseKey.on('up', function(event){
@@ -116,14 +123,34 @@ function update () {
 
         playerYVelocity = player.body.velocity.y;
     
+        if (!cursors.up.isDown) {
+            canJumpAgain = true;
+        }
+
         // jump
         if (cursors.up.isDown && player.body.touching.down) {
             player.setVelocityY(-400);
+            canJumpAgain = false;
         }
     
         // fast fall
         else if (cursors.down.isDown && !player.body.touching.down) {   
             player.setVelocityY(player.body.velocity.y + 30);
+            
+        }
+
+        // double check
+        else if (cursors.up.isDown && !player.body.touching.down && jumpsLeft > 0 && canJumpAgain) {
+            let newSpeed = -400;
+            player.setVelocityY(newSpeed);
+            jumpsLeft--;
+            canJumpAgain = false;
+        }
+
+
+        // refresh double jump
+        else if (player.body.touching.down) {
+            jumpsLeft = extraJumps;
         }
     
         // Reset rocks after going off left side of screen
@@ -165,6 +192,7 @@ function rockCollision () {
 function pauseGame () {
     stopRocks();
     stopPlayer();
+    pauseText.visible = true;
 }
 
 function stopRocks () {
@@ -182,9 +210,11 @@ function stopPlayer () {
     player.setVelocityX(0);
 }
 
-function unpauseGame () {
+function resumeGame () {
     resumePlayer();
     resumeRocks();
+    pauseText.visible = false;
+
 }
 
 function resumePlayer () {
