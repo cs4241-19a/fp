@@ -10,21 +10,20 @@ function logIn() {
     },
     method: "POST",
     body: body
-  }).then(function(res){
-    res.text().then(function(){
-      
-    })
-    alert(res.text())
-    if(res.body == "OK"){
-      window.location = "/index"
-    }
-    if(res.body == "BAD"){
-      alert("Invalid Login!")
-    }
-  })
+  }).then(function(res) {
+    res.text().then(function(str) {
+      alert(str);
+      if (str == "OK") {
+        window.location = "/index";
+      }
+      if (str == "BAD") {
+        alert("Invalid Login!");
+      }
+    });
+  });
 }
 
 window.onload = function() {
   const button = document.getElementById("loginButton");
-  button.onclick = logIn
+  button.onclick = logIn;
 };
