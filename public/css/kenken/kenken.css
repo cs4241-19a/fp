@@ -29,7 +29,7 @@ h4{
     cursor: pointer;
 }
 
-h2{
+#win{
     color: green;
     display: none;
 }

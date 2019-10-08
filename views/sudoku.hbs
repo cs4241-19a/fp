@@ -1,6 +1,6 @@
 <div class="container">
     <div class="col-sp">
-        <h1>Sudoku</h1><h4 id="info">ⓘ</h4>
+        <h1>Sudoku</h1>
         <h3 id="timer">Time</h3>
         <h2 id="win">You Won!<button class="btn btn-secondary" id="playAgain" onclick="playAgain()">Play Again?</button></h2>
         <div id="game-area">
@@ -136,32 +136,15 @@
     <script src="/js/sudoku/sudoku.js"></script>
 {{/section}}
 
-<section>
-
-    <div class="modal fade" id="InfoModal" tabindex="-1" role="dialog" aria-labelledby="signInFormModalLabel" aria-modal="true" style="display: none;">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Instructions</h5>
-                    <button type="button" class="close" id="x-close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Sudoku is a number placing puzzle based on a 9x9 grid with several given numbers. The object is to place the numbers 1 to 9 in the empty squares so that each row, each column and each 3x3 box contains the same number only once.
-                    <br><br> The puzzle is constantly checked, you will be notified
-                    once the correct board state is filled in.
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="close-button">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 {{#> layouts/modal-layout type="gameScore" title="Submit Score" submitText="Submit" }}
     {{#*inline "form-content"}}
         {{> includes/game-submit-default }}
+    {{/inline}}
+{{/layouts/modal-layout}}
+
+<!-- The help modal -->
+{{#> layouts/modal-layout type="help" title="Sudoku Help" }}
+    {{#*inline "form-content"}}
+        {{> includes/help/sudoku }}
     {{/inline}}
 {{/layouts/modal-layout}}

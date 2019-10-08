@@ -58,3 +58,10 @@
         {{> includes/game-submit-default }}
     {{/inline}}
 {{/layouts/modal-layout}}
+
+<!-- The help modal -->
+{{#> layouts/modal-layout type="help" title="Rock Paper Scissors Help" }}
+    {{#*inline "form-content"}}
+        {{> includes/help/rockpaperscissors }}
+    {{/inline}}
+{{/layouts/modal-layout}}

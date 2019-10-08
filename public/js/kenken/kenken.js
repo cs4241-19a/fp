@@ -101,20 +101,6 @@ function stopTimer(){
     clearTimeout(seconds);
 }
 
-function openInfo(){
-    document.getElementById('InfoModal').style.display='block';
-    document.getElementById('InfoModal').style.opacity=1;
-}
-
-function closeInfo(){
-    document.getElementById('InfoModal').style.display='none';
-    document.getElementById('InfoModal').style.opacity=0;
-}
-
-document.getElementById('info').onclick=openInfo;
-document.getElementById('x-close').onclick=closeInfo;
-document.getElementById('close-button').onclick=closeInfo;
-
 function validate(e){
     var theEvent = e || window.e;
     // Handle key press
