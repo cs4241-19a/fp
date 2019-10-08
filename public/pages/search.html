@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="icon"
+      type="image/ico"
+      href="https://cdn.glitch.com/8c08a500-c574-43fb-ba6b-d98966e3af01%2Flogoblack_NvF_icon.ico?v=1570476649104"
+    />
+    <title>CS4241 Assignment 6</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@1.0.1/build/pure-min.css"
+      integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47"
+      crossorigin="anonymous"
+    />
+    <link href="stylesheets/style.css" rel="stylesheet" />
+    <meta http-equiv="expires" content="-1" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <ul class="navbar">
+      <li class="navbar"><a href="/index">My Books</a></li>
+      <li class="navbar"><a href="/add">Add a Book</a></li>
+
+      <li class="navbar"><a href="/search">Find a Book</a></li>
+      <li class="navbar">
+        <a id="messgaing" href="/messaging">Messages</a>
+      </li>
+      <li class="navbar" style="float:right">
+        <a id="login" href="/">Logout</a>
+      </li>
+      <li class="navbar" id="create">
+        <a href="create">Create Account</a>
+      </li>
+      <li class="navbar" style="float:right">
+        <a class="active" href="about">About</a>
+      </li>
+    </ul>
+    <div
+      style="display:flex; justify-content:center; align-items:center; margin:5px;"
+    >
+      <div style="width:20%"></div>
+      <h1 style="margin:5px">
+        Search for Books
+      </h1>
+      <form style="margin:auto; margin:20px" class="pure-form" action="">
+        <input
+          name="search"
+          id="search"
+          placeholder="Search for a book!"
+          value=""
+        />
+      </form>
+      <div style="width:20%"></div>
+    </div>
+    <h3></h3>
+    <table id="results" class="pure-table" style="width:80%">
+      <thead>
+        <tr>
+          <th>Book</th>
+          <th>CRN</th>
+          <th>Location</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+    </table>
+  </body>
+  <script src="javascripts/client.js"></script>
+</html>

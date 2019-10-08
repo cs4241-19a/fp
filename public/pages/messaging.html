@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="icon"
+      type="image/ico"
+      href="https://cdn.glitch.com/8c08a500-c574-43fb-ba6b-d98966e3af01%2Flogoblack_NvF_icon.ico?v=1570476649104"
+    />
+    <title>CS4241 Assignment 6</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@1.0.1/build/pure-min.css"
+      integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47"
+      crossorigin="anonymous"
+    />
+    <link href="stylesheets/style.css" rel="stylesheet" />
+    <meta http-equiv="expires" content="-1" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <ul class="navbar">
+      <li class="navbar"><a href="/index">My Books</a></li>
+      <li class="navbar"><a href="/add">Add a Book</a></li>
+
+      <li class="navbar"><a href="/search">Find a Book</a></li>
+      <li class="navbar"><a id="messgaing" href="/">Messages</a></li>
+      <li class="navbar" style="float:right">
+        <a id="login" href="/">Logout</a>
+      </li>
+      <li class="navbar" id="create">
+        <a href="create">Create Account</a>
+      </li>
+      <li class="navbar" style="float:right">
+        <a class="active" href="about">About</a>
+      </li>
+    </ul>
+    <h1 id="t">
+      Messages
+    </h1>
+
+    <h2></h2>
+    <div id="messageContainer" style="height:700px; width:90%" class="msg"></div>
+  </body>
+  <script>
+    (function(t, a, l, k, j, s) {
+      s = a.createElement("script");
+      s.async = 1;
+      s.src = "https://cdn.talkjs.com/talk.js";
+      a.head.appendChild(s);
+      k = t.Promise;
+      t.Talk = {
+        v: 2,
+        ready: {
+          then: function(f) {
+            if (k)
+              return new k(function(r, e) {
+                l.push([f, r, e]);
+              });
+            l.push([f]);
+          },
+          catch: function() {
+            return k && new k();
+          },
+          c: l
+        }
+      };
+    })(window, document, []);
+
+    Talk.ready.then(function() {
+      var me = new Talk.User({
+        id: "123456",
+        name: "Alice",
+        email: "alice@example.com",
+        photoUrl: "https://demo.talkjs.com/img/alice.jpg",
+        welcomeMessage: "Hey there! How are you? :-)"
+      });
+      window.talkSession = new Talk.Session({
+        appId: "tqeei7aL",
+        me: me
+      });
+      var other = new Talk.User({
+        id: "654321",
+        name: "Sebastian",
+        email: "Sebastian@example.com",
+        photoUrl: "https://demo.talkjs.com/img/sebastian.jpg",
+        welcomeMessage: "Hey, how can I help?"
+      });
+
+      var conversation = talkSession.getOrCreateConversation(
+        Talk.oneOnOneId(me, other)
+      );
+      conversation.setParticipant(me);
+      conversation.setParticipant(other);
+      var inbox = talkSession.createInbox({ selected: conversation });
+      inbox.mount(document.getElementById("messageContainer"));
+    });
+  </script>
+</html>

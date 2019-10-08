@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="icon"
+      type="image/ico"
+      href="https://cdn.glitch.com/8c08a500-c574-43fb-ba6b-d98966e3af01%2Flogoblack_NvF_icon.ico?v=1570476649104"
+    />
+    <title>CS4241 Assignment 6</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@1.0.1/build/pure-min.css"
+      integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47"
+      crossorigin="anonymous"
+    />
+    <link href="stylesheets/style.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <ul class="navbar">
+      <li class="navbar"><a href="/index">My Books</a></li>
+      <li class="navbar"><a href="/add">Add a Book</a></li>
+
+      <li class="navbar"><a href="/search">Find a Book</a></li>
+      <li class="navbar">
+        <a id="messgaing" href="/messaging">Messages</a>
+      </li>
+      <li class="navbar" style="float:right">
+        <a id="login" href="/">Logout</a>
+      </li>
+      <li class="navbar" id="create">
+        <a href="create">Create Account</a>
+      </li>
+      <li class="navbar" style="float:right">
+        <a class="active" href="about">About</a>
+      </li>
+    </ul>
+    <div class="container">
+      <div class="empty2"></div>
+      <div class="titles">
+        <div class="pad">
+          <img
+            src="https://cdn.glitch.com/8c08a500-c574-43fb-ba6b-d98966e3af01%2Flogored.png?v=1570491943157"
+            height="150px"
+            width="150px"
+          />
+        </div>
+        <p class="title" style="color:#EF233C">
+          Get Started With
+        </p>
+        <p class="titleBold" style="color:#EF233C">
+          Goatbooks
+        </p>
+      </div>
+      <div class="login" id="talkbubble" style="background-color:#EF233C">
+        <form style="margin:10px; width:90%;" class="pure-form" action="">
+          <input
+            name="username"
+            class="pure-input-1"
+            type="text"
+            id="newUsername"
+            placeholder="New Username"
+            value=""
+          />
+        </form>
+        <form style="margin:0px; width:90%" class="pure-form" action="">
+          <input
+            name="password"
+            class="pure-input-1"
+            type="password"
+            id="newPassword"
+            placeholder="New Password"
+            value=""
+          />
+        </form>
+        <button
+          style="margin:10px; width:90%; background-color:#EDF2F4; color:#EF233C"
+          id="createButton"
+          class="pure-button translate"
+        >
+          Create Account!
+        </button>
+      </div>
+      <div class="empty"></div>
+    </div>
+  </body>
+  <script src="javascripts/create.js"></script>
+</html>
