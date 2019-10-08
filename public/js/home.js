@@ -88,16 +88,6 @@ const getRecommendations = function () {
 
                 if (isNaN(rating) || rating < 1 || rating > 5) continue
 
-                /*let newRecommendation =
-                    `<div class="card" id="recommendation${i}">\n` +
-                    `   <div class="card-body">\n` +
-                    `      <h5 class="card-title">` + "\"" + songname + "\" by " + artist + `</h5>\n` +
-                    `      <p class="card-text">` + username + " rated this song " + rating + " out of 5" + `</p>\n` +
-                    `      <p class="card-text"><i>` + "\"" + caption + "\"" + `</i></p>\n` +
-                    `      <p class="invisible" id="songid${i}">` + songid + `</p>\n` +
-                    `   </div>\n` +
-                    `</div>`*/
-
                 let newRecommendation =
                     `<div class="card" id="recommendation${i}">\n` +
                     `   <div class="card-body">\n` +
