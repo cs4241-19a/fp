@@ -42,9 +42,11 @@ router.post('/login', function (req, res) {
 
   if (dbUserAuthenticate(username, password)) {
     res.cookie('username', username);
-    res.redirect("/index");
+    res.send("OK")
+    //res.redirect("/index");
   } else {
-    res.redirect("/?alert=Invalid+login");
+    res.send("BAD")
+    //res.redirect("/?alert=Invalid+login");
   }
 })
 

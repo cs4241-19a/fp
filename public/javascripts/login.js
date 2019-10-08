@@ -10,6 +10,17 @@ function logIn() {
     },
     method: "POST",
     body: body
+  }).then(function(res){
+    res.text().then(function(){
+      
+    })
+    alert(res.text())
+    if(res.body == "OK"){
+      window.location = "/index"
+    }
+    if(res.body == "BAD"){
+      alert("Invalid Login!")
+    }
   })
 }
 
