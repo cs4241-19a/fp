@@ -38,7 +38,7 @@ const fetchLeaderboard = async function() {
 };
 
 const login = function (e) {
-    debugger;
+    //debugger;
     e.preventDefault();
 
     const loginInfo = {
@@ -58,6 +58,12 @@ const login = function (e) {
         document.getElementById('login').style.display = "none";
     });
 };
+
+// Front end stuff
+
+const points = document.querySelector('.point');
+
+let damage = 10;  // placeholder damage
 
 function findEnemy(tier) {
     const random = Math.random();
@@ -112,7 +118,7 @@ function findEnemy(tier) {
                 filepath = "../img/zero.png";
                 break;
             case random <= 0.2:
-                filepath = "../img/waddle-dee.png";
+                filepath = "../img/zant.png";
                 break;
         }
     }
@@ -132,3 +138,32 @@ function findEnemy(tier) {
 
     return filepath;
 }
+
+const animateCSS = function (element, animationName, callback) {
+    const node = document.querySelector(element);
+    node.classList.add('animated', animationName);
+
+    function handleAnimationEnd() {
+        node.classList.remove('animated', animationName);
+        node.removeEventListener('animationend', handleAnimationEnd);
+
+        if (typeof callback === 'function') callback()
+    }
+
+    node.addEventListener('animationend', handleAnimationEnd);
+};
+
+
+const mainClick = function () {
+    const enemyHealth = document.getElementById('health');
+    const enemyImg = document.getElementById('enemy-image');
+
+    if(enemyHealth.value > 0){
+        enemyHealth.value -= damage;
+    } else {
+        enemyHealth.value = 100;
+        enemyImg.src = findEnemy(2);
+    }
+    animateCSS('.point', 'fadeInUp');
+    console.log("Hello");
+};
