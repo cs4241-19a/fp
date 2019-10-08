@@ -4,18 +4,18 @@ function logIn() {
   let json = { username: username.value, password: password.value };
   let body = JSON.stringify(json);
 
-  fetch("/login", {
+  fetch("api/users/login", {
     headers: {
       "Content-Type": "application/json"
     },
     method: "POST",
     body: body
   }).then(function(res){
-    //parse response?
+    res.
   })
 }
 
 window.onload = function() {
   const button = document.getElementById("loginButton");
-  button.onclick = logIn();
+  button.onclick = logIn
 };

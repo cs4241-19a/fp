@@ -34,6 +34,7 @@ router.post('/create', function (req, res) {
   } else {
     res.redirect("/?alert=Username+taken");
   }
+  res.end()
 })
 
 router.post('/login', function (req, res) {
