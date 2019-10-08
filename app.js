@@ -9,6 +9,7 @@ var createRouter = require('./routes/create');
 var homeRouter = require('./routes/home');
 var indexRouter = require('./routes/index');
 var messagingRouter = require('./routes/messaging');
+var addRouter = require('./routes/add');
 var searchRouter = require('./routes/search');
 var apiUserRouter = require('./routes/apiUser');
 //var apiBookRouter = require('./routes/apiBook');
@@ -31,6 +32,8 @@ app.use('/', homeRouter); //home will just be the root directory
 app.use('/index', indexRouter);
 app.use('/messaging', messagingRouter);
 app.use('/search', searchRouter);
+app.use('/add', addRouter);
+
 
 app.use('/api/users', apiUserRouter);
 //app.use('/api/books', apiBookRouter);

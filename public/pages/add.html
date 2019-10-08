@@ -18,17 +18,17 @@
       crossorigin="anonymous"
     />
     <link href="stylesheets/style.css" rel="stylesheet" />
+    <meta http-equiv="expires" content="-1" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
     <meta charset="utf-8" />
   </head>
   <body>
     <ul class="navbar">
       <li class="navbar"><a href="/index">My Books</a></li>
       <li class="navbar"><a href="/add">Add a Book</a></li>
-
       <li class="navbar"><a href="/search">Find a Book</a></li>
-      <li class="navbar">
-        <a id="messgaing" href="/messaging">Messages</a>
-      </li>
+      <li class="navbar"><a id="messgaing" href="/messaging">Messages</a></li>
       <li class="navbar" style="float:right">
         <a id="login" href="/">Logout</a>
       </li>
@@ -39,54 +39,61 @@
         <a class="active" href="about">About</a>
       </li>
     </ul>
-    <div class="container">
-      <div class="empty2"></div>
-      <div class="titles">
-        <div class="pad">
-          <img
-            src="https://cdn.glitch.com/8c08a500-c574-43fb-ba6b-d98966e3af01%2Flogored.png?v=1570491943157"
-            height="150px"
-            width="150px"
-          />
-        </div>
-        <p class="title" style="color:#EF233C">
-          Get Started With
-        </p>
-        <p class="titleBold" style="color:#EF233C">
-          Goatbooks
-        </p>
-      </div>
-      <div class="login" id="talkbubble" style="background-color:#EF233C">
-        <form style="margin:10px; width:90%;" class="pure-form" action="">
+    <h1 id="t">
+      Add a Book
+    </h1>
+   
+    <h2></h2>
+    <h3></h3>
+    <table id="results" class="pure-table" style="width:80%">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>CRN</th>
+          <th>Upload</th>
+        </tr>
+        <tr>
+          <td>
+             <form style="margin:10px; width:90%" class="pure-form" action="">
           <input
-            name="username"
-            class="pure-input-1"
+            name="name"
             type="text"
-            id="username"
-            placeholder="New Username"
+            id="bookname"
+            placeholder="Book Name"
             value=""
           />
         </form>
-        <form style="margin:0px; width:90%" class="pure-form" action="">
+          </td>
+          <td>
+             <form style="margin:10px; width:90%" class="pure-form" action="">
           <input
-            name="password"
-            class="pure-input-1"
-            type="password"
-            id="password"
-            placeholder="New Password"
+            name="crn"
+            type="text"
+            id="crn"
+            placeholder="CRN ####"
             value=""
           />
         </form>
-        <button
-          style="margin:10px; width:90%; background-color:#EDF2F4; color:#EF233C"
-          id="createButton"
+          </td>
+          <td>
+            <button
+          style="margin:10px; width:90%;"
+          id="uploadButton"
           class="pure-button translate"
         >
-          Create Account!
+          Upload PDF
         </button>
-      </div>
-      <div class="empty"></div>
-    </div>
+          </td>
+        </tr>
+         <button
+          style="margin:10px; width:90%;"
+          id="uploadButton"
+          class="pure-button translate"
+        >
+          Upload PDF
+        </button>
+      </thead>
+    </table>
   </body>
-  <script src="javascripts/create.js"></script>
+  <script src="javascripts/client.js"></script>
 </html>
