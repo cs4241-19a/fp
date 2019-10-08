@@ -5,28 +5,29 @@
     <title>Home Page</title>
     <link type="text/css" rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-    <script src="../js/click.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.5/pixi.js"></script>
     <script src="../js/scripts.js"></script>
 </head>
 <body>
-    <div id="leaderboard-button">
-        <button>Leaderboard</button>
+    <div class="game">
+        <canvas id="game-canvas"></canvas>
     </div>
 
-    <div id="back-button">
-        <button>Back</button>
-    </div>
-
-    <div id="main-button-container">
-        <div class="characters">
-            <div class="enemy">
-                <img class="enemy-image" id="enemy-image" src="../img/bokoblin.png">
-                <br>
-                <progress id="health" value="100" max="100"></progress>
-            </div>
+    <div id="main-container">
+        <div id="leaderboard-button">
+            <button>Leaderboard</button>
         </div>
-        <button id="main-button" onclick="mainClick()">Click This!</button>
-        <p class="point">+1</p>
+
+        <div id="back-button">
+            <button>Back</button>
+        </div>
+
+        <div class="enemy">
+            <progress id="health" value="100" max="100"></progress>
+        </div>
+        <div class="button-container">
+            <button id="main-button" onclick="mainClick()">Click This!</button>
+        </div>
     </div>
 
     <div id="login">

@@ -26,7 +26,7 @@
     align-items: center;
 }
 
-#main-button-container{
+#main-container{
     position: relative;
     display: none;
     width: 100%;
@@ -34,25 +34,43 @@
     justify-content: center;
 }
 
-.characters{
+.game{
     position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .enemy{
-    justify-content: center;
+    position: absolute;
+    right: 5%;
 }
-.enemy #health{
-    width: 100%;
-    height: 40px;
+
+progress[value] {
+    -webkit-appearance: none;
+    appearance: none;
+
+}
+
+.enemy progress[value]::-webkit-progress-bar {
+    background-color: var(--red);
+}
+
+#health{
+    margin-top: 600px;
+    width: 250px;
+}
+
+.button-container{
+    position: absolute;
+    top: 100px;
+    justify-content: center;
 }
 
 #main-button{
-    position: absolute;
     box-shadow: 0 5px 10px 5px;
     border-radius: 20px;
     width: 100px;
     height: 50px;
-    top: 500px;
 
 }
 
@@ -65,6 +83,7 @@
 
 #back-button {
     display: none;
+    font-size: 1.5em;
 }
 
 #main-button:hover{
@@ -73,8 +92,7 @@
 
 .point{
     position: absolute;
-    top: 450px;
-    animation-duration: 1s;
+    top: 0;
 }
 
 h3 {

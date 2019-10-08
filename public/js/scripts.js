@@ -1,7 +1,8 @@
+
 const viewLeaderboard = function() {
     document.getElementById('table').style.display = "flex";
     document.getElementById('back-button').style.display = "flex";
-    document.getElementById('main-button-container').style.display = "none";
+    document.getElementById('main-container').style.display = "none";
     document.getElementById('leaderboard-button').style.display = "none";
 
     fetchLeaderboard();
@@ -11,8 +12,11 @@ const viewLeaderboard = function() {
 const viewGame = function() {
     document.getElementById('table').style.display = "none";
     document.getElementById('back-button').style.display = "none";
-    document.getElementById('main-button-container').style.display = "flex";
+    document.getElementById('main-container').style.display = "flex";
     document.getElementById('leaderboard-button').style.display = "flex";
+
+    console.log("is this running?");
+    pixiInit();
 };
 
 const fetchLeaderboard = async function() {
@@ -53,17 +57,14 @@ const login = function (e) {
         headers: { 'Content-Type': 'application/json' }
     })
     .then( function( response ) {
-        document.getElementById('main-button-container').style.display = "flex";
+        document.getElementById('main-container').style.display = "flex";
         document.getElementById('leaderboard-button').style.display = "flex";
         document.getElementById('login').style.display = "none";
+        viewGame();
     });
 };
 
 // Front end stuff
-
-const points = document.querySelector('.point');
-
-let damage = 10;  // placeholder damage
 
 function findEnemy(tier) {
     const random = Math.random();
@@ -153,10 +154,55 @@ const animateCSS = function (element, animationName, callback) {
     node.addEventListener('animationend', handleAnimationEnd);
 };
 
+const pixiInit = function (){
+    const canvas = document.getElementById("game-canvas");
+    const container = document.getElementById('main-container');
+
+    const game = new PIXI.Application({
+        view: canvas,
+        width: window.innerWidth,
+        height: 750,
+        backgroundColor: 0x333333,
+        antialias: true
+    });
+
+    console.log("wtf is happening");
+
+    const renderer = new PIXI.Renderer({});
+
+    const enemyTexture = PIXI.Texture.from("../img/bokoblin.png");
+    const enemy = new PIXI.Sprite(enemyTexture);
+
+    enemy.x = (game.renderer.width * 5) / 6;
+    enemy.y = game.renderer.height / 2;
+    enemy.anchor.x = 0.5;
+    enemy.anchor.y = 0.5;
+
+    const playerTexture = PIXI.Texture.from("../img/bomb.png");
+    const player = new PIXI.Sprite(playerTexture);
+
+    player.x = game.renderer.width / 6;
+    player.y = game.renderer.height / 2;
+    player.anchor.x = 0.5;
+    player.anchor.y = 0.5;
+
+    game.stage.addChild(enemy);
+    game.stage.addChild(player);
+    game.ticker.add(animate);
+
+    function animate() {
+        enemy.rotation += 0.01;
+        player.rotation -= 0.01;
+    }
+};
+
+
+let damage = 10;  // placeholder damage
 
 const mainClick = function () {
     const enemyHealth = document.getElementById('health');
     const enemyImg = document.getElementById('enemy-image');
+    const buttonContainer = document.querySelector('.button-container');
 
     if(enemyHealth.value > 0){
         enemyHealth.value -= damage;
@@ -164,6 +210,6 @@ const mainClick = function () {
         enemyHealth.value = 100;
         enemyImg.src = findEnemy(2);
     }
-    animateCSS('.point', 'fadeInUp');
+
     console.log("Hello");
 };
