@@ -10,6 +10,8 @@ var homeRouter = require('./routes/home');
 var indexRouter = require('./routes/index');
 var messagingRouter = require('./routes/messaging');
 var searchRouter = require('./routes/search');
+var apiUserRouter = require('./routes/apiUser');
+var apiBookRouter = require('./routes/apiBook');
 
 var app = express();
 
@@ -29,6 +31,9 @@ app.use('/', homeRouter); //home will just be the root directory
 app.use('/index', indexRouter);
 app.use('/messaging', messagingRouter);
 app.use('/search', searchRouter);
+
+app.use('/api/users', apiUserRouter);
+app.use('/api/books', apiBookRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
