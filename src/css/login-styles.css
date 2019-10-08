@@ -11417,7 +11417,7 @@ body {
 }
 
 #navBar {
-  height: 150px;
+  height: 200px;
   overflow: hidden;
   position: -webkit-sticky; /* Safari */
   position: sticky;
@@ -11494,8 +11494,8 @@ button:hover {
 
 .signT {
   font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter";
-  font-weight: 600;
-  font-size: 2em;
+  font-weight: 500;
+  font-size: 1.7em;
   color: #00FF54;
   background-color: black;
   padding-top: 1px;
@@ -11509,6 +11509,20 @@ button:hover {
 .topMar {
   margin-top: 20px;
   box-shadow: 0 10px 20px #999;
+}
+
+.bottomBanner {
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter";
+  font-weight: 500;
+  font-size: 1.1em;
+  margin-left: -100px;
+  margin-right: -100px;
+  margin-bottom: -50px;
+  margin-top: 50px;
+  background-color: #282829;
+  padding: 20px;
+  color: white !important;
+  border-top: 2px solid #00FF54;
 }
 
 @media (min-width: 640px) {

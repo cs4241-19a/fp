@@ -252,6 +252,7 @@ export default function LoginApp(props) {
 					</div>
 				</div>
 			</div>
+			<div className="lg:text-center bottomBanner"> Designed and developed in Worcester, Massachusetts </div>
 		</div>
 	)
 }
