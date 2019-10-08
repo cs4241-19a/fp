@@ -150,7 +150,7 @@ fetch('/getYou', {
         let img = createNode('img')
         if (row.pic) {
             img.src = row.pic
-            console.log(img.height, img.width)
+                // console.log(img.height, img.width)
             img.style.height = '100px'
             img.style.width = '150px'
         }

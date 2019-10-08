@@ -6,52 +6,93 @@
     <title>Personal Information</title>
 
     <link href="register.css" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
-    <h1 id="rightHead">Personal Information</h1>
-    <form action="">
-        <h3>Username</h3>
-        <h3>Password</h3>
-        <br>
-        <label for="username"></label><input id="username" placeholder="Username" type="text">
-        <label id="pwdLabel" for="password"></label><input id="password" placeholder="Password" type="text">
-        <br>
-        <h3>Name</h3>
-        <h3>Age</h3>
-        <br>
-        <label for="name"></label><input id="name" placeholder="Name" type="text">
-        <label id="ageLabel" for="age"></label><input id="age" placeholder="Age" type="text">
-        <br>
-        <h3>Gender</h3>
-        <br>
-        <label><input type="radio" name="gender" value="Male"></label> Male
-        <label><input type="radio" name="gender" value="Female"></label> Female
-        <br>
-        <h3>Hobby</h3>
-        <br>
-        <label><input type="radio" name="hobby" value="Sport"></label> Sport
-        <label><input type="radio" name="hobby" value="Music"></label> Music
-        <label><input type="radio" name="hobby" value="Gaming"></label> Gaming
-        <label><input type="radio" name="hobby" value="Jellyfish Hunt"></label> Jellyfish Hunt
-        <br>
-        <h3>Profile Picture</h3>
-        <br>
-        <input type="file" id="inpFile">
-        <div class="image-preview" id="imagePreview">
-            <img src="" alt="Image Preview" class="image-preview__image">
-            <span class="image-preview__default-text">Image Preview</span>
-        </div>
-    </form>
-    <button id="add">Submit</button>
-    <button id="cancel">Cancel</button>
-    <br>
-    <h3 id="hint"></h3>
+    <div id="background"></div>
+    <div id="register-box">
+        <form id="register-form">
+            <div class="text-center mb-4">
+                <h1 class="h3 font-weight-normal">Registration Form</h1>
+            </div>
+            <div class="mt-3 form-label-group">
+                <label for="inputUsername">Username</label>
+                <input type="text" id="input-username" class="form-control" placeholder="Username" required autofocus>
+            </div>
+            <div class="mt-3 form-label-group">
+                <label for="inputPassword">Password</label>
+                <div class="form-row">
+                    <div class="col">
+                        <input type="password" id="input-password" class="form-control" placeholder="Password" required>
+                    </div>
+                    <div class="col">
+                        <input type="password" id="input-confirm-password" class="form-control" placeholder="Confirm Password" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col mt-3 form-label-group">
+                    <label for="inputNickname">Nickname</label>
+                    <input type="text" id="input-nickname" class="form-control" placeholder="Nickname" required autofocus>
+                </div>
+                <div class="col mt-3 form-label-group">
+                    <label for="inputAge">Age</label>
+                    <input type="number" id="input-age" class="form-control" placeholder="Age" required autofocus>
+                </div>
+            </div>
+            <div class="mt-3 form-label-group">
+                <label for="inputGender">Gender</label>
+                <br />
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="radio-male" value="Male" name="customRadio" class="custom-control-input" required>
+                    <label class="custom-control-label" for="radio-male">Male</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="radio-female" value="Female" name="customRadio" class="custom-control-input">
+                    <label class="custom-control-label" for="radio-female">Female</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="radio-nonbinary" value="Non-binary" name="customRadio" class="custom-control-input">
+                    <label class="custom-control-label" for="radio-nonbinary">Non-binary</label>
+                </div>
+            </div>
+            <div class="mt-3 form-label-group">
+                <label for="select-hobby">Hobby</label>
+                <select class="form-control" id="select-hobby">
+                    <option value="Example1">Example1</option>
+                    <option value="Example2">Example2</option>
+                    <option value="Example3">Example3</option>
+                </select>
+            </div>
+            <div class="mt-3 form-label-group">
+                <label for="inpFile">Profile Picture</label>
+                <br>
+                <input type="file" id="inpFile">
+                <div class="image-preview" id="imagePreview">
+                    <img src="" alt="Image Preview" class="image-preview__image">
+                    <span class="image-preview__default-text">Image Preview</span>
+                </div>
+            </div>
+            <div class="mt-4 btn-group btn-block" role="group" aria-label="Basic example">
+                <button id="register-btn" class="btn btn-lg btn-outline-primary" type="submit">Register</button>
+                <button id="cancel-btn" class="btn btn-lg btn-outline-warning" type="submit">Cancel</button>
+            </div>
+            <p class="mt-5 mb-3 text-muted text-center">&copy; CS4241 - Rui & Percy & Zonglin</p>
+        </form>
+    </div>
 </body>
 
 <!-- Sweet Alert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script src="register.js"></script>
+
+<!--  JavaScript Plugins  -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 </html>
