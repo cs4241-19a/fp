@@ -71,12 +71,8 @@ function createPlayerForSong(track) {
     )
 }
 
-function pause() {
-    player.pause()
-}
-
-function play() {
-    player.play()
+function togglePlayPause() {
+    player.togglePlay()
 }
 
 function playSomeTrackID(track){
