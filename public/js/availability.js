@@ -287,14 +287,16 @@ const submitButtonClicked = function (e) {
     times: out_put_times
   };
 
-  buildAvailability(newAvailability).then(() => console.log(''));
+  buildAvailability(newAvailability).then(() => console.log());
 
   const emailList = document.querySelectorAll('.emailRecipient');
   let emailAddresses = [];
   emailList.forEach((email) => {
-    emailAddresses.push(email.value);
+    if (email.value != "") {
+      emailAddresses.push(email.value);
+    }
   });
-  if (emailAddresses) {
+  if (emailAddresses.length > 0) {
     sendEmail(selected_room, selected_start_time, selected_end_time, selected_day, emailAddresses).then(console.log());
   }
 };
@@ -307,7 +309,7 @@ async function sendEmail(room, startTime, endTime, day, emailList) {
       subject: `Meeting created for ${day}`,
       text: `You have been invited to a meeting in ${room} on ${day}. The room is booked from ${startTime} to ${endTime}.`
     });
-    console.log(body);
+
     await fetch('/sendEmail', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -318,45 +320,109 @@ async function sendEmail(room, startTime, endTime, day, emailList) {
   }
 }
 
+function validateAvailability(roomAvail, selectedTimes) {
+  let unavailable = false;
+  selectedTimes.forEach((time) => {
+    if (roomAvail.includes(time)) {
+      unavailable = true;
+    }
+  });
+
+  if (unavailable) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function removeAllAlerts() {
+  document.getElementById('room-unavailable-alert').style.display = "none";
+  document.getElementById('meeting-created-alert').style.display = "none";
+}
+
+function meetingCreatedAlert() {
+  document.getElementById('meeting-created-alert').style.display = "flex";
+}
+
+function roomUnavailableAlert() {
+  document.getElementById('room-unavailable-alert').style.display = "flex";
+}
+
 async function buildAvailability(availability) {
   try {
+    removeAllAlerts();
     const roomAvail = await fetchRoomAvailability(availability.room);
     if (roomAvail) {
       switch (availability.day) {
         case "Sunday":
-          availability.times.forEach((time) => {
-            roomAvail.sunday.push(time);
-          });
+          if (validateAvailability(roomAvail.sunday, availability.times)) {
+            availability.times.forEach((time) => {
+              roomAvail.sunday.push(time);
+            });
+            meetingCreatedAlert();
+          } else {
+            roomUnavailableAlert();
+          }
           break;
         case "Monday":
-          availability.times.forEach((time) => {
-            roomAvail.monday.push(time);
-          });
+          if (validateAvailability(roomAvail.monday, availability.times)) {
+            availability.times.forEach((time) => {
+              roomAvail.monday.push(time);
+            });
+            meetingCreatedAlert();
+          } else {
+            roomUnavailableAlert();
+          }
           break;
         case "Tuesday":
-          availability.times.forEach((time) => {
-            roomAvail.tuesday.push(time);
-          });
+          if (validateAvailability(roomAvail.tuesday, availability.times)) {
+            availability.times.forEach((time) => {
+              roomAvail.tuesday.push(time);
+            });
+            meetingCreatedAlert();
+          } else {
+            roomUnavailableAlert();
+          }
           break;
         case "Wednesday":
-          availability.times.forEach((time) => {
-            roomAvail.wednesday.push(time);
-          });
+          if (validateAvailability(roomAvail.wednesday, availability.times)) {
+            availability.times.forEach((time) => {
+              roomAvail.wednesday.push(time);
+            });
+            meetingCreatedAlert();
+          } else {
+            roomUnavailableAlert();
+          }
           break;
         case "Thursday":
-          availability.times.forEach((time) => {
-            roomAvail.thursday.push(time);
-          });
+          if (validateAvailability(roomAvail.thursday, availability.times)) {
+            availability.times.forEach((time) => {
+              roomAvail.thursday.push(time);
+            });
+            meetingCreatedAlert();
+          } else {
+            roomUnavailableAlert();
+          }
           break;
         case "Friday":
-          availability.times.forEach((time) => {
-            roomAvail.friday.push(time);
-          });
+          if (validateAvailability(roomAvail.friday, availability.times)) {
+            availability.times.forEach((time) => {
+              roomAvail.friday.push(time);
+            });
+            meetingCreatedAlert();
+          } else {
+            roomUnavailableAlert();
+          }
           break;
         case "Saturday":
-          availability.times.forEach((time) => {
-            roomAvail.saturday.push(time);
-          });
+          if (validateAvailability(roomAvail.saturday, availability.times)) {
+            availability.times.forEach((time) => {
+              roomAvail.saturday.push(time);
+            });
+            meetingCreatedAlert();
+          } else {
+            roomUnavailableAlert();
+          }
           break;
         default:
           break;
