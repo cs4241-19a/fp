@@ -11424,7 +11424,7 @@ body {
   background-color: black;
   text-align: center;
   padding: 10px;
-  box-shadow: 0 1px 10px #000000;
+  box-shadow: 0 1px 10px dodgerblue;
 }
 
 .imgCent img {
@@ -11473,8 +11473,42 @@ body {
 }
 
 button {
-  background: -webkit-gradient(linear, left top, right top, from(#FC5C7D), to(#6A82FB)) fixed;
-  background: linear-gradient(90deg, #FC5C7D, #6A82FB) fixed;
+  background: white;
+  color: black !important;
+  border: 2px solid black;
+  -webkit-transition: 0.9s;
+  transition: 0.9s;
+}
+
+button:hover {
+  background: black;
+  color: #00FF55 !important;
+}
+
+.headT {
+  color: white;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter";
+  font-weight: 600;
+  font-size: 3.5em;
+}
+
+.signT {
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter";
+  font-weight: 600;
+  font-size: 2em;
+  color: #00FF54;
+  background-color: black;
+  padding-top: 1px;
+  padding-bottom: 2px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 30px;
+  box-shadow: 0 10px 20px #999;
+}
+
+.topMar {
+  margin-top: 20px;
+  box-shadow: 0 10px 20px #999;
 }
 
 @media (min-width: 640px) {
