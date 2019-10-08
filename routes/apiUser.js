@@ -103,9 +103,7 @@ function dbUserAuthenticate(username, password) {
        MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) { 
        const db = client.db('finalproject');
        var promise1 = new Promise(function(resolve, reject) {
-         setTimeout(function() {
-           resolve(db.collection('users').find({username: username, password: password}).toArray());
-         }, 100);
+          resolve(db.collection('users').find({username: username, password: password}).toArray());
        });
        promise1.then(function(value) {
          console.log("value: " + value);
@@ -143,9 +141,7 @@ router.post('/login', function (req, res) {
   
   var loginSuccess = false
 
-  dbUserAuthenticate(username, password).then(function(value) {
-    console.log("this is the value: " + value);
-  });
+  console.log(dbUserAuthenticate(username, password))
   
   if (loginSuccess) {
     res.cookie('username', username);
