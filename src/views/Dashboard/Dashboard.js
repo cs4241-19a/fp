@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import './Dashboard.css'
 import Tabulator from "tabulator-tables"; //import Tabulator library
-import "tabulator-tables/dist/css/tabulator.min.css"; //import Tabulator stylesheet
+import * as tableFunctions from './TableFunctions.js'
 
 class Dashboard extends Component {
     constructor(props) {
@@ -56,9 +57,9 @@ class Dashboard extends Component {
 	    ],
         columns: [
             {title: "ID", field: "id", visible: false},
-            {title:"Name", field:"name", headerFilter: "input", editor:"input", cellEdited:function(cell){
+            {title:"Name", field:"name", headerFilter: "input", editor:"input", bottomCalc:"count", cellEdited:function(cell){
                 console.log(cell)
-                modifyRow(cell);}},
+                tableFunctions.modifyRow(cell);}},
             {title:"Requested Amount", field:"requested", formatter:"money", editor: "input", bottomCalc:"sum", bottomCalcFormatter: "money", headerFilter: "input", 
                 bottomCalcFormatterParams:  {
                 decimal: ".",
@@ -68,7 +69,7 @@ class Dashboard extends Component {
                     decimal: ".",
                     thousand: ",",
                     symbol: "$"
-                }, cellEdited:function(cell){ console.log(cell); modifyRow(cell);}},
+                }, cellEdited:function(cell){ console.log(cell); tableFunctions.modifyRow(cell);}},
             {title:"Approved Amount", field:"approved", formatter:"money", editor: "input", bottomCalc:"sum", bottomCalcFormatter: "money", headerFilter: "input", 
                 bottomCalcFormatterParams:  {
                 decimal: ".",
@@ -78,12 +79,11 @@ class Dashboard extends Component {
                     decimal: ".",
                     thousand: ",",
                     symbol: "$"
-                }, cellEdited:function(cell){ console.log(cell); modifyRow(cell);}},
+                }, cellEdited:function(cell){ console.log(cell); tableFunctions.modifyRow(cell);}},
             {formatter:"buttonCross", width:40, align:"center", cellClick:function(e, cell){
                 cell.getRow().delete();
-                deleteRow(cell);
+                tableFunctions.deleteRow(cell);
             }}
-
         ] 
         })
     }
@@ -99,20 +99,11 @@ class Dashboard extends Component {
     //add table holder element to DOM
     render() {
       return (
-        <div>
-            Hello
+        <div class = "table">
             <div ref={el => (this.el = el)} />
         </div>
       );
     }  
-}
-
-const deleteRow = function(cell) {
-    // code me       
-}
-
-const modifyRow = function(cell){
-    // code me
 }
 
 export default Dashboard
