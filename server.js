@@ -9,13 +9,7 @@ const express = require( 'express' ),
     nodemailer = require('nodemailer'),
     port = 3000;
 
-let transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'meetingnotification.wpi@gmail.com',
-    pass: 'meetingwpi1'
-  }
-});
+app.set('view engine', 'ejs');
 
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
@@ -30,6 +24,15 @@ app.use( compression() );
 app.use( session({ secret:'cats cats cats', resave: false, saveUninitialized: false }) );
 app.use( passport.initialize() );
 app.use( passport.session() );
+
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  port: 465,
+  auth: {
+    user: 'wpi.meeting.notification@gmail.com',
+    pass: 'meetingwpi1'
+  }
+});
 
 /********** PASSPORT CONFIGURATION **********/
 passport.use(new Local (

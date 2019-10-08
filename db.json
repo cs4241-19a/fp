@@ -223,7 +223,9 @@
           "17:00",
           "17:30"
         ],
-        "wednesday": [],
+        "wednesday": [
+          "11:30"
+        ],
         "thursday": [],
         "friday": [],
         "saturday": []
@@ -235,7 +237,9 @@
         "sunday": [],
         "monday": [],
         "tuesday": [],
-        "wednesday": [],
+        "wednesday": [
+          "9:00"
+        ],
         "thursday": [],
         "friday": [],
         "saturday": []
@@ -256,8 +260,12 @@
     {
       "name": "Leonardo da Vinci",
       "availability": {
-        "sunday": [],
-        "monday": [],
+        "sunday": [
+          "9:00"
+        ],
+        "monday": [
+          "9:00"
+        ],
         "tuesday": [],
         "wednesday": [],
         "thursday": [],

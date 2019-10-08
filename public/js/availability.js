@@ -41,7 +41,6 @@ const createAvailabilityTable = async function () {
       //TODO: change military time to user friendly time
       for (let i = 9; i < 18; i++) {
         // build each interval row
-        console.log(i);
         htmlDiv.innerHTML += createRow(availability, `${i}:00`, true);
         htmlDiv.innerHTML += createRow(availability, `${i}:30`, false);
       }
@@ -63,7 +62,6 @@ const createAvailabilityTable = async function () {
  */
 async function fetchRoomAvailability(roomName) {
   try {
-    console.log(roomName);
     const body = JSON.stringify({name: roomName});
     const resp = await fetch('/specificRoomAvailability', {
       method: 'POST',
@@ -310,11 +308,11 @@ async function sendEmail(room, startTime, endTime, day, emailList) {
       text: `You have been invited to a meeting in ${room} on ${day}. The room is booked from ${startTime} to ${endTime}.`
     });
     console.log(body);
-    // await fetch('/sendEmail', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body
-    // });
+    await fetch('/sendEmail', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body
+    });
   } catch {
     console.log('error sending email');
   }
