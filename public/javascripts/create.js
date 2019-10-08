@@ -2,7 +2,7 @@
 function createAccount(){
   let user = document.querySelector( '#newUsername' )
   let password = document.querySelector( '#newPassword' )
-  let json = { user: user.value, pass: password.value}
+  let json = { username: user.value, password: password.value}
   let body = JSON.stringify(json)
   
   fetch( '/api/users/create', {
@@ -25,6 +25,6 @@ function createAccount(){
 }
 
 window.onload = function() {
-  const button = document.getElementById('createAccount')
+  const button = document.getElementById('createButton')
   button.onclick = createAccount
 }

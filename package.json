@@ -10,6 +10,7 @@
     "debug": "^4.1.1",
     "express": "^4.16.4",
     "http-errors": "^1.7.3",
+    "mongodb": "^3.3.2",
     "morgan": "^1.9.1",
     "react": "^16.10.2",
     "talkjs": "0.13.0"

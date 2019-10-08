@@ -6,48 +6,126 @@ var router = express.Router();
 
 // create a new user with their username and chosen password, returning nothing
 function dbUserAdd(username, password) {
-  //TODO
+  console.log("adding new user to the database...");
+  
+  const MongoClient = require('mongodb').MongoClient;
+  const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
+
+  MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("finalproject");
+    var myobj = { username: username, password: password };
+    dbo.collection("users").insertOne(myobj, function(err, res) {
+      if (err) throw err;
+      console.log("added new user!");
+      db.close();
+    });
+  });
   return;
 }
 
 // check if a username is taken, returning true if it is and false if not
-function dbUserExists(username) {
-  //TODO
-  return true;
+let dbUserExists = function(arr) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if(arr.length == 1) {
+        const MongoClient = require('mongodb').MongoClient;
+        const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
+        const client = new MongoClient(uri, { useNewUrlParser: true });
+        try {
+          MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) { 
+            const db = client.db('finalproject');
+            resolve(db.collection('users').find({username: arr[0]}).toArray())
+          })
+        }
+        catch(e) {
+          console.log(e)
+        }
+        client.close();
+      }
+      else {
+        reject(Error("invalid!"))
+      }
+    }, 100)
+  })
 }
 
 // check if the user both exists and matches the given password, returning true if valid and false if not
-function dbUserAuthenticate(username, password) {
-  //TODO
-  return true;
+let dbUserAuthenticate = function(arr) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if(arr.length == 2) {
+        const MongoClient = require('mongodb').MongoClient;
+        const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
+        const client = new MongoClient(uri, { useNewUrlParser: true });
+        try {
+          MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) { 
+            const db = client.db('finalproject');
+            resolve(db.collection('users').find({username: arr[0], password: arr[1]}).toArray())
+          })
+        }
+        catch(e) {
+          console.log(e)
+        }
+        client.close();
+      }
+      else {
+        reject(Error("invalid!"))
+      }
+    }, 100)
+  })
 }
 
 /* ### ROUTES ### */
 router.post('/create', function (req, res) {
+  console.log("attempting to create new account...")
   const username = req.body.username;
   const password = req.body.password;
-
-  if (!dbUserExists(username)) {
-    dbUserAdd(username, password);
-    res.cookie('username', username);
-    res.send("OK")
-   // res.redirect("/index?alert=Account+created");
-  } else {
-    res.send("BAD")
-   // res.redirect("/?alert=Username+taken");
-  }
+  
+  dbUserExists([username]).then(data => {
+    if(data.length == 0) {
+      dbUserAdd(username, password)
+      res.cookie('username', username);
+      res.send("OK");
+    }
+    else {
+      res.send("BAD");
+    }
+  }).catch(e => {
+    console.log(e)
+  })
+  
+  dbUserExists([username]).then(data => {
+    if(data.length != 0) {
+      console.log("username exists!!!")
+    }
+    else {
+      console.log("username does not exist!!!")
+    }
+  }).catch(e => {
+    console.log(e)
+  })
 })
 
 router.post('/login', function (req, res) {
+  console.log("attempting to log in...")
+  
   const username = req.body.username;
   const password = req.body.password;
-
-  if (dbUserAuthenticate(username, password)) {
-    res.cookie('username', username);
-    res.send("OK")
-  } else {
-    res.send("BAD")
-  }
+  
+  let loginInfo = [username, password]
+  
+  dbUserAuthenticate(loginInfo).then(data => {
+    if(data.length != 0) {
+      res.cookie('username', username);
+      res.send("OK");
+    }
+    else {
+      res.send("BAD");
+    }
+  }).catch(e => {
+    console.log(e)
+  })
 })
 
 router.post('/logout', function (req, res) {
