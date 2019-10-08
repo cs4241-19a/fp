@@ -1,18 +1,22 @@
 require=(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({"map":[function(require,module,exports){
-let earth = null;
+let map = null;
+let activeCountries = null;
 
 function init() {
-  earth = new WE.map('earth');
-  earth.setView([46.8011, 8.2266], 2);
-  WE.tileLayer('https://webglearth.github.io/webglearth2-offline/{z}/{x}/{y}.jpg', {
-    tileSize: 256,
-    bounds: [[-85, -180], [85, 180]],
-    minZoom: 0,
-    maxZoom: 16,
-    attribution: 'WebGLEarth example',
-    tms: true,
-  }).addTo(earth);
-  console.log('init earth');
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 4,
+    center: new google.maps.LatLng(30, 0),
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+  });
+  activeCountries = new google.maps.FusionTablesLayer({
+    query: {
+      select: 'geometry',
+      from: '1N2LBk4JHwWpOY4d9fobIn27lfnZ5MDy-NoqqRpk',
+      where: 'ISO_2DIGIT IN (\'US\', \'GB\', \'DE\')',
+    },
+    map: map,
+    suppressInfoWindows: true,
+  });
 }
 
 module.exports = {init};
