@@ -100,6 +100,18 @@ function dbUserAuthenticate(username, password) {
     //   callPromise().then(function(result) {          
     //       client.close();
     //    });    
+       MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) { 
+       const db = client.db('finalproject');
+       var promise1 = new Promise(function(resolve, reject) {
+         setTimeout(function() {
+           resolve(db.collection('users').find({username: username, password: password}).toArray());
+         }, 100);
+       });
+       promise1.then(function(value) {
+         console.log("value: " + value);
+       });
+       console.log("promise: " + promise1)
+       return promise1;
     }); //end mongo client   
    } 
   catch (e) {
