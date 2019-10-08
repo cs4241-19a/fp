@@ -68,6 +68,8 @@ function dbUserExists(username) {
 
 // check if the user both exists and matches the given password, returning true if valid and false if not
 function dbUserAuthenticate(username, password) {
+  console.log("username: " + username)
+  console.log("password: " + password)
   console.log("authenticating user...")
   
   const MongoClient = require('mongodb').MongoClient;
@@ -107,9 +109,6 @@ function dbUserAuthenticate(username, password) {
    }
 }
 
-dbUserExists("username", "password")
-// dbUserAuthenticate("balls", "admin")
-
 /* ### ROUTES ### */
 router.post('/create', function (req, res) {
   const username = req.body.username;
@@ -129,8 +128,14 @@ router.post('/create', function (req, res) {
 router.post('/login', function (req, res) {
   const username = req.body.username;
   const password = req.body.password;
+  
+  var loginSuccess = false
 
-  if (dbUserAuthenticate(username, password)) {
+dbUserAuthenticate(username, password).then(function(value) {
+  console.log(value);
+});
+  
+  if (loginSuccess) {
     res.cookie('username', username);
     res.send("OK")
   } else {
