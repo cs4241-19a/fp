@@ -18,10 +18,12 @@ var config = {
 };
 const PLAY_STATE = 0;
 const LOST_STATE = 1;
+const PAUSE_STATE = 2;
 
 let game = new Phaser.Game(config);
 let player;
 let cursors;
+let pauseKey;
 let groundGroup;
 let rock = [];
 const path = "/assets/gompei/";
@@ -30,6 +32,9 @@ let maxRocks = 3;
 let rockSpeed = -200;
 let state = PLAY_STATE; // current state
 let scoreText;
+let playerYVelocity;
+let newState = false;
+let rockAcc = 0.1;
 
 // preload images
 function preload () {
@@ -53,7 +58,7 @@ function create () {
 
     // set rock properties
     for (let i = 0; i < maxRocks; i++) {
-        rock[i] = this.physics.add.image(offset, 445, "rock").setScale(0.25);
+        rock[i] = this.physics.add.image(offset, 450, "rock").setScale(0.25);
         offset += 450;
         this.physics.add.collider(player, rock[i], rockCollision, null);
         rock[i].setVelocityX(rockSpeed);
@@ -62,6 +67,7 @@ function create () {
     }
 
     cursors = this.input.keyboard.createCursorKeys();
+    pauseKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
 
     // Add score HUD
     scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
@@ -70,6 +76,34 @@ function create () {
 
 // Updates and re draws images
 function update () {
+    
+    pauseKey.on('down', function(event){
+        if (!newState) {
+            if (state === PLAY_STATE) {
+                console.log("PAUSED");
+                state = PAUSE_STATE;
+                pauseGame();
+                newState = true;
+            }
+            else if (state === PAUSE_STATE) {
+                console.log("UNPAUSE");
+                state = PLAY_STATE;
+                unpauseGame();
+                newState = true;
+            }
+        }
+
+    })
+
+    pauseKey.on('up', function(event){
+        if (state === PLAY_STATE) {
+            newState = false;
+        }
+        else if (state === PAUSE_STATE) {
+            newState = false;
+        }
+    })
+
     if (state === PLAY_STATE) {
 
         // Update score
@@ -77,7 +111,10 @@ function update () {
         scoreText.setText("Score: " + score);
 
         // Steadily increase rock speed
-        rockSpeed+=0.5;
+        rockSpeed-=rockAcc;
+        setRockSpeeds(rockSpeed);
+
+        playerYVelocity = player.body.velocity.y;
     
         // jump
         if (cursors.up.isDown && player.body.touching.down) {
@@ -98,18 +135,68 @@ function update () {
     }
 }
 
+function setRockSpeeds (rockSpeed) {
+    for (let i = 0; i < maxRocks; i++) {
+        rock[i].setVelocityX(rockSpeed);
+    }
+
+}
+
 // Put game in lost state when player collides with a rock
 function rockCollision () {
     state = LOST_STATE;
 
+    stopPlayer();
+    stopRocks();
+
+    const scoreModel = $("#gameScoreFormModal");
+    const resetGame = data => {
+        location.reload();
+    };
+
+    attachHeading(`Score: ${score} points`);
+    scoreModel.on("hidden.bs.modal", resetGame);
+    attachSubmit({score: score}, () => {
+        scoreModel.modal("hide");
+    });
+    scoreModel.modal("show");  // user jQuery to show the modal
+}
+
+function pauseGame () {
+    stopRocks();
+    stopPlayer();
+}
+
+function stopRocks () {
+    // Stop all rocks
+    for (let i = 0; i < maxRocks; i++) {
+        rock[i].setVelocityX(0);
+        rock[i].setVelocityY(0);
+    }
+}
+
+function stopPlayer () {
     // Stop player
     player.body.allowGravity = false;
     player.setVelocityY(0);
     player.setVelocityX(0);
+}
 
-    // Stop all rocks
+function unpauseGame () {
+    resumePlayer();
+    resumeRocks();
+}
+
+function resumePlayer () {
+    // Stop player
+    player.body.allowGravity = true;
+    player.setVelocityY(playerYVelocity);
+    player.setVelocityX(0);
+}
+
+function resumeRocks () {
     for (let i = 0; i < maxRocks; i++) {
-        rock[i].setVelocityX(0);
+        rock[i].setVelocityX(rockSpeed);
         rock[i].setVelocityY(0);
     }
 }
