@@ -96,7 +96,6 @@ const generateRandomString = function (length) {
 };
 
 app.get("/", isLoggedIn, function (req, res) {
-    console.log("test")
     res.sendFile(__dirname + "/public/home.html")
 })
 app.get("/login", function (req, res) {
@@ -336,5 +335,5 @@ function isLoggedIn(req, res, next) {
 }
 
 //added in order to run the server
-app.listen(process.env.PORT || 3001)
+app.listen(process.env.PORT || 3000)
 module.exports = app
