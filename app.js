@@ -65,7 +65,7 @@ passport.use('local-login', new LocalStrategy(
                 collection.find({"username": username}).toArray((err, items) => {
                     resolve(items)
                 })
-            }).then()
+            })
         }).then(function (result) {
             if (typeof result[0] == 'undefined') {
                 return done(null, false, {"message": "Wrong username"})
@@ -80,7 +80,7 @@ passport.use('local-login', new LocalStrategy(
                 })
             }
         }, function (err) {
-            return done(null, false, {"message": "User not found. Err: " + err})
+            return done(null, false, {"message": "User not found."})
         })
     })
 )
@@ -184,8 +184,8 @@ app.get('/callback', function (req, res) {
 app.get('/refresh_token', function (req, res) {
 
     // requesting access token from refresh token
-    let refresh_token = req.query.refresh_token;
-    let authOptions = {
+    var refresh_token = req.query.refresh_token;
+    var authOptions = {
         url: 'https://accounts.spotify.com/api/token',
         headers: {'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))},
         form: {
@@ -263,8 +263,8 @@ app.get("/recommendation", function (req, res) {
                 })
                 res.send(JSON.stringify(entries))
             })
-        }).then()
-    }).then()
+        })
+    })
 })
 
 app.post("/login",
@@ -315,8 +315,8 @@ app.post("/recommendation", function (req, res) {
             }).then(() => {
                 res.redirect("/");
             })
-        }).then()
-    }).then()
+        })
+    })
 })
 
 function isLoggedIn(req, res, next) {
