@@ -59,8 +59,8 @@ class Submit extends Component {
 
     render() {
         return(
-            <section class="section center">
-                <a class="button btn is-primary is-focused" id="submit" disabled>Submit</a>
+            <section class="section center submitButton">
+                <a class="button btn is-primary is-focused is-fullwidth" id="submit" disabled>Submit Data</a>
             </section>)
     }
 
