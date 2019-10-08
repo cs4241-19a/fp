@@ -10,7 +10,7 @@ html {
     overflow-y: scroll;
     overflow-x: hidden;
     height: 100%;
-    background: linear-gradient(90deg, #FC5C7D, #6A82FB) fixed;
+    background-image: linear-gradient(to top, #000104, #121214, #1d1d1e, #282829, #333334);
 }
   
 body {
@@ -20,6 +20,27 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+#navBar {
+    height: 120px;
+    overflow: hidden;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    background-color: black;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0 1px 10px #000000;
+}
+
+#root {
+    padding: 50px;
+}
+
+#navBar img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 button {
