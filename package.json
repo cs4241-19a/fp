@@ -7,16 +7,18 @@
     "start": "node songs.js"
   },
   "dependencies": {
+    "body-parser": "latest",
     "compression": "^1.7.4",
     "express": "^4.17.1",
     "lowdb": "^1.0.0",
     "mime": "^2.4.4",
     "passport": "^0.4.0",
-    "body-parser": "latest"
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "epm": "^1.0.4",
     "helmet": "^3.21.1",
+    "mongodb": "^3.3.2",
     "request": "^2.88.0"
   }
 }

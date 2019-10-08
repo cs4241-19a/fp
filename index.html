@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<script src="http://d3js.org/d3.v5.min.js"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <head>
     <meta charset="UTF-8">
-    <title>The Bard's Tale</title>
+    <title>Starstep</title>
+    <link rel="stylesheet" href="./resources/css/buttons.css">
     <link rel="stylesheet" href="./resources/css/tooltip.css">
     <link rel="stylesheet" href="./resources/css/main.css">
 </head>
@@ -12,14 +13,17 @@
 <svg id="backgroundSvg" style="z-index: -1; position: absolute; width: 100%; height: 100%; pointer-events: none; display: flex; justify-content: center; align-items: center">
     <image id="backgroundImg" style="position: inherit; width: 100%; height: auto"></image>
 </svg>
+<!--
 <div class="tooltip">
     HELP
     <span class="tooltiptext" style="width: 800px">
             Select a track, select a difficulty, and click anywhere else. To pick a different track, refresh the page.
     </span>
 </div>
-<div class="box">
+-->
+<div id="box" class="box">
     <div class="row header" id = "banner" style="height: fit-content; display: flex; justify-content: center; align-items: center">
+<!--
         <svg id = "background" style="height: 192px; width: 400px; display: flex; justify-content: right; align-items: center"></svg>
         <div id = "trackSelectContainer" style="display: flex; flex-direction: column">
             <label for="trackSelect">Track Selection</label>
@@ -38,14 +42,197 @@
             <label style="background: bisque">Score</label>
             <label id = "score" style="background: bisque">0</label>
         </div>
+-->
     </div>
-    <div class = "row content">
-        <svg id="notearea" style="height: 100%; width: 300px"></svg>
+    <div id="bottom" class = "row content">
     </div>
 </div>
 </body>
 <script>
+    let Startscreen = function(){
+    this.drawAll = function(){
+        let logo = document.createElement("svg");
+        logo.id = "logo";
+        logo.width = 1044;
+        logo.height = 434;
+        let img = document.createElement("img");
+        img.src = "./resources/images/starstepLogo.png";
+        img.width = 1044;
+        logo.appendChild(img);
+        document.querySelector("#banner").appendChild(logo);
 
+        d3.select("#backgroundImg")
+            .attr("xlink:href", "./resources/images/backgrounds/space.jpg")
+            .style("position: inherit; width: 100%; height: auto");
+
+        d3.select("#notearea")
+            .append("image")
+            .attr("y", 400)
+            .attr("x", 0)
+            .attr("xlink:href", "./resources/images/blank_arrow_left.png");
+    };
+        this.drawAll();
+        this.prevStates = this;
+        this.next = function (){
+            removeElement("logo");
+            return new Mainmenu(this);
+        };
+        this.prev = function(){
+            return new Mainmenu(this);
+        };
+    };
+
+    function removeElement(elementId) {
+        let element = document.getElementById(elementId);
+        element.parentNode.removeChild(element);
+    }
+
+    let Helpmenu = function(){
+        this.next = function (){
+            //return new Mainmenu(this.prevStates);
+        };
+        this.prev = function(){
+            return new Mainmenu(this.prevStates);
+        };
+    };
+
+    let Mainmenu = function(prevStates){
+        this.drawAll = function(){
+            let container = document.createElement("div");
+            container.className = "container";
+            let freeplay = document.createElement("button");
+            freeplay.id = "freeplay";
+            freeplay.innerText = "Free Play";
+            let help = document.createElement("button");
+            help.id = "help";
+            help.innerText = "Help";
+            let login = document.createElement("button");
+            login.id = "login";
+            login.innerText = "Login";
+            container.appendChild(freeplay);
+            container.appendChild(help);
+            container.appendChild(login);
+            document.querySelector("#banner").appendChild(container);
+        };
+        this.drawAll();
+        this.prevStates = prevStates;
+        this.next = function (){
+            //get currently selected menu option
+            return new Mainmenu(this);
+        };
+        this.prev = function(){
+            removeElement("freeplay");
+            removeElement("help");
+            removeElement("login");
+            prevStates.drawAll();
+            return prevStates;
+        };
+    };
+    let Coursemenu = function(prevStates){
+        this.prevStates = prevStates;
+        this.next = function (){
+            //get currently selected menu option
+            return new Mainmenu(prevStates);
+        };
+        this.prev = function(){
+
+            return prevStates;
+        };
+    };
+    let Songmenu = function(prevStates){
+        this.prevStates = prevStates;
+        this.next = function (){
+            //get currently selected menu option
+            return new Mainmenu(prevStates);
+        };
+        this.prev = function(){
+            return prevStates;
+        };
+    };
+    let Difficultymenu = function(prevStates){
+        this.prevStates = prevStates;
+        this.next = function (){
+            //get currently selected menu option
+            return new Mainmenu(prevStates);
+        };
+        this.prev = function(){
+            return prevStates;
+        };
+    };
+    let Loginmenu;
+    let Registermenu;
+    let Gameplaying = function(prevStates){
+        this.prevStates = prevStates;
+        this.next = function (){
+            //get currently selected menu option
+            let notearea = document.createElement("svg");
+            notearea.setAttribute("style", "height: 100%; width: 300px");
+            notearea.id = "notearea";
+            let noteareaContainer = document.createElement("div");
+            noteareaContainer.className = "row content";
+            noteareaContainer.appendChild(notearea);
+            d3.select("#notearea")
+                .append("image")
+                .attr("y", 400)
+                .attr("x", 0)
+                .attr("xlink:href", "./resources/images/blank_arrow_left.png");
+
+            d3.select("#notearea")
+                .append("image")
+                .attr("y", 400)
+                .attr("x", 72)
+                .attr("xlink:href", "./resources/images/blank_arrow_down.png");
+
+            d3.select("#notearea")
+                .append("image")
+                .attr("y", 400)
+                .attr("x", 144)
+                .attr("xlink:href", "./resources/images/blank_arrow_up.png");
+
+            d3.select("#notearea")
+                .append("image")
+                .attr("y", 400)
+                .attr("x", 216)
+                .attr("xlink:href", "./resources/images/blank_arrow_right.png");
+            return new Mainmenu(prevStates);
+        };
+        this.prev = function(){
+            return prevStates;
+        };
+    };
+    let Pausemenu = function(prevStates){
+        this.prevStates = prevStates;
+        this.next = function (){
+            //get currently selected menu option
+            return new Mainmenu(prevStates);
+        };
+        this.prev = function(){
+            return prevStates;
+        };
+    };
+    let Songcomplete = function(prevStates){
+        this.prevStates = prevStates;
+        this.next = function (){
+            //get currently selected menu option
+            return new Mainmenu(prevStates);
+        };
+        this.prev = function(){
+            return prevStates;
+        };
+    };
+
+//    const slideDown
+//  const slightZoomIn
+    const fadeOut = d3.transition()
+        .duration(500)
+        .ease(d3.easeExpOut);
+
+    const fadeIn = d3.transition()
+        .duration(500)
+        .ease(d3.easeExpIn);
+
+
+/*
     let background = d3.select("#background")
         .append("image")
         .attr("id", "firstimage")
@@ -56,6 +243,7 @@
         .style("opacity", 0.0);
     d3.select("#background").attr("width", d3.select("#firstimage").attr("width"))
         .attr("height", d3.select("#firstimage").attr("height"));
+*/
 
     // let selectedTrack = d3.select("#selectedTrack")
         // .append("svg")
@@ -78,18 +266,26 @@
     // let timer = d3.timer().stop();
     let currNotes = [[],[],[],[]];
 
+    function calculateBackgroundImagePosition(){
+        //High life (big blast)
+        //Medium life (thin trail)
+        //Low life (puttering trail)
+        //Changes color depending on which arrow keys are pressed (colors combine when two arrow keys are pressed together)
+        //TURBO MODE: Goes rainbow colored
+    }
+
     function getComboMultiplier(currCombo){
         if(currCombo > 20)
         {
-            return 8;
+            return 800;
         }else if(currCombo > 10)
         {
-            return 4;
+            return 400;
         }else if(currCombo > 5)
         {
-            return 2;
+            return 200;
         }else{
-            return 1;
+            return 100;
         }
     }
 
@@ -107,7 +303,6 @@
         }
         //Game Over
         return life > 0;
-
     }
 
     function checkCollision(noteYPos) {
@@ -126,6 +321,10 @@
         }else if(diff > 5){
             return 250; //"Perfect"
         }
+    }
+
+    function measurePosition(){
+
     }
 
     function pressedLeftKey(){
@@ -212,6 +411,15 @@
         }
     }
     document.addEventListener('keydown', keyPressed); // first
+    let currState = new Startscreen();
+
+    function pressedEscapeKey(){
+        currState = currState.prev();
+    }
+
+    function pressedEnterKey(){
+        currState = currState.next();
+    }
 
     function keyPressed(e) {
         console.log(e);
@@ -228,33 +436,14 @@
             case "ArrowRight":
                 pressedRightKey();
                 break;
+            case "Escape":
+                pressedEscapeKey();
+                break;
+            case "Enter":
+                pressedEnterKey();
+                break;
         }
     }
-
-    d3.select("#notearea")
-        .append("image")
-        .attr("y", 400)
-        .attr("x", 0)
-        .attr("xlink:href", "./resources/images/blank_arrow_left.png");
-
-    d3.select("#notearea")
-        .append("image")
-        .attr("y", 400)
-        .attr("x", 72)
-        .attr("xlink:href", "./resources/images/blank_arrow_down.png");
-
-    d3.select("#notearea")
-        .append("image")
-        .attr("y", 400)
-        .attr("x", 144)
-        .attr("xlink:href", "./resources/images/blank_arrow_up.png");
-
-    d3.select("#notearea")
-        .append("image")
-        .attr("y", 400)
-        .attr("x", 216)
-        .attr("xlink:href", "./resources/images/blank_arrow_right.png");
-
 
     function makeid(length) {
         var result           = '';
@@ -321,7 +510,6 @@
         let prevImgURL = d3.select('#firstimage')
             .attr("xlink:href");
 
-        console.log(prevImgURL);
         d3.select('#firstimage')
             .attr('xlink:href', dir+'.png')
             .style("opacity", 1e-6)
@@ -371,7 +559,7 @@
         let bpm = songJson["changes"]["bpm"][0][1];
         let barTimeToAdd = 60/bpm*4/notes[0][1].length * 1000;
         let nextBarTime = barTimeToAdd - barTimeToAdd*speed;
-        let offset = songJson["times"]["offset"] * 1000 + 50;
+        let offset = songJson["times"]["offset"] * 1000 + 100;
         let bar;
         console.log(barTimeToAdd);
         audio.src = dir+'.mp3';
@@ -389,7 +577,7 @@
                             currNotes[i].shift();
                             calculateLife(0);
                         }else{
-                            note.arrowShape.attr("y", time/1000*400);
+                            note.arrowShape.attr("y", 400 - time/1000*400);
                         }
                     })
                 }
@@ -503,8 +691,6 @@
         audio.stop();
     }
 
-
-    // window.addEventListener("load", createSongSelect);
     const body = JSON.stringify({ "username" : "anonymous" });
     // (async function() {
     fetch('songRequest', {
@@ -530,6 +716,9 @@
         });
     });
 
+    function populateHighScores(songname){
+
+    }
 
     function changeTrack(event){
         let dir = './resources/audio/songs/'+event.target.value+'/'+event.target.value;
