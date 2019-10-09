@@ -39,6 +39,14 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname + "/index.html"));
 });
 
+app.get("/game.html", function(req, res) {
+  res.sendFile(path.join(__dirname + "/game.html"));
+});
+
+app.get("/game.js", function(req, res) {
+  res.sendFile(path.join(__dirname + "/game.js"));
+});
+
 app.get("/js/scripts.js", function(req, res) {
   res.sendFile(path.join(__dirname + "/js/scripts.js"));
 });
