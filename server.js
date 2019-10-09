@@ -42,7 +42,6 @@ app.get('/song_data', function (request, response){
       {song_id: song_id, song_bytes: song_data.byte_string} //base64 which is what mp3 needs to be converted from/to
     ))
   })
-  
 })
 
 passport.use('local', new LocalStrategy( {
