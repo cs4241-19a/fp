@@ -57,75 +57,32 @@ exports.readAllUserData = function() {
 
 
 exports.readFeedData = async function() {
-    let feed_ref = this.firestore.collection("top_ten_feed");
-    let feed_posts = this.firestore.collection("music_profiles");
-    let myData = [];
-    feed_list = await feed_ref.get();
-    feed_list.forEach(async function(ref) {
-        let post = await feed_posts.doc(ref.id).get()
-        myData.push(post)
-    })
-    return myData;
+    let feed_posts = await this.firestore.collection("music_profiles").orderBy("postOrder", "desc").limit(10).get();
+    return feed_posts;
+}
+
+exports.readUserFeed = async function(username){
+    let feed_posts = await this.firestore.collection("music_profiles").where("username", "==", username).orderBy("postOrder", "desc").get();
+    return feed_posts;
 }
 
 exports.getSongData = async function(song_id){
     return await this.firestore.collection("song_data").doc(song_id).get();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-exports.addMusicToProfile = function (username, song){
-    let profiles = this.firestore.collection("music_profiles")
-    profiles.doc(username).get().then(function(obj){
-        prof = obj.data()
-        prof.songs.push(song)
-        profiles.doc(username).update(prof)
+exports.addSongData = async function(byte_string){
+    songs = await this.firestore.collection("song_data").get()
+    n_songs = songs.size
+    await this.firestore.collection("song_data").doc(n_songs+1).set({
+        byte_string: byte_string
     })
-    let posts = this.firestore.collection("posts")
-    posts.add({
-        user: username,
-        date: song.uploaded,
-        itemid: song.itemid
-    })
+    return n_songs+1 //same as new song id
 }
 
-
-
-
-
-
-
-
-// exports.getMostRecentPosts = function (limit){
-//     let profiles = this.firestore.collection("music_profiles")
-//     let posts = this.firestore.collection("posts")
-//     return new Promise((resolve, reject) => {
-//         posts.orderBy("date").limit(limit).get().then(function(list){
-//             post_list = []
-//             list.data().forEach(p => {
-//                 profiles.doc(p.user).get().then(function(obj){
-//                     prof = obj.data();
-//                     song = prof.songs.filter(function(song){
-//                         return p.itemid == song.itemid;
-//                     })[0];
-//                     post_list.push({
-//                         user: prof.user,
-//                         song: song
-//                     });
-//                 })
-//             })
-//             resolve(post_lists)
-//         })
-//     })
-//
-// }
+exports.addFeedPost = async function(post){
+    posts = await this.firestore.collection("music_profiles").get()
+    n_posts = posts.size
+    post.postOrder = n_posts+1
+    await this.firestore.collection("music_profiles").doc(n_posts+1).set(post)
+    return n_post+1 //same as new post id
+}
