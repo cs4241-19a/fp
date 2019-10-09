@@ -37,10 +37,12 @@ app.get('/feed', function (request, response) {
 
 app.get('/song_data', function (request, response){
   let song_id = request.query.id;
-  //TODO: replace with fs_service method
-  response.end(JSON.stringify(
-    {song_id: 1, song_bytes: "7293698753297457326932"} //base64 which is what mp3 needs to be converted from/to
-  ))
+  fs_service.getSongData(song_id).then(song_data => {
+    response.end(JSON.stringify(
+      {song_id: song_id, song_bytes: song_data.byte_string} //base64 which is what mp3 needs to be converted from/to
+    ))
+  })
+  
 })
 
 passport.use('local', new LocalStrategy( {

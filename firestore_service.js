@@ -68,6 +68,9 @@ exports.readFeedData = async function() {
     return myData;
 }
 
+exports.getSongData = async function(song_id){
+    return await this.firestore.collection("song_data").doc(song_id).get();
+}
 
 
 
