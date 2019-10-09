@@ -30,7 +30,7 @@ We plan to create a project management tool that enables WPI students to effecti
   
   2) A tool that enables groups to book meeting rooms on campus that are not already booked
  
-#### Impact
+#### Impact:
 
 As students who have worked on large group projects and IQP teams, we know how difficult and how confusing it can be to use 25live to find empty meeting spaces on campus. Our application addresses this issue and provides a solution that enable teams to find a time and place to interact and accomplish their team goals.
 
