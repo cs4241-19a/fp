@@ -1,18 +1,13 @@
 function query(str) {
-  let body = { name: str, crn: null };
-  let json = JSON.stringify(body);
-
   fetch("api/books/getBooks", {
     headers: {
       "Content-Type": "application/json"
     },
     method: "POST",
-    body: json
   }).then(function(res) {
     res.json().then(function(ret) {
       for (let i = 0; i < ret.length; i++) {
-        alert(ret[i])
-        if (ret[i].name.contains(str)) {
+        if (ret[i].name.includes(str)) {
           let tdNode = document.createElement("td");
           let tdNode2 = document.createElement("td");
           let tdNode3 = document.createElement("td");
@@ -26,17 +21,11 @@ function query(str) {
           document.getElementById("results").appendChild(trNode);
         }
       }
+      return;
     });
   });
 }
 
 window.onload = function() {
-  document.addEventListener("keypress", function(e) {
-    var key = e.which || e.keyCode;
-    if (key === 13) {
-      let str = document.querySelector("#search");
-      query(str);
-      //window.reload()
-    }
-  });
+  document.getElementById("search").onsubmit = query(document.querySelector("#search").value); 
 };
