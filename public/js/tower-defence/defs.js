@@ -26,9 +26,9 @@ const offScreenCoord = {x: -500, y: -500};
 const cellSize = {width: 40, height: 40};
 const playArea = {width: (myGame.width / cellSize.width), height: (myGame.height / cellSize.height) - 1};
 const menuArea = {width: (myGame.width / cellSize.width), height: 1};
-const enemyEnterCoord = {x: playArea.width - 1, y: 1};
+const enemyEnterCoord = {x: playArea.width, y: 1};  // is off playArea but grid has an empty cell here
 const btmLeft = {x: 0, y: playArea.height + menuArea.height - menuArea.height - 1};  // the bottom left cell of the grid. where the base is
-const baseEntrance = {x: btmLeft.x + 1, y: btmLeft.y};
+const baseEntrance = {x: btmLeft.x, y: btmLeft.y};
 
 const grid = [];
 (() => {
@@ -64,6 +64,9 @@ const grid = [];
     grid[btmLeft.y - 1][btmLeft.x] = cellTypes.BASE;
     grid[btmLeft.y - 1][btmLeft.x + 1] = cellTypes.BASE;
 
+    // add enemy buffer area
+    grid[enemyEnterCoord.y][enemyEnterCoord.x] = cellTypes.OPEN;
+
     // // test pathfinding
     // grid[1][15] = cellTypes.WALL;
     // grid[2][14] = cellTypes.WALL;
@@ -94,6 +97,7 @@ function getGraph() {
             switch (grid[i][j]) {
                 case cellTypes.WALL:
                 case cellTypes.TOWER:
+                default: // all tower types
                     graph[i][j] = 0;  // impassible (infinity wight)
                     break;
                 case cellTypes.OPEN:
@@ -108,20 +112,19 @@ function getGraph() {
 
 function getPath(startCoord) {
     const graphData = getGraph();
-    // console.log("graph data:", graphData, startCoord);
+    console.log("graph data:", graphData, startCoord);
     const graph = new Graph(graphData, {diagonal: true});
     // x and y are switched in grid
     const start = graph.grid[startCoord.y][startCoord.x];
     const end = graph.grid[baseEntrance.y][baseEntrance.x];
     const path = astar.search(graph, start, end, {heuristic: astar.heuristics.diagonal});
-    // console.log("path:", path);
+    console.log("path:", path);
     return path;
 }
 
 function getPathPoints(startCoord) {
     const pathPoints = {x: [], y: []};
     // start off the screen and first go to the starting point
-    pathPoints.x.push(startCoord.x + 1, startCoord.x);
     pathPoints.y.push(startCoord.y, startCoord.y);
     getPath(startCoord).forEach(node => {
         // x and y are switched in grid

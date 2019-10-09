@@ -22,15 +22,15 @@ const gamePlayState = new Phaser.Class({
 
         scene.enemies = [];
         // Enemy types
-        const enemy_events = {};
+        const enemy_events = {onBase: () => console.log('-1 life'), onDeath: () => console.log('-1 Enemy')};
         scene.EnemyUnits = {Trucks: Truck(enemy_events)};
         scene.Towers = {SandBags: SandBag()};
 
 
         scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 1));
-        scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 2));
-        scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 3));
-        scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 4));
+        // scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 2));
+        // scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 3));
+        // scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 4));
         scene.Towers.SandBags.create(scene.Towers.SandBags.Sand(scene, {x: 1, y: 1}));
 
         // cursor
@@ -85,7 +85,6 @@ function placeTower(scene, coord) {
     console.log("place");
     if (grid[coord.y][coord.x] === cellTypes.OPEN) {
         grid[coord.y][coord.x] = cellTypes.TOWER;
-        console.log(getPath(enemyEnterCoord));
         if (getPath(enemyEnterCoord).length === 0) {
             grid[coord.y][coord.x] = cellTypes.OPEN;  // reset to open since this blocks a path from the entrance
         } else {
@@ -167,6 +166,7 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
     let waveWaitDur = waveSpacingDur * waveIndex;
 
     function move() {
+        if (atBase) return false;  // halt movement
         if (waveWaitDur > 0) {
             waveWaitDur--;
             if (waveWaitDur === 0) {
@@ -177,24 +177,32 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
                 return true;
             }
         }
+        const coord = getSpriteCoord();  // coords at the beginning of this update call (after setting init pos above)
+        let newCoordTrans;
+        let newPathCoord;
         if (!pathPoints) {
-            pathPoints = getPathPoints(getSpriteCoord());
+            pathPoints = getPathPoints(coord);
+            console.log(pathPoints)
+        }
+        if (pathPoints) {
+            newCoordTrans = {x: Phaser.Math.Interpolation.CatmullRom(pathPoints.x, moveIdx), y: Phaser.Math.Interpolation.CatmullRom(pathPoints.y, moveIdx)};
+            // x and y paths can have different lengths
+            const pathIdxX = (moveIdx < 1) ? Math.floor(pathPoints.x.length * moveIdx) : pathPoints.x.length - 1;
+            const pathIdxY = (moveIdx < 1) ? Math.floor(pathPoints.y.length * moveIdx) : pathPoints.y.length - 1;
+            newPathCoord = {x: pathPoints.x[pathIdxX], y: pathPoints.y[pathIdxY]};
+            // TODO: Recalculate path if now is occupied
+            // if (grid[newPathCoord.y][newPathCoord.x] !== cellTypes.OPEN || grid[newPathCoord.y][newPathCoord.x] !== cellTypes.BASE) {  // if moving into a new coord and it is occupied
+            //     pathPoints = getPathPoints();
+            // }
         }
         if (!atBase) {
-            const gx = Phaser.Math.Interpolation.CatmullRom(pathPoints.x, moveIdx);
-            const gy = Phaser.Math.Interpolation.CatmullRom(pathPoints.y, moveIdx);
-            // console.log(px, py);
-            const newX = gx * cellSize.width + (cellSize.width / 2);
-            const newY = gy * cellSize.height + (cellSize.width / 2);
-            const angle = Phaser.Math.Angle.Between(sprite.x, sprite.y, newX, newY);
+            const newPos = {x: newCoordTrans.x * cellSize.width + (cellSize.width / 2), y: newCoordTrans.y * cellSize.height + (cellSize.width / 2)};
+            const angle = Phaser.Math.Angle.Between(sprite.x, sprite.y, newPos.x, newPos.y);
             sprite.rotation = spriteRotation + angle;
-            sprite.x = newX;
-            sprite.y = newY;
+            sprite.x = newPos.x;
+            sprite.y = newPos.y;
             moveIdx += moveSpeed;
-            // console.log(moveIdx);
-            checkAtBase(gx, gy);
-        } else {
-            // base loses a life
+            checkAtBase(newPathCoord);
         }
     }
     
@@ -204,12 +212,12 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
 
     /**
      * Check if at the base
-     * @param gx Grid x coordinate
-     * @param gy Grid y coordinate
+     * @param coord Coordinates from path
      */
-    function checkAtBase(gx, gy) {
-        if (gx <= baseEntrance.x && gy >= baseEntrance.y) {
+    function checkAtBase(coord) {
+        if (coord.x <= baseEntrance.x && coord.y >= baseEntrance.y) {
             atBase = true;
+            onBase();
         }
     }
 
