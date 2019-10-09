@@ -76,13 +76,15 @@
             </form>
           </td>
           <td>
-            <button
-              style="margin:10px; width:90%;"
-              id="uploadButton"
-              class="pure-button translate"
-            >
-              Upload PDF (Optional)
-            </button>
+            <form style="margin:10px; width:90%" class="pure-form" action="">
+              <input
+                name="crn"
+                type="text"
+                id="url"
+                placeholder="Link to PDF (Optional)"
+                value=""
+              />
+            </form>
           </td>
         </tr>
       </thead>
@@ -99,5 +101,5 @@
     </button>
     </h2>
   </body>
-  <script src="javascripts/client.js"></script>
+  <script src="javascripts/add.js"></script>
 </html>

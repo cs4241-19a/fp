@@ -12,7 +12,7 @@ var messagingRouter = require('./routes/messaging');
 var addRouter = require('./routes/add');
 var searchRouter = require('./routes/search');
 var apiUserRouter = require('./routes/apiUser');
-//var apiBookRouter = require('./routes/apiBook');
+var apiBookRouter = require('./routes/apiBook');
 
 var app = express();
 
@@ -33,10 +33,8 @@ app.use('/index', indexRouter);
 app.use('/messaging', messagingRouter);
 app.use('/search', searchRouter);
 app.use('/add', addRouter);
-
-
 app.use('/api/users', apiUserRouter);
-//app.use('/api/books', apiBookRouter);
+app.use('/api/books', apiBookRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

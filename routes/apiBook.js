@@ -125,6 +125,7 @@ let dbBookGetAll = function() {
 
 // get all books from a user
 let dbBookGetFromUser = function(arr) {
+    console.log("getbookuser")
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             try {
@@ -186,6 +187,7 @@ router.post('/getBooks', function (req,res){
 });
 
 router.post('/getBooksFromUser', function(req, res) {
+    console.log(req.body.username)
     const username = req.body.username;
     console.log("getting books from user " + username + "...");
 
@@ -195,3 +197,5 @@ router.post('/getBooksFromUser', function(req, res) {
         console.log(e)
     })
 });
+
+module.exports = router;
