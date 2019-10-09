@@ -196,3 +196,5 @@ router.post('/getBooksFromUser', function(req, res) {
         console.log(e)
     })
 });
+
+module.exports = router;

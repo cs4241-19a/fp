@@ -2,19 +2,54 @@ let count = 0;
 let localAppData = [];
 let currentUser = "";
 
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(";");
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == " ") {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function deleteRow() {
+  let p = this.parentNode.parentNode;
+  p.parentNode.removeChild(p);
+  fetch("/submit", {
+    method: "POST",
+    body:body
+  });
+}
+
 window.onload = function() {
-  fetch("api/books", {
+  let body = { username: getCookie("username") };
+  fetch("api/books/getBooksFromUser", {
     headers: {
       "Content-Type": "application/json"
     },
     method: "POST",
+    body: body
   }).then(function(res) {
     res.json().then(function(ret) {
-     
+      for (let i = 0; i < ret.length; i++) {
+        let tdNode = document.createElement("td");
+        let tdNode2 = document.createElement("td");
+        let tdNode3 = document.createElement("td");
+        let tdNode4 = document.createElement("td");
+        let trNode = document.createElement("tr");
+
+        ret[i].name;
+        ret[i].crn;
+      }
     });
   });
-} 
-
+};
 
 //document.location.reload()
 /*
