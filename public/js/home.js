@@ -6,12 +6,12 @@ const recText = document.getElementById("exampleFormControlTextarea2")
 let username = "badUsernameZQFMGB"
 
 const addRecommendation = function () {
-    let rating = -1;
-    if (document.getElementById("star5").checked) rating = 5;
-    else if (document.getElementById("star4").checked) rating = 4;
-    else if (document.getElementById("star3").checked) rating = 3;
-    else if (document.getElementById("star2").checked) rating = 2;
-    else if (document.getElementById("star1").checked) rating = 1;
+    let rating = -1
+    if (document.getElementById("star5").checked) rating = 5
+    else if (document.getElementById("star4").checked) rating = 4
+    else if (document.getElementById("star3").checked) rating = 3
+    else if (document.getElementById("star2").checked) rating = 2
+    else if (document.getElementById("star1").checked) rating = 1
     else return false
 
     if (rating === -1) return false
@@ -31,7 +31,7 @@ const addRecommendation = function () {
         artist: artist
     }
 
-    const body = JSON.stringify(newRecommendation);
+    const body = JSON.stringify(newRecommendation)
     fetch("/recommendation", {
         method: "POST",
         body,
@@ -92,7 +92,7 @@ const getRecommendations = function () {
                     `<div class="card" id="recommendation${i}">\n` +
                     `   <div class="card-body">\n` +
                     `      <h5 class="card-title">` + username + " rated \"" + songname + "\" by " + artist + `</h5>\n` +
-                    `      <p class="card-text">`;
+                    `      <p class="card-text">`
 
                 for (let j = 0; j < rating; j++)
                     newRecommendation += `<img src="../images/fullstar.png" alt="Star"/>`

@@ -84,9 +84,18 @@ img {
     background-color: #391A3F;
 }
 
+.circular {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
 #current-track {
-    width: 83px;
-    height: 75px;
+    display: inline;
+    height: 110%;
+    width: 110%;
 }
 
 .hidden-data {
@@ -127,29 +136,35 @@ img {
     padding: 0 10px;
     display: inline-block;
 }
+
 .rate:not(:checked) > input {
-    position:absolute;
-    top:-9999px;
+    position: absolute;
+    top: -9999px;
 }
+
 .rate:not(:checked) > label {
-    float:right;
-    width:1em;
-    overflow:hidden;
-    white-space:nowrap;
-    cursor:pointer;
-    font-size:30px;
-    color:#ccc;
+    float: right;
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 30px;
+    color: #ccc;
 }
+
 .rate:not(:checked) > label:before {
     content: '★ ';
 }
+
 .rate > input:checked ~ label {
     color: #ffc700;
 }
+
 .rate:not(:checked) > label:hover,
 .rate:not(:checked) > label:hover ~ label {
     color: #deb217;
 }
+
 .rate > input:checked + label:hover,
 .rate > input:checked + label:hover ~ label,
 .rate > input:checked ~ label:hover,
@@ -162,7 +177,7 @@ img {
     display: none;
 }
 
-.player-header{
+.player-header {
     position: sticky;
     top: 0px;
 }
