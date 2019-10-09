@@ -52,22 +52,6 @@ class Home extends Component {
             {budget.name} - Requested ${budget.requested} - Approved ${budget.approved}
         </li>
 
-
-    handleSubmit = async e => {
-        e.preventDefault();
-        const response = await fetch('/api/addBudget', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name: this.state.name, requested: 3000, approved: 2700 }),
-        });
-        const body = await response;
-        if (body) {
-            this.getBudgets();
-        }
-    };
-
     render() {
         const { users, budgets } = this.state;
         return (
@@ -77,7 +61,7 @@ class Home extends Component {
                         {users.map(this.showUsers)}
                     </ul>
                 </div>
-
+                <br />
                 <div>
                     <ul>
                         {
@@ -85,19 +69,6 @@ class Home extends Component {
                         }
                     </ul>
                 </div>
-
-                <form onSubmit={this.handleSubmit}>
-                    <p>
-                        <strong>Add budget:</strong>
-                    </p>
-                    <input
-                        type="text"
-                        value={this.state.name}
-                        onChange={e => this.setState({ name: e.target.value })}
-                    />
-                    <button type="submit">Submit</button>
-                </form>
-                <p>{this.state.responseToPost}</p>
             </div>
         );
     }

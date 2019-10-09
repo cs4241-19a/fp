@@ -32,7 +32,7 @@ class Header extends Component {
                                             color="white"
                                         ></FontAwesomeIcon>
                                     </div>
-                                    <span class="navbar-burger burger" data-target="navbarMenuHeroC">
+                                    <span className="navbar-burger burger" data-target="navbarMenuHeroC">
                                         <span></span>
                                         <span></span>
                                         <span></span>

@@ -9,33 +9,6 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-let budgets = [
-    {
-        "id": 1,
-        "name": "Cheese Club",
-        "requested": 3000,
-        "approved": 2500
-    },
-    {
-        "id": 2,
-        "name": "Soccomm Movies",
-        "requested": 4500,
-        "approved": 4500
-    },
-    {
-        "id": 3,
-        "name": "Ski Club",
-        "requested": 3600,
-        "approved": 3300
-    },
-    {
-        "id": 4,
-        "name": "Women In ECE",
-        "requested": 400,
-        "approved": 300
-    },
-];
-
 var con = mysql.createConnection({
     host: "remotemysql.com",
     user: "9noIEwbrh3",
@@ -65,14 +38,18 @@ app.post('/api/world', (req, res) => {
 
 app.get('/api/home', (req, res) => {
     // Remember to add id as props when doing mysql, I want array syntax, but efficiency of a map/object
-    res.json({budgets: budgets});
+    con.query("SELECT * FROM budgets;", function (err, data) {
+        (err) ? res.send(err) : res.json({ budgets: data });
+    })
 });
 
 app.post('/api/addBudget', (req, res) => {
     console.log(`Adding budget for ${req.body.name}`)
-    req.body.id = budgets.length;
-    budgets.push(req.body);
-    res.send(true);
+    con.query(`INSERT INTO budgets (name, requested, approved) VALUES ("${req.body.name}", 
+    '${req.body.requested}', '${req.body.approved}');`,
+        function (err, result) {
+            (err) ? res.send(err) : res.send(true);
+        })
 });
 
 /**
@@ -90,9 +67,13 @@ app.post('/api/addBudget', (req, res) => {
     }
  */
 app.post('/api/editBudget', (req, res) => {
-    let index = Object.keys(req.body);
-    budgets[index] = req.body[index];
-    res.send(true);
+    let id = parseInt(req.body.id);
+    console.log(req.body);
+    con.query(`UPDATE budgets SET name=${req.body.name}, requested=${req.body.requested}, approved=${req.body.approved}
+    WHERE id = ${id};`, function (err, result) {
+        console.log(result);
+        (err) ? res.send(err) : res.send(true);
+    })
 });
 
 /**
@@ -111,9 +92,11 @@ app.post('/api/editBudget', (req, res) => {
     }
  */
 app.post('/api/deleteBudget', function (req, res) {
-    let index = parseInt(req.body.index);
-    let isDeleted = delete budgets[index];
-    res.send(isDeleted);
+    let id = parseInt(req.body.id);
+    con.query(`DELETE FROM budgets where id = ${id};`, function (err, result) {
+        console.log(result);
+        (err) ? res.send(err) : res.send(true);
+    });
 });
 
 app.post('/api/login', (req, res) => {
@@ -122,7 +105,7 @@ app.post('/api/login', (req, res) => {
     let user;
     con.query("SELECT * FROM accounts where username = '" + username + "' AND password = '" + password + "';", function (err, data) {
         console.log(data.length > 0);
-        (err) ? res.send(err) : res.send(user);
+        (err) ? res.send(err) : res.json(user);
     })
 });
 

@@ -30,8 +30,12 @@ class Table extends Component {
         { title: "ID", field: "id", visible: false },
         {
             title: "Name", field: "name", headerFilter: "input", editor: "input", bottomCalc: "count", cellEdited: function (cell) {
-                console.log(cell)
-                tableFunctions.modifyRow(cell);
+                console.log(cell.getRow());
+                tableFunctions.modifyRow(cell.getRow(), (isModified) => {
+                    if(isModified) {
+                        console.log('Was modified successfully');
+                    }
+                });
             }
         },
         {
@@ -44,7 +48,14 @@ class Table extends Component {
                 decimal: ".",
                 thousand: ",",
                 symbol: "$"
-            }, cellEdited: function (cell) { console.log(cell); tableFunctions.modifyRow(cell); }
+            }, cellEdited: function (cell) { 
+                console.log(cell.getRow());
+                tableFunctions.modifyRow(cell.getRow(), (isModified) => {
+                    if(isModified) {
+                        console.log('Was modified successfully');
+                    }
+                });
+            }
         },
         {
             title: "Approved Amount", field: "approved", formatter: "money", editor: "input", bottomCalc: "sum", bottomCalcFormatter: "money", headerFilter: "input",
@@ -56,12 +67,22 @@ class Table extends Component {
                 decimal: ".",
                 thousand: ",",
                 symbol: "$"
-            }, cellEdited: function (cell) { console.log(cell); tableFunctions.modifyRow(cell); }
+            }, cellEdited: function (cell) {
+                console.log(cell.getRow());
+                tableFunctions.modifyRow(cell.getRow(), (isModified) => {
+                    if(isModified) {
+                        console.log('Was modified successfully');
+                    }
+                });
+            }
         },
         {
             formatter: "buttonCross", width: 40, align: "center", cellClick: function (e, cell) {
-                cell.getRow().delete();
-                tableFunctions.deleteRow(cell);
+                tableFunctions.deleteRow(cell.getRow(), (isDeleted) => {
+                    if (isDeleted) {
+                        cell.getRow().delete();
+                    }
+                });
             }
         }
     ];
