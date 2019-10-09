@@ -1,6 +1,3 @@
-let count = 0;
-let localAppData = [];
-let currentUser = "";
 
 function getCookie(cname) {
   var name = cname + "=";
