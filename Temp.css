@@ -24,3 +24,14 @@ footer {
   text-align: center;
   flex-direction: column;
 }
+
+[type="text"],
+textarea {
+  width: 50%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 20px;
+  resize: vertical;
+  font-size: 18px;
+  font-size: 1.75vw;
+}
