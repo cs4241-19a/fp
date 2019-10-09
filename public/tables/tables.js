@@ -1,7 +1,3 @@
-window.onload = function() {
-    let fizzyText = new FizzyText('Teender')
-}
-
 fetch('/getYou', {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
@@ -245,4 +241,7 @@ fetch('/getYou', {
         })
     }
     refresh()
+
+    document.getElementById('form-title').innerHTML = you.name
+    append(document.getElementById('left-pic'), makeImg(you))
 })
