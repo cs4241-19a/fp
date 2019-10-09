@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CS4241 Final Project</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script src="js/messageScripts.js" defer></script>
+  </head>
+
+  <body class="p-3 mb-2 bg-dark text-white">
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="https://fp-start.glitch.me/mainview.html"
+          >Menu</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="https://fp-start.glitch.me/mainview.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://fp-start.glitch.me/meetingmakerview.html">Meeting Creator</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://fp-start.glitch.me/meetingtasksview.html" >Task Manager</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="https://fp-start.glitch.me/messagesview.html">Messages<span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+          <a href="https://fp-start.glitch.me">Logout</a>
+        </div>
+      </nav>
+    </header>
+
+
+    <div class="row">
+      <div class="col-sm-6">
+        <h3>Messages</h3>
+        <hr style="border-color: white">
+        <details id="messagesHelp" class="form-text text-light">
+        Here you can see messages sent to you as you are assigned and unassigned from tasks.
+        </details>
+        <button id="viewButton" class="btn btn-primary">Show Messages For You</button>
+        <button id="hideButton" class="btn btn-secondary">Hide Messages</button>
+        <ul><!--This table can be shown or hidden to display current messages in the database for the current user only-->
+          <table id="tablePrint" class="table table-dark"></table>
+        </ul>
+      </div>
+      
+      <div class="col-sm-6">
+        <h3>Your Tasks</h3>
+        <hr style="border-color: white">
+        <details id="tasksHelp" class="form-text text-light">
+          Here you can see all tasks currently assigned to you.
+        </details>
+        <button id="viewTasksButton" class="btn btn-primary">View your current tasks</button>
+        <button id="hideTasksButton" class="btn btn-secondary">Hide Your Current Tasks</button>
+        <table id="tableTasksPrint" class="table table-dark"></table>
+      </div>
+    </div>
+      
+    
+ 
+
+    <footer>
+      <div>
+        <hr style="border-color: white">
+        <li class="text-center">
+          <a href="https://fp-start.glitch.me/mainview.html"><u>Back to main view</u></a>
+        </li>
+        <p class="text-center">
+           Created by Tom Graham, Peter Jankowski, and Rosana Pochat
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

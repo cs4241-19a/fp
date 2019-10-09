@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CS4241 Final Project</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <script src="js/mainScripts.js" defer></script>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"/>
+  </head>
+
+  <body class="p-3 mb-2 bg-dark text-white">
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="https://fp-start.glitch.me/mainview.html">Menu</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="https://fp-start.glitch.me/mainview.html">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://fp-start.glitch.me/meetingmakerview.html">Meeting Creator</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://fp-start.glitch.me/meetingtasksview.html">Task Manager</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://fp-start.glitch.me/messagesview.html">Messages</a>
+            </li>
+          </ul>
+          <a href="https://fp-start.glitch.me">Logout</a>
+        </div>
+      </nav>
+    </header>
+    
+    <main>  
+      <h1>Home</h1>
+      <hr style="border-color: white">
+      <div class="container-fluid">
+        <p>
+          Welcome to your Home Screen. Browser diferent views through the Navigation Bar on top, or look at meetings and tasks you have scheduled down below. 
+        </p>
+        
+        <!-- First Row: Meetings&Tasks and Calendar-->
+        <div class="row">
+          <div class="col-sm-5">
+            <!-- Meetings -->
+            <h3>Meeting Information</h3>
+            <input type="date" id="enteredDate" style="-webkit-appearance:none;">
+            <details id="meetingInfoMainView" class="form-text text-light">
+              Show all meetings on the date entered.
+            </details>
+            <button id="viewButton" class="btn btn-primary">View Meetings For Date</button>
+            <table id="tablePrint" class="table table-dark"></table>
+            
+            <!-- Tasks-->
+            <hr style="border-color: white">
+            <h3>Your Tasks</h3>
+            <fieldset id="entry" class="mx-auto">
+              <label for="meetingname" class="pageText">Meeting Name:</label>
+              <input type="text" id="meetingname" placeholder="Meeting Name Here" class="form-control"/>
+              <details id="taskInfoMainView" class="form-text text-light">
+                Displays the tasks that you have assigned for the meeting entered.
+              </details>
+              <button id="viewButtonM" class="btn btn-primary">View Tasks for Meeting</button>
+              <button id="hideButtonM" class="btn btn-secondary">Hide Meeting Tasks</button>
+            </fieldset>
+            <table id="tablePrintM" class="table table-dark"></table>
+          </div>
+          
+          <!-- Calendar -->
+          <div class="col-sm-7">
+            <h3 id="calendarHeader">Calendar</h3>
+            <canvas id="myCanvas" width="700px" height="700px" style="border:1px solid #ffffff;"></canvas>
+          </div>
+        </div>        
+      </div>
+    </main>
+    
+    <footer>
+      <div>
+        <hr style="border-color: white">
+        <p class="text-center">
+           Created by Tom Graham, Peter Jankowski, and Rosana Pochat
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
