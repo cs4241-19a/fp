@@ -90,7 +90,7 @@ app.post('/createAccount', function (request, response) {
     response.send(JSON.stringify({status: false}));
   } else {
     db.get('users')
-      .push(request.body) // this will be an entire base user
+      .push(request.body)
       .write();
 
     response.send(JSON.stringify({status: true}));
@@ -98,14 +98,8 @@ app.post('/createAccount', function (request, response) {
 });
 
 /*** USER METHODS ***/
-// app.get('/allUserInfo', function (request, response) {
-//   const users = db.get('users')
-//     .value();
-//
-//   response.send(JSON.stringify({data: users}));
-// });
 
-app.post('/currentUserMeetings', function (request, response) {
+app.get('/currentUserMeetings', function (request, response) {
   const availability = db.get('users')
     .filter({email: request.session.passport.user})
     .map('meetings')
@@ -123,34 +117,234 @@ app.get('/currentUserInfo', function (request, response) {
 });
 
 app.post('/updateUserMeetings', function (request, response) {
-  // TODO: potentially fix this
+  const newMeeting = {
+    name: request.body.room,
+    time: [request.body.startTime, request.body.endTime]
+  };
+
+  const listOfMeetings = db.get('users')
+    .filter({email: request.session.passport.user})
+    .map('meetings')
+    .value();
+
+  switch(request.body.day) {
+    case 'Sunday':
+      listOfMeetings[0].sunday.push(newMeeting);
+      break;
+    case 'Monday':
+      listOfMeetings[0].monday.push(newMeeting);
+      break;
+    case 'Tuesday':
+      listOfMeetings[0].tuesday.push(newMeeting);
+      break;
+    case 'Wednesday':
+      listOfMeetings[0].wednesday.push(newMeeting);
+      break;
+    case 'Thursday':
+      listOfMeetings[0].thursday.push(newMeeting);
+      break;
+    case 'Friday':
+      listOfMeetings[0].friday.push(newMeeting);
+      break;
+    case 'Saturday':
+      listOfMeetings[0].saturday.push(newMeeting);
+      break;
+    default:
+      break;
+  }
+
   db.get('users')
-    .find({email: request.session.passport.user})
-    .assign({meetings: request.body.meetings})
-    .write();
+  .find({email: request.session.passport.user})
+  .assign({meetings: listOfMeetings[0]})
+  .write();
 
   response.writeHead( 200, "OK", {'Content-Type': 'application/json' });
   response.end();
 });
 
-// app.post('/updateUserArchive', function (request, response) {
-//   //TODO: only accept unique archive names, send 'false' in response?
-//   let userArchive = db.get('users')
-//     .filter({email: request.session.passport.user})
-//     .map('archive')
-//     .value();
-//
-//   userArchive[0].push(request.body);
-//
-//   db.get('users')
-//     .find({email: request.session.passport.user})
-//     .assign({archive: userArchive[0] })
-//     .write();
-//
-//   response.writeHead( 200, "OK", {'Content-Type': 'application/json' });
-//   response.end();
-// });
+app.post('/deleteMeeting', function(request, response) {
+  const meetingToDelete = request.body;
 
+  // delete from user's meetings
+  let userMeetings = db.get('users')
+    .filter({email: request.session.passport.user})
+    .map('meetings')
+    .value();
+
+  let meetingsForSelectedDay = getListForDay(request.body.day, userMeetings[0]);
+
+  let userIndex = meetingsForSelectedDay.findIndex((meeting, i) => {
+    return ((meeting.name === meetingToDelete.meeting.name) &&
+      (meeting.time[0] === meetingToDelete.meeting.time[0]))
+  });
+
+  if (userIndex >= 0) {
+    meetingsForSelectedDay.splice( userIndex, 1 );
+  }
+
+  switch(request.body.day) {
+    case 'Sunday':
+      db.get('users')
+        .filter({email: request.session.passport.user})
+        .assign({meetings: {sunday: meetingsForSelectedDay}})
+        .write();
+      break;
+    case 'Monday':
+      db.get('users')
+        .filter({email: request.session.passport.user})
+        .assign({meetings: {monday: meetingsForSelectedDay}})
+        .write();
+      break;
+    case 'Tuesday':
+      db.get('users')
+        .filter({email: request.session.passport.user})
+        .assign({meetings: {tuesday: meetingsForSelectedDay}})
+        .write();
+      break;
+    case 'Wednesday':
+      db.get('users')
+        .filter({email: request.session.passport.user})
+        .assign({meetings: {wednesday: meetingsForSelectedDay}})
+        .write();
+      break;
+    case 'Thursday':
+      db.get('users')
+        .filter({email: request.session.passport.user})
+        .assign({meetings: {thursday: meetingsForSelectedDay}})
+        .write();
+      break;
+    case 'Friday':
+      db.get('users')
+        .filter({email: request.session.passport.user})
+        .assign({meetings: {friday: meetingsForSelectedDay}})
+        .write();
+      break;
+    case 'Saturday':
+      db.get('users')
+        .filter({email: request.session.passport.user})
+        .assign({meetings: {saturday: meetingsForSelectedDay}})
+        .write();
+      break;
+    default:
+      break;
+  }
+
+  // parse times to delete
+  const availability = db.get('rooms')
+    .filter({name: request.body.meeting.name})
+    .map('availability')
+    .value();
+
+  let availabilityForSelectedDay = getListForDay(request.body.day, availability[0]);
+
+
+  let timesToDelete = [];
+
+  availabilityForSelectedDay.forEach((time) => {
+    // append a '0' to the beginning of the time if necessary
+    const startTime = ((meetingToDelete.meeting.time[0] === "9:00") || (meetingToDelete.meeting.time[0] === "9:30")) ? "0"+meetingToDelete.meeting.time[0] : meetingToDelete.meeting.time[0];
+    const endTime = meetingToDelete.meeting.time[1];
+    time = ((time === "9:00") || (time === "9:30")) ? "0"+time : time;
+
+    if ((time === startTime) ||
+      ((time < endTime) && (time > startTime))) {
+
+      let roomIndex = availabilityForSelectedDay.findIndex((iTime, i) => {
+        iTime = ((iTime === "9:00") || (iTime === "9:30")) ? "0"+iTime : iTime;
+        return (iTime === time)
+      });
+
+      if (roomIndex >= 0) {
+        timesToDelete.unshift(roomIndex);
+      }
+    }
+  });
+
+  timesToDelete.forEach((index) => {
+    availabilityForSelectedDay.splice(index, 1);
+  });
+
+  switch(request.body.day) {
+    case 'Sunday':
+      db.get('rooms')
+        .filter({name: request.body.meeting.name})
+        .assign({availability: {sunday: availabilityForSelectedDay}})
+        .write();
+      break;
+    case 'Monday':
+      db.get('rooms')
+        .filter({name: request.body.meeting.name})
+        .assign({availability: {monday: availabilityForSelectedDay}})
+        .write();
+      break;
+    case 'Tuesday':
+      db.get('rooms')
+        .filter({name: request.body.meeting.name})
+        .assign({availability: {tuesday: availabilityForSelectedDay}})
+        .write();
+      break;
+    case 'Wednesday':
+      db.get('rooms')
+        .filter({name: request.body.meeting.name})
+        .assign({availability: {wednesday: availabilityForSelectedDay}})
+        .write();
+      break;
+    case 'Thursday':
+      db.get('rooms')
+        .filter({name: request.body.meeting.name})
+        .assign({availability: {thursday: availabilityForSelectedDay}})
+        .write();
+      break;
+    case 'Friday':
+      db.get('rooms')
+        .filter({name: request.body.meeting.name})
+        .assign({availability: {friday: availabilityForSelectedDay}})
+        .write();
+      break;
+    case 'Saturday':
+      db.get('rooms')
+        .filter({name: request.body.meeting.name})
+        .assign({availability: {saturday: availabilityForSelectedDay}})
+        .write();
+      break;
+    default:
+      break;
+  }
+
+  response.writeHead( 200, "OK", {'Content-Type': 'application/json' });
+  response.end();
+});
+
+function getListForDay(day, listOfTimes) {
+  let timesForSelectedDay;
+
+  switch(day) {
+    case 'Sunday':
+      timesForSelectedDay = listOfTimes.sunday;
+      break;
+    case 'Monday':
+      timesForSelectedDay = listOfTimes.monday;
+      break;
+    case 'Tuesday':
+      timesForSelectedDay = listOfTimes.tuesday;
+      break;
+    case 'Wednesday':
+      timesForSelectedDay = listOfTimes.wednesday;
+      break;
+    case 'Thursday':
+      timesForSelectedDay = listOfTimes.thursday;
+      break;
+    case 'Friday':
+      timesForSelectedDay = listOfTimes.friday;
+      break;
+    case 'Saturday':
+      timesForSelectedDay = listOfTimes.saturday;
+      break;
+    default:
+      break;
+  }
+  return timesForSelectedDay;
+}
 
 /*** ROOM METHODS ***/
 app.get('/allRoomInfo', function (request, response) {
@@ -161,12 +355,16 @@ app.get('/allRoomInfo', function (request, response) {
 });
 
 app.post('/specificRoomAvailability', function (request, response) {
+  if (request.session.passport) {
     const availability = db.get('rooms')
-        .filter({name: request.body.name})
-        .map('availability')
-        .value();
+      .filter({name: request.body.name})
+      .map('availability')
+      .value();
 
     response.send(JSON.stringify({data: availability[0]}));
+  } else {
+    response.send(JSON.stringify({data: null}));
+  }
 });
 
 app.post('/updateRoomAvailability', function (request, response) {
@@ -184,7 +382,6 @@ app.post('/updateRoomAvailability', function (request, response) {
 
 app.post('/sendEmail', function (request, response) {
   const mailToSend = request.body;
-  console.log(mailToSend);
   sendMail(mailToSend);
 });
 

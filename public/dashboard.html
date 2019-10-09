@@ -43,10 +43,9 @@
     <div class="column col-12 col-md-6 col-lg-4 col-xl-3 navbar-collapse collapse">
       <div class="row justify-content-center">
         <ul class="nav navbar-nav justify-content-end" style="width:100%; margin:0px; display: inline-block;">
-          <li class="nav-item active left-space"><a href="login.html">Log Out</a></li>
-          <!--    TODO: attach this to a logout method    -->
-          <li class="nav-item" style="display: inline-block;"><a href="dashboard.html">Book A Room</a></li>
-          <li class="nav-item" style="display: inline-block;"><a href="meetingsDisplay.html">Meetings</a></li>
+          <li class="nav-item"><a href="dashboard.html">Book A Room</a></li>
+          <li class="nav-item"><a href="meetingsDisplay.html">Meetings</a></li>
+          <li class="nav-item active left-space"><a id="logout-link" href="login.html">Log Out</a></li>
         </ul>
       </div>
     </div>
@@ -167,16 +166,12 @@
                 </div>
               </div>
             </div>
-<!--            <div class="column col-12" id="emailList">-->
-<!--              <input type="email" name="email" class="form-control emailRecipient" id="email"-->
-<!--                     data-msg="Please enter a valid email">-->
-<!--            </div>-->
             <div class="column col-12">
               <small class="form-text text-muted">Invite meeting participants via email</small>
             </div>
             <div class="column col-12">
-              <div class="row">
-                <button class="btn" id="add-email">
+              <div class="row" style="justify-content: start; margin: 0px; padding: 0px; overflow: auto;">
+                <button class="btn" id="add-email" style="padding: 0px;">
                   <span class="glyphicon glyphicon-plus-sign"></span>
                   &nbsp;Add email
                 </button>
@@ -192,10 +187,16 @@
       </div>
 
       <!--     AVAILABILITY TABLE     -->
-      <div class="page column col-12 col-xl-7 col-lg-7 col-md-12 ml-xl-5 ml-lg-3">
+      <div class="page column col-12 col-xl-7 col-lg-7 col-md-12 ml-xl-5 ml-lg-3 mt-md-5 mt-sm-5">
         <h2 id="room-table-label" style="font-size: 36px; margin-bottom: 20px; text-align: center;"></h2>
         <div class="table-responsive-sm table-responsive-lg table-responsive-xl">
           <h2 id="prebookingMsg" style="font-size: 36px;">Select a room to begin booking.</h2>
+          <div class="card" id="login-redirect" style="display: none; align-items: center; align-content: center; justify-content: center;">
+            <div class="card-body">
+              <p class="card-text" style="text-align:center; color: #555;">Please login to view rooms.</p>
+              <a href="login.html" class="btn btn-primary">Login</a>
+            </div>
+          </div>
           <table id="room-avail-table" class="table table-sm table-hover"></table>
         </div>
       </div>

@@ -19,7 +19,7 @@ const createAvailabilityTable = async function () {
     // change table label to requested room name
     document.getElementById('room-table-label').innerText = selected_room;
 
-    if (availability) {
+    if (availability !== null) {
       // get the table
       let htmlDiv = document.getElementById('room-avail-table');
 
@@ -48,6 +48,9 @@ const createAvailabilityTable = async function () {
       htmlDiv.innerHTML += '</tbody>';
 
     } else {
+      document.getElementById('login-redirect').style.display = "flex";
+      document.getElementById('room-avail-table').style.display = "none";
+      document.getElementById('room-table-label').style.display = "none";
       document.getElementById('room-avail').innerText = "Could not find room.";
     }
   } catch (err) {
@@ -284,11 +287,15 @@ const submitButtonClicked = function (e) {
   const newAvailability = {
     room: selected_room,
     day: selected_day,
-    times: out_put_times
+    times: out_put_times,
+    startTime: selected_start_time,
+    endTime: selected_end_time
   };
 
   buildAvailability(newAvailability).then(() => console.log());
+};
 
+function buildEmail(selected_room, selected_start_time, selected_end_time, selected_day) {
   const emailList = document.querySelectorAll('.emailRecipient');
   let emailAddresses = [];
   emailList.forEach((email) => {
@@ -299,7 +306,7 @@ const submitButtonClicked = function (e) {
   if (emailAddresses.length > 0) {
     sendEmail(selected_room, selected_start_time, selected_end_time, selected_day, emailAddresses).then(console.log());
   }
-};
+}
 
 async function sendEmail(room, startTime, endTime, day, emailList) {
   try {
@@ -348,6 +355,23 @@ function roomUnavailableAlert() {
   document.getElementById('room-unavailable-alert').style.display = "flex";
 }
 
+function addUserMeeting(room, startTime, endTime, day) {
+  const newMeeting = {
+    room: room,
+    startTime: startTime,
+    endTime: endTime,
+    day: day
+  };
+
+  const body = JSON.stringify(newMeeting);
+  fetch('/updateUserMeetings', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body
+  }).then(function () {
+  });
+}
+
 async function buildAvailability(availability) {
   try {
     removeAllAlerts();
@@ -359,6 +383,8 @@ async function buildAvailability(availability) {
             availability.times.forEach((time) => {
               roomAvail.sunday.push(time);
             });
+            addUserMeeting(availability.room, availability.startTime, availability.endTime, availability.day);
+            buildEmail(availability.room, availability.startTime, availability.endTime, availability.day);
             meetingCreatedAlert();
           } else {
             roomUnavailableAlert();
@@ -369,6 +395,8 @@ async function buildAvailability(availability) {
             availability.times.forEach((time) => {
               roomAvail.monday.push(time);
             });
+            addUserMeeting(availability.room, availability.startTime, availability.endTime, availability.day);
+            buildEmail(availability.room, availability.startTime, availability.endTime, availability.day);
             meetingCreatedAlert();
           } else {
             roomUnavailableAlert();
@@ -379,6 +407,8 @@ async function buildAvailability(availability) {
             availability.times.forEach((time) => {
               roomAvail.tuesday.push(time);
             });
+            addUserMeeting(availability.room, availability.startTime, availability.endTime, availability.day);
+            buildEmail(availability.room, availability.startTime, availability.endTime, availability.day);
             meetingCreatedAlert();
           } else {
             roomUnavailableAlert();
@@ -389,6 +419,8 @@ async function buildAvailability(availability) {
             availability.times.forEach((time) => {
               roomAvail.wednesday.push(time);
             });
+            addUserMeeting(availability.room, availability.startTime, availability.endTime, availability.day);
+            buildEmail(availability.room, availability.startTime, availability.endTime, availability.day);
             meetingCreatedAlert();
           } else {
             roomUnavailableAlert();
@@ -399,6 +431,8 @@ async function buildAvailability(availability) {
             availability.times.forEach((time) => {
               roomAvail.thursday.push(time);
             });
+            addUserMeeting(availability.room, availability.startTime, availability.endTime, availability.day);
+            buildEmail(availability.room, availability.startTime, availability.endTime, availability.day);
             meetingCreatedAlert();
           } else {
             roomUnavailableAlert();
@@ -409,6 +443,8 @@ async function buildAvailability(availability) {
             availability.times.forEach((time) => {
               roomAvail.friday.push(time);
             });
+            addUserMeeting(availability.room, availability.startTime, availability.endTime, availability.day);
+            buildEmail(availability.room, availability.startTime, availability.endTime, availability.day);
             meetingCreatedAlert();
           } else {
             roomUnavailableAlert();
@@ -419,6 +455,8 @@ async function buildAvailability(availability) {
             availability.times.forEach((time) => {
               roomAvail.saturday.push(time);
             });
+            addUserMeeting(availability.room, availability.startTime, availability.endTime, availability.day);
+            buildEmail(availability.room, availability.startTime, availability.endTime, availability.day);
             meetingCreatedAlert();
           } else {
             roomUnavailableAlert();
@@ -448,6 +486,15 @@ const delEmail = function (element) {
   $(element).closest('.row').remove();
 };
 
+const logout = function() {
+  fetch( '/logout', {
+    method:'GET'
+  }).then(function () {
+  });
+
+  return false;
+};
+
 window.onload = function () {
   const selectedRoomInput = document.getElementById('selectRoomName');
   selectedRoomInput.onchange = createAvailabilityTable;
@@ -461,6 +508,9 @@ window.onload = function () {
 
   const addEmailButton = document.getElementById('add-email');
   addEmailButton.onclick = addEmail;
+
+  const logoutButton = document.getElementById('logout-link');
+  logoutButton.addEventListener('click', logout);
 };
 
 function main() {

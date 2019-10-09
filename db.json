@@ -12,21 +12,75 @@
               "9:00",
               "11:00"
             ]
+          }
+        ],
+        "monday": [
+          {
+            "name": "Edvard Munch",
+            "time": [
+              "10:00",
+              "11:30"
+            ]
           },
           {
-            "name": "Henri Matisse",
+            "name": "Michelangelo",
             "time": [
-              "9:00",
-              "11:00"
+              "14:00",
+              "14:30"
             ]
           }
         ],
-        "monday": [],
-        "tuesday": [],
-        "wednesday": [],
+        "tuesday": [
+          {
+            "name": "Claude Monet",
+            "time": [
+              "13:00",
+              "14:30"
+            ]
+          },
+          {
+            "name": "Frida Kahlo",
+            "time": [
+              "11:00",
+              "11:30"
+            ]
+          }
+        ],
+        "wednesday": [
+          {
+            "name": "Pablo Picasso",
+            "time": [
+              "9:00",
+              "9:30"
+            ]
+          },
+          {
+            "name": "Leonardo da Vinci",
+            "time": [
+              "15:30",
+              "18:00"
+            ]
+          }
+        ],
         "thursday": [],
-        "friday": [],
-        "saturday": []
+        "friday": [
+          {
+            "name": "Henri Matisse",
+            "time": [
+              "10:00",
+              "11:30"
+            ]
+          }
+        ],
+        "saturday": [
+          {
+            "name": "Vincent van Gogh",
+            "time": [
+              "9:00",
+              "12:30"
+            ]
+          }
+        ]
       }
     },
     {
@@ -34,22 +88,7 @@
       "email": "ylin7@wpi.edu",
       "password": "1234",
       "meetings": {
-        "sunday": [
-          {
-            "name": "Raphael",
-            "time": [
-              "9:00",
-              "11:00"
-            ]
-          },
-          {
-            "name": "Henri Matisse",
-            "time": [
-              "9:00",
-              "11:00"
-            ]
-          }
-        ],
+        "sunday": [],
         "monday": [],
         "tuesday": [],
         "wednesday": [],
@@ -63,22 +102,7 @@
       "email": "mmdanke@wpi.edu",
       "password": "1234",
       "meetings": {
-        "sunday": [
-          {
-            "name": "Raphael",
-            "time": [
-              "9:00",
-              "11:00"
-            ]
-          },
-          {
-            "name": "Henri Matisse",
-            "time": [
-              "9:00",
-              "11:00"
-            ]
-          }
-        ],
+        "sunday": [],
         "monday": [],
         "tuesday": [],
         "wednesday": [],
@@ -92,22 +116,7 @@
       "email": "aezeobiejesi@wpi.edu",
       "password": "1234",
       "meetings": {
-        "sunday": [
-          {
-            "name": "Raphael",
-            "time": [
-              "9:00",
-              "11:00"
-            ]
-          },
-          {
-            "name": "Henri Matisse",
-            "time": [
-              "9:00",
-              "11:00"
-            ]
-          }
-        ],
+        "sunday": [],
         "monday": [],
         "tuesday": [],
         "wednesday": [],
@@ -123,66 +132,25 @@
       "availability": {
         "sunday": [
           "9:00",
-          "9:15",
           "9:30",
-          "9:45",
-          "10:30",
-          "11:00",
-          "10:00"
-        ],
-        "monday": [
-          "9:00",
-          "9:30"
-        ],
-        "tuesday": [
           "10:00",
-          "10:30",
-          "11:00",
-          "11:30",
-          "12:00",
-          "12:30",
-          "13:00",
-          "13:30",
-          "14:00",
-          "09:30"
+          "10:30"
         ],
-        "wednesday": [
-          "12:00",
-          "10:00",
-          "10:30",
-          "11:00"
-        ],
-        "thursday": [
-          "9:00"
-        ],
-        "friday": [
-          "16:00"
-        ],
-        "saturday": [
-          "9:00"
-        ]
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
       }
     },
     {
       "name": "Frida Kahlo",
       "availability": {
-        "sunday": [
-          "9:00"
-        ],
-        "monday": [
-          "9:00",
-          "9:30",
-          "10:00",
-          "10:30",
-          "11:00",
-          "11:30",
-          "12:00",
-          "12:30",
-          "13:00",
-          "13:30"
-        ],
+        "sunday": [],
+        "monday": [],
         "tuesday": [
-          "9:00"
+          "11:00"
         ],
         "wednesday": [],
         "thursday": [],
@@ -195,7 +163,11 @@
       "availability": {
         "sunday": [],
         "monday": [],
-        "tuesday": [],
+        "tuesday": [
+          "13:00",
+          "13:30",
+          "14:00"
+        ],
         "wednesday": [],
         "thursday": [],
         "friday": [],
@@ -205,35 +177,14 @@
     {
       "name": "Edvard Munch",
       "availability": {
-        "sunday": [
-          "9:00",
-          "9:30",
-          "10:00"
-        ],
-        "monday": [],
-        "tuesday": [
-          "9:00",
-          "9:30",
+        "sunday": [],
+        "monday": [
           "10:00",
           "10:30",
-          "11:00",
-          "11:30",
-          "12:00",
-          "12:30",
-          "13:00",
-          "13:30",
-          "14:00",
-          "14:30",
-          "15:00",
-          "15:30",
-          "16:00",
-          "16:30",
-          "17:00",
-          "17:30"
+          "11:00"
         ],
-        "wednesday": [
-          "11:30"
-        ],
+        "tuesday": [],
+        "wednesday": [],
         "thursday": [],
         "friday": [],
         "saturday": []
@@ -245,11 +196,13 @@
         "sunday": [],
         "monday": [],
         "tuesday": [],
-        "wednesday": [
-          "9:00"
-        ],
+        "wednesday": [],
         "thursday": [],
-        "friday": [],
+        "friday": [
+          "10:00",
+          "10:30",
+          "11:00"
+        ],
         "saturday": []
       }
     },
@@ -257,7 +210,9 @@
       "name": "Michelangelo",
       "availability": {
         "sunday": [],
-        "monday": [],
+        "monday": [
+          "14:00"
+        ],
         "tuesday": [],
         "wednesday": [],
         "thursday": [],
@@ -268,14 +223,16 @@
     {
       "name": "Leonardo da Vinci",
       "availability": {
-        "sunday": [
-          "9:00"
-        ],
-        "monday": [
-          "9:00"
-        ],
+        "sunday": [],
+        "monday": [],
         "tuesday": [],
-        "wednesday": [],
+        "wednesday": [
+          "15:30",
+          "16:00",
+          "16:30",
+          "17:00",
+          "17:30"
+        ],
         "thursday": [],
         "friday": [],
         "saturday": []
@@ -290,7 +247,15 @@
         "wednesday": [],
         "thursday": [],
         "friday": [],
-        "saturday": []
+        "saturday": [
+          "9:00",
+          "9:30",
+          "10:00",
+          "10:30",
+          "11:00",
+          "11:30",
+          "12:00"
+        ]
       }
     },
     {
@@ -299,7 +264,9 @@
         "sunday": [],
         "monday": [],
         "tuesday": [],
-        "wednesday": [],
+        "wednesday": [
+          "9:00"
+        ],
         "thursday": [],
         "friday": [],
         "saturday": []
