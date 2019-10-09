@@ -35,6 +35,14 @@ app.get('/feed', function (request, response) {
   });
 });
 
+app.get('/song_data', function (request, response){
+  let song_id = request.query.id;
+  //TODO: replace with fs_service method
+  response.end(JSON.stringify(
+    {song_id: 1, song_bytes: "7293698753297457326932"} //base64 which is what mp3 needs to be converted from/to
+  ))
+})
+
 passport.use('local', new LocalStrategy( {
   usernameField: 'username',
   passwordField: 'password'
@@ -71,7 +79,6 @@ app.post( '/login', passport.authenticate( 'local' ), function( req, res ) {
   console.log( 'username:', req.body.username );
   res.json({'status': true});
 });
-
 
 
 app.post( '/signup', function( request, response ) {
