@@ -9,6 +9,9 @@ class BarGraph extends Component {
     componentDidMount() {
     }
 
+    badData= this.props.data;
+
+
     render() {
         var data = {
             labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8', 'W9', 'W10'],
@@ -22,6 +25,7 @@ class BarGraph extends Component {
             low: 0
         };
 
+        console.log(this.badData);
         return (
             <div id="myGraph">
                 <ChartistGraph data={data} options={options} type={"Bar"} />

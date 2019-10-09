@@ -41,7 +41,7 @@ class Dashboard extends Component {
     render() {
         return(
             <div>
-                <Graphy></Graphy>
+                <Graphy data={this.state.budgets}></Graphy>
                 <Field getData={this.getData}></Field>
                 <Table data={this.state.budgets}></Table>
             </div>

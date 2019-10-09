@@ -1,4 +1,3 @@
-import { ReactTabulator } from 'react-tabulator'; // for React 15.x, use import { React15Tabulator }
 
 const deleteRow = async function(cell, cb) {
     var answer = window.confirm("Are you sure you want to delete?")
