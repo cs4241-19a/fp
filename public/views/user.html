@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+      <script src="js/user.js" type="module"></script>
       <title>User Profile</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,6 +9,28 @@
       <link rel="stylesheet" type="text/css" href="css/style.css"/>
   </head>
   <body>
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <a class="navbar-brand" href="https://axpdsp.org">Alpha Chi Rho - Delta Sigma Phi</a>
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="/">Home</a>
+          </li>
+          <li class="active">
+            <a href="/user">Profile</a>
+          </li>
+          <li>
+            <a href="/stats">Sheet</a>
+          </li>
+          <li>
+            <a href="/admin">Admin</a>
+          </li>
+          <li>
+            <a href="/login">Login</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
     <h1 id="name">Hello,</h1><br>
     <h3>Your job this week is:</h3><br>
     <h2 id="job"></h2><h2>on</h2><h2 id="day"></h2><br><br>

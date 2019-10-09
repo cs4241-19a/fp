@@ -129,9 +129,11 @@ app.get('/users', async function(req,res){
 // Returning statistics of the user for user view page
 // TODO handle users who aren't logged in
 app.get('/userData', function(req, res) {
-  dataCol.findOne({uuid: req.user.uuid}, function(err, result) {
+  console.log('Looking for user:', req.session.passport.user);
+  userCol.findOne({uuid: req.session.passport.user}, function(err, result) {
     if(err) {res.sendStatus(503)}
     else {
+      console.log(result)
       res.json(result);
     }
   });
