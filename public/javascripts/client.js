@@ -19,8 +19,8 @@ function getCookie(cname) {
 }
 
 function deleteRow() {
-  let p = this.parentNode.parentNode;
-  p.parentNode.removeChild(p);
+  return;
+  //p.parentNode.parentNode.removeChild(p);
   //CALL DB HERE
 }
 
@@ -29,7 +29,6 @@ function editRow() {
 }
 
 window.onload = function() {
-  alert()
   let cook = getCookie("username");
   let body = {username: cook};
   body = JSON.stringify(body)
@@ -43,7 +42,6 @@ window.onload = function() {
   }).then(function(res) {
     res.json().then(function(ret) {
       for (let i = 0; i < ret.length; i++) {
-        
         let deleteButton = document.createElement("button");
         let editButton = document.createElement("button");
 
