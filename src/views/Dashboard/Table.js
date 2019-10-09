@@ -28,14 +28,7 @@ class Table extends Component {
     columns = [
         { title: "ID", field: "id", visible: false },
         {
-            title: "Name", field: "name", headerFilter: "input", editor: "input", bottomCalc: "count", cellEdited: function (cell) {
-                console.log(cell.getRow());
-                tableFunctions.modifyRow(cell.getRow(), (isModified) => {
-                    if(isModified) {
-                        console.log('Was modified successfully');
-                    }
-                });
-            }
+            title: "Name", field: "name", headerFilter: "input", bottomCalc: "count"
         },
         {
             title: "Requested Amount", field: "requested", formatter: "money", editor: "input", bottomCalc: "sum", bottomCalcFormatter: "money", headerFilter: "input",
