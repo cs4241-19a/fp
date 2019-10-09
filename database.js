@@ -27,7 +27,7 @@ module.exports = function () {
             request.onload = () => {
                 if (request.status >= 200 && request.status < 400) {
                     let data = JSON.parse(request.responseText);
-                    if(data['QueryStatusCode'] !== 'Success') reject("Reverse Geocode lookup failed: " + data['ErrorMessage']);
+                    if (data['QueryStatusCode'] !== 'Success') reject("Reverse Geocode lookup failed: " + data['ErrorMessage']);
                     let address = data['StreetAddresses'][0];
                     resolve({
                         city: address['City'],
@@ -77,6 +77,10 @@ module.exports = function () {
     }
 
     return {
+        deleteAll: function () {
+            PingsCollection.then(collection => collection.remove({}));
+        },
+
         locationLookup: function (data) {
             return new Promise(resolve => resolve(getLocation(data[0])))
         },

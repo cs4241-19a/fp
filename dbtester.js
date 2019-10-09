@@ -5,11 +5,11 @@ const db = new DB();
 const testdata = [{
     favicon: 'facebook.com',
     rtt: 1.2,
-    latitude: '42.28',
-    longitude: '-71.80',
-    connectionInfo: {effectiveType: '4g', rtt: 50, downlink: 5.2, type: 'cellular', downlinkMax: '6.66'},
-    ip: '72.93.244.26',
-    isMobile: true
+    // latitude: '42.28',
+    // longitude: '-71.80',
+    connectionInfo: {effectiveType: '4g', rtt: 50, downlink: 5.2, type: 'ethernet', downlinkMax: '6.66'},
+    ip: '173.13.70.45',
+    isMobile: false
 }];
 // db.insertPings(testdata).then(result => console.log(result));
 
