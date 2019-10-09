@@ -51,3 +51,11 @@ async function submitAllMods(){
     
     //console.log(currentJobs);
 }
+
+function forceUpdate() {
+    fetch('/forceUpdate', {
+        method: 'POST',
+        credentials: 'include'
+    })
+    .then(res => console.log(res));
+}
