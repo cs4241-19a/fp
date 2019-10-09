@@ -1,0 +1,313 @@
+{
+  "users": [
+    {
+      "name": "Carla",
+      "email": "ciduarte@wpi.edu",
+      "password": "1234",
+      "availability": {
+        "sunday": [
+          "9:00",
+          "9:15",
+          "9:30",
+          "9:45"
+        ],
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [
+          "8:00"
+        ],
+        "thursday": [],
+        "friday": [
+          "3:00"
+        ],
+        "saturday": []
+      },
+      "archive": []
+    },
+    {
+      "name": "Sylvia",
+      "email": "ylin7@wpi.edu",
+      "password": "1234",
+      "availability": [
+        {
+          "sunday": [],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ],
+      "archive": []
+    },
+    {
+      "name": "Manasi",
+      "email": "mmdanke@wpi.edu",
+      "password": "1234",
+      "availability": [
+        {
+          "sunday": [],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ],
+      "archive": []
+    },
+    {
+      "name": "Amanda",
+      "email": "aezeobiejesi@wpi.edu",
+      "password": "1234",
+      "availability": [
+        {
+          "sunday": [],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ],
+      "archive": []
+    },
+    {
+      "name": "test1",
+      "email": "test1@wpi.edu",
+      "password": "1234",
+      "availability": [
+        {
+          "sunday": [],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ],
+      "archive": []
+    },
+    {
+      "name": "hello",
+      "email": "hello@wpi.edu",
+      "password": "hello",
+      "availability": [
+        {
+          "sunday": [],
+          "monday": [],
+          "tuesday": [],
+          "wednesday": [],
+          "thursday": [],
+          "friday": [],
+          "saturday": []
+        }
+      ],
+      "archive": []
+    }
+  ],
+  "rooms": [
+    {
+      "name": "Raphael",
+      "availability": {
+        "sunday": [
+          "9:00",
+          "9:15",
+          "9:30",
+          "9:45",
+          "10:30",
+          "11:00",
+          "10:00"
+        ],
+        "monday": [
+          "9:00",
+          "9:30"
+        ],
+        "tuesday": [
+          "10:00",
+          "10:30",
+          "11:00",
+          "11:30",
+          "12:00",
+          "12:30",
+          "13:00",
+          "13:30",
+          "14:00",
+          "09:30"
+        ],
+        "wednesday": [
+          "12:00",
+          "10:00",
+          "10:30",
+          "11:00"
+        ],
+        "thursday": [
+          "9:00"
+        ],
+        "friday": [
+          "16:00"
+        ],
+        "saturday": [
+          "9:00"
+        ]
+      }
+    },
+    {
+      "name": "Frida Kahlo",
+      "availability": {
+        "sunday": [
+          "9:00"
+        ],
+        "monday": [
+          "9:00",
+          "9:30",
+          "10:00",
+          "10:30",
+          "11:00",
+          "11:30",
+          "12:00",
+          "12:30",
+          "13:00",
+          "13:30"
+        ],
+        "tuesday": [
+          "9:00"
+        ],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
+    },
+    {
+      "name": "Claude Monet",
+      "availability": {
+        "sunday": [],
+        "monday": [
+          "9:00",
+          "9:30",
+          "10:00",
+          "10:30",
+          "11:00",
+          "11:30",
+          "12:00",
+          "12:30",
+          "13:00",
+          "13:30"
+        ],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
+    },
+    {
+      "name": "Edvard Munch",
+      "availability": {
+        "sunday": [
+          "9:00",
+          "9:30",
+          "10:00"
+        ],
+        "monday": [],
+        "tuesday": [
+          "9:00",
+          "9:30",
+          "10:00",
+          "10:30",
+          "11:00",
+          "11:30",
+          "12:00",
+          "12:30",
+          "13:00",
+          "13:30",
+          "14:00",
+          "14:30",
+          "15:00",
+          "15:30",
+          "16:00",
+          "16:30",
+          "17:00",
+          "17:30"
+        ],
+        "wednesday": [
+          "11:30"
+        ],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
+    },
+    {
+      "name": "Henri Matisse",
+      "availability": {
+        "sunday": [],
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [
+          "9:00"
+        ],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
+    },
+    {
+      "name": "Michelangelo",
+      "availability": {
+        "sunday": [],
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
+    },
+    {
+      "name": "Leonardo da Vinci",
+      "availability": {
+        "sunday": [
+          "9:00"
+        ],
+        "monday": [
+          "9:00"
+        ],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
+    },
+    {
+      "name": "Vincent van Gogh",
+      "availability": {
+        "sunday": [],
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
+    },
+    {
+      "name": "Pablo Picasso",
+      "availability": {
+        "sunday": [],
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
+    }
+  ]
+}
