@@ -1,5 +1,5 @@
 # Carbon Footprint
-###Team: Georgina Cromwell, Corrin Courville, Kaitlin McDermott
+### Team: Georgina Cromwell, Corrin Courville, Kaitlin McDermott
 Website: https://final-project-gcc-cmc-kmd.glitch.me/
 
 ## General description
