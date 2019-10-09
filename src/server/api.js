@@ -113,9 +113,8 @@ const api = db => {
             startTime,
             stopTime,
             days,
-            users: [],
-            userTimes: []
-        })
+            availabilities: {}
+        });
 
         await newEvent.save();
         res.redirect(`/event/${newEvent._id}`);
@@ -131,7 +130,15 @@ const api = db => {
             res.status(404).json({ message: "Event not found." });
         }
     })
-    // router.post('/event/:eventId/update')
+
+    router.post('/event/:eventId/update', ensureLoggedIn, async (req, res) => {
+        const { user, body, params } = req;
+        const { userAvailability } = body;
+
+        const event = await Event.findById(params.eventId);
+        event.availabilities[user._id] = userAvailability;
+        await event.save();
+    })
 
 
 

@@ -32,10 +32,9 @@ export const passwordSchema = new mongoose.Schema({
 export const eventSchema = new mongoose.Schema({
     name: String,
     days: Array,
-    startTime: String,
-    stopTime: String,
-    users: Array,
-    userTimes: Array
+    start: String,
+    stop: String,
+    availabilities: Object
 });
 
 export const User = mongoose.model('W3MUsers', userSchema);
