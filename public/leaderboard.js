@@ -21,7 +21,7 @@ updateLeaderboard = function(leaderboardData) {
         let attempts = newRow.insertCell(2);
         username.innerHTML = entry.user;
         time.innerHTML = entry.time;
-        // attempts.innerHTML = entry.attempts;
+        attempts.innerHTML = entry.attempts;
         rowLength = leaderboard.rows.length;
     });
 };

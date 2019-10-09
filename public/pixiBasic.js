@@ -8,6 +8,8 @@ document.getElementById("pixi").appendChild(app.view);
 let paw = PIXI.Sprite.from('images/cat.png');
 let dog = PIXI.Sprite.from('images/dog.png');
 let turtle = PIXI.Sprite.from('images/turtle.png');
+let highBat = PIXI.Sprite.from('images/bat.png');
+let mediumBat = PIXI.Sprite.from('images/bat.png');
 let finish = PIXI.Sprite.from('images/finish.png');
 finish.height = 52;
 finish.width = 52;
@@ -96,14 +98,41 @@ document.getElementById("pawBut").addEventListener("click", function(){
     activeChar.visible = true;
 });
 
-function addTurtle(){
+function addTurtle(vx) {
     app.stage.addChild(turtle);
     turtle.anchor.set(1);
     turtle.x = app.screen.width;
     turtle.y = app.screen.height;
-    turtle.vx = -2;
+    turtle.vx = vx;
     turtle.height = 45;
     turtle.width = 45;
+}
+
+function addHighBat(vx) {
+    app.stage.addChild(highBat);
+    highBat.anchor.set(1);
+    highBat.x = app.screen.width;
+    highBat.y = app.screen.height - 150;
+    highBat.vx = vx;
+    highBat.height = 45;
+    highBat.width = 45;
+}
+
+function addMediumBat(vx) {
+    app.stage.addChild(mediumBat);
+    mediumBat.anchor.set(1);
+    mediumBat.x = app.screen.width;
+    mediumBat.y = app.screen.height;
+    mediumBat.vx = vx;
+    mediumBat.height = 45;
+    mediumBat.width = 45;
+}
+
+
+function addTurtles(num, vx) {
+    for (let i = 0; i<num; i++) {
+        addTurtle(vx);
+    }
 }
 
 // animation loop running at 60 fps
@@ -147,8 +176,14 @@ app.ticker.add(function(delta) {
             victory.visible = true;
             start = false;
         }
-        if(time % 8 === 0){
-            addTurtle();
+        if (time < 20 && time % 8 === 0) {
+            addTurtle(-2);
+        } else if (time < 40 && time % 8 === 0) {
+            addHighBat(-4);
+            addTurtles(1, -4)
+        }
+        if (time < 40 && time % 6 === 0 && time !== 0) {
+            addMediumBat(-3);
         }
         if (activeChar.y === app.screen.height - 62) {
             hasTouchedGround = true;
