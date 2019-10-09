@@ -12,8 +12,27 @@ export default function FeedItem(props) {
      */
 
     const song = useStoreState(state => state.vis.song);
+    const songFile = useStoreState(state => state.vis.songFile);
     const user = useStoreState(state => state.vis.user);
+    const options = useStoreState(state => state.vis.options);
+
     const setSong = useStoreActions(actions => actions.vis.setSong);
+    const setSongFile = useStoreActions(actions => actions.vis.setSongFile);
+    const setUser = useStoreActions(actions => actions.vis.setUser);
+    const setOptions = useStoreActions(actions => actions.vis.setOptions);
+
+    async function handleClick() {
+        console.log('paper has been clicked');
+
+        //first fetch new song
+        await setSongFile(songFile, props.song.song_id);
+
+        //then give new options
+        setSong(song, props.song);
+        setUser(user, props.user);
+        setOptions(options, props.options);
+
+    }
 
     // function handleClick() {
     //     const payload = {
@@ -72,8 +91,10 @@ export default function FeedItem(props) {
         paper: {
             display: 'flex',
             flexDirection: 'row',
-            padding: '10px 10px',
-            borderRadius: '15px'
+            padding: '15px 15px',
+            borderRadius: '15px',
+            cursor: 'pointer',
+            margin: '10px'
         },
         avatar: {
             margin: 10,
@@ -88,13 +109,13 @@ export default function FeedItem(props) {
 
     return (
         <div className={classes.container}>
-            <Paper className={classes.paper}>
-                <Button
+            <Paper className={classes.paper} onClick={handleClick}>
+                {/* <Button
                     variant="contained"
                     className={classes.button}
                     color="primary">
                         View
-                </Button>
+                </Button> */}
                 <div>
                     <Typography variant="h5">
                         {props.song.title} - {props.song.artist}

@@ -29,6 +29,21 @@ app.get('/receive', function (request, response) {
   });
 });
 
+app.get('/feed', function (request, response) {
+  fs_service.readFeedData().then(feedData =>{
+    response.end(JSON.stringify(feedData))
+  });
+});
+
+app.get('/song_data', function (request, response){
+  let song_id = request.query.id;
+  fs_service.getSongData(song_id).then(song_data => {
+    response.end(JSON.stringify(
+      {song_id: song_id, song_bytes: song_data.byte_string} //base64 which is what mp3 needs to be converted from/to
+    ))
+  })
+})
+
 passport.use('local', new LocalStrategy( {
   usernameField: 'username',
   passwordField: 'password'
@@ -65,7 +80,6 @@ app.post( '/login', passport.authenticate( 'local' ), function( req, res ) {
   console.log( 'username:', req.body.username );
   res.json({'status': true});
 });
-
 
 
 app.post( '/signup', function( request, response ) {

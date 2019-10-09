@@ -56,25 +56,21 @@ exports.readAllUserData = function() {
 }
 
 
-exports.readFeedData = function() {
+exports.readFeedData = async function() {
     let feed_ref = this.firestore.collection("top_ten_feed");
-    return new Promise((resolve, reject) => {
-        let myData = [];
-        feed_ref.get()
-            .then(snapshot => {
-                snapshot.forEach(doc => {
-                    console.log(doc.id, '=>',doc.data())
-                    myData.push(doc);
-                });
-                resolve(myData)
-            })
-            .catch(err => {
-                console.log('Error getting document', err);
-                reject('Error getting document')
-            })
+    let feed_posts = this.firestore.collection("music_profiles");
+    let myData = [];
+    feed_list = await feed_ref.get();
+    feed_list.forEach(async function(ref) {
+        let post = await feed_posts.doc(ref.id).get()
+        myData.push(post)
     })
+    return myData;
 }
 
+exports.getSongData = async function(song_id){
+    return await this.firestore.collection("song_data").doc(song_id).get();
+}
 exports.updateUserPassword = function (username, password) {
     let profiles_coll = this.firestore.collection("user_profiles").doc(username);
     profiles_coll.update({password: password}).then(r => console.log(r));
