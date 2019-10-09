@@ -189,6 +189,8 @@ function populateTimeInput() {
 
   time = i + ":00";
   times.push(time);
+  time = i + ":30";
+	times.push(time);
 
   let selectStartTime = document.getElementById("selectStartTime");
 
