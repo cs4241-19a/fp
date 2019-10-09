@@ -60,17 +60,28 @@ function forceUpdate() {
     .then(res => console.log(res));
 }
 
+function resetJobs() {
+    fetch('/resetJobs', {
+        method: 'POST',
+        credentials: 'include'
+    })
+    .then(res => console.log(res));
+}
+
+
 // For testing purposes
 function fill(){
     var table = document.getElementById("row").getElementsByTagName("TR");
     for (let job of table) {
-          
+
       if(job.id !== ""){
           job.cells[1].innerHTML = "Jimmy Tran";
-          
+
       }
     }
-  }
+}
+
+
   
 function resetJobs(){
     fetch('/resetJobs', {

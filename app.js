@@ -258,12 +258,14 @@ app.post('/forceUpdate', function(req, res) {
 app.post('/resetjobs', function(req,res){
   userCol.updateMany({},{$set: {jobs:[]}});
 })
+
+
+
 // Automatic scheduled updates
 // Updates job list every Sunday at 5:00 PM
 var schedUpdate = schedule.scheduleJob({hour: 17, minute: 0, dayOfWeek: 0}, function() {update();});
 
 // Function to update listing of house jobs 
-// TODO reset job point values for next week
 // TODO change job date values for next week
 var update = async function() {
   // Read through current list of jobs
@@ -300,7 +302,7 @@ var update = async function() {
 
   // Change job dates
   //TODO
-  
+  let userList = [];
   // Calculate points
   await userCol.find({}).toArray().then(users => {
     users.forEach(user => {
@@ -315,27 +317,31 @@ var update = async function() {
       else {userCol.updateOne({name: user.name},
         {$set: {point: 0}})};
     });
+
     // Sort users by point value (default to uuid if points are identical)
     // Currently sorts with lowest points being first
     // Lower UUID will be put to the front
     // Swap the comparisons to reverse (later implementation of a new system)
     // TODO remove people from the lsit who are N/A
-    return users.sort((a, b) => (a.point < b.point) ? 1 : (a.point === b.point) ? ((a.uuid > b.uuid) ? 1 : -1) : -1)})
-  .then(sortedList => async function(){
-    // Assign each user a house job randomly
-    //    Edit name of job to user's name, and reset status
-    let assigned = [];
-    await jobCol.find({}).toArray().then(jobs => async function() {
-      jobs.forEach(job => {
-        // Picks a random user and checks if they have a job yet
-        let rand = Math.round(Math.random() * 24);
-        while(assigned.includes(rand)) {
-          rand = Math.round(Math.random() * 24);
-        };
-        // Assigns job to random user
-        jobCol.updateOne({jobCode: job.jobCode},
-          {$set: {name: sortedList[rand].name}});
-      });
+    let sortedList = users.sort((a, b) => (a.point > b.point) ? 1 : (a.point === b.point) ? ((parseInt(a.uuid) < parseInt(b.uuid)) ? 1 : -1) : -1);
+    console.log('List of Users:', sortedList);
+    userList = sortedList;
+  });
+  // Assign each user a house job randomly
+  //    Edit name of job to user's name, and reset status
+  let assigned = [];
+  await jobCol.find({}).toArray().then(jobs => {
+    jobs.forEach(job => {
+      // Picks a random user and checks if they have a job yet
+      let rand = Math.round(Math.random() * 24);
+      while(assigned.includes(rand)) {
+        rand = Math.round(Math.random() * 24);
+      };
+      assigned.push(rand);
+      console.log('Selected User:', userList[rand].name, '  For Job:', job.jobCode, ' (Random Index):', rand);
+      // Assigns job to random user
+      jobCol.updateOne({jobCode: job.jobCode},
+        {$set: {name: userList[rand].name}});
     });
   });
 };
