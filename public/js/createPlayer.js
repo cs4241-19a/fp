@@ -38,7 +38,7 @@ function createPlayerForSong(track) {
                 player.on('player_state_changed', state => {
                     console.log("state is: ")
                     console.log(state)
-                    if(state != null) {
+                    if (state != null) {
                         $('#current-track').attr('src', state.track_window.current_track.album.images[0].url)
                         $('#current-track-name').text(state.track_window.current_track.name)
                         //edit this to incclude the whole atrists array?
@@ -77,7 +77,34 @@ function createPlayerForSong(track) {
     )
 }
 
+let interval
+
+function turningRecord(turn) {
+    let counter = 0
+    if (turn) {
+        interval = setInterval(function () {
+            console.log("interval")
+            counter -= 1
+            $("#current-track").css({
+                MozTransform: 'rotate(-' + -counter + 'deg)',
+                WebkitTransform: 'rotate(' + -counter + 'deg)',
+                transform: 'rotate(' + -counter + 'deg)'
+            })
+
+        }, 10)
+    } else {
+        clearInterval(interval)
+
+    }
+}
+
+let currentlyPlaying = true
+turningRecord(currentlyPlaying)
+
 function togglePlayPause() {
+    currentlyPlaying = !currentlyPlaying
+    console.log("currentlyplaying is " + currentlyPlaying)
+    turningRecord(currentlyPlaying)
     player.togglePlay()
 }
 
@@ -88,6 +115,10 @@ function playSomeTrackID(track) {
     console.log("player disconnected")
     console.log("trying to play " + track)
     createPlayerForSong(track)
+    if (!currentlyPlaying) {
+        currentlyPlaying = true
+        turningRecord(currentlyPlaying)
+    }
 }
 
 function getCurrentTrack(){
