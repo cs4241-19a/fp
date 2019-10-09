@@ -8,7 +8,7 @@ let stopped = true;
 
 const rollingNumber = 10;
 
-const userLocation = {lat: undefined, lng: undefined};
+const userLocation = {latitude: undefined, longitude: undefined};
 
 const localData = {};
 const runCycle = async function () {
@@ -68,8 +68,8 @@ const runCycle = async function () {
 	}
 
 	newData.forEach(d => {
-		d.lat = userLocation.lat;
-		d.lng = userLocation.lng;
+		d.latitude = userLocation.latitude;
+		d.longitude = userLocation.longitude;
 		const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
 		if (connection) {
 			d.connectionInfo = {
@@ -131,8 +131,8 @@ const startCollection = async function () {
 
 const geoLocate = function() {
 	navigator.geolocation.getCurrentPosition(position => {
-			userLocation.lat = position.coords.latitude.toFixed(2);
-			userLocation.lng = position.coords.longitude.toFixed(2);
+			userLocation.latitude = position.coords.latitudeitude.toFixed(2);
+			userLocation.longitude = position.coords.longitude.toFixed(2);
 	});
 };
 

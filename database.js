@@ -18,7 +18,7 @@ module.exports = function () {
         return new Promise((resolve) => DB().then(db => resolve(db.collection('pings'))))
     }
 
-    function reverseGeocode(lat, lon) {
+    function reverseGeocode(latitude, longitude) {
         return new Promise((resolve, reject) => {
             let request = new XMLHttpRequest();
             request.onreadystatechange = () => {
@@ -40,16 +40,16 @@ module.exports = function () {
             let parameters = {
                 apiKey: 'efda2ed783e748239c3406235a586f43',
                 version: 4.1,
-                lat: lat,
-                lon: lon,
+                latitude: latitude,
+                longitude: longitude,
                 notStore: true,
                 format: 'json',
             };
             let url = 'https://geoservices.tamu.edu/Services/ReverseGeocoding/WebService/v04_01/Rest/?' +
                 'apiKey=efda2ed783e748239c3406235a586f43&' +
                 'version=4.1&' +
-                'lat=' + lat + '&' +
-                'lon=' + lon + '&' +
+                'latitude=' + latitude + '&' +
+                'longitude=' + longitude + '&' +
                 'notStore=true&' +
                 'format=json';
             request.open('GET', url, true);
@@ -64,8 +64,8 @@ module.exports = function () {
                 let data = reader.city(ip);
                 if (!ip) reject("MaxMind lookup failed! No IP for data[0]");
                 resolve({
-                    lat: data.location.latitude,
-                    lon: data.location.longitude,
+                    latitude: data.location.latitudeitude,
+                    longitude: data.location.longitudegitude,
                     city: data.city.names.en,
                     state: data.subdivisions[0].isoCode,
                     country: data.country.isoCode
@@ -79,8 +79,8 @@ module.exports = function () {
             let type = data.connectionInfo.type;
             if ((data.isMobile && type === 'wifi') || !data.isMobile)
                 maxMindLookup(data.ip).then(location => resolve(location));
-            else if (data.isMobile && type === 'cellular' && data.lat && data.lng)
-                reverseGeocode(data.lat, data.lng).then(location => resolve(location));
+            else if (data.isMobile && type === 'cellular' && data.latitude && data.longitude)
+                reverseGeocode(data.latitude, data.longitude).then(location => resolve(location));
         });
     }
 
@@ -90,8 +90,8 @@ module.exports = function () {
         },
         // Data: [{ favicon: 'Yahoo',
         //     rtt: 657,
-        //     lat: '42.28',
-        //     lng: '-71.80',
+        //     latitude: '42.28',
+        //     longitude: '-71.80',
         //     connectionInfo: { effectiveType: '4g', rtt: 50, downlink: 5.2, type: 'wifi', downlinkMax '6.66'},
         //     ip: '::1',
         //     isMobile: false }]
@@ -99,8 +99,8 @@ module.exports = function () {
             return new Promise((resolve, reject) => {
                 getLocation(data[0]).then(location => {
                     for (let i = 0; i < data.length; i++) {
-                        data[i].lat = location.lat;
-                        data[i].lng = location.lon;
+                        data[i].latitude = location.latitude;
+                        data[i].longitude = location.longitude;
                         data[i].city = location.city;
                         data[i].state = location.state;
                         data[i].country = location.country;
@@ -109,7 +109,7 @@ module.exports = function () {
                 }).catch(error => reject("Error getting GeoIP info: " + error));
             });
         },
-        // returns [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}]
+        // returns [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", latitude: "0.0", longitude: "0.0"}]
         getData: function () {
             return new Promise(resolve => PingsCollection().then(col =>
                 col.aggregate([
@@ -117,8 +117,8 @@ module.exports = function () {
                         $group: {
                             "_id": {"favicon": "$favicon", "city": "$city", "state": "$state"},
                             count: {$sum: 1},
-                            lat: {$avg: "$lat"},
-                            lng: {$avg: "$lng"},
+                            latitude: {$avg: "$latitude"},
+                            longitude: {$avg: "$longitude"},
                             avg_rtt: {$avg: "$rtt"},
                             max_rtt: {$max: "$rtt"}
                         }
