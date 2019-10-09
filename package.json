@@ -20,7 +20,7 @@
     "parcel": "parcel src/html/main.html",
     "watch": "parcel watch src/html/*.html",
     "build": "parcel build src/html/*.html",
-    "css": "npx tailwind build src/css/main-t.css -o src/css/main-styles.css; npx tailwind build src/css/login-t.css -o src/css/login-styles.css;"
+    "css": "npx tailwind build src/css/main-t.css -o src/css/main-styles.css; npx tailwind build src/css/login-t.css -o src/css/login-styles.css; npx tailwind build src/css/profile-t.css -o src/css/profile-styles.css;"
   },
   "proxy": "http://localhost:3000/",
   "dependencies": {

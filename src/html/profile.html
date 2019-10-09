@@ -2,23 +2,43 @@
 <html lang="en">
 
   <head>
-    <title>Soundcloudish: Login</title>
+    <title>Soundcloudish: Profile</title>
     <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="../media/favicon.jpg" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-    <link rel='stylesheet' href='../css/login-styles.css'>
+    <link rel='stylesheet' href='../css/profile-styles.css'>
     <link href="../css/aos.css" rel="stylesheet" type="text/css">
     <script src="../js/aos.js"></script>
   </head>
   <body>
-    <div class="w-full" id="navBar">
-      <img src="../media/logoNav.png" alt="Logo" width="284" height="50">
+  <div class="w-full flex -mx-4" id="navBar">
+    <div id="homeDiv" class="w-1/5 px-4">
+      <img id="homeGo" src="../media/logoNav.png" alt="Logo" width="284" height="50">
     </div>
+    <div class="w-3/5 px-4"></div>
+    <div class="w-1/5 flex px-4">
+      <div id="profileGo" class="w-1/2 items-center rounded flex">
+        <div class="w-1/2">
+          <img class="w-10 h-10 rounded-full" src="../media/Manas.jpg"
+               alt="Avatar of Manas Mehta"/>
+        </div>
+        <div class="w-1/2">
+          <div class="text-sm">
+            <p id="nameCurr" class="text-gray-900 leading-none"></p>
+          </div>
+        </div>
+      </div>
+      <div class="w-1/10 px-4"></div>
+      <div class="w-2/5 px-4">
+        <button id="logoutBtn" class="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Logout</button>
+      </div>
+    </div>
+  </div>
     <script> AOS.init(); </script>
     <div class="overflow-y-auto" id="root"></div>
-    <script src="../js/login.js"></script>
+    <script src="../js/profile.js"></script>
   </body>
 </html>
