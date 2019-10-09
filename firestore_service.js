@@ -61,8 +61,6 @@ exports.readFeedData = async function() {
     let feed_posts = this.firestore.collection("music_profiles");
     let myData = [];
     feed_list = await feed_ref.get();
-    feed_list.forEach(ref =>{
-        let post = await feed_posts.doc(ref.id).get()
     feed_list.forEach(async function(ref) {
         let post = await feed_posts.doc(ref.id).get()
         myData.push(post)
