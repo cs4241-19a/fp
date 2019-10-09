@@ -192,14 +192,24 @@ img {
 
 }
 
+/*.searchButton {*/
+/*    color: #391A3F !important;*/
+/*    border-color: #391A3F !important;*/
+/*}*/
+
+/*.recommendationButton {*/
+/*    background-color: #391A3F !important;*/
+/*    border-color: #391A3F !important;*/
+/*}*/
+
 .searchButton {
-    color: #391A3F !important;
-    border-color: #391A3F !important;
+    color: #FE3B53 !important;
+    border-color: #FE3B53 !important;
 }
 
 .recommendationButton {
-    background-color: #391A3F !important;
-    border-color: #391A3F !important;
+    background-color: #FE3B53 !important;
+    border-color: #FE3B53 !important;
 }
 
 
