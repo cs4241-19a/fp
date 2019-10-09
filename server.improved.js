@@ -29,7 +29,6 @@ const client = new mongodb.MongoClient(uri, {
 let currentUser = "";
 let usersCollection = null;
 
-
 app.use(express.static(path.join(__dirname + "/public")));
 app.use(bodyParser.json());
 app.use(helmet());
@@ -57,7 +56,7 @@ const myLocalStrategy = function(username, password, done) {
     .find({})
     .toArray()
     .then(result => {
-    console.log("TESTING " + result)
+      console.log("TESTING " + result);
       user = result[0];
       console.log("Username: " + result);
 
@@ -81,7 +80,7 @@ passport.deserializeUser((username, done) => {
     .toArray()
     .then(result => {
       user = result[0];
-      console.log("Query result: " + result)
+      console.log("Query result: " + result);
 
       if (user !== undefined) {
         done(null, user);
