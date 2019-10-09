@@ -18,9 +18,9 @@ Our team consists of four members: Manasi Danke,Carla Duarte, Amanda-Ezeobiejesi
 
 ## Final Project Description (with Professor Roberts's feedback):
 
-#### Users:
+#### Users: WPI students and faculty who are in project teams and need a private space to meet with their teams.
 
-#### Stakeholders:
+#### Stakeholders: Admin controlling application, Manasi, Carla, Amanda, Sylvia, WPI faculty, and WPI students. 
 
 ### General Description: 
 
@@ -34,13 +34,17 @@ We plan to create a project management tool that enables WPI students to effecti
 
 As students who have worked on large group projects and IQP teams, we know how difficult and how confusing it can be to use 25live to find empty meeting spaces on campus. Our application addresses this issue and provides a solution that enable teams to find a time and place to interact and accomplish their team goals.
 
-
 ## Technical Requirements Accomplished and More!:
 
-Your project should consist of a complete Web application, exhibiting facets of the three main sections of the course material:
+Our project is a complete web application:
 
-- Static Web page content and design. You should have a project that is accessible, easily navigable, and features significant content.
-- Dynamic behavior implemented with JavaScript.
-- Server-side programming *using Node.js*. Typically this will take the form of some sort of persistent data, authentication, and possibly server-side computation.
+- Our project has static web page content and design. It is accessible, easily navigable, and features significant content.
+- Our project showcases dynamic behavior implemented with JavaScript.
+- Our project uses Node.js, uses persistent data and implements authentication through login and register functionalities.
+- Our project implements middleware and server-side computations.
+- Our project implements a form that lets users add, view and populate data in a table and lod data from other users' account to show which rooms are already booked.
+- Our project lets users delete their bookings from their list of meetings.
 
-Additionally, you should incorporate features that you independently research, design, and implement for your project.
+### Fun Features that we independently researched, designed, and implemented:
+
+- nodemailer: which enabled us to send emails from our specialized team gmail account that notified recipents of the day, start time, end time, and location of their scheduled meeting.
