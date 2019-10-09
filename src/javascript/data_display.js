@@ -179,6 +179,7 @@ const displayBar = function (raw_data) {
 
 const chartHeader = 60;
 const setupMap = function (width, height) {
+	const scaleLength = 400
 	mapHeight = height;
 	projection = d3.geoAlbersUsa()
 		.translate([width / 2, height / 2 + chartHeader])
@@ -191,6 +192,10 @@ const setupMap = function (width, height) {
 		.append("svg")
 		.attr("width", width)
 		.attr("height", height + chartHeader);
+
+	let constGradient = d3.scaleSequential(d3.interpolateOrRd)
+	//.range(["#fff", "#BF303C"])
+		.domain([0, scaleLength]);
 
 	svg.append('text')
 		.attr("class", "chart-header")
@@ -222,6 +227,7 @@ const setupMap = function (width, height) {
 		.text(currentFavicon);
 
 
+
 	d3.json("us-named.topojson").then(us => {
 		const counties = topojson.feature(us, us.objects.counties);
 		svg.selectAll("path")
@@ -243,12 +249,42 @@ const setupMap = function (width, height) {
 
 	});
 
+	let bars = svg.selectAll(".bars")
+		.data(d3.range(0, scaleLength), d => d);
+	bars.exit().remove();
+	bars.enter()
+		.append("rect")
+		.attr("class", "bars")
+		.attr("x", function (d, i) {
+			return i + 40;
+		})
+		.attr("y", mapHeight - 20 + chartHeader)
+		.attr("height", 20)
+		.attr("width", 1)
+		.style("fill", function (d, i) {
+			return constGradient(d);
+		})
+
+	svg.append('text')
+		.attr("id", "maxScaleLabel")
+		.attr("class", "scaleLabel")
+		.attr("y", mapHeight + chartHeader)
+		.attr("x", scaleLength + 50)
+		.text(0 + "ms");
+
+	svg.append('text')
+		.attr("id", "minScaleLabel")
+		.attr("class", "scaleLabel")
+		.attr("y", mapHeight + chartHeader)
+		.attr("x", 0)
+		.text(0 + "ms");
+
+
+
 };
 
 // data = [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}]
 const updateMap = function () {
-	//Length of scale in px
-	const scaleLength = 400
 
 	let div = d3.select("body")
 		.append("div")
@@ -261,9 +297,7 @@ const updateMap = function () {
 	//.range(["#fff", "#BF303C"])
 		.domain([0, maxValue]);
 
-	let constGradient = d3.scaleSequential(d3.interpolateOrRd)
-	//.range(["#fff", "#BF303C"])
-		.domain([0, scaleLength]);
+
 
 
 	const mapPoint = svg.selectAll("circle").data(filtered);
@@ -297,35 +331,7 @@ const updateMap = function () {
 			return scaledGradient(d.avg_rtt)
 		});
 
-	let bars = svg.selectAll(".bars")
-		.data(d3.range(0, scaleLength), d => d);
-	bars.exit().remove();
-	bars.enter()
-		.append("rect")
-		.attr("class", "bars")
-		.attr("x", function (d, i) {
-			return i + 40;
-		})
-		.attr("y", mapHeight - 20 + chartHeader)
-		.attr("height", 20)
-		.attr("width", 1)
-		.style("fill", function (d, i) {
-			return constGradient(d);
-		})
-
-	svg.append('text')
-		.attr("id", "maxScaleLabel")
-		.attr("class", "scaleLabel")
-		.attr("y", mapHeight + chartHeader)
-		.attr("x", scaleLength + 50)
-		.text(maxValue + "ms");
-
-	svg.append('text')
-		.attr("id", "minScaleLabel")
-		.attr("class", "scaleLabel")
-		.attr("y", mapHeight + chartHeader)
-		.attr("x", 0)
-		.text(0 + "ms");
+	document.getElementById("maxScaleLabel").innerText = Math.round(maxValue)+ "ms"
 
 
 };
