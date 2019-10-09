@@ -27,7 +27,8 @@
     "phaser": "^3.19.0",
     "postprocessing": "^6.7.0",
     "serve-favicon": "^2.5.0",
-    "three": "^0.108.0"
+    "three": "^0.108.0",
+    "lowdb": "^1.0.0"
   },
   "nodemonConfig": {
     "exec": "npm run start-dev",

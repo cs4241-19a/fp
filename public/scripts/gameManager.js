@@ -4,6 +4,7 @@ import getRandomInt from "./utility/random";
 class GameManager {
   static _instance = null;
   characterNames = ['blue', 'orange', 'purple', 'red', 'yellow'];
+  actualCharacterNames = ['blu', 'org', 'prp', 'red', 'yel'];
   p1Pieces;
   p2Pieces;
   // buy-state objects
@@ -14,9 +15,11 @@ class GameManager {
   p2Placement;
   // activePiece is the character to put on the field
   activePiece;
-  p1Ready; p2Ready;
+  p1Ready;
+  p2Ready;
   //fight-state objects
-  p1FightPieces; p2FightPieces;
+  p1FightPieces;
+  p2FightPieces;
   // general resources
   state;
   stateTransitionKey;
@@ -76,11 +79,10 @@ class GameManager {
           // remove all listeners attached to this object (so we can reset it later)
           this.setInteractive().removeAllListeners('pointerup');
           pieceList.add(child);
-          if(that.turn === CONSTANTS.TURN.p1){
+          if (that.turn === CONSTANTS.TURN.p1) {
             that.playerOneResources -= child.data.values.price;
             text.setText('Resources: ' + that.playerOneResources);
-          }
-          else{
+          } else {
             that.playerTwoResources -= child.data.values.price;
             text.setText('Resources: ' + that.playerTwoResources);
           }
@@ -127,11 +129,11 @@ class GameManager {
     let x = CONSTANTS.WIDTH / 4;
     let that = this;
     for (let i = 0; i < 3; i++) {
-      //how do we inject the state object into this?
+      let nameIndex = getRandomInt(this.characterNames.length);
       let character = scene.physics.add.sprite(x,
-          CONSTANTS.HEIGHT / 2, this.characterNames[getRandomInt(this.characterNames.length)]);
+          CONSTANTS.HEIGHT / 2, this.characterNames[nameIndex]);
       // set a health and strength for the character. The price is how many resources it costs
-      character.setData({health: 100, strength: 1, speed:50, price: 5});
+      character.setData({name: this.actualCharacterNames[nameIndex], health: 100, strength: 1, speed: 50, price: 5});
       // make the character bounce when it hits something
       character.setBounce(1);
       this.buyList.add(character);
@@ -143,6 +145,27 @@ class GameManager {
     GameManager._instance = new GameManager();
     return GameManager._instance;
   }
+
+  /**
+   * @return {Array}
+   */
+  getP1TeamNames() {
+    let names = [];
+    this.p1Pieces.children.iterate(function (child) {
+      names.push(child.data.values.name);
+    });
+    console.log('names are '+ names);
+    return names;
+  }
+
+  getP2TeamNames() {
+    let names = [];
+    this.p2Pieces.children.iterate(function (child) {
+      names.push(child.data.values.name);
+    });
+    return names;
+  }
+
   /**
    * creates the instance of the GameManager
    */
@@ -160,6 +183,7 @@ class GameManager {
     }
     return GameManager._instance;
   }
+
 }
 
 

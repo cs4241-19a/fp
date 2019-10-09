@@ -2,7 +2,7 @@ const Phaser = require('phaser');
 const Setup = require('./state_helpers/setupHelper');
 const Fight = require('./state_helpers/fightHelper');
 const UIhelper = require('./state_helpers/uiHelper');
-
+import {initResults, postResult} from "./resultsManager";
 import GameManager from "./gameManager";
 import createMap from "./map";
 import CONSTANTS from "./constants";
@@ -51,6 +51,7 @@ function preload() {
  * This happens once everything is read
  */
 function create() {
+  initResults();
   console.log('starting game');
   gameManager = GameManager.resetInstance();
   // leave space for 2, 100px setup areas for either player
@@ -181,11 +182,13 @@ function update() {
       gameManager.turn = CONSTANTS.TURN.p1;
       gameManager.p1Ready = gameManager.p2Ready = false;
       if(gameManager.playerOneResources <= 0) {
+        postResult(1, gameManager.getP1TeamNames(), gameManager.getP2TeamNames());
         gameManager.state = CONSTANTS.STATES.gameOver;
         this.add.text(CONSTANTS.WIDTH/2 - 200, CONSTANTS.HEIGHT/2 - 200,
             `PLAYER 2 WINS\nRESTART WITH SPACE`, {fontSize: '32px', fill: '#000'});
       }
       if (gameManager.playerTwoResources <= 0) {
+        postResult(0, gameManager.getP1TeamNames(), gameManager.getP2TeamNames());
         gameManager.state = CONSTANTS.STATES.gameOver;
         this.add.text(CONSTANTS.WIDTH/2 - 200, CONSTANTS.HEIGHT/2 - 200,
             `PLAYER 1 WINS\nRESTART WITH SPACE`, {fontSize: '32px', fill: '#000'});
