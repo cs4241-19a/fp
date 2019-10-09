@@ -61,7 +61,7 @@ class Field extends Component {
                                 <input 
                                     placeholder="ex. $10,000"
                                     class= { this.state.requested === '' ? 'input' : 'input is-success'}
-                                    type='text' 
+                                    type='number' 
                                     value={this.state.requested}
                                     onChange={e => this.setState({ requested: e.target.value })}/>
                             </div>              
@@ -74,7 +74,7 @@ class Field extends Component {
                                 <input
                                     placeholder="ex. $1,000" 
                                     class= { this.state.approved === '' ? 'input' : 'input is-success'}
-                                    type='text' 
+                                    type='number' 
                                     value={this.state.approved}
                                     onChange={e => this.setState({ approved: e.target.value })}/>
                             </div>              
