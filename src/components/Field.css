@@ -4,16 +4,12 @@
     align-content: center;
     justify-content: center;
     flex-direction: column;
-    margin-left: 10%;
-    margin-right: 10%;
-}
-
-.fieldInput {
-    margin-left: 5%
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
 .submitButton {
-    margin-top: -70px; 
-    margin-left: 15%;
-    margin-right: 15%;
+    margin-top: -30px; 
+    margin-left: 20%;
+    margin-right: 20%;
 }
