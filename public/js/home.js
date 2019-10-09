@@ -102,6 +102,7 @@ const getRecommendations = function () {
                 newRecommendation += `</p>\n` +
                     `      <p class="card-text"><i>` + "\"" + caption + "\"" + `</i></p>\n` +
                     `      <p class="invisible" id="songid${i}">` + songid + `</p>\n` +
+                    `      <a class="btn btn-primary" href="#" onclick="playSomeTrackID('` + songid + `')">Play</a>` +
                     `   </div>\n` +
                     `</div>`
 

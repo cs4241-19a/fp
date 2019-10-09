@@ -46,7 +46,7 @@ function searchSpotify() {
 
     //console.log("do we have the token access here? " + token)
     const BASE_URL = 'https://api.spotify.com/v1/search?'
-    const FETCH_URL = `${BASE_URL}q=${songName}&type=track&market=US&limit=10`
+    const FETCH_URL = `${BASE_URL}q=track:${songName}&type=track&market=US&limit=10`
 
     fetch(FETCH_URL, {
         method: 'GET',
@@ -71,7 +71,7 @@ function search(json) {
         $("tbody").append("<tr>" +
             "                   <td>" + tracks[i].name + "</td>\n" +
             "                   <td>" + tracks[i].artists[0].name + "</td>" +
-            "                   <td class = 'hidden-data d-none'>" + tracks[i].artists[0].id + "</td>" +
+            "                   <td class = 'hidden-data d-none'>" + tracks[i].uri.split('track:')[1] + "</td>" +
             "             </tr>"
         )
     }
