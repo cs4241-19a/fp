@@ -34,14 +34,14 @@
     </nav>
     <h1 class="d-flex justify-content-center">House Jobs This Week</h1>
     <figure id="jobReadout" class="container">
-      <div class="row">
+      <div id="row" class="row">
         <table id="tuesReadout" class="col-sm">
           <tr>
-            <th colspan="2">Tuesday</th>
+            <th id="tuesday" colspan="2">Tuesday</th>
           </tr>
           <tr id="tuesknob">
             <td>Knobs + Rags</td>
-            <td contenteditable=true>keep</td>
+            <td contenteditable="true"></td>
           </tr>
           <tr id="tues3br">
             <td>3rd Floor Bathroom</td>
@@ -90,7 +90,7 @@
         </table>
         <table id="thurReadout" class="col-sm">
           <tr>
-            <th colspan="2">Thursday</th>
+            <th id="thursday" colspan="2">Thursday</th>
           </tr>
           <tr id="thurknob">
             <td>Knobs + Rags</td>
@@ -147,9 +147,9 @@
       <h3>Edit current jobs via below form</h3>
       <form autocomplete="off" id="adminForm" action="/modify" method="POST">
         <div class="autocomplete" style="width:300px;">
-        Name:<input type="text" name="name" id="name" placeholder="Type Name"><br>
+        Name:<input type="text" name="name" id="name" placeholder="Type Name" required>
           </div>
-        Job:<select name="jobCode" id="jobCode">
+        Job:<select name="jobCode" id="jobCode" required>
           <option value="knob">Knobs + Rags</option>
           <option value="3br">3rd Floor Bathroom</option>
           <option value="2brVan">2nd Floor Br, Toilet/Vanity</option>
@@ -163,12 +163,11 @@
           <option value="base">Basement</option>
           <option value="laund">Laundry Room</option>
         </select><br>
-        Date:<input type="date" name="date"><br>
-        Point Value: <input type="number" name="point"><br>
+        Date:<input type="date" name="date" required><br>
+        Point Value: <input type="number" name="point" required><br>
         <input type="submit" value="Submit Mod">
       </form>
-      <button type="button" id="modifyBtn" class="modify">Modify</button>
-      <button type="button" id="submitBtn" class="submit">Submit Mods</button>
+      <button type="button" id="submitBtn" onclick="submitAllMods()">Submit Mods</button>
     </section>
     <section class="container">
       <button type="button" onclick="window.location='/register'">Register New Account</h3>

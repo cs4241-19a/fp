@@ -229,13 +229,24 @@ app.post('/modify', function(req, res){
     
 });
 
+app.post('/modifyAll', function(req, res){
+  //console.log(req.body);
+  let jobs = req.body;
+
+  jobs.forEach(function(job){
+    jobCol.findOne({jobCode: job.jobCode}, function(err, jobFound){
+      jobCol.updateOne({jobCode: job.jobCode},
+        {$set: {name: job.name}})
+    })
+    //console.log(job);
+  })
+})
 
 // Manual override for updating jobs
 app.post('/forceUpdate', function(req, res) {
   update();
   res.sendStatus(200);
 });
-
 
 
 // Automatic scheduled updates
@@ -336,3 +347,4 @@ var markLate = async function(day) {
 const listener = app.listen(process.env.PORT || 3000, function() {
   console.log('App is listening on port ' + listener.address().port);
 });
+
