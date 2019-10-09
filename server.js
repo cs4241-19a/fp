@@ -19,11 +19,47 @@ app.use(helmet());
 
 fs_service.init();
 
-//TODO: Set to main.html for testing purposes, change to login.html for prod 
-//behavior
 app.get('/', function(request, response) {
   response.sendFile(__dirname + '/dist/login.html');
 });
+
+passport.use('local', new LocalStrategy( {
+  usernameField: 'username',
+  passwordField: 'password'
+}, function( username, password, done ) {
+  fs_service.readData(username).then(myData=> {
+      if(myData === undefined || myData === null) {
+        console.log("user not found");
+        return done( null, false, { message:'user not found' })
+      } else {
+        const pass = myData.password;
+        if ( pass !==  null && pass !== undefined) {
+          console.log("successfully authenticated");
+          return done(null, {username, password})
+        } else {
+          console.log("incorrect password");
+          return done( null, false, { message: 'incorrect password' })
+        }
+      }
+    })
+}));
+
+app.use(passport.initialize());
+//app.use(passport.session());
+
+passport.serializeUser(function(username, done) {
+  done(null, username);
+});
+
+passport.deserializeUser(function(username, done) {
+  done(null, username);
+});
+
+app.post( '/login', passport.authenticate( 'local' ), function( req, res ) {
+  console.log( 'username:', req.body.username );
+  res.json({'status': true});
+});
+
 
 
 app.post( '/signup', function( request, response ) {

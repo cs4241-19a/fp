@@ -18,7 +18,6 @@ export default function LoginApp(props) {
 
 		window.localStorage;
 		localStorage.setItem('currUser', inputUsername.value)
-
 		body = JSON.stringify( json );
 
 		fetch('/signup', {
@@ -37,34 +36,48 @@ export default function LoginApp(props) {
 			})
 	}
 
-	function login() {
+	function login(e) {
+		e.preventDefault();
 
-		//TODO: All the fetch calls and communications with the server
-		//should be done in the store and change state only
-		const json = {
-			username: name,
-			password: pwd
-		}
-		const body = JSON.stringify(json);
+		let body;
 
-		fetch('/login', {
-			method: 'POST',
+		const inputUsername = document.querySelector( '#username'),
+			inputPassword = document.querySelector('#password'),
+			json = { username: inputUsername.value, password: inputPassword.value }
+
+		window.localStorage;
+		localStorage.setItem('currUser', inputUsername.value)
+		body = JSON.stringify( json );
+
+		fetch( '/login', {
+			method:  'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body
 		})
-		.then(function(res) {
-			if (res.status === 200) {
-				fetch('/main', {
-					method: 'GET',
-					credentials: 'include'
-				})
-				.then(function(resp) {
-					window.location.href = resp.url;
-				})
-			} else {
-				let pwd = document.querySelector('#password')
-				pwd.classList.add("border-red-500");
-				document.querySelector('#bad-pwd').hidden = false;
+		.then( function( response ) {
+			console.log(response.status);
+			if(response.status === 200) {
+				// showToast({
+				// 	str: "Successfully Authenticated",
+				// 	time: 2000,
+				// 	position: 'bottom'
+				// });
+				console.log("post response: ", response)
+				window.location = "/main.html"
+			} else if(response.status === 401) {
+				// showToast({
+				// 	str: "Authentication Failed",
+				// 	time: 2000,
+				// 	position: 'bottom'
+				// });
+				console.log("post response: ", response)
+			}  else {
+				// showToast({
+				// 	str: "Unknown Error",
+				// 	time: 2000,
+				// 	position: 'bottom'
+				// });
+				console.log("post response: ", response)
 			}
 		})
 	}

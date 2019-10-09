@@ -14,6 +14,28 @@ exports.addNewUserProfile = function (username, new_profile){
     profiles_coll.doc(username).set(new_profile).then(r => console.log(r))
 }
 
+exports.readData = function(username) {
+    let user_ref = this.firestore.collection("user_profiles").doc(username);
+    return new Promise((resolve, reject) => {
+        let myData = {};
+        user_ref.get()
+            .then(doc => {
+                if (!doc.exists) {
+                    console.log('No such document!');
+                    resolve(myData)
+                } else {
+                    console.log('Document data:', doc.data());
+                    myData = doc.data();
+                    resolve(myData)
+                }
+            })
+            .catch(err => {
+                console.log('Error getting document', err);
+                reject('Error getting document')
+            })
+    })
+}
+
 exports.addMusicToProfile = function (username, song){
     let profiles = this.firestore.collection("music_profiles")
     profiles.doc(username).get().then(function(obj){
