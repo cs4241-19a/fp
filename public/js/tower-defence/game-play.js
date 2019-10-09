@@ -12,13 +12,10 @@ const gamePlayState = new Phaser.Class({
 
     create: function() {
         const scene = this;
-        scene.i = 0;
-        scene.timer1Stopped = true;
-        scene.timer1 = null;
 
         // Create objects
         console.log("GamePlay");
-        const pistol = scene.add.image(250, 300, "pistol");
+        // const pistol = scene.add.image(250, 300, "pistol");
         const station = scene.add.image((btmLeft.x + 1) * cellSize.width, (btmLeft.y) * cellSize.height, "station");
         initFromGrid(scene);  // add bricks
 
