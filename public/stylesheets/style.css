@@ -212,5 +212,13 @@ img {
     border-color: #FE3B53 !important;
 }
 
+#loginBtn {
+    background-color: #7E3BFD;
+    border-color: #7E3BFD;
+}
 
+#signUpBtn {
+    background-color: #2D9FFE;
+    border-color: #2D9FFE;
+}
 
