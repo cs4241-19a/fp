@@ -18,3 +18,11 @@ const submitForm = async function( e ){
     console.log(data);
 
 }
+
+function forceUpdate() {
+    fetch('/forceUpdate', {
+        method: 'POST',
+        credentials: 'include'
+    })
+    .then(res => console.log(res));
+}

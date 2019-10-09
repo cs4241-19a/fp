@@ -114,7 +114,7 @@ app.get('/admin', async function(req, res) {
   }else{
     console.log("NotAuthed");
   res.redirect('/');
-  }
+  };
 });
 
 app.get('/users', async function(req,res){
@@ -124,12 +124,13 @@ app.get('/users', async function(req,res){
     await userCol.find({ }).toArray().then(result =>
       res.json(result)
       );
-  }
-})
+  };
+});
 
 app.get('/register', function(req, res){
   res.sendFile(__dirname + '/public/views/register.html');
-} )
+});
+
 // Returning statistics of the user for user view page
 // TODO handle users who aren't logged in
 app.get('/userData', function(req, res) {
@@ -164,14 +165,14 @@ app.post('/login',
   });
 
 app.post('/signoff', function(req, res) {
-  // TODO Signoff jobs here
+  // TODO signoff jobs here
 });
 
 app.post('/register', function(req, res){
   const per = req.body;
   per.level = "standard";
   per.point = 0;
-  per.jobs = {};
+  per.jobs = [];
   per.active = "active";
   per.preferred = [];
 
@@ -180,7 +181,8 @@ app.post('/register', function(req, res){
     if(!perFound){userCol.insertOne(per)}
     res.sendFile(__dirname + '/public/views/register.html');
   });
-})
+});
+
 // Toggles automatic updates
 app.post('/toggle', function(req, res) {
   active = !active;
@@ -228,12 +230,21 @@ app.post('/modify', function(req, res){
 });
 
 
+// Manual override for updating jobs
+app.post('/forceUpdate', function(req, res) {
+  update();
+  res.sendStatus(200);
+});
+
+
 
 // Automatic scheduled updates
 // Updates job list every Sunday at 5:00 PM
 var schedUpdate = schedule.scheduleJob({hour: 17, minute: 0, dayOfWeek: 0}, function() {update();});
 
 // Function to update listing of house jobs 
+// TODO reset job point values for next week
+// TODO change job date values for next week
 var update = async function() {
   // Read through current list of jobs
   await jobCol.find({}).toArray().then(jobs => {
@@ -257,7 +268,20 @@ var update = async function() {
   let day = 1000 * 60 * 60 * 24
 
   // Discard old jobs (more than 8 weeks ago)
-  await userCol.update({}, {$pull: {jobs: {date: {$lt: today - (day * 42)}}}}, {multi: true});
+  userCol.updateMany({}, {$pull: {jobs: {date: {$lt: today - (day * 42)}}}});
+
+  // Reset job values (date changed seperately)
+  jobCol.updateMany({}, 
+    {$set: 
+      {name: '',
+      point: 1,
+      status: 
+        {complete: false,
+        late: false,
+        signoff: ''}}});
+
+  // Change job dates
+  //TODO
   
   // Calculate points
   await userCol.find({}).toArray().then(users => {
@@ -270,37 +294,44 @@ var update = async function() {
         {$set: {point: points}});
     });
     // Sort users by point value (default to uuid if points are identical)
-    users.sort((a, b) => (a.point > b.point) ? 1 : (a.point === b.point) ? ((a.uuid > b.uuid) ? 1 : -1) : -1)
-    .then(sortedList => {
-      // Assign each user a house job randomly
-      //    Edit name of job to user's name, and reset status
-      sortedList.forEach(user => {
-        // TODO assign random job here
+    // Currently sorts with lowest points being first
+    // Lower UUID will be put to the front
+    // Swap the comparisons to reverse (later implementation of a new system)
+    // TODO remove people from the lsit who are N/A
+    return users.sort((a, b) => (a.point < b.point) ? 1 : (a.point === b.point) ? ((a.uuid > b.uuid) ? 1 : -1) : -1)})
+  .then(sortedList => async function(){
+    // Assign each user a house job randomly
+    //    Edit name of job to user's name, and reset status
+    let assigned = [];
+    await jobCol.find({}).toArray().then(jobs => async function() {
+      jobs.forEach(job => {
+        // Picks a random user and checks if they have a job yet
+        let rand = Math.round(Math.random() * 24);
+        while(assigned.includes(rand)) {
+          rand = Math.round(Math.random() * 24);
+        };
+        // Assigns job to random user
+        jobCol.updateOne({jobCode: job.jobCode},
+          {$set: {name: sortedList[rand].name}});
       });
     });
   });
 };
 
-// Marks jobs late for Tuesday
-var markLateTues = schedule.scheduleJob({hour: 9, minute: 0, dayOfWeek: 3}, async function() {
-  await jobCol.find({day: 'tues'}).then(jobs => {
+// Scheduled functions to mark jobs late
+var markLateTues = schedule.scheduleJob({hour: 9, minute: 0, dayOfWeek: 3}, async function() {markLate('tues')});
+var markLateThur = schedule.scheduleJob({hour: 9, minute: 0, dayOfWeek: 5}, async function() {markLate('thur')});
+
+// Marks all incomplete jobs as late for given day
+var markLate = async function(day) {
+  await jobCol.find({day: day}).then(jobs => {
     jobs.forEach(job => {
       if(!job.status.complete) {
         jobCol.updateOne({jobCode: job.jobCode},
           {$set: {status: {late: true}}})}
     });
   });
-});
-// Marks jobs late for Thursday
-var markLateThur = schedule.scheduleJob({hour: 9, minute: 0, dayOfWeek: 5}, async function() {
-  await jobCol.find({day: 'thur'}).then(jobs => {
-    jobs.forEach(job => {
-      if(!job.status.complete) {
-        jobCol.updateOne({jobCode: job.jobCode},
-          {$set: {status: {late: true}}})}
-    });
-  });
-});
+};
 
 const listener = app.listen(process.env.PORT || 3000, function() {
   console.log('App is listening on port ' + listener.address().port);
