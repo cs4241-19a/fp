@@ -4,6 +4,7 @@ h1,h3{
 
 #wins{
     float: right;
+    margin-top: 5px;
 }
 
 #game-area{
@@ -68,6 +69,7 @@ h1,h3{
 #rounds{
     float:right;
     margin-right: 30px;
+    margin-top: 5px;
 }
 
 #playAgain{

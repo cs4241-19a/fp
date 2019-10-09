@@ -36,6 +36,7 @@ h4{
 
 #timer{
     float: right;
+    margin-top: 10px;
 }
 
 #playAgain{
