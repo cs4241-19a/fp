@@ -29,7 +29,7 @@ class Header extends Component {
                                     <div className="navbar-item">
                                         <FontAwesomeIcon icon="database"
                                             size="3x"
-                                            color="white"
+                                            color= '#E62020'
                                         ></FontAwesomeIcon>
                                     </div>
                                     <span className="navbar-burger burger" data-target="navbarMenuHeroC">
