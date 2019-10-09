@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<svg width="40.00000000000001" height="40.00000000000001" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
+ <defs>
+  <radialGradient cx="0.5" cy="0.5" id="svg_10" r="0.5" spreadMethod="pad">
+   <stop offset="0" stop-color="#404040"/>
+   <stop offset="1" stop-color="#bfbfbf"/>
+  </radialGradient>
+  <radialGradient id="svg_12" spreadMethod="pad">
+   <stop offset="0" stop-color="#000000"/>
+   <stop offset="1" stop-color="#3d3d3d" stop-opacity="0.996094"/>
+  </radialGradient>
+ </defs>
+ <g class="layer">
+  <title>Layer 1</title>
+  <circle cx="20" cy="20" fill="url(#svg_10)" id="svg_3" r="14" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null"/>
+  <circle cx="20" cy="20" fill="url(#svg_12)" id="svg_5" r="2" stroke="#000000" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="0"/>
+  <rect fill="#ff0000" height="19.25" id="svg_7" stroke="#000000" stroke-linejoin="bevel" stroke-width="0.25" width="0.75" x="19.625" y="0.5"/>
+ </g>
+</svg>
