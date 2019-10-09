@@ -23,13 +23,19 @@ window.onload = function () {
                 }
             }
         })
-    document.getElementById("homeDiv").onclick = home
+    document.getElementById("homeGo").onclick = home
     document.getElementById("logoutBtn").onclick = logout
+    document.getElementById("profileGo").onclick = myProfile
 }
 
 function home(e) {
     e.preventDefault();
     window.location = "/main.html"
+}
+
+function myProfile(e) {
+    e.preventDefault();
+    window.location = "/profile.html"
 }
 
 function logout(e) {

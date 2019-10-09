@@ -13,27 +13,12 @@ export default function App(props) {
           options  = {height: 0, length: 0};
 
     window.localStorage;
-
-
     window.onload = function () {
-
-
     }
 
     return (
         <StoreProvider store={store}>
             <FeedContainer />
-
-
-
-
-
-
-
-
-
-
-
             <div className="w-full padder">
                 <div className="w-full glower">
                     <div className="w-full bg-white rounded overflow-hidden shadow-lg">
@@ -204,29 +189,6 @@ export default function App(props) {
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </StoreProvider>
     )
 
