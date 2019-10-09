@@ -15,9 +15,7 @@ export default {
             state.song = payload;
         }),
         setSongFile: thunk(async (state, payload) => {
-            const data = await fetch('/song_data', {
-                song_id: payload
-            })
+            const data = await fetch('/song_data?id=' + payload)
             .then(response => {
                 console.log(response)
                 return response
