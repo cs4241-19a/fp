@@ -91,6 +91,7 @@ app.post('/newLeaderboardTime', function (request, response) {
             leaderboardData = [];
         } else {
             console.log(leaderboardData);
+            leaderboardData = leaderboardData.leaderboardData;
             leaderboardData.forEach(entry => {
                 if (entry.user === request.session.passport.user) {
                     entry.attempts++;
