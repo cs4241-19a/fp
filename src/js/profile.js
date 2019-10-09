@@ -2,9 +2,9 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import profileApp from "./profileApp";
+import ProfileApp from "./profileApp";
 
-ReactDOM.render(<profileApp />, document.getElementById("root"));
+ReactDOM.render(<ProfileApp />, document.getElementById("root"));
 
 window.onload = function () {
     fetch( '/receive')

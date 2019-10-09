@@ -4,21 +4,11 @@ import model from './store';
 import FeedContainer from './FeedContainer'
 import FeedItem from './FeedItem';
 
-export default function profileApp(props) {
-
-    const store = createStore(model);
-
-    const song = {title: "asdf", artist: "asdf", file: 0},
-          user = {username: "XxX_420_newbRekr_69_XxX", name: "Bob"},
-          options  = {height: 0, length: 0};
-
-    window.localStorage;
-    window.onload = function () {
-    }
+export default function ProfileApp(props) {
 
     return (
-        <StoreProvider store={store}>
-            <FeedContainer />
+        <div className="w-full">
+            <FeedContainer/>
             <div className="w-full">
                 <div className="w-full">
                     <div className="w-full bg-white rounded overflow-hidden shadow-lg">
@@ -189,9 +179,8 @@ export default function profileApp(props) {
                     </div>
                 </div>
             </div>
-
             <div className="lg:text-center bottomBanner"> Designed and developed in Worcester, Massachusetts </div>
-        </StoreProvider>
+        </div>
     )
 
 }
