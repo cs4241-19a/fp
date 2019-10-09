@@ -1,12 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Phaser tutorial</title>
-  <link href="css/style.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <title>Phaser tutorial</title>
+    <link href="css/style.css" rel="stylesheet"/>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
 <body>
-<div id="game-container"></div>
+<div class="container row" id="player-start">
+    <div class="" id="player-input">
+        <div class="col s6">
+            <label>Player 1</label>
+            <input>
+        </div>
+        <div class="col s6">
+            <label>Player 2</label>
+            <input>
+        </div>
+    </div>
+</div>
+<div class="container" id="game-container"></div>
+<div class="container" id="">
+    <label>Recent Games</label>
+    <div class="row" id="game-results"></div>
+
+</div>
+
+
 </body>
-<script src='./bundle/bundle.js' type='module'></script>
+<script src="./bundle/bundle.js" type='module'></script>
+
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
 </html>

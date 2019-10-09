@@ -1,6 +1,7 @@
 const Phaser = require('phaser');
 import createMap from "./map";
 import CONSTANTS from "./constants";
+import * from "./resultsManager";
 
 let config = {
   type: Phaser.AUTO,
@@ -46,6 +47,9 @@ function create() {
 
   // leave space for the setup area height
   const layer = map.createStaticLayer(0, tiles, 0, CONSTANTS.SETUP_AREA_HEIGHT);
+
+  // sets up the game results
+  initResults();
 }
 
 /**

@@ -1,0 +1,17 @@
+{
+  "games": [
+    {
+      "recency": "0",
+      "player1": {"name": "Kent", "pieces": ["a", "b", "c"]},
+      "player2": {"name": "JC", "pieces": ["w","x","y","z"]},
+      "result": 0
+    },
+    {
+      "recency": "1",
+      "player1": {"name": "Kent", "pieces": ["a", "b", "c"]},
+      "player2": {"name": "JC", "pieces": ["w","x","y","z"]},
+      "result": 1
+    }
+  ],
+  "": []
+}

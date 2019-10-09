@@ -5,7 +5,7 @@
   "author": "Kent Libby (klibby@wpi.edu)",
   "scripts": {
     "start-dev": "npm-run-all --parallel start",
-    "test": "node -r esm ../a4-creativecoding/jasmineTestRunner.js",
+    "test": "node -r esm ./jasmineTestRunner.js",
     "start": "npm-run-all browser-babel-ify run-server",
     "browser-babel-ify": "browserify public/scripts/main.js -o public/bundle/bundle.js -t [ babelify --presets [@babel/preset-env] ]",
     "run-server": "node ../fp/server.js"
@@ -27,7 +27,8 @@
     "phaser": "^3.19.0",
     "postprocessing": "^6.7.0",
     "serve-favicon": "^2.5.0",
-    "three": "^0.108.0"
+    "three": "^0.108.0",
+    "lowdb": "^1.0.0"
   },
   "nodemonConfig": {
     "exec": "npm run start-dev",

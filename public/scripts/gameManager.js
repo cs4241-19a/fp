@@ -13,6 +13,13 @@ class GameManager {
   }
 
   /**
+   * @return {Array}
+   */
+  getPlayerOneTeam(){
+    //return player one's team currently
+    return []
+  }
+  /**
    * creates the instance of the GameManager
    */
   static _createInstance() {
@@ -29,6 +36,7 @@ class GameManager {
     }
     return GameManager._instance;
   }
+
 }
 
 

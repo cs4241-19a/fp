@@ -14,3 +14,33 @@
 #game-container>canvas {
     border-radius: 5px;
 }
+
+
+/*
+    This is for this. Recent matches results
+ */
+
+.recent-game-icons {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.recent-game-icons li {
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+
+/*
+    player input
+ */
+
+#player-input {
+
+}
