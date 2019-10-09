@@ -36,6 +36,7 @@ const viewLeaderboard = function() {
     document.getElementById('back-button').style.display = "flex";
     document.getElementById('main-container').style.display = "none";
     document.getElementById('leaderboard-button').style.display = "none";
+    document.getElementById('game-canvas').style.display = "none";
 
     fetchLeaderboard();
     return false;
@@ -44,11 +45,9 @@ const viewLeaderboard = function() {
 const viewGame = function() {
     document.getElementById('table').style.display = "none";
     document.getElementById('back-button').style.display = "none";
+    document.getElementById('game-canvas').style.display = "flex";
     document.getElementById('main-container').style.display = "flex";
     document.getElementById('leaderboard-button').style.display = "flex";
-
-    console.log("is this running?");
-    pixiInit();
 };
 
 const fetchLeaderboard = async function() {
@@ -93,6 +92,7 @@ const login = function (e) {
         document.getElementById('leaderboard-button').style.display = "flex";
         document.getElementById('login').style.display = "none";
         document.getElementById('current-username').value = loginInfo.username;
+        pixiInit();
     });
 };
 
