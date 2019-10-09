@@ -9,10 +9,14 @@ const scopes = [
 let _token
 let player
 let playerData
+let currentTrackID = "3n3Ppam7vgaVa1iaRUc9Lp"
+let currentlyPlaying = true
+let interval
+
 
 window.onSpotifyPlayerAPIReady = () => {
     console.log("player API is ready")
-    createPlayerForSong("3n3Ppam7vgaVa1iaRUc9Lp")
+    createPlayerForSong(currentTrackID)
 }
 
 function createPlayerForSong(track) {
@@ -77,8 +81,6 @@ function createPlayerForSong(track) {
     )
 }
 
-let interval
-
 function turningRecord(turn) {
     let counter = 0
     if (turn) {
@@ -98,7 +100,6 @@ function turningRecord(turn) {
     }
 }
 
-let currentlyPlaying = true
 turningRecord(currentlyPlaying)
 
 function togglePlayPause() {
@@ -108,19 +109,27 @@ function togglePlayPause() {
     player.togglePlay()
 }
 
-let currentTrackID
 function playSomeTrackID(track) {
-    currentTrackID = track
+    updateCurrentTrack(track)
     player.disconnect()
     console.log("player disconnected")
-    console.log("trying to play " + track)
-    createPlayerForSong(track)
+    console.log("trying to play " + currentTrackID)
+    createPlayerForSong(currentTrackID)
     if (!currentlyPlaying) {
         currentlyPlaying = true
         turningRecord(currentlyPlaying)
     }
 }
 
-function getCurrentTrack(){
-    return currentTrackID
+function updateCurrentTrack(track) {
+    currentTrackID = track
+    const json = {track: currentTrackID}
+    fetch('/currentTrack', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(json)
+    })
 }

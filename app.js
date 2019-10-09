@@ -184,7 +184,10 @@ app.get('/callback', function (req, res) {
         });
     }
 });
-
+app.post('/currentTrack', function (req, res) {
+    let parsedData = req.body
+    track_id = parsedData.track
+})
 
 app.get('/trackAnalysis', function (req,res) {
     const options = {
