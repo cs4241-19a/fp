@@ -109,7 +109,7 @@ export default function FeedItem(props) {
 
     return (
         <div className={classes.container}>
-            <Paper className={classes.paper} onClick={handleClick}>
+            <Paper className={classes.paper} >
                 {/* <Button
                     variant="contained"
                     className={classes.button}

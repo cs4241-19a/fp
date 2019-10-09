@@ -51,22 +51,6 @@ export default function FeedContainer(props) {
             response.forEach(feed_item => {
                 items.push(feed_item)
             });
-            return (
-                <Grid container direction='column' justify='center' alignItems='center'>
-                    {items.map(item => {
-        
-                        //TODO: Feed items not working, idk but div works
-        
-                        // <FeedItem
-                        //     key={item.song.title} 
-                        //     song={item.song}
-                        //     user={item.user}
-                        //     options={item.options}
-                        // />
-                        return <div key={item.song.title}>{item.user.username}</div>
-                    })}
-                </Grid>
-            )
         });
 
         console.log(items)
@@ -87,15 +71,6 @@ export default function FeedContainer(props) {
     return (
         <Grid container direction='column' justify='center' alignItems='center'>
             {items.map(item => {
-
-                //TODO: Feed items not working, idk but div works
-
-                // <FeedItem
-                //     key={item.song.title} 
-                //     song={item.song}
-                //     user={item.user}
-                //     options={item.options}
-                // />
                 return (
                 <div key={item.song.title + item.user.username}>
                     <FeedItem
