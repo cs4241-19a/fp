@@ -102,3 +102,10 @@ text.category{
 	font-size: 20px;
 	font-weight: bold;
 }
+
+#deleteButton {
+	height: 100px;
+	font-size: 50px;
+	font-weight: bold;
+	color: #eaeaea;
+}

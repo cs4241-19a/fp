@@ -2,10 +2,13 @@ const webpack = require('webpack');
 const path = require('path');
 
 const config = {
-  entry: ['@babel/polyfill', './src/javascript/index.js'],
+  entry: {
+    main: ['@babel/polyfill', './src/javascript/index.js'],
+    deletion: ['@babel/polyfill', './src/javascript/deletion.js']
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: '[name]-bundle.js'
   },
   module: {
     rules: [

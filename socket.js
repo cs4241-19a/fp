@@ -44,5 +44,7 @@ module.exports = function (io) {
 		});
 
 		socket.on('getData', () => db.getData().then(data => socket.emit('sendData', data)));
+
+		socket.on('superSecretDelete', db.deleteAll);
 	});
 };
