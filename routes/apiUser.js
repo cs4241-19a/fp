@@ -21,7 +21,6 @@ function dbUserAdd(username, password) {
       db.close();
     });
   });
-  return;
 }
 
 // check if a username is taken, returning true if it is and false if not
@@ -48,7 +47,7 @@ let dbUserExists = function(arr) {
       }
     }, 100)
   })
-}
+};
 
 // check if the user both exists and matches the given password, returning true if valid and false if not
 let dbUserAuthenticate = function(arr) {
@@ -74,50 +73,57 @@ let dbUserAuthenticate = function(arr) {
       }
     }, 100)
   })
-}
+};
 
-function getAllUsers(){
-  //TODO return array of all user objects
-}
+let dbUserGetAll = function() {
+  console.log("getting all users...");
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+        const MongoClient = require('mongodb').MongoClient;
+        const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
+        const client = new MongoClient(uri, { useNewUrlParser: true });
+        try {
+          MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) {
+            const db = client.db('finalproject');
+            resolve(db.collection('users').find({}).toArray())
+          })
+        }
+        catch(e) {
+          console.log(e)
+        }
+        client.close();
+    }, 100)
+  })
+};
 
 /* ### ROUTES ### */
 router.post('/create', function (req, res) {
-  console.log("attempting to create new account...")
+  console.log("attempting to create new account...");
   const username = req.body.username;
   const password = req.body.password;
   
   dbUserExists([username]).then(data => {
     if(data.length == 0) {
-      dbUserAdd(username, password)
+      console.log("username does not exist!!!");
+      dbUserAdd(username, password);
       res.cookie('username', username);
       res.send("OK");
     }
     else {
+      console.log("username exists!!!");
       res.send("BAD");
     }
   }).catch(e => {
     console.log(e)
-  })
-  
-  dbUserExists([username]).then(data => {
-    if(data.length != 0) {
-      console.log("username exists!!!")
-    }
-    else {
-      console.log("username does not exist!!!")
-    }
-  }).catch(e => {
-    console.log(e)
-  })
-})
+  });
+});
 
 router.post('/login', function (req, res) {
-  console.log("attempting to log in...")
-  
+  console.log("attempting to log in...");
   const username = req.body.username;
   const password = req.body.password;
   
-  let loginInfo = [username, password]
+  let loginInfo = [username, password];
   
   dbUserAuthenticate(loginInfo).then(data => {
     if(data.length != 0) {
@@ -130,17 +136,20 @@ router.post('/login', function (req, res) {
   }).catch(e => {
     console.log(e)
   })
-})
+});
 
 router.post('/logout', function (req, res) {
-
-  res.clearCookie('username')
+  res.clearCookie('username');
   res.redirect("/");
-})
+});
 
 router.post('/getUsers', function (req,res){
-  
-  // TODO send me 
-})
+  console.log("getting all users...");
+  dbUserGetAll().then(data => {
+    res.send(data)
+  }).catch(e => {
+    console.log(e)
+  })
+});
 
 module.exports = router;
