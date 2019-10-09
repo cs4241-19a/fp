@@ -1,4 +1,7 @@
-let activeCountries = [];
+let activeCountries = [
+  ['Country', 'Popularity'],
+  ['', '']
+];
 
 function init() {
   $.get('/getMapsAPI', function(data) {
@@ -11,8 +14,16 @@ function init() {
   });
 }
 
-function mapSong(songData) {
-  activeCountries = []; // TODO - accessed via queue.q
+function update(songData) {
+  activeCountries = [
+    ['Country', 'Popularity'],
+  ];
+
+  for (let i = 0; i < songData.length; i++) {
+    activeCountries[activeCountries.length] =
+      [songData[i].country, songData[i].pop];
+  }
+  drawRegionsMap();
 }
 
 function drawRegionsMap() {
@@ -26,4 +37,4 @@ function drawRegionsMap() {
   chart.draw(data, options);
 }
 
-module.exports = {init, mapSong};
+module.exports = {init, update};

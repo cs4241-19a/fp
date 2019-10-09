@@ -9,6 +9,7 @@ const request = require('request');
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const db = low(new FileSync('db.json'));
+const countries = low(new FileSync('countries.json'));
 const app = express();
 const port = 3000;
 const SpotifyStrategy = require('passport-spotify').Strategy;
@@ -17,8 +18,7 @@ const client_secret = 'c11bdf5f5886434aac3b5dbe1f02984b';
 const redirect_uri = 'http://localhost:3000/callback';
 const maps_api = 'AIzaSyDK0xxnlwqYth2rGPCPZ5Erl3qAkzk23qc';
 
-let client_token = '',
-    loggedIn = '';
+let loggedIn = '';
 
 passport.use(
     new SpotifyStrategy({
@@ -52,7 +52,7 @@ app.use(session({secret: 'spotify-secret', resave: true, saveUninitialized: true
 app.use(passport.initialize());
 app.use(passport.session());
 
-db.defaults({queue: [], users: [], count: 0}).write();
+db.defaults({queue: [], users: [], count: 1}).write();
 
 const sendFile = function( response, filename ) {
   const type = mime.getType( filename );
@@ -79,8 +79,8 @@ app.get('/bundle.js', function(request, response) {
   sendFile( response, './js/bundle.js' );
 });
 
-app.get('/token', function(req, res) {
-  res.end(client_token);
+app.get('/countries', function(req, res) {
+  res.end(JSON.stringify(countries.get('data').value()));
 });
 
 passport.serializeUser(function(user, done) {
@@ -115,7 +115,7 @@ app.get('/logout', function(req, res) {
 app.get('/search', (req, res) => {
   if (!req.user) {
     req.user = {
-      token: 'invalid',
+      token: 'invalid'
     };
   }
   const results = {
@@ -133,17 +133,44 @@ app.get('/search', (req, res) => {
   });
 });
 
+app.get('/searchCountries', (req, res) => {
+  if (!req.user){
+    req.user = {
+      token: 'invalid'
+    };
+  }
+  const results = {
+    url: `https://api.spotify.com/v1/artists/${req.query.artist_id}/top-tracks?country=${req.query.country}`,
+    headers: {
+      Authorization: `Bearer ${req.user.token}`,
+    },
+    json: true,
+  };
+  request.get(results, (err, response, body) => {
+    if (err) {
+      console.log(err);
+    }
+    res.json(body);
+  });
+})
+
 app.post('/queue', function(req, res) {
   db.get('queue').push({
     id: req.body.id,
-    spotify_uri: req.body.spotify_uri,
+    spotify_id: req.body.spotify_id,
     song_name: req.body.song_name,
     artist_name: req.body.artist_name,
+    artist_id: req.body.artist_id,
     length: req.body.length,
     added_by: req.body.user,
+    country_list: req.body.country_list
   }).write();
   db.update('count', (n) => n + 1).write();
-  res.end(JSON.stringify(db.get('queue').find({spotify_uri: req.body.spotify_uri}).value()));
+  res.end(JSON.stringify(db.get('queue').find({spotify_id: req.body.spotify_id}).value()));
+});
+
+app.get('/getSong', function(req, res) {
+  res.end(db.get('queue[0]'));
 });
 
 app.get('/getQueue', function(req, res) {

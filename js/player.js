@@ -1,3 +1,27 @@
+// Asking server for '/getSong' - return a song object
+// Tell server to '/delete' using the song.id in the song object
+// Telling map to .update() using song.countries
+// Play song until done
+
+function init() {
+  player = new Spotify.Player({
+    name: 'The Q',
+    getOAuthToken: (callback) => {
+      callback(token);
+    },
+    volume: 0.5,
+  });
+  player.connect().then((success) => {
+    if (success) {
+      console.log('The Web Playback SDK successfully connected to Spotify!');
+    }
+  });
+  player.addListener('ready', ({device_id}) => {
+    console.log('The Web Playback SDK is ready to play music!');
+    console.log('Device ID', device_id);
+  });
+}
+
 // const play = ({
 //   spotify_uri,
 //   playerInstance: {
@@ -44,6 +68,8 @@
 //   });
 // }
 
+
+// INIT method - create player and connects to spotify..does other stuff maybe
 // window.onSpotifyWebPlaybackSDKReady = () => {
 //   player = new Spotify.Player({
 //     name: 'The Q',

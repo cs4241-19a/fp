@@ -17,6 +17,8 @@
     "rules": {
         "no-unused-vars": "off",
         "require-jsdoc": "off",
-        "new-cap": "off"
+        "new-cap": "off",
+        "camelcase": "off",
+        "guard-for-in": "off"
     }
 }

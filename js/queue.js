@@ -1,7 +1,10 @@
 let cooldown = 0;
 let user = null;
-let count = 0;
-const q = [];
+let count = '0';
+let countries = [];
+let currentCountries = [];
+let song;
+const map = require('map');
 
 function search(e) {
   e.preventDefault();
@@ -23,41 +26,71 @@ function search(e) {
   return false;
 }
 
-function queue() {
+function postToQueue() {
   if (!cooldown) {
     cooldown = 1;
     setTimeout(function() {
       cooldown = 0;
     }, 500);
-    $.get('/queueLen', function(data) {
-      count=data;
-    });
-    $.post('/queue',
-        {
-          id: count,
-          spotify_uri: event.currentTarget.id,
-          song_name: event.currentTarget.childNodes[0].innerHTML,
-          artist_name: event.currentTarget.childNodes[1].innerHTML,
-          length: event.currentTarget.childNodes[3].innerHTML,
-          added_by: user,
-        },
-        function(data, status) {
-          if (status === 'success') {
-            renderItem('queueTable', JSON.parse(data), user);
-            addToQ(JSON.parse(data));
-          }
-        }
-    );
+    const xmlRequest = new XMLHttpRequest();
+    xmlRequest.open('post', '/queue');
+    xmlRequest.setRequestHeader(
+        'Content-Type', 'application/json;charset=UTF-8');
+    xmlRequest.send(JSON.stringify(song));
+    xmlRequest.onload = function() {
+      renderItem('queueTable', JSON.parse(xmlRequest.response), user);
+    };
+    map.update(currentCountries);
   }
 }
 
-function addToQ(song) {
-  q[q.length] = {
-    name: song.name,
-    uri: song.uri,
-    countries: [], // TODO - get country stats from request
+async function makeSongObject(obj) {
+  song = {
+    id: count,
+    spotify_id: obj.id,
+    song_name: obj.childNodes[0].innerHTML,
+    artist_name: obj.childNodes[1].innerHTML,
+    artist_id: obj.childNodes[1].id,
+    length: obj.childNodes[3].innerHTML,
+    added_by: user,
+    country_list: currentCountries,
   };
+  postToQueue();
 }
+
+function queue() {
+  $.get('/queueLen', function(data) {
+    count=data;
+  });
+  getCountryData(event.currentTarget.childNodes[1].id, 
+    event.currentTarget.id);
+  setTimeout(makeSongObject, 2000, event.currentTarget);
+}
+
+async function getCountryData(artist_id, spotify_id) {
+  const countryData = [];
+  for (let country = 0; country < countries.length; country++) {
+    fetch(`/searchCountries?${$.param({artist_id: artist_id,
+      country: countries[country].code})}`, {
+      credentials: 'include',
+    }).then((res) => res.json())
+        .then((data) => {
+          if ('error' in data) {
+            alert(data.error.message);
+            return;
+          }
+          for (let i = 0; i < data.tracks.length; i++) {
+            if (data.tracks[i].id == spotify_id) {
+              countryData[countryData.length] = {
+                country: countries[country].name,
+                pop: data.tracks[i].popularity,
+              };
+            }
+          }
+        }).catch((err) => console.log(err));
+  }
+  currentCountries = countryData;
+};
 
 function deleteItem() {
   if (!cooldown) {
@@ -65,15 +98,14 @@ function deleteItem() {
     setTimeout(function() {
       cooldown = 0;
     }, 500);
-    $.post('/delete',
-        {
-          id: event.currentTarget.id,
-        },
-        function(data, status) {
-          if (status === 'success') {
-            updateQueue();
-          }
-        });
+    const xmlRequest = new XMLHttpRequest();
+    xmlRequest.open('post', '/delete');
+    xmlRequest.setRequestHeader(
+        'Content-Type', 'application/json;charset=UTF-8');
+    xmlRequest.send(JSON.stringify({id: event.currentTarget.id}));
+    xmlRequest.onload = function() {
+      updateQueue();
+    };
   }
 }
 
@@ -84,8 +116,9 @@ function renderItem(table, item, user) {
   const time = min+':'+sec;
   if (table == 'searchTable') {
     document.getElementById(table).innerHTML +=
-        '<tr class=\'songItem\' id='+item.uri+' onclick="q.queue()">'+
-        '<td class=\'song\'>'+item.name+'</td><td class=\'artist\'>'+
+        '<tr class=\'songItem\' id='+item.id+' onclick="q.queue()">'+
+        '<td class=\'song\'>'+item.name+'</td><td id='+item.artists[0].id+
+        ' class=\'artist\'>'+
         item.artists[0].name+'</td><td class=\'album\'>'+item.album.name+
         '</td><td class=\'length\'>'+time+'</td></tr>';
   } else {
@@ -121,7 +154,10 @@ function init() {
       document.getElementById('log-in-modal').style.display = 'block';
     }
   });
+  $.get('/countries', function(data) {
+    countries = JSON.parse(data);
+  });
   updateQueue();
 }
 
-module.exports = {init, search, queue, deleteItem, q};
+module.exports = {init, search, queue, deleteItem};
