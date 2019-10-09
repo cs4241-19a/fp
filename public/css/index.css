@@ -1,0 +1,21 @@
+.form-control {
+  margin-left:25%;
+  width:50%;
+}
+
+label {
+  margin-left:25%;
+}
+
+details {
+  margin-left:25%;
+  margin-right:25%;
+}
+
+#myCanvas{
+  background-color: black;
+}
+
+.btn {
+  margin-left:25%;
+}
