@@ -30,6 +30,11 @@ const gamePlayState = new Phaser.Class({
         scene.enemies.push(Trucks.create(Trucks.Truck3b(scene), 3));
         scene.enemies.push(Trucks.create(Trucks.Truck3b(scene), 4));
 
+        // cursor
+        this.cursor = this.add.graphics();
+        this.cursor.lineStyle(2, 0x000000, 1);
+        this.cursor.strokeRect(0, 0, 40, 40);
+
         // scene.e1 = Enemy(truck, 0.003, 75);
         // scene.e1 = Enemy(truck, 0.003, 75);
         console.log(scene.enemies);
@@ -37,6 +42,7 @@ const gamePlayState = new Phaser.Class({
 
     update: function() {
         const scene = this;
+        updateMarker(scene)
         scene.enemies.forEach(enemy => {
             enemy.move();
         });
@@ -58,6 +64,27 @@ function initFromGrid(scene) {
 
 
 // Update
+
+
+function updateMarker(scene) {
+
+    const coord = {x: Math.floor(scene.input.activePointer.worldX / cellSize.width), y: Math.floor(scene.input.activePointer.worldY / cellSize.height)}
+
+    scene.cursor.x = coord.x * cellSize.width;
+    scene.cursor.y = coord.y * cellSize.height;
+
+    if (scene.input.mousePointer.isDown) {
+        console.log(coord);
+        // map.putTile(currentTile, currentLayer.getTileX(marker.x), currentLayer.getTileY(marker.y), currentLayer);
+        // map.fill(currentTile, currentLayer.getTileX(marker.x), currentLayer.getTileY(marker.y), 4, 4, currentLayer);
+    }
+
+}
+
+
+
+
+
 
 /**
  * A closure creating a Enemy.
