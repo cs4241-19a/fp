@@ -1,15 +1,18 @@
 # Carbon Footprint
-
-For your final project, you'll implement a course project that exhibits your mastery of the course materials. 
-Similar to A4, this project gives you an opportunity to be creative and to pursue individual research and learning.
+###Team: Georgina Cromwell, Corrin Courville, Kaitlin McDermott
+Website: https://final-project-gcc-cmc-kmd.glitch.me/
 
 ## General description
 
-Your project should consist of a complete Web application, exhibiting facets of the three main sections of the course material:
+Our website incorperates the following: 
 
-- Static Web page content and design. You should have a project that is accessible, easily navigable, and features significant content.
-- Dynamic behavior implemented with JavaScript.
-- Server-side programming *using Node.js*. Typically this will take the form of some sort of persistent data, authentication, and possibly server-side computation.
+- user login using passport 
+- css using bootstrap : 
+- css built from scratch
+- data visualization using d3.js 
+- db using mongodb 
+- server using express
+
 
 Additionally, you should incorporate features that you independently research, design, and implement for your project.
 
@@ -41,11 +44,3 @@ Submit a second PR on the final project repo to turn in your app and code.
 Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service.
 Folks on the same team do not need to post the same webpage, but must instead clearly state who is on the team in their proposal.
 (Staff will use the proposal to build the grading sheet.)
-
-## Final Presentation
-
-Presentations will occur during the final day of class.
-
-## FAQs
-
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use node.js.
