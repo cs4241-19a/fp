@@ -44,8 +44,8 @@ class Login extends Component {
     render() {
         return (
             <div className="outer notification background-light">
-                <div className="center titleContainer has-background-white">
-                    <p className="title">Sign In</p>
+                <div className="center titleContainer has-background-dark">
+                    <p className="has-text-white title">Sign In</p>
                 </div>
                 <div className="vessel">
                     <div className="columns">
@@ -74,7 +74,7 @@ class Login extends Component {
                     </div>
                 </div>
                 <div className="vessel">
-                    <button className={ (this.state.username === '' || this.state.password === '') ? 'button' : 'button is-success'} onClick={this.login}>Submit</button>
+                    <button className={ (this.state.username === '' || this.state.password === '') ? 'button submit-button' : 'button is-danger submit-button'} onClick={this.login}>Submit</button>
                 </div>
             </div>
         );
