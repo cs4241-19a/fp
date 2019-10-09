@@ -119,7 +119,6 @@ img {
 }
 
 .rate {
-    float: left;
     height: 46px;
     padding: 0 10px;
     display: inline-block;
@@ -165,8 +164,11 @@ img {
 }
 
 .recommendations-container {
-    /*height: 300px;*/
-    height: 55vh
-    /*height: available;*/
+    height: 55vh;
+    max-height: 55vh;
+}
+
+.star-rating {
+    text-align: center;
 }
 
