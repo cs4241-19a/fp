@@ -48,6 +48,22 @@
     <div id="messageContainer" style="height:700px; width:90%" class="msg"></div>
   </body>
   <script>
+    function getCookie(cname) {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+    
     (function(t, a, l, k, j, s) {
       s = a.createElement("script");
       s.async = 1;
@@ -75,15 +91,17 @@
     Talk.ready.then(function() {
       var me = new Talk.User({
         id: "123456",
-        name: "Alice",
+        name: getCookie("username"),
         email: "alice@example.com",
-        photoUrl: "https://demo.talkjs.com/img/alice.jpg",
-        welcomeMessage: "Hey there! How are you? :-)"
       });
       window.talkSession = new Talk.Session({
         appId: "tqeei7aL",
         me: me
       });
+      
+      
+      
+      // SET OTHER PARTICIPANT AND START CONVO
       var other = new Talk.User({
         id: "654321",
         name: "Sebastian",
@@ -91,12 +109,15 @@
         photoUrl: "https://demo.talkjs.com/img/sebastian.jpg",
         welcomeMessage: "Hey, how can I help?"
       });
-
+      
+      // CREATE A CONVERSTATION
       var conversation = talkSession.getOrCreateConversation(
         Talk.oneOnOneId(me, other)
       );
       conversation.setParticipant(me);
       conversation.setParticipant(other);
+      
+      // SET INBOX
       var inbox = talkSession.createInbox({ selected: conversation });
       inbox.mount(document.getElementById("messageContainer"));
     });
