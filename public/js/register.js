@@ -9,7 +9,7 @@ const create = async function( e ) {
     name: document.getElementById('name').value,
     email: document.getElementById( 'email' ).value,
     password: document.getElementById( 'password' ).value,
-    availability: [{
+    meetings: {
       sunday: [],
       monday: [],
       tuesday: [],
@@ -17,8 +17,7 @@ const create = async function( e ) {
       thursday: [],
       friday: [],
       saturday: []
-    }],
-    archive: []
+    }
   };
   try {
     const resp = await fetch( '/createAccount', {

@@ -4,110 +4,117 @@
       "name": "Carla",
       "email": "ciduarte@wpi.edu",
       "password": "1234",
-      "availability": {
+      "meetings": {
         "sunday": [
-          "9:00",
-          "9:15",
-          "9:30",
-          "9:45"
+          {
+            "name": "Raphael",
+            "time": [
+              "9:00",
+              "11:00"
+            ]
+          },
+          {
+            "name": "Henri Matisse",
+            "time": [
+              "9:00",
+              "11:00"
+            ]
+          }
         ],
         "monday": [],
         "tuesday": [],
-        "wednesday": [
-          "8:00"
-        ],
+        "wednesday": [],
         "thursday": [],
-        "friday": [
-          "3:00"
-        ],
+        "friday": [],
         "saturday": []
-      },
-      "archive": []
+      }
     },
     {
       "name": "Sylvia",
       "email": "ylin7@wpi.edu",
       "password": "1234",
-      "availability": [
-        {
-          "sunday": [],
-          "monday": [],
-          "tuesday": [],
-          "wednesday": [],
-          "thursday": [],
-          "friday": [],
-          "saturday": []
-        }
-      ],
-      "archive": []
+      "meetings": {
+        "sunday": [
+          {
+            "name": "Raphael",
+            "time": [
+              "9:00",
+              "11:00"
+            ]
+          },
+          {
+            "name": "Henri Matisse",
+            "time": [
+              "9:00",
+              "11:00"
+            ]
+          }
+        ],
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
     },
     {
       "name": "Manasi",
       "email": "mmdanke@wpi.edu",
       "password": "1234",
-      "availability": [
-        {
-          "sunday": [],
-          "monday": [],
-          "tuesday": [],
-          "wednesday": [],
-          "thursday": [],
-          "friday": [],
-          "saturday": []
-        }
-      ],
-      "archive": []
+      "meetings": {
+        "sunday": [
+          {
+            "name": "Raphael",
+            "time": [
+              "9:00",
+              "11:00"
+            ]
+          },
+          {
+            "name": "Henri Matisse",
+            "time": [
+              "9:00",
+              "11:00"
+            ]
+          }
+        ],
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
     },
     {
       "name": "Amanda",
       "email": "aezeobiejesi@wpi.edu",
       "password": "1234",
-      "availability": [
-        {
-          "sunday": [],
-          "monday": [],
-          "tuesday": [],
-          "wednesday": [],
-          "thursday": [],
-          "friday": [],
-          "saturday": []
-        }
-      ],
-      "archive": []
-    },
-    {
-      "name": "test1",
-      "email": "test1@wpi.edu",
-      "password": "1234",
-      "availability": [
-        {
-          "sunday": [],
-          "monday": [],
-          "tuesday": [],
-          "wednesday": [],
-          "thursday": [],
-          "friday": [],
-          "saturday": []
-        }
-      ],
-      "archive": []
-    },
-    {
-      "name": "hello",
-      "email": "hello@wpi.edu",
-      "password": "hello",
-      "availability": [
-        {
-          "sunday": [],
-          "monday": [],
-          "tuesday": [],
-          "wednesday": [],
-          "thursday": [],
-          "friday": [],
-          "saturday": []
-        }
-      ],
-      "archive": []
+      "meetings": {
+        "sunday": [
+          {
+            "name": "Raphael",
+            "time": [
+              "9:00",
+              "11:00"
+            ]
+          },
+          {
+            "name": "Henri Matisse",
+            "time": [
+              "9:00",
+              "11:00"
+            ]
+          }
+        ],
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": []
+      }
     }
   ],
   "rooms": [
@@ -187,18 +194,7 @@
       "name": "Claude Monet",
       "availability": {
         "sunday": [],
-        "monday": [
-          "9:00",
-          "9:30",
-          "10:00",
-          "10:30",
-          "11:00",
-          "11:30",
-          "12:00",
-          "12:30",
-          "13:00",
-          "13:30"
-        ],
+        "monday": [],
         "tuesday": [],
         "wednesday": [],
         "thursday": [],

@@ -98,17 +98,17 @@ app.post('/createAccount', function (request, response) {
 });
 
 /*** USER METHODS ***/
-app.get('/allUserInfo', function (request, response) {
-  const users = db.get('users')
-    .value();
+// app.get('/allUserInfo', function (request, response) {
+//   const users = db.get('users')
+//     .value();
+//
+//   response.send(JSON.stringify({data: users}));
+// });
 
-  response.send(JSON.stringify({data: users}));
-});
-
-app.post('/specificUserAvailability', function (request, response) {
+app.post('/currentUserMeetings', function (request, response) {
   const availability = db.get('users')
-    .filter({email: request.body.email})
-    .map('availability')
+    .filter({email: request.session.passport.user})
+    .map('meetings')
     .value();
 
   response.send(JSON.stringify({data: availability[0]}));
@@ -122,33 +122,34 @@ app.get('/currentUserInfo', function (request, response) {
   response.send(JSON.stringify({data: user[0]}));
 });
 
-app.post('/updateUserAvailability', function (request, response) {
+app.post('/updateUserMeetings', function (request, response) {
+  // TODO: potentially fix this
   db.get('users')
     .find({email: request.session.passport.user})
-    .assign({availability: request.body.availability})
+    .assign({meetings: request.body.meetings})
     .write();
 
   response.writeHead( 200, "OK", {'Content-Type': 'application/json' });
   response.end();
 });
 
-app.post('/updateUserArchive', function (request, response) {
-  //TODO: only accept unique archive names, send 'false' in response?
-  let userArchive = db.get('users')
-    .filter({email: request.session.passport.user})
-    .map('archive')
-    .value();
-
-  userArchive[0].push(request.body);
-
-  db.get('users')
-    .find({email: request.session.passport.user})
-    .assign({archive: userArchive[0] })
-    .write();
-
-  response.writeHead( 200, "OK", {'Content-Type': 'application/json' });
-  response.end();
-});
+// app.post('/updateUserArchive', function (request, response) {
+//   //TODO: only accept unique archive names, send 'false' in response?
+//   let userArchive = db.get('users')
+//     .filter({email: request.session.passport.user})
+//     .map('archive')
+//     .value();
+//
+//   userArchive[0].push(request.body);
+//
+//   db.get('users')
+//     .find({email: request.session.passport.user})
+//     .assign({archive: userArchive[0] })
+//     .write();
+//
+//   response.writeHead( 200, "OK", {'Content-Type': 'application/json' });
+//   response.end();
+// });
 
 
 /*** ROOM METHODS ***/
