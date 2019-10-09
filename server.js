@@ -37,10 +37,10 @@ let budgets = [
 ];
 
 var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "root",
-    database: "fp"
+    host: "remotemysql.com",
+    user: "9noIEwbrh3",
+    password: "Zt1rWu4Ent",
+    database: "9noIEwbrh3"
 });
 
 con.connect(function (err) {
