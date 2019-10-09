@@ -87,10 +87,7 @@ app.post('/newLeaderboardTime', function (request, response) {
             });
         }
     }).then(doc => {
-        if (!doc) {
-            leaderboardData = [];
-        } else {
-
+        if (doc) {
             leaderboardData = doc.leaderboardData;
         }
         leaderboardData.forEach(entry => {
@@ -99,11 +96,10 @@ app.post('/newLeaderboardTime', function (request, response) {
                 if (entry.time > request.body.time) {
                     entry.time = request.body.time;
                 }
-            } else {
                 foundUser = true;
             }
         });
-        if (foundUser === true) {
+        if (foundUser === false) {
             leaderboardData.push(newData);
         }
         db.upsert('leaderboardData', function(doc) {
