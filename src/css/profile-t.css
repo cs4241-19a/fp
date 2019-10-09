@@ -133,5 +133,12 @@ button:hover {
 }
 
 .shadowBg {
+    color: #00FF54;
+    background-color: black;
+    padding-top: 1px;
+    padding-bottom: 2px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 30px;
     box-shadow: 0 5px 10px #999;
 }
