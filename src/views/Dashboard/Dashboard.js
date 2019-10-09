@@ -4,8 +4,9 @@ import 'react-tabulator/lib/styles.css'; // required styles
 import 'react-tabulator/lib/css/tabulator.min.css'; // theme
 import { ReactTabulator } from 'react-tabulator'; // for React 15.x, use import { React15Tabulator }
 import * as tableFunctions from './TableFunctions.js'
+import Graph from '../Graph/Graph';
 
-class Graph extends Component {
+class Graphy extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -17,8 +18,7 @@ class Graph extends Component {
     render() {
         return(
             <section class="center">
-                <br></br>
-                Give me a pretty graph :)
+                <Graph/>
             </section>
         )
     }
@@ -180,7 +180,7 @@ class Dashboard extends Component {
     render() {
         return(
             <div>
-                <Graph></Graph>
+                <Graphy></Graphy>
                 <Field></Field>
                 <Submit></Submit>
                 <Table></Table>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Graph from '../Graph/Graph';
 
 class Home extends Component {
     constructor(props) {
@@ -73,6 +74,7 @@ class Home extends Component {
         return (
             <div className="App">
                 {/* <p>{this.state.response}</p> */}
+                <Graph/>
                 <div>
                     <ul>
                         {users.map(this.showUsers)}
