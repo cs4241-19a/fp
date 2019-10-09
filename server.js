@@ -87,9 +87,11 @@ app.post('/newLeaderboardTime', function (request, response) {
             });
         }
     }).then(doc => {
-        leaderboardData = doc.leaderboardData;
-        if (!leaderboardData) {
+        if (!doc) {
             leaderboardData = [];
+        } else {
+
+            leaderboardData = doc.leaderboardData;
         }
         leaderboardData.forEach(entry => {
             if (entry.user === request.session.passport.user) {
