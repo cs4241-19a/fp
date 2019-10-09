@@ -20,12 +20,13 @@ const bodyParser = require("body-parser")
 app.use(bodyParser.json())
 
 // Serve our compiled react program
-app.use(express.static("dist"))
+const directory = "client/build"
+app.use(express.static(directory))
 
 // Redirect to the default webpage
 app.get("/", function(request, response)
 {
-	response.sendFile(__dirname + "/dist/index.html")
+	response.sendFile(__dirname + directory + "/index.html")
 })
 
 
