@@ -1,14 +1,20 @@
-  
- let count = 0;
- let localAppData = []
- let currentUser = ""
+let count = 0;
+let localAppData = [];
+let currentUser = "";
 
-    e.preventDefault()
-      
+window.onload = function() {
+  fetch("api/books", {
+    headers: {
+      "Content-Type": "application/json"
+    },
+    method: "POST",
+  }).then(function(res) {
+    res.json().then(function(ret) {
+     
+    });
+  });
+} 
 
-    window.onload = function() {
-   
-  }
 
 //document.location.reload()
 /*
