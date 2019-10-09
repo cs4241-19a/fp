@@ -1,15 +1,31 @@
 var Talk, talkSession;
+let userArray = [];
+let convos = [];
 
-
-function userSetup(){
+function userSetup(me) {
   fetch("api/users/getUsers", {
     headers: {
       "Content-Type": "application/json"
     },
-    method: "POST",
+    method: "POST"
   }).then(function(res) {
-    res.json().then(function(str) {
-       // Parse Users and add them to window
+    res.json().then(function(ret) {
+      for (let i = 0; i < ret.length; i++) {
+        let next = new Talk.User({
+          id: ret[i].id,
+          name: ret[i].name,
+          email: null
+        });
+        userArray.append(next);
+      }
+      for (let i = 0; i < userArray.length; i++) {
+        let conversation = talkSession.getOrCreateConversation(
+          Talk.oneOnOneId(me, userArray[i])
+        );
+        conversation.setParticipant(me);
+        conversation.setParticipant(userArray[i]);
+        convos.append(conversation);
+      }
     });
   });
 }
@@ -58,33 +74,14 @@ Talk.ready.then(function() {
   var me = new Talk.User({
     id: "123456",
     name: getCookie("username"),
-    email: "alice@example.com"
+    email: null
   });
+  userSetup(me);
   window.talkSession = new Talk.Session({
     appId: "tqeei7aL",
     me: me
   });
-  
-  
-  
-  
-  // SET OTHER PARTICIPANT AND START CONVO
-  var other = new Talk.User({
-    id: "654321",
-    name: "Sebastian",
-    email: "Sebastian@example.com",
-    photoUrl: "https://demo.talkjs.com/img/sebastian.jpg",
-    welcomeMessage: "Hey, how can I help?"
-  });
-
-  // CREATE A CONVERSTATION
-  var conversation = talkSession.getOrCreateConversation(
-    Talk.oneOnOneId(me, other)
-  );
-  conversation.setParticipant(me);
-  conversation.setParticipant(other);
-
   // SET INBOX
-  var inbox = talkSession.createInbox({ selected: conversation });
+  var inbox = talkSession.createInbox({ selected: convos[0] });
   inbox.mount(document.getElementById("messageContainer"));
 });
