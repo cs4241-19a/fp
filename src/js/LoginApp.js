@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import Toast from "./show-toast"
 
 export default function LoginApp(props) {
 
@@ -26,11 +27,11 @@ export default function LoginApp(props) {
 			body
 		})
 			.then(function(res) {
-				// showToast({
-				// 	str: "Creating Profile",
-				// 	time: 2000,
-				// 	position: 'bottom'
-				// });
+				Toast ({
+					str: "Creating Profile",
+					time: 2000,
+					position: 'bottom'
+				});
 				console.log( "post response: ", res )
                 window.location = "/main.html"
 			})
@@ -49,6 +50,12 @@ export default function LoginApp(props) {
 		localStorage.setItem('currUser', inputUsername.value)
 		body = JSON.stringify( json );
 
+		Toast ({
+			str: "Authenticating User",
+			time: 2000,
+			position: 'bottom'
+		});
+
 		fetch( '/login', {
 			method:  'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -57,26 +64,26 @@ export default function LoginApp(props) {
 		.then( function( response ) {
 			console.log(response.status);
 			if(response.status === 200) {
-				// showToast({
-				// 	str: "Successfully Authenticated",
-				// 	time: 2000,
-				// 	position: 'bottom'
-				// });
+				Toast ({
+					str: "Successfully Authenticated",
+					time: 2000,
+					position: 'bottom'
+				});
 				console.log("post response: ", response)
 				window.location = "/main.html"
 			} else if(response.status === 401) {
-				// showToast({
-				// 	str: "Authentication Failed",
-				// 	time: 2000,
-				// 	position: 'bottom'
-				// });
+				Toast ({
+					str: "Authentication Failed",
+					time: 2000,
+					position: 'bottom'
+				});
 				console.log("post response: ", response)
 			}  else {
-				// showToast({
-				// 	str: "Unknown Error",
-				// 	time: 2000,
-				// 	position: 'bottom'
-				// });
+				Toast ({
+					str: "Unknown Error",
+					time: 2000,
+					position: 'bottom'
+				});
 				console.log("post response: ", response)
 			}
 		})
