@@ -1,7 +1,7 @@
 
 
 function query(str){
-  let body = {name: str, crn:""};
+  let body = {name: str};
   body = JSON.stringify(body)
 
   fetch("api/books/searchBook", {
