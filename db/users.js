@@ -1,9 +1,12 @@
-var records = [
-    { id: 1, username: 'jack', password: 'secret', displayName: 'Jack', emails: [ { value: 'jack@example.com' } ] }
-  , { id: 2, username: 'jill', password: 'birthday', displayName: 'Jill', emails: [ { value: 'jill@example.com' } ] }
-];
+var app = require('../app');
+var low = require('lowdb');
+
+const FileSync = require('lowdb/adapters/FileSync');
+const adapter = new FileSync('data/userData.json');
+const database = low(adapter);
 
 exports.findById = function(id, cb) {
+  var records = database.get(database.get(id));
   process.nextTick(function() {
     var idx = id - 1;
     if (records[idx]) {
@@ -15,13 +18,21 @@ exports.findById = function(id, cb) {
 }
 
 exports.findByUsername = function(username, cb) {
-  process.nextTick(function() {
-    for (var i = 0, len = records.length; i < len; i++) {
-      var record = records[i];
-      if (record.username === username) {
-        return cb(null, record);
-      }
-    }
+  var records = database.get( "users" )
+  .find({ "username": username })
+  .value();
+
+  if (records == undefined) {
+    console.log("bad username")
     return cb(null, null);
+  }
+
+  process.nextTick(function() {
+    if (records.username === username) {
+      return cb(null, records);
+    }
+    else {
+      return cb(null, null);
+    }
   });
 }

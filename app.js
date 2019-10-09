@@ -46,15 +46,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(passport.initialize()); // 2
+app.use(passport.initialize()); 
 app.use(passport.session());
-app.use(express.static('public')); // 3
+app.use(express.static('public'));
 
 // routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/login',loginRouter);
-app.use('/game',gameRouter);
+app.use('/login', loginRouter);
+app.use('/login/create', loginRouter);
+app.use('/game', gameRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
