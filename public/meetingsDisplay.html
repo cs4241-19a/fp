@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Meetings</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="img/favicon.png" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900|Raleway:400,300,700,900" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- Main Stylesheet File -->
+  <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body data-spy="scroll" data-offset="80" data-target="#thenavbar" onload="main()">
+
+<!-- NAVIGATION BAR -->
+<div id="thenavbar" class="navbar navbar-default navbar-fixed-top">
+  <div class="container row justify-content-center">
+    <div class="column col-12 col-xl-9 col-lg-8 col-md-6 navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><i class="fa fa-bolt"></i></a>
+    </div>
+    <div class="column col-12 col-md-6 col-lg-4 col-xl-3 navbar-collapse collapse">
+      <div class="row justify-content-center">
+        <ul class="nav navbar-nav justify-content-end" style="width:100%; margin:0px; display: inline-block;">
+          <li class="nav-item active left-space"><a href="login.html">Log Out</a></li>
+          <!--    TODO: attach this to a logout method    -->
+          <li class="nav-item" style="display: inline-block;"><a href="dashboard.html">Book A Room</a></li>
+          <li class="nav-item" style="display: inline-block;"><a href="meetingsDisplay.html">Meetings</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN BODY -->
+<div id="hello">
+  <div class="container-fluid pr-5 pl-5 mr-auto ml-auto">
+    <h1 style="font-size:60px;font-weight:600px;font-color:#74cfae;text-align:center;">Meetings</h1>
+    <h3 style="font-size:40px;font-weight:600px;font-color:#74cfae;text-align:center;">This Week</h3>
+    <br><br><br>
+    <div class="row justify-content-center">
+<!--     
+      <div class="column col-12 col-md-12 col-lg-3 col-xl-3 bookForm">
+        <form class="account-form" role="form" action="/">
+          <h1 style="font-size: 36px; margin-bottom: 20px; text-align: center;">Book A Room</h1>
+        </form> 
+      </div> -->
+      <table class="table table-striped" style="margin:0% 15% 0% 15%;">
+        <thead style="text-align:center;">
+          <tr>
+            <th>Day</th>
+            <th>Room and Time</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="text-align:center;vertical-align:middle;">Sunday</td>
+            <td>
+              <span style="display:block;background-color:#a0ccd4;border-radius:5px;padding:10px;margin:3px 0px 3px 0px;">Frida Kahlo, 10:00-12:00</span>
+              <span style="display:block;background-color:#d6a1b9; border-radius:5px;padding:10px;margin:3px 0px 3px 0px;">Raphael, 16:00-17:00</span>
+              <span style="display:block;background-color:#74cfae; border-radius:5px;padding:10px;margin:3px 0px 3px 0px;">Raphael, 16:00-17:00</span>
+            </td>
+            <td>
+              <span style="display:block;text-align:center;">x</span><br>
+              <span style="display:block;text-align:center;">x</span><br>
+              <span style="display:block;text-align:center;">x</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align:center;vertical-align:middle;">Monday</td>
+            <td>
+              <span style="display:block;background-color:#ffff99; border-radius:5px;padding:10px;margin:3px 0px 3px 0px;">Claude Monet, 12:00-14:00</span>
+              <span style="display:block;background-color:#a0ccd4; border-radius:5px;padding:10px;margin:3px 0px 3px 0px;">Raphael, 16:00-17:00</span>
+            </td>
+            <td>
+              <span style="display:block;text-align:center;">x</span><br>
+              <span style="display:block;text-align:center;">x</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align:center;vertical-align:middle;">Tuesday</td>
+            <td>
+              <span style="display:block;background-color:#d6a1b9; border-radius:5px;padding:10px;margin:3px 0px 3px 0px;">Raphael, 16:00-17:00</span>
+            </td>
+            <td>
+              <span style="display:block;text-align:center;">x</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align:center;vertical-align:middle;">Wednesday</td>
+            <td>
+              <span style="display:block;background-color:#74cfae; border-radius:5px;padding:10px;margin:3px 0px 3px 0px;">Edvard Munch, 12:00-16:00</span>
+              <span style="display:block;background-color:#ffff99; border-radius:5px;padding:10px;margin:3px 0px 3px 0px;">Raphael, 16:00-17:00</span>
+            </td>
+            <td>
+              <span style="display:block;text-align:center;">x</span><br>
+              <span style="display:block;text-align:center;">x</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align:center;vertical-align:middle;">Thursday</td>
+            <td>
+              <span style="display:block;background-color:#a0ccd4; border-radius:5px;padding:10px;margin:3px 0px 3px 0px;">Henri Matisse, 17:00-17:30</span>
+            </td>
+            <td>
+              <span style="display:block;text-align:center;">x</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align:center;vertical-align:middle;">Friday</td>
+            <td>
+              <span style="display:block;background-color:#d6a1b9; border-radius:5px;padding:10px;margin:3px 0px 3px 0px;">Machelangelo, 12:00-12:30</span>
+            </td>
+            <td>
+              <span style="display:block;text-align:center;">x</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align:center;vertical-align:middle;">Saturday</td>
+            <td>
+              <span style="display:block;background-color:#74cfae; border-radius:5px;padding:10px;margin:3px 0px 3px 0px;">Leonardo da Vinci, 14:00-12:00</span>
+              <span style="display:block;background-color:#ffff99; border-radius:5px;padding:10px;margin:3px 0px 3px 0px;">  Raphael, 16:00-17:00</span>
+            </td>
+            <td>
+              <span style="display:block;text-align:center;">x</span><br>
+              <span style="display:block;text-align:center;">x</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="copyrights">
+  <div class="container">
+    <p>
+      &copy; Copyrights <strong>Bolt</strong>. All Rights Reserved
+    </p>
+    <div class="credits">
+      Created with Bolt template by <a href="https://templatemag.com/">TemplateMag</a>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/chart/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+<!-- Template Main Javascript File -->
+<script src="js/main.js"></script>
+<script src="js/availability.js"></script>
+
+</body>
+</html>
