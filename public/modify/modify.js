@@ -1,3 +1,7 @@
+window.onload = function() {
+    let fizzyText = new FizzyText('Modify Profile')
+}
+
 document.getElementById('cancel-btn').onclick = function(e) {
     location.href = '../profile/profile.html'
     e.preventDefault()
