@@ -372,25 +372,15 @@ async function buildAvailability(availability) {
 
 const addEmail = function (e) {
   e.preventDefault();
-  $("#emailList").append('<input type="email" name="email" class="form-control emailRecipient mt-2"\n' +
-      '                     data-msg="Please enter a valid email">');
-  // let add = document.querySelector("#add-email");
-  // let div = document.querySelector("#emailList");
-  // add.addEventListener('click', function () {
-  //   let input = document.createElement('input');
-  //   // console.log(input);
-  //   input.type="email";
-  //   // input.name="email";
-  //   //input.className="form-control emailRecipient mt-2";
-  //   //input.data.msg="Please enter a valid email";
-  //    let test = '<input type="email" name="email" class="form-control emailRecipient mt-2"\n' +
-  //       '                     data-msg="Please enter a valid email">';
-  //   // console.log(input);
-  //   div.appendChild(input);
-}
-// const emailList = document.querySelectorAll('emailList');
-// emailList.innerHTML += '<input type="email" name="email" class="form-control emailRecipient mt-2"\n' +
-//   '                     data-msg="Please enter a valid email">';
+  let container = $('#emailList');
+  let emailField = container.find('.default').clone();
+  emailField.removeClass('default');
+  emailField.appendTo(container).show();
+};
+
+const delEmail = function (element) {
+  $(element).closest('.row').remove();
+};
 
 window.onload = function () {
   const selectedRoomInput = document.getElementById('selectRoomName');

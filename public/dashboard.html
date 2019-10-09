@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Dashboard</title>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta content="" name="keywords">
-  <meta content="" name="description">
+    <meta charset="utf-8">
+    <title>Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
 
-  <!-- Favicons -->
-  <link href="img/favicon.png" rel="icon">
-  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Favicons -->
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900|Raleway:400,300,700,900" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900|Raleway:400,300,700,900" rel="stylesheet">
 
-  <!-- Bootstrap CSS File -->
-  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS File -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Libraries CSS Files -->
-  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Libraries CSS Files -->
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-  <!-- Main Stylesheet File -->
-  <link href="css/style.css" rel="stylesheet">
+    <!-- Main Stylesheet File -->
+    <link href="css/style.css" rel="stylesheet">
 
 </head>
 
@@ -31,145 +31,166 @@
 
 <!-- NAVIGATION BAR -->
 <div id="thenavbar" class="navbar navbar-default navbar-fixed-top">
-  <div class="container row justify-content-center">
-    <div class="column col-12 col-xl-10 col-lg-9 col-md-9 navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#"><i class="fa fa-bolt"></i></a>
+    <div class="container row justify-content-center">
+        <div class="column col-12 col-xl-10 col-lg-9 col-md-9 navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><i class="fa fa-bolt"></i></a>
+        </div>
+        <div class="column col-12 col-md-3 col-lg-3 col-xl-2 navbar-collapse collapse">
+            <div class="row justify-content-center">
+                <ul class="nav navbar-nav justify-content-end" style="width:100%; margin:0px; display: inline-block;">
+                    <li class="nav-item active left-space"><a href="login.html">Log Out</a></li>
+                    <!--    TODO: attach this to a logout method    -->
+                    <li class="nav-item" style="display: inline-block;"><a href="dashboard.html">Book A Room</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <div class="column col-12 col-md-3 col-lg-3 col-xl-2 navbar-collapse collapse">
-      <div class="row justify-content-center">
-        <ul class="nav navbar-nav justify-content-end" style="width:100%; margin:0px; display: inline-block;">
-          <li class="nav-item active left-space"><a href="login.html">Log Out</a></li>
-          <!--    TODO: attach this to a logout method    -->
-          <li class="nav-item" style="display: inline-block;"><a href="dashboard.html">Book A Room</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
 </div>
 
 <!-- MAIN BODY -->
 <div id="hello">
-  <div class="container-fluid pr-5 pl-5 mr-auto ml-auto">
-    <div class="row justify-content-center">
-      <!--     BOOKING FORM     -->
-      <div class="column col-12 col-md-12 col-lg-3 col-xl-3 bookForm">
-        <form class="account-form" role="form" action="/">
-          <h1 style="font-size: 36px; margin-bottom: 20px; text-align: center;">Book A Room</h1>
-          <!--     SELECT ROOM     -->
-          <div class="form-group row">
-            <div class="column col-12">
-                <label for="selectStartTime">Room</label>
+    <div class="container-fluid pr-5 pl-5 mr-auto ml-auto">
+        <div class="row justify-content-center">
+            <!--     BOOKING FORM     -->
+            <div class="column col-12 col-md-12 col-lg-3 col-xl-3 bookForm">
+                <form class="account-form" role="form" action="/">
+                    <h1 style="font-size: 36px; margin-bottom: 20px; text-align: center;">Book A Room</h1>
+                    <!--     SELECT ROOM     -->
+                    <div class="form-group row">
+                        <div class="column col-12">
+                            <label for="selectStartTime">Room</label>
+                        </div>
+                        <div class="column col-12">
+                            <select class="dropDown custom-select" id="selectRoomName">
+                                <option value="select">-- Select Room --</option>
+                                <option value="Raphael">Raphael</option>
+                                <option value="Frida Kahlo">Frida Kahlo</option>
+                                <option value="Claude Monet">Claude Monet</option>
+                                <option value="Edvard Munch">Edvard Munch</option>
+                                <option value="Henri Matisse">Henri Matisse</option>
+                                <option value="Michelangelo">Michelangelo</option>
+                                <option value="Leonardo da Vinci">Leonardo da Vinci</option>
+                                <option value="Vincent van Gogh">Vincent van Gogh</option>
+                                <option value="Pablo Picasso">Pablo Picasso</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--     SELECT DAY     -->
+                    <div class="form-group row">
+                        <div class="column col-12">
+                            <label for="selectDay"> Day of Week </label>
+                        </div>
+                        <div class="column col-12">
+                            <select class="dropDown custom-select" id="selectDay">
+                                <option value="select">-- Select Day of Week --</option>
+                                <option value="Sunday">Sunday</option>
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
+                                <option value="Saturday">Saturday</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--     SELECT START TIME     -->
+                    <div class="form-group row">
+                        <div class="column col-12">
+                            <label for="selectStartTime">Start Time</label>
+                        </div>
+                        <div class="column col-12">
+                            <select class="dropDown custom-select" id="selectStartTime" onchange="childDropDown();">
+                                <option value="select">-- Select Start Time --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--     SELECT END TIME     -->
+                    <div class="form-group row">
+                        <div class="column col-12">
+                            <label for="selectChild">End Time</label>
+                        </div>
+                        <div class="column col-12">
+                            <select class="dropDown custom-select" id="selectChild">
+                                <option value="select">-- Select End Time --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--     SELECT EMAIL     -->
+                    <div class="form-group row">
+                        <div class="column col-12">
+                            <label> Email List </label>
+                        </div>
+                        <div class="column col-12" id="emailListShown">
+                            <div class="row">
+                                <div class="column col-12">
+                                    <input type="email" name="email" class="form-control emailRecipient"
+                                           data-msg="Please enter a valid email">
+                                </div>
+                                <div class="column">
+                                    <button class="del-email" onclick="delEmail(this)">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column col-12" id="emailList">
+                            <div id="modifyEmailGroup" class="default row" style="display: none">
+                                <div class="column col-12">
+                                    <input type="email" name="email" class="form-control emailRecipient"
+                                           data-msg="Please enter a valid email">
+                                </div>
+                                <div class="column">
+                                    <button class="del-email" onclick="delEmail(this)">
+                                        <span class="glyphicon glyphicon-remove"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column col-12">
+                            <small class="form-text text-muted">Invite meeting participants via email</small>
+                        </div>
+                        <div class="column col-12">
+                            <div class="row">
+                                <button class="btn" id="add-email" onclick="addEmail();">
+                                    <span class="glyphicon glyphicon-plus-sign"></span>
+                                    &nbsp;Add email
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-send">
+                        <button id="submit_times" type="submit" class="btn-theme" name="submit_times">
+                            <strong>Book</strong></button>
+                    </div>
+                </form>
             </div>
-            <div class="column col-12">
-                <select class="dropDown custom-select" id="selectRoomName">
-                    <option value="select">-- Select Room --</option>
-                    <option value="Raphael">Raphael</option>
-                    <option value="Frida Kahlo">Frida Kahlo</option>
-                    <option value="Claude Monet">Claude Monet</option>
-                    <option value="Edvard Munch">Edvard Munch</option>
-                    <option value="Henri Matisse">Henri Matisse</option>
-                    <option value="Michelangelo">Michelangelo</option>
-                    <option value="Leonardo da Vinci">Leonardo da Vinci</option>
-                    <option value="Vincent van Gogh">Vincent van Gogh</option>
-                    <option value="Pablo Picasso">Pablo Picasso</option>
-                </select>
-            </div>
-          </div>
-          <!--     SELECT DAY     -->
-          <div class="form-group row">
-            <div class="column col-12">
-              <label for="selectDay"> Day of Week </label>
-            </div>
-            <div class="column col-12">
-              <select class="dropDown custom-select" id="selectDay">
-                <option value="select">-- Select Day of Week --</option>
-                <option value="Sunday">Sunday</option>
-                <option value="Monday">Monday</option>
-                <option value="Tuesday">Tuesday</option>
-                <option value="Wednesday">Wednesday</option>
-                <option value="Thursday">Thursday</option>
-                <option value="Friday">Friday</option>
-                <option value="Saturday">Saturday</option>
-              </select>
-            </div>
-          </div>
-          <!--     SELECT START TIME     -->
-          <div class="form-group row">
-              <div class="column col-12">
-                  <label for="selectStartTime">Start Time</label>
-              </div>
-              <div class="column col-12">
-                  <select class="dropDown custom-select" id="selectStartTime" onchange="childDropDown();">
-                      <option value="select">-- Select Start Time --</option>
-                  </select>
-              </div>
-          </div>
-          <!--     SELECT END TIME     -->
-          <div class="form-group row">
-              <div class="column col-12">
-                  <label for="selectChild">End Time</label>
-              </div>
-              <div class="column col-12">
-                  <select class="dropDown custom-select" id="selectChild">
-                      <option value="select">-- Select End Time --</option>
-                  </select>
-              </div>
-          </div>
-          <!--     SELECT EMAIL     -->
-          <div class="form-group row">
-            <div class="column col-12">
-              <label for="email"> Email List </label>
-            </div>
-            <div class="column col-12" id="emailList">
-              <input type="email" name="email" class="form-control emailRecipient" id="email"
-                     data-msg="Please enter a valid email">
-            </div>
-            <div class="column col-12">
-              <small class="form-text text-muted">Invite meeting participants via email</small>
-            </div>
-            <div class="column col-12">
-              <div class="row">
-                <button class="btn" id="add-email">
-                  <span class="glyphicon glyphicon-plus-sign"></span>
-                  &nbsp;Add email
-                </button>
-              </div>
-            </div>
-          </div>
-          <br>
-          <div class="form-send">
-              <button id="submit_times" type="submit" class="btn-theme" name="submit_times">
-                  <strong>Book</strong></button>
-          </div>
-        </form>
-      </div>
 
-      <!--     AVAILABILITY TABLE     -->
-      <div class="page column col-12 col-xl-7 col-lg-7 col-md-12 ml-xl-5 ml-lg-3">
-        <h2 id="room-table-label" style="font-size: 36px; margin-bottom: 20px; text-align: center;"></h2>
-        <div class="table-responsive-sm table-responsive-lg table-responsive-xl">
-          <h2 id="prebookingMsg" style="font-size: 36px;">Select a room to begin booking.</h2>
-          <table id="room-avail-table" class="table table-sm table-hover"></table>
+            <!--     AVAILABILITY TABLE     -->
+            <div class="page column col-12 col-xl-7 col-lg-7 col-md-12 ml-xl-5 ml-lg-3">
+                <h2 id="room-table-label" style="font-size: 36px; margin-bottom: 20px; text-align: center;"></h2>
+                <div class="table-responsive-sm table-responsive-lg table-responsive-xl">
+                    <h2 id="prebookingMsg" style="font-size: 36px;">Select a room to begin booking.</h2>
+                    <table id="room-avail-table" class="table table-sm table-hover"></table>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <div id="copyrights">
-  <div class="container">
-    <p>
-      &copy; Copyrights <strong>Bolt</strong>. All Rights Reserved
-    </p>
-    <div class="credits">
-      Created with Bolt template by <a href="https://templatemag.com/">TemplateMag</a>
+    <div class="container">
+        <p>
+            &copy; Copyrights <strong>Bolt</strong>. All Rights Reserved
+        </p>
+        <div class="credits">
+            Created with Bolt template by <a href="https://templatemag.com/">TemplateMag</a>
+        </div>
     </div>
-  </div>
 </div>
 
 <!-- JavaScript Libraries -->
