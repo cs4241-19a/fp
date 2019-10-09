@@ -1,0 +1,7 @@
+<div class="entry">
+    <ul class="list-group">
+        {{#noeval "{{#each scoresData as |score|}}"}}{{/noeval}}
+        <li class="list-group-item" title='{{#noeval "{{#ts}}{{/ts}}"}}{{/noeval}}'>{{#noeval '{{#add1 @index}}{{/add1}}. {{#ts}}{{/ts}} <span class="float-right">{{score.score}}</span>'}}{{/noeval}}</li>
+        {{#noeval "{{/each}}"}}{{/noeval}}
+    </ul>
+</div>

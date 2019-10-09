@@ -1,0 +1,32 @@
+<div class="modal fade" id="{{ type }}FormModal" tabindex="-1" role="dialog" aria-labelledby="{{ type }}FormModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="{{ type }}FormModalLabel">{{ title }}</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="">
+                <div class="modal-body">
+                    <div id="warningAlerts">
+                        <div class="alert alert-warning d-none" role="alert">
+                            <span></span>
+                        </div>
+                    </div>
+                    {{#> form-content}}
+                    {{!-- Custom content can be added here. --}}
+                    {{/form-content}}
+                </div>
+                <div class="modal-footer">
+                    {{#if submitText}}
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="{{ type }}SubmitBtn" class="btn btn-primary">{{ submitText }}</button>
+                    {{else}}
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    {{/if}}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

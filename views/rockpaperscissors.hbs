@@ -1,0 +1,67 @@
+<div class="container">
+    <div class="col-sp">
+        <h1>Rock Paper Scissors</h1>
+        <h3 id="wins">Score: 0</h3>
+        <h3 id="rounds">Round: 1</h3>
+        <div id="game-area">
+            <div id="prompt">
+                <h2>Choose your move!</h2>
+            </div>
+            <div id="options">
+                <img class="option" src="/assets/rockpaperscissors/rock.png" onclick="makeChoice('rock')">
+                <img class="option" src="/assets/rockpaperscissors/paper.png" onclick="makeChoice('paper')">
+                <img class="option" src="/assets/rockpaperscissors/scissors.png"onclick="makeChoice('scissors')">
+            </div>
+        </div>
+    </div>
+</div>
+
+{{#section 'css'}}
+{{!-- Add CSS here --}}
+    <link rel="stylesheet" href="/css/rockpaperscissors/rps.css">
+{{/section}}
+
+{{#section 'js'}}
+    <script src="/js/rockpaperscissors/rps.js"></script>
+{{/section}}
+
+<section>
+
+    <div class="modal fade" id="InfoModal" tabindex="-1" role="dialog" aria-labelledby="signInFormModalLabel" aria-modal="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Instructions</h5>
+                    <button type="button" class="close" id="x-close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li>The only numbers you may write are 1, 2, 3, 4, or 5.</li>
+                        <li>No numbers may appear more than once in any row or column. (That is, all required numbers must appear once in every row and column.)</li>
+                        <li>Each "cage" (region bounded by a heavy border) contains a "target number." If there's more than one cell in the cage, the target is also accompanied by an arithmetic operation. You must fill that cage with numbers that produce the target number, using only the specified arithmetic operation. Numbers may be repeated within a cage, if necessary, as long as they do not repeat within a single row or column.</li>
+                        <li>In a one-cell cage, just write the target number in that cell.</li>
+                    </ul><br><br> The puzzle is constantly checked, you will be notified
+                    once the correct board state is filled in.
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="close-button">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{#> layouts/modal-layout type="gameScore" title="Submit Score" submitText="Submit" }}
+    {{#*inline "form-content"}}
+        {{> includes/game-submit-default }}
+    {{/inline}}
+{{/layouts/modal-layout}}
+
+<!-- The help modal -->
+{{#> layouts/modal-layout type="help" title="Rock Paper Scissors Help" }}
+    {{#*inline "form-content"}}
+        {{> includes/help/rockpaperscissors }}
+    {{/inline}}
+{{/layouts/modal-layout}}

@@ -1,0 +1,78 @@
+h1,h3{
+    display: inline-block;
+}
+
+#wins{
+    float: right;
+}
+
+#game-area{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#prompt{
+    display: flex;
+    justify-content: center;
+}
+
+#options{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.option{
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+}
+
+.result{
+    width: 150px;
+    height: 150px;
+}
+
+#nextRound{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    align-items: center;
+}
+
+#finalResults{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    align-items: center;
+}
+
+#finalResults .result{
+    width: 50px;
+    height: 50px;
+}
+
+#finalResults2{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    align-items: center;
+}
+
+#finalResults2 .result{
+    width: 50px;
+    height: 50px;
+}
+
+#rounds{
+    float:right;
+    margin-right: 30px;
+}
+
+#playAgain{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    align-items: center;
+}
