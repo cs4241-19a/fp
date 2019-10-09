@@ -12,6 +12,7 @@ const gamePlayState = new Phaser.Class({
 
     create: function() {
         const scene = this;
+        scene.menuSelection = null;  // set to {x, y, cellType} when has a value
 
         // Create objects
         console.log("GamePlay");
@@ -22,13 +23,15 @@ const gamePlayState = new Phaser.Class({
         scene.enemies = [];
         // Enemy types
         const enemy_events = {};
-        const Trucks = Truck(enemy_events);
+        scene.EnemyUnits = {Trucks: Truck(enemy_events)};
+        scene.Towers = {SandBags: SandBag()};
 
 
-        scene.enemies.push(Trucks.create(Trucks.Truck3b(scene), 1));
-        scene.enemies.push(Trucks.create(Trucks.Truck3b(scene), 2));
-        scene.enemies.push(Trucks.create(Trucks.Truck3b(scene), 3));
-        scene.enemies.push(Trucks.create(Trucks.Truck3b(scene), 4));
+        scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 1));
+        scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 2));
+        scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 3));
+        scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 4));
+        scene.Towers.SandBags.create(scene.Towers.SandBags.Sand(scene, {x: 1, y: 1}));
 
         // cursor
         this.cursor = this.add.graphics();
@@ -78,37 +81,60 @@ function initFromGrid(scene) {
 // Update
 
 
+function placeTower(scene, coord) {
+    console.log("place");
+    if (grid[coord.y][coord.x] === cellTypes.OPEN) {
+        grid[coord.y][coord.x] = cellTypes.TOWER;
+        console.log(getPath(enemyEnterCoord));
+        if (getPath(enemyEnterCoord).length === 0) {
+            grid[coord.y][coord.x] = cellTypes.OPEN;  // reset to open since this blocks a path from the entrance
+        } else {
+            scene.Towers.SandBags.create(scene.Towers.SandBags.Sand(scene, coord));
+        }
+
+    }
+}
+
+function selectTower(scene) {
+    console.log("select");
+}
+
 function updateMarker(scene) {
     const coord = {x: Math.floor(scene.input.activePointer.worldX / cellSize.width), y: Math.floor(scene.input.activePointer.worldY / cellSize.height)}
     scene.cursor.x = coord.x * cellSize.width;
     scene.cursor.y = coord.y * cellSize.height;
 
     if (scene.input.mousePointer.isDown) {
-        console.log(coord);
-        switch (grid[coord.y][coord.x]) {
-            case cellTypes.WALL:
-                console.log("wall");
-                break;
-            case cellTypes.TOWER:
-                console.log("TOWER");
-                break;
-            case cellTypes.OPEN:
-                console.log("OPEN");
-                break;
-            case cellTypes.BASE:
-                console.log("BASE");
-                break;
-            case cellTypes.MENU_SAND:
-                console.log("MENU_SAND");
-                break;
-            case cellTypes.MENU_MG:
-                console.log("MENU_MG");
-                break;
-            case cellTypes.MENU_CANNON:
-                console.log("MENU_CANNON");
-                break;
-
+        // console.log(coord);
+        if (coord.y < playArea.height ) {
+            placeTower(scene, coord);
+        } else if (coord.y >= playArea.height && coord.y < playArea.height + menuArea.height) {
+            selectTower(scene, coord);
         }
+        // switch (grid[coord.y][coord.x]) {
+        //     case cellTypes.WALL:
+        //         console.log("wall");
+        //         break;
+        //     case cellTypes.TOWER:
+        //         console.log("TOWER");
+        //         break;
+        //     case cellTypes.OPEN:
+        //         console.log("OPEN");
+        //         break;
+        //     case cellTypes.BASE:
+        //         console.log("BASE");
+        //         break;
+        //     case cellTypes.MENU_SAND:
+        //         console.log("MENU_SAND");
+        //         break;
+        //     case cellTypes.MENU_MG:
+        //         console.log("MENU_MG");
+        //         break;
+        //     case cellTypes.MENU_CANNON:
+        //         console.log("MENU_CANNON");
+        //         break;
+        //
+        // }
         // map.putTile(currentTile, currentLayer.getTileX(marker.x), currentLayer.getTileY(marker.y), currentLayer);
         // map.fill(currentTile, currentLayer.getTileX(marker.x), currentLayer.getTileY(marker.y), 4, 4, currentLayer);
     }
@@ -273,6 +299,7 @@ function Tower(sprite, range, damage, fireRate) {
         return false; // no targets
     }
 
+    return {sprite, shoot, resetTargets};
 }
 
 
@@ -296,9 +323,34 @@ function Truck(events) {
         return truck;
     }
 
-    return {create, Truck3b}
+    return {create, Truck3b};
 }
 
+
+// TOWERS //
+
+function SandBag() {
+    /**
+     * Create the Tower at the coordinates.
+     * @returns {{resetTargets: *, sprite: *, shoot: *}}
+     * @param {Phaser.GameObjects.Image} sprite The sprite to use
+     */
+    function create(sprite) {
+        return Tower(sprite, 0.003, 75, 1);
+    }
+
+    /**
+     * Create the Tower at the coordinates.
+     * @param scene The game object.
+     * @param coord The coordinates of the cell to place at.
+     * @returns {Phaser.GameObjects.Image} The sprite.
+     */
+    function Sand(scene, coord) {
+        return scene.add.image(coord.x * cellSize.width, coord.y * cellSize.height, "sand").setOrigin(0, 0);
+    }
+
+    return {create, Sand}
+}
 
 
 // Add scene to list of scenes

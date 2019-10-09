@@ -64,13 +64,19 @@ const grid = [];
     grid[btmLeft.y - 1][btmLeft.x] = cellTypes.BASE;
     grid[btmLeft.y - 1][btmLeft.x + 1] = cellTypes.BASE;
 
-    // test pathfinding
-    grid[1][15] = cellTypes.WALL;
-    grid[2][15] = cellTypes.WALL;
-    grid[3][15] = cellTypes.WALL;
-    grid[4][15] = cellTypes.WALL;
-    grid[5][15] = cellTypes.WALL;
-    grid[6][15] = cellTypes.WALL;
+    // // test pathfinding
+    // grid[1][15] = cellTypes.WALL;
+    // grid[2][14] = cellTypes.WALL;
+    // grid[3][14] = cellTypes.WALL;
+    // grid[4][14] = cellTypes.WALL;
+    // grid[5][15] = cellTypes.WALL;
+    // grid[6][15] = cellTypes.WALL;
+    // grid[7][15] = cellTypes.WALL;
+    // grid[8][15] = cellTypes.WALL;
+    // grid[9][15] = cellTypes.WALL;
+    // grid[10][15] = cellTypes.WALL;
+    // grid[11][15] = cellTypes.WALL;
+    // grid[12][15] = cellTypes.WALL;
 
 })();
 console.log(grid);
@@ -102,13 +108,13 @@ function getGraph() {
 
 function getPath(startCoord) {
     const graphData = getGraph();
-    console.log("graph data:", graphData, startCoord);
+    // console.log("graph data:", graphData, startCoord);
     const graph = new Graph(graphData, {diagonal: true});
     // x and y are switched in grid
     const start = graph.grid[startCoord.y][startCoord.x];
     const end = graph.grid[baseEntrance.y][baseEntrance.x];
     const path = astar.search(graph, start, end, {heuristic: astar.heuristics.diagonal});
-    console.log("path:", path);
+    // console.log("path:", path);
     return path;
 }
 
