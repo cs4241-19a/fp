@@ -69,10 +69,22 @@ app.post( '/login', passport.authenticate( 'local' ), function( req, res ) {
 
 
 app.post( '/signup', function( request, response ) {
-  json = request.body;
+  let json = request.body;
 
   let username = JSON.stringify(json.username).replace(/^"(.*)"$/, '$1');
   fs_service.addNewUserProfile(username, json);
+
+  response.writeHead( 200, { 'Content-Type': 'application/json'})
+  response.end( JSON.stringify( request.body ) )
+})
+
+
+app.post( '/changePass', function( request, response ) {
+  let json = request.body;
+
+  let username = JSON.stringify(json.username).replace(/^"(.*)"$/, '$1');
+  let password = JSON.stringify(json.password).replace(/^"(.*)"$/, '$1');
+  fs_service.updateUserPassword(username, password);
 
   response.writeHead( 200, { 'Content-Type': 'application/json'})
   response.end( JSON.stringify( request.body ) )

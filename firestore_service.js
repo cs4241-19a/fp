@@ -75,6 +75,11 @@ exports.readFeedData = function() {
     })
 }
 
+exports.updateUserPassword = function (username, password) {
+    let profiles_coll = this.firestore.collection("user_profiles").doc(username);
+    profiles_coll.update({password: password}).then(r => console.log(r));
+}
+
 
 
 
