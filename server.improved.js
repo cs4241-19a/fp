@@ -57,6 +57,7 @@ const myLocalStrategy = function(username, password, done) {
     .find({})
     .toArray()
     .then(result => {
+    console.log("TESTING " + result)
       user = result[0];
       console.log("Username: " + result);
 
