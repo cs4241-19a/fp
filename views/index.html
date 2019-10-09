@@ -7,13 +7,63 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
+<style>
+    html, body {
+        height: 100%;
+    }
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+    .content {
+        flex: 1 0 auto;
+    }
+    .footer {
+        flex-shrink: 0;
+    }
+</style>
 <body>
-<p>Move your character using the arrow keys.</p>
+<div class="content">
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Logo</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="leaderboard">Leaderboard</a></li>
+            </ul>
+        </div>
+    </nav>
+    <p>Move your character using the arrow keys.</p>
 
-<p>Choose your character by selecting one of the sprites below. Win by reaching the X.</p>
-<p>Make sure to dodge the turtles</p>
-<input id = "dogBut" type = "image" src = "images/dog.png"></input>
-<input id = "pawBut" type = "image" src = images/cat.png></input>
-<div id = "pixi"></div>
+    <p>Choose your character by selecting one of the sprites below. Win by reaching the X.</p>
+    <p>Make sure to dodge the turtles</p>
+
+    <input id="dogBut" type="image" src="images/dog.png" class="picture"></input>
+    <input id="pawBut" type="image" src=images/cat.png class="picture"></input>
+    <div id="pixi"></div>
+</div>
+
+<footer class="page-footer footer">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Webware Final Project</h5>
+                <p class="grey-text text-lighten-4">A small project that uses pixijs to create a game that tracks user's and their times.</p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                    <li><a class="grey-text text-lighten-3" href="https://github.com/cbennet">Cooper's Github</a></li>
+                    <li><a class="grey-text text-lighten-3" href="https://github.com/kandonie">Kristen's Github</a></li>
+                    <li><a class="grey-text text-lighten-3" href="https://github.com/NobleKalish/">Noble's github</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            © 2019 Copyright Text
+        </div>
+    </div>
+</footer>
 </body>
 </html>
