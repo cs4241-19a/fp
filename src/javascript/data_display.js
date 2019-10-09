@@ -310,7 +310,7 @@ const updateMap = function () {
             div.transition()
                 .duration(200)
                 .style("opacity", .9);
-            div.text(d.city + "\n" + Math.round(d.avg_rtt) + " ms")
+            div.html(d.city + "<br>" + Math.round(d.avg_rtt) + " ms")
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px")
                 .style("font-size", "15px")
