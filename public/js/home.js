@@ -99,12 +99,27 @@ const getRecommendations = function () {
                 for (let j = rating; j < 5; j++)
                     newRecommendation += `<img src="../images/emptystar.png" alt="Blank Star"/>`
 
+                    //     <div class = "nav-right">
+                    // <input type="image" src="images/pause.png" id = "play-pause-button" name="play button" onclick="togglePlayPause()" />
+                    // </div>
+
+                // `      <input type="image" src="images/play.png" id = "play-pause-button" name="play button" onclick="playSomeTrackID('` + songid + '`)"/>' +
+
                 newRecommendation += `</p>\n` +
                     `      <p class="card-text"><i>` + "\"" + caption + "\"" + `</i></p>\n` +
                     `      <p class="invisible" id="songid${i}">` + songid + `</p>\n` +
-                    `      <a class="btn btn-primary" href="#" onclick="playSomeTrackID('` + songid + `')">Play</a>` +
-                    `   </div>\n` +
+                    `      <div class="nav-right">` + `\n` +
+                    `      <input type="image" src="images/play.png" id = "play-pause-button" name="play button" onclick="playSomeTrackID('` + songid + `')"/>` +
+                    `      </div>` + `\n` +
+                    `   </div>` + `\n` +
                     `</div>`
+
+                // newRecommendation += `</p>\n` +
+                //     `      <p class="card-text"><i>` + "\"" + caption + "\"" + `</i></p>\n` +
+                //     `      <p class="invisible" id="songid${i}">` + songid + `</p>\n` +
+                //     `      <a class="btn btn-primary" href="#" onclick="playSomeTrackID('` + songid + `')">Play</a>` +
+                //     `   </div>\n` +
+                //     `</div>`
 
                 list.innerHTML += newRecommendation
             }
@@ -112,24 +127,6 @@ const getRecommendations = function () {
     })()
 }
 
-function buttonPlayPress() {
-    if(state=='stop'){
-        state='play';
-        var button = d3.select("#button_play").classed('btn-success', true);
-        button.select("i").attr('class', "fa fa-pause");
-    }
-    else if(state=='play' || state=='resume'){
-        state = 'pause';
-        d3.select("#button_play i").attr('class', "fa fa-play");
-    }
-    else if(state=='pause'){
-        state = 'resume';
-        d3.select("#button_play i").attr('class', "fa fa-pause");
-    }
-    console.log("button play pressed, play was "+state);
-}
-
 getData()
 getRecommendations()
-//refreshBtn.onclick = getRecommendations
 addRecBtn.onclick = addRecommendation
