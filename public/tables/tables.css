@@ -75,6 +75,20 @@ body {
     margin-right: auto;
 }
 
+#table img {
+    width: 60px;
+    height: 60px;
+    background-position: center center;
+    background-size: 60px;
+    border-radius: 30px;
+    box-shadow: 0px 0px 10px #222222;
+    background-color: white;
+}
+
+#table td {
+    vertical-align: middle;
+}
+
 #footer {
     display: flex;
     justify-content: space-around;
@@ -108,4 +122,64 @@ body {
 
 nav .btn {
     margin-left: 10px;
+}
+
+#info-name {
+    font-size: 28pt;
+}
+
+#info-pic {
+    width: 80px;
+    height: 80px;
+    background-position: center center;
+    background-size: 80px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 15px black;
+    background-color: white;
+}
+
+#stats {
+    display: flex;
+    justify-content: space-around;
+}
+
+#renderer {
+    width: 300px;
+    height: 300px;
+    background-position: center center;
+    background-size: 200px;
+    border-radius: 150px;
+    box-shadow: 0px 0px 15px black;
+    background-color: white;
+}
+
+#playme {
+    position: absolute;
+    margin-left: 110px;
+    margin-top: 110px;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    padding: 6px 0;
+    line-height: 1.42;
+    border-radius: 80px;
+}
+
+#player {
+    margin: 0 auto;
+    width: 300px;
+}
+
+/* Font Awesome Icon */
+
+#like-ico {
+    color: rgb(255, 67, 67);
+}
+
+#up-ico {
+    color: rgb(83, 143, 255)
+}
+
+#down-ico {
+    color: rgb(255, 175, 83)
 }

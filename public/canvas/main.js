@@ -45,13 +45,13 @@ function animationLooper() {
     // set to the size of device
     canvas = document.getElementById("renderer");
     canvas.width = 300;
-    canvas.height = 500;
+    canvas.height = 300;
     ctx = canvas.getContext("2d");
 
     // find the center of the window
     center_x = canvas.width / 2;
     center_y = canvas.height / 2;
-    radius = 50;
+    radius = 40;
 
     // style the background
     var gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
@@ -63,7 +63,8 @@ function animationLooper() {
     //draw a circle
     ctx.beginPath();
     ctx.arc(center_x, center_y, radius, 0, 2 * Math.PI);
-    ctx.stroke();
+    ctx.fillStyle = 'white';
+    ctx.fill();
 
     if (analyser !== undefined) {
         analyser.getByteFrequencyData(frequency_array);

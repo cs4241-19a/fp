@@ -133,8 +133,13 @@ nav .btn {
 }
 
 #stats {
+    padding: 0px 100px;
     display: flex;
     justify-content: space-around;
+}
+
+#basic-info {
+    padding: 0px 100px;
 }
 
 .toast {
@@ -154,17 +159,17 @@ nav .btn {
     color: #5b5b5e;
 }
 
-#edit-info:hover {
+/* #edit-info:hover {
     color: black;
-}
+} */
 
 #comment-ico {
     color: #5b5b5e;
 }
 
-#comment-ico:hover {
+/* #comment-ico:hover {
     color: black;
-}
+} */
 
 #like-ico {
     color: rgb(255, 67, 67);
