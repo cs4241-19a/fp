@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Update Profile</title>
+
+    <!--  Bootstrap CSS  -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!--  font awesome css  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+
+    <link href="profile.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="position: sticky" id="navbar">
+        <a class="navbar-brand" href="../tables/overview.html">Overview</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="../tables/liked.html">Favorate</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../tables/blacklist.html">Blacklist</a>
+                </li>
+            </ul>
+            <a class="btn btn-info" href="/modify-profile.html">Modify Profile</a>
+            <a class="btn btn-primary" href="../profile/profile.html">Profile</a>
+            <a class="btn btn-light" href="../index.html">Logout</a>
+        </div>
+    </nav>
+    <div id='background'></div>
+    <div class="content">
+        <div id="profile-box">
+            <div id="avatar-box">
+                <div id="avatar"></div>
+            </div>
+            <div id="name"></div>
+            <div id="personal-msg">
+                Life is short, I choose <del>Node.js</del> Python.
+            </div>
+            <div id="profile">
+                <div id="stats">
+                    <p>
+                        <i id="like-ico" class="fas fa-heart"></i>
+                        <span>79</span>
+                    </p>
+                    <p>
+                        <i id="up-ico" class="fas fa-thumbs-up"></i>
+                        <span id="likes"></span>
+                    </p>
+                    <p>
+                        <i id="down-ico" class="fas fa-thumbs-down"></i>
+                        <span id="dislikes"></span>
+                    </p>
+                </div>
+                <h2>Basic Info<i id="edit-info" onclick="alert('modifyme')" class="fas fa-edit"></i></h2>
+                <div id="basic-info">
+                    <table class="table table-borderless">
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Gender</th>
+                                <td id="gender">Male</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Age</th>
+                                <td id="age">20</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Hobby</th>
+                                <td id="hobby">Coding</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h2>Comments<i id="comment-ico" class="fas fa-comments"></i></h2>
+                <div id="comments">
+                    <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false">
+                        <div class="toast-header">
+                            <img src="../img/avatar.png" class="rounded mr-2">
+                            <strong class="mr-auto" id="name2">Happy Pengu</strong>
+                            <small>Leave a comment now</small>
+                        </div>
+                        <div class="toast-body">
+                            <form>
+                                <div class="form-group">
+                                    <textarea class="form-control" id="comment-text" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="mb-2 float-right btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false">
+                        <div class="toast-header">
+                            <img src="../img/avatar-alt.png" class="rounded mr-2">
+                            <strong class="mr-auto">Dab pengu</strong>
+                            <small>11 mins ago</small>
+                        </div>
+                        <div class="toast-body">
+                            That was so coooooooool man
+                        </div>
+                    </div>
+                    <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false">
+                        <div class="toast-header">
+                            <img src="../img/avatar-alt.png" class="rounded mr-2">
+                            <strong class="mr-auto">Dab pengu</strong>
+                            <small>12 mins ago</small>
+                        </div>
+                        <div class="toast-body">
+                            Ayyyyy man I love it!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <p><a href="https://cs4241-19a.github.io/">CS4241</a></p>
+        <p>&copy; 2019 - Rui & Percy & Zonglin</p>
+        <p><a href="https://github.com/PercyJiang/fp">Git Repo</a></p>
+    </div>
+    <!-- Go top -->
+    <button id="goTop-btn" type='button' class="btn btn-primary to-top"><i class="fa fa-arrow-up"></i></button>
+</body>
+
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="profile.js"></script>
+
+<!--  JavaScript Plugins  -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</html>

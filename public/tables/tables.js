@@ -108,6 +108,21 @@ fetch('/getYou', {
         };
         return bomb
     }
+    const makeComment = function(row) {
+        let comment = createNode('i')
+        comment.className = 'fas fa-comments'
+        comment.onclick = function(e) {
+            let comment = prompt("Please enter your comment", "You look hot!")
+            if (comment !== null && comment !== "") {
+                alert("You have made the following comment: \n" + comment)
+                row.comments.push([you.pic, you.name, comment])
+                update(row)
+            } else alert('Comment canceled')
+            e.preventDefault()
+            return false
+        }
+        return comment
+    }
     const makeLike = function(row) {
         let like = createNode('i')
         like.className = 'fa fa-thumbs-o-up'
@@ -166,6 +181,7 @@ fetch('/getYou', {
         let td8 = createNode('th')
         let td9 = createNode('th')
         let td10 = createNode('th')
+        let td11 = createNode('th')
 
         append(td1, makeImg(row))
         td2.innerHTML = row.name
@@ -178,7 +194,8 @@ fetch('/getYou', {
         append(td7, makeDislike(row))
         td8.innerHTML = calculateScore(row)
         append(td9, makeHeart(row))
-        append(td10, makeBomb(row))
+        append(td10, makeComment(row))
+        append(td11, makeBomb(row))
 
         append(tr, td1)
         append(tr, td2)
@@ -190,6 +207,7 @@ fetch('/getYou', {
         append(tr, td8)
         append(tr, td9)
         append(tr, td10)
+        append(tr, td11)
 
         return tr
     }
@@ -205,7 +223,6 @@ fetch('/getYou', {
             makeHeadings()
             data.map(function(row) {
                 if (row.username !== you.username) {
-                    console.log(document.title)
                     switch (document.title) {
                         case 'Overview':
                             if (!you.blackList.includes(row.username)) append(table, makeRow(row));

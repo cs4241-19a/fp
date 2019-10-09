@@ -1,0 +1,191 @@
+#background {
+    /* BOX MODEL */
+    width: 100%;
+    height: 450px;
+    /* ENHANCEMENT */
+    background-image: url('/img/bg.jpg');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 1)), to(rgba(0, 0, 0, 0)));
+    z-index: -1;
+    position: relative;
+}
+
+#namebox {
+    width: 400px;
+    height: 50px;
+    background: black;
+    color: white;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 24pt;
+    margin-bottom: 20px;
+}
+
+#handwritten {
+    margin: 0 auto;
+    width: 500px;
+    text-align: center;
+    font-style: bold;
+    font-size: 18pt;
+    font-family: 'Great Vibes', cursive;
+    margin-bottom: 100px;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: #eeeeee;
+}
+
+.content {
+    margin: -220px 5% 100px;
+}
+
+.to-top {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+}
+
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#footer {
+    display: flex;
+    justify-content: space-around;
+    background-color: #3c3d41;
+    color: #fff;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+#footer a {
+    color: #d2d1d1c0;
+    text-decoration: none;
+}
+
+#footer a:hover {
+    color: #fff;
+}
+
+nav .btn {
+    margin-left: 10px;
+}
+
+#profile-box {
+    margin: 0 auto;
+    /* margin-top: 5%; */
+    width: 90%;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    box-shadow: 0px 0px 20px #aaaaaa;
+}
+
+#avatar {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    /* background-image: url('/img/avatar.png'); */
+    background-position: center center;
+    background-size: 200px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 15px black;
+    background-color: white;
+    margin-left: 100px;
+    margin-top: -120px;
+}
+
+#personal-msg {
+    font-style: bold;
+    font-size: 20pt;
+    font-family: 'Nothing You Could Do', cursive;
+    margin-left: 380px;
+}
+
+#name {
+    position: absolute;
+    font-family: 'Lato', sans-serif;
+    font-size: 24pt;
+    margin-left: 380px;
+    margin-top: -100px;
+}
+
+#profile {
+    font-size: 20px;
+    padding: 40px;
+}
+
+#profile>div {
+    margin-top: 20px;
+}
+
+#profile h2 {
+    margin-top: 20px;
+    border-bottom: solid 1px #3c3d41;
+    display: flex;
+    justify-content: space-between;
+}
+
+#stats {
+    display: flex;
+    justify-content: space-around;
+}
+
+.toast {
+    margin: 0 auto;
+    max-width: 500px;
+}
+
+.toast img {
+    width: 40px;
+    height: 40px;
+}
+
+
+/* Font Awesome Icon */
+
+#edit-info {
+    color: #5b5b5e;
+}
+
+#edit-info:hover {
+    color: black;
+}
+
+#comment-ico {
+    color: #5b5b5e;
+}
+
+#comment-ico:hover {
+    color: black;
+}
+
+#like-ico {
+    color: rgb(255, 67, 67);
+}
+
+#like-ico:hover {
+    color: rgb(255, 0, 0);
+}
+
+#up-ico {
+    color: rgb(83, 143, 255)
+}
+
+#up-ico:hover {
+    color: rgb(0, 102, 255);
+}
+
+#down-ico {
+    color: rgb(255, 175, 83)
+}
+
+#down-ico:hover {
+    color: rgb(255, 145, 0);
+}
