@@ -44565,6 +44565,7 @@ app.stage.addChild(pixiTimer);
 pixiTimer.visible = false;
 var count = 0;
 var fallDone = true;
+var victory = new PIXI.Text("");
 
 function resetPaw() {
   paw.x = app.screen.width / 2;
@@ -44621,14 +44622,11 @@ document.getElementById("pawBut").addEventListener("click", function () {
 app.ticker.add(function (delta) {
   if (start) {
     pixiTimer.visible = true;
+    pixiTimer.text = 'Time: ' + time.toString();
+    victory.text = '';
 
     if (collisionDetect(activeChar, finish)) {
-      var victory = new PIXI.Text("You Win!! Your final time was: " + time.toString(), {
-        fontFamily: 'Arial',
-        fontSize: 24,
-        fill: 0xff1010,
-        align: 'center'
-      });
+      victory.text = 'You win! Your final time was: ' + time.toString();
       app.stage.addChild(victory);
       pixiTimer.visible = false;
       victory.visible = true;
