@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 
+import socketIOClient from "socket.io-client";
+const socket = socketIOClient("localhost:8080");
 //would normally come from database but this is for testing
 //list of ALL words
 let allWords = [
@@ -77,7 +79,7 @@ class Card extends React.Component {
         <button
             className="button card"
             style={{backgroundColor: this.state.color}}
-            onClick={() => this.changeStyle(this.props.team)}
+            onClick={() => clickAction(this)}
         >
           {this.props.value}
         </button>
@@ -270,5 +272,20 @@ function setBoard(order) {
 
   return [boardWords, boardTeams];
 }
+
+function clickAction(btn){
+  btn.changeStyle(btn.props.team);
+  console.log('number clicked');
+  socket.emit("send hint", "sent!");
+}
+
+socket.on("update hints", function(msg){
+  var final_message = document.createElement('p');
+  console.log(msg);
+  final_message.innerHTML = msg;
+  console.log(final_message);
+  document.getElementsByClassName('chat-container')[0].append(final_message);
+});
+
 
 export default App;
