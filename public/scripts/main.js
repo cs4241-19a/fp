@@ -1,7 +1,7 @@
 const Phaser = require('phaser');
 import createMap from "./map";
 import CONSTANTS from "./constants";
-import * from "./resultsManager";
+import {initResults, postResult} from "./resultsManager";
 
 let config = {
   type: Phaser.AUTO,
@@ -50,6 +50,8 @@ function create() {
 
   // sets up the game results
   initResults();
+
+
 }
 
 /**

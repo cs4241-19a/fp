@@ -16,7 +16,7 @@ const fs = require('fs');
 
 app.use(helmet());
 app.use(compression());
-app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
+
 
 // provide favicon
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -25,8 +25,8 @@ app.use('/materialize', express.static(__dirname +
     '/node_modules/materialize-css/dist'));
 
 app.use(express.static(__dirname + '/public'));
-// app.use(bodyParser.json({type: 'application/json'}));
-// app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(bodyParser.json({type: 'application/json'}));
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 // database + data access object setup
 const dbAccessor = require('./dao/dbAccessor').DbAccessor;
@@ -41,9 +41,13 @@ app.get('/get-game-results', function (request, response) {
 
 });
 
-app.post('/add', function (request, response) {
-    let requestOutput = dbAccessor.addNewGameResult(request.body)
-    response.end(JSON.stringify(requestOutput))
+app.post('/add-result', function (request, response) {
+    let body = request.body;
+    console.log('body is ');
+    let requestOutput = dbAccessor.addNewGameResult(body)
+    if (requestOutput) {
+        response.end(JSON.stringify(requestOutput))
+    }
 })
 
 // port

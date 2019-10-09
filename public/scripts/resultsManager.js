@@ -1,6 +1,8 @@
-exports.initResults = function () {
+let input1 = "";
+let input2 = "";
+export const initResults = function () {
     let showResults = document.getElementById('game-results');
-    showResults.innerHTML += `<div class="" id=""> <div class="row" id=""> `
+    showResults.innerHTML = `<div class="" id=""> <div class="row" id=""> `
 
     let gameResult = "";
     let p1 = "";
@@ -8,15 +10,16 @@ exports.initResults = function () {
     let pPieces1 = "";
     let pPieces2 = "";
     let recency = "";
-    let display = "";
 
     fetch('/get-game-results', {
         method: 'GET'
     })
         .then((response) => response.json())
-        .then((results) => { console.log("on client side" + JSON.parse(results));
+        .then((results) => {
+            //console.log("on client side" + JSON.parse(results));
             let gameResults = JSON.parse(results);
             gameResults.forEach(function (result) {
+                let display = "";
                 if (result) {
                     gameResult = (parseInt(result.result) == 0) ? "W - L" : "L - W";
                     p1 = result.player1.name;
@@ -55,16 +58,16 @@ exports.initResults = function () {
                     </div> 
                  </div> </div>
                 `
+                    showResults.innerHTML = (display += showResults.innerHTML);
                 }
-                console.log(display);
+                //console.log(display);
 
             })
-            console.log(display);
-            showResults.innerHTML += display;
+            //console.log(display);
             //showResults.innerHTML += `</div>`
         })
-    console.log(display);
-    showResults.innerHTML += `</div>` ;
+    //console.log(display);
+    showResults.innerHTML += `</div>`;
 
 }
 
@@ -74,34 +77,39 @@ exports.initResults = function () {
  * @param {Array<String>} p1Pieces an array of strings for p1's pieces
  * @param {Array<String>} p2Pieces an array of strings for p2's pieces
  */
-exports.postResult = function(winner, p1Pieces, p2Pieces) {
+export const postResult = function (winner, p1Pieces, p2Pieces) {
     // write to db
-    // calls init
+
     let p1 = document.getElementById("player1").value;
     let p2 = document.getElementById("player2").value;
-    console.log(p1 + " " + p2 + "are playing");
-    let body = {
-      player1: p1,
+
+
+    //console.log(p1 + " " + p2 + "are playing");
+    let newResult = {
+        player1: p1,
         player2: p2,
         p1Pieces: p1Pieces,
         p2Pieces: p2Pieces,
         result: winner
 
     };
+    let body = JSON.stringify(newResult);
+    //console.log(" body in post function: " +body);
 
-    fetch('/add', {
-        method: 'POST',
+    fetch('/add-result', {
         headers: {'Content-Type': 'application/json'},
+        method: 'POST',
         body
     })
         .then((response) => response.json())
-        .then(function() {
+        .then(function () {
             console.log("Added new game result: " + body);
             // refreshing
             initResults();
         })
+
     return false;
 
 
 }
-// 
+

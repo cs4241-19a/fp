@@ -2,15 +2,128 @@
   "games": [
     {
       "recency": "0",
-      "player1": {"name": "Kent", "pieces": ["a", "b", "c"]},
-      "player2": {"name": "JC", "pieces": ["w","x","y","z"]},
+      "player1": {
+        "name": "Kent",
+        "pieces": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "player2": {
+        "name": "JC",
+        "pieces": [
+          "w",
+          "x",
+          "y",
+          "z"
+        ]
+      },
       "result": 0
     },
     {
       "recency": "1",
-      "player1": {"name": "Kent", "pieces": ["a", "b", "c"]},
-      "player2": {"name": "JC", "pieces": ["w","x","y","z"]},
+      "player1": {
+        "name": "Kent",
+        "pieces": [
+          "a",
+          "b",
+          "c"
+        ]
+      },
+      "player2": {
+        "name": "JC",
+        "pieces": [
+          "w",
+          "x",
+          "y",
+          "z"
+        ]
+      },
       "result": 1
+    },
+    {
+      "player1": {
+        "name": "sam",
+        "pieces": [
+          "a",
+          "b"
+        ]
+      },
+      "player2": {
+        "name": "tom ",
+        "pieces": [
+          "c",
+          "d"
+        ]
+      },
+      "result": 0
+    },
+    {
+      "player1": {
+        "name": "sam",
+        "pieces": [
+          "a",
+          "b"
+        ]
+      },
+      "player2": {
+        "name": "tom ",
+        "pieces": [
+          "c",
+          "d"
+        ]
+      },
+      "result": 0
+    },
+    {
+      "player1": {
+        "name": "",
+        "pieces": [
+          "a",
+          "b"
+        ]
+      },
+      "player2": {
+        "name": "",
+        "pieces": [
+          "c",
+          "d"
+        ]
+      },
+      "result": 0
+    },
+    {
+      "player1": {
+        "name": "ab",
+        "pieces": [
+          "a",
+          "b"
+        ]
+      },
+      "player2": {
+        "name": "ab",
+        "pieces": [
+          "c",
+          "d"
+        ]
+      },
+      "result": 0
+    },
+    {
+      "player1": {
+        "name": "",
+        "pieces": [
+          "a"
+        ]
+      },
+      "player2": {
+        "name": "",
+        "pieces": [
+          "b"
+        ]
+      },
+      "result": 0
     }
   ],
   "": []
