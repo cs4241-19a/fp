@@ -126,6 +126,79 @@ passport.deserializeUser((user, done) =>
 })
 
 
+// ###########
+// ## TASKS ##
+// ###########
+
+app.post(
+	"/gettasks",
+	function(res, req)
+	{
+		if (res.user === undefined)
+		{
+			res.status(401) // Unauthorized
+			res.send()
+			return
+		}
+		
+		res.json({/* TODO send back the tasks for that user */})
+	}
+)
+
+app.post(
+	"/createtask",
+	function(res, req)
+	{
+		if (res.user === undefined)
+		{
+			res.status(401) // Unauthorized
+			res.send()
+			return
+		}
+		
+		// TODO insert new task into DB, maybe authenticate stuff?
+		// Convert DateTime to moment, then use moment.format
+		res.status(200)
+		res.send()
+	}
+)
+
+app.post(
+	"/edittask",
+	function(res, req)
+	{
+		if (res.user === undefined)
+		{
+			res.status(401) // Unauthorized
+			res.send()
+			return
+		}
+		
+		// TODO edit task in DB, maybe authenticate stuff?
+		// Convert DateTime to moment, then use moment.format
+		res.status(200)
+		res.send()
+	}
+)
+
+app.post(
+	"/deletetask",
+	function(res, req)
+	{
+		if (res.user === undefined)
+		{
+			res.status(401) // Unauthorized
+			res.send()
+			return
+		}
+		
+		// TODO delete task in DB, maybe authenticate stuff?
+		res.status(200)
+		res.send()
+	}
+)
+
+
 // ############
 // ## LISTEN ##
 // ############
