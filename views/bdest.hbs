@@ -13,3 +13,10 @@
         {{> includes/game-submit-default }}
     {{/inline}}
 {{/layouts/modal-layout}}
+
+<!-- The help modal -->
+{{#> layouts/modal-layout type="help" title="Brick Destroyer Help" }}
+    {{#*inline "form-content"}}
+        {{> includes/help/bdest }}
+    {{/inline}}
+{{/layouts/modal-layout}}
