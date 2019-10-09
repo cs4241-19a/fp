@@ -19,8 +19,8 @@ export default function App(props) {
     return (
         <StoreProvider store={store}>
             <FeedContainer />
-            <div className="w-full padder">
-                <div className="w-full glower">
+            <div className="w-full">
+                <div className="w-full">
                     <div className="w-full bg-white rounded overflow-hidden shadow-lg">
                         <img className="w-full" src={require("../media/appVisual.png")} alt="Vis"/>
                         <div
@@ -53,8 +53,8 @@ export default function App(props) {
                     </div>
                 </div>
             </div>
-            <div className="w-full padder">
-                <div className="w-full glower">
+            <div className="w-full">
+                <div className="w-full">
                     <div className="w-full bg-white rounded overflow-hidden shadow-lg">
                         <img className="w-full" src={require("../media/appVisual.png")} alt="Vis"/>
                         <div
@@ -87,8 +87,8 @@ export default function App(props) {
                     </div>
                 </div>
             </div>
-            <div className="w-full padder">
-                <div className="w-full glower">
+            <div className="w-full">
+                <div className="w-full">
                     <div className="w-full bg-white rounded overflow-hidden shadow-lg">
                         <img className="w-full" src={require("../media/appVisual.png")} alt="Vis"/>
                         <div
@@ -121,8 +121,8 @@ export default function App(props) {
                     </div>
                 </div>
             </div>
-            <div className="w-full padder">
-                <div className="w-full glower">
+            <div className="w-full">
+                <div className="w-full">
                     <div className="w-full bg-white rounded overflow-hidden shadow-lg">
                         <img className="w-full" src={require("../media/appVisual.png")} alt="Vis"/>
                         <div
@@ -155,8 +155,8 @@ export default function App(props) {
                     </div>
                 </div>
             </div>
-            <div className="w-full padder">
-                <div className="w-full glower">
+            <div className="w-full">
+                <div className="w-full">
                     <div className="w-full bg-white rounded overflow-hidden shadow-lg">
                         <img className="w-full" src={require("../media/appVisual.png")} alt="Vis"/>
                         <div
@@ -189,6 +189,7 @@ export default function App(props) {
                     </div>
                 </div>
             </div>
+            <div className="lg:text-center bottomBanner"> Designed and developed in Worcester, Massachusetts </div>
         </StoreProvider>
     )
 

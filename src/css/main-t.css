@@ -63,46 +63,12 @@ body {
     box-shadow: 0 1px 10px dodgerblue;
 }
 
-.imgCent img {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-}
-
-.padder {
-    padding: 50px;
-}
-
-.glower {
-    box-shadow: 0 10px 20px green;
-}
-
-.offClr {
-    color: #00FF54;
-    background-color: black;
-    padding-top: 1px;
-    padding-bottom: 2px;
-    padding-left: 15px;
-    padding-right: 15px;
-    border-radius: 30px;
-}
-
-#introLogo {
-    background-image: url("../media/soundcloudishLogin.png");
-}
-
-#musicPic {
-    background-image: url("../media/music.jpg");
-}
-
-
 #root {
     padding-left: 100px;
     padding-right: 100px;
     padding-top: 50px;
     padding-bottom: 50px;
 }
-
 
 #navBar img {
     margin-left: auto;
@@ -133,42 +99,6 @@ button:hover {
     background: #00FF55;
     color: black !important;
     border: 2px solid #00FF55;
-}
-
-.headT {
-    color: white;
-    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter";
-    font-weight: 600;
-    font-size: 3em;
-    margin-top: -20px;
-    margin-bottom: -20px;
-}
-
-.headT1 {
-    color: white;
-    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter";
-    font-weight: 600;
-    font-size: 3em;
-    margin-bottom: -10px;
-}
-
-.signT {
-    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter";
-    font-weight: 500;
-    font-size: 1.7em;
-    color: #00FF54;
-    background-color: black;
-    padding-top: 1px;
-    padding-bottom: 2px;
-    padding-left: 15px;
-    padding-right: 15px;
-    border-radius: 30px;
-    box-shadow: 0 10px 20px #999;
-}
-
-.topMar {
-    margin-top: 20px;
-    box-shadow: 0 10px 20px #999;
 }
 
 .bottomBanner {
