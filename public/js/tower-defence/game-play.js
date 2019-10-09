@@ -12,7 +12,8 @@ const gamePlayState = new Phaser.Class({
 
     create: function() {
         const scene = this;
-        scene.menuSelection = null;  // set to {x, y, cellType} when has a value
+        console.log(scene);
+        scene.menuSelection = null;  // set to {type, add} when has a value of types cellTypes, function
 
         // Create objects
         console.log("GamePlay");
@@ -21,17 +22,33 @@ const gamePlayState = new Phaser.Class({
         initFromGrid(scene);  // add bricks
 
         scene.enemies = [];
+        scene.towers = [];
         // Enemy types
         const enemy_events = {onBase: () => console.log('-1 life'), onDeath: () => console.log('-1 Enemy')};
         scene.EnemyUnits = {Trucks: Truck(enemy_events)};
-        scene.Towers = {SandBags: SandBag()};
+        scene.Towers = {SandBags: SandBag(), MachineGuns: MachineGun(), Cannons: Cannon()};
+
+        scene.addTruck3b = function (waveIndex) {
+            scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), waveIndex));
+        };
+
+        scene.addSandBag = function (coord) {
+            scene.towers.push(scene.Towers.SandBags.create(scene.Towers.SandBags.Sand(scene, coord)));
+        };
+        scene.addMachineGun = function (coord) {
+            scene.towers.push(scene.Towers.MachineGuns.create(scene.Towers.MachineGuns.MachineGun(scene, coord)));
+        };
+        scene.addCannon = function (coord) {
+            scene.towers.push(scene.Towers.Cannons.create(scene.Towers.Cannons.Cannon(scene, coord)));
+        };
 
 
-        scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 1));
+        scene.addTruck3b(0);
+        scene.addSandBag({x: 1, y: 1});
+
         // scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 2));
         // scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 3));
         // scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 4));
-        scene.Towers.SandBags.create(scene.Towers.SandBags.Sand(scene, {x: 1, y: 1}));
 
         // cursor
         this.cursor = this.add.graphics();
@@ -49,8 +66,15 @@ const gamePlayState = new Phaser.Class({
         scene.enemies.forEach(enemy => {
             enemy.move();
         });
+        scene.towers.forEach(tower => {
+            tower.resetTargets(scene.enemies);
+            tower.shoot();
+        });
 
     },
+
+
+
 });
 
 // Create
@@ -82,20 +106,36 @@ function initFromGrid(scene) {
 
 
 function placeTower(scene, coord) {
-    console.log("place");
-    if (grid[coord.y][coord.x] === cellTypes.OPEN) {
+    if (scene.menuSelection && grid[coord.y][coord.x] === cellTypes.OPEN) {
         grid[coord.y][coord.x] = cellTypes.TOWER;
         if (getPath(enemyEnterCoord).length === 0) {
             grid[coord.y][coord.x] = cellTypes.OPEN;  // reset to open since this blocks a path from the entrance
-        } else {
-            scene.Towers.SandBags.create(scene.Towers.SandBags.Sand(scene, coord));
+        } else if (scene.menuSelection) {
+            scene.menuSelection.add(coord);
         }
-
     }
 }
 
-function selectTower(scene) {
-    console.log("select");
+function clearTowerSelection(scene) {
+    scene.menuSelection = null;
+}
+
+function selectTower(scene, coord) {
+    switch (grid[coord.y][coord.x]) {
+        case cellTypes.MENU_SAND:
+            scene.menuSelection = {type: cellTypes.MENU_SAND, add: scene.addSandBag};
+            break;
+        case cellTypes.MENU_MG:
+            scene.menuSelection = {type: cellTypes.MENU_MG, add: scene.addMachineGun};
+            break;
+        case cellTypes.MENU_CANNON:
+            scene.menuSelection = {type: cellTypes.MENU_CANNON, add: scene.addCannon};
+            break;
+        default:
+            clearTowerSelection(scene);
+            break;
+    }
+
 }
 
 function updateMarker(scene) {
@@ -104,38 +144,12 @@ function updateMarker(scene) {
     scene.cursor.y = coord.y * cellSize.height;
 
     if (scene.input.mousePointer.isDown) {
-        // console.log(coord);
+        console.log(scene.menuSelection);
         if (coord.y < playArea.height ) {
             placeTower(scene, coord);
         } else if (coord.y >= playArea.height && coord.y < playArea.height + menuArea.height) {
             selectTower(scene, coord);
         }
-        // switch (grid[coord.y][coord.x]) {
-        //     case cellTypes.WALL:
-        //         console.log("wall");
-        //         break;
-        //     case cellTypes.TOWER:
-        //         console.log("TOWER");
-        //         break;
-        //     case cellTypes.OPEN:
-        //         console.log("OPEN");
-        //         break;
-        //     case cellTypes.BASE:
-        //         console.log("BASE");
-        //         break;
-        //     case cellTypes.MENU_SAND:
-        //         console.log("MENU_SAND");
-        //         break;
-        //     case cellTypes.MENU_MG:
-        //         console.log("MENU_MG");
-        //         break;
-        //     case cellTypes.MENU_CANNON:
-        //         console.log("MENU_CANNON");
-        //         break;
-        //
-        // }
-        // map.putTile(currentTile, currentLayer.getTileX(marker.x), currentLayer.getTileY(marker.y), currentLayer);
-        // map.fill(currentTile, currentLayer.getTileX(marker.x), currentLayer.getTileY(marker.y), 4, 4, currentLayer);
     }
 
 }
@@ -167,9 +181,9 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
 
     function move() {
         if (atBase) return false;  // halt movement
-        if (waveWaitDur > 0) {
+        if (waveWaitDur >= 0) {
             waveWaitDur--;
-            if (waveWaitDur === 0) {
+            if (waveWaitDur < 0) {
                 // set the sprite to the correct position
                 sprite.x = enemyEnterCoord.x * cellSize.width;
                 sprite.y = enemyEnterCoord.y * cellSize.height;
@@ -185,6 +199,7 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
             console.log(pathPoints)
         }
         if (pathPoints) {
+            // CatmullRom
             newCoordTrans = {x: Phaser.Math.Interpolation.CatmullRom(pathPoints.x, moveIdx), y: Phaser.Math.Interpolation.CatmullRom(pathPoints.y, moveIdx)};
             // x and y paths can have different lengths
             const pathIdxX = (moveIdx < 1) ? Math.floor(pathPoints.x.length * moveIdx) : pathPoints.x.length - 1;
@@ -201,7 +216,7 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
             sprite.rotation = spriteRotation + angle;
             sprite.x = newPos.x;
             sprite.y = newPos.y;
-            moveIdx += moveSpeed;
+            moveIdx += (moveSpeed * 2 / (pathPoints.x.length + pathPoints.y.length) );
             checkAtBase(newPathCoord);
         }
     }
@@ -229,6 +244,7 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
     function damage(damageAmount) {
         if (!alive) return false;  // return false if the enemy is already dead
         hp -= damageAmount;  // damage the enemy
+        console.log("ouch", hp);
         if (isDead()) {
             alive = false;
             onDeath();
@@ -240,8 +256,12 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
     function isDead() {
         return (hp < 0);
     }
+    
+    function isAlive() {
+        return alive;
+    }
 
-    return {sprite, move, damage}
+    return {sprite, move, damage, isAlive}
 }
 
 // Update
@@ -272,7 +292,7 @@ function Tower(sprite, range, damage, fireRate) {
      * @returns {boolean} True when confirmed, else false.
      */
     function confirmTarget() {
-        if (!target && target.alive) {
+        if (!target || !target.isAlive()) {
             if (!targets) {  // if no current target get the next one in range
                 for (let i = 0; i < targets.length; i++) {
                     if (isInRange(targets[i]) && targets[i].alive) {
@@ -291,16 +311,18 @@ function Tower(sprite, range, damage, fireRate) {
      * @returns {boolean}
      */
     function shoot() {
-        const target = target;  // store the target in case the property changes
+        const localTarget = target;  // store the target in case the property changes
+        // console.log(confirmTarget());
+        // console.log(targets);
         if (confirmTarget()) {
-            switch(target.damage(damage)) {
+            switch(localTarget.damage(damage)) {
                 case false:
                     return shoot();  // bad target so try again
                 case true:
                     // do nothing
                     return true;
                 case undefined:
-                    targets.splice(targets.indexOf(target), 1);  // remove the enemy from the targets
+                    targets.splice(targets.indexOf(localTarget), 1);  // remove the enemy from the targets
                     return true;
             }
         }
@@ -322,7 +344,7 @@ function Truck(events) {
      * @returns {{damage: (function(number)), move: Function, sprite: *}}
      */
     function create(sprite, waveIndex) {
-        return Enemy(sprite, waveIndex, 0.003, 75, events.onDeath, events.onBase);
+        return Enemy(sprite, waveIndex, 0.06, 75, events.onDeath, events.onBase);
     }
 
     function Truck3b(scene) {
@@ -344,7 +366,7 @@ function SandBag() {
      * @param {Phaser.GameObjects.Image} sprite The sprite to use
      */
     function create(sprite) {
-        return Tower(sprite, 0.003, 75, 1);
+        return Tower(sprite, 0, 0, 0);
     }
 
     /**
@@ -360,6 +382,51 @@ function SandBag() {
     return {create, Sand}
 }
 
+function MachineGun() {
+    /**
+     * Create the Tower at the coordinates.
+     * @returns {{resetTargets: *, sprite: *, shoot: *}}
+     * @param {Phaser.GameObjects.Image} sprite The sprite to use
+     */
+    function create(sprite) {
+        return Tower(sprite, 2, 5, 3);
+    }
+
+    /**
+     * Create the Tower at the coordinates.
+     * @param scene The game object.
+     * @param coord The coordinates of the cell to place at.
+     * @returns {Phaser.GameObjects.Image} The sprite.
+     */
+    function MachineGun(scene, coord) {
+        return scene.add.image(coord.x * cellSize.width, coord.y * cellSize.height, "machine gun").setOrigin(0, 0);
+    }
+
+    return {create, MachineGun}
+}
+
+function Cannon() {
+    /**
+     * Create the Tower at the coordinates.
+     * @returns {{resetTargets: *, sprite: *, shoot: *}}
+     * @param {Phaser.GameObjects.Image} sprite The sprite to use
+     */
+    function create(sprite) {
+        return Tower(sprite, 3, 20, 15);
+    }
+
+    /**
+     * Create the Tower at the coordinates.
+     * @param scene The game object.
+     * @param coord The coordinates of the cell to place at.
+     * @returns {Phaser.GameObjects.Image} The sprite.
+     */
+    function Cannon(scene, coord) {
+        return scene.add.image(coord.x * cellSize.width, coord.y * cellSize.height, "cannon").setOrigin(0, 0);
+    }
+
+    return {create, Cannon}
+}
 
 // Add scene to list of scenes
 myGame.scenes.push(gamePlayState);

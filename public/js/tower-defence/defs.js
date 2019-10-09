@@ -125,7 +125,8 @@ function getPath(startCoord) {
 function getPathPoints(startCoord) {
     const pathPoints = {x: [], y: []};
     // start off the screen and first go to the starting point
-    pathPoints.y.push(startCoord.y, startCoord.y);
+    pathPoints.x.push(startCoord.x);
+    pathPoints.y.push(startCoord.y);
     getPath(startCoord).forEach(node => {
         // x and y are switched in grid
         pathPoints.x.push(node.y);
