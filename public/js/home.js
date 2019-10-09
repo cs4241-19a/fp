@@ -114,5 +114,5 @@ const getRecommendations = function () {
 
 getData()
 getRecommendations()
-refreshBtn.onclick = getRecommendations
+//refreshBtn.onclick = getRecommendations
 addRecBtn.onclick = addRecommendation

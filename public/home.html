@@ -23,7 +23,7 @@
     <title>Music App</title>
 </head>
 
-<body>
+<body id = "body">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <img alt="Application Logo"
          class="logo mt-2"
@@ -82,29 +82,22 @@
         </div>
 
         <div class="col">
-            <div id="rec-btn-div">
-                <button class="btn btn-primary" id="refresh-btn">Refresh Recommendations</button>
-            </div>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light player-header">
+                <img alt="image of song cover" id="current-track" src="images/songnotfound.png"/>
+                <h5 class="card-title" id="current-track-name">Song Name, Artist, Album</h5>
+                <h5 class="card-title" > - </h5>
+                <h5 class="card-title" id="current-track-artist"></h5>
+                <a class="btn btn-primary" href="#" onclick="togglePlayPause()">Play/Pause</a>
+            </nav>
             <div class="card">
-                <div class="card-header"></div>
-                <p class="text">
-                    Scrollable List of songs here
-                </p>
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title" id="current-track-name">Song Name, Artist, Album</h5>
-                        <img alt="image of song cover" id="current-track" src="images/songnotfound.png"/>
-                        <p class="card-text">Recommendation note</p>
-                        <a class="btn btn-primary" href="#" onclick="togglePlayPause()">Play/Pause</a>
-                    </div>
-                </div>
-                <div id="recommendation-list"></div>
-                <a class="btn btn-primary" href="#" onclick="playSomeTrackID('3n3Ppam7vgaVa1iaRUc9Lp')">Play some other
-                    random song</a>
+                <div id="recommendation-list" class = "overflow-auto recommendations-container"></div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $('#body').css('min-height', screen.height);
+</script>
 <p class="invisible" id="secretUsername">badUsernameZQFMGB</p>
 <p class="invisible" id="secretSongID">-1</p>
 <p class="invisible" id="secretArtist">-1</p>
