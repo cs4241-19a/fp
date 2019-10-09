@@ -265,9 +265,7 @@ var update = async function() {
       let pointVal = job.point;
       if(!job.status.complete) {pointVal = -pointVal}
       else {if(job.status.late) {pointVal /= 2}};
-      jobCol.updateOne({jobCode: job.jobCode}, 
-        {$set: {point: pointVal}});
-
+      job.point = pointVal;
       // Adding job to user
       userCol.updateOne({name: job.name},
         {$push: {jobs: job}});
@@ -298,11 +296,15 @@ var update = async function() {
   await userCol.find({}).toArray().then(users => {
     users.forEach(user => {
       let points = 0;
-      user.jobs.forEach(job => {
-        points += job.point;
-      });
-      userCol.updateOne({name: user.name}, 
-        {$set: {point: points}});
+      if(user.jobs.length > 0) {
+        user.jobs.forEach(job => {
+          points += job.point;
+        });
+        userCol.updateOne({name: user.name}, 
+          {$set: {point: points}});
+      }
+      else {userCol.updateOne({name: user.name},
+        {$set: {point: 0}})};
     });
     // Sort users by point value (default to uuid if points are identical)
     // Currently sorts with lowest points being first
