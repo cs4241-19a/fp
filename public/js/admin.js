@@ -83,3 +83,8 @@ function fill(){
 
 
   
+function resetJobs(){
+    fetch('/resetJobs', {
+        method:'POST'
+    })
+}
