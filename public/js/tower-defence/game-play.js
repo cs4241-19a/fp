@@ -22,16 +22,27 @@ const gamePlayState = new Phaser.Class({
         const station = scene.add.image((btmLeft.x + 1) * cellSize.width, (btmLeft.y) * cellSize.height, "station");
         initFromGrid(scene);  // add bricks
 
-        const truck = scene.add.image(-500, -500, "truck3b");
-        truck.angle = 90;
-        scene.e1 = Enemy(truck, 0.003, 75);
-        console.log(scene.e1);
+        scene.enemies = [];
+        // Enemy types
+        const enemy_events = {};
+        const Trucks = Truck(enemy_events);
+
+
+        scene.enemies.push(Trucks.create(Trucks.Truck3b(scene), 1));
+        scene.enemies.push(Trucks.create(Trucks.Truck3b(scene), 2));
+        scene.enemies.push(Trucks.create(Trucks.Truck3b(scene), 3));
+        scene.enemies.push(Trucks.create(Trucks.Truck3b(scene), 4));
+
+        // scene.e1 = Enemy(truck, 0.003, 75);
+        // scene.e1 = Enemy(truck, 0.003, 75);
+        console.log(scene.enemies);
     },
 
     update: function() {
         const scene = this;
-        scene.e1.move();
-
+        scene.enemies.forEach(enemy => {
+            enemy.move();
+        });
 
     },
 });
@@ -54,23 +65,36 @@ function initFromGrid(scene) {
 /**
  * A closure creating a Enemy.
  * @param sprite The sprite for this enemy. The enemy will move this sprite.
+ * @param waveIndex The position in the wave used to space the enemies out.
  * @param moveSpeed This enemies move speed.
  * @param healthPoints This enemies starting health points.
  * @param onDeath A call back that will be called on the death of this Enemy.
+ * @param onBase
  * @returns {{damage: function(number), move: function, sprite: *}}
  * @constructor
  */
-function Enemy(sprite, moveSpeed, healthPoints, onDeath, onBase) {
+function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
     let pathPoints;
     let moveIdx = 0;
     let atBase = false;
     const spriteRotation = sprite.rotation;  // should be passed in facing right
     let hp = healthPoints;
     let alive = true;
+    let waveWaitDur = waveSpacingDur * waveIndex;
 
     function move() {
+        if (waveWaitDur > 0) {
+            waveWaitDur--;
+            if (waveWaitDur === 0) {
+                // set the sprite to the correct position
+                sprite.x = enemyEnterCoord.x * cellSize.width;
+                sprite.y = enemyEnterCoord.y * cellSize.height;
+            } else {
+                return true;
+            }
+        }
         if (!pathPoints) {
-            pathPoints = getPathPoints(enemyEnterCoord);
+            pathPoints = getPathPoints(getSpriteCoord());
         }
         if (!atBase) {
             const gx = Phaser.Math.Interpolation.CatmullRom(pathPoints.x, moveIdx);
@@ -88,6 +112,10 @@ function Enemy(sprite, moveSpeed, healthPoints, onDeath, onBase) {
         } else {
             // base loses a life
         }
+    }
+    
+    function getSpriteCoord() {
+        return {x: Math.floor(sprite.x / cellSize.width), y: Math.floor(sprite.y / cellSize.height)}
     }
 
     /**
@@ -187,6 +215,30 @@ function Tower(sprite, range, damage, fireRate) {
         return false; // no targets
     }
 
+}
+
+
+// ENEMIES //
+
+
+function Truck(events) {
+    /**
+     * Create the enemy.
+     * @param sprite The sprite the enemy will use.
+     * @param waveIndex The position in the wave used to space the enemies out.
+     * @returns {{damage: (function(number)), move: Function, sprite: *}}
+     */
+    function create(sprite, waveIndex) {
+        return Enemy(sprite, waveIndex, 0.003, 75, events.onDeath, events.onBase);
+    }
+
+    function Truck3b(scene) {
+        const truck = scene.add.image(offScreenCoord.x, offScreenCoord.y, "truck3b");
+        truck.angle = 90;
+        return truck;
+    }
+
+    return {create, Truck3b}
 }
 
 

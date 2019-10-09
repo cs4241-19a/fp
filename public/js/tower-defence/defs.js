@@ -17,6 +17,8 @@ const cellTypes = {
 };
 
 
+let waveSpacingDur = 40;  // how many update cycles to wait until moving
+const offScreenCoord = {x: -500, y: -500};
 
 const cellSize = {width: 40, height: 40};
 const playArea = {width: myGame.width, height: myGame.height - cellSize.height};
