@@ -6,7 +6,7 @@
 
 Our team consists of four members: Manasi Danke,Carla Duarte, Amanda-Ezeobiejesi, and Sylvia Lin.
 
-### Deliverables
+## Deliverables:
 
 ### __Project:__ *insert link url
 
