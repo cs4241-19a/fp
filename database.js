@@ -24,7 +24,7 @@ class Task extends Sequelize.Model{}
 //  Databases
 //-------------
 
-// Table model for the database
+// Table model for the User database
 User.init({
     id: {
         type: Sequelize.INTEGER,
@@ -45,6 +45,7 @@ User.init({
     }
 },{sequelize: sequelize, modelName: 'user'});
 
+// Table model for the Task database
 Task.init({
     id: {
       type: Sequelize.INTEGER,
@@ -81,45 +82,50 @@ Task.init({
     }
 },{sequelize: sequelize, modelName: 'task'});
 
-Task.belongsTo(User);
-
-User.sync();
-Task.sync();
+//startDB function
+export function startDB(){
+    return sequelize.authenticate()
+        .then(() => {
+            Task.belongsTo(User);
+            User.sync();
+            Task.sync();
+        })
+}
 
 //-----------
 //  Helpers
 //-----------
 
 //getUser
-function getUser(login){
+export function getUser(username){
     return User.findOne({
-        where: {username: login}
+        where: {username: username}
     });
 }
 
 //getUserTasks
-function getUserTasks(login){
+export function getUserTasks(username){
     return User.getTasks({
-        where: {username: login}
+        where: {username: username}
     });
 }
 
-//createUser: login(username), peper(salt), browns(hash)
-function createUser(login, pepper, browns){
+//createUser
+export function createUser(username, salt, hash){
     User.create({
-        salt: pepper,
-        hash: browns,
-        username: login,
+        username: username,
+        salt: salt,
+        hash: hash,
     });
 }
 
 //createTask
-function createTask(object){
+export function createTask(object){
     Task.create(object);
 }
 
 //updateTask
-function updateTask(taskId, object){
+export function updateTask(taskId, object){
     Task.findOne({
         where: {id: taskId}
     }).then(result => {
