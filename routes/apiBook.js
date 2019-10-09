@@ -48,24 +48,24 @@ let dbBookLookup = function(arr) {
                         MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) {
                             const db = client.db('finalproject');
                             resolve(db.collection('books').find({name: arr[0]}).toArray())
+                            client.close();
                         })
                     }
                     catch(e) {
                         console.log(e)
                     }
-                    client.close();
                 }
                 else if(isCRN) {
                     try {
                         MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) {
                             const db = client.db('finalproject');
                             resolve(db.collection('books').find({crn: arr[0]}).toArray())
+                            client.close();
                         })
                     }
                     catch(e) {
                         console.log(e)
                     }
-                    client.close();
                 }
             }
             else if(arr.length == 2) {
@@ -73,12 +73,12 @@ let dbBookLookup = function(arr) {
                     MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) {
                         const db = client.db('finalproject');
                         resolve(db.collection('books').find({name: arr[0], crn: arr[1]}).toArray())
+                        client.close();
                     })
                 }
                 catch(e) {
                     console.log(e)
                 }
-                client.close();
             }
             else {
                 reject(Error("invalid!"))
@@ -89,20 +89,20 @@ let dbBookLookup = function(arr) {
 
 // after an exchange is completed adds book to new user while removing it from previous
 // array should be [prevOwner, newOwner, bookName, crn]
-function dbBookChangeOwner(prevOwner, newOwner, bookName, crn) {
+function dbBookDeleteBook(username, bookName, crn) {
     const MongoClient = require('mongodb').MongoClient;
     const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
     const client = new MongoClient(uri, { useNewUrlParser: true });
     try {
         MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) {
             const db = client.db('finalproject');
-            db.collection('books').update({username: prevOwner, name: bookName, crn: crn}, {$set: {username: newOwner}})
+            db.collection('books').deleteOne({username: username, name: bookName, crn: crn})
+            client.close();
         })
     }
     catch(e) {
         console.log(e)
     }
-    client.close();
 }
 
 // get all books from db
@@ -113,12 +113,12 @@ let dbBookGetAll = function() {
                 MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) {
                     const db = client.db('finalproject');
                     resolve(db.collection('books').find({}).toArray())
+                    client.close();
                 })
             }
             catch(e) {
                 console.log(e)
             }
-            client.close();
         }, 100)
     })
 };
@@ -131,12 +131,12 @@ let dbBookGetFromUser = function(arr) {
                 MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) {
                     const db = client.db('finalproject');
                     resolve(db.collection('books').find({username: arr[0]}).toArray())
+                    client.close();
                 })
             }
             catch(e) {
                 console.log(e)
             }
-            client.close();
         }, 100)
     })
 };
@@ -167,14 +167,13 @@ router.post('/searchBook', function(req, res) {
     })
 });
 
-router.post('/exchangeBook', function(req, res) {
+router.post('/deleteBook', function(req, res) {
     console.log("exchanging book...");
-    const prevOwner = req.body.curOwner;
-    const newOwner = req.body.newOwner;
+    const username = req.body.username;
     const bookName = req.body.name;
     const crn = req.body.crn;
 
-    dbBookChangeOwner(prevOwner, newOwner, bookName, crn)
+    dbBookDeleteBook(username, bookName, crn)
 });
 
 router.post('/getBooks', function (req,res){

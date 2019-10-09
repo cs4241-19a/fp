@@ -35,12 +35,12 @@ let dbUserExists = function(arr) {
           MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) { 
             const db = client.db('finalproject');
             resolve(db.collection('users').find({username: arr[0]}).toArray())
+            client.close();
           })
         }
         catch(e) {
           console.log(e)
         }
-        client.close();
       }
       else {
         reject(Error("invalid!"))
@@ -61,12 +61,12 @@ let dbUserAuthenticate = function(arr) {
           MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) { 
             const db = client.db('finalproject');
             resolve(db.collection('users').find({username: arr[0], password: arr[1]}).toArray())
+            client.close();
           })
         }
         catch(e) {
           console.log(e)
         }
-        client.close();
       }
       else {
         reject(Error("invalid!"))
@@ -86,12 +86,12 @@ let dbUserGetAll = function() {
           MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) {
             const db = client.db('finalproject');
             resolve(db.collection('users').find({}).toArray())
+            client.close();
           })
         }
         catch(e) {
           console.log(e)
         }
-        client.close();
     }, 100)
   })
 };
