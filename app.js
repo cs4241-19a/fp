@@ -26,7 +26,10 @@ const express = require('express'),
 
 let currentUser = [],
     access_token = null,
-    refresh_token = null
+    refresh_token = null,
+    product = null,
+    track_id = '3n3Ppam7vgaVa1iaRUc9Lp',
+    audioAnalysis;
 
 app.use(favicon(__dirname + '/public/images/favicon.ico'))
 app.use(logger('dev'))
@@ -161,7 +164,9 @@ app.get('/callback', function (req, res) {
                 // use the access token to access the Spotify Web API
                 request.get(options, function (error, response, body) {
                     console.log(body);
-                    console.log('token = ' + access_token)
+                    //console.log("The Product is: " + body.product)
+                    product = body.product
+                    console.log('token = '+ access_token)
                 });
 
                 // we can also pass the token to the browser to make requests from there
@@ -179,6 +184,21 @@ app.get('/callback', function (req, res) {
         });
     }
 });
+
+
+app.get('/trackAnalysis', function (req,res) {
+    const options = {
+        url: 'https://api.spotify.com/v1/audio-analysis/'+track_id,
+        headers: {'Authorization': 'Bearer ' + access_token},
+        json: true
+    };
+    request.get(options, function(response,body){
+        //console.log(body)
+        res.send(body)
+
+    })
+})
+
 
 app.get('/refresh_token', function (req, res) {
 
@@ -204,6 +224,17 @@ app.get('/refresh_token', function (req, res) {
     });
 });
 
+app.get("/trackInfo",function(req,res){
+    var authOptions = {
+        url: 'https://api.spotify.com/v1/audio-analysis/06AKEBrKUckW0KREUWRnvT',
+        headers: {'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
+        }
+        if(res){
+            const track = JSON.parse(res.body)
+        }
+})
+
+
 app.get("/user", function (req, res) {
     const json = {
         user: currentUser[0]
@@ -214,6 +245,8 @@ app.get("/user", function (req, res) {
 app.get("/token", function (req, res) {
     const answerObj = {}
     answerObj.name = "token"
+    answerObj.name = "product"
+    answerObj.product = product
     answerObj.token = access_token
     res.send(JSON.stringify(answerObj))
 })
@@ -335,5 +368,5 @@ function isLoggedIn(req, res, next) {
 }
 
 //added in order to run the server
-app.listen(process.env.PORT || 3001)
+app.listen(process.env.PORT || 3000)
 module.exports = app
