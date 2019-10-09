@@ -1,0 +1,27 @@
+{
+  "name": "a5-anaghalate",
+  "version": "0.1.0",
+  "description": "CS4241 Assignment 5",
+  "author": "Anagha Late",
+  "scripts": {
+    "start": "node server.improved.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "helmet": "^3.21.1",
+    "lowdb": "^1.0.0",
+    "mime": "^2.4.4",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pixi.js": "^5.1.5",
+    "response-time": "^2.3.2",
+    "dotenv": "^8.1.0"
+  },
+  "devDependencies": {
+    "express-session": "^1.16.2",
+    "mongodb": "^3.3.2",
+    "node-statsd": "^0.1.1"
+  }
+}
