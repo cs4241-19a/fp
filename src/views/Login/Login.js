@@ -74,7 +74,9 @@ class Login extends Component {
                     </div>
                 </div>
                 <div className="vessel">
-                    <button className={ (this.state.username === '' || this.state.password === '') ? 'button submit-button' : 'button is-danger submit-button'} onClick={this.login}>Submit</button>
+                    <button 
+                        className={ (this.state.username === '' || this.state.password === '') ? 'button submit-button' : 'button is-danger submit-button'} onClick={this.login}
+                        disabled={this.state.username === '' || this.state.password === ''}>Submit</button>
                 </div>
             </div>
         );

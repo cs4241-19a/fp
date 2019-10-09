@@ -84,7 +84,10 @@ class Field extends Component {
                 </section>
                 <form onSubmit={this.handleSubmit}>
                     <section class=" section center submitButton">
-                        <button class={this.state.name === '' || this.state.requested === '' || this.state.approved === '' ? "submitButton button is-fullwidth" : 'submitButton button is-danger is-fullwidth'} id="submit">Submit Data</button>
+                        <button 
+                            class={this.state.name === '' || this.state.requested === '' || this.state.approved === '' ? "submitButton button is-fullwidth" : 'submitButton button is-danger is-fullwidth'} 
+                            id="submit"
+                            disabled={this.state.name === '' || this.state.requested === '' || this.state.approved === ''}>Submit Data</button>
                     </section>
                 </form>
             </div>
