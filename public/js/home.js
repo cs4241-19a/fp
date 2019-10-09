@@ -102,8 +102,10 @@ const getRecommendations = function () {
                 newRecommendation += `</p>\n` +
                     `      <p class="card-text"><i>` + "\"" + caption + "\"" + `</i></p>\n` +
                     `      <p class="invisible" id="songid${i}">` + songid + `</p>\n` +
-                    `      <a class="btn btn-primary" href="#" onclick="playSomeTrackID('` + songid + `')">Play</a>` +
-                    `   </div>\n` +
+                    `      <div class="nav-right">` + `\n` +
+                    `      <input type="image" src="images/play.png" id = "play-pause-button" name="play button" onclick="playSomeTrackID('` + songid + `')"/>` +
+                    `      </div>` + `\n` +
+                    `   </div>` + `\n` +
                     `</div>`
 
                 list.innerHTML += newRecommendation
@@ -114,5 +116,4 @@ const getRecommendations = function () {
 
 getData()
 getRecommendations()
-//refreshBtn.onclick = getRecommendations
 addRecBtn.onclick = addRecommendation

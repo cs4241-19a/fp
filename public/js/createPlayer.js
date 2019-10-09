@@ -106,6 +106,14 @@ function togglePlayPause() {
     console.log("currentlyplaying is " + currentlyPlaying)
     turningRecord(currentlyPlaying)
     player.togglePlay()
+    let playPauseButton = document.getElementById("play-pause-button");
+    let imageSrc = playPauseButton.getAttribute('src')
+    if(imageSrc === "images/play.png")
+    {
+        playPauseButton.setAttribute('src', "images/pause.png");
+    } else if (imageSrc === "images/pause.png") {
+        playPauseButton.setAttribute('src', "images/play.png");
+    }
 }
 
 function playSomeTrackID(track) {

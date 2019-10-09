@@ -7,6 +7,7 @@ body {
 
 nav {
     margin-bottom: 2%;
+    opacity: .87;
 }
 
 a {
@@ -38,6 +39,8 @@ label {
 .side-container {
     background-color: #F8F9FA;
     color: black;
+    opacity: .87;
+    text-align: center;
 }
 
 .post {
@@ -105,7 +108,8 @@ img {
 }
 
 .leftJustify {
-    float: left;
+    /*float: left;*/
+    text-align: center;
 }
 
 .results-table {
@@ -124,11 +128,10 @@ img {
 }
 
 .stars {
-    text-align: center;
+
 }
 
 .rate {
-    float: left;
     height: 46px;
     padding: 0 10px;
     display: inline-block;
@@ -180,8 +183,57 @@ img {
 }
 
 .recommendations-container {
-    /*height: 300px;*/
-    height: 55vh
-    /*height: available;*/
+    height: 55vh;
+    max-height: 55vh;
+}
+
+.star-rating {
+    text-align: center;
+}
+
+#play-pause-button {
+    height: 5%;
+    width: 5%;
+    color: rgba(0, 0, 0, 0.87) !important;
+    float: right;
+}
+
+.nav-right {
+    float: right;
+}
+
+.card {
+    opacity: .87;
+
+}
+
+/*.searchButton {*/
+/*    color: #391A3F !important;*/
+/*    border-color: #391A3F !important;*/
+/*}*/
+
+/*.recommendationButton {*/
+/*    background-color: #391A3F !important;*/
+/*    border-color: #391A3F !important;*/
+/*}*/
+
+.searchButton {
+    color: #FE3B53 !important;
+    border-color: #FE3B53 !important;
+}
+
+.recommendationButton {
+    background-color: #FE3B53 !important;
+    border-color: #FE3B53 !important;
+}
+
+#loginBtn {
+    background-color: #7E3BFD;
+    border-color: #7E3BFD;
+}
+
+#signUpBtn {
+    background-color: #2D9FFE;
+    border-color: #2D9FFE;
 }
 
