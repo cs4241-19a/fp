@@ -1,12 +1,16 @@
 import * as PIXI from 'pixi.js';
 
 //init basics
-let app = new PIXI.Application({ backgroundColor: 0x00FFFF });
+let app = new PIXI.Application({ backgroundColor: 0x00FFFF});
 const loader = new PIXI.Loader();
 document.getElementById("pixi").appendChild(app.view);
 let paw = PIXI.Sprite.from('images/cat.png');
 let dog = PIXI.Sprite.from('images/dog.png');
+let turtle = PIXI.Sprite.from('images/turtle.png');
 let finish = PIXI.Sprite.from('images/finish.png');
+finish.height = 52;
+finish.width = 52;
+
 let activeChar = paw;
 let tics = 0;
 let time = 0;
@@ -20,11 +24,24 @@ let count = 0;
 let fallDone = true;
 let victory = new PIXI.Text("");
 
+let bgText = new PIXI.Texture.from("images/bg.png");
+let bgPic = new PIXI.TilingSprite(bgText, app.screen.width,256);
+// PIXI.TilingSprite.call(bgPic, 512, 256);
+
+bgPic.anchor.set(1);
+bgPic.position.x = app.screen.width;
+bgPic.position.y = app.screen.height;
+bgPic.tilePosition.x = 0;
+bgPic.tilePosition.y = 0;
+app.stage.addChild(bgPic);
+
 function resetPaw() {
     paw.x = app.screen.width / 2;
     paw.y = app.screen.height / 2;
     paw.vx = 0;
     paw.vy = 0;
+    paw.height = 60;
+    paw.width = 60;
     time = 0;
     tics = 0;
 }
@@ -34,6 +51,8 @@ function resetDog() {
     dog.y = app.screen.height / 2;
     dog.vx = 0;
     dog.vy = 0;
+    dog.height = 60;
+    dog.width = 60;
     time = 0;
     tics = 0;
 }
@@ -74,10 +93,21 @@ document.getElementById("pawBut").addEventListener("click", function(){
     activeChar.visible = true;
 });
 
+function addTurtle(){
+    app.stage.addChild(turtle);
+    turtle.anchor.set(1);
+    turtle.x = app.screen.width;
+    turtle.y = app.screen.height;
+    turtle.vx = -2;
+    turtle.height = 45;
+    turtle.width = 45;
+}
+
 // animation loop running at 60 fps
 app.ticker.add(function(delta) {
     if(start) {
         pixiTimer.visible = true;
+        bgPic.tilePosition.x += -0.4;
         pixiTimer.text = 'Time: ' + time.toString();
         victory.text = '';
         if(collisionDetect(activeChar, finish)){
@@ -87,7 +117,18 @@ app.ticker.add(function(delta) {
             victory.visible = true;
             start = false;
         }
-        if (up.isDown && count < 60 && fallDone) {
+        if(collisionDetect(activeChar, turtle)){
+            victory.text = 'You Lose';
+            app.stage.addChild(victory);
+            pixiTimer.visible = false;
+            victory.visible = true;
+            start = false;
+        }
+        if(time % 8 === 0){
+            addTurtle();
+        }
+        turtle.x += turtle.vx;
+        if (up.isDown && count < 45 && fallDone) {
             activeChar.vy = -2;
             count++;
         } else {
@@ -171,17 +212,17 @@ let left = keyboard("ArrowLeft"),
 //key functions
 left.press = function(){
     'use strict';
-    activeChar.vx += -5;
+    activeChar.vx += -2;
 };
 right.press = function(){
     'use strict';
-    activeChar.vx += 5;
+    activeChar.vx += 2;
 };
 right.release = function(){
     'use strict';
-    activeChar.vx = 0;
+    activeChar.vx = -0.4;
 };
 left.release = function(){
     'use strict';
-    activeChar.vx = 0;
+    activeChar.vx = -0.4;
 };
