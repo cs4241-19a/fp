@@ -227,7 +227,18 @@ app.post('/modify', function(req, res){
     
 });
 
+app.post('/modifyAll', function(req, res){
+  //console.log(req.body);
+  let jobs = req.body;
 
+  jobs.forEach(function(job){
+    jobCol.findOne({jobCode: job.jobCode}, function(err, jobFound){
+      jobCol.updateOne({jobCode: job.jobCode},
+        {$set: {name: job.name}})
+    })
+    //console.log(job);
+  })
+})
 
 // Automatic scheduled updates
 // Updates job list every Sunday at 5:00 PM
@@ -305,3 +316,4 @@ var markLateThur = schedule.scheduleJob({hour: 9, minute: 0, dayOfWeek: 5}, asyn
 const listener = app.listen(process.env.PORT || 3000, function() {
   console.log('App is listening on port ' + listener.address().port);
 });
+

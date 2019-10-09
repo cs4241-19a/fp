@@ -12,9 +12,42 @@ const modifyForm = function( e ) {
     
 }
 
-const submitForm = async function( e ){
-    e.preventDefault();
+async function submitAllMods(){
+    const newJobs = [];
+    const names = [];
+    const badNames = [];
+    try{
+        const response = await fetch('/users');
+        let data = await response.json();
+        data.forEach(function(result){ names.push(result.name); })
+    }
+    catch(error){console.log(error)};
+    var table = document.getElementById("row").getElementsByTagName("TR");
+    for (let job of table) {
+        
+        if(job.id !== ""){
+            if(job.cells[1].innerHTML !== "<br>"){
+                let name = job.cells[1].textContent
+                
+                if(names.includes(name)){
+                    newJobs.push({jobCode:job.id, name:name} );
+                    //console.log(job.id + job.cells[1].textContent);
+                }else { 
+                    //alert(name + " does not exist. Please fix");
+                    break;
+                }
+            }
+        }
+    }
 
-    console.log(data);
-
+    // const jResponse = await fetch('/jobList');
+    // let currentJobs = await jResponse.json();
+    console.log(JSON.stringify(newJobs));
+    fetch('/modifyAll', {
+        method:'POST',
+        body: JSON.stringify(newJobs),
+        headers: {'Content-Type': 'application/json'}
+    })
+    
+    //console.log(currentJobs);
 }

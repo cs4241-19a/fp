@@ -1,9 +1,8 @@
 export const _knob = "Wipe down surfaces with a rag + 91% rubbing alcohol.. \n\
 Surfaces: common room doors (both sides), bedroom doors (outside only), door push bar, light switches, stair railing.. \n\
 If present put trash around the dumpster in it"
-export const _foyer = "Pick up trash. . \n\
-Clean anything off the entrance windows. . \n\
-Clean anything off the wall paneling. . \n\
+export const _foyer = "Pick up trash. . \n \
+Clean anything off the entrance windows. . \n \Clean anything off the wall paneling. . \n\
 Sweep both floors. Mop the foyer floor. \n\
 Mop the library floor . \n\
 Shake rungs and bring back in."
@@ -74,3 +73,6 @@ Wipe off machines including button panel with wet rag. \n\
 Place any cloths found behind machines in lost and found box. \n\
 Check and empty lint traps"
 
+export const _months =["January", "February", "March", "April", "May", "June",
+"July", "August", "September", "October", "November", "December"
+];

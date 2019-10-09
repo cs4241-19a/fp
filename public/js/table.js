@@ -7,8 +7,19 @@ window.onload = function(){
   if(location.pathname.split("/").slice(-1)[0] == ""){
   setStandards();  
   }
-  
+
+  applyDates();
   fillBoard();
+}
+
+const applyDates = function(){
+
+  let date = new Date();
+  var diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1); 
+  let day = new Date(date.setDate(diff)); //Finds monday of the current week
+  document.getElementById("tuesday").innerHTML += (" " + (day.getMonth()+1) + "/" + (day.getDate()+1) + "/" + day.getFullYear());
+  document.getElementById("thursday").innerHTML += (" " + (day.getMonth()+1) + "/" + (day.getDate()+3) + "/" + day.getFullYear());
+
 }
 
 const setStandards = function(){
@@ -53,7 +64,6 @@ const fillBoard = async function(){
     try{ 
         const jobR = await fetch('/jobList');
         let jobs = await jobR.json();
-
         jobs.forEach(function(job){
             document.getElementById(job.jobCode).cells[1].innerHTML = job.name;
         });
