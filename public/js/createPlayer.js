@@ -104,6 +104,11 @@ turningRecord(currentlyPlaying)
 
 function togglePlayPause() {
     currentlyPlaying = !currentlyPlaying
+    if(!currentlyPlaying){
+        $("canvas").remove()
+    }else{
+        trackInfo()
+    }
     console.log("currentlyplaying is " + currentlyPlaying)
     turningRecord(currentlyPlaying)
     player.togglePlay()
@@ -133,5 +138,6 @@ function updateCurrentTrack(track) {
         },
         body: JSON.stringify(json)
     })
+    clearTimeout(timeout)
     trackInfo()
 }

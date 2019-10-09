@@ -1,10 +1,10 @@
+let timeout;
 function trackInfo() {
     let analysis
     let scene,camera,renderer,mesh,mesh2,mesh3,mesh4,mesh5,mesh6;
     let shapes = [];
     let numArray = [];
     let confidence =1;
-
     (async () => {
         const rawResponse = await fetch('/trackAnalysis', {
             method: 'GET'
@@ -76,7 +76,7 @@ function trackInfo() {
           const randomPosPerSec = ()=>{
             //barsNum()
             for (let i = 0; i < beats.length; i++) { //numArray.length
-                setTimeout( () =>{ //stores previous number to go to next number
+                timeout = setTimeout( () =>{ //stores previous number to go to next number
 
                   mesh.position.x=(beats[i].confidence)*numArray[i]*1.7
                   mesh2.position.y=(beats[i].confidence)*numArray[i]*1.2
