@@ -24,7 +24,18 @@ const gamePlayState = new Phaser.Class({
         scene.enemies = [];
         scene.towers = [];
         // Enemy types
-        const enemy_events = {onBase: () => console.log('-1 life'), onDeath: () => console.log('-1 Enemy')};
+        function removeEnemy(enemy) {
+            scene.enemies.slice(scene.enemies.indexOf(enemy), 1);
+        }
+        const enemy_events = {onBase: () => {
+                console.log('-1 life');
+                removeEnemy();
+                return scene;
+            }, onDeath: () => {
+                console.log('-1 Enemy');
+                removeEnemy();
+                return scene;
+            }};
         scene.EnemyUnits = {Trucks: Truck(enemy_events)};
         scene.Towers = {SandBags: SandBag(), MachineGuns: MachineGun(), Cannons: Cannon()};
 
@@ -42,9 +53,9 @@ const gamePlayState = new Phaser.Class({
             scene.towers.push(scene.Towers.Cannons.create(scene.Towers.Cannons.Cannon(scene, coord)));
         };
 
-
-        scene.addTruck3b(0);
-        scene.addSandBag({x: 1, y: 1});
+        // for (let i = 0; i < 10; i++) scene.addTruck3b(i * 10);
+        scene.addTruck3b(1);
+        // scene.addSandBag({x: 1, y: 1});
 
         // scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 2));
         // scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 3));
@@ -180,7 +191,7 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
     let waveWaitDur = waveSpacingDur * waveIndex;
 
     function move() {
-        if (atBase) return false;  // halt movement
+        if (atBase || !alive) return false;  // halt movement
         if (waveWaitDur >= 0) {
             waveWaitDur--;
             if (waveWaitDur < 0) {
@@ -244,13 +255,25 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
     function damage(damageAmount) {
         if (!alive) return false;  // return false if the enemy is already dead
         hp -= damageAmount;  // damage the enemy
-        console.log("ouch", hp);
         if (isDead()) {
             alive = false;
-            onDeath();
+            die(onDeath());
             return undefined;  // return undefined if the enemy is now dead
         }
         return true;  // return true if damage taken
+    }
+
+    function die(scene) {
+        // sprite.destroy();
+        let fadeTween = scene.tweens.add({
+            targets: sprite,
+            alpha: { from: 1, to: 0.5 },
+            ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 1000,
+            repeat: 0,            // -1: infinity
+            yoyo: false,
+            onComplete: () => sprite.destroy()
+        });
     }
 
     function isDead() {
@@ -283,7 +306,7 @@ function Tower(sprite, range, damage, fireRate) {
      * @returns {boolean} True when in range, else false
      */
     function isInRange(enemy) {
-        return Phaser.Math.Distance.Between(sprite.x, sprite.y, enemy.sprite.x, enemy.sprite.y) < range;
+        return Phaser.Math.Distance.Between(sprite.x / cellSize.width, sprite.y / cellSize.height, enemy.sprite.x / cellSize.width, enemy.sprite.y / cellSize.height) < range;
     }
 
     /**
@@ -292,18 +315,16 @@ function Tower(sprite, range, damage, fireRate) {
      * @returns {boolean} True when confirmed, else false.
      */
     function confirmTarget() {
-        if (!target || !target.isAlive()) {
-            if (!targets) {  // if no current target get the next one in range
-                for (let i = 0; i < targets.length; i++) {
-                    if (isInRange(targets[i]) && targets[i].alive) {
-                        target = targets[i];
-                        targets.splice(0, i);  // remove all enemies before the one found
-                        break;
-                    }
+        if (!(target && target.isAlive())) {  // if no current target get the next one in range
+            for (let i = 0; i < targets.length; i++) {
+                if (isInRange(targets[i]) && targets[i].isAlive()) {
+                    target = targets[i];
+                    targets.splice(0, i);  // remove all enemies before the one found
+                    break;
                 }
             }
         }
-        return !!target;
+        return target && target.isAlive();
     }
 
     /**
@@ -311,18 +332,16 @@ function Tower(sprite, range, damage, fireRate) {
      * @returns {boolean}
      */
     function shoot() {
-        const localTarget = target;  // store the target in case the property changes
-        // console.log(confirmTarget());
-        // console.log(targets);
         if (confirmTarget()) {
-            switch(localTarget.damage(damage)) {
+            switch(target.damage(damage)) {
                 case false:
-                    return shoot();  // bad target so try again
+                    console.log("bad target");
+                    return false;  // bad target so try again next update
                 case true:
                     // do nothing
                     return true;
                 case undefined:
-                    targets.splice(targets.indexOf(localTarget), 1);  // remove the enemy from the targets
+                    targets.splice(targets.indexOf(target), 1);  // remove the enemy from the targets
                     return true;
             }
         }
