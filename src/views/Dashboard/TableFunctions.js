@@ -1,11 +1,41 @@
-const deleteRow = function(cell) {
+const deleteRow = async function(cell, cb) {
     // alert asking to confirm changes (yes/no)
-    // code me      
+    let data = cell._row.data;
+    let id = data.id;
+    console.log(id);
+    const response = await fetch('/api/deleteBudget', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: id}),
+    });
+    const body = await response;
+    if (body) {
+        cb(true);
+    } else {
+        console.log('could not delete');
+    }
 }
 
-const modifyRow = function(cell){
+const modifyRow = async function(cell, cb){
     // alert asking to confirm change (yes/no)
-    // send modification to server
+    let data = cell._row.data;
+
+    console.log(data);
+    const response = await fetch('/api/editBudget', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+    const body = await response;
+    if (body) {
+        cb(true);
+    } else {
+        console.log('could not edit');
+    }
 }
 
 // download csv

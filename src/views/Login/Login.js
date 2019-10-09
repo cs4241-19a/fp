@@ -6,70 +6,78 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faEnvelope, faUserLock, faKey, faAddressCard } from '@fortawesome/free-solid-svg-icons';
 library.add(faEnvelope, faUserLock, faKey, faAddressCard);
 
-class Field extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            success: false,
-        }
-    }
-
-    // This will toggle the is-success class on the input field
-    toggle(event) {
-        if(event.target.value !== "")
-            this.setState({success: true})
-        else
-            this.setState({success: false})
-    }
-
-    render() {
-        return (
-            <div className="vessel">
-                <div className="columns">
-                    <div className="column is-one-third">
-                        <FontAwesomeIcon icon={this.props.icon} size = "2x"/>
-                    </div>
-                    <div className="column is-two-third">
-                        <input  className= { this.state.success ?  "input is-success" : "input" }
-                                type={this.props.type}
-                                name={this.props.name} 
-                                placeholder={this.props.placeholder}
-                                onInput = {this.toggle.bind(this)}
-                        ></input>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-}
-
-class SignInButton extends Component {
-    render() {
-        return (
-            <button className = "button is-success">Submit</button>
-        )
-    }
-}
-
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            username: '',
+            password: '',
+        };
     }
 
     componentDidMount() {
     }
 
+    updateUsername = (e) => {
+        this.setState({
+            username: e.target.value
+        });
+    }
+    updatePassword = (e) => {
+        this.setState({
+            password: e.target.value
+        });
+    }
+
+    login = async () => {
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username: this.state.username, password: this.state.password }),
+        });
+        const body = await response;
+        if (body) {
+            console.log(body);
+        }
+    }
+
     render() {
         return (
             <div className="outer notification background-light">
-                <div className = "center titleContainer has-background-white">
-                    <p className = "title">Sign In</p>
+                <div className="center titleContainer has-background-white">
+                    <p className="title">Sign In</p>
                 </div>
-                <Field name="Username" placeholder="Username" icon="user-lock" type = "text"></Field>
-                <Field name="Password" placeholder="Password" icon="key" type = "password"></Field>
                 <div className="vessel">
-                    <SignInButton></SignInButton>
+                    <div className="columns">
+                        <div className="column is-one-third">
+                            <FontAwesomeIcon icon="user-lock" size="2x" />
+                            <input
+                                type="text"
+                                name={this.state.username}
+                                placeholder="Username"
+                                onChange={this.updateUsername}
+                            />
+                        </div>
+
+
+
+                        <div className="column is-one-third">
+                            <FontAwesomeIcon icon="key" size="2x" />
+                            <input
+                                type="password"
+                                name={this.state.password}
+                                placeholder="Password"
+                                onChange={this.updatePassword}
+
+                            />
+                        </div>
+
+                    </div>
+                </div>
+                <div className="vessel">
+                    <button className="button is-success" onClick={this.login}>Submit</button>
                 </div>
             </div>
         );
