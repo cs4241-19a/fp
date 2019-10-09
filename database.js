@@ -52,6 +52,14 @@ Task.init({
       primaryKey: true,
       autoIncrement: true,
     },
+    userId: {
+    	type: Sequelize.INTEGER,
+    	references: {
+    		model: User,
+    		key: 'id',
+    		deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
+    	},
+    },
     title: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -105,9 +113,11 @@ function getUser(username){
 
 //getUserTasks
 function getUserTasks(username){
-    return User.getTasks({
-        where: {username: username}
-    });
+	return getUser(username).then((user) => {
+		Task.findAll({
+		    where: {userId: user.id}
+		});
+    })
 }
 
 //createUser

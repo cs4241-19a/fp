@@ -117,12 +117,24 @@ app.post(
 passport.serializeUser((user, done) =>
 {
 	console.log("Serialized user ", user.username)
-	done(null, user)
+	done(null, user.username)
 })
-passport.deserializeUser((user, done) =>
+passport.deserializeUser((username, done) =>
 {
-	console.log("Deserialized user ", user.username)
-	done(null, user)
+	console.log("Deserialized user ", username)
+	
+	database.getUser(username).then(
+	function(user)
+	{
+		if (user === null)
+		{
+			done(null, false, {"message": "user not found - session not restored"})
+		}
+		else
+		{
+			done(null, user)
+		}
+	})
 })
 
 
@@ -134,16 +146,22 @@ app.post(
 	"/gettasks",
 	function(req, res)
 	{
-		if (res.user === undefined)
+		if (req.user === undefined)
 		{
 			res.status(401) // Unauthorized
 			res.send()
 			return
 		}
 		
-		console.log(res.user.username)
+		console.log(req.user.username)
 		
-		database.getTasks(res.user.username)
+		database.getUserTasks(req.user.username).then(
+		function(tasks)
+		{
+			tasks = tasks === undefined ? {} : tasks
+			console.log(tasks)
+			res.json(tasks)
+		})
 	}
 )
 
@@ -158,10 +176,17 @@ app.post(
 			return
 		}
 		
-		// TODO insert new task into DB, maybe authenticate stuff?
-		// Convert DateTime to moment, then use moment.format
-		res.status(200)
-		res.send()
+		database.getUser(req.user.username).then(
+		function(user)
+		{
+			const task = req.body 	// Is this right???
+			task.userId = user.id
+			
+			database.createTask(task)
+			
+			res.status(200)
+			res.send()
+		})
 	}
 )
 
@@ -176,13 +201,21 @@ app.post(
 			return
 		}
 		
-		// TODO edit task in DB, maybe authenticate stuff?
-		// Convert DateTime to moment, then use moment.format
-		res.status(200)
-		res.send()
+		const task = req.body 	// Is this right???
+		const taskId = task.id
+		task.id = undefined 	// Don't update the task id to be the same that it already is
+		
+		database.updateTask(taskId, task).then(
+		function()
+		{
+			res.status(200)
+			res.send()
+		})
 	}
 )
 
+// Not yet implemented in the database library
+/*
 app.post(
 	"/deletetask",
 	function(req, res)
@@ -199,6 +232,7 @@ app.post(
 		res.send()
 	}
 )
+*/
 
 
 // ############
