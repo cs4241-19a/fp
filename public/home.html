@@ -85,11 +85,29 @@
 
         <div class="col">
             <nav class="navbar navbar-expand-lg navbar-light bg-light player-header">
-                <img alt="image of song cover" id="current-track" src="images/songnotfound.png"/>
-                <h5 class="card-title" id="current-track-name">Song Name, Artist, Album</h5>
-                <h5 class="card-title" > - </h5>
-                <h5 class="card-title" id="current-track-artist"></h5>
-                <a class="btn btn-primary" href="#" onclick="togglePlayPause()">Play/Pause</a>
+
+                <div class="d-flex flex-row">
+                    <div class="p-2">
+                        <img alt="image of song cover" id="current-track" src="images/songnotfound.png"/>
+                    </div>
+                    <div class="p-2">
+                        <h5 class="card-title" id="current-track-name">Song Name, Artist, Album</h5>
+                    </div>
+                    <div class="p-2">
+                        <h5 class="card-title" id="current-track-artist"></h5>
+                    </div>
+                    <div class="p-2">
+                        <input type="image" src="images/play.png" id = "play-pause-button" name="play button" onclick="togglePlayPause()" />
+                    </div>
+                </div>
+
+<!--                <img alt="image of song cover" id="current-track" src="images/songnotfound.png"/>-->
+<!--                <h5 class="card-title" id="current-track-name">Song Name, Artist, Album</h5>-->
+<!--                <h5 class="card-title" > - </h5>-->
+<!--                <h5 class="card-title" id="current-track-artist"></h5>-->
+<!--                <div class = "nav-right">-->
+<!--                    <input type="image" src="images/play.png" id = "play-pause-button" name="play button" onclick="togglePlayPause()" />-->
+<!--                </div>-->
             </nav>
             <div class="card">
                 <div id="recommendation-list" class = "overflow-auto recommendations-container"></div>

@@ -172,3 +172,14 @@ img {
     text-align: center;
 }
 
+#play-pause-button {
+    height: 5%;
+    width: 5%;
+    color: rgba(0, 0, 0, 0.87) !important;
+    float: right;
+}
+
+.nav-right {
+    /*float: right;*/
+}
+
