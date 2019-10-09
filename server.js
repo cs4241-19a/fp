@@ -29,6 +29,12 @@ app.get('/receive', function (request, response) {
   });
 });
 
+app.get('/feed', function (request, response) {
+  fs_service.readFeedData().then(feedData =>{
+    response.end(JSON.stringify(feedData))
+  });
+});
+
 passport.use('local', new LocalStrategy( {
   usernameField: 'username',
   passwordField: 'password'
