@@ -86,6 +86,26 @@ app.ticker.add(function(delta) {
             pixiTimer.visible = false;
             victory.visible = true;
             start = false;
+            let body = {
+                time: time.toString()
+            };
+            body = JSON.stringify(body);
+            fetch('/newLeaderboardTime', {
+                method: 'POST',
+                body,
+                headers: {'Content-Type': 'application/json'}
+            }).catch(err => {
+                console.log(err)
+            }).then(response => {
+                console.log(response);
+                response.json().catch(err => {
+                    console.log(err);
+                }).then(data => {
+                    if (data ==='ok') {
+                        next();
+                    }
+                })
+            });
         }
         if (up.isDown && count < 60 && fallDone) {
             activeChar.vy = -2;

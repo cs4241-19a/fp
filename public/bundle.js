@@ -44631,6 +44631,28 @@ app.ticker.add(function (delta) {
       pixiTimer.visible = false;
       victory.visible = true;
       start = false;
+      var body = {
+        time: time.toString()
+      };
+      body = JSON.stringify(body);
+      fetch('/newLeaderboardTime', {
+        method: 'POST',
+        body: body,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })["catch"](function (err) {
+        console.log(err);
+      }).then(function (response) {
+        console.log(response);
+        response.json()["catch"](function (err) {
+          console.log(err);
+        }).then(function (data) {
+          if (data === 'ok') {
+            next();
+          }
+        });
+      });
     }
 
     if (up.isDown && count < 60 && fallDone) {
