@@ -1,0 +1,51 @@
+{
+  "name": "final",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:5000/",
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/react-fontawesome": "^0.1.5",
+    "body-parser": "^1.19.0",
+    "bulma": "^0.7.5",
+    "concurrently": "^4.1.2",
+    "express": "^4.17.1",
+    "font-awesome": "^4.7.0",
+    "mysql": "^2.17.1",
+    "path": "^0.12.7",
+    "react": "^16.10.1",
+    "react-bulma-components": "^3.1.3",
+    "react-dom": "^16.10.1",
+    "react-fontawesome": "^1.6.1",
+    "react-redux": "^7.1.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.2.0",
+    "react-tabulator": "^0.10.2",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
+    "tabulator-tables": "^4.4.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "server": "nodemon server.js",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

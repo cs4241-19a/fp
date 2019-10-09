@@ -1,0 +1,51 @@
+.vessel {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.field {
+    height: 18px;
+    align-self: center;
+    margin-left: 10px;
+}
+
+.outer {
+    margin-top: 80px; 
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+.width {
+    width: 40%;
+}
+
+.button {
+    background-color: #f44336;
+    border-radius: 10px;
+    color: white;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.titleContainer {
+    height: 50px;
+    margin-bottom: 40px;
+    margin-left: 20%;
+    margin-right: 20%;
+    padding-top: 5px;
+    padding-bottom: 40px;
+    color: black;
+    border-radius: 20px;
+}
