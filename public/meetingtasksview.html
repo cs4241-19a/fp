@@ -1,0 +1,118 @@
+<!-- Tasks related to meetings -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CS4241 Final Project</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"/>
+
+    <script src="js/meetingScripts.js" defer></script>
+  </head>
+
+  <body class="p-3 mb-2 bg-dark text-white">
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="https://fp-start.glitch.me/mainview.html">Menu</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="https://fp-start.glitch.me/mainview.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://fp-start.glitch.me/meetingmakerview.html">Meeting Creator</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="https://fp-start.glitch.me/meetingtasksview.html">Task Manager<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://fp-start.glitch.me/messagesview.html">Messages</a>
+            </li>
+          </ul>
+          <a href="https://fp-start.glitch.me">Logout</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <h2>Meeting Task Manager</h2>
+      <hr style="border-color: white">
+      <details id="loginHelpBlock" class="form-text text-light">
+        You can only view, assign or unassign tasks to meetings that you have created. You can't view or assign tasks to meetings that you did not create.
+      </details>
+      
+      <div class="row">
+          <!-- Tasks for meetings-->
+          <div class="col-sm-6">
+            
+            <fieldset id="entry" class="mx-auto">
+              <label for="meetingname" class="pageText">Meeting Name:</label>
+              <input type="text" id="meetingname" placeholder="Meeting Name Here" class="form-control"/>
+              <details id="meetingForTasks" class="form-text text-light">
+                Enter the name of a meeting you have made to see all tasks that you have assigned for it.
+              </details>
+              <button id="viewButton" class="btn btn-primary">View Tasks for Meeting</button>
+              <button id="hideButton" class="btn btn-secondary">Hide Meeting Tasks</button>
+            </fieldset>
+          </div>
+
+          <div class="col-sm-6">
+            <div>
+              <label for="taskName" class="pageText">Task Name:</label>
+              <input type="text" id="taskname" placeholder="Task name here" class="form-control"/>
+
+              <label for="assigneeName" class="pageText">Task Assigned to:</label>
+              <input type="text" id="assigneename" placeholder="Assignee Name Here" class="form-control"/>
+
+              <label for="details" class="pageText">Task Details:</label>
+              <input type="text" id="details" placeholder="Task Details here" class="form-control"/>
+            </div>
+            <details id="taskDetails" class="form-text text-light">
+                Add and remove tasks for your meeting with the entered name. Note that to remove a task,
+                you must specify the user for which the task has been assigned, since multiple users can
+                be assigned tasks with the same name.
+            </details>
+            <div>
+              <button id="inputButton" class="btn btn-primary">Assign task</button>
+              <button id="removeButton" class="btn btn-danger">Remove task</button>
+            </div>
+          </div>
+      </div>
+      
+      <!-- Printing task table -->
+      <table id="tablePrint" class="table table-dark"></table>
+    </main>
+
+    <footer>
+      <div>
+        <hr style="border-color: white">
+        <li class="text-center">
+          <a href="https://fp-start.glitch.me/mainview.html"><u>Back to main view</u></a>
+        </li>
+        <p class="text-center">
+          Created by Tom Graham, Peter Jankowski, and Rosana Pochat
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
