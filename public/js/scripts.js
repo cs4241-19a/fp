@@ -3,7 +3,7 @@ const updatePlayer = function() {
     // Add logic here for gamestate and/or score
     const pObj = {
         attack: 7,
-        crit: 0.11,
+        crit: 1,
         helpers: 0
     };
 
@@ -36,6 +36,7 @@ const viewLeaderboard = function() {
     document.getElementById('back-button').style.display = "flex";
     document.getElementById('main-container').style.display = "none";
     document.getElementById('leaderboard-button').style.display = "none";
+    document.getElementById('game-canvas').style.display = "none";
 
     fetchLeaderboard();
     return false;
@@ -46,8 +47,8 @@ const viewGame = function() {
     document.getElementById('back-button').style.display = "none";
     document.getElementById('main-container').style.display = "flex";
     document.getElementById('leaderboard-button').style.display = "flex";
+    document.getElementById('game-canvas').style.display = "flex";
 
-    console.log("is this running?");
     pixiInit();
 };
 
@@ -93,6 +94,8 @@ const login = function (e) {
         document.getElementById('leaderboard-button').style.display = "flex";
         document.getElementById('login').style.display = "none";
         document.getElementById('current-username').value = loginInfo.username;
+
+        viewGame();
     });
 };
 
@@ -189,6 +192,7 @@ const animateCSS = function (element, animationName, callback) {
 const pixiInit = function (){
     const canvas = document.getElementById("game-canvas");
     const container = document.getElementById('main-container');
+    let enemyTier = 1;
 
     const game = new PIXI.Application({
         view: canvas,
@@ -198,19 +202,19 @@ const pixiInit = function (){
         antialias: true
     });
 
-    console.log("wtf is happening");
 
     const renderer = new PIXI.Renderer({});
 
     const enemyTexture = PIXI.Texture.from("../img/bokoblin.png");
     const enemy = new PIXI.Sprite(enemyTexture);
+    const enemyHealth = document.getElementById('health');
 
     enemy.x = (game.renderer.width * 5) / 6;
     enemy.y = game.renderer.height / 2;
     enemy.anchor.x = 0.5;
     enemy.anchor.y = 0.5;
 
-    const playerTexture = PIXI.Texture.from("../img/bomb.png");
+    const playerTexture = PIXI.Texture.from("../img/link.png");
     const player = new PIXI.Sprite(playerTexture);
 
     player.x = game.renderer.width / 6;
@@ -223,24 +227,114 @@ const pixiInit = function (){
     game.ticker.add(animate);
 
     function animate() {
-        enemy.rotation += 0.01;
-        player.rotation -= 0.01;
+        enemy.rotation += 0.00;
+        player.rotation -= 0.00;
+
+        if(!enemyHealth.value > 0){
+            let newEnemy;
+            let newEnemyHealth;
+            enemyHealth.value = 0;
+            updateCurrency(enemyHealth.max);
+            attackCounter = 0;
+            let levelRef = document.getElementById('level');
+
+
+            switch (enemyTier) {
+
+                case 1:
+                    newEnemy = PIXI.Texture.from(findEnemy(2));
+                    enemy.texture = newEnemy;
+                    newEnemyHealth = level * 100 + getRandomInt(5 * enemyTier);
+                    enemyHealth.max = newEnemyHealth;
+                    enemyHealth.value = enemyHealth.max;
+                    enemyTier = 2;
+                    break;
+
+                case 2:
+                    newEnemy = PIXI.Texture.from(findEnemy(3));
+                    enemy.texture = newEnemy;
+                    //enemyHealth.max += 30;
+                    newEnemyHealth = level * 100 + getRandomInt(5 * enemyTier);
+                    enemyHealth.max = newEnemyHealth;
+                    enemyHealth.value = enemyHealth.max;
+                    enemyTier = 3;
+                    break;
+
+                case 3:
+                    newEnemy = PIXI.Texture.from(findEnemy(1));
+                    enemy.texture = newEnemy;
+                    newEnemyHealth = level * 100 + getRandomInt(5 * enemyTier);
+                    enemyHealth.max = newEnemyHealth;
+                    enemyHealth.value = enemyHealth.max;
+                    enemyTier = 1;
+                    level = parseInt(levelRef.innerText) + 1;
+                    levelRef.innerText = level.toString();
+                    break;
+            }
+
+        }
     }
 };
 
 
-let damage = 10;  // placeholder damage
+const damageUpgrade = function () {
+    if (gold >= attackCost) {
+        baseDamage += attackCost * level;
+        let currentCurrency = document.getElementById('currency-text');
+        gold -= attackCost;
+        attackCost *= attackCost;
+        currentCurrency.innerText = gold.toString();
+    }
+};
+
+const critUpgrade = function () {
+    if (gold >= critCost) {
+        baseCrit += (baseCrit == 0.00) ? 1.00 : (baseCrit / level.toFixed(2));
+        let currentCurrency = document.getElementById('currency-text');
+        let pop = document.getElementById('crit-rate');
+        gold -= critCost;
+        currentCurrency.innerText = gold.toString();
+        pop.innerText = baseCrit.toFixed(2).toString();
+    }
+};
+
+const updateCurrency = function (enemyHealth) {
+    let currentCurrency = document.getElementById('currency-text');
+    gold = parseInt(currentCurrency.innerText);
+    gold += enemyHealth / attackCounter;
+    gold = Math.floor(gold);
+    currentCurrency.innerText = gold.toString();
+};
+
+
+let baseDamage = 10;  // placeholder damage
+let maxCrit = 50.00;
+let baseCrit = 0.00;
+let attackCounter = 0;
+let attackCost = 10;
+let critCost = 20;
+let level = 1;
+let gold = 0;
+
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max)) + 1;
+}
 
 const mainClick = function () {
     const enemyHealth = document.getElementById('health');
-    const enemyImg = document.getElementById('enemy-image');
     const buttonContainer = document.querySelector('.button-container');
 
     if(enemyHealth.value > 0){
-        enemyHealth.value -= damage;
-    } else {
-        enemyHealth.value = 100;
-        enemyImg.src = findEnemy(2);
+        let totalDamage = baseDamage;
+        if(baseCrit >= maxCrit){
+            baseCrit = maxCrit;
+        }
+        if(getRandomInt(100).toFixed(2) <= baseCrit){
+            totalDamage *= 2.5;
+        }
+        attackCounter += 1;
+        enemyHealth.value -= totalDamage;
     }
 
     console.log("Hello");
