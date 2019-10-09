@@ -549,6 +549,21 @@ html {
     width: 100%;
 }
 
+.del-email {
+    color: #5e5e5e;
+    text-align: start;
+    background-color: #f2f2f2;
+    font-size: 14px;
+    width: 100%;
+    margin-left: -35px;
+    padding-top: 10px;
+}
+
 #prebookingMsg {
     text-align: center;
+}
+
+.emailRecipient {
+    width: 80%;
+    margin-bottom: 5px;
 }
