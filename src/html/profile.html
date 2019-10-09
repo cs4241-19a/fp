@@ -38,7 +38,66 @@
       </div>
     </div>
     <script> AOS.init(); </script>
-    <div class="overflow-y-auto" id="root"></div>
+    <div class="w-full flex">
+      <div class="w-4/5 flex">
+        <div class="overflow-y-auto" id="root"></div>
+      </div>
+      <div id="infoContainer" class="w-1/5 p-5">
+        <div class="w-full bg-white rounded p-5" id="userInfo">
+          <div class="w-full content-center">
+            <img id="myPic" class="w-5/6 h-5/6 rounded-full" src="../media/Manas.jpg" alt="Vis"/>
+          </div>
+          <div class="w-full my-3 mt-5">
+            <div class="w-full shadowBg rounded p-3">
+                <div id="myName" class="text-gray-900 font-bold text-center text-3xl"></div>
+            </div>
+          </div>
+            <div class="w-full rounded p-3 mt-5">
+              <div id="myUName" class="text-gray-900 text-center text-2xl"></div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="w-full mt-5 max-w-xs">
+          <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="flex items-center justify-between">
+              <div class="mb-8 text-xl font-bold centerEl">
+                Update Password
+              </div>
+            </div>
+            <div class="mb-4">
+              <label class="block uppercase text-gray-700 text-xs font-bold mb-2" for="oldPassword">
+                Old Password
+              </label>
+              <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                     id="oldPassword" type="password" placeholder="******************">
+            </div>
+            <div class="mb-6">
+              <label class="block uppercase text-gray-700 text-xs font-bold mb-2" for="newPassword">
+                New Password
+              </label>
+              <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                     id="newPassword" type="password" placeholder="******************">
+            </div>
+            <div class="flex items-center justify-between">
+              <button class="text-white centerEl font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                Update Password
+              </button>
+            </div>
+          </form>
+          <p class="text-center text-gray-500 text-xs">
+            &copy; 2019 soundcloudish, Inc. All rights reserved.
+          </p>
+        </div>
+
+
+      </div>
+    </div>
     <script src="../js/profile.js"></script>
   </body>
 </html>

@@ -17,6 +17,9 @@ window.onload = function () {
         for(let i = 0; i < Object.keys(response).length; i++) {
             if(response[i].username === user) {
                 document.getElementById("nameCurr").innerText = JSON.stringify(response[i].firstName).replace(/^"(.*)"$/, '$1');
+                document.getElementById("myName").innerText = JSON.stringify(response[i].firstName).replace(/^"(.*)"$/, '$1') + " " +
+                    JSON.stringify(response[i].lastName).replace(/^"(.*)"$/, '$1');
+                document.getElementById("myUName").innerText = "Username: " + JSON.stringify(response[i].username).replace(/^"(.*)"$/, '$1');
                 break;
             }
         }
