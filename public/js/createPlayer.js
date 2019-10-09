@@ -122,6 +122,7 @@ function playSomeTrackID(track) {
 }
 
 function updateCurrentTrack(track) {
+    $("canvas").remove()
     currentTrackID = track
     const json = {track: currentTrackID}
     fetch('/currentTrack', {
@@ -132,4 +133,5 @@ function updateCurrentTrack(track) {
         },
         body: JSON.stringify(json)
     })
+    trackInfo()
 }

@@ -1,12 +1,10 @@
-
-
-let analysis
-let scene,camera,renderer,mesh,mesh2,mesh3,mesh4,mesh5,mesh6;
-let shapes = [];
-let numArray = [];
-let confidence =1;
-
 function trackInfo() {
+    let analysis
+    let scene,camera,renderer,mesh,mesh2,mesh3,mesh4,mesh5,mesh6;
+    let shapes = [];
+    let numArray = [];
+    let confidence =1;
+
     (async () => {
         const rawResponse = await fetch('/trackAnalysis', {
             method: 'GET'
