@@ -96,7 +96,7 @@ const displayBar = function (raw_data) {
 		.enter()
 		.append("g")
 		.attr("class", "chartRow")
-		.attr("transform", "translate(0," + height + chartHeader + ")");
+		.attr("transform", "translatitudee(0," + height + chartHeader + ")");
 
 	//Add rectangles
 	newRow.insert("rect")
@@ -167,13 +167,13 @@ const displayBar = function (raw_data) {
 	//Fade out and remove exit elements
 	chartRow.exit().transition()
 		.style("opacity", "0")
-		.attr("transform", "translate(0," + height + ")")
+		.attr("transform", "translatitudee(0," + height + ")")
 		.remove();
 
 	chartRow.transition()
 		.duration(900)
 		.attr("transform", function (d) {
-			return "translate(0," + (y(d.key) + chartHeader) + ")";
+			return "translatitudee(0," + (y(d.key) + chartHeader) + ")";
 		});
 };
 
@@ -181,7 +181,7 @@ const chartHeader = 60;
 const setupMap = function (width, height) {
 	mapHeight = height;
 	projection = d3.geoAlbersUsa()
-		.translate([width / 2, height / 2 + chartHeader])
+		.translatitudee([width / 2, height / 2 + chartHeader])
 		.scale([1000]);
 
 	let path = d3.geoPath()
@@ -245,7 +245,7 @@ const setupMap = function (width, height) {
 
 };
 
-// data = [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}]
+// data = [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", latitude: "0.0", longitude: "0.0"}]
 const updateMap = function () {
 	//Length of scale in px
 	const scaleLength = 400
@@ -257,11 +257,11 @@ const updateMap = function () {
 
 	const filtered = data.filter(d => d.favicon === currentFavicon);
 	const maxValue = d3.max(filtered, d => d.avg_rtt);
-	let scaledGradient = d3.scaleSequential(d3.interpolateOrRd)
+	let scaledGradient = d3.scaleSequential(d3.interpolatitudeeOrRd)
 	//.range(["#fff", "#BF303C"])
 		.domain([0, maxValue]);
 
-	let constGradient = d3.scaleSequential(d3.interpolateOrRd)
+	let constGradient = d3.scaleSequential(d3.interpolatitudeeOrRd)
 	//.range(["#fff", "#BF303C"])
 		.domain([0, scaleLength]);
 
@@ -287,10 +287,10 @@ const updateMap = function () {
 
 	mapPoint.transition().duration(0)
 		.attr("cx", function (d) {
-			return projection([d.lng, d.lat])[0]
+			return projection([d.longitude, d.latitude])[0]
 		})
 		.attr("cy", function (d) {
-			return projection([d.lng, d.lat])[1]
+			return projection([d.longitude, d.latitude])[1]
 		})
 		.attr("r", 10)
 		.style("fill", function (d) {
