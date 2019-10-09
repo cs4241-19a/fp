@@ -16,6 +16,8 @@ Our team consists of four members: Manasi Danke,Carla Duarte, Amanda-Ezeobiejesi
 
 ### How We Implemented His Feedback:
 
+After reviewing Professor Robert's feedback, we decided to focus our project entirely on the room booking service, since that would be quite a coding challenge and have the most positive impact on our users and stakeholders, defined below. 
+
 ## Final Project Description (with Professor Roberts's feedback):
 
 #### Users: WPI students and faculty who are in project teams and need a private space to meet with their teams.
@@ -24,11 +26,17 @@ Our team consists of four members: Manasi Danke,Carla Duarte, Amanda-Ezeobiejesi
 
 ### General Description: 
 
-We plan to create a project management tool that enables WPI students to effectively meet with their IQP teams at a convenient time and place on campus. We plan to implement two key features in our project management dashboard:
+We create a project management tool that enables WPI students to effectively meet with their IQP teams at a convenient time and place on campus. We implemented these key features in our project management dashboard:
 
-  1) An availability tool that enables users to log in and enter/select which days and times of the week they are able to meet with their particular group. 
+  1) An availability tool that enables users to log in/register and enter/select which days and times of the week they are able to meet with their particular group for a particular room through a form.
   
-  2) A tool that enables groups to book meeting rooms on campus that are not already booked
+  2) A tool that enables groups to book meeting rooms on campus that are not already booked. They are also able to delete meetings they have booked through their account.
+  
+  3) A tool that sends an email to recipients through our application to share booking details and provide confirmation. It is pretty cool.
+  
+  4) A visual table display of rooms that are already booked for particular times. The table is udpated to even include the times you have booked rooms for and block those off so no other user can book that time.
+  
+  5) A visual table that shows the user's meetings and enables them to delete meetings they have booked.
  
 #### Impact:
 
@@ -46,5 +54,9 @@ Our project is a complete web application:
 - Our project lets users delete their bookings from their list of meetings.
 
 ### Fun Features that we independently researched, designed, and implemented:
+
+We had to research may components of our application and found resources on Stack Overflow, w3schools, tutorial points, and YouTube.
+
+One of our favorite features to research was:
 
 - nodemailer: which enabled us to send emails from our specialized team gmail account that notified recipents of the day, start time, end time, and location of their scheduled meeting.
