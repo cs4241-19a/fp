@@ -90,13 +90,7 @@ app.use((req,res,next) => {
 
 // Handling Routes
 app.get('/', function(req, res) {
-  if(req.isAuthenticated()){
-    
-  res.sendFile(__dirname + '/public/views/index.html');
-  }else {
-    
-  res.sendFile(__dirname + '/public/views/login.html');
-  }
+res.sendFile(__dirname + '/public/views/index.html');
 });
 
 app.get('/login', function(req, res) {
@@ -119,7 +113,7 @@ app.get('/admin', async function(req, res) {
     res.sendFile(__dirname + '/public/views/admin.html');
   }else{
     console.log("NotAuthed");
-  res.sendFile(__dirname + '/public/views/index.html');
+  res.redirect('/');
   }
 });
 
@@ -179,6 +173,7 @@ app.post('/register', function(req, res){
   per.point = 0;
   per.jobs = {};
   per.active = "active";
+  per.preferred = [];
 
   userCol.findOne({uuid: per.uuid}, function(err, perFound){
     if(err){return console.log(err)};
