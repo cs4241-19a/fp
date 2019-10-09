@@ -1,56 +1,32 @@
 import React, { Component } from 'react';
-//import * as Plotly from "react-plotlyjs";
-//import Plot from 'react-plotly.js';
+import ChartistGraph from 'react-chartist';
 
-class Graph extends Component {
+class BarGraph extends Component {
     constructor(props) {
         super(props);
         this.state = {};
     }
-
     componentDidMount() {
     }
 
     render() {
+        var data = {
+            labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8', 'W9', 'W10'],
+            series: [ [1000, 2000, 4000, 8000, 6000, 1000, 1000, 1000, 1000, 1000], [2000, 1000, 6000, 7000, 9000, 30000, 2000, 6000, 3000, 1000]]
+        };
+
+        var options = {
+           //high is the biggest number plus one
+        //<section className="center">
+            high: 10000,
+            low: 0
+        };
+
         return (
-            <div>
-            <script type="text/javascript" src= './RawGraph.js'></script>
-            <div id="myDiv"></div>
-                hey its the graph div
-        </div>
+            <div id="myGraph">
+                <ChartistGraph data={data} options={options} type={"Bar"} />
+            </div>
         );
     };
 }
-
-/*
-<script>
-  var trace1 = {
-      x: ['giraffes', 'orangutans', 'monkeys'],
-      y: [20, 14, 23],
-      name: 'SF Zoo',
-      type: 'bar'
-  };
-
-  var trace2 = {
-      x: ['giraffes', 'orangutans', 'monkeys'],
-      y: [12, 18, 29],
-      name: 'LA Zoo',
-      type: 'bar'
-  };
-
-  var data = [trace1, trace2];
-  var layout = {barmode: 'group'};
-
-  Plotly.newPlot('myDiv',data, layout, {},{showSendToCloud:true});
-  </script>
-
-  getBudgets = async () => {
-      const response = await fetch('/api/home');
-      const body = await response.json();
-      if (response.status !== 200) throw Error(body.message);
-      console.log(Object.values(body));
-      this.setState({budgets: Object.values(body)});
-  };
-
-*/
-export default Graph;
+export default BarGraph;
