@@ -11,8 +11,8 @@ function FizzyText(message) {
 
     this.growthSpeed = 0.1; // how fast do particles change size?
     this.maxSize = 5; // how big can they get?
-    this.noiseStrength = 10; // how turbulent is the flow?
-    this.speed = 0.1; // how fast do particles move?
+    this.noiseStrength = 5; // how turbulent is the flow?
+    this.speed = 0.05; // how fast do particles move?
     this.displayOutline = false; // should we draw the message as a stroke?
     this.framesRendered = 0;
 

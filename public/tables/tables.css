@@ -40,7 +40,8 @@
     margin-bottom: 100px;
 }
 
-.avatar {
+
+/* .avatar {
     width: 200px;
     height: 200px;
     margin: 30px;
@@ -51,7 +52,7 @@
 
 .avatar:hover {
     background-image: url('/img/avatar-alt.png');
-}
+} */
 
 body {
     font-family: 'Montserrat', sans-serif;
