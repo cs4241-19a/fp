@@ -8,7 +8,7 @@ const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrite
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
 // adds a book to the book database, assigning the user adding it as an owner
-function dbBookAdd(username, name, crn) {
+function dbBookAdd(username, name, crn, location) {
     console.log("adding new book to the database...");
 
     const MongoClient = require('mongodb').MongoClient;
@@ -17,7 +17,7 @@ function dbBookAdd(username, name, crn) {
     MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
         if (err) throw err;
         var dbo = db.db("finalproject");
-        var myobj = { username: username, name: name, crn: crn};
+        var myobj = { username: username, name: name, crn: crn, location: location };
         dbo.collection("books").insertOne(myobj, function(err, res) {
             if (err) throw err;
             console.log("added new book!");
@@ -87,8 +87,7 @@ let dbBookLookup = function(arr) {
     })
 };
 
-// after an exchange is completed adds book to new user while removing it from previous
-// array should be [prevOwner, newOwner, bookName, crn]
+// delete book given username, bookName, and crn
 function dbBookDeleteBook(username, bookName, crn) {
     const MongoClient = require('mongodb').MongoClient;
     const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
@@ -145,11 +144,12 @@ let dbBookGetFromUser = function(arr) {
 // /* ### ROUTES ### */
 router.post('/addBook', function (req, res) {
     console.log("attempting to add new book...");
-    const username = req.body.username; // going to have to change this to get it from cookie probably
+    const username = req.body.username; // going to have to get this from cookie
     const bookName = req.body.name;
     const crn = req.body.crn;
+    const location = req.body.location;
 
-    dbBookAdd(username, bookName, crn);
+    dbBookAdd(username, bookName, crn, location);
     res.cookie('username', username);
     res.send("OK");
 });
