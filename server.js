@@ -132,7 +132,7 @@ passport.deserializeUser((user, done) =>
 
 app.post(
 	"/gettasks",
-	function(res, req)
+	function(req, res)
 	{
 		if (res.user === undefined)
 		{
@@ -141,15 +141,17 @@ app.post(
 			return
 		}
 		
-		res.json({/* TODO send back the tasks for that user */})
+		console.log(res.user.username)
+		
+		database.getTasks(res.user.username)
 	}
 )
 
 app.post(
 	"/createtask",
-	function(res, req)
+	function(req, res)
 	{
-		if (res.user === undefined)
+		if (req.user === undefined)
 		{
 			res.status(401) // Unauthorized
 			res.send()
@@ -165,7 +167,7 @@ app.post(
 
 app.post(
 	"/edittask",
-	function(res, req)
+	function(req, res)
 	{
 		if (res.user === undefined)
 		{
@@ -183,7 +185,7 @@ app.post(
 
 app.post(
 	"/deletetask",
-	function(res, req)
+	function(req, res)
 	{
 		if (res.user === undefined)
 		{
