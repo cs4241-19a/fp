@@ -72,7 +72,6 @@ class Home extends Component {
         const { users, budgets } = this.state;
         return (
             <div className="App">
-                {/* <p>{this.state.response}</p> */}
                 <div>
                     <ul>
                         {users.map(this.showUsers)}
