@@ -37,19 +37,11 @@ module.exports = function () {
                 } else reject("Reverse Geocode lookup failed with API status code " + request.status + ": " + request.responseText);
             };
 
-            let parameters = {
-                apiKey: 'efda2ed783e748239c3406235a586f43',
-                version: 4.1,
-                latitude: latitude,
-                longitude: longitude,
-                notStore: true,
-                format: 'json',
-            };
             let url = 'https://geoservices.tamu.edu/Services/ReverseGeocoding/WebService/v04_01/Rest/?' +
                 'apiKey=efda2ed783e748239c3406235a586f43&' +
                 'version=4.1&' +
-                'latitude=' + latitude + '&' +
-                'longitude=' + longitude + '&' +
+                'lat=' + latitude + '&' +
+                'lon=' + longitude + '&' +
                 'notStore=true&' +
                 'format=json';
             request.open('GET', url, true);
