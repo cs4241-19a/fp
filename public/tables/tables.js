@@ -1,3 +1,7 @@
+window.onload = function() {
+    let fizzyText = new FizzyText('Teender')
+}
+
 fetch('/getYou', {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }

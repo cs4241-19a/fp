@@ -1,3 +1,7 @@
+window.onload = function() {
+    let fizzyText = new FizzyText('Registration')
+}
+
 document.getElementById('cancel-btn').onclick = function(e) {
     location.href = '../index.html';
     e.preventDefault();

@@ -1,3 +1,10 @@
+#helvetica-demo {
+    display: flex;
+    justify-content: center;
+    margin-left: 530px;
+    margin-bottom: -80px;
+}
+
 #background {
     /* BOX MODEL */
     width: 100%;

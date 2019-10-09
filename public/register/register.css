@@ -49,3 +49,9 @@ body {
     display: none;
     width: 100%;
 }
+
+#helvetica-demo {
+    display: flex;
+    justify-content: end;
+    margin-bottom: -80px;
+}
