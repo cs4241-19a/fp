@@ -9,8 +9,11 @@ window.onload = async function(){
     catch(error){
          console.log(error);
     }
-
-    autocomplete(document.getElementById("name"), names);
+    
+    if(location.href.split("/").slice(-1)[0] === "admin"){
+        autocomplete(document.getElementById("name"), names);
+    }
+    
     fillBoard();
 }
 
