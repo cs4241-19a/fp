@@ -64,19 +64,17 @@
             <textarea class="form-control" id="exampleFormControlTextarea2"
                       placeholder="Write a note about the song here"
                       rows="3"></textarea>
-            <div class = "stars">
-                <div class="rate">
-                    <input type="radio" id="star5" name="rate" value="5" />
-                    <label for="star5" title="5">5 stars</label>
-                    <input type="radio" id="star4" name="rate" value="4" />
-                    <label for="star4" title="4">4 stars</label>
-                    <input type="radio" id="star3" name="rate" value="3" />
-                    <label for="star3" title="3">3 stars</label>
-                    <input type="radio" id="star2" name="rate" value="2" />
-                    <label for="star2" title="2">2 stars</label>
-                    <input type="radio" id="star1" name="rate" value="1" />
-                    <label for="star1" title="1">1 star</label>
-                </div>
+            <div class="rate">
+                <input type="radio" id="star5" name="rate" value="5" />
+                <label for="star5" title="5">5 stars</label>
+                <input type="radio" id="star4" name="rate" value="4" />
+                <label for="star4" title="4">4 stars</label>
+                <input type="radio" id="star3" name="rate" value="3" />
+                <label for="star3" title="3">3 stars</label>
+                <input type="radio" id="star2" name="rate" value="2" />
+                <label for="star2" title="2">2 stars</label>
+                <input type="radio" id="star1" name="rate" value="1" />
+                <label for="star1" title="1">1 star</label>
             </div>
             <div class="post">
                 <button class="btn btn-danger" type="button" id="add-rec-btn">Make Recomendation</button>
@@ -91,23 +89,8 @@
                 <h5 class="card-title" id="current-track-artist"></h5>
                 <a class="btn btn-primary" href="#" onclick="togglePlayPause()">Play/Pause</a>
             </nav>
-            <!-- I commented this out because it seemed to refresh automatically -->
-<!--            <div id="rec-btn-div">-->
-<!--                <button class="btn btn-primary" id="refresh-btn">Refresh Recommendations</button>-->
-<!--            </div>-->
             <div class="card">
-<!--                <div class="card-header"></div>-->
-<!--                <div class="card">-->
-<!--                    <div class="card-body">-->
-<!--                        <h5 class="card-title" id="current-track-name">Song Name, Artist, Album</h5>-->
-<!--                        <img alt="image of song cover" id="current-track" src="images/songnotfound.png"/>-->
-<!--                        <p class="card-text">Recommendation note</p>-->
-<!--                        <a class="btn btn-primary" href="#" onclick="togglePlayPause()">Play/Pause</a>-->
-<!--                    </div>-->
-<!--                </div>-->
                 <div id="recommendation-list" class = "overflow-auto recommendations-container"></div>
-                <a class="btn btn-primary" href="#" onclick="playSomeTrackID('13FlxJxlFrtgphJb94sFAM')">Play some other
-                    random song</a>
             </div>
         </div>
     </div>
