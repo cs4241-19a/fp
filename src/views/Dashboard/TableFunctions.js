@@ -1,9 +1,11 @@
 const deleteRow = function(cell) {
-    // code me       
+    // alert asking to confirm changes (yes/no)
+    // code me      
 }
 
 const modifyRow = function(cell){
-    // code me
+    // alert asking to confirm change (yes/no)
+    // send modification to server
 }
 
 // download csv

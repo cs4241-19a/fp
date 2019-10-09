@@ -36,24 +36,24 @@ let budgets = [
     },
 ];
 
-var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "root",
-    database: "fp"
-});
+// var con = mysql.createConnection({
+//     host: "localhost",
+//     user: "root",
+//     password: "root",
+//     database: "fp"
+// });
 
-con.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected!");
-});
+// con.connect(function (err) {
+//     if (err) throw err;
+//     console.log("Connected!");
+// });
 
 app.use(express.static(path.join(__dirname, './build')));
 
 app.get('/api/hello', (req, res) => {
-    con.query("SELECT * FROM accounts;", function (err, data) {
-        (err) ? res.send(err) : res.json({ users: data });
-    })
+    // con.query("SELECT * FROM accounts;", function (err, data) {
+    //     (err) ? res.send(err) : res.json({ users: data });
+    // })
 });
 
 app.post('/api/world', (req, res) => {

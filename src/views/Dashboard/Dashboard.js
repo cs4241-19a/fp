@@ -5,7 +5,86 @@ import 'react-tabulator/lib/css/bulma/tabulator_bulma.min.css'; // theme
 import { ReactTabulator } from 'react-tabulator'; // for React 15.x, use import { React15Tabulator }
 import * as tableFunctions from './TableFunctions.js'
 
-class Dashboard extends Component {
+class Graph extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    componentDidMount() {
+    }
+
+    render() {
+        return(
+            <section class="center">
+                <br></br>
+                Give me a pretty graph :)
+            </section>
+        )
+    }
+}
+
+class Field extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    componentDidMount() {
+    }
+    
+    render() {
+        return(
+            <section class="section fields">
+                <div class="columns">
+                    <div class="column">
+                        <div class="notification" id="nameBox">
+                        <form class="item" action="">
+                            <h5> Enter Club Name: </h5>
+                            <input class="selStyle fieldInput" type='text' id='name'/>
+                        </form>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="notification" id="requestBox">
+                            <div class="item">
+                                <h5> Enter Requested Amount: </h5>
+                                <input class="selStyle fieldInput" type='text' id='request'/>
+                            </div>              
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="notification" id="approveBox">
+                            <div class="item">
+                                <h5> Enter Approved Amount: </h5>
+                                <input class="selStyle fieldInput" type='text' id='approve'/>
+                            </div>              
+                        </div>
+                    </div>
+                </div>
+            </section>)     
+    }
+}
+
+class Submit extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    componentDidMount() {
+    }
+
+    render() {
+        return(
+            <section class=" section center submitButton">
+                <a class="button btn is-primary is-focused is-fullwidth" id="submit" disabled>Submit Data</a>
+            </section>)
+    }
+
+}
+
+class Table extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -82,10 +161,31 @@ class Dashboard extends Component {
     //add table holder element to DOM
     render() {
         return (
-            <div className="table">
+            <section class="section table">
                 <ReactTabulator columns={this.columns} data={this.state.budgets} options={this.options} />
-            </div>
+            </section>
         );
+    }
+}
+
+class Dashboard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    componentDidMount() {
+    }
+
+    render() {
+        return(
+            <div>
+                <Graph></Graph>
+                <Field></Field>
+                <Submit></Submit>
+                <Table></Table>
+            </div>
+        )
     }
 }
 
