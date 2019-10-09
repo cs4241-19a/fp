@@ -6,12 +6,8 @@ import FeedItem from './FeedItem';
 
 export default function ProfileApp(props) {
 
-    const store = createStore(model);
-
     return (
-        <StoreProvider store={store}>
         <div className="w-full">
-                <FeedContainer/>
             <div className="w-full">
                 <div className="w-full">
                     <div className="w-full bg-white rounded overflow-hidden shadow-lg">
@@ -184,7 +180,6 @@ export default function ProfileApp(props) {
             </div>
             <div className="lg:text-center bottomBanner"> Designed and developed in Worcester, Massachusetts </div>
         </div>
-        </StoreProvider>
     )
 
 }
