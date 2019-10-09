@@ -5,7 +5,6 @@ import 'react-tabulator/lib/css/bulma/tabulator_bulma.min.css'; // theme
 import { ReactTabulator } from 'react-tabulator'; // for React 15.x, use import { React15Tabulator }
 import * as tableFunctions from './TableFunctions.js'
 
-
 class Table extends Component {
     constructor(props) {
         super(props);
@@ -94,7 +93,7 @@ class Table extends Component {
             <section class="section table">
                 <ReactTabulator columns={this.columns} data={this.props.data} options={this.options} />
             </section>
-        );
+        ); 
     }
 }
 
