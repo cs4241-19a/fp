@@ -77,7 +77,7 @@ let variables = {
     playbackTimer: null,
     countdownTimerCount: 3,
     countdownTimer: null,
-
+    recordingPiano: false,
 }
 
 ////////////////////////////////////////
@@ -637,7 +637,6 @@ PS.shutdown = function( options ) {
 //RECORDING FUNCTIONS
 
 function recordingCountdown() {
-    console.log("IN COUNTDOWN")
     if (variables.countdownTimerCount > 0) {
         PS.audioPlay("fx_click");
         PS.statusText("RECORDING IN: " + variables.countdownTimerCount);
@@ -646,13 +645,13 @@ function recordingCountdown() {
     else {
         PS.statusText("RECORDING");
         PS.timerStop(variables.countdownTimer)
+        variables.recordInfo = true;
         variables.timer = setInterval(intervalTimerLoop, 10);
     }
 }
 
 function startRecording(arrayPos) {
     variables.arrayLoc = arrayPos;
-    variables.recordInfo = true;
     variables.currentTime = 0;
     variables.dataArray[variables.arrayLoc] = [];
     variables.countdownTimer = PS.timerStart(60, recordingCountdown);
@@ -667,66 +666,28 @@ function intervalTimerLoop() {
     else {
         clearInterval(variables.timer);
         variables.recordInfo = false;
+        variables.recordingPiano = false;
+        PS.statusText("FINISHED RECORDING")
         variables.currentTime = 0;
         variables.countdownTimerCount = 3;
     }
 }
 
 function recordData(data, timing) {
-    let calVal = 0;
-    switch (data.data) {
-        case 0:
-            calVal = 44;
-            variables.dataArray[variables.arrayLoc].push({ pianoVal: calVal, timeVal: timing });
-            break;
-        case 0.5:
-            calVal = 45;
-            variables.dataArray[variables.arrayLoc].push({ pianoVal: calVal, timeVal: timing });
-            break;
-        case 1:
-            calVal = 46;
-            variables.dataArray[variables.arrayLoc].push({ pianoVal: calVal, timeVal: timing });
-            break;
-        case 1.5:
-            calVal = 47;
-            variables.dataArray[variables.arrayLoc].push({ pianoVal: calVal, timeVal: timing });
-            break;
-        case 2:
-            calVal = 48;
-            variables.dataArray[variables.arrayLoc].push({ pianoVal: calVal, timeVal: timing });
-            break;
-        case 3:
-            calVal = 49;
-            variables.dataArray[variables.arrayLoc].push({ pianoVal: calVal, timeVal: timing });
-            break;
-        case 3.5:
-            calVal = 50;
-            variables.dataArray[variables.arrayLoc].push({ pianoVal: calVal, timeVal: timing });
-            break;
-        case 4:
-            calVal = 51;
-            variables.dataArray[variables.arrayLoc].push({ pianoVal: calVal, timeVal: timing });
-            break;
-        case 4.5:
-            calVal = 52;
-            variables.dataArray[variables.arrayLoc].push({ pianoVal: calVal, timeVal: timing });
-            break;
-        case 5:
-            calVal = 53;
-            variables.dataArray[variables.arrayLoc].push({ pianoVal: calVal, timeVal: timing });
-            break;
-        case 5.5:
-            calVal = 54;
-            variables.dataArray[variables.arrayLoc].push({ pianoVal: calVal, timeVal: timing });
-            break;
-        case 6:
-            calVal = 55;
-            variables.dataArray[variables.arrayLoc].push({ pianoVal: calVal, timeVal: timing });
-            break;
-        case 7:
-            calVal = 56;
-            variables.dataArray[variables.arrayLoc].push({ pianoVal: calVal, timeVal: timing });
-            break;
+    //RESTIRCT TO PIANO
+    if (variables.recordingPiano) {
+        if (data.data <= 7) {
+            if (!isNaN(data.data)) {
+                variables.dataArray[variables.arrayLoc].push({ noteVal: data.data, timeVal: timing });
+            }
+        }
+    }
+    else {
+        if (data.data > 7) {
+            if (!isNaN(data.data)) {
+                variables.dataArray[variables.arrayLoc].push({ noteVal: data.data, timeVal: timing });
+            }
+        }
     }
 }
 
@@ -739,13 +700,38 @@ function playBackData(arrayPos) {
         variables.arrayLoc = arrayPos;
         variables.currentPlaybackTime = 0;
         variables.playbackLength = []
-        variables.playbackIndicies = [0, 0, 0, 0]
+        variables.playbackIndicies = [0, 0, 0, 0, 0, 0, 0, 0]
         variables.maxLength = 0;
-        for (var i = 0; i < variables.dataArray.length; i++) {
-            if (variables.dataArray[i].length > variables.maxLength) {
-                variables.maxLength = variables.dataArray[i].length
+        //IF PIANO
+        if (arrayPos === "PIANO") {
+            for (var i = 0; i < 4; i++) {
+                if (variables.dataArray[i].length > variables.maxLength) {
+                    variables.maxLength = variables.dataArray[i].length
+                }
+                variables.playbackLength.push(variables.dataArray[i].length);
             }
-            variables.playbackLength.push(variables.dataArray[i].length);
+        }
+        //IF DRUMS
+        if (arrayPos === "DRUMS") {
+            variables.playbackLength.push(0);
+            variables.playbackLength.push(0);
+            variables.playbackLength.push(0);
+            variables.playbackLength.push(0);
+            for (var i = 4; i < 8; i++) {
+                if (variables.dataArray[i].length > variables.maxLength) {
+                    variables.maxLength = variables.dataArray[i].length
+                }
+                variables.playbackLength.push(variables.dataArray[i].length);
+            }
+        }
+        //IF BOTH
+        if (arrayPos === "ALL") {
+            for (var i = 0; i < variables.dataArray.length; i++) {
+                if (variables.dataArray[i].length > variables.maxLength) {
+                    variables.maxLength = variables.dataArray[i].length
+                }
+                variables.playbackLength.push(variables.dataArray[i].length);
+            }
         }
         variables.timeRemaining = variables.maxSeconds;
         variables.playbackTimer = setInterval(playbackSound, 10);
@@ -754,14 +740,12 @@ function playBackData(arrayPos) {
 }
 
 function playbackSound() {
-    if (variables.currentPlaybackTime % 1000 === 0) {
-        PS.statusText(variables.timeRemaining / 1000)
-        variables.timeRemaining -= 1000;
-    }
-    if (variables.arrayLoc !== null) {
+    //PLAY SINGLE TRACK
+    if (variables.arrayLoc !== "PIANO" && variables.arrayLoc !== "DRUMS" && variables.arrayLoc !== "ALL") {
         if (variables.currentPlaybackIndex < variables.dataArray[variables.arrayLoc].length) {
             if (variables.dataArray[variables.arrayLoc][variables.currentPlaybackIndex].timeVal === variables.currentPlaybackTime) {
-                PS.audioPlay(PS.piano(variables.dataArray[variables.arrayLoc][variables.currentPlaybackIndex].pianoVal, false));
+                playAudio(variables.dataArray[variables.arrayLoc][variables.currentPlaybackIndex].noteVal)
+                //PS.audioPlay(PS.piano(variables.dataArray[variables.arrayLoc][variables.currentPlaybackIndex].noteVal, false));
                 variables.currentPlaybackIndex++;
             }
             variables.currentPlaybackTime += 10;
@@ -774,13 +758,13 @@ function playbackSound() {
             clearInterval(variables.playbackTimer)
         }
     }
-    //PLAY ALL TRACKS
-    else {
-        for (var i = 0; i < variables.dataArray.length; i++) {
+    //PLAY ALL PIANO
+    else if (variables.arrayLoc === "PIANO") {
+        for (var i = 0; i < 4; i++) {
             if (variables.playbackIndicies[i] < variables.playbackLength[i]) {
                 if (variables.dataArray[i][variables.playbackIndicies[i]].timeVal === variables.currentPlaybackTime) {
-                    //console.log("TRACK: " + i + " INDEX: " + playbackIndicies[i] + " " + variables.dataArray[i][playbackIndicies[i]].pianoVal);
-                    PS.audioPlay(PS.piano(variables.dataArray[i][variables.playbackIndicies[i]].pianoVal, false));
+                    playAudio(variables.dataArray[i][variables.currentPlaybackIndex].noteVal)
+                    //PS.audioPlay(PS.piano(variables.dataArray[i][variables.playbackIndicies[i]].noteVal, false));
                     variables.playbackIndicies[i]++;
                 }
                 if (variables.playbackIndicies[i] === variables.maxLength) {
@@ -794,7 +778,47 @@ function playbackSound() {
         }
         variables.currentPlaybackTime += 10;
     }
+    //PLAY ALL DRUMS
+    else if (variables.arrayLoc === "DRUMS") {
+        for (var i = 4; i < 8; i++) {
+            if (variables.playbackIndicies[i] < variables.playbackLength[i]) {
+                if (variables.dataArray[i][variables.playbackIndicies[i]].timeVal === variables.currentPlaybackTime) {
+                    playAudio(variables.dataArray[i][variables.currentPlaybackIndex].noteVal)
+                    //PS.audioPlay(PS.piano(variables.dataArray[i][variables.playbackIndicies[i]].noteVal, false));
+                    variables.playbackIndicies[i]++;
+                }
+                if (variables.playbackIndicies[i] === variables.maxLength) {
+                    //END PLAYBACK
+                    variables.playingBack = false;
+                    variables.currentPlaybackTime = 0;
+                    PS.statusText("FINISHED PLAYBACK");
+                    clearInterval(variables.playbackTimer)
+                }
+            }
+        }
+        variables.currentPlaybackTime += 10;
+    }
+    //PLAY BOTH
+    else if (variables.arrayLoc === "ALL") {
+        for (var i = 0; i < 8; i++) {
+            if (variables.playbackIndicies[i] < variables.playbackLength[i]) {
+                if (variables.dataArray[i][variables.playbackIndicies[i]].timeVal === variables.currentPlaybackTime) {
+                    playAudio(variables.dataArray[i][variables.currentPlaybackIndex].noteVal)
+                    //PS.audioPlay(PS.piano(variables.dataArray[i][variables.playbackIndicies[i]].noteVal, false));
+                    variables.playbackIndicies[i]++;
+                }
+                if (variables.playbackIndicies[i] === variables.maxLength) {
+                    //END PLAYBACK
+                    variables.playingBack = false;
+                    variables.currentPlaybackTime = 0;
+                    PS.statusText("FINISHED PLAYBACK");
+                    clearInterval(variables.playbackTimer)
+                }
+            }
+        }
+        variables.currentPlaybackTime += 10;
 
+    }
 }
 
 ////////////////////////////////////////
@@ -1129,6 +1153,7 @@ function pianoSetup() {
 function drumSetup() {
     //TODO BETTER COLORS
 
+    //VERTICAL is 14 to 23
     //DRUMS
     for (var i = 0; i < 32; i++) {
         for (var j = 14; j < 23; j++) {
@@ -1669,7 +1694,6 @@ function RevertKey(data) {
     }
 }
 
-
 ////////////////////////////////////////
 ////////////////////////////////////////
 ////////////////////////////////////////
@@ -1719,21 +1743,25 @@ function playAudio(data) {
             break;
         case "R1":
             if (!variables.recordInfo) {
+                variables.recordingPiano = true;
                 startRecording(0);
             }
             break;
         case "R2":
             if (!variables.recordInfo) {
+                variables.recordingPiano = true;
                 startRecording(1);
             }
             break;
         case "R3":
             if (!variables.recordInfo) {
+                variables.recordingPiano = true;
                 startRecording(2);
             }
             break;
         case "R4":
             if (!variables.recordInfo) {
+                variables.recordingPiano = true;
                 startRecording(3);
             }
             break;
@@ -1803,21 +1831,25 @@ function playAudio(data) {
             break;
         case "DR1":
             if (!variables.recordInfo) {
+                variables.recordingPiano = false;
                 startRecording(4);
             }
             break;
         case "DR2":
             if (!variables.recordInfo) {
+                variables.recordingPiano = false;
                 startRecording(5);
             }
             break;
         case "DR3":
             if (!variables.recordInfo) {
+                variables.recordingPiano = false;
                 startRecording(6);
             }
             break;
         case "DR4":
             if (!variables.recordInfo) {
+                variables.recordingPiano = false;
                 startRecording(7);
             }
             break;
