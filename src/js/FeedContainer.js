@@ -27,10 +27,27 @@ export default function FeedContainer(props) {
         },
     ]
 
-    fetch('/feed')
+    // fetch('/feed')
+    //     .then( function( response ) {
+    //         return response.json();
+    //     }).then(function (response){
+    //         response.forEach(feed_item => {
+    //             items.push(feed_item)
+    //         });
+    //     });
+
+    // console.log(items)
+
+
+    async function getItems() {
+
+        console.log(items)
+
+        await fetch('/feed')
         .then( function( response ) {
             return response.json();
         }).then(function (response){
+            console.log(response)
             response.forEach(feed_item => {
                 items.push(feed_item)
             });
@@ -52,6 +69,12 @@ export default function FeedContainer(props) {
             )
         });
 
+        console.log(items)
+
+    }
+
+    getItems()
+
     //when getting array of 10 items from server
     //items.map(item) => <FeedItem etcetcetc />
     //will render all feed items automatically from the data
@@ -61,4 +84,29 @@ export default function FeedContainer(props) {
     //TODO: Each of the FeedItems in the generated list needs a unique 'key' field
     //Currently have it set to the song title but not guarantee this is unique
     
+    return (
+        <Grid container direction='column' justify='center' alignItems='center'>
+            {items.map(item => {
+
+                //TODO: Feed items not working, idk but div works
+
+                // <FeedItem
+                //     key={item.song.title} 
+                //     song={item.song}
+                //     user={item.user}
+                //     options={item.options}
+                // />
+                return (
+                <div key={item.song.title + item.user.username}>
+                    <FeedItem
+                        key={item.song.title} 
+                        song={item.song}
+                        user={item.user}
+                        ptions={item.options}
+                    />
+                </div>
+            )
+            })}
+        </Grid>
+    )
 }
