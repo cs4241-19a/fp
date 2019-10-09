@@ -70,3 +70,9 @@ nav .dropdown-menu {
 .gameMeta p {
     margin: .5em 0 0;
 }
+
+/* score board */
+#scoreModal .tab-content{
+    overflow-y: scroll;
+    height: 50vh;
+}

@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="col-sp">
+        <h1>Kenken</h1>
+        <h3 id="timer">Time</h3>
+        <h2 id="win">You Won!<button class="btn btn-secondary" id="playAgain" onclick="playAgain()">Play Again?</button></h2>
+        <div id="game-area">
+
+        </div>
+    </div>
+</div>
+
+{{#section 'css'}}
+{{!-- Add CSS here --}}
+    <link rel="stylesheet" href="/css/kenken/kenken.css">
+{{/section}}
+
+{{#section 'js'}}
+    <script src="/js/kenken/kenken.js"></script>
+{{/section}}
+
+{{#> layouts/modal-layout type="gameScore" title="Submit Score" submitText="Submit" }}
+    {{#*inline "form-content"}}
+        {{> includes/game-submit-default }}
+    {{/inline}}
+{{/layouts/modal-layout}}
+
+<!-- The help modal -->
+{{#> layouts/modal-layout type="help" title="Kenken Help" }}
+    {{#*inline "form-content"}}
+        {{> includes/help/kenken }}
+    {{/inline}}
+{{/layouts/modal-layout}}

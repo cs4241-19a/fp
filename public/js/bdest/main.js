@@ -15,7 +15,7 @@ let board = {
         this.barYScale = 0.5; // Y scale for bars
         this.bricksLeft = 1;
         // Current board configuration
-        this.rowConfiguration = ["r_bar", "o_bar", "o_bar", "y_bar", "y_bar"];
+        this.rowConfiguration = ["r_bar", "r_bar", "o_bar", "o_bar", "y_bar"];
         this.over = false;  // means the game is over
     }
 };
@@ -52,8 +52,7 @@ let gameOverText;
 let startingText;
 
 function preload() {
-    let ball = this.load.image("ball", path + "ball.png");
-    ball.smoothed = false;
+    this.load.image("ball", path + "ball.png");
     this.load.image("r_bar", path + "bar_red.png");
     this.load.image("o_bar", path + "bar_orange.png");
     this.load.image("y_bar", path + "bar_yellow.png");
@@ -95,9 +94,11 @@ function create() {
     // Add score HUD
     scoreText = this.add.text(16, 16, 'Score: ' + board.score, { fontSize: '32px', fill: '#fff' });
     livesText = this.add.text(400, 16, 'Lives: ' + board.lives, { fontSize: '32px', fill: '#fff' });
-    gameOverText = this.add.text(85, 400, 'GAME OVER', { fontSize: '64px', fill: '#fff' });
+    gameOverText = this.add.text(300, 400, 'GAME OVER', { fontSize: '64px', fill: '#fff' });
     gameOverText.setVisible(false);
-    startingText = this.add.text(60, 600, 'Press the space bar to serve!', { fontSize: '32px', fill: '#fff' });
+    gameOverText.setOrigin(0.5);
+    startingText = this.add.text(300, 600, 'Press the space bar to serve!', { fontSize: '32px', fill: '#fff' });
+    startingText.setOrigin(0.5);
 }
 
 function update() {
@@ -152,14 +153,18 @@ const addBall = function () {
  * Function to handle input events.
  */
 const onKeyPress = function () {
-    /* Enable the paddle to move when a key is pressed */
-    paddle.setImmovable(false);
 
     /* Movement */
     if (cursors.left.isDown) {
+        /* Enable the paddle to move when a key is pressed */
+        paddle.setImmovable(false);
         paddle.setVelocityX(-board.paddleSpeed);
+        /* Disable movement to prevent collision */
+        paddle.setImmovable();
     } else if (cursors.right.isDown) {
+        paddle.setImmovable(false);
         paddle.setVelocityX(board.paddleSpeed);
+        paddle.setImmovable();
     /* Only send ball if board is not active (i.e. life is not lost or game over) */
     } else if (spaceBar.isDown && !board.active && board.lives > 0) {
         startingText.setVisible(false);
@@ -175,8 +180,6 @@ const onKeyPress = function () {
     else {
         paddle.setVelocityX(0);
     }
-    /* Disable movement to prevent collision */
-    paddle.setImmovable();
 }
 
 /***
@@ -185,6 +188,7 @@ const onKeyPress = function () {
  * @param {Array} bricks - empty array of bricks
  * @param {Number} brickX - X scale of the bricks
  * @param {Number} brickY - Y scale of the bricks
+ * @param {Array<String>} rows - The array of brick types specified by its color
  */
 const initializeBricksArray = function (bricks, brickX, brickY, rows) {
 
