@@ -54,11 +54,11 @@ app.get('/getLeaderboardData', function (request, response) {
             throw err;
         }
     }).then(function (doc) {
-        leaderboardData = doc;
+        leaderboardData = doc.leaderboardData;
+        response.send(leaderboardData);
     }).catch(err => {
         console.log(err);
     });
-    response.send(leaderboardData);
 });
 
 app.post('/newLeaderboardTime', function (request, response) {
@@ -85,6 +85,12 @@ app.post('/newLeaderboardTime', function (request, response) {
         }
     }).then(doc => {
         leaderboardData = doc.leaderboardData;
+        console.log(doc);
+        if (!leaderboardData) {
+            leaderboardData = [];
+        } else {
+            leaderboardData = leaderboardData.leaderboardData;
+        }
         leaderboardData.push(newData);
         db.upsert('leaderboardData', function(doc) {
             doc.counter = doc.counter || 0;
@@ -95,6 +101,7 @@ app.post('/newLeaderboardTime', function (request, response) {
             console.log(err);
         });
     });
+    response.send('ok');
 });
 
 app.post('/login', passport.authenticate('local', {
