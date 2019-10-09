@@ -251,6 +251,9 @@ app.post('/forceUpdate', function(req, res) {
 app.post('/resetjobs', function(req,res){
   userCol.updateMany({},{$set: {jobs:[]}});
 })
+
+
+
 // Automatic scheduled updates
 // Updates job list every Sunday at 5:00 PM
 var schedUpdate = schedule.scheduleJob({hour: 17, minute: 0, dayOfWeek: 0}, function() {update();});
