@@ -91,7 +91,7 @@ PS.init = function (system, options) {
 
     variables.timeRemaining = variables.maxSeconds;
 
-    PS.gridSize(32, 32);
+    PS.gridSize(32, 19);
     PS.gridColor(PS.COLOR_GRAY)
     PS.borderColor(PS.ALL, PS.ALL, PS.COLOR_BLACK)
 
@@ -99,13 +99,56 @@ PS.init = function (system, options) {
 
     drumSetup();
 
+    for (var i = 0; i < 32; i++) {
+        PS.visible(i, 17, false);
+    }
+    for (var i = 9; i < 23; i++) {
+        PS.border(i, 18, 0);
+        PS.color(i, 18, PS.COLOR_BLUE);
+        PS.data(i, 18, ["ALL"])
+    }
+
+    PS.visible(0, 18, false);
+    PS.visible(1, 18, false);
+    PS.visible(2, 18, false);
+    PS.visible(3, 18, false);
+    PS.visible(4, 18, false);
+    PS.visible(5, 18, false);
+    PS.visible(6, 18, false);
+    PS.visible(7, 18, false);
+    PS.visible(8, 18, false);
+    PS.glyph(9, 18, "P");
+    PS.glyph(10, 18, "L");
+    PS.glyph(11, 18, "A");
+    PS.glyph(12, 18, "Y");
+    PS.glyph(13, 18, "R");
+    PS.glyph(14, 18, "E");
+    PS.glyph(15, 18, "C");
+    PS.glyph(16, 18, "O");
+    PS.glyph(17, 18, "R");
+    PS.glyph(18, 18, "D");
+    PS.glyph(19, 18, "I");
+    PS.glyph(20, 18, "N");
+    PS.glyph(21, 18, "G");
+    PS.glyph(22, 18, "!");
+    PS.visible(23, 18, false);
+    PS.visible(24, 18, false);
+    PS.visible(25, 18, false);
+    PS.visible(26, 18, false);
+    PS.visible(27, 18, false);
+    PS.visible(28, 18, false);
+    PS.visible(29, 18, false);
+    PS.visible(30, 18, false);
+    PS.visible(31, 18, false);
+
+
     PS.statusText("Shitty Garageband");
 };
 
 PS.touch = function (x, y, data, options) {
     "use strict";
 
-    HighlightKey(data[0]);
+    // HighlightKey(data[0]);
 
     if (data[0] !== undefined && variables.recordInfo) {
         recordData({ x: x, y: y, data: data[0] }, variables.currentTime);
@@ -441,14 +484,7 @@ PS.touch = function (x, y, data, options) {
 PS.release = function (x, y, data, options) {
     "use strict"; // Do not remove this directive!
 
-    RevertKey(data[0]);
-};
-
-PS.exitGrid = function (options) {
-    "use strict"; // Do not remove this directive!
-    for (var i = 0; i < 8; i += .5) {
-        RevertKey(i)
-    }
+    // RevertKey(data[0]);
 };
 
 ////////////////////////////////////////
@@ -828,16 +864,19 @@ function playbackSound() {
 //PIANO FUNCTIONS
 
 function pianoSetup() {
+    /*for (var i = 0; i < 32; i++) {
+        PS.visible(i, 8, false);
+    }*/
     //PIANO
     for (var i = 0; i < 32; i++) {
-        for (var j = 24; j < 32; j++) {
+        for (var j = 9; j < 17; j++) {
             PS.border(i, j, 0);
         }
     }
 
     for (var i = 0; i < 32; i++) {
-        PS.visible(i, 23, false);
-        PS.border(i, 24, {
+        PS.visible(i, 8, false);
+        PS.border(i, 9, {
             top: 2,
             left: 0,
             bottom: 0,
@@ -845,7 +884,7 @@ function pianoSetup() {
         });
     }
 
-    for (var i = 29; i < 32; i++) {
+    for (var i = 9; i < 13; i++) {
         PS.border(2, i, {
             top: 0,
             left: 0,
@@ -878,10 +917,16 @@ function pianoSetup() {
         });
     }
 
-    for (var i = 24; i < 32; i++) {
+    for (var i = 9; i < 17; i++) {
+        for (var j = 2; j < 24; j += 3) {
+            PS.border(j, i, {
+                right: 2
+            });
+        }
         PS.border(8, i, {
             right: 2
         });
+
         PS.border(20, i, {
             right: 2
         });
@@ -893,17 +938,17 @@ function pianoSetup() {
 
     //C
     for (var i = 0; i < 2; i++) {
-        for (var j = 24; j < 32; j++) {
+        for (var j = 9; j < 17; j++) {
             PS.data(i, j, [0]);
         }
     }
-    for (var i = 29; i < 32; i++) {
+    for (var i = 14; i < 17; i++) {
         PS.data(2, i, [0])
     }
 
     //C#
     for (var i = 2; i < 4; i++) {
-        for (var j = 24; j < 29; j++) {
+        for (var j = 9; j < 14; j++) {
             PS.color(i, j, PS.COLOR_BLACK);
             PS.data(i, j, [.5]);
         }
@@ -911,19 +956,19 @@ function pianoSetup() {
 
     //D
     for (var i = 4; i < 5; i++) {
-        for (var j = 24; j < 32; j++) {
+        for (var j = 9; j < 17; j++) {
             PS.data(i, j, [1]);
         }
     }
     for (var i = 3; i < 6; i++) {
-        for (var j = 29; j < 32; j++) {
+        for (var j = 14; j < 17; j++) {
             PS.data(i, j, [1]);
         }
     }
 
     //D#
     for (var i = 5; i < 7; i++) {
-        for (var j = 24; j < 29; j++) {
+        for (var j = 9; j < 14; j++) {
             PS.color(i, j, PS.COLOR_BLACK);
             PS.data(i, j, [1.5]);
         }
@@ -931,67 +976,67 @@ function pianoSetup() {
 
     //E
     for (var i = 7; i < 9; i++) {
-        for (var j = 24; j < 32; j++) {
+        for (var j = 9; j < 17; j++) {
             PS.data(i, j, [2]);
         }
     }
     for (var i = 6; i < 9; i++) {
-        for (var j = 29; j < 32; j++) {
+        for (var j = 14; j < 17; j++) {
             PS.data(i, j, [2]);
         }
     }
 
     //F
     for (var i = 9; i < 11; i++) {
-        for (var j = 24; j < 32; j++) {
+        for (var j = 9; j < 17; j++) {
             PS.data(i, j, [3]);
         }
     }
     for (var i = 9; i < 12; i++) {
-        for (var j = 29; j < 32; j++) {
+        for (var j = 14; j < 17; j++) {
             PS.data(i, j, [3]);
         }
     }
 
     //F#
     for (var i = 11; i < 13; i++) {
-        for (var j = 24; j < 29; j++) {
+        for (var j = 9; j < 14; j++) {
             PS.color(i, j, PS.COLOR_BLACK);
             PS.data(i, j, [3.5]);
         }
     }
 
     //G
-    for (var j = 24; j < 32; j++) {
+    for (var j = 9; j < 14; j++) {
         PS.data(13, j, [4]);
     }
     for (var i = 12; i < 15; i++) {
-        for (var j = 29; j < 32; j++) {
+        for (var j = 14; j < 17; j++) {
             PS.data(i, j, [4]);
         }
     }
 
     //G#
     for (var i = 14; i < 16; i++) {
-        for (var j = 24; j < 29; j++) {
+        for (var j = 9; j < 14; j++) {
             PS.color(i, j, PS.COLOR_BLACK);
             PS.data(i, j, [4.5]);
         }
     }
 
     //A
-    for (var j = 24; j < 32; j++) {
+    for (var j = 9; j < 17; j++) {
         PS.data(16, j, [5]);
     }
     for (var i = 15; i < 18; i++) {
-        for (var j = 29; j < 32; j++) {
+        for (var j = 14; j < 17; j++) {
             PS.data(i, j, [5]);
         }
     }
 
     //A#
     for (var i = 17; i < 19; i++) {
-        for (var j = 24; j < 29; j++) {
+        for (var j = 9; j < 14; j++) {
             PS.color(i, j, PS.COLOR_BLACK);
             PS.data(i, j, [5.5]);
         }
@@ -999,145 +1044,138 @@ function pianoSetup() {
 
     //B
     for (var i = 19; i < 21; i++) {
-        for (var j = 24; j < 32; j++) {
+        for (var j = 9; j < 17; j++) {
             PS.data(i, j, [6]);
         }
     }
     for (var i = 18; i < 21; i++) {
-        for (var j = 29; j < 32; j++) {
+        for (var j = 14; j < 17; j++) {
             PS.data(i, j, [6]);
         }
     }
 
     //C
     for (var i = 21; i < 24; i++) {
-        for (var j = 24; j < 32; j++) {
+        for (var j = 9; j < 17; j++) {
             PS.data(i, j, [7]);
         }
     }
 
     //RECORDING AREA
-    PS.visible(24, 24, false);
-    PS.glyph(25, 24, "R");
-    PS.glyph(26, 24, "E");
-    PS.glyph(27, 24, "C");
-    PS.glyph(28, 24, "O");
-    PS.glyph(29, 24, "R");
-    PS.glyph(30, 24, "D");
-    PS.visible(31, 24, false);
+    PS.visible(24, 9, false);
+    PS.glyph(25, 9, "R");
+    PS.glyph(26, 9, "E");
+    PS.glyph(27, 9, "C");
+    PS.glyph(28, 9, "O");
+    PS.glyph(29, 9, "R");
+    PS.glyph(30, 9, "D");
+    PS.visible(31, 9, false);
 
     for (var i = 24; i < 32; i++) {
-        for (var j = 25; j < 27; j++) {
+        for (var j = 10; j < 12; j++) {
             PS.color(i, j, PS.COLOR_RED);
         }
     }
 
 
-    for (var j = 25; j < 27; j++) {
+    for (var j = 10; j < 12; j++) {
         PS.border(25, j, { right: 1 });
         PS.border(27, j, { right: 1 });
         PS.border(29, j, { right: 1 });
     }
 
 
-    PS.visible(24, 27, false);
-    PS.glyph(25, 27, "T");
-    PS.glyph(26, 27, "R");
-    PS.glyph(27, 27, "A");
-    PS.glyph(28, 27, "C");
-    PS.glyph(29, 27, "K");
-    PS.glyph(30, 27, "S");
-    PS.visible(31, 27, false);
+    PS.visible(24, 12, false);
+    PS.glyph(25, 12, "T");
+    PS.glyph(26, 12, "R");
+    PS.glyph(27, 12, "A");
+    PS.glyph(28, 12, "C");
+    PS.glyph(29, 12, "K");
+    PS.glyph(30, 12, "S");
+    PS.visible(31, 12, false);
 
     for (var i = 24; i < 32; i++) {
-        for (var j = 28; j < 30; j++) {
+        for (var j = 13; j < 15; j++) {
             PS.color(i, j, PS.COLOR_GREEN);
         }
     }
 
 
-    for (var j = 28; j < 30; j++) {
+    for (var j = 13; j < 15; j++) {
         PS.border(25, j, { right: 1 });
         PS.border(27, j, { right: 1 });
         PS.border(29, j, { right: 1 });
     }
 
 
-    PS.visible(24, 30, false);
-    PS.visible(25, 30, false);
-    PS.glyph(26, 30, "P");
-    PS.glyph(27, 30, "L");
-    PS.glyph(28, 30, "A");
-    PS.glyph(29, 30, "Y");
-    PS.visible(30, 30, false);
-    PS.visible(31, 30, false);
+    PS.visible(24, 15, false);
+    PS.visible(25, 15, false);
+    PS.glyph(26, 15, "P");
+    PS.glyph(27, 15, "L");
+    PS.glyph(28, 15, "A");
+    PS.glyph(29, 15, "Y");
+    PS.visible(30, 15, false);
+    PS.visible(31, 15, false);
 
     for (var i = 24; i < 32; i++) {
-        for (var j = 31; j < 32; j++) {
+        for (var j = 16; j < 17; j++) {
             PS.color(i, j, PS.COLOR_BLUE);
             PS.data(i, j, ["PALL"]);
         }
     }
 
-
-    for (var j = 28; j < 30; j++) {
-        PS.border(25, j, { right: 1 });
-        PS.border(27, j, { right: 1 });
-        PS.border(29, j, { right: 1 });
-    }
-
     //R1
     for (var i = 24; i < 26; i++) {
-        for (var j = 25; j < 27; j++) {
+        for (var j = 10; j < 12; j++) {
             PS.data(i, j, ["R1"]);
         }
     }
 
     //R2
     for (var i = 26; i < 28; i++) {
-        for (var j = 25; j < 27; j++) {
+        for (var j = 10; j < 12; j++) {
             PS.data(i, j, ["R2"]);
         }
     }
 
     //R3
     for (var i = 28; i < 30; i++) {
-        for (var j = 25; j < 27; j++) {
+        for (var j = 10; j < 12; j++) {
             PS.data(i, j, ["R3"]);
         }
     }
 
     //R4
     for (var i = 30; i < 32; i++) {
-        for (var j = 25; j < 27; j++) {
+        for (var j = 10; j < 12; j++) {
             PS.data(i, j, ["R4"]);
         }
     }
 
     //P1
     for (var i = 24; i < 26; i++) {
-        for (var j = 28; j < 30; j++) {
+        for (var j = 13; j < 16; j++) {
             PS.data(i, j, ["P1"]);
         }
     }
 
     //P2
     for (var i = 26; i < 28; i++) {
-        for (var j = 28; j < 30; j++) {
+        for (var j = 13; j < 16; j++) {
             PS.data(i, j, ["P2"]);
         }
     }
 
     //P3
     for (var i = 28; i < 30; i++) {
-        for (var j = 28; j < 30; j++) {
+        for (var j = 13; j < 16; j++) {
             PS.data(i, j, ["P3"]);
         }
     }
 
     //P4
     for (var i = 30; i < 32; i++) {
-        for (var j = 28; j < 30; j++) {
+        for (var j = 13; j < 16; j++) {
             PS.data(i, j, ["P4"]);
         }
     }
@@ -1156,542 +1194,322 @@ function drumSetup() {
     //VERTICAL is 14 to 23
     //DRUMS
     for (var i = 0; i < 32; i++) {
-        for (var j = 14; j < 23; j++) {
+        for (var j = 0; j < 8; j++) {
             PS.border(i, j, 0);
         }
     }
 
-    //highhat
+    //hihat
     for (var i = 0; i < 4; i++) {
-        PS.color(i, 14, PS.COLOR_YELLOW);
-        PS.data(i, 14, [14]);
+        PS.color(i, 0, PS.COLOR_YELLOW);
+        PS.data(i, 0, [14]);
     }
-    PS.border(0, 14, { top: 1, bottom: 1, left: 1 })
-    PS.border(1, 14, { top: 1, bottom: 1 })
-    PS.border(2, 14, { top: 1, bottom: 1 })
-    PS.border(3, 14, { top: 1, bottom: 1, right: 1 })
-    for (var i = 15; i < 23; i++) {
+    PS.border(0, 0, { top: 1, bottom: 1, left: 1 })
+    PS.border(1, 0, { top: 1, bottom: 1 })
+    PS.border(2, 0, { top: 1, bottom: 1 })
+    PS.border(3, 0, { top: 1, bottom: 1, right: 1 })
+    for (var i = 1; i < 8; i++) {
         PS.border(1, i, { right: 1 });
     }
 
     //crash
     for (var i = 13; i < 17; i++) {
-        PS.color(i, 14, PS.COLOR_YELLOW);
-        PS.data(i, 14, [17]);
+        PS.color(i, 0, PS.COLOR_YELLOW);
+        PS.data(i, 0, [17]);
     }
-    PS.border(13, 14, { top: 1, bottom: 1, left: 1 })
-    PS.border(14, 14, { top: 1, bottom: 1 })
-    PS.border(15, 14, { top: 1, bottom: 1 })
-    PS.border(16, 14, { top: 1, bottom: 1, right: 1 })
-    for (var i = 15; i < 23; i++) {
+    PS.border(13, 0, { top: 1, bottom: 1, left: 1 })
+    PS.border(14, 0, { top: 1, bottom: 1 })
+    PS.border(15, 0, { top: 1, bottom: 1 })
+    PS.border(16, 0, { top: 1, bottom: 1, right: 1 })
+    for (var i = 1; i < 8; i++) {
         PS.border(14, i, { right: 1 });
     }
 
     //tom 1
     for (var i = 4; i < 7; i++) {
-        for (var j = 15; j < 18; j++) {
-            PS.color(i, j, PS.COLOR_CYAN);
+        for (var j = 1; j < 4; j++) {
+            PS.color(i, j, PS.COLOR_MAGENTA);
             PS.data(i, j, [10]);
         }
     }
-    PS.border(4, 15, { top: 1, left: 1 })
-    PS.border(5, 15, { top: 1 })
-    PS.border(6, 15, { top: 1, right: 1 })
-    PS.border(4, 16, { left: 1 })
-    PS.border(6, 16, { right: 1 })
-    PS.border(4, 17, { bottom: 1, left: 1 })
-    PS.border(5, 17, { bottom: 1 })
-    PS.border(6, 17, { bottom: 1, right: 1 })
+    for (var i = 4; i < 7; i++) {
+        PS.color(i, 1, PS.COLOR_GRAY_LIGHT);
+    }
+
+    PS.border(4, 1, { top: 1, left: 1 })
+    PS.border(5, 1, { top: 1 })
+    PS.border(6, 1, { top: 1, right: 1 })
+    PS.border(4, 2, { left: 1 })
+    PS.border(6, 2, { right: 1 })
+    PS.border(4, 3, { bottom: 1, left: 1 })
+    PS.border(5, 3, { bottom: 1 })
+    PS.border(6, 3, { bottom: 1, right: 1 })
 
     //tom 2
     for (var i = 10; i < 13; i++) {
-        for (var j = 15; j < 18; j++) {
-            PS.color(i, j, PS.COLOR_CYAN);
+        for (var j = 1; j < 4; j++) {
+            PS.color(i, j, PS.COLOR_MAGENTA);
             PS.data(i, j, [11]);
         }
     }
-    PS.border(10, 15, { top: 1, left: 1 })
-    PS.border(11, 15, { top: 1 })
-    PS.border(12, 15, { top: 1, right: 1 })
-    PS.border(10, 16, { left: 1 })
-    PS.border(12, 16, { right: 1 })
-    PS.border(10, 17, { bottom: 1, left: 1 })
-    PS.border(11, 17, { bottom: 1 })
-    PS.border(12, 17, { bottom: 1, right: 1 })
+    for (var i = 10; i < 13; i++) {
+        PS.color(i, 1, PS.COLOR_GRAY_LIGHT);
+    }
+
+    PS.border(10, 1, { top: 1, left: 1 })
+    PS.border(11, 1, { top: 1 })
+    PS.border(12, 1, { top: 1, right: 1 })
+    PS.border(10, 2, { left: 1 })
+    PS.border(12, 2, { right: 1 })
+    PS.border(10, 3, { bottom: 1, left: 1 })
+    PS.border(11, 3, { bottom: 1 })
+    PS.border(12, 3, { bottom: 1, right: 1 })
 
     //snare
     for (var i = 3; i < 6; i++) {
-        for (var j = 18; j < 21; j++) {
+        for (var j = 4; j < 7; j++) {
             PS.color(i, j, PS.COLOR_MAGENTA);
             PS.data(i, j, [9]);
         }
     }
-    PS.border(3, 18, { top: 1, left: 1 })
-    PS.border(4, 18, { top: 1 })
-    PS.border(5, 18, { top: 1, right: 1 })
-    PS.border(3, 19, { left: 1 })
-    PS.border(5, 19, { right: 1 })
-    PS.border(3, 20, { bottom: 1, left: 1 })
-    PS.border(4, 20, { bottom: 1 })
-    PS.border(5, 20, { bottom: 1, right: 1 })
+    for (var i = 3; i < 6; i++) {
+        PS.color(i, 4, PS.COLOR_GRAY_LIGHT);
+    }
+    PS.border(3, 4, { top: 1, left: 1 })
+    PS.border(4, 4, { top: 1 })
+    PS.border(5, 4, { top: 1, right: 1 })
+    PS.border(3, 5, { left: 1 })
+    PS.border(5, 5, { right: 1 })
+    PS.border(3, 6, { bottom: 1, left: 1 })
+    PS.border(4, 6, { bottom: 1 })
+    PS.border(5, 6, { bottom: 1, right: 1 })
 
     //tom 3
     for (var i = 11; i < 14; i++) {
-        for (var j = 18; j < 21; j++) {
+        for (var j = 4; j < 7; j++) {
             PS.color(i, j, PS.COLOR_MAGENTA);
             PS.data(i, j, [13]);
         }
     }
-    PS.border(11, 18, { top: 1, left: 1 })
-    PS.border(12, 18, { top: 1 })
-    PS.border(13, 18, { top: 1, right: 1 })
-    PS.border(11, 19, { left: 1 })
-    PS.border(13, 19, { right: 1 })
-    PS.border(11, 20, { bottom: 1, left: 1 })
-    PS.border(12, 20, { bottom: 1 })
-    PS.border(13, 20, { bottom: 1, right: 1 })
+    for (var i = 11; i < 14; i++) {
+        PS.color(i, 4, PS.COLOR_GRAY_LIGHT);
+    }
+    PS.border(11, 4, { top: 1, left: 1 })
+    PS.border(12, 4, { top: 1 })
+    PS.border(13, 4, { top: 1, right: 1 })
+    PS.border(11, 5, { left: 1 })
+    PS.border(13, 5, { right: 1 })
+    PS.border(11, 6, { bottom: 1, left: 1 })
+    PS.border(12, 6, { bottom: 1 })
+    PS.border(13, 6, { bottom: 1, right: 1 })
 
     //kick
     for (var i = 6; i < 11; i++) {
-        for (var j = 18; j < 23; j++) {
-            PS.color(i, j, PS.COLOR_ORANGE);
+        for (var j = 4; j < 8; j++) {
+            PS.color(i, j, PS.COLOR_MAGENTA);
             PS.data(i, j, [8]);
         }
     }
-    PS.border(6, 18, { top: 1, left: 1 })
-    PS.border(7, 18, { top: 1 })
-    PS.border(8, 18, { top: 1 })
-    PS.border(9, 18, { top: 1 })
-    PS.border(10, 18, { top: 1, right: 1 })
-    PS.border(6, 19, { left: 1 })
-    PS.border(10, 19, { right: 1 })
-    PS.border(6, 20, { left: 1 })
-    PS.border(10, 20, { right: 1 })
-    PS.border(6, 21, { left: 1 })
-    PS.border(10, 21, { right: 1 })
-    PS.border(6, 22, { bottom: 1, left: 1 })
-    PS.border(7, 22, { bottom: 1 })
-    PS.border(8, 22, { bottom: 1 })
-    PS.border(9, 22, { bottom: 1 })
-    PS.border(10, 22, { bottom: 1, right: 1 })
+    for (var i = 7; i < 10; i++) {
+        for (var j = 5; j < 7; j++) {
+            PS.color(i, j, PS.COLOR_GRAY_LIGHT);
+        }
+    }
+    PS.border(6, 4, { top: 1, left: 1 })
+    PS.border(7, 4, { top: 1 })
+    PS.border(8, 4, { top: 1 })
+    PS.border(9, 4, { top: 1 })
+    PS.border(10, 4, { top: 1, right: 1 })
+    PS.border(6, 5, { left: 1 })
+    PS.border(10, 5, { right: 1 })
+    PS.border(6, 6, { left: 1 })
+    PS.border(10, 6, { right: 1 })
+    PS.border(6, 7, { left: 1 })
+    PS.border(10, 7, { right: 1 })
+    PS.border(6, 8, { bottom: 1, left: 1 })
+    PS.border(7, 8, { bottom: 1 })
+    PS.border(8, 8, { bottom: 1 })
+    PS.border(9, 8, { bottom: 1 })
+    PS.border(10, 8, { bottom: 1, right: 1 })
 
     //RECORDING AREA
-    for (var i = 0; i < 32; i++) {
-        PS.visible(i, 13, false);
-    }
-    for (var i = 24; i < 32; i++) {
-        PS.visible(i, 14, false);
-    }
 
-
-    PS.visible(24, 15, false);
-    PS.glyph(25, 15, "R");
-    PS.glyph(26, 15, "E");
-    PS.glyph(27, 15, "C");
-    PS.glyph(28, 15, "O");
-    PS.glyph(29, 15, "R");
-    PS.glyph(30, 15, "D");
-    PS.visible(31, 15, false);
+    PS.visible(24, 0, false);
+    PS.glyph(25, 0, "R");
+    PS.glyph(26, 0, "E");
+    PS.glyph(27, 0, "C");
+    PS.glyph(28, 0, "O");
+    PS.glyph(29, 0, "R");
+    PS.glyph(30, 0, "D");
+    PS.visible(31, 0, false);
 
     for (var i = 24; i < 32; i++) {
-        for (var j = 16; j < 18; j++) {
+        for (var j = 1; j < 3; j++) {
             PS.color(i, j, PS.COLOR_RED);
         }
     }
 
 
-    for (var j = 16; j < 18; j++) {
+    for (var j = 1; j < 3; j++) {
         PS.border(25, j, { right: 1 });
         PS.border(27, j, { right: 1 });
         PS.border(29, j, { right: 1 });
     }
 
 
-    PS.visible(24, 18, false);
-    PS.glyph(25, 18, "T");
-    PS.glyph(26, 18, "R");
-    PS.glyph(27, 18, "A");
-    PS.glyph(28, 18, "C");
-    PS.glyph(29, 18, "K");
-    PS.glyph(30, 18, "S");
-    PS.visible(31, 18, false);
+    PS.visible(24, 3, false);
+    PS.glyph(25, 3, "T");
+    PS.glyph(26, 3, "R");
+    PS.glyph(27, 3, "A");
+    PS.glyph(28, 3, "C");
+    PS.glyph(29, 3, "K");
+    PS.glyph(30, 3, "S");
+    PS.visible(31, 3, false);
 
     for (var i = 24; i < 32; i++) {
-        for (var j = 19; j < 21; j++) {
+        for (var j = 4; j < 6; j++) {
             PS.color(i, j, PS.COLOR_GREEN);
         }
     }
 
 
-    for (var j = 19; j < 21; j++) {
+    for (var j = 4; j < 6; j++) {
         PS.border(25, j, { right: 1 });
         PS.border(27, j, { right: 1 });
         PS.border(29, j, { right: 1 });
     }
 
 
-    PS.visible(24, 21, false);
-    PS.visible(25, 21, false);
-    PS.glyph(26, 21, "P");
-    PS.glyph(27, 21, "L");
-    PS.glyph(28, 21, "A");
-    PS.glyph(29, 21, "Y");
-    PS.visible(30, 21, false);
-    PS.visible(31, 21, false);
+    PS.visible(24, 6, false);
+    PS.visible(25, 6, false);
+    PS.glyph(26, 6, "P");
+    PS.glyph(27, 6, "L");
+    PS.glyph(28, 6, "A");
+    PS.glyph(29, 6, "Y");
+    PS.visible(30, 6, false);
+    PS.visible(31, 6, false);
 
     for (var i = 24; i < 32; i++) {
-        for (var j = 22; j < 23; j++) {
+        for (var j = 7; j < 8; j++) {
             PS.color(i, j, PS.COLOR_BLUE);
             PS.data(i, j, ["DALL"]);
         }
     }
 
-
-    for (var j = 19; j < 21; j++) {
-        PS.border(25, j, { right: 1 });
-        PS.border(27, j, { right: 1 });
-        PS.border(29, j, { right: 1 });
-    }
-
     //R1
     for (var i = 24; i < 26; i++) {
-        for (var j = 16; j < 18; j++) {
+        for (var j = 1; j < 3; j++) {
             PS.data(i, j, ["DR1"]);
         }
     }
 
     //R2
     for (var i = 26; i < 28; i++) {
-        for (var j = 16; j < 18; j++) {
+        for (var j = 1; j < 3; j++) {
             PS.data(i, j, ["DR2"]);
         }
     }
 
     //R3
     for (var i = 28; i < 30; i++) {
-        for (var j = 16; j < 18; j++) {
+        for (var j = 1; j < 3; j++) {
             PS.data(i, j, ["DR3"]);
         }
     }
 
     //R4
     for (var i = 30; i < 32; i++) {
-        for (var j = 16; j < 18; j++) {
+        for (var j = 1; j < 3; j++) {
             PS.data(i, j, ["DR4"]);
         }
     }
 
     //P1
     for (var i = 24; i < 26; i++) {
-        for (var j = 19; j < 21; j++) {
+        for (var j = 4; j < 6; j++) {
             PS.data(i, j, ["DP1"]);
         }
     }
 
     //P2
     for (var i = 26; i < 28; i++) {
-        for (var j = 19; j < 21; j++) {
+        for (var j = 4; j < 6; j++) {
             PS.data(i, j, ["DP2"]);
         }
     }
 
     //P3
     for (var i = 28; i < 30; i++) {
-        for (var j = 19; j < 21; j++) {
+        for (var j = 4; j < 6; j++) {
             PS.data(i, j, ["DP3"]);
         }
     }
 
     //P4
     for (var i = 30; i < 32; i++) {
-        for (var j = 19; j < 21; j++) {
+        for (var j = 4; j < 6; j++) {
             PS.data(i, j, ["DP4"]);
         }
     }
-}
 
-////////////////////////////////////////
-////////////////////////////////////////
-////////////////////////////////////////
-////////////////////////////////////////
-//RECOLOR FUNCTIONS
 
-function HighlightKey(data) {
-    switch (data) {
-        case 0:
-            //C
-            for (var i = 0; i < 2; i++) {
-                for (var j = 24; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_YELLOW);
-                }
-            }
-            for (var i = 29; i < 32; i++) {
-                PS.color(2, i, PS.COLOR_YELLOW)
-            }
-            break;
-        case 0.5:
-            //C#
-            for (var i = 2; i < 4; i++) {
-                for (var j = 24; j < 29; j++) {
-                    PS.color(i, j, PS.COLOR_YELLOW);
-                }
-            }
-            break;
-        case 1:
-            //D
-            for (var i = 4; i < 5; i++) {
-                for (var j = 24; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_YELLOW);
-                }
-            }
-            for (var i = 3; i < 6; i++) {
-                for (var j = 29; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_YELLOW);
-                }
-            }
-            break;
-        case 1.5:
-            //D#
-            for (var i = 5; i < 7; i++) {
-                for (var j = 24; j < 29; j++) {
-                    PS.color(i, j, PS.COLOR_YELLOW);
-                }
-            }
-            break;
-        case 2:
-            //E
-            for (var i = 7; i < 9; i++) {
-                for (var j = 24; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_YELLOW);
-                }
-            }
-            for (var i = 6; i < 9; i++) {
-                for (var j = 29; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_YELLOW);
-                }
-            }
-            break;
-        case 3:
-            //F
-            for (var i = 9; i < 11; i++) {
-                for (var j = 24; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_YELLOW);
-                }
-            }
-            for (var i = 9; i < 12; i++) {
-                for (var j = 29; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_YELLOW);
-                }
-            }
-            break;
-        case 3.5:
-            //F#
-            for (var i = 11; i < 13; i++) {
-                for (var j = 24; j < 29; j++) {
-                    PS.color(i, j, PS.COLOR_YELLOW);
-                }
-            }
-            break;
-        case 4:
-            //G
-            for (var j = 24; j < 32; j++) {
-                PS.color(13, j, PS.COLOR_YELLOW);
-            }
-            for (var i = 12; i < 15; i++) {
-                for (var j = 29; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_YELLOW);
-                }
-            }
-            break;
-        case 4.5:
-            //G#
-            for (var i = 14; i < 16; i++) {
-                for (var j = 24; j < 29; j++) {
-                    PS.color(i, j, PS.COLOR_YELLOW);
-                }
-            }
-            break;
-        case 5:
-            //A
-            for (var j = 24; j < 32; j++) {
-                PS.color(16, j, PS.COLOR_YELLOW);
-            }
-            for (var i = 15; i < 18; i++) {
-                for (var j = 29; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_YELLOW);
-                }
-            }
-            break;
-        case 5.5:
-            //A#
-            for (var i = 17; i < 19; i++) {
-                for (var j = 24; j < 29; j++) {
-                    PS.color(i, j, PS.COLOR_YELLOW);
-                }
-            }
-            break;
-        case 6:
-            //B
-            for (var i = 19; i < 21; i++) {
-                for (var j = 24; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_YELLOW);
-                }
-            }
-            for (var i = 18; i < 21; i++) {
-                for (var j = 29; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_YELLOW);
-                }
-            }
+    ////////////////////////
+    //TOGGLE DRUM SOUNDS
+    /*for (var i = 17; i < 24; i++) {
+        for (var j = 0; j < 8; j++) {
+            PS.color(i, j, PS.COLOR_BLACK)
+        }
+    }*/
+    PS.glyph(17, 0, "H");
+    PS.glyph(18, 0, "I");
+    PS.glyph(19, 0, "H");
+    PS.glyph(20, 0, "A");
+    PS.glyph(21, 0, "T");
+    PS.glyph(22, 0, ":");
+    PS.glyph(17, 1, "1");
+    PS.glyph(19, 1, "2");
+    PS.glyph(21, 1, "3");
+    PS.data(17, 1, ["H1"]);
+    PS.data(19, 1, ["H2"]);
+    PS.data(21, 1, ["H3"]);
 
-            break;
-        case 7:
-            //C
-            for (var i = 21; i < 24; i++) {
-                for (var j = 24; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_YELLOW);
-                }
-            }
-            break;
-    }
-}
+    PS.glyph(17, 2, "C");
+    PS.glyph(18, 2, "R");
+    PS.glyph(19, 2, "A");
+    PS.glyph(20, 2, "S");
+    PS.glyph(21, 2, "H");
+    PS.glyph(22, 2, ":");
+    PS.glyph(17, 3, "1");
+    PS.glyph(19, 3, "2");
+    PS.glyph(21, 3, "3");
+    PS.glyph(23, 3, "4");
+    PS.data(17, 3, ["C1"]);
+    PS.data(19, 3, ["C2"]);
+    PS.data(21, 3, ["C3"]);
+    PS.data(23, 3, ["C4"]);
 
-function RevertKey(data) {
-    switch (data) {
-        case 0:
-            //C
-            for (var i = 0; i < 2; i++) {
-                for (var j = 24; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_WHITE);
-                }
-            }
-            for (var i = 29; i < 32; i++) {
-                PS.color(2, i, PS.COLOR_WHITE)
-            }
-            break;
-        case 0.5:
-            //C#
-            for (var i = 2; i < 4; i++) {
-                for (var j = 24; j < 29; j++) {
-                    PS.color(i, j, PS.COLOR_BLACK);
-                }
-            }
-            break;
-        case 1:
-            //D
-            for (var i = 4; i < 5; i++) {
-                for (var j = 24; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_WHITE);
-                }
-            }
-            for (var i = 3; i < 6; i++) {
-                for (var j = 29; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_WHITE);
-                }
-            }
-            break;
-        case 1.5:
-            //D#
-            for (var i = 5; i < 7; i++) {
-                for (var j = 24; j < 29; j++) {
-                    PS.color(i, j, PS.COLOR_BLACK);
-                }
-            }
-            break;
-        case 2:
-            //E
-            for (var i = 7; i < 9; i++) {
-                for (var j = 24; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_WHITE);
-                }
-            }
-            for (var i = 6; i < 9; i++) {
-                for (var j = 29; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_WHITE);
-                }
-            }
-            break;
-        case 3:
-            //F
-            for (var i = 9; i < 11; i++) {
-                for (var j = 24; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_WHITE);
-                }
-            }
-            for (var i = 9; i < 12; i++) {
-                for (var j = 29; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_WHITE);
-                }
-            }
-            break;
-        case 3.5:
-            //F#
-            for (var i = 11; i < 13; i++) {
-                for (var j = 24; j < 29; j++) {
-                    PS.color(i, j, PS.COLOR_BLACK);
-                }
-            }
-            break;
-        case 4:
-            //G
-            for (var j = 24; j < 32; j++) {
-                PS.color(13, j, PS.COLOR_WHITE);
-            }
-            for (var i = 12; i < 15; i++) {
-                for (var j = 29; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_WHITE);
-                }
-            }
-            break;
-        case 4.5:
-            //G#
-            for (var i = 14; i < 16; i++) {
-                for (var j = 24; j < 29; j++) {
-                    PS.color(i, j, PS.COLOR_BLACK);
-                }
-            }
-            break;
-        case 5:
-            //A
-            for (var j = 24; j < 32; j++) {
-                PS.color(16, j, PS.COLOR_WHITE);
-            }
-            for (var i = 15; i < 18; i++) {
-                for (var j = 29; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_WHITE);
-                }
-            }
-            break;
-        case 5.5:
-            //A#
-            for (var i = 17; i < 19; i++) {
-                for (var j = 24; j < 29; j++) {
-                    PS.color(i, j, PS.COLOR_BLACK);
-                }
-            }
-            break;
-        case 6:
-            //B
-            for (var i = 19; i < 21; i++) {
-                for (var j = 24; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_WHITE);
-                }
-            }
-            for (var i = 18; i < 21; i++) {
-                for (var j = 29; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_WHITE);
-                }
-            }
 
-            break;
-        case 7:
-            //C
-            for (var i = 21; i < 24; i++) {
-                for (var j = 24; j < 32; j++) {
-                    PS.color(i, j, PS.COLOR_WHITE);
-                }
-            }
-            break;
-    }
+    PS.glyph(17, 4, "L");
+    PS.glyph(18, 4, " ");
+    PS.glyph(19, 4, "T");
+    PS.glyph(20, 4, "O");
+    PS.glyph(21, 4, "M");
+    PS.glyph(22, 4, ":");
+    PS.glyph(17, 5, "1");
+    PS.glyph(19, 5, "2");
+    PS.data(17, 5, ["L1"]);
+    PS.data(19, 5, ["L2"]);
+
+    PS.glyph(17, 6, "R");
+    PS.glyph(18, 6, " ");
+    PS.glyph(19, 6, "T");
+    PS.glyph(20, 6, "O");
+    PS.glyph(21, 6, "M");
+    PS.glyph(22, 6, ":");
+    PS.glyph(17, 7, "1");
+    PS.glyph(19, 7, "2");
+    PS.data(17, 7, ["TR1"]);
+    PS.data(19, 7, ["TR2"]);
 }
 
 ////////////////////////////////////////
@@ -1829,6 +1647,72 @@ function playAudio(data) {
         case 20:
             PS.audioPlay("perc_cymbal_crash4");
             break;
+        //DRUM REPROGRAM
+        case "H1":
+            for (var i = 0; i < 4; i++) {
+                PS.data(i, 0, [14]);
+            }
+            break;
+        case "H2":
+            for (var i = 0; i < 4; i++) {
+                PS.data(i, 0, [15]);
+            }
+            break;
+        case "H3":
+            for (var i = 0; i < 4; i++) {
+                PS.data(i, 0, [16]);
+            }
+            break;
+        case "C1":
+            for (var i = 13; i < 17; i++) {
+                PS.data(i, 0, [17]);
+            }
+            break;
+        case "C2":
+            for (var i = 13; i < 17; i++) {
+                PS.data(i, 0, [18]);
+            }
+            break;
+        case "C3":
+            for (var i = 13; i < 17; i++) {
+                PS.data(i, 0, [19]);
+            }
+            break;
+        case "C4":
+            for (var i = 13; i < 17; i++) {
+                PS.data(i, 0, [20]);
+            }
+            break;
+        case "L1":
+            for (var i = 4; i < 7; i++) {
+                for (var j = 1; j < 4; j++) {
+                    PS.data(i, j, [10]);
+                }
+            }
+            break;
+        case "L2":
+            for (var i = 4; i < 7; i++) {
+                for (var j = 1; j < 4; j++) {
+                    PS.data(i, j, [11]);
+                }
+            }
+            break;
+        case "TR1":
+            for (var i = 10; i < 13; i++) {
+                for (var j = 1; j < 4; j++) {
+                    PS.data(i, j, [11]);
+                }
+            }
+            break;
+        case "TR2":
+            for (var i = 10; i < 13; i++) {
+                for (var j = 1; j < 4; j++) {
+                    PS.data(i, j, [12]);
+                }
+            }
+            break;
+
+        //DRUM RECORDING
         case "DR1":
             if (!variables.recordInfo) {
                 variables.recordingPiano = false;
@@ -1893,9 +1777,31 @@ function playAudio(data) {
 //DATABASE FUNCTIONS
 
 //LOAD SONG
+function loadTrack() {
+    //SAVE TRACK UNDER USERNAME
+    //TRACK IS variables.dataArray
+    console.log("LOADING TRACK");
+    //SET variables.dataArray to the value of the select option
+    console.log(variables.dataArray);
+}
 
 //SAVE SONG
 function saveTrack() {
-    console.log("SAVING TRACK");
-    console.log(variables.dataArray);
+    //SAVE TRACK NAME
+    //TRACK IS variables.dataArray
+    var trackName = "NONE";
+    PS.statusInput("Track name:", function (text) {
+        trackName = text
+        console.log("SAVING TRACK: " + trackName);
+        console.log(variables.dataArray);
+        //WRITE TO DB HERE
+    })
+}
+
+//POPULATE DROPDOWN
+function populateDropdown() {
+    //DELETE ALL EXISTING OPTIONS
+    var select = document.getElementById("songDropdown").length = 0;
+    //THEN POPULATE FROM DATABASE
+    //SET TEXT TO USERNAME - TRACKNAME
 }
