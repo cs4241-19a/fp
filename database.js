@@ -64,8 +64,8 @@ module.exports = function () {
                 let data = reader.city(ip);
                 if (!ip) reject("MaxMind lookup failed! No IP for data[0]");
                 resolve({
-                    latitude: data.location.latitudeitude,
-                    longitude: data.location.longitudegitude,
+                    latitude: data.location.latitude,
+                    longitude: data.location.longitude,
                     city: data.city.names.en,
                     state: data.subdivisions[0].isoCode,
                     country: data.country.isoCode
