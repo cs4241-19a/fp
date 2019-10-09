@@ -326,7 +326,7 @@ app.get('/gamesearch', function(req,res){
 })
 app.get('/requestsearch', function(req,res){
   gameToSearch = req.query
-  requestSearch(gameToSearch['gameName'], gameToSearch['genre'], gameToSearch['console']).then(result => {
+  requestSearch(gameToSearch['gameName'], "","").then(result => {
     res.send(result)
   })
 })
