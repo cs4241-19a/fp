@@ -75,8 +75,9 @@ function togglePlayPause() {
     player.togglePlay()
 }
 
-function playSomeTrackID(track){
+function playSomeTrackID(track) {
     player.disconnect()
+    console.log("player disconnected")
     console.log("trying to play " + track)
     createPlayerForSong(track)
 }
