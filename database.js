@@ -101,7 +101,7 @@ module.exports = function () {
                         data[i].state = location.state;
                         data[i].country = location.country;
                     }
-                    PingsCollection().then(col => resolve(col.insertMany(data)));
+                    PingsCollection().then(col => col.insertMany(data).then(resolve));
                 }).catch(error => reject("Error getting GeoIP info: " + error));
             });
         },
