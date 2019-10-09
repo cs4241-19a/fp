@@ -64,11 +64,6 @@ a:before, a:after {
     transition: color 0.1s ease-in, background 0.1s ease-in;
 }
 
-/*li {*/
-/*  width: 80%;*/
-/*  float: left;*/
-/*}*/
-
 /* Bootstrap Modifications */
 
 hr {
