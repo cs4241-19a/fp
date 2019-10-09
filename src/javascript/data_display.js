@@ -276,7 +276,7 @@ const setupMap = function (width, height) {
         .attr("class", "scaleLabel")
         .attr("y", mapHeight + chartHeader)
         .attr("x", 0)
-        .text("");
+        .text("0ms");
 
 
 };
@@ -333,9 +333,9 @@ const updateMap = function () {
             return scaledGradient(d.avg_rtt)
         });
 
-    if (maxValue != undefined) {
-        document.getElementById("minScaleLabel").innerText = "0ms"
-        document.getElementById("maxScaleLabel").innerText = Math.round(maxValue) + "ms"
+    if (maxValue !== undefined) {
+        document.querySelector("#minScaleLabel").textContent = "0ms";
+        document.querySelector("#maxScaleLabel").textContent = Math.round(maxValue) + "ms";
     }
 
 
