@@ -98,7 +98,7 @@ class Chat extends React.Component {
   createAmounts() {
     let table = [];
     for (let i = 0; i < 10; i++) {
-        table.push(<div className={'amount' +  (i <= this.state.wordsLeft ? '' : ' disabled')}>{i}</div>)
+        table.push(<div key ={i} className={'amount' +  (i <= this.state.wordsLeft ? '' : ' disabled')}>{i}</div>)
     }
     return table;
   }
