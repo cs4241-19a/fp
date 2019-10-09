@@ -11,7 +11,7 @@ let svg = null;
 let projection = null;
 let data = [];
 let currentFavicon = "Google";
-let mapHeight
+let mapHeight;
 
 // data = [{favicon: '', avg: 0.0}]
 let bar_initialized = false;
@@ -96,7 +96,7 @@ const displayBar = function (raw_data) {
 		.enter()
 		.append("g")
 		.attr("class", "chartRow")
-		.attr("transform", "translatitudee(0," + height + chartHeader + ")");
+		.attr("transform", "translate(0," + height + chartHeader + ")");
 
 	//Add rectangles
 	newRow.insert("rect")
@@ -167,21 +167,22 @@ const displayBar = function (raw_data) {
 	//Fade out and remove exit elements
 	chartRow.exit().transition()
 		.style("opacity", "0")
-		.attr("transform", "translatitudee(0," + height + ")")
+		.attr("transform", "translate(0," + height + ")")
 		.remove();
 
 	chartRow.transition()
 		.duration(900)
 		.attr("transform", function (d) {
-			return "translatitudee(0," + (y(d.key) + chartHeader) + ")";
+			return "translate(0," + (y(d.key) + chartHeader) + ")";
 		});
 };
 
 const chartHeader = 60;
 const setupMap = function (width, height) {
+	const scaleLength = 400
 	mapHeight = height;
 	projection = d3.geoAlbersUsa()
-		.translatitudee([width / 2, height / 2 + chartHeader])
+		.translate([width / 2, height / 2 + chartHeader])
 		.scale([1000]);
 
 	let path = d3.geoPath()
@@ -191,6 +192,10 @@ const setupMap = function (width, height) {
 		.append("svg")
 		.attr("width", width)
 		.attr("height", height + chartHeader);
+
+	let constGradient = d3.scaleSequential(d3.interpolateOrRd)
+	//.range(["#fff", "#BF303C"])
+		.domain([0, scaleLength]);
 
 	svg.append('text')
 		.attr("class", "chart-header")
@@ -222,6 +227,7 @@ const setupMap = function (width, height) {
 		.text(currentFavicon);
 
 
+
 	d3.json("us-named.topojson").then(us => {
 		const counties = topojson.feature(us, us.objects.counties);
 		svg.selectAll("path")
@@ -243,12 +249,42 @@ const setupMap = function (width, height) {
 
 	});
 
+	let bars = svg.selectAll(".bars")
+		.data(d3.range(0, scaleLength), d => d);
+	bars.exit().remove();
+	bars.enter()
+		.append("rect")
+		.attr("class", "bars")
+		.attr("x", function (d, i) {
+			return i + 40;
+		})
+		.attr("y", mapHeight - 20 + chartHeader)
+		.attr("height", 20)
+		.attr("width", 1)
+		.style("fill", function (d, i) {
+			return constGradient(d);
+		})
+
+	svg.append('text')
+		.attr("id", "maxScaleLabel")
+		.attr("class", "scaleLabel")
+		.attr("y", mapHeight + chartHeader)
+		.attr("x", scaleLength + 50)
+		.text("");
+
+	svg.append('text')
+		.attr("id", "minScaleLabel")
+		.attr("class", "scaleLabel")
+		.attr("y", mapHeight + chartHeader)
+		.attr("x", 0)
+		.text("");
+
+
+
 };
 
 // data = [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", latitude: "0.0", longitude: "0.0"}]
 const updateMap = function () {
-	//Length of scale in px
-	const scaleLength = 400
 
 	let div = d3.select("body")
 		.append("div")
@@ -261,9 +297,10 @@ const updateMap = function () {
 	//.range(["#fff", "#BF303C"])
 		.domain([0, maxValue]);
 
-	let constGradient = d3.scaleSequential(d3.interpolatitudeeOrRd)
-	//.range(["#fff", "#BF303C"])
-		.domain([0, scaleLength]);
+
+	// let constGradient = d3.scaleSequential(d3.interpolatitudeeOrRd)
+	// //.range(["#fff", "#BF303C"])
+	// 	.domain([0, scaleLength]);
 
 
 	const mapPoint = svg.selectAll("circle").data(filtered);
@@ -297,35 +334,10 @@ const updateMap = function () {
 			return scaledGradient(d.avg_rtt)
 		});
 
-	let bars = svg.selectAll(".bars")
-		.data(d3.range(0, scaleLength), d => d);
-	bars.exit().remove();
-	bars.enter()
-		.append("rect")
-		.attr("class", "bars")
-		.attr("x", function (d, i) {
-			return i + 40;
-		})
-		.attr("y", mapHeight - 20 + chartHeader)
-		.attr("height", 20)
-		.attr("width", 1)
-		.style("fill", function (d, i) {
-			return constGradient(d);
-		})
-
-	svg.append('text')
-		.attr("id", "maxScaleLabel")
-		.attr("class", "scaleLabel")
-		.attr("y", mapHeight + chartHeader)
-		.attr("x", scaleLength + 50)
-		.text(maxValue + "ms");
-
-	svg.append('text')
-		.attr("id", "minScaleLabel")
-		.attr("class", "scaleLabel")
-		.attr("y", mapHeight + chartHeader)
-		.attr("x", 0)
-		.text(0 + "ms");
+	if(maxValue != undefined ) {
+		document.getElementById("minScaleLabel").innerText = "0ms"
+		document.getElementById("maxScaleLabel").innerText = Math.round(maxValue)+ "ms"
+	}
 
 
 };
