@@ -115,7 +115,7 @@ module.exports = function () {
                 col.aggregate([
                     {$match: {country: "US"}}, {
                         $group: {
-                            "_id": {"favicon": "$favicon", "city": "$city"},
+                            "_id": {"favicon": "$favicon", "city": "$city", "state": "$state"},
                             count: {$sum: 1},
                             lat: {$avg: "$lat"},
                             lng: {$avg: "$lng"},
