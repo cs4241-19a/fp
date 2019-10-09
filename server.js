@@ -33,7 +33,7 @@ passport.use('local', new LocalStrategy( {
         return done( null, false, { message:'user not found' })
       } else {
         const pass = myData.password;
-        if ( pass !==  null && pass !== undefined) {
+        if ( pass !==  null && pass !== undefined && pass === password) {
           console.log("successfully authenticated");
           return done(null, {username, password})
         } else {
