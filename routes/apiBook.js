@@ -118,7 +118,7 @@ function dbBookChangeOwner(prevOwner, newOwner, bookName, crn) {
       resolve(
         db
           .collection("books")
-          .find({ username: arr[0] })
+          .find({ username: prevOwner})
           .toArray()
       );
     });
