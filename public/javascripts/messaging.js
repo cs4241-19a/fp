@@ -27,3 +27,26 @@ function getCookie(cname) {
   }
   return "";
 }
+
+var sb = new SendBird({appId: APP_ID});
+sb.connect(USER_ID, function(user, error) {
+    if (error) {
+        return;
+    }
+});
+sb.OpenChannel.createChannel(function(openChannel, error) {
+    if (error) {
+        return;
+    }
+});
+sb.OpenChannel.getChannel(CHANNEL_URL, function(openChannel, error) {
+    if (error) {
+        return;
+    }
+
+    openChannel.enter(function(response, error) {
+        if (error) {
+            return;
+        }
+    })
+});
