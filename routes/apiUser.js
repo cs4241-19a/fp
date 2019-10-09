@@ -76,6 +76,10 @@ let dbUserAuthenticate = function(arr) {
   })
 }
 
+function getAllUsers(){
+  //TODO return array of all user objects
+}
+
 /* ### ROUTES ### */
 router.post('/create', function (req, res) {
   console.log("attempting to create new account...")
@@ -132,6 +136,11 @@ router.post('/logout', function (req, res) {
 
   res.clearCookie('username')
   res.redirect("/");
+})
+
+router.post('/getUsers', function (req,res){
+  
+  // TODO send me 
 })
 
 module.exports = router;
