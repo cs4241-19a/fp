@@ -8,9 +8,11 @@ sortLeaderboardData = function(a, b) {
 updateLeaderboard = function(leaderboardData) {
     'use strict';
     let rowLength = leaderboard.rows.length;
+    console.log(leaderboardData);
     leaderboardData = leaderboardData.sort(function(a, b) {
         sortLeaderboardData(a, b);
     });
+    console.log(leaderboardData);
     leaderboardData.forEach(entry => {
         console.log(rowLength);
         let newRow = leaderboard.insertRow(rowLength);
