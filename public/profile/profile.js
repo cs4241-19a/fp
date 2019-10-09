@@ -36,8 +36,6 @@ fetch('/getYou', {
 
         let img = createNode('img')
         img.src = comment[0]
-        img.style.height = '50px'
-        img.style.width = '70px'
         img.className = 'rounded mr-2'
 
         let strong = createNode('strong')
