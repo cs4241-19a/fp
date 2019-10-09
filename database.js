@@ -78,7 +78,7 @@ module.exports = function () {
 
     return {
         deleteAll: function () {
-            PingsCollection().then(collection => collection.remove({}));
+            return PingsCollection().then(collection => collection.remove({}));
         },
 
         locationLookup: function (data) {
