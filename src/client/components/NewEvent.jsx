@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import TableDragSelect from "./table-drag/table-drag-select";
 import { Formik } from "formik";
+import { request } from "../util";
 
 export default class NewEvent extends React.Component {
   state = {
@@ -94,12 +95,12 @@ export default class NewEvent extends React.Component {
                 });
                 return errors;
               }}
-              onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                  values.days = this.state.cells[1];
-                  alert(JSON.stringify(values, null, 2));
-                  setSubmitting(false);
-                }, 400);
+              onSubmit={async (values, { setSubmitting }) => {
+                console.log("calling create");
+                values.days = this.state.cells;
+                console.log(values);
+                await request("POST", "/api/event/create", values);
+                setSubmitting(false);
               }}
             >
               {({

@@ -5,7 +5,8 @@ import {
 } from "./util";
 import passport from "passport";
 import {
-    User
+    User,
+    Event
 } from './db'
 
 const api = db => {
@@ -96,7 +97,29 @@ const api = db => {
     });
 
     // router.get('/user/:user/events')
-    // router.post('/event/create')
+    router.post('/event/create', async (req, res) => {
+        const {
+            body
+        } = req;
+        const {
+            title,
+            startTime,
+            stopTime,
+            days
+        } = body;
+
+        const newEvent = new Event({
+            title,
+            startTime,
+            stopTime,
+            days,
+            users: [],
+            userTimes: []
+        })
+
+        await newEvent.save();
+        res.redirect(`/event/${newEvent._id}`);
+    })
     // router.get('/event/:eventId')
     // router.post('/event/:eventId/update')
 

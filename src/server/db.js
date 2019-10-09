@@ -32,8 +32,8 @@ export const passwordSchema = new mongoose.Schema({
 export const eventSchema = new mongoose.Schema({
     name: String,
     days: Array,
-    start: String,
-    end: String,
+    startTime: String,
+    stopTime: String,
     users: Array,
     userTimes: Array
 });

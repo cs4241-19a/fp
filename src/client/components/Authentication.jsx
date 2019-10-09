@@ -104,15 +104,18 @@ class SignUp extends React.Component {
     return (
       <Container className="auth-container">
         <Formik
-          initialValues={{ email: "", password: "", passwordConfirm: "" }}
+          initialValues={{ name: "", email: "", password: "", passwordConfirm: "" }}
           validate={values => {
             let errors = {};
-            if (!values.username) {
-              errors.username = "Required";
+            if (!values.name) {
+              errors.name = "Required";
+            }
+            if (!values.email) {
+              errors.email = "Required";
             } else if (
-              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.username)
+              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
             ) {
-              errors.username = "Invalid email address";
+              errors.email = "Invalid email address";
             }
             if (!values.password) {
               errors.password = "Required";
@@ -122,7 +125,8 @@ class SignUp extends React.Component {
             return errors;
           }}
           onSubmit={async (values, { setSubmitting }) => {
-            await request("POST", "/api/user/login", values);
+            values.username = values.email;
+            await request("POST", "/api/user/create", values);
             setSubmitting(false);
           }}
         >
@@ -138,6 +142,21 @@ class SignUp extends React.Component {
           }) => (
             <Form noValidate onSubmit={handleSubmit}>
               <Form.Group>
+                <Form.Label>Display Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.name}
+                  isInvalid={touched.name && errors.name}
+                ></Form.Control>
+                <Form.Control.Feedback type="invalid">
+                  {errors.name}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group>
                 <Form.Label>Email Address</Form.Label>
                 <Form.Control
                   type="email"
@@ -145,11 +164,11 @@ class SignUp extends React.Component {
                   placeholder="Email"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.username}
-                  isInvalid={touched.username && errors.username}
+                  value={values.email}
+                  isInvalid={touched.email && errors.email}
                 ></Form.Control>
                 <Form.Control.Feedback type="invalid">
-                  {errors.username}
+                  {errors.email}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group>
