@@ -6,6 +6,11 @@ document.getElementById('goTop-btn').onclick = function() {
     document.body.scrollTop = 0
     document.documentElement.scrollTop = 0
 }
+document.getElementById('edit-info').onclick = function(e) {
+    location.href = '../modify/modify.html'
+    e.preventDefault()
+    return false
+}
 
 fetch('/getYou', {
     method: 'GET',
@@ -13,7 +18,7 @@ fetch('/getYou', {
 }).then(function(response) {
     return response.json();
 }).then(function(you) {
-    document.getElementById('avatar').style.backgroundImage = `url(${you.pic})`
+    if (you.pic) document.getElementById('avatar').style.backgroundImage = `url(${you.pic})`
     document.getElementById('name').innerHTML = you.name
     document.getElementById('name2').innerHTML = you.name
     document.getElementById('likes').innerHTML = you.likes
@@ -56,72 +61,3 @@ fetch('/getYou', {
         append(comments, toast)
     })
 })
-
-// const makeBody = function() {
-//     let gender;
-//     for (let i = 0; i < genderS.length; i++)
-//         if (genderS[i].checked) gender = genderS[i].value;
-//     let hobby;
-//     for (let i = 0; i < hobbyS.length; i++)
-//         if (hobbyS[i].checked) hobby = hobbyS[i].value;
-
-//     if (name.value && age && gender && hobby) {
-//         hint.innerHTML = "";
-//         const json = {
-//             name: name.value,
-//             age: parseInt(age.value),
-//             gender: gender,
-//             hobby: hobby
-//         };
-//         return JSON.stringify(json);
-//     } else {
-//         console.log("There are missing fields!");
-//         hint.innerHTML = "There are missing fields!";
-//         return ""
-//     }
-// }
-// document.getElementById('update').onclick = function(e) {
-//     let body = makeBody()
-//     fetch(`/updateInfo`, {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body
-//     }).then(function(response) {
-//         swal(`Hello ${name.value}!`, `You have successfully updated your profile!`, "success")
-//             .then(() => location.href = '../tables/overview.html')
-//         console.log("Post sent to server: " + response);
-//     });
-//     e.preventDefault()
-//     return false
-// }
-
-// document.getElementById('delete').onclick = function(e) {
-//     swal({
-//         title: "Are you sure?",
-//         text: "Once deleted, you will not be able to recover your account!",
-//         icon: "warning",
-//         buttons: true,
-//         dangerMode: true,
-//     }).then((willDelete) => {
-//         if (willDelete) {
-//             swal("Goodbye!", {
-//                 icon: "success",
-//             }).then(() => {
-//                 fetch('/delete', {
-//                     method: 'POST'
-//                 }).then(function(response) {
-//                     console.log("Post sent to server: " + response)
-//                     location.href = '../index.html'
-//                 })
-//             })
-//         } else swal("Great!")
-//     })
-//     e.preventDefault()
-//     return false
-// }
-
-// document.getElementById('cancel').onclick = function(e) {
-//     location.href = '../tables/overview.html'
-//     e.preventDefault()
-//     return false
-// }

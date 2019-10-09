@@ -123,7 +123,8 @@ app.post('/updateInfo', function(request, response) {
             name: request.body.name,
             age: request.body.age,
             gender: request.body.gender,
-            hobby: request.body.hobby
+            hobby: request.body.hobby,
+            pic: request.body.pic
         }
     }).then(result => {
         response.json(result)
