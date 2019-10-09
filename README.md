@@ -1,4 +1,4 @@
-# cs4241-FinalProject
+# Carbon Footprint
 
 For your final project, you'll implement a course project that exhibits your mastery of the course materials. 
 Similar to A4, this project gives you an opportunity to be creative and to pursue individual research and learning.
