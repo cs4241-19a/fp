@@ -25,36 +25,39 @@ const START_STATE = 3;
 const path = "/assets/gompei/";
 
 let state = START_STATE; // current state
-let newState = false;
+let newState = false; // used to swap between play and pause state
 
 let game = new Phaser.Game(config);
 let player;
 let rock = [];
 let grass;
+let groundGroup;
 
+// inputs
 let cursors;
 let pauseKey;
 let spaceBar;
-let groundGroup;
-
 
 let score = 0;
-let maxRocks = 3;
-let rockSpeed = -200;
-let rockAcc = 0.05;
+let maxRocks = 3; // max number of rocks
+let rockSpeed = -200; // starting speed of rocks
+let rockAcc = 0.05; // acceleration of rock
 
+// text that appears on screen
 let scoreText;
 let pauseText;
 let startText;
 
-let playerYVelocity;
-let extraJumps = 1;
-let jumpsLeft = extraJumps;
-let canJumpAgain = true;
+let playerYVelocity; // current Y velocity
+let extraJumps = 1; // number of extra jumps in midair
+let jumpsLeft = extraJumps; // number of jumps user can still do in midair
+let canJumpAgain = true; // make sure user lets go of up key before hitting it again
 
 
-
-// preload images
+/**
+ * Preload images
+ * @author: am
+ */
 function preload () {
     this.load.image("gompei", path + "gompei.png"); // Source: https://depositphotos.com/273483776/stock-illustration-pixel-art-goat-character-isolated.html
     this.load.image("ground", path + "groundLong.png"); 
@@ -62,17 +65,18 @@ function preload () {
     this.load.image("grass", path + "grassLong.png"); // Source: https://imgbin.com/png/XmJBdYii/pixel-art-game-sprite-png 
 }
 
-// Set up images on page with correct properties
+/**
+ * Set up images on page with correct properties
+ * @author: am
+ */
 function create () {
-
-    // this.cameras.main.backgroundColor.setTo(19, 64, 84);
 
     // Set ground properties (separate from grass since grass has no physics)
     groundGroup = this.physics.add.staticGroup();
     groundGroup.create(0, 560, "ground");
 
     // Set moving ground properties
-    grass = this.add.tileSprite(0,560, this.width, this.height, 'grass')
+    grass = this.add.tileSprite(0,560, this.width, this.height, "grass");
 
     // set player properties
     player = this.physics.add.sprite(50, 450, "gompei").setScale(0.7);
@@ -116,9 +120,13 @@ function create () {
     
 }
 
-// Updates and re draws images
+/**
+ * Updates and re-draws images
+ * @author: am
+ */
 function update () {
     
+    // Pause or resume game when hitting 'p' key
     pauseKey.on('down', function(event){
         if (!newState) {
             if (state === PLAY_STATE) {
@@ -132,6 +140,7 @@ function update () {
         }
     })
 
+    // Allow user to pause or resume after letting go of 'p' key
     pauseKey.on('up', function(event){
         if (state === PLAY_STATE) {
             newState = false;
@@ -141,6 +150,7 @@ function update () {
         }
     })
 
+    // Actions that happen when game is being played
     if (state === PLAY_STATE) {
 
         // Update score
@@ -190,10 +200,12 @@ function update () {
         // Reset rocks after going off left side of screen
         for (let i = 0; i < maxRocks; i++) {
             if (rock[i].x < 0) {
-                rock[i].x = (Math.random() * 600) + 800
+                rock[i].x = (Math.random() * 600) + 800;
             }
         }
     }
+
+    // When page loads, wait for user to hit space to start game
     else if (state === START_STATE){
         if (spaceBar.isDown) {
             resumeGame();
@@ -202,13 +214,21 @@ function update () {
 }
 
 
+/**
+ * Set velocity of all rocks
+ * @param {number} rockSpeed New velocity for rocks 
+ * @author: am
+ */
 function setRockSpeeds (rockSpeed) {
     for (let i = 0; i < maxRocks; i++) {
         rock[i].setVelocityX(rockSpeed);
     }
 }
 
-// Put game in lost state when player collides with a rock
+/**
+ * Put game in lost state when player collides with a rock
+ * @author: am
+ */
 function rockCollision () {
     state = LOST_STATE;
 
@@ -228,6 +248,10 @@ function rockCollision () {
     scoreModel.modal("show");  // user jQuery to show the modal
 }
 
+/**
+ * Pause game: stop all sprites and show pause text
+ * @author: am
+ */
 function pauseGame () {
     state = PAUSE_STATE;
     stopRocks();
@@ -235,21 +259,31 @@ function pauseGame () {
     pauseText.visible = true;
 }
 
+/**
+ * Stop velocities of all rocks
+ * @author: am
+ */
 function stopRocks () {
-    // Stop all rocks
     for (let i = 0; i < maxRocks; i++) {
         rock[i].setVelocityX(0);
         rock[i].setVelocityY(0);
     }
 }
 
+/**
+ * Stop velocity of player
+ * @author: am
+ */
 function stopPlayer () {
-    // Stop player
     player.body.allowGravity = false;
     player.setVelocityY(0);
     player.setVelocityX(0);
 }
 
+/**
+ * Resume movements of all sprites and hide pause text
+ * @author: am
+ */
 function resumeGame () {
     state = PLAY_STATE;
     resumePlayer();
@@ -259,13 +293,20 @@ function resumeGame () {
 
 }
 
+/**
+ * Resume player velocities
+ * @author: am
+ */
 function resumePlayer () {
-    // Stop player
     player.body.allowGravity = true;
     player.setVelocityY(playerYVelocity);
     player.setVelocityX(0);
 }
 
+/**
+ * Resume velocities of all rocks
+ * @author: am
+ */
 function resumeRocks () {
     for (let i = 0; i < maxRocks; i++) {
         rock[i].setVelocityX(rockSpeed);
