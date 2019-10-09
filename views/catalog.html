@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>GDC Game Catalog</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        .mySlides {display:none;}
+      </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+  </head>
+
+  <style>
+
+    @font-face { font-family: arcade; src: url('../resources/ARCADE.TTF'); }
+
+
+  </style>
+  <body style ="font-family: arcade; background-color: darkgrey; color: black">
+      <div class = "text-center" style = "margin-top: 20px;">
+          <a href='/' class="btn btn-primary" role="button">Home</a>
+           <a href='/catalog' class="btn btn-primary" role="button">Catalog</a>
+           <a href='/request' class="btn btn-primary" role="button">Request a Game</a>
+       
+       
+       </div>
+    <div><font size = "6"><h1 class = "text-center" id = "title" style = "font-weight:bold; font-size: 64px; margin-left: 5%"></h1></font></div>
+    <div id ="slideshow" class="w3-content w3-display-container" style="width:40%; height:40%  margin-bottom: 20%">
+        <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+        <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+    </div>
+    <div id='description_head' style = "width: 80%; margin-left: 10%; font-size: 28px; font-weight: bold"></div>
+    <div id='description' style = "width: 80%; margin-left: 10%; font-size: 24px; margin-bottom: 5%"></div>
+    
+</body>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
+<script>
+    let gamedata = {};
+    let photos = null
+    window.onload = function() {
+    game = document.URL.substring(document.URL.indexOf("?")+1)
+    let something = {}
+    something["game"] = game;
+    $.ajaxSetup({async: false});
+    $.get('/gamescreenshots', something, function(data){
+      photos = data
+      console.log(photos)
+    })
+    $.get('/gameselect', something, function(data){
+        console.log(data)
+        constructPage(data)
+    })
+}
+    function constructPage(gamedata){
+        //console.log(gamedata.name)
+        let something = {}
+        something["game"] = game;
+        $("#title").text(gamedata.name)
+        $('#description_head').text("About "+gamedata.name)
+        photos.forEach(element => {
+          $('#slideshow').append('<img class="mySlides" style="width:100%; margin-bottom: 10% " src='+element.image+'>')
+        });
+        showDivs(slideIndex);
+        $("#description").append(gamedata.raw.description)
+    }
+
+
+var slideIndex = 1;
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  x[slideIndex-1].style.display = "block";  
+}
+</script>

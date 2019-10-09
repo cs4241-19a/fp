@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>GDC Game Catalog</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+
+  </head>
+  <style>
+
+    @font-face { font-family: arcade; src: url('../resources/ARCADE.TTF'); }
+
+
+  </style>
+  <body style = 'font-family: arcade; background-color: darkgrey; color: black;'>
+      <div class = "text-center" style = "margin-top: 20px;">
+          <a href='/' class="btn btn-primary" role="button">Home</a>
+           <a href='/catalog' class="btn btn-primary" role="button">Catalog</a>
+           <a href='/request' class="btn btn-primary" role="button">Request a Game</a>
+       
+       
+       </div>
+     <div><font size = "6"><h1 class = "text-center" style ="font-weight: bold; font-size: 64px;">Request A Game!!</h1></font></div>
+    <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+    <div class = " text-center  " style = "width: 80%; margin-left: 10%; font-size: 24px">
+        <input id="gameSearch" placeholder="Game Title" name="gameSearch">
+        <select hidden id ="console" name="console">
+          <option value="">Console</option>
+          <option value="PC">PC</option>
+          <option value="Nintendo">Nintendo</option>
+          <option value="PlayStation">PlayStation</option>
+          <option value="Xbox">Xbox</option>
+        </select>
+        <select hidden id="genre" name="genre">
+          <option value="">Genre</option>
+          <option value="Indie">Indie</option>
+          <option value="Racing">Racing</option>
+          <option value="Action">Action</option>
+          <option value="Adventure">Adventure</option>
+          <option value="RPG">RPG</option>
+          <option value="Puzzle">Puzzle</option>
+          <option value="Platformer">Platformer</option>
+          <option value="Arcade">Arcade</option>
+          <option value="Fighting">Fighting</option>
+          <option value="Casual">Casual</option>
+        </select> 
+        <button id="submit" class="btn btn-primary" onclick="search()" > Search </button>
+    </div>
+    
+    <div style = "width: 50%; margin: 0 auto; margin-top: 5%; font-size: 32px">
+    <table id = "table" class="table table-bordered">
+        <tbody>
+          </tbody>
+    </table>
+      </div>
+    
+  </body>
+  
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" ></script>
+  
+  <script>
+     
+    
+  function reloadData(){
+    console.log("Getting Data");
+    $.get('/getgames', function(data) {
+      clearTable(document.getElementById("table").rows.length)
+      data.forEach(function(car){
+        if(jQuery.isEmptyObject(car))
+          return
+        let name = car.name
+        console.log(car)
+        $('#table').append('<tr><td id=name>' + car.name +'</td><td><button class = "btn-primary" onclick=request('+car.raw.id+') >Request</button></td></tr>')
+      })
+    });
+    jQuery.ready();
+  }
+    
+  function clearTable(rowNum){
+    for(let i = 0; i < rowNum; i++)
+      document.getElementById("table").deleteRow(0)
+  }
+
+  function search(){
+    let gameName = $('#gameSearch').val()
+    let Console = $('#console').val()
+    let genre = $('#genre').val()
+    console.log(Console)
+    console.log(genre)
+    if(gameName == '' && Console == '' && genre == '')
+      reloadData()
+    
+      let something = {}
+      something["gameName"] = gameName;
+      something["console"] = Console;
+      something['genre'] = genre
+      clearTable(document.getElementById("table").rows.length)
+      $('#table').append('<tr><td style="text-align:center">Searching For Games, Please Wait</td></tr>') 
+      $('body').css('cursor', 'wait');    
+      $.get('/requestSearch', something, function(data) {
+      $('body').css('cursor', 'default');
+      clearTable(document.getElementById("table").rows.length)
+      if(data.length === 0){
+        $('#table').append('<tr><td style="text-align:center">No Game Found</td></tr>')      
+        return
+      }
+      data.forEach(function(car){
+        if(jQuery.isEmptyObject(car))
+          return
+        let name = car.name
+        console.log(car)
+        let image = ''
+        if(car.image != null)
+          image = car.image
+        $('#table').append('<tr><td><a href ='+image+'><img src='+image+' width="65" height="65"></img></a></td><td id=name>' + car.name +'</td><td><button onclick=request('+car.raw.id+')>Request</button></td></tr>')             
+      })
+    });
+    jQuery.ready();
+  }
+
+  function request(gameId){
+      console.log(gameId)
+    let something = {}
+      something["gameId"] = gameId
+    $.get('/requestgame', something, function(data) {alert("Thanks for requesting a game")})
+}
+    
+  </script>  
+</html>
