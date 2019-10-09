@@ -68,10 +68,10 @@ module.exports = function () {
 
     function getLocation(data) {
         return new Promise((resolve, reject) => {
-            let type = data.connectionInfo.type;
-            if ((data.isMobile && type === 'wifi') || !data.isMobile)
+            let onWifi = data.connectionInfo.type === 'wifi';
+            if ((data.isMobile && onWifi) || !data.isMobile)
                 maxMindLookup(data.ip).then(location => resolve(location));
-            else if (data.isMobile && type === 'cellular' && data.latitude && data.longitude)
+            else if (data.isMobile && !onWifi && data.latitude && data.longitude)
                 reverseGeocode(data.latitude, data.longitude).then(location => resolve(location));
         });
     }
