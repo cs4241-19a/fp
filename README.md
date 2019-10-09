@@ -1,51 +1,56 @@
 # cs4241-FinalProject
 
-For your final project, you'll implement a course project that exhibits your mastery of the course materials. 
-Similar to A4, this project gives you an opportunity to be creative and to pursue individual research and learning.
+## Team
+* Kent Libby
+* Justin Cheng
 
 ## General description
-
-Your project should consist of a complete Web application, exhibiting facets of the three main sections of the course material:
-
-- Static Web page content and design. You should have a project that is accessible, easily navigable, and features significant content.
-- Dynamic behavior implemented with JavaScript.
-- Server-side programming *using Node.js*. Typically this will take the form of some sort of persistent data, authentication, and possibly server-side computation.
-
-Additionally, you should incorporate features that you independently research, design, and implement for your project.
-
-## Project ideation
-
-Excellent projects serve someone/some group; for this assignment you need to define your users and stakeholders. I encourage you to identify projects that will have impact, either artistically, politically, or in terms of productivity. Consider creating something useful for a cause or hobby you care about.
-
-## Logistics
-
-### Team size
-Students are encouraged to work in teams of 2-5 students for the project. This will allow you to build a good project without expending an excessive amount of effort. While I would expect a team of four or five students to produce a project with more features, I expect a every team's work to exhibit all of the required facets described above.
+This project is based off Dota battle chess. We will create a similar game with the characters being based of warriors from the early 11th century. In this game, the players set up their characters in their respective corners. Once the battle begins the characters will move toward each other and attack. Between rounds players can purchase items and upgrades for their characters. The game is over once a player loses by too large of a collective margin. Unlike dota chess it will be strictly 1 on 1 games.
 
 ### Deliverables
 
-__Proposal:__ 
-Provide an outline of your project direction and the names of the team members. 
-The outline should have enough detail so that staff can determine if it meets the minimum expectations, or if it goes too far to be reasonable by the deadline.
-This file must be named proposal.md so we can find it.
-Submit a PR to turn it in by Monday, September 30th, before class
+__Base Deliverables__:
+* 5 Characters with unique capabilites (movements and/or attacks)
+* Local multiplayer 
+* Accounts for users to track win/loss and recent builds
+* Client-side system capable of providing dota chess-esque expierence
 
-There are no other scheduled checkpoints for your project. 
-You must be done in time to present before the final project demo day (October 10th). 
+__Stretch Goals__:
+* Online multiplayer
+* Animated Characters
+* Additional characters
 
-#### Turning in Your Outline / Project
+## User Guide
 
-**NOTE: code is due before the project presentation day due to the end of term / grading schedule constraints**
-Submit a second PR on the final project repo to turn in your app and code.
+The game works by buying characters, with resources, placing them on the field, then having them move toward each other to deal damage. The game is played on the same machine, with users sharing the mouse and keyboard. When a players resources drop to 0, that player loses. 
+*Note*: player one is the player on the top, and player two is the player on the bottom.
 
-Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service.
-Folks on the same team do not need to post the same webpage, but must instead clearly state who is on the team in their proposal.
-(Staff will use the proposal to build the grading sheet.)
+__Buy Round__:
 
-## Final Presentation
+The game starts with player one able to purchase characters. Click on a character to buy it, and it will show up in the top right. Once player one is done purchasing, press `space`, then player two can purchase. Once again, the player can click to buy a character. Once player two is done, press `space` to enter setup. 
 
-Presentations will occur during the final day of class.
+__Setup__:
 
-## FAQs
+Setup once again begins with player one. To place a character, click on it, then click the grey square to place it there (Player one's squares are on the top and player two's squares are on the bottom). Player one can place as many characters as they want, then press `space`. Then player two can place characters by clicking their characters and clicking a grey square on the bottom to place them. Once a player has placed all the pieces they want they can press `y` and it will be the other player's turn to place. once both players have pressed `y` the fight starts.
 
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use node.js.
+__Fight__:
+
+Sit back and enjoy, the characters move toward each other and deal damage when they hit. Once a character's health hits 0, they die and whoever's character's are still standing at the end wins!. The victor takes 5 resources from the loser, and the game returns to the `buy round`
+
+__Winning__:
+
+When a player's resources hit 0, the other player wins, and they can press space to restart!!
+
+## Technical Achievements
+* **Interactive sprites**: We made the individual sprites clickable, allowing for a simple and intuitive UI. This was especially challenging as the listeners needed to be added or removed based on game state.
+* **Sprites with UI overlays**: Created a system to overlay text on each sprite that changes depending on the state of the game. This also updates automatically with the sprite
+* **Object pool optimizations**: Used object pools to store UI text and player pieces to speed up render time.
+* **browserify and babel**: Used browserify and babel to minify the js files and make them accessible from more broswers
+* **Game engine**: Learned phaser3 with no game development expierence and implemented it for this project.
+
+## Design/Evaluation Achievements
+* **HTML and phaser integration**: Used the phaser state machine to update the list of wins and losses at the end.
+* **Contrast**: Used high contrast colors to make the game screen more visible
+* **Randomized Map**: Used the phaser tileset and map generator to create a randomized map texture for each playthrough.
+
+
