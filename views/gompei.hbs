@@ -13,3 +13,10 @@
         {{> includes/game-submit-default }}
     {{/inline}}
 {{/layouts/modal-layout}}
+
+<!-- The help modal -->
+{{#> layouts/modal-layout type="help" title="Gompei Run Help" }}
+    {{#*inline "form-content"}}
+        {{> includes/help/gompei }}
+    {{/inline}}
+{{/layouts/modal-layout}}
