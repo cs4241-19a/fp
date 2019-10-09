@@ -188,6 +188,8 @@ app.ticker.add(function(delta) {
         if (activeChar.y === app.screen.height - 62) {
             hasTouchedGround = true;
         }
+        mediumBat.x += mediumBat.vx;
+        highBat.x += highBat.vx;
         turtle.x += turtle.vx;
         if (up.isDown && count < 45 && fallDone && hasTouchedGround) {
             activeChar.vy = -2;
