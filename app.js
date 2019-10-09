@@ -188,7 +188,7 @@ app.get('/callback', function (req, res) {
 
 app.get('/trackAnalysis', function (req,res) {
     const options = {
-        url: 'https://api.spotify.com/v1/audio-analysis/'+track_id,
+        url: 'https://api.spotify.com/v1/audio-analysis/'+track_id, //req.body
         headers: {'Authorization': 'Bearer ' + access_token},
         json: true
     };
@@ -368,5 +368,5 @@ function isLoggedIn(req, res, next) {
 }
 
 //added in order to run the server
-app.listen(process.env.PORT || 3001)
+app.listen(process.env.PORT || 3000)
 module.exports = app
