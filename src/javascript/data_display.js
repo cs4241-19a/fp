@@ -247,24 +247,24 @@ const setupMap = function (width, height) {
 
 // data = [{favicon: "facebook.com", avg_rtt: 1.1, city: "Boston", lat: "0.0", lng: "0.0"}]
 const updateMap = function () {
+	//Length of scale in px
+	const scaleLength = 400
+
 	let div = d3.select("body")
 		.append("div")
 		.attr('class', "tooltip")
 		.style("opacity", 0);
 
-	const minScaleLabel = d3.select("body")
-		.append("div")
-		.attr('class', "scaleLabel");
-
-	const maxScaleLabel = d3.select("body")
-		.append("div")
-		.attr('class', "scaleLabel");
-
 	const filtered = data.filter(d => d.favicon === currentFavicon);
 	const maxValue = d3.max(filtered, d => d.avg_rtt);
-	let gradient = d3.scaleSequential(d3.interpolateCool)
+	let scaledGradient = d3.scaleSequential(d3.interpolateOrRd)
 	//.range(["#fff", "#BF303C"])
 		.domain([0, maxValue]);
+
+	let constGradient = d3.scaleSequential(d3.interpolateOrRd)
+	//.range(["#fff", "#BF303C"])
+		.domain([0, scaleLength]);
+
 
 	const mapPoint = svg.selectAll("circle").data(filtered);
 	mapPoint.exit().remove();
@@ -294,40 +294,39 @@ const updateMap = function () {
 		})
 		.attr("r", 10)
 		.style("fill", function (d) {
-			return gradient(d.avg_rtt)
+			return scaledGradient(d.avg_rtt)
 		});
-	console.log(maxValue)
+
 	let bars = svg.selectAll(".bars")
-		.data(d3.range(0, maxValue), d => d);
+		.data(d3.range(0, scaleLength), d => d);
 	bars.exit().remove();
 	bars.enter()
 		.append("rect")
 		.attr("class", "bars")
 		.attr("x", function (d, i) {
-			return i + 20;
+			return i + 40;
 		})
 		.attr("y", mapHeight - 20 + chartHeader)
 		.attr("height", 20)
 		.attr("width", 1)
 		.style("fill", function (d, i) {
-			return gradient(d);
+			return constGradient(d);
 		})
 
-	//TODO: Fix scale labels
-	/*
-	const svgX = svg.getBoundingClientRect().left
-	const svgY = svg.getBoundingClientRect().top
-	console.log(svgX + " ," + svgY)
-	minScaleLabel.text(minValue + "ms")
-		.style("left", svgX)
-		.style("top", svgY + mapHeight-20)
-		.style("font-size", "15px")
+	svg.append('text')
+		.attr("id", "maxScaleLabel")
+		.attr("class", "scaleLabel")
+		.attr("y", mapHeight + chartHeader)
+		.attr("x", scaleLength + 50)
+		.text(maxValue + "ms");
 
-	maxScaleLabel.text(maxValue + "ms")
-		.style("left", svgX + maxValue-minValue+10)
-		.style("top", svgY + mapHeight-20)
-		.style("font-size", "15px")
-*/
+	svg.append('text')
+		.attr("id", "minScaleLabel")
+		.attr("class", "scaleLabel")
+		.attr("y", mapHeight + chartHeader)
+		.attr("x", 0)
+		.text(0 + "ms");
+
 
 };
 
