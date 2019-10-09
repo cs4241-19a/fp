@@ -1,6 +1,5 @@
 function query() {
   document.getElementById("results").innerHTML = "";
-  
   let tdNode = document.createElement("th");
   let tdNode2 = document.createElement("th");
   let tdNode3 = document.createElement("th");
