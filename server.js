@@ -15,6 +15,7 @@ const passport   = require("passport")
 const Local      = require("passport-local").Strategy
 const pass       = require("pwd")
 const bodyParser = require("body-parser")
+const database   = require("./database.js")
 
 // Parse JSON bodies
 app.use(bodyParser.json())
@@ -33,38 +34,32 @@ app.get("/", function(request, response)
 // ## AUTHENTICATION ##
 // ####################
 
-/* TEMP STUFF */
-let users = []
-const findUser = function(username)
-{
-	return users.find(user => user.username == username)
-}
-/* END TEMP STUFF */
-
 passport.use(new Local(function(username, password, done)
 {
-	const user = findUser(username) // TODO use actual function
-	
 	console.log("Attempted login: ", username)
 	
-	if (user === undefined)
+	database.getUser(username).then(
+	function(user)
 	{
-		console.log("Fail - user not found")
-		return done(null, false)
-	}
-	
-	pass.hash(password, user.salt).then(function(result)
-	{
-		if (user.hash === result.hash)
+		if (user === null)
 		{
-			console.log("Success")
-			done(null, {"username": username, "password": password})
+			console.log("Fail - user not found")
+			return done(null, false)
 		}
-		else
+		
+		pass.hash(password, user.salt).then(function(result)
 		{
-			console.log("Fail - bad password")
-			done(null, false)
-		}
+			if (user.hash === result.hash)
+			{
+				console.log("Success")
+				done(null, {"username": username, "password": password})
+			}
+			else
+			{
+				console.log("Fail - bad password")
+				done(null, false)
+			}
+		})
 	})
 }))
 
@@ -96,20 +91,25 @@ app.post(
 			return
 		}
 		
-		// Make sure user does not already exist
-		if (findUser(req.body.username) !== undefined)
+		database.getUser(req.body.username).then(
+		function(user)
 		{
-			console.log("Error: username ", req.body.username, " already exists")
-			res.status(403) 	// Forbidden
-			res.send()
-			return
-		}
-		
-		pass.hash(req.body.password).then(function(result)
-		{
-			users.push({"username": req.body.username, "hash": result.hash, "salt": result.salt})
-			console.log("Successfully created user ", req.body.username)
-			res.json({"status": "success"})
+			console.log(user)
+			// Make sure user does not already exist
+			if (user !== null)
+			{
+				console.log("Error: username ", req.body.username, " already exists")
+				res.status(403) 	// Forbidden
+				res.send()
+				return
+			}
+			
+			pass.hash(req.body.password).then(function(result)
+			{
+				database.createUser(req.body.username, result.salt, result.hash)
+				console.log("Successfully created user ", req.body.username)
+				res.json({"status": "success"})
+			})
 		})
 	}
 )
@@ -203,7 +203,10 @@ app.post(
 // ## LISTEN ##
 // ############
 
-const listener = app.listen(process.env.PORT || 3000, function()
+database.startDB().then(() =>
 {
-	console.log("Your app is listening on port " + listener.address().port)
+	const listener = app.listen(process.env.PORT || 3000, function()
+	{
+		console.log("Your app is listening on port " + listener.address().port)
+	})
 })

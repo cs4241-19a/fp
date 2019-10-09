@@ -4,3 +4,4 @@ node_modules/
 .glitch-assets
 shrinkwrap.yaml
 public/bundle.js
+database.lite
