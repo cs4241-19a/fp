@@ -2,7 +2,8 @@ import * as constants from './standards.js';
 
 window.onload = function(){
   if(location.pathname.split("/").slice(-1)[0] == "admin"){
-    doAutoFill();  
+    doAutoFill();
+    addSignOff();
   }
   if(location.pathname.split("/").slice(-1)[0] == ""){
   setStandards();  
@@ -10,6 +11,34 @@ window.onload = function(){
 
   applyDates();
   fillBoard();
+}
+
+
+const addSignOff = function(){
+  var table = document.getElementById("row").getElementsByTagName("TR");
+  for (let job of table) {
+  
+    if(job.id !== ""){
+      let buttonCell = job.insertCell(2);
+      var modifyBtn = document.createElement("input");
+      modifyBtn.type="button";
+      modifyBtn.value="SignOff";
+      modifyBtn.addEventListener("click", function() {
+        let jobToSign = {jobCode:job.id};
+        fetch('/signoff', {
+          method:'POST',
+          body: JSON.stringify(jobToSign),
+          headers: {'Content-Type': 'application/json'}
+
+        })
+        //console.log(jobToSign);
+        });
+      modifyBtn.style = "width:100%";
+      buttonCell.append(modifyBtn);
+
+    }
+  
+  }
 }
 
 const applyDates = function(){

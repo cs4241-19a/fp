@@ -164,8 +164,15 @@ app.post('/login',
   
   });
 
-app.post('/signoff', function(req, res) {
-  // TODO signoff jobs here
+app.post('/signoff', async function(req, res) {
+  let job = req.body;
+  
+  await jobCol.findOne({jobCode: job.jobCode}, function(err, jobFound){
+    jobFound.status.complete = true;
+    jobFound.status.signoff = req.session.passport.user;
+
+    jobCol.updateOne({jobCode:job.jobCode}, {$set: {status: jobFound.status}})
+  })
 });
 
 app.post('/register', function(req, res){

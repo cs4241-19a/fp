@@ -8,8 +8,9 @@ th, tr {
 
 td {
   border: 1px solid black;
-  width: 10%;
+  width: 45%;
 }
+/* td:nth-of-type(3) {width:100px;} */
 
 body {
   justify-content: center;
