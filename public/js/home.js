@@ -99,12 +99,6 @@ const getRecommendations = function () {
                 for (let j = rating; j < 5; j++)
                     newRecommendation += `<img src="../images/emptystar.png" alt="Blank Star"/>`
 
-                    //     <div class = "nav-right">
-                    // <input type="image" src="images/pause.png" id = "play-pause-button" name="play button" onclick="togglePlayPause()" />
-                    // </div>
-
-                // `      <input type="image" src="images/play.png" id = "play-pause-button" name="play button" onclick="playSomeTrackID('` + songid + '`)"/>' +
-
                 newRecommendation += `</p>\n` +
                     `      <p class="card-text"><i>` + "\"" + caption + "\"" + `</i></p>\n` +
                     `      <p class="invisible" id="songid${i}">` + songid + `</p>\n` +
@@ -113,13 +107,6 @@ const getRecommendations = function () {
                     `      </div>` + `\n` +
                     `   </div>` + `\n` +
                     `</div>`
-
-                // newRecommendation += `</p>\n` +
-                //     `      <p class="card-text"><i>` + "\"" + caption + "\"" + `</i></p>\n` +
-                //     `      <p class="invisible" id="songid${i}">` + songid + `</p>\n` +
-                //     `      <a class="btn btn-primary" href="#" onclick="playSomeTrackID('` + songid + `')">Play</a>` +
-                //     `   </div>\n` +
-                //     `</div>`
 
                 list.innerHTML += newRecommendation
             }

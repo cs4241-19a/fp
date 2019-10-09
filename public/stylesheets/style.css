@@ -7,6 +7,7 @@ body {
 
 nav {
     margin-bottom: 2%;
+    opacity: .87;
 }
 
 a {
@@ -38,6 +39,8 @@ label {
 .side-container {
     background-color: #F8F9FA;
     color: black;
+    opacity: .87;
+    text-align: center;
 }
 
 .post {
@@ -96,7 +99,8 @@ img {
 }
 
 .leftJustify {
-    float: left;
+    /*float: left;*/
+    text-align: center;
 }
 
 .results-table {
@@ -115,7 +119,7 @@ img {
 }
 
 .stars {
-    text-align: center;
+
 }
 
 .rate {
@@ -182,4 +186,21 @@ img {
 .nav-right {
     float: right;
 }
+
+.card {
+    opacity: .87;
+
+}
+
+.searchButton {
+    color: #391A3F !important;
+    border-color: #391A3F !important;
+}
+
+.recommendationButton {
+    background-color: #391A3F !important;
+    border-color: #391A3F !important;
+}
+
+
 
