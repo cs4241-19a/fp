@@ -7,3 +7,18 @@ import store from "./store"
 import { StoreProvider } from "easy-peasy";
 
 ReactDOM.render(<App />, document.getElementById("root"));
+
+window.onload = function () {
+    document.getElementById("homeDiv").onclick = home
+    document.getElementById("logoutBtn").onclick = logout
+}
+
+function home(e) {
+    e.preventDefault();
+    window.location = "/main.html"
+}
+
+function logout(e) {
+    e.preventDefault();
+    window.location = "/login.html"
+}

@@ -22,6 +22,10 @@ body {
     justify-content: center;
 }
 
+#homeDiv:hover {
+    cursor: pointer !important;
+}
+
 #navBar {
     height: 70px;
     min-height: 70px !important;
@@ -91,6 +95,19 @@ button {
 button:hover {
     background: black;
     color: #00FF55 !important;
+}
+
+#logoutBtn {
+    background: black;
+    color: white !important;
+    border: 2px solid white;
+    transition: 0.7s;
+}
+
+#logoutBtn:hover {
+    background: #00FF55;
+    color: black !important;
+    border: 2px solid #00FF55;
 }
 
 .headT {

@@ -23,11 +23,22 @@ app.get('/', function(request, response) {
   response.sendFile(__dirname + '/dist/login.html');
 });
 
+app.get('/receive', function (request, response) {
+
+  fs_service.readUserData(request.body.username).then(myData=> {});
+  ref.on("value", function(snapshot) {
+    console.log(snapshot.val());
+    response.end(JSON.stringify(snapshot.val()))
+  }, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+});
+
 passport.use('local', new LocalStrategy( {
   usernameField: 'username',
   passwordField: 'password'
 }, function( username, password, done ) {
-  fs_service.readData(username).then(myData=> {
+  fs_service.readUserData(username).then(myData=> {
       if(myData === undefined || myData === null) {
         console.log("user not found");
         return done( null, false, { message:'user not found' })

@@ -14,7 +14,7 @@ exports.addNewUserProfile = function (username, new_profile){
     profiles_coll.doc(username).set(new_profile).then(r => console.log(r))
 }
 
-exports.readData = function(username) {
+exports.readUserData = function(username) {
     let user_ref = this.firestore.collection("user_profiles").doc(username);
     return new Promise((resolve, reject) => {
         let myData = {};
@@ -36,6 +36,38 @@ exports.readData = function(username) {
     })
 }
 
+exports.readFeedData = function() {
+    let feed_ref = this.firestore.collection("top_ten_feed");
+    return new Promise((resolve, reject) => {
+        let myData = [];
+        feed_ref.get()
+            .then(snapshot => {
+                snapshot.forEach(doc => {
+                    console.log(doc.id, '=>',doc.data())
+                    myData.push(doc);
+                });
+                resolve(myData)
+            })
+            .catch(err => {
+                console.log('Error getting document', err);
+                reject('Error getting document')
+            })
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 exports.addMusicToProfile = function (username, song){
     let profiles = this.firestore.collection("music_profiles")
     profiles.doc(username).get().then(function(obj){
@@ -51,26 +83,33 @@ exports.addMusicToProfile = function (username, song){
     })
 }
 
-exports.getMostRecentPosts = function (limit){
-    let profiles = this.firestore.collection("music_profiles")
-    let posts = this.firestore.collection("posts")
-    return new Promise((resolve, reject) => {
-        posts.orderBy("date").limit(limit).get().then(function(list){
-            post_list = []
-            list.data().forEach(p => {
-                profiles.doc(p.user).get().then(function(obj){
-                    prof = obj.data();
-                    song = prof.songs.filter(function(song){
-                        return p.itemid == song.itemid;
-                    })[0];
-                    post_list.push({
-                        user: prof.user,
-                        song: song
-                    }); 
-                })
-            })
-            resolve(post_lists)
-        })
-    })
-    
-}
+
+
+
+
+
+
+
+// exports.getMostRecentPosts = function (limit){
+//     let profiles = this.firestore.collection("music_profiles")
+//     let posts = this.firestore.collection("posts")
+//     return new Promise((resolve, reject) => {
+//         posts.orderBy("date").limit(limit).get().then(function(list){
+//             post_list = []
+//             list.data().forEach(p => {
+//                 profiles.doc(p.user).get().then(function(obj){
+//                     prof = obj.data();
+//                     song = prof.songs.filter(function(song){
+//                         return p.itemid == song.itemid;
+//                     })[0];
+//                     post_list.push({
+//                         user: prof.user,
+//                         song: song
+//                     });
+//                 })
+//             })
+//             resolve(post_lists)
+//         })
+//     })
+//
+// }
