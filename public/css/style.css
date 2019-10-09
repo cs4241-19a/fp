@@ -20,6 +20,9 @@ body {
   text-align: center;
 }
 
+h3.edit {
+  text-align: center;
+}
 .autocomplete {
   /*the container must be positioned relative:*/
   position: relative;

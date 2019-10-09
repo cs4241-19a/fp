@@ -88,3 +88,14 @@ function resetJobs(){
         method:'POST'
     })
 }
+
+function showHide(){
+    let inner = document.getElementById("editForm");
+    //var inner = obj.parentNode.getElementsByTagName("div")[0];
+    if (inner.style.display == "none") {
+        inner.style.display = "";
+    }
+    else{
+        inner.style.display = "none";
+    }
+}

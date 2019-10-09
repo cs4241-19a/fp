@@ -4,6 +4,7 @@ window.onload = function(){
   if(location.pathname.split("/").slice(-1)[0] == "admin"){
     doAutoFill();
     addSignOff();
+    fillMessages();
   }
   if(location.pathname.split("/").slice(-1)[0] == ""){
   setStandards();  
@@ -13,6 +14,23 @@ window.onload = function(){
   fillBoard();
 }
 
+const fillMessages = async function(){
+
+  const table = document.getElementById("messages");
+  const response = await fetch('/messages')
+  const messages = await response.json();
+
+  console.log("messages are ", messages);
+  messages.forEach(function(msg){
+    var tableRow = table.insertRow(1);
+        var tCell1 = tableRow.insertCell(0);
+        var tCell2 = tableRow.insertCell(1);
+        var tCell3 = tableRow.insertCell(2);
+
+    tCell1.innerHTML = msg.from;
+    tCell2.innerHTML = msg.message;
+  })
+}
 
 const addSignOff = function(){
   var table = document.getElementById("row").getElementsByTagName("TR");

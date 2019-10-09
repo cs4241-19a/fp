@@ -93,6 +93,16 @@ app.get('/', function(req, res) {
 res.sendFile(__dirname + '/public/views/index.html');
 });
 
+app.get('/messages', async function(req, res){
+  if( msgCol !== null ) {
+    //console.log( await userCol.find({ }).toArray());
+    // get array and pass to res.json
+    
+    await msgCol.find({ }).toArray().then(result =>
+      res.json(result)
+      );
+  };
+})
 app.get('/login', function(req, res) {
   res.sendFile(__dirname + '/public/views/login.html');
 });
@@ -175,6 +185,15 @@ app.post('/signoff', async function(req, res) {
   })
 });
 
+app.post('/messages', function(req, res){
+  let message = req.body;
+  let uuid = req.session.passport.user;
+  userCol.findOne({uuid:uuid}, function(err, userFound){
+    
+    message.from = userFound.name;
+    msgCol.insertOne(message);
+  })
+})
 app.post('/register', function(req, res){
   const per = req.body;
   per.level = "standard";
