@@ -10,7 +10,7 @@
 ## Proposal and Deliverables:
 We plan to create a project management tool that enables WPI students to effectively meet with their IQP teams at a convenient time and place on campus. We plan to implement two key features in our project management dashboard:
 
-  1) An availability tool that enables users to log in and enter/select which days and times of the week they are able to meet with their particular group. The tool will help them idenitify overlapping time ranges and help them decide when to meet.
+  1) An availability tool that enables users to log in and enter/select which days and times of the week they are able to meet with their particular group. 
   
   2) A tool that enables groups to book meeting rooms on campus that are not already booked
  
