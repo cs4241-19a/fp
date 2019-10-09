@@ -13,7 +13,10 @@ const cellTypes = {
     WALL: -2,  // this tile cannot be passed, have anything on it or be shot though
     BASE: -1,
     OPEN: 0,
-    TOWER: 1,
+    TOWER: 1,  // a placed tower
+    MENU_SAND: 2,
+    MENU_MG: 3,
+    MENU_CANNON: 4,
 };
 
 
@@ -21,21 +24,36 @@ let waveSpacingDur = 40;  // how many update cycles to wait until moving
 const offScreenCoord = {x: -500, y: -500};
 
 const cellSize = {width: 40, height: 40};
-const playArea = {width: myGame.width, height: myGame.height - cellSize.height};
-const enemyEnterCoord = {x: (playArea.width / cellSize.width) - 1, y: 1};
-const btmLeft = {x: 0, y: (playArea.height / cellSize.height) - 1};  // the bottom left cell of the grid. where the base is
+const playArea = {width: (myGame.width / cellSize.width), height: (myGame.height / cellSize.height) - 1};
+const menuArea = {width: (myGame.width / cellSize.width), height: 1};
+const enemyEnterCoord = {x: playArea.width - 1, y: 1};
+const btmLeft = {x: 0, y: playArea.height + menuArea.height - menuArea.height - 1};  // the bottom left cell of the grid. where the base is
 const baseEntrance = {x: btmLeft.x + 1, y: btmLeft.y};
 
 const grid = [];
 (() => {
-    for (let i = 0; i < playArea.height / cellSize.height; i++) {
+    for (let i = 0; i < playArea.height; i++) {
         grid[i] = [];
-        for (let j = 0; j < playArea.width / cellSize.width; j++) {
-            if (i === 0 || j === 0 || i === (playArea.height / cellSize.height) - 1 || (i !== enemyEnterCoord.y && j === (playArea.width / cellSize.width) - 1)) {
+        for (let j = 0; j < playArea.width; j++) {
+            if (i === 0 || j === 0 || i === playArea.height - 1 || (i !== enemyEnterCoord.y && j === playArea.width - 1)) {
                 // add WALLs to top, bottom, left, and right. Except the second one down on the right
                 grid[i][j] = cellTypes.WALL;
             } else {
                 grid[i][j] = cellTypes.OPEN;
+            }
+        }
+    }
+    for (let i = playArea.height; i < playArea.height + menuArea.height; i++) {
+        grid[i] = [];
+        for (let j = 0; j < menuArea.width; j++) {
+            if (j === 6) {
+                grid[i][j] = cellTypes.MENU_SAND;
+            } else if (j === 7) {
+                grid[i][j] = cellTypes.MENU_MG;
+            } else if (j === 8) {
+                grid[i][j] = cellTypes.MENU_CANNON;
+            } else {
+                grid[i][j] = cellTypes.WALL;
             }
         }
     }

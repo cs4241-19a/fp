@@ -11,6 +11,7 @@ const preloadState = new Phaser.Class({
         this.load.svg("station", "/assets/tower-defence/station.svg", {width: 2 * cellSize.width, height: 2 * cellSize.height});
         this.load.svg("machine gun", "/assets/tower-defence/machine-gun.svg", cellSize);
         this.load.svg("cannon", "/assets/tower-defence/cannon.svg", cellSize);
+        this.load.svg("sand", "/assets/tower-defence/sand.svg", cellSize);
         this.load.image("truck3b", "/assets/tower-defence/truck3b_body.png");
     },
 

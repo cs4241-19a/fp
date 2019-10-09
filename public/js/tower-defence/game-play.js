@@ -42,7 +42,7 @@ const gamePlayState = new Phaser.Class({
 
     update: function() {
         const scene = this;
-        updateMarker(scene)
+        updateMarker(scene);
         scene.enemies.forEach(enemy => {
             enemy.move();
         });
@@ -55,8 +55,20 @@ const gamePlayState = new Phaser.Class({
 function initFromGrid(scene) {
     for (let i = 0; i < grid.length; i++) {  // height
         for (let j = 0; j < grid[i].length; j++) {  // width
-            if (grid[i][j] === cellTypes.WALL) {
-                scene.add.image(j * cellSize.width, i * cellSize.height, "brick1").setOrigin(0, 0);
+            switch (grid[i][j]) {
+                case cellTypes.WALL:
+                    scene.add.image(j * cellSize.width, i * cellSize.height, "brick1").setOrigin(0, 0);
+                    break;
+                case cellTypes.MENU_SAND:
+                    scene.add.image(j * cellSize.width, i * cellSize.height, "sand").setOrigin(0, 0);
+                    break;
+                case cellTypes.MENU_MG:
+                    scene.add.image(j * cellSize.width, i * cellSize.height, "machine gun").setOrigin(0, 0);
+                    break;
+                case cellTypes.MENU_CANNON:
+                    scene.add.image(j * cellSize.width, i * cellSize.height, "cannon").setOrigin(0, 0);
+                    break;
+
             }
         }
     }
@@ -67,14 +79,36 @@ function initFromGrid(scene) {
 
 
 function updateMarker(scene) {
-
     const coord = {x: Math.floor(scene.input.activePointer.worldX / cellSize.width), y: Math.floor(scene.input.activePointer.worldY / cellSize.height)}
-
     scene.cursor.x = coord.x * cellSize.width;
     scene.cursor.y = coord.y * cellSize.height;
 
     if (scene.input.mousePointer.isDown) {
         console.log(coord);
+        switch (grid[coord.y][coord.x]) {
+            case cellTypes.WALL:
+                console.log("wall");
+                break;
+            case cellTypes.TOWER:
+                console.log("TOWER");
+                break;
+            case cellTypes.OPEN:
+                console.log("OPEN");
+                break;
+            case cellTypes.BASE:
+                console.log("BASE");
+                break;
+            case cellTypes.MENU_SAND:
+                console.log("MENU_SAND");
+                break;
+            case cellTypes.MENU_MG:
+                console.log("MENU_MG");
+                break;
+            case cellTypes.MENU_CANNON:
+                console.log("MENU_CANNON");
+                break;
+
+        }
         // map.putTile(currentTile, currentLayer.getTileX(marker.x), currentLayer.getTileY(marker.y), currentLayer);
         // map.fill(currentTile, currentLayer.getTileX(marker.x), currentLayer.getTileY(marker.y), 4, 4, currentLayer);
     }
