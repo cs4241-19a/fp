@@ -1,25 +1,58 @@
-window.onload = async function(){
-    const names = [];
-    try{
-        const response = await fetch('/users');
-        data = await response.json();
-        data.forEach(function(result){ names.push(result.name); })
-    } 
-    catch(error){
-         console.log(error);
-    }
-    if(location.pathname.split("/").slice(-1)[0] == "admin"){
-        //autocomplete(document.getElementById("name"), names);
-    }
+import * as constants from './standards.js';
 
-    fillBoard();
+window.onload = function(){
+  if(location.pathname.split("/").slice(-1)[0] == "admin"){
+    doAutoFill();  
+  }
+  if(location.pathname.split("/").slice(-1)[0] == ""){
+  setStandards();  
+  }
+  
+  fillBoard();
 }
 
+const setStandards = function(){
+  var table = document.getElementById("row").getElementsByTagName("TR");
+  for (let job of table) {
+    
+    let jobCode = job.id.substring(4)
+    
+    if(jobCode !== ""){
+      if(jobCode === '3br' || jobCode === '2brVan' || jobCode === '2brFloor' 
+      || jobCode === "1br"){
+        job.cells[0].addEventListener("click", function() {
+          changeStandardText("_br")});
+      } else {
+      job.cells[0].addEventListener("click", function() {
+        changeStandardText("_"+jobCode)});
+      }
+    //console.log(job.cells[0]);
+    }
+  }
+  
+}
 
+const changeStandardText = function(job){
+    document.getElementById("standards").innerHTML = constants[job];
+}
+const doAutoFill = async function(){
+  const names = [];
+  try{
+      const response = await fetch('/users');
+      let data = await response.json();
+      data.forEach(function(result){ names.push(result.name); })
+  } 
+  catch(error){
+       console.log(error);
+  }
+
+  autocomplete(document.getElementById("name"), names);
+
+}
 const fillBoard = async function(){
     try{ 
-        const jobR = await this.fetch('/jobList');
-        jobs = await jobR.json();
+        const jobR = await fetch('/jobList');
+        let jobs = await jobR.json();
 
         jobs.forEach(function(job){
             document.getElementById(job.jobCode).cells[1].innerHTML = job.name;
@@ -29,6 +62,9 @@ const fillBoard = async function(){
          console.log(error);
     }
 }
+
+
+
 
 //Chunk taken from W3 Schools
 function autocomplete(inp, arr) {
