@@ -1,0 +1,23 @@
+{
+  "name": "fp-start",
+  "version": "0.1.0",
+  "description": "A nice description",
+  "author": "Many ",
+  "scripts": {
+    "start": "node server.improved.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "sqlite3": "^4.1.0",
+    "response-time": "^2.3.2",
+    "serve-favicon": "^2.5.0",
+    "helmet": "^3.21.0",
+    "express-slash": "^2.0.1",
+    "morgan": "1.9.1",
+    "compression": "^1.7.4"
+  }
+}
