@@ -9,23 +9,27 @@ class Field extends Component {
         };
     }
 
-    componentDidMount() {
-    }
-
     handleSubmit = async e => {
-
-        const response = await fetch('/api/addBudget', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name: this.state.name, 
-                              requested: this.state.requested,
-                               approved: this.state.approved}),
-        });
-        const body = await response;
-        if (body) {
-            this.props.getData();
+        var answer = window.confirm("Are you sure you want to add this data?")
+        if (answer) {
+            const response = await fetch('/api/addBudget', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: this.state.name, 
+                                  requested: this.state.requested,
+                                   approved: this.state.approved}),
+            });
+            const body = await response;
+            if (body) {
+                this.props.getData();
+            }   
+        }
+        else {
+            this.setState({name: ' '});
+            this.setState({requested: null});
+            this.setState({approved: null})
         }
     };
     
@@ -39,6 +43,7 @@ class Field extends Component {
                         <form class="item" action="">
                             <h5> Enter Club Name: </h5>
                             <input 
+                                placeholder="ex. Cheese Club"
                                 class="selStyle fieldInput" 
                                 type='text' 
                                 value={this.state.name}
@@ -51,6 +56,7 @@ class Field extends Component {
                             <div class="item">
                                 <h5> Enter Requested Amount: </h5>
                                 <input 
+                                    placeholder="ex. $10,000"
                                     class="selStyle fieldInput" 
                                     type='text' 
                                     value={this.state.requested}
@@ -62,7 +68,8 @@ class Field extends Component {
                         <div class="notification" id="approveBox">
                             <div class="item">
                                 <h5> Enter Approved Amount: </h5>
-                                <input 
+                                <input
+                                    placeholder="ex. $1,000" 
                                     class="selStyle fieldInput" 
                                     type='text' 
                                     value={this.state.approved}
