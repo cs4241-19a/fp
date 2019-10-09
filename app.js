@@ -236,12 +236,76 @@ app.post('/modify', function(req, res){
 
 // Automatic scheduled updates
 // Updates job list every Sunday at 5:00 PM
-var update = schedule.scheduleJob({hour: 17, minute: 0, dayOfWeek: 0}, function() {
-  // TODO update job listings here
-  console.log('Test');
+var schedUpdate = schedule.scheduleJob({hour: 17, minute: 0, dayOfWeek: 0}, function() {update();});
+
+// Function to update listing of house jobs 
+var update = function() {
+  // Read through current list of jobs
+  await jobCol.find({}).toArray().then(jobs => {
+    // Add jobs to each user's history
+    jobs.forEach(job => {
+      // Calculate job point value base on status
+      let pointVal = job.point;
+      if(!job.status.complete) {pointVal = -pointVal}
+      else {if(job.status.late) {pointVal /= 2}};
+      await jobCol.updateOne({jobCode: job.jobCode}, 
+        {$set: {point: pointVal}});
+
+      // Adding job to user
+      await userCol.updateOne({name: job.name},
+        {$push: {jobs: job}});
+    });
+  });
+
+  let today = new Date();
+  // Number of ms in a day
+  let day = 1000 * 60 * 60 * 24
+
+  // Discard old jobs (more than 8 weeks ago)
+  await userCol.update({}, {$pull: {jobs: {date: {$lt: today - (day * 42)}}}}, {multi: true});
+  
+  // Calculate points
+  await userCol.find({}).toArray().then(users => {
+    users.forEach(user => {
+      let points = 0;
+      user.jobs.forEach(job => {
+        points += job.point;
+      });
+      await userCol.updateOne({name: user.name}, 
+        {$set: {point: points}});
+    });
+    // Sort users by point value (default to uuid if points are identical)
+    await users.sort((a, b) => (a.point > b.point) ? 1 : (a.point === b.point) ? ((a.uuid > b.uuid) ? 1 : -1) : -1)
+    .then(sortedList => {
+      // Assign each user a house job randomly
+      //    Edit name of job to user's name, and reset status
+      sortedList.forEach(user => {
+        // TODO assign random job here
+      });
+    });
+  });
+};
+
+// Marks jobs late for Tuesday
+var markLateTues = schedule.scheduleJob({hour: 9, minute: 0, dayOfWeek: 3}, function() {
+  await jobCol.find({day: 'tues'}).then(jobs => {
+    jobs.forEach(job => {
+      if(!job.status.complete) {
+        await jobCol.updateOne({jobCode: job.jobCode},
+          {$set: {status: {late: true}}})}
+    });
+  });
 });
-
-
+// Marks jobs late for Thursday
+var markLateThur = schedule.scheduleJob({hour: 9, minute: 0, dayOfWeek: 5}, function() {
+  await jobCol.find({day: 'thur'}).then(jobs => {
+    jobs.forEach(job => {
+      if(!job.status.complete) {
+        await jobCol.updateOne({jobCode: job.jobCode},
+          {$set: {status: {late: true}}})}
+    });
+  });
+});
 
 const listener = app.listen(process.env.PORT || 3000, function() {
   console.log('App is listening on port ' + listener.address().port);
