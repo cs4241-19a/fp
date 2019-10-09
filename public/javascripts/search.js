@@ -1,4 +1,9 @@
-function query(str) {
+function query() {
+ 
+      document.getElementById("results").deleteRow()
+
+  
+  let str = document.querySelector("#search").value;
   fetch("api/books/getBooks", {
     headers: {
       "Content-Type": "application/json"
@@ -27,5 +32,5 @@ function query(str) {
 }
 
 window.onload = function() {
-  document.getElementById("search").onsubmit = query(document.querySelector("#search").value); 
+  document.getElementById("searchButton").onclick = query;
 };
