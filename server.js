@@ -86,25 +86,24 @@ app.post('/newLeaderboardTime', function (request, response) {
             });
         }
     }).then(doc => {
-        leaderboardData = doc.leaderboardData;
+        leaderboardData = doc;
+        console.log(leaderboardData);
+        leaderboardData = leaderboardData.leaderboardData;
         if (!leaderboardData) {
             leaderboardData = [];
-        } else {
-            console.log(leaderboardData);
-            leaderboardData = leaderboardData.leaderboardData;
-            leaderboardData.forEach(entry => {
-                if (entry.user === request.session.passport.user) {
-                    entry.attempts++;
-                    if (entry.time > request.body.time) {
-                        entry.time = request.body.time;
-                    }
-                } else {
-                    foundUser = true;
+        }
+        leaderboardData.forEach(entry => {
+            if (entry.user === request.session.passport.user) {
+                entry.attempts++;
+                if (entry.time > request.body.time) {
+                    entry.time = request.body.time;
                 }
-            });
-            if (foundUser === true) {
-                leaderboardData.push(newData);
+            } else {
+                foundUser = true;
             }
+        });
+        if (foundUser === true) {
+            leaderboardData.push(newData);
         }
         db.upsert('leaderboardData', function(doc) {
             doc.counter = doc.counter || 0;
