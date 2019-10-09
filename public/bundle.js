@@ -44580,8 +44580,9 @@ bgPic.tilePosition.y = 0;
 app.stage.addChild(bgPic);
 
 function resetPaw() {
+  paw.anchor.set(1);
   paw.x = app.screen.width / 2;
-  paw.y = app.screen.height / 2;
+  paw.y = app.screen.height;
   paw.vx = 0;
   paw.vy = 0;
   paw.height = 60;
@@ -44591,8 +44592,9 @@ function resetPaw() {
 }
 
 function resetDog() {
+  dog.anchor.set(1);
   dog.x = app.screen.width / 2;
-  dog.y = app.screen.height / 2;
+  dog.y = app.screen.height;
   dog.vx = 0;
   dog.vy = 0;
   dog.height = 60;
