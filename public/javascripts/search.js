@@ -1,14 +1,24 @@
 function query() {
- 
-      document.getElementById("results").deleteRow()
-
+  document.getElementById("results").innerHTML = "";
   
+  let tdNode = document.createElement("th");
+  let tdNode2 = document.createElement("th");
+  let tdNode3 = document.createElement("th");
+  let trNode = document.createElement("tr");
+  tdNode.innerHTML = "Book";
+  tdNode2.innerHTML= "CRN";
+  tdNode3.innerHTML = "Location";
+  trNode.appendChild(tdNode);
+  trNode.appendChild(tdNode2);
+  trNode.appendChild(tdNode3);
+  document.getElementById("results").appendChild(trNode);
+
   let str = document.querySelector("#search").value;
   fetch("api/books/getBooks", {
     headers: {
       "Content-Type": "application/json"
     },
-    method: "POST",
+    method: "POST"
   }).then(function(res) {
     res.json().then(function(ret) {
       for (let i = 0; i < ret.length; i++) {
