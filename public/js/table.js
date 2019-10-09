@@ -74,8 +74,6 @@ const fillBoard = async function(){
 }
 
 
-
-
 //Chunk taken from W3 Schools
 function autocomplete(inp, arr) {
     /*the autocomplete function takes two arguments,

@@ -59,3 +59,21 @@ function forceUpdate() {
     })
     .then(res => console.log(res));
 }
+
+function fill(){
+
+    var table = document.getElementById("row").getElementsByTagName("TR");
+    for (let job of table) {
+          
+      if(job.id !== ""){
+          job.cells[1].innerHTML = "Jimmy Tran";
+          
+      }
+    }
+}
+
+function reset(){
+    fetch('/resetjobs', {
+        method:'POST'
+    });
+}
