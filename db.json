@@ -12,6 +12,13 @@
               "9:00",
               "11:00"
             ]
+          },
+          {
+            "name": "Leonardo da Vinci",
+            "time": [
+              "13:00",
+              "15:30"
+            ]
           }
         ],
         "monday": [
@@ -223,7 +230,13 @@
     {
       "name": "Leonardo da Vinci",
       "availability": {
-        "sunday": [],
+        "sunday": [
+          "13:00",
+          "13:30",
+          "14:00",
+          "14:30",
+          "15:00"
+        ],
         "monday": [],
         "tuesday": [],
         "wednesday": [
