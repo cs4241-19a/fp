@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Final Project</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Tom Graham, Peter Jankowski, and Rosana Pochat">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="js/loginScripts.js" defer></script>
+    <link rel="stylesheet" href="css/index.css">
+  </head>
+  
+  <body class="p-3 mb-2 bg-dark text-white">
+    <header>
+      <div class="text-center">
+        <h1>Scheduler App</h1>
+        <h2>Login Page</h2>
+      </div>
+    </header>
+    
+    <main>
+      <!-- Login and Signup form-->
+      <form action="/login" id="loginForm" method="post" class="container">
+        <!-- Sign In -->
+        <label>Username:</label>
+        <input type="text" name="username" id="loginName" class="form-control"/>
+        <label>Password:</label>
+        <input type="password" name="password" id="pass" class="form-control"/>
+        <input type="submit" value="Log In" id="loginButton" class="btn btn-primary" aria-describedby="loginHelpBlock"/>
+        <details id="loginHelpBlock" class="form-text text-light">
+        Sign in above if you already have registered as a user, or register as a new user below.
+        </details>
+        <hr style="border-color: white">
+        <!-- Register -->
+        <label>New Username:</label>
+        <input type="text" name="username" id="newname" class="form-control" aria-describedby="usernameHelpBlock"/>
+        
+        <details id="usernameHelpBlock" class="form-text text-light">
+          Your username must be unique from any other user.
+        </details>
+        
+        <label>New Password:</label>
+        <input type="password" name="password" id="newpass" class="form-control"/>
+        
+        <input type="submit" value="Sign Up" id="signupButton" class="btn btn-primary"/>
+      </form>
+    </main>
+    
+   <footer>
+      <div>
+        <hr style="border-color: white">
+        <p class="text-center">
+          Created by Tom Graham, Peter Jankowski, and Rosana Pochat
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
