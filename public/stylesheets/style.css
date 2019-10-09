@@ -1,7 +1,8 @@
 body {
-    padding: 50px;
+    padding: 25px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     background-color: rgba(0, 0, 0, 0.87) !important;
+    overflow: hidden;
 }
 
 nav {
@@ -87,7 +88,6 @@ img {
 
 .hidden-data {
     visibility: hidden;
-
 }
 
 .songInput {
@@ -114,10 +114,15 @@ img {
     text-align: center;
 }
 
+.stars {
+    text-align: center;
+}
+
 .rate {
     float: left;
     height: 46px;
     padding: 0 10px;
+    display: inline-block;
 }
 .rate:not(:checked) > input {
     position:absolute;
@@ -153,3 +158,15 @@ img {
 .invisible {
     display: none;
 }
+
+.player-header{
+    position: sticky;
+    top: 0px;
+}
+
+.recommendations-container {
+    /*height: 300px;*/
+    height: 50vh
+    /*height: available;*/
+}
+

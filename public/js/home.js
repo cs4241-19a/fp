@@ -102,6 +102,7 @@ const getRecommendations = function () {
                 newRecommendation += `</p>\n` +
                     `      <p class="card-text"><i>` + "\"" + caption + "\"" + `</i></p>\n` +
                     `      <p class="invisible" id="songid${i}">` + songid + `</p>\n` +
+                    `      <button type="button" id="selectButton${i}">` + "Select" + `</button>\n` +
                     `   </div>\n` +
                     `</div>`
 
@@ -113,5 +114,5 @@ const getRecommendations = function () {
 
 getData()
 getRecommendations()
-refreshBtn.onclick = getRecommendations
+//refreshBtn.onclick = getRecommendations
 addRecBtn.onclick = addRecommendation
