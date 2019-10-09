@@ -1,7 +1,10 @@
 <div class="container">
-<h1>EX GAME</h1>
+<h1>Epic Awesome Game</h1>
 
 {{!-- Game goes here --}}
+    <h2>Please submit kindly</h2>
+    <input id="submitvalue" type="text" onkeypress='validate(event)' maxlength="12">
+    <button class="btn btn-secondary" onclick="giveScore()">Submit</button>
 </div>
 
 {{#section "css"}}
@@ -13,4 +16,17 @@
 {{!-- Add JS here --}}
     <script src="/js/ex-game/ex-game.js"></script>
 {{/section}}
+
+{{#> layouts/modal-layout type="gameScore" title="Submit Score" submitText="Submit" }}
+    {{#*inline "form-content"}}
+        {{> includes/game-submit-default }}
+    {{/inline}}
+{{/layouts/modal-layout}}
+
+<!-- The help modal -->
+{{#> layouts/modal-layout type="help" title="Epic Awesome Help" }}
+    {{#*inline "form-content"}}
+        {{> includes/help/ex }}
+    {{/inline}}
+{{/layouts/modal-layout}}
 
