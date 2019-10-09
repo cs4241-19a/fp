@@ -49,15 +49,15 @@
           </div>
           <div class="w-full my-3 mt-5">
             <div class="w-full shadowBg rounded p-3">
-                <div id="myName" class="text-gray-900 font-bold text-center text-3xl"></div>
+                <div id="myName" class="font-bold text-center text-3xl"></div>
             </div>
           </div>
-            <div class="w-full rounded p-3 mt-5">
-              <div id="myUName" class="text-gray-900 text-center text-2xl"></div>
+            <div class="w-full border-t-2 border-gray-400 mt-6 pt-3">
+              <div id="myUName" class="text-gray-900 text-center text-xl font-bold"></div>
             </div>
         </div>
         <div class="w-full mt-5 max-w-xs">
-          <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <form id="formPass" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div class="flex items-center justify-between">
               <div class="mb-8 text-xl font-bold centerEl">
                 Update Password
@@ -78,7 +78,7 @@
                      id="newPassword" type="password" placeholder="******************">
             </div>
             <div class="flex items-center justify-between">
-              <button class="text-white centerEl font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+              <button id="updatePassBtn" class="text-white centerEl font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
                 Update Password
               </button>
             </div>

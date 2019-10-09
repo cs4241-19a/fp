@@ -69,6 +69,11 @@ exports.readUserFeed = async function(username){
 exports.getSongData = async function(song_id){
     return await this.firestore.collection("song_data").doc(song_id).get();
 }
+exports.updateUserPassword = function (username, password) {
+    let profiles_coll = this.firestore.collection("user_profiles").doc(username);
+    profiles_coll.update({password: password}).then(r => console.log(r));
+}
+
 
 exports.addSongData = async function(byte_string){
     songs = await this.firestore.collection("song_data").get()

@@ -8,7 +8,6 @@ export default function ProfileApp(props) {
 
     return (
         <div className="w-full">
-            <FeedContainer/>
             <div className="w-full">
                 <div className="w-full">
                     <div className="w-full bg-white rounded overflow-hidden shadow-lg">
