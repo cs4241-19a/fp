@@ -69,29 +69,27 @@ app.post('/newLeaderboardTime', function (request, response) {
         time: request.body.time,
         attempts: 1
     };
+    let newLeaderboardData;
     db.get('leaderboardData').catch(err => {
         if (err.name === 'not_found') {
             leaderboardData.push(newData);
-            leaderboardData = {
+            newLeaderboardData = {
                 _id: 'leaderboardData',
                 leaderboardData: leaderboardData
             };
             db.upsert('leaderboardData', function(doc) {
                 doc.counter = doc.counter || 0;
                 doc.counter++;
-                doc.leaderboardData = leaderboardData;
+                doc.leaderboardData = newLeaderboardData;
                 return doc;
             }).catch (err => {
                 console.log(err);
             });
         }
     }).then(doc => {
-        leaderboardData = doc;
+        leaderboardData = doc.leaderboardData;
         if (!leaderboardData) {
             leaderboardData = [];
-        } else {
-            console.log(leaderboardData);
-            leaderboardData = leaderboardData.leaderboardData;
         }
         leaderboardData.forEach(entry => {
             if (entry.user === request.session.passport.user) {
