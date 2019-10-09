@@ -25,4 +25,12 @@ function logIn() {
 window.onload = function() {
   const button = document.getElementById("loginButton");
   button.onclick = logIn;
+
+  var input = document.getElementById("password");
+  input.addEventListener("keydown", function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      button.click();
+    }
+  });
 };
