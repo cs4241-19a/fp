@@ -126,6 +126,10 @@ app.get('/users', async function(req,res){
       );
   }
 })
+
+app.get('/register', function(req, res){
+  res.sendFile(__dirname + '/public/views/register.html');
+} )
 // Returning statistics of the user for user view page
 // TODO handle users who aren't logged in
 app.get('/userData', function(req, res) {
@@ -164,6 +168,19 @@ app.post('/signoff', function(req, res) {
   // TODO Signoff jobs here
 });
 
+app.post('/register', function(req, res){
+  const per = req.body;
+  per.level = "standard";
+  per.point = 0;
+  per.jobs = {};
+  per.active = "active";
+
+  userCol.findOne({uuid: per.uuid}, function(err, perFound){
+    if(err){return console.log(err)};
+    if(!perFound){userCol.insertOne(per)}
+    res.sendFile(__dirname + '/public/views/register.html');
+  });
+})
 // Toggles automatic updates
 app.post('/toggle', function(req, res) {
   active = !active;
