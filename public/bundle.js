@@ -44539,6 +44539,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var app = new PIXI.Application({
   backgroundColor: 0x00FFFF
 });
+var hasTouchedGround = false;
 var loader = new PIXI.Loader();
 document.getElementById("pixi").appendChild(app.view);
 var paw = PIXI.Sprite.from('images/cat.png');
@@ -44580,9 +44581,9 @@ bgPic.tilePosition.y = 0;
 app.stage.addChild(bgPic);
 
 function resetPaw() {
-  paw.anchor.set(1);
+  hasTouchedGround = false;
   paw.x = app.screen.width / 2;
-  paw.y = app.screen.height;
+  paw.y = app.screen.height / 2;
   paw.vx = 0;
   paw.vy = 0;
   paw.height = 60;
@@ -44592,9 +44593,9 @@ function resetPaw() {
 }
 
 function resetDog() {
-  dog.anchor.set(1);
+  hasTouchedGround = false;
   dog.x = app.screen.width / 2;
-  dog.y = app.screen.height;
+  dog.y = app.screen.height / 2;
   dog.vx = 0;
   dog.vy = 0;
   dog.height = 60;
@@ -44697,9 +44698,13 @@ app.ticker.add(function (delta) {
       addTurtle();
     }
 
+    if (activeChar.y === app.screen.height - 62) {
+      hasTouchedGround = true;
+    }
+
     turtle.x += turtle.vx;
 
-    if (up.isDown && count < 45 && fallDone) {
+    if (up.isDown && count < 45 && fallDone && hasTouchedGround) {
       activeChar.vy = -2;
       count++;
     } else {
