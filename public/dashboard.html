@@ -56,6 +56,22 @@
 <div id="hello">
   <div class="container-fluid pr-5 pl-5 mr-auto ml-auto">
     <div class="row justify-content-center">
+      <div id="room-unavailable-alert" class="column col-12" style="display: none; justify-content: center;">
+        <div class="alert alert-danger mb-5" style="width: 80%; padding: 15px 20px;" role="alert">
+          The room is unavailable at this time. Please select a different time.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div id="meeting-created-alert" class="column col-12" style="display: none; justify-content: center;">
+        <div class="alert alert-success mb-5" style="width: 80%; padding: 15px 20px;" role="alert">
+          Your meeting was successfully created.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
       <!--     BOOKING FORM     -->
       <div class="column col-12 col-md-12 col-lg-3 col-xl-3 bookForm">
         <form class="account-form" role="form" action="/">
