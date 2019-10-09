@@ -24,13 +24,8 @@ app.get('/', function(request, response) {
 });
 
 app.get('/receive', function (request, response) {
-
-  fs_service.readUserData(request.body.username).then(myData=> {});
-  ref.on("value", function(snapshot) {
-    console.log(snapshot.val());
-    response.end(JSON.stringify(snapshot.val()))
-  }, function (errorObject) {
-    console.log("The read failed: " + errorObject.code);
+  fs_service.readAllUserData().then(myData=> {
+    response.end(JSON.stringify(myData))
   });
 });
 

@@ -9,6 +9,20 @@ import { StoreProvider } from "easy-peasy";
 ReactDOM.render(<App />, document.getElementById("root"));
 
 window.onload = function () {
+    fetch( '/receive')
+        .then( function( response ) {
+            return response.json();
+        }).then(function (response) {
+            window.localStorage;
+            let user = localStorage.getItem('currUser');
+            console.log(user)
+            for(let i = 0; i < Object.keys(response).length; i++) {
+                if(response[i].username === user) {
+                    document.getElementById("nameCurr").innerText = JSON.stringify(response[i].firstName).replace(/^"(.*)"$/, '$1');
+                    break;
+                }
+            }
+        })
     document.getElementById("homeDiv").onclick = home
     document.getElementById("logoutBtn").onclick = logout
 }

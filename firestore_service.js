@@ -36,6 +36,26 @@ exports.readUserData = function(username) {
     })
 }
 
+exports.readAllUserData = function() {
+    let feed_ref = this.firestore.collection("user_profiles");
+    return new Promise((resolve, reject) => {
+        let myData = [];
+        feed_ref.get()
+            .then(snapshot => {
+                snapshot.forEach(doc => {
+                    console.log(doc.id, '=>',doc.data())
+                    myData.push(doc.data());
+                });
+                resolve(myData)
+            })
+            .catch(err => {
+                console.log('Error getting document', err);
+                reject('Error getting document')
+            })
+    })
+}
+
+
 exports.readFeedData = function() {
     let feed_ref = this.firestore.collection("top_ten_feed");
     return new Promise((resolve, reject) => {

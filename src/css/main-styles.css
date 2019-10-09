@@ -11416,8 +11416,33 @@ body {
           justify-content: center;
 }
 
+#nameCurr {
+  color: white;
+  font-family: 'Source Code Pro', 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.2em;
+  font-weight: 500;
+  padding-left: 15px;
+}
+
+#profileGo {
+  cursor: pointer !important;
+  padding-right: 15px;
+  -webkit-transition: 0.7s;
+  transition: 0.7s;
+  background-color: #0C2C4D;
+}
+
+#profileGo:hover {
+  background-color: dodgerblue !important;
+  color: black !important;
+}
+
 #homeDiv:hover {
   cursor: pointer !important;
+}
+
+#homeDiv img {
+  margin-top: -5px;
 }
 
 #navBar {
@@ -11428,7 +11453,8 @@ body {
   position: sticky;
   background-color: black;
   text-align: center;
-  padding: 10px;
+  padding-top: 13px;
+  padding-bottom: 10px;
   box-shadow: 0 1px 10px dodgerblue;
 }
 
