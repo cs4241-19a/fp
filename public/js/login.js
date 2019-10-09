@@ -8,12 +8,12 @@ const login = function() {
     alert('Missing credentials, please enter a username and password');
     return;
   }
-
-  fetch('/login', {
-    method: 'POST',
-    body: JSON.stringify(user),
-    headers: {'Content-Type': 'application/json'}
-  })
+  console.log(JSON.stringify(user));
+  // fetch('/login', {
+  //   method: 'POST',
+  //   body: JSON.stringify(user),
+  //   headers: {'Content-Type': 'application/json'}
+  // })
   // TODO redirect to user profile page
 }
 

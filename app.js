@@ -7,10 +7,7 @@ const express = require('express'),
       passport = require('passport'),
       LocalStrategy = require('passport-local').Strategy,
       session = require('express-session');
-
 var active = false;
-
-
 
 // MongoDB Setup
 const uri = 'mongodb+srv://admin:admin@data-n1exc.mongodb.net/admin?retryWrites=true&w=majority';
@@ -70,24 +67,16 @@ passport.deserializeUser(function(uuid, done) {
 
 
 // Middleware
-app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));
+app.use(session({ secret: 'secret', resave: false, saveUninitialized: false}));
 app.use(morgan('dev'));
 app.use(express.static('public'));
 app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());
 passport.use(new LocalStrategy(localStrategy));
 app.use(passport.initialize());
+app.use(passport.session());
 
-//const FileStore = require('session-file-store')(session);
-//app.use(session({
-//  genid: function(request){
-//    return uuid();
-//  },
-//  store: new FileStore(),
-//    secret: 'derps',
-//    resave: false,
-//    saveUninitialized: false
-//}));
+
 app.use((req,res,next) => {
   if(jobCol !== null && msgCol !== null && userCol !== null && dataCol !== null) {
     next();
@@ -101,7 +90,13 @@ app.use((req,res,next) => {
 
 // Handling Routes
 app.get('/', function(req, res) {
+  if(req.isAuthenticated()){
+    
   res.sendFile(__dirname + '/public/views/index.html');
+  }else {
+    
+  res.sendFile(__dirname + '/public/views/login.html');
+  }
 });
 
 app.get('/login', function(req, res) {
@@ -109,12 +104,23 @@ app.get('/login', function(req, res) {
 });
 
 app.get('/user', function(req, res) {
+  if(req.isAuthenticated()){
   res.sendFile(__dirname + '/public/views/user.html');
+  }else {
+    
+    res.sendFile(__dirname + '/public/views/login.html');
+    }
 });
 
 app.get('/admin', async function(req, res) {
-  console.log(await jobCol.find({ }).toArray());
-  res.sendFile(__dirname + '/public/views/admin.html');
+  //console.log(await jobCol.find({ }).toArray());
+  if(req.isAuthenticated() && req.user.level === 'admin'){
+    console.log("Authenticated");
+    res.sendFile(__dirname + '/public/views/admin.html');
+  }else{
+    console.log("NotAuthed");
+  res.sendFile(__dirname + '/public/views/index.html');
+  }
 });
 
 app.get('/users', async function(req,res){
@@ -154,7 +160,6 @@ app.get('/jobList', async function(req, res) {
 app.post('/login', 
     (req, res, next) => {
   console.log('Inside POST /login callback')
-  
   passport.authenticate('local', (err, user, info) => {   
     req.login(user, (err) => {
       // TODO get redirect to work
