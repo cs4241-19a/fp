@@ -293,7 +293,7 @@ const updateMap = function () {
 
 	const filtered = data.filter(d => d.favicon === currentFavicon);
 	const maxValue = d3.max(filtered, d => d.avg_rtt);
-	let scaledGradient = d3.scaleSequential(d3.interpolatitudeeOrRd)
+	let scaledGradient = d3.scaleSequential(d3.interpolateOrRd)
 	//.range(["#fff", "#BF303C"])
 		.domain([0, maxValue]);
 
