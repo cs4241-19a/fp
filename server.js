@@ -35,6 +35,12 @@ app.get('/feed', function (request, response) {
   });
 });
 
+app.get('/user_feed', function (request, response) {
+  fs_service.readUserFeed(request.body.username).then(feedData =>{
+    response.end(JSON.stringify(feedData))
+  })
+})
+
 app.get('/song_data', function (request, response){
   let song_id = request.query.id;
   fs_service.getSongData(song_id).then(song_data => {
@@ -102,6 +108,19 @@ app.post( '/changePass', function( request, response ) {
 
   response.writeHead( 200, { 'Content-Type': 'application/json'})
   response.end( JSON.stringify( request.body ) )
+})
+
+app.post('/post_music', function(request, response) {
+  let body = request.body;
+  let song = body.song_bytes;
+  let post = body.music_post;
+  fs_service.addSongData(song).then(song_id => {
+    post.song.song_id = song_id;
+    fs_service.addFeedPost(post).then(post_id => {
+      response.writeHead( 200, { 'Content-Type': 'application/json'})
+      response.end( JSON.stringify( {post_id: post_id} ) )
+    })
+  })
 })
 
 // listen for requests
