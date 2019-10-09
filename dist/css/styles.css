@@ -46,9 +46,9 @@ body {
 div.tooltip {
   position: absolute;
   text-align: center;
-  width: 80px;
+  /*width: 80px;*/
   height: 38px;
-  padding: 2px;
+  padding: 4px;
   font: 12px sans-serif;
   background: white;
   border: 0px;
