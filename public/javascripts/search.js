@@ -1,6 +1,6 @@
 function query() {
  
-      document.getElementById("results").deleteRow()
+  document.getElementById("results")
 
   
   let str = document.querySelector("#search").value;
