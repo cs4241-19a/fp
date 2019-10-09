@@ -1,0 +1,81 @@
+body {
+  font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+  color: #black;
+  margin: 2em;
+  background:#538895;
+}
+label{
+  font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+  color: #cee9f0;
+}
+
+
+h1 {
+  font-style: italic;
+  color:  #cee9f0;
+}
+#container {
+	width: 960px;
+	margin: 0 auto;
+}
+text-area{  
+  display: block;
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 600px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  font-size: 16px;
+  background-color:#d7f7ff ;
+}
+
+a{font-size:16px;}
+#content {
+	margin: 40px;
+	
+	width: 600px;
+}
+
+.outputSample {
+		margin: 10px;
+	padding: 5px;
+	background-color: rgb(250, 250, 255);
+}
+
+#content {
+	margin: 40px;
+	
+	width: 600px;
+  
+}
+
+#output {
+	margin: 10px;
+	padding: 5px;
+	background-color:#d7f7ff ;
+}
+
+#grammar {
+		padding: 5px;
+	margin: 10px;
+	background-color: rgb(200, 230, 255);
+}
+
+
+a:link {
+  color: #cee9f0;
+}
+
+/* visited link */
+a:visited {
+  color: #cee9f0;
+}
+
+/* mouse over link */
+a:hover {
+  color: teal;
+}
+
+/* selected link */
+a:active {
+  color: cyan;

@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Code Crafters Grammar Demo</title>
+    <link rel="stylesheet" href="css/layout.css" />
+  </head>
+
+  <body>
+    <div id="container">
+      
+      <div id="content"><h1>Code Crafters Grammar Demo</h1>
+        
+          <text-area><h3>
+            Welcome to Code Crafters Grammar Demo: 
+            </h3>
+          <strong>This page displays our current work on a grammar to help quilters
+          explore software concepts like modularity.</strong><br>
+          Please select the <strong>Get Data</strong> button to see the actual grammar coding (at the bottom of the ) that
+          produced the "A Quilt is: " definition. <br>
+          If you want to see it at work, click on the <strong>Save Data</strong> button to save a local
+          copy of the file and explore our <strong>Code Crafters interface</strong>. Use the Load File button on
+        the interface to see the file at work.</text-area>
+        
+          
+       
+        <select id="grammarSelect">
+          <option value="codecrafters">Code Crafters</option>
+        </select>
+        <input
+          type="button"
+          class="buttonClass"
+          id="getQuiltData"
+          value="Get Data"
+        />
+        <input
+          type="button"
+          class="buttonClass"
+          id="saveQuilt"
+          value="Save Data to File"
+        /><br /><br />
+        <a
+          href="https://arundelain-quiltcraftersfinal.glitch.me/editor/"
+          target="_blank"
+          >Code Crafters Interface Here</a
+        ><br>
+        <label><p>
+          <strong>A Quilt is made of a:</strong>
+          </p></label>
+        <div id="output">
+          Output
+        </div>
+        <label>A Quilt is: (Use the Get Data button above to fill in boxes.) </label>
+        <text-area id="quilt"></text-area><br />
+
+        <label>A block is </label>
+        <text-area id="block"></text-area><br />
+
+        <label>A patch is </label>
+        <text-area id="patch"></text-area><br />
+
+        <label>A palette list statement is </label>
+        <text-area id="paletteListStatement"></text-area><br />
+
+        <label>A palette array is </label>
+        <text-area id="paletteArray"></text-area><br />
+
+        <label>Blocks wide by high is </label>
+        <text-area id="blocksWideByHigh"></text-area><br />
+
+        <label>A quilt types array is </label>
+        <text-area id="quiltTypesArray"></text-area><br />
+
+        <label>A one row block is </label>
+        <text-area id="oneRowPatch"></text-area><br />
+
+        <label>A two row block is </label>
+        <text-area id="twoRowPatch"></text-area><br />
+
+        <label>A three row block is </label>
+        <text-area id="threeRowPatch"></text-area><br />
+
+        <label>A four row block is </label>
+        <text-area id="fourRowPatch"></text-area><br />
+
+        <label>The left letter is </label>
+        <text-area id="leftLetter"></text-area><br />
+
+        <label>The right letter is </label>
+        <text-area id="rightLetter"></text-area><br />
+
+        <label>A single letter is </label>
+        <text-area id="singleLetter"></text-area><br />
+
+        <label>A blue palette is </label>
+        <text-area id="setBluePalette"></text-area><br />
+
+        <label>A red palette is </label>
+        <text-area id="setRedPalette"></text-area><br />
+
+        <label>A yellow palette is </label>
+        <text-area id="setYellowPalette"></text-area><br />
+
+        <label>A green palette is </label>
+        <text-area id="setGreenPalette"></text-area><br />
+
+        <label>A palette is built of </label>
+        <text-area id="palette"></text-area><br />
+
+        <label>The output text </label>
+        <text-area id="outputText"></text-area><br />
+
+        <label>The origin is </label>
+        <text-area id="origin"></text-area><br />
+        <!--<div id="grammar">
+					Grammar
+				</div>-->
+      </div>
+    </div>
+    <script src="js/vendor/jquery-1.11.2.min.js"></script>
+    <script src="js/tracery.min.js"></script>
+    <script src="js/grammars.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/quiltClient.js"></script>
+    <script src="css/FileSaver.js"></script>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Welcome to Glitch!</title>
+    <meta name="description" content="A cool thing made with Glitch">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+    
+    <!-- import the webpage's client-side javascript file -->
+    <script src="/client.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>
+        A Dream of the Future
+      </h1>
+    </header>
+
+    <main>
+      <p class="bold">Oh hi,</p>
+      
+      <p>Tell me something I don't know:</p>
+      
+      <form>
+        <input name="nameData" id="nameData" type="text" maxlength="100" placeholder="Data" >
+        <input name="passData" id="passData" type="text" maxlength="100" placeholder="Pass data" >
+        <input name="removeNameData" id="removeNameData" type="text" maxlength="100" placeholder="Name Data of Interest" >
+        <input name="removePassData" id="removePassData" type="text" maxlength="100" placeholder="Password Data of Interest" >
+        <input name="removeIDData" id="removeIDData" type="text" maxlength="100" placeholder="ID of Interest" >
+        <!--<button type="submit" id="submit-dream">Submit Info</button>-->
+        <input class="buttonClass" id="addInfo" type="button" value="Add Data">
+        <input class="buttonClass" id="allInfo" type="button" value="Show Data List">
+        <input class="buttonClass" id="removeData" type="button" value="Delete Data">
+        <input class="buttonClass" id="updateData" type="button" value="Update Data List">
+        <input class="buttonClass" id="clicker" type="button" value="Remove Data List">
+      </form>
+      
+      <section class="dreams">
+        <ul id="dataInfo"></ul>
+      </section>
+    </main>
+
+    <footer>
+      Made with <a href="https://glitch.com">Glitch</a>!
+    </footer>
+
+    <div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>
+    <script src="https://button.glitch.me/button.js"></script>
+
+  </body>
+</html>

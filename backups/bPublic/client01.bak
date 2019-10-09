@@ -1,0 +1,114 @@
+const information = [];
+
+// define variables that reference elements on our page - see UL - id
+const informationList = document.getElementById("iDataInfo");
+const informationForm = document.forms[0];
+const nameInput = informationForm.elements["iNameData"];
+const passInput = informationForm.elements["iPassData"];
+const idInput = "";
+const inputString = { username: nameInput, password: passInput };
+
+// a helper function that creates a list item for a given data
+const appendNewInformation = function(iItem) {
+  const newListItem = document.createElement("li");
+  newListItem.innerHTML = iItem;
+  console.log("This is iItem", iItem);
+  informationList.appendChild(newListItem);
+};
+
+const iGetAllData = function(e) {
+  event.preventDefault();
+  //this function will find the inital data values and output them to the list
+  //these items will have a remove button next to them
+  fetch("/iGetAll", {
+    method: "GET"
+  })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(responseJSON) {
+      let temp = [];
+      for (let i = 0; i < responseJSON.length; i++) {
+        temp = [
+          responseJSON[i]._id,
+          responseJSON[i].username,
+          responseJSON[i].password
+        ];
+        information.push(temp);
+        appendNewInformation(temp);
+      }
+      //console.log("here is all data: ", responseJSON[0]._id)
+    });
+};
+
+const iAddData = function(e) {
+  event.preventDefault();
+  const input_1 = document.querySelector("#iNameData");
+  const input_2 = document.querySelector("#iPassData");
+  fetch("/iAdd", {
+    method: "POST",
+    body: JSON.stringify({ username: input_1.value, password: input_2.value }),
+    headers: { "Content-Type": "application/json" }
+  }).then(console.log);
+  //input_1 by itself without .value is an HTMLElement it needs to have .value to be useful info
+  //.then(appendNewInformation([input_1.value,input_2.value]));
+};
+
+const iRemoveData = function(e) {
+  e.preventDefault();
+  const removeName = document.querySelector("#iRemoveNameData");
+  const removePass = document.querySelector("#iRemovePassData");
+  const removeID = document.querySelector("#iRemoveIDData");
+  //alert("I'm removing");
+  fetch("/iRemove", {
+    method: "POST",
+    body: JSON.stringify({ username: removeName.value, password: removePass.value, _id:removeID.value }),
+    headers: { "Content-Type": "application/json" }
+  }).then(console.log);
+
+};
+
+const iClearing = function(e) {
+  //alert("I'm clicking");
+  fetch("/iClear", {
+    method: "POST",
+
+    headers: { "Content-Type": "application/json" }
+  }).then(document.location.reload())
+    .then(console.log);
+};
+
+const iUpdating = function(e){
+  e.preventDefault();
+  const removeName = document.querySelector("#iRemoveNameData");
+  const removePass = document.querySelector("#iRemovePassData");
+  const removeID = document.querySelector("#iRemoveIDData");
+  fetch("/iUpdate", {
+    method: "POST",
+    body: JSON.stringify({ username: removeName.value, password: removePass.value, _id:removeID.value }),
+    headers: { "Content-Type": "application/json" }
+  }).then(console.log);
+};
+
+window.onload = function() {
+  const button = document.querySelector("#iAddInfo");
+  const button2 = document.querySelector("#iAllInfo");
+  const button3 = document.querySelector("#iRemoveData");
+  const button4 = document.querySelector("#iUpdateData");
+  const button5 = document.querySelector("#iClear");
+  //button.onclick = submitFunction();
+  button.onclick = iAddData;
+  button2.onclick = iGetAllData;
+  button3.onclick = iRemoveData;
+  button4.onclick= iUpdating;
+  button5.onclick = iClearing;
+};
+
+//building a new button
+//place new button on index or whichever page you need
+//next note the id of the button.
+//go to the client side js page that has the button and add it to the event listener for
+//the page. Add the onclick event. Assign it to the clicking function.
+//in the fetch, fetch the path /whatever and then
+//next go to the server page and hook it up to /whatever there. Use Get or Post
+//

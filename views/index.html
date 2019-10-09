@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>A data thing</title>
+    <meta name="description" content="A cool thing made with Glitch" />
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css" />
+
+    <!-- import the webpage's client-side javascript file -->
+    <script src="/client.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>
+        A Dream of Data
+      </h1>
+    </header>
+
+    <main>
+      <p class="bold">Thanks for trying my database</p>
+
+      <form>
+        <fieldset id="first">
+          <input
+            name="iNameData"
+            id="iNameData"
+            type="text"
+            maxlength="100"
+            placeholder="Data"
+          />
+          <input
+            name="iPassData"
+            id="iPassData"
+            type="text"
+            maxlength="100"
+            placeholder="Pass data"
+          />
+          <input
+            class="buttonClass"
+            id="iAddInfo"
+            type="button"
+            value="Add Data"
+          />
+        </fieldset>
+        <fieldset id="second">
+          <input
+            name="iUpdateNameData"
+            id="iUpdateNameData"
+            type="text"
+            maxlength="100"
+            placeholder="Name to update"
+          />
+          <input
+            name="iUpdatePassData"
+            id="iUpdatePassData"
+            type="text"
+            maxlength="100"
+            placeholder="Password to update"
+          />
+          <input
+            name="iUpdateIDData"
+            id="iUpdateIDData"
+            type="text"
+            maxlength="100"
+            placeholder="ID of entry"
+          />
+          <input
+            class="buttonClass"
+            id="iUpdateData"
+            type="button"
+            value="Update Data List"
+          />
+        </fieldset>
+        
+        <fieldset id="third">
+          <p
+            name="iRemoveNameData"
+            id="iRemoveNameData"
+            type="text"
+            maxlength="100"
+          />
+          <p
+            name="iRemovePassData"
+            id="iRemovePassData"
+            type="text"
+            maxlength="100"
+          />
+          <input
+            name="iRemoveIDData"
+            id="iRemoveIDData"
+            type="text"
+            maxlength="100"
+            placeholder="ID of Interest"
+          />
+          <input
+            class="buttonClass"
+            id="iRemoveData"
+            type="button"
+            value="Delete Data"
+          />
+        </fieldset>
+        
+        <fieldset>
+          <input
+            class="buttonClass"
+            id="iAllInfo"
+            type="button"
+            value="Show Data List"
+          />
+          <input
+            class="buttonClass"
+            id="iClear"
+            type="button"
+            value="Remove Data List"
+          />
+          <input
+            class="buttonClass"
+            id="gotoGrammar"
+            type="button"
+            value="Go To Grammar"
+          />
+        </fieldset>
+      </form>
+
+      <section class="presentData">
+        <ul id="iDataInfo"></ul>
+      </section>
+    </main>
+  </body>
+</html>
