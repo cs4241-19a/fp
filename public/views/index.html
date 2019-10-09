@@ -4,22 +4,29 @@
     <meta charset="UTF-8">
     <title>Home Page</title>
     <link type="text/css" rel="stylesheet" href="../css/styles.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.5/pixi.js"></script>
+    <script src="../js/jquery.min.js"></script>
     <script src="../js/scripts.js"></script>
 </head>
 <body>
     <div class="game">
         <canvas id="game-canvas"></canvas>
     </div>
-
-    <div id="leaderboard-button">
-        <button>Leaderboard</button>
-    </div>
-
     <div id="back-button">
         <button>Back</button>
     </div>
+
+    <div id="main-container">
+        <div id="leaderboard-button">
+            <button>Leaderboard</button>
+        </div>
+        <div>
+            <h3 id="level">1</h3>
+        </div>
+        <div class="currency">
+            <h2 id="currency-text">0</h2>
+            <p id="crit-rate">0.00</p>
+        </div>
 
     <div id="main-container">
         <div class="enemy">
@@ -27,6 +34,11 @@
         </div>
         <div class="button-container">
             <button id="main-button" onclick="mainClick()">Click This!</button>
+            <br>
+            <button class="upgrade-button" id="upgrade-attack" onclick="damageUpgrade()">Upgrade Cost: ${attackCost}</button>
+            <br>
+            <button class="upgrade-button" id="upgrade-crit" onclick="critUpgrade()">Upgrade${critCost}</button>
+            <br>
         </div>
     </div>
 
