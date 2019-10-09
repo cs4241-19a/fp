@@ -6,7 +6,7 @@ function createAccount(){
   let body = JSON.stringify(json)
   
   fetch( '/api/users/create', {
-      headers: {
+    headers: {
       "Content-Type": "application/json"
     },
     method: "POST",
