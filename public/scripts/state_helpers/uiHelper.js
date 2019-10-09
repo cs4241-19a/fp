@@ -49,7 +49,7 @@ exports.paintText = function() {
 };
 
 const createStatusText = function(text, child){
-  text.visible = true;
+  text.visible = child.active;
   text.setPosition(child.x-TEXT_OFFSET, child.y-TEXT_OFFSET);
   text.setText('str: '+child.data.values.strength+'\n' +
       'health:\n '+child.data.values.health);

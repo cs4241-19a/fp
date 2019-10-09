@@ -15,12 +15,12 @@ exports.initFightHelper = function(){
  */
 exports.attack = function(piece, enemy) {
   piece.data.values.health -= enemy.data.values.strength;
-  enemy.data.values.health -= enemy.data.values.strength;
+  enemy.data.values.health -= piece.data.values.strength;
   if (piece.data.values.health <= 0){
     piece.disableBody(true, true);
   }
   if (enemy.data.values.health <= 0){
-    piece.disableBody(true, true);
+    enemy.disableBody(true, true);
   }
 };
 
@@ -90,24 +90,24 @@ exports.handleFightEnd = function(){
   let p1Lost = true;
   let p2Lost = true;
   gameManager.p1FightPieces.getChildren().forEach((piece) => {
-    if(piece.data.values.health > 0){
+    if(piece.active){
       p1Lost = false;
     }
   });
   gameManager.p2FightPieces.getChildren().forEach((piece) => {
-    if(piece.data.values.health > 0){
+    if(piece.active){
       p2Lost = false;
     }
   });
   // transfer resources from the winner to the loser
   if(p2Lost) {
-    let resourceExchangeValue = gameManager.p1FightPieces.getChildren().length*3+3;
+    let resourceExchangeValue = 5;
     gameManager.playerOneResources += resourceExchangeValue;
     gameManager.playerTwoResources -= resourceExchangeValue;
     console.log('player 2 lost');
   }
   else if (p1Lost) {
-    let resourceExchangeValue = gameManager.p1FightPieces.getChildren().length*3+3;
+    let resourceExchangeValue = 5;
     gameManager.playerTwoResources += resourceExchangeValue;
     gameManager.playerOneResources -= resourceExchangeValue;
     console.log('player 1 lost');

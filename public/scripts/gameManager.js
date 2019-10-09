@@ -76,8 +76,14 @@ class GameManager {
           // remove all listeners attached to this object (so we can reset it later)
           this.setInteractive().removeAllListeners('pointerup');
           pieceList.add(child);
-          resources -= child.data.values.price;
-          text.setText('Resources: ' + resources);
+          if(that.turn === CONSTANTS.TURN.p1){
+            that.playerOneResources -= child.data.values.price;
+            text.setText('Resources: ' + that.playerOneResources);
+          }
+          else{
+            that.playerTwoResources -= child.data.values.price;
+            text.setText('Resources: ' + that.playerTwoResources);
+          }
           console.log('added child!!');
           // remove the interactivity, then the child
           that.buyList.remove(child);

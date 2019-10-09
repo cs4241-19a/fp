@@ -180,12 +180,12 @@ function update() {
       gameManager.state = CONSTANTS.STATES.buy;
       gameManager.turn = CONSTANTS.TURN.p1;
       gameManager.p1Ready = gameManager.p2Ready = false;
-      if(gameManager.playerOneResources < 0) {
+      if(gameManager.playerOneResources <= 0) {
         gameManager.state = CONSTANTS.STATES.gameOver;
         this.add.text(CONSTANTS.WIDTH/2 - 200, CONSTANTS.HEIGHT/2 - 200,
             `PLAYER 2 WINS\nRESTART WITH SPACE`, {fontSize: '32px', fill: '#000'});
       }
-      if (gameManager.playerTwoResources < 0) {
+      if (gameManager.playerTwoResources <= 0) {
         gameManager.state = CONSTANTS.STATES.gameOver;
         this.add.text(CONSTANTS.WIDTH/2 - 200, CONSTANTS.HEIGHT/2 - 200,
             `PLAYER 1 WINS\nRESTART WITH SPACE`, {fontSize: '32px', fill: '#000'});
