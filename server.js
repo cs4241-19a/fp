@@ -159,7 +159,7 @@ app.post(
 		database.getUserTasks(req.user.username).then(
 		function(tasks)
 		{
-			tasks = tasks === undefined ? {} : tasks
+			tasks = tasks === undefined ? [] : tasks
 			console.log(tasks)
 			res.json(tasks)
 		})
@@ -180,7 +180,7 @@ app.post(
 		database.getUser(req.user.username).then(
 		function(user)
 		{
-			const task = req.body 	// Is this right???
+			const task = JSON.parse(req.body)
 			task.userId = user.id
 			
 			database.createTask(task)
@@ -202,7 +202,7 @@ app.post(
 			return
 		}
 		
-		const task = req.body 	// Is this right???
+		const task = JSON.parse(req.body)
 		const taskId = task.id
 		task.id = undefined 	// Don't update the task id to be the same that it already is
 		
@@ -216,7 +216,6 @@ app.post(
 )
 
 // Not yet implemented in the database library
-/*
 app.post(
 	"/deletetask",
 	function(req, res)
@@ -228,12 +227,13 @@ app.post(
 			return
 		}
 		
-		// TODO delete task in DB, maybe authenticate stuff?
+		const json = JSON.parse(req.body)
+		
+		database.deleteTask(json.id)
 		res.status(200)
 		res.send()
 	}
 )
-*/
 
 
 // ############

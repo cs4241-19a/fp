@@ -143,4 +143,11 @@ function updateTask(taskId, object){
     });
 }
 
-module.exports = {startDB, getUser, getUserTasks, createUser, createTask, updateTask}
+//deleteTask
+function deleteTask(taskId){
+	Task.destroy({
+		where: {id: taskId}
+	}
+}
+
+module.exports = {startDB, getUser, getUserTasks, createUser, createTask, updateTask, deleteTask}
