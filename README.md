@@ -18,9 +18,9 @@ Click on your profile name in the upper right and you will be directed to your p
 ### Technologies
 We used a wide array of technologies and libraries for this project. Much of the project was centered around React, which allowed us to compartmentalize the application using the component structure, as well as handle network requests and component updates in an efficent way. Using React meant we also used parcel to bundle our files for both development and production. 
 
-For the server, we use Express along with helmet and compression. Passport was used for user auth. We used firebase for our database. __ **EXPLAIN MORE**
+For the server, we use Express along with helmet and compression. Passport was used for user auth. We used firebase for our database hosting system. Specifically, we used Cloud Firestore as the serverless NoSQL realtime solution. The database can store the user profiles, music posts, and song data, while maintaing post order and top 10 feed logic.
 
-The visualization was created using web audio api and dat.gui. **FILL IN**
+The visualization was created using web audio api and dat.gui.
 
 ### Challenges
 The main challenge we faced was the loss of a group member. They realized they would be NR'ing the course so decided to spend their time during the last week on other work. With a student short, we were stretched to complete our original goals, especially because that student had been partly responsible for the visualizer aspect, the heart of our project. As a result we were not able to create a polished product to the specifications we originally aimed for. We had to cut some features, for example providing a preloaded list of mp3s instead of letting the user upload a song from their computer. Some features were still not able to be finished completely, such as the visualizer and some styling. 
