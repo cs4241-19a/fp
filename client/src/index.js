@@ -8,7 +8,7 @@ import TaskCardEntry from './TaskCardEntry';
 import * as serviceWorker from './serviceWorker';
 
 
-//ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 //ReactDOM.render(<Login />, document.getElementById('login'));
 //ReactDOM.render(<TaskCard />, document.getElementById('card'));
 //ReactDOM.render(<TaskCardEntry />, document.getElementById('cardEntry'));
