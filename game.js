@@ -141,7 +141,7 @@ PS.init = function(system, options) {
   PS.visible(30, 18, false);
   PS.visible(31, 18, false);
 
-  PS.statusText("Shitty Garageband");
+  PS.statusText("Perlenspiel Garageband");
 
   //loadSongs()
 };
