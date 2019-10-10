@@ -1,0 +1,397 @@
+body {
+  background-color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+}
+
+input {
+  width: 250px;
+  height: 25px;
+  margin: 5px;
+  padding: 5px;
+}
+
+label {
+  font-size: 15pt;
+  width: 264px;
+  margin: 5px;
+}
+
+.welcome {
+  float: left;
+  font-size: 30px;
+  margin-left: 2%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-110%);
+  color: white;
+}
+
+.logoutBtn {
+  width: 9%;
+  height: 100%;
+  font-size: 40px;
+  float: right;
+  background-color: #79C4BD;
+  border: none;
+  color: white;
+  padding: 0px 60px;
+  cursor: pointer;
+}
+
+.logoutBtn:hover {
+  background-color: #61A49E;
+}
+
+.nav-top {
+  overflow: visible;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #79C4BD;
+  height: 10%;
+}
+
+.nav-btn-group {
+  height: 90%;
+  width: 15%;
+  margin: 0px;
+  padding: 0px;
+  position: fixed;
+  top: 10%;
+  left: 0px;
+}
+
+.content {
+  height: 90%;
+  width: 85%;
+  position: fixed;
+  top: 10%;
+  left: 15%;
+  background-color: white;
+}
+
+#tenantProfile {
+  margin-top: 8%;
+  margin-left: 8%;
+  margin-right: 8%;
+  margin-bottom: 7%;
+  position: relative;
+}
+
+.landlordInfo {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  color: #808080;
+}
+
+.tenants-group {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  color: #808080;
+}
+
+.landlord {
+  margin-top: 35px;
+  display: inline-block;
+}
+
+.landlord a {
+  width: 100%;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.landlord b {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.landlord c {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.tenant {
+  margin-top: 35px;
+  width: 100%;
+  display: inline-block;
+}
+
+.tenant a {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.tenant b {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.tenant c {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.tenant d {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.nav-btn-group .button {
+  /*background-color: #4CAF50; !* Green *!*/
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 550%;
+  cursor: pointer;
+  width: 100%;
+  display: block;
+  height: 33.33%;
+}
+
+.contactRightTitle {
+  text-align: left;
+  float: left;
+  font-size: 48px;
+  color: #808080;
+  font-weight: bold;
+  vertical-align: top;
+}
+
+.user {
+  display: inline-block;
+  color: #808080;
+}
+
+.user b {
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.user c {
+  font-size: 24px;
+  font-weight: normal;
+}
+
+#apartments {
+  margin-top: 8%;
+  margin-left: 8%;
+  margin-right: 8%;
+  margin-bottom: 7%;
+  position: relative;
+}
+
+.subTitle {
+  text-align: left;
+  font-size: 36px;
+  color: #808080;
+  margin-top: 40px;
+  font-weight: bold;
+}
+
+#contactLeft {
+  height: 90%;
+  width: 40%;
+  position: fixed;
+  top: 10%;
+  left: 15%;
+  background-color: white;
+  overflow-y: scroll;
+  overflow-x: auto;
+}
+
+#contactRight {
+  height: 90%;
+  width: 45%;
+  position: fixed;
+  top: 10%;
+  left: 55%;
+  background-color: #F9F9F9;
+  overflow-y: scroll;
+  overflow-x: auto;
+  display: block;
+}
+
+#calendarScreen {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+#form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  color: #808080;
+}
+
+.screenTitle {
+  text-align: left;
+  font-size: 48px;
+  color: #808080;
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+.updateBtnFun {
+  margin-top: 30px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.3s;
+  background-color: white;
+  border: 4px solid #808080;
+  border-radius: 2px;
+  color: #808080;
+  padding: 12px;
+  width: 250px;
+  text-align: center;
+  font-weight: bold;
+  display: inline-block;
+  font-size: 18px;
+}
+
+#contactScreen {
+  display: block;
+}
+
+#calendarScreen {
+  display: none;
+}
+
+#paymentScreen {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+#contact {
+  background: #F7CD54;
+}
+
+#contact:hover {
+  background: #E5B429;
+}
+
+#calendar {
+  background: #F2655A;
+}
+
+#calendar:hover {
+  background: #D24B3F;
+}
+
+#payment {
+  background: #95BF74;
+}
+
+#payment:hover {
+  background: #7DA45E;
+}
+
+#my-calendar {
+  display: block;
+  overflow-x: scroll;
+  overflow-y: auto;
+  vertical-align: center;
+  horiz-align: center;
+  width: 50%;
+  zoom: 215%;
+}
+
+#events {
+  width: 50%;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.eventType {
+  font-weight: bold;
+  font-size: 25pt;
+  margin: 5% 5% 0 5%;
+}
+
+#payTitle {
+  color: #F2655A;
+}
+
+#eventTitle {
+  color: #7FC8Ec;
+}
+
+#serviceTitle {
+  color: #95BF74;
+}
+
+#date {
+  margin: 5%;
+  font-weight:bold;
+  font-size: 30pt;
+  color: #808080;
+}
+
+ul {
+  list-style: circle;
+  margin: 10px 5% 5% 5%;
+}
+
+#paymentList{
+  width: 50%;
+}
+
+#paymentdetails{
+  width: 50%;
+}
+
+#paymentScreen h3 {
+  margin: 5%;
+  color: #808080;
+  font-size: 30pt;
+}
+
+#payButtons{
+  display: flex;
+  flex-direction: column;
+}
+.payBtn{
+  background: #95BF74;
+  height: 60px;
+  width: 80%;
+  margin: 1% 10%;
+  border: none;
+  font-size: 15pt;
+  font-weight: bold;
+  color: darkslategrey;
+}
+.payBtn:hover {
+  background-color: #7DA45E;
+}
+
+#payInfo{
+  display: flex;
+  flex-direction: column;
+}
+#paypal{
+  background: #F2655A;
+  height: 60px;
+  width: 80%;
+  margin: 1% 10%;
+  border: none;
+  font-size: 15pt;
+  font-weight: bold;
+}
+
+.paytext{
+  color: #808080;
+  font-weight: bold;
+  font-size: 15pt;
+  margin:  10px 15%;
+}

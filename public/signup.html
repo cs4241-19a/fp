@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>CS4241 Final Project - Sign Up</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+
+<body>
+    <div class="signupcolor">
+
+    <!-- Logo -->
+    <div id="logoform">
+        <img src="/logos/knockKnockLogoBlue.png" alt="Blue Knock Knock Logo">
+    </div>
+
+    <!-- Back Button -->
+    <button class="signupToHome" onclick="window.location.href='/index.html'"><i
+            class="fa fa-chevron-left"></i></button>
+
+    <!-- Select User -->
+    <div id="userType">
+        <h1 class="formHeader">SIGN UP</h1>
+        <h2>Who are you...</h2>
+        <button class="signupBtnFun" id="tenant">Tenant</button>
+        <button class="signupBtnFun" style="margin-top: 10px;" id="landlord">Landlord</button>
+    </div>
+
+    <!-- Sign Up Form -->
+    <div id="form" style="display: none">
+        <h1 class="formHeader">SIGN UP</h1>
+
+        <label for="FirstName">First Name</label>
+        <input id="FirstName" type="text" placeholder="John">
+
+        <label for="LastName">Last Name</label>
+        <input id="LastName" type="text" placeholder="Smith">
+
+        <label for="Username">Username</label>
+        <input id="Username" type="text" placeholder="John89">
+
+        <label for="Password">Password</label>
+        <input id="Password" type="password" placeholder="password123">
+
+        <label for="PhoneNumber">Phone Number</label>
+        <input id="PhoneNumber" type="text" placeholder="***-***-****">
+
+                <label for="Email">Email</label>
+                <input id="Email" type="email" placeholder="John@gmail.com">
+
+        <!-- Visible ONLY for Tenant -->
+        <div id="KeyInput">
+            <label for="Key">Landlord Key</label>
+            <input id="Key" type="number" placeholder="123">
+        </div>
+
+        <!-- Sign Up Button -->
+        <button class="signupBtnFun" style="margin-top:20px;" id="signUp">Sign Up</button>
+
+    </div>
+    </div>
+    <script src="js/main.js" type="module"></script>
+    <script type="module">
+        import {tenantReg, landlordReg, addUser} from "./js/main.js";
+        window.onload = function() {
+            let tenant = document.getElementById("tenant")
+            tenant.onclick = tenantReg
+            let landlord = document.getElementById("landlord")
+            landlord.onclick = landlordReg
+            let signUp = document.getElementById("signUp")
+            signUp.onclick = addUser
+        }
+    </script>
+</body>
+
+</html>
