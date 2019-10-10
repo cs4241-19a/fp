@@ -18,7 +18,6 @@ function sendMessage(fromUser, toUser, message) {
     var myobj = { from: fromUser, to: toUser, message: message, time: new Date().getTime() };
     dbo.collection("messages").insertOne(myobj, function(err, res) {
       if (err) throw err;
-      console.log("added new book!");
       db.close();
     });
   });
