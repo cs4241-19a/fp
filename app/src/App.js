@@ -45,17 +45,38 @@ let allWords = [
   "ball"
 ];
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Codenames</h1>
-      </header>
-      <Menu />
-      <Game />
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalOpen: true,
+    };
+
+    socket.on("closeModal", this.closeModal.bind(this));
+  }
+
+  closeModal() {
+    console.log("closeModal");
+    this.setState({modalOpen: false});
+  }
+
+
+
+  render() {
+    return (
+        <div className="App">
+          <header className="App-header">
+            <h1>Codenames</h1>
+          </header>
+          {this.state.modalOpen &&
+          <Menu/>
+          }
+          <Game/>
+        </div>
+    );
+  }
 }
+
 
 Modal.setAppElement("#root");
 
