@@ -45,32 +45,42 @@ window.onload = function() {
           a.style = "color:white; text-decoration: none";
           l.appendChild(a);
           document.getElementById("people").appendChild(l);
+          currentConvo = ret[i].username;
         }
+        document.getElementById("t").innerHTML =
+          "Messages with " + ret[i].username;
+
+        updateChat();
       }
     });
   });
-  setInterval(updateChat, 3000);
-  
-}
+  //setInterval(updateChat, 3000);
+};
 
 function updateChat() {
+  clearChat();
+  let packet = { from: getCookie("username"), to: currentConvo };
+  let body = JSON.stringify(packet);
   fetch("messaging/getConversation/", {
     headers: {
       "Content-Type": "application/json"
     },
-    method: "POST"
+    method: "POST",
+    body: body
   }).then(function(res) {
     res.json().then(function(ret) {
-      for (let i = 0; i < ret.length; i++) {
+      //alert(ret)
+      for (let i = ret.length - 1; i >= 0; i--) {
         if (
           (ret[i].from == currentConvo && ret[i].to == getCookie("username")) ||
           (ret[i].to == currentConvo && ret[i].from == getCookie("username"))
         ) {
           if (ret[i].to == getCookie("username")) {
-            makeToTextBubble()
+            makeFromTextBubble(ret[i].message);
           }
           if (ret[i].from == getCookie("username")) {
-            makeFromTextBubble()
+            //alert(ret[i])
+            makeToTextBubble(ret[i].message);
           }
         }
       }
@@ -78,27 +88,55 @@ function updateChat() {
   });
 }
 
-function sendMessage(){
-  let message = {from: getCookie("username"), to:currentConvo, message:document.querySelector('#msg').value}
+function sendMessage() {
+  let message = {
+    from: getCookie("username"),
+    to: currentConvo,
+    message: document.querySelector("#msg").value
+  };
+  let body = JSON.stringify(message);
+
   fetch("messaging/sendMessage/", {
     headers: {
       "Content-Type": "application/json"
     },
     method: "POST",
-    body:message
-  })
+    body: body
+  });
+
   updateChat();
+  document.getElementById("msg").value = "";
+  window.reload();
 }
 
-
-function makeToTextBubble(str){
+function makeToTextBubble(str) {
+  let container = document.createElement("div");
   let bubble = document.createElement("div");
-  bubble.setHTML = str;
-  bubble.style = "background-color: #70dafa; width:20%; height:10%; float:right; font-weight:bold"
+  let pad = document.createElement("div");
+  container.style = "display:block; margin:5px;";
+  pad.style = "width:55%";
+  bubble.innerHTML = str;
+  bubble.style =
+    "background-color: #70dafa; width:20%; font-weight:bold; border-radius:15px;  float:right";
+  container.appendChild(pad);
+  container.appendChild(bubble);
+  document.getElementById("board").appendChild(container);
 }
 
-function makeFromTextBubble(str){
+function makeFromTextBubble(str) {
+  let container = document.createElement("div");
   let bubble = document.createElement("div");
-  bubble.setHTML = str;
-  bubble.style = "background-color: #6df299; width:20%; height:10%; float:left; font-weight:bold"
+  let pad = document.createElement("div");
+  container.style = "display:block; margin:5px;";
+  pad.style = "width:55%";
+  bubble.innerHTML = str;
+  bubble.style =
+    "background-color: #6df299; width:20%; font-weight:bold; border-radius:15px; float:left";
+  container.appendChild(bubble);
+  container.appendChild(pad);
+  document.getElementById("board").appendChild(container);
+}
+
+function clearChat() {
+  document.getElementById("board").innerHTML = "";
 }
