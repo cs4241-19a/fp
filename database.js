@@ -147,7 +147,7 @@ function updateTask(taskId, object){
 function deleteTask(taskId){
 	Task.destroy({
 		where: {id: taskId}
-	}
+	})
 }
 
 module.exports = {startDB, getUser, getUserTasks, createUser, createTask, updateTask, deleteTask}
