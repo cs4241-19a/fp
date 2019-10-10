@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7d783fb3-c0bd-43c4-9844-e447bcdcbe9e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,11 +25,6 @@
         <entry key="$PROJECT_DIR$" value="index.html" />
       </map>
     </option>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
-    <option name="width" value="1772" />
-    <option name="height" value="2092" />
   </component>
   <component name="ProjectId" id="1RqYMWoBiqNEiYMgvgj28WMgUK8" />
   <component name="PropertiesComponent">
@@ -72,6 +67,7 @@
       <workItem from="1570396994559" duration="2012000" />
       <workItem from="1570469948474" duration="483000" />
       <workItem from="1570471172339" duration="653000" />
+      <workItem from="1570677057834" duration="3875000" />
     </task>
     <servers />
   </component>
