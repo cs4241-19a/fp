@@ -16,5 +16,3 @@ By using the books students already have and allowing trade, students can simply
 Our project will heavily utilize a database, with the DB being exposed by an API. With this, the webpage itself will be as static as possible to allow for quick load times. Our API will be stateless.
 
 Students can search by course, book title, or book ISBN. The app will then give a list of contacts with the matching criteria. From here, users will be able to message other users and arrange a place to meet on campus.In addition, legally obtained digital copies of books can be uploaded to our db and accessed/shared per user. 
-
-This project will be built using the React framework.
