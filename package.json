@@ -1,0 +1,62 @@
+{
+  "name": "fp",
+  "version": "1.0.0",
+  "description": "For your final project, you'll implement a course project that exhibits your mastery of the course materials. \r Similar to A4, this project gives you an opportunity to be creative and to pursue individual research and learning.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint src/**/*.js src/**/*.jsx",
+    "lint:fix": "eslint src/**/*.js src/**/*.jsx --fix",
+    "start": "node dist/server/main.js",
+    "start:dev": "nodemon dist/server/main.js",
+    "clean": "rm -rf .cache dist node_modules",
+    "watch": "run-p watch:client watch:server",
+    "watch:client": "cross-env BABEL_ENV=client parcel watch src/client/index.html -d dist/client --public-url /dist",
+    "watch:server": "cross-env BABEL_ENV=server parcel watch src/server/main.js -d dist/server --public-url /dist --target=node",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "cross-env BABEL_ENV=client parcel build src/client/index.html -d dist/client --public-url /dist",
+    "build:server": "cross-env BABEL_ENV=server parcel build src/server/main.js -d dist/server --public-url /dist --target=node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Max5254/fp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Max5254/fp/issues"
+  },
+  "homepage": "https://github.com/Max5254/fp#readme",
+  "devDependencies": {
+    "@babel/core": "^7.6.3",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.3",
+    "cross-env": "^6.0.0",
+    "eslint": "^6.5.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-react": "^7.14.3",
+    "nodemon": "^1.19.3",
+    "npm-run-all": "^4.1.5",
+    "parcel-bundler": "^1.12.3"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.3",
+    "clone": "^2.1.2",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "formik": "^1.5.8",
+    "mongoose": "^5.7.3",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "react": "^16.10.2",
+    "react-bootstrap": "^1.0.0-beta.14",
+    "react-dom": "^16.10.2",
+    "react-helmet": "^5.2.1",
+    "react-router-dom": "^5.1.1"
+  }
+}
