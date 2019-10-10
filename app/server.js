@@ -33,33 +33,29 @@ module.exports = app;
 
 ///connections and usages
 var clientList = [];
+var boardState = [];
+var clueLog = [];
+
+function updateAll(){
+    sendBoardUpdate();
+    sendClueUpdate();
+}
+
+function sendBoardUpdate(){
+    io.sockets.emit("updateBoardstate", boardState);
+}
+function sendClueUpdate(){
+    io.sockets.emit("updateCluestate", clueLog);
+}
+
 
 io.on("connect", function(client){
-    //clients.push(client);
-    console.log(client.id);
+    console.log("establishing connection with", client.id);
     console.log("all clients", clientList);
     client.send(client.id);
-    // client.on('disconnect', function() {
-    //     clients.splice(clients.indexOf(client), 1);
-    // });
 });
 
 io.on("connection", function(socket) {
-    let ud = socket.handshake.session.userdata;
-    let user = "";
-    console.log('session for: ', socket.handshake.session.userdata);
-    if(ud) {
-        clientList.forEach(function (element) {
-            console.log('client found! : ', element.name, 'with size', clientList.length);
-            if (element.name && element.name == socket.handshake.session.userdata) {
-                user = element.name;
-                element.connection = socket.id;
-                io.sockets.emit("displayUser", user);
-            }
-        });
-    }else {
-        io.sockets.emit("displayUser", "New User");
-    }
 
     socket.on("disableOthers", function(){
         console.log('clicked disable');
@@ -68,15 +64,46 @@ io.on("connection", function(socket) {
         //io.sockets.to(getSocketFromClient(socket.handshake.session.userdata)).emit("specMsg", 'only for ' + socket.handshake.session.userdata);
     });
 
-    socket.on("send hint", function(msg) {
-        socket.handshake.session.userdata = msg;
-        clientList.push({name: msg, connection: socket.id});
-        socket.handshake.session.save();
+    socket.on("setInitState", function(state, browserCache){
+        console.log('session for: ', browserCache, 'socket', socket.id);
+        let user = browserCache.user;
+        let found = false;
+        clientList.forEach(function (element) {
+            if (element.name && element.name === user) {
+                console.log("updating " + user + " connection from ", element.connection, 'to', socket.id);
+                element.connection = socket.id;
+                io.sockets.emit("displayUser", user);
+                found = true;
+            }
+        });
+        if(!found){
+            console.log('adding client', user, 'with socket', socket.id);
+            clientList.push({name: user, connection: socket.id})
+            //io.sockets.emit("displayUser", "New User");
+        }
 
-        let full_msg = "[ " + getCurrentDate() + " ]: " + msg;
-        //io.sockets.emit("update hints", full_msg, msg);
-        socket.broadcast.emit("update hints", full_msg, msg);
+        //The first user that connects sets the base cards
+       if(boardState.length<1){
+           console.log('state set to', state);
+           boardState = state;
+       }else{
+           updateAll();
+           console.log('state already is ', boardState);
+       }
     });
+
+    socket.on("button selected", function(state) {
+        boardState = state;
+        //io.sockets.emit("update hints", full_msg, msg);
+        //socket.broadcast.emit("update hints", full_msg, msg);
+        sendBoardUpdate();
+    });
+
+    socket.on("clue sent", function(clue){
+        clueLog.push(clue);
+        sendClueUpdate();
+    });
+
 });
 
 function getSocketFromClient(cl){
