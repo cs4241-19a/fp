@@ -1,13 +1,20 @@
 const updatePlayer = function(eHP, eSrc, etier) {
-    const mhm = document.getElementById('scoreboard');
-    let sc = parseInt(mhm.innerText);
-    console.log(sc);
+    const board = document.getElementById('scoreboard');
+    const currtext = document.getElementById('currency-text');
+    const lvlref = document.getElementById('level');
+    const attref = document.getElementById('attack-cost');
+    const critref = document.getElementById('crit-cost');
+    let sc = parseInt(board.innerText);
+    let go = parseInt(currtext.innerText);
+    let lvl = parseInt(lvlref.innerText);
+    let att = parseInt(attref.innerText);
+    let crt = parseInt(critref.innerText);
 
     // Add logic here for gamestate and/or score
     const pObj = {
         attack: baseDamage,
         crit: baseCrit,
-        helpers: 0
+        level: lvl
     };
 
     const eObj = {
@@ -17,13 +24,16 @@ const updatePlayer = function(eHP, eSrc, etier) {
     };
 
     const currentState = {
+        score: sc,
+        currency: go,
         PlayerObj: pObj,
-        EnemyObj: eObj
+        EnemyObj: eObj,
+        attackCost: att,
+        critCost: crt
     };
 
     const updatedUser = {
         username: document.getElementById('current-username').value,
-        score: sc,
         gameState: currentState
     };
 
@@ -67,7 +77,7 @@ const fetchLeaderboard = async function() {
         const currentUser = users[i];
         let row = '<tr>\n';
         row += (`<td> ${currentUser.username} </td>\n`);
-        row += (`<td> ${currentUser.score} </td>\n`);
+        row += (`<td> ${currentUser.gameState.score} </td>\n`);
         row += '</tr>';
         HTMLDiv.innerHTML += row;
     }
@@ -220,18 +230,29 @@ const pixiInit = async function () {
 
     let enemySrc = "../img/bokoblin.png";
 
-    if (!isEmpty(state)) {
+    if (state.score != 0) {
         baseDamage = state.PlayerObj.attack;
         baseCrit = state.PlayerObj.crit;
+        document.getElementById('crit-rate').innerText = baseCrit.toString();
+        document.getElementById('scoreboard').innerText = state.score.toString();
         enemySrc = state.EnemyObj.filepath;
+        document.getElementById('currency-text').innerText = state.currency.toString();
+        document.getElementById('level').innerText = state.PlayerObj.level.toString();
         enemyTier = state.EnemyObj.tier;
+        attackCost = state.attackCost;
+        critCost = state.critCost;
+        document.getElementById('crit-cost').innerText = state.critCost.toString();
+        document.getElementById('attack-cost').innerText = state.attackCost.toString();
     }
 
     const enemyTexture = PIXI.Texture.from(enemySrc);
     const enemy = new PIXI.Sprite(enemyTexture);
     const enemyHealth = document.getElementById('health');
 
-    if (!isEmpty(state)) enemyHealth.value = state.EnemyObj.health;
+    if (state.score != 0) {
+        enemyHealth.value = state.EnemyObj.health;
+        enemyHealth.max = state.EnemyObj.health;
+    }
 
     enemy.x = (game.renderer.width * 5) / 6;
     enemy.y = game.renderer.height / 2;
@@ -272,7 +293,7 @@ const pixiInit = async function () {
                     break;
 
                 case 2:
-                    enemySrc = findEnemy(3)
+                    enemySrc = findEnemy(3);
                     newEnemy = PIXI.Texture.from(enemySrc);
                     enemy.texture = newEnemy;
                     //enemyHealth.max += 30;
@@ -371,11 +392,3 @@ const mainClick = function () {
         enemyHealth.value -= totalDamage;
     }
 };
-
-function isEmpty(obj) {
-    for(var key in obj) {
-        if(obj.hasOwnProperty(key))
-            return false;
-    }
-    return true;
-}

@@ -50,11 +50,9 @@ app.post("/update", function(req, res) {
 
     req.on( 'end', function() {
         const updatedUser = JSON.parse(dataString);
-        const currentUser = db.get('users').find({ username: updatedUser.username}).value();
-        const newScore = updatedUser.score;
         db.get('users')
             .find({ username: updatedUser.username })
-            .assign({ score: newScore, gameState: updatedUser.gameState})
+            .assign({ gameState: updatedUser.gameState})
             .write();
 
         res.writeHead( 200, "OK", {'Content-Type': 'text/plain' });
@@ -99,8 +97,7 @@ const myLocalStrategy = function(username, password, done) {
         const newUser = {
             'username': username,
             'password': password,
-            'score': 0,
-            'gameState': {}
+            'gameState': {'score': 0}
         };
 
         db.get( 'users' ).push(newUser).write();
