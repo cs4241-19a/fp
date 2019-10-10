@@ -48,7 +48,7 @@ function updateAll() {
 }
 
 function sendRoleState(){
-    //io.sockets.emit("updateBoardstate", boardState);
+    io.sockets.emit("updateRoleState", roleState);
 }
 
 function sendBoardUpdate(){
@@ -84,7 +84,7 @@ io.on("connection", function(socket) {
             if (element.name && element.name === user) {
                 console.log("updating " + user + " connection from ", element.connection, 'to', socket.id);
                 element.connection = socket.id;
-                io.sockets.emit("displayUser", user);
+                //io.sockets.emit("displayUser", user);
                 found = true;
             }
         });
