@@ -1,5 +1,7 @@
 # cs4241-FinalProject- the 🔥🔥 Ultimate 🔥🔥 Final 💪 Grade 💯 Calculator 🧮
 
+[Try it now!](https://jcharante.com/your-final-grade)
+
 ## The Team
 **Yicheng Yang** <yyang17@wpi.edu>
 
@@ -8,7 +10,7 @@
 **Jean Claude Zarate** <jzarate@wpi.edu>
 
 ## Project Introduction
-For the final project, our group developed a final grade calculator. As a user, you can add your class grades and grading policy in it and it will tell you your current grade as well as the highest/lowest grades. The system supports several different grading policies such as dropping, extra credit, top worth more, etc. It will store individual information for every user who uses it. Users also have the option to use it offline only or synchronize online.
+For the final project, our group developed a final grade calculator. As a user, you can add your class grades and grading policy in it and it will tell you your current grade as well as the highest/lowest grades. The system supports several different grading policies such as dropping, extra credit, top worth more, etc. It will store individual information for every user who uses it. Users also have the option to use it offline only or synchronize online. Available in English和中文。
 
 ## Instructions
 As a user, you may want to create an account first. After that, you can login and create classes, categories and grades. There will be specific explanation next to each field. You also turn on/off Offline Only Mode or Sync Online in the bar on the left. You will also be able to see the logout button there.
@@ -25,3 +27,9 @@ Basically, there are too many different grading policies. It is complicated to f
 **Yicheng Yang:** Contributed to the algorithm of the calculating system. Did the translation for the Chinese version of the website. Helped to write an explanation of each field that user need to fill.
 
 **James J. Scherick:** Critical contributor on the team developing the calculator algorithm.
+
+## Source Code
+
+- [Website](https://github.com/JCharante/your-final-grade-spa)
+- [Calculator](https://github.com/JCharante/your-final-grade-calculator)
+- [API Server](https://github.com/JCharante/your-final-grade-api)
