@@ -502,7 +502,10 @@ function makeGray(btn, selected) {
   b.style.backgroundColor = "gray";
   b.disabled = true;
   selected.state.selectedRole = btn;
+  //socket.emit("roleSelection", grabRoleState());
 }
+
+
 
 function closeMenu(play) {
   var u = document.getElementById("menuName");
