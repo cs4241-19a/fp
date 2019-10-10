@@ -31,7 +31,7 @@
       <li class="navbar"><a href="/search">Find a Book</a></li>
       <li class="navbar"><a id="messgaing" href="/">Messages</a></li>
       <li class="navbar" style="float:right">
-        <a id="login" href="/" onclick="document.cookie='username=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';">Logout</a>
+        <a id="login" href="/">Logout</a>
       </li>
       <li class="navbar" style="float:right">
         <a class="active" href="about">About</a>
@@ -40,21 +40,38 @@
     <h1 id="t">
       Messages
     </h1>
-    <h2></h2>
     <div
       id="messageContainer"
       style="height:400px; width:90%; display:flex; background-color:transparent; margin:auto"
       class="msg"
     >
       <div name="padding" style="background-color:transparent; width:20%"></div>
-      <div class="pure-menu" style="padding:10px">
+      <div class="pure-menu" style="padding:10px; background-color:#EF233C">
         <ul class="pure-menu-list" id="people"></ul>
       </div>
       <div
-        style="background-color:blue; width:80%; display:flex; flex-direction:column"
+        style="background-color:transparent; width:80%; display:flex; flex-direction:column"
       >
-        <div style="background-color:green; height:80%"></div>
-        <div style="background-color:yellow; height:20%"></div>
+        <div style="background-color:#d1d1d1; height:80%;  border-radius:1px;"></div>
+        <div style="background-color:#ff9191; height:20%; border-radius:1px">
+         <form style="margin:auto; width:85%" class="pure-form" action="">
+          <input
+            name="msg"
+            class="pure-input-1"
+            style="margin:auto"
+            id="msg"
+            placeholder="..."
+            value=""
+          />
+        </form>
+        <button
+          style="margin:auto; width:10%;"
+          id="sendButton"
+          class="pure-button translate"
+        >
+          Send!
+        </button>
+        </div>
       </div>
       <div name="padding" style="background-color:transparent; width:20%"></div>
     </div>
