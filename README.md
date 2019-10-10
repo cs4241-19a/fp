@@ -23,7 +23,7 @@ Welcome to qMe! qMe is a priority queue application to assist in personal schedu
   - If you do not want to sign up for a new account, then the default user is `user1`, password `hunter2`.
   - To log in to your account, run:
   - ```js
-    fetch("/signup", {
+    fetch("/login", {
       method: 'POST',
       body: JSON.stringify({
           username: "<YOUR USERNAME HERE>",
