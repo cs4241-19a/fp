@@ -52,6 +52,7 @@ export default function FeedContainer(props) {
                     <FeedItem
                         key={item.title}
                         user={item.user}
+                        title={item.title}
                     />
                 </div>
             )
