@@ -10,6 +10,36 @@ Our team consists of four members: Manasi Danke, Carla Duarte, Amanda Ezeobiejes
 
 ### __Project:__ https://fp-md-cd-ae-sl.glitch.me
 
+#### Directions to run it:
+1) Make sure you run npm install if the application is not loading on glitch.
+2) Sign out of all current gmail accounts.
+3) Sign into our project team’s gmail account with these credentials:	
+- Username: wpi.meeting.notification@gmail.com
+- Password: meetingwpi1
+4) Go to email settings and allow access to less secure apps: https://myaccount.google.com/lesssecureapps
+
+5) Go to this link and click “Continue” : http://www.google.com/accounts/DisplayUnlockCaptcha
+6) If there are any issues, please check our gmail to see if there are any recent emails regarding security. Please check the green "yes" in the email to indicate that this activity was due to our application.
+7) You are all set! You can now log in with any of these credentials or create and register your own account:
+
+
+Username: ciduarte@wpi.edu
+Password: 1234
+
+
+Username: mmdanke@wpi.edu
+Password: 1234
+
+
+Username: ylin7@wpi.edu
+Password: 1234
+
+
+Username: aezeobiejesi@wpi.edu
+Password: 1234
+
+8) If you have any additional questions, please do not hesitate to reach out to us.
+
 ### _Professor Roberts' Feedback on the Proposal:_
 
 "This sounds really really useful! I don't have much experience using Live25 so I'm unclear how much effort it will take to
