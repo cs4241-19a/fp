@@ -23,17 +23,22 @@ Our team consists of four members: Manasi Danke, Carla Duarte, Amanda Ezeobiejes
 
 
 Username: ciduarte@wpi.edu
+
 Password: 1234
 
-
+<br></br>
 Username: mmdanke@wpi.edu
+
 Password: 1234
 
+<br></br>
 Username: ylin7@wpi.edu
+
 Password: 1234
 
-
+<br></br>
 Username: aezeobiejesi@wpi.edu
+
 Password: 1234
 
 8) If you have any additional questions, please do not hesitate to reach out to us.
@@ -137,6 +142,7 @@ In addition, we encountered a few difficulties when we first began to implement 
 <b>Manasi:</b> Created registration page, helped mock and create the meeting page, helped to implement nodemailer functionality, and wrote initial versions of the proposal and final readme.
 
 <b>Sylvia:</b> Created login page from scratch, custom styled CSS on top of the original Bootstrap template, helped create the room availability page, created the booking form from scratch.
+
 
 ### Future Improvements:
 
