@@ -55,55 +55,17 @@ const newAccount = function() {
     return false
   }
 
-/*
-const submitLogin = function() {
-
-  console.log("hello")
-
-  const username = document.querySelector( '#username' ).value,
-        password = document.querySelector( '#password' ).value,
-        json = { 
-           'username': username,
-           'password': password,
-         },
-        body = JSON.stringify( json )
-
-  clearForm()
-
-  if (username.length < 1 ) {
-    document.getElementById("message").innerHTML = "please enter a username";
-    return false;  
-  }
-  else if ( password.length < 1) {
-    document.getElementById("message").innerHTML =  "please enter a password";
-    return false;
-  }
-
-
-  fetch('/login', {
-    method:'POST',
-    body,
-    headers: {'Content-Type':'application/json'}
-  })
-  .then( function( response ) {
-    //console.log( response )
-    //console.log(response.status)
-    if (response.status != 200) {
-      return false;
-    }
-    else {
-      //window.location.href = "/login/profile"
-    }
-  }) 
-}
-*/
-
 window.onload = function() {
 
-    document.getElementById( "form" ).style.display = "none"
-    document.getElementById("newAccount").style.display = "none"
-    //document.getElementById("loginButton").style.display = "none"
+    var loginForm = document.getElementById("login")
+    loginForm.style.display = "none"
+    var newAccountForm = document.getElementById("createNewAccount")
+    newAccountForm.style.display = "none"
 
+    //document.getElementById( "form" ).style.display = "none"
+    //document.getElementById("newAccount").style.display = "none"
+    //document.getElementById("loginButton").style.display = "none"
+/*
     const showNewAccountForm = function() {
         document.getElementById( "form" ).style.display = "block"
         document.getElementById("showLoginButton").style.display = "block"
@@ -125,7 +87,26 @@ window.onload = function() {
       document.getElementById("showNewAccountButton").style.display = "block"
       document.getElementById("login").style.display = "block"
     }
+    */
 
+    var loginButton = document.getElementById("loginButton")
+    loginButton.onclick = function() {
+      loginForm.style.display = "block" // show login
+      newAccountForm.style.display = "none" // hide new account
+      loginButton.style.display = "none" // hide login button
+    }
+
+    var createAccountButton = document.getElementById("createAccountButton")
+    createAccountButton.onclick = function() {
+      newAccountForm.style.display = "block" // show new account
+      loginForm.style.display = "none" // hide login
+      createAccountButton.style.display = "none"
+      var submitNewAccountButton = document.getElementById("createNewAccountButton")
+      submitNewAccountButton.onclick = newAccount
+      
+    }
+
+    /*
     var createAccount = document.getElementById("newAccount")
     createAccount.style.display = "none"
     createAccount.onclick = newAccount
@@ -136,5 +117,6 @@ window.onload = function() {
 
     var loginButton  = document.getElementById("showLoginButton")
     loginButton.onclick = showLoginForm
+    */
 
 }

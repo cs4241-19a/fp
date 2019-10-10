@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "idCount": 6,
-=======
-  "idCount": 5,
->>>>>>> 48c15ff706f058493d5e9d86f5239f9910ea8a21
+  "idCount": 7,
   "users": [
     {
       "username": "jack",
@@ -34,16 +30,11 @@
       "games": []
     },
     {
-<<<<<<< HEAD
       "username": "ale4",
-=======
-      "username": "alej",
->>>>>>> 48c15ff706f058493d5e9d86f5239f9910ea8a21
       "password": "1234",
       "id": 5,
       "highscore": 0,
       "games": []
-<<<<<<< HEAD
     },
     {
       "username": "thtfh",
@@ -51,8 +42,13 @@
       "id": 6,
       "highscore": 0,
       "games": []
-=======
->>>>>>> 48c15ff706f058493d5e9d86f5239f9910ea8a21
+    },
+    {
+      "username": "lizzie",
+      "password": "hello",
+      "id": 7,
+      "highscore": 0,
+      "games": []
     }
   ]
 }
