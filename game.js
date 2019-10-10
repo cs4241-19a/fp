@@ -177,11 +177,14 @@ PS.keyDown = function(key, shift, ctrl, options) {
     if (variables.databaseIndex >= variables.databaseTracks.length) {
       variables.databaseIndex = 0;
     }
-    PS.debug("Track " + variables.databaseIndex + ": " +  
-      variables.databaseTracks[variables.databaseIndex].songname +
+    PS.debug(
+      "Track " +
+        variables.databaseIndex +
+        ": " +
+        variables.databaseTracks[variables.databaseIndex].songname +
         " by " +
-        variables.databaseTracks[variables.databaseIndex].username
-                           + "\n"
+        variables.databaseTracks[variables.databaseIndex].username +
+        "\n"
     );
   }
   if (key === PS.KEY_ARROW_LEFT) {
@@ -189,18 +192,20 @@ PS.keyDown = function(key, shift, ctrl, options) {
     if (variables.databaseIndex < 0) {
       variables.databaseIndex = variables.databaseTracks.length - 1;
     }
-    PS.debug("Track " + variables.databaseIndex + ": " +  
-      variables.databaseTracks[variables.databaseIndex].songname +
+    PS.debug(
+      "Track " +
+        variables.databaseIndex +
+        ": " +
+        variables.databaseTracks[variables.databaseIndex].songname +
         " by " +
-        variables.databaseTracks[variables.databaseIndex].username
-              + "\n"
+        variables.databaseTracks[variables.databaseIndex].username +
+        "\n"
     );
   }
-  
-  if(key === PS.KEY_ENTER){
-    variables.dataArray = [[], [], [], [], [], [], [], []]
-    PS.debug("All Tracks Cleared!\n"
-    );
+
+  if (key === PS.KEY_ENTER) {
+    variables.dataArray = [[], [], [], [], [], [], [], []];
+    PS.debug("All Tracks Cleared!\n");
   }
 
   // Uncomment the following code line to inspect first three parameters:
@@ -274,7 +279,7 @@ function recordData(data, timing) {
 }
 
 function playBackData(arrayPos) {
-  if (!variables.playingBack) {
+  if (!variables.playingBack && !dataArrayIsEmpty()) {
     variables.playingBack = true;
     variables.arrayLoc = arrayPos;
     variables.currentPlaybackTime = 0;
@@ -313,7 +318,9 @@ function playBackData(arrayPos) {
       }
     }
     variables.timeRemaining = variables.maxSeconds;
-    variables.playbackTimer = setInterval(playbackSound, 10);
+    
+      variables.playbackTimer = setInterval(playbackSound, 10);
+    
   }
 }
 
@@ -428,9 +435,6 @@ function playbackSound() {
 //PIANO FUNCTIONS
 
 function pianoSetup() {
-  /*for (var i = 0; i < 32; i++) {
-        PS.visible(i, 8, false);
-    }*/
   //PIANO
   for (var i = 0; i < 32; i++) {
     for (var j = 9; j < 17; j++) {
@@ -1332,10 +1336,11 @@ function playAudio(data) {
 
 //LOAD SONG
 function loadTrack() {
-  if(!variables.playingBack){
-  console.log("LOADING");
-  variables.dataArray = variables.databaseTracks[variables.databaseIndex].songdata
-  console.log(variables.dataArray)
+  if (!variables.playingBack) {
+    console.log("LOADING");
+    variables.dataArray =
+      variables.databaseTracks[variables.databaseIndex].songdata;
+    console.log(variables.dataArray);
   }
 }
 
@@ -1392,15 +1397,24 @@ function loadSongs() {
     });
 }
 
-function logOut(){
-  let result = window.confirm("Are you sure you wish to log out?")
-  if(result){
-    fetch('/logout', {
-      method:'GET',
-      headers: {'Content-Type': 'application/json'},
-    })
-      .then(function(res){
-      window.location = res.url
-    })
+function logOut() {
+  let result = window.confirm("Are you sure you wish to log out?");
+  if (result) {
+    fetch("/logout", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" }
+    }).then(function(res) {
+      window.location = res.url;
+    });
   }
+}
+
+function dataArrayIsEmpty() {
+  for (var i = 0; i < variables.dataArray.length; i++) {
+    if (variables.dataArray[i].length > 0) {
+      console.log("NOT EMPTY")
+      return false;
+    }
+  }
+  return true;
 }
