@@ -51,16 +51,94 @@ Any value returned is ignored.
 // UNCOMMENT the following code BLOCK to expose the PS.init() event handler:
 
 var player_x,
-	player_y;
-	timer = "";
+	player_y,
+	timer = "",
+	jump = false,
+	FRAME_COUNT = 0;
+	var jump_pos; 
+	has_UP = false;
+	has_DOWN = false;
+	player_alive = true;
+var up = 0;
+var down = 0;
+	
 
-const GRID_W = 9, GRID_H = 9;
+//Objects in Map
+var obj1 = {
+	name: "obj1",
+	color: PS.COLOR_PINK,
+	x_pos: 0, //GRID_W -1
+	y_pos: 0,	//GRID_Y
+	length: 1,
+	height: 1,
+}
+
+var obj2 = {
+	name: "obj2",
+	color: PS.COlOR_BLUE,
+	x_pos: 0, //GRID_W -1
+	y_pos: 0,	//GRID_Y
+	length: 2,
+	height: 1,
+}
+const GRID_W = 16, GRID_H = 8;
 
 var TIMER = {
 	global : 0,
 	tick : function() {
 		TIMER.global+=1;
-		//PS.debug("we ticking at " + TIMER.global);
+		if (jump) {
+			//PS.debug("hh\n");
+			if(TIMER.global % 30 === 0 && up != 2) {
+				moveHelper(1); // move up one pixel
+				//PS.debug("move up one\n");
+				up+=1;
+			}
+			else if(TIMER.global % 30 === 0 && up == 2 && down != 2){
+				moveHelper(2);
+				down+=1;
+				//PS.debug("move down one\n");
+				if (down == 2) {
+					jump = false;
+					up = 0;
+					down = 0;
+				}
+			}
+		}
+	},
+	up: function(){ //jump upwards
+		PS.debug( "I am in up function\n");
+		//make sure we have onyl jumped two pixels 
+		if( jump_pos < 2){
+			//PS.debug("jum_pos"+ jump_pos);
+			//make current spot white 
+			PS.color(player_x, player_y, PS.COLOR_WHITE);
+			//decrease y position 
+			player_y -= 1;
+			//color new square 
+			PS.color(player_x, player_y, PS.COLOR_BLACK);
+			//update jump position 
+			jump_pos++;
+			PS.debug("inside up: " + jump_pos + "\n");
+		} else {
+			//call down function
+			TIMER.down(jump_pos);
+		}
+		//return ;
+	},
+	down: function(down_pos){
+		PS.debug("I am in down funtion\n");
+		if(down_pos > -1){
+			//PS.debug("jum_pos"+ jump_pos);
+			//make current spot white 
+			PS.color(player_x, player_y, PS.COLOR_WHITE);
+			//increase y position 
+			player_y += 1;
+			//color new square 
+			PS.color(player_x, player_y, PS.COLOR_BLACK);
+			//update jump position 
+			down_pos--;
+		}
 	}
 }
 
@@ -88,15 +166,23 @@ PS.init = function( system, options ) {
 
 	PS.gridSize( GRID_W, GRID_H );
 	PS.border(PS.ALL,PS.ALL,0);
-	PS.gridColor(PS.COLOR_GRAY_DARK);
+	PS.gridColor(PS.COLOR_WHITE);
 
-	player_x = GRID_W/2;
+	player_x = GRID_W/4;
 	player_y = GRID_H - 3;
 
 	PS.color(player_x,player_y,PS.COLOR_BLACK);
 	timer = PS.timerStart(1, TIMER.tick);
-
-
+	
+	//wait a bit before the map starts moving 
+	/*TIMER.global = 0 
+	while(true){
+		if(TIMER.global % 400 == 0){
+			startMap();
+			break;
+		}
+	}
+	*/
 
 	// This is also a good place to display
 	// your game title or a welcome message
@@ -109,6 +195,57 @@ PS.init = function( system, options ) {
 	// Add any other initialization code you need here.
 };
 
+var startMap = function(){
+	var arr = [2];
+	var next;
+
+	while(player_alive){
+		next = PS.random(2) + 1; //random number between 1 - 3
+
+		if (next == 1){ //load object 1 
+			//print random number
+			PS.debug(next + '\n');
+			TIMER.global = 0;
+			//render object
+			obj1.x_pos = GRID_W -1; 
+			obj1.y_pos = GRID_H -3; 
+			PS.color(obj1.x_pos, obj1.y_pos, obj1.color);
+			//wait a couple of ticks 
+			while(true){
+				if(TIMER.global % 475 == 0){
+					break;
+				}
+			}
+		} else if(next == 2){
+			//print random number
+			PS.debug(next + '\n');
+			PS.debug("2\n");
+			// TIMER.global = 0;
+			// //render object
+			// obj2.x_pos = GRID_W -1; 
+			// obj2.y_pos = GRID_H -5; 
+			// PS.color(obj2.x_pos, obj2.y_pos, obj2.color);
+			// //wait a couple of ticks 
+			// while(true){
+			// 	if(TIMER.global % 475 == 0){
+			// 		break;
+			// 	}
+			// }
+		} else { //assuming it is 3 
+			//print random number
+			PS.debug(next + '\n');
+			player_alive = false; 
+		}
+ 	}
+	
+
+	// for(var i = 0; i < 4; i++){
+	// 	next = PS.random(3) + 1;
+	
+	// 	PS.debug(next + "\n");
+	// }
+
+}
 
 
 /*
@@ -252,8 +389,25 @@ This function doesn't have to do anything. Any value returned is ignored.
 
 // UNCOMMENT the following code BLOCK to expose the PS.keyDown() event handler:
 
-var movePlayer = function() {
-	PS.debug("hey we moving\n");
+//helper function for move player
+var moveHelper = function(direction){
+	//PS.debug("MoveHelper was called\n");
+	if(direction === 1){
+		//make current spot white 
+		PS.color(player_x, player_y, PS.COLOR_WHITE);
+		//decrease y position 
+		player_y -= 1;
+		//color new square 
+		 PS.color(player_x, player_y, PS.COLOR_BLACK);
+
+	} else if (direction === 2){
+		//make current spot white 
+		PS.color(player_x, player_y, PS.COLOR_WHITE);
+		//increase y position 
+		player_y += 1;
+		//color new square 
+	 	PS.color(player_x, player_y, PS.COLOR_BLACK);
+	}
 }
 
 
@@ -266,8 +420,7 @@ PS.keyDown = function( key, shift, ctrl, options ) {
 
 	switch (key) {
 		case 32:
-			PS.debug("heyyyyy\n");
-			movePlayer();
+			jump = true;
 			break;
 	}
 	// Add code here for when a key is pressed.
