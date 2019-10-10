@@ -94,6 +94,7 @@ const gamePlayState = new Phaser.Class({
 
         scene.pauseKey = scene.input.keyboard.addKey("P");
         scene.prevPauseDown = false;
+        scene.gameover = false;
 
     },
 
@@ -106,8 +107,17 @@ const gamePlayState = new Phaser.Class({
             scene.pause = !scene.pause;
             scene.prevPauseDown = false;
         }
-
-        if (scene.pause) return;
+        if (scene.pause || scene.gameover) return;
+        if (scene.lives <= 0) {
+            scene.gameover = true;
+            const scoreModel = $("#gameScoreFormModal");
+            attachHeading(`Score: ${scene.score.toFixed(0)}`);
+            scoreModel.on("hidden.bs.modal", () => scene.scene.start());
+            attachSubmit({score: scene.score}, () => {
+                scoreModel.modal("hide");
+            });
+            scoreModel.modal("show");  // user jQuery to show the modal
+        }
         // console.log(scene.enemies);
         if (scene.enemies.length === 0) {
             waveSpacingDur = this.spacingChoices[Math.floor(Math.random() * this.spacingChoices.length + (this.waveIdx / 5)) % this.spacingChoices.length];
