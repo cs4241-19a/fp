@@ -15,6 +15,7 @@ const passport   = require("passport")
 const Local      = require("passport-local").Strategy
 const pass       = require("pwd")
 const bodyParser = require("body-parser")
+const moment     = require("moment")
 const database   = require("./database.js")
 
 // Parse JSON bodies
@@ -160,7 +161,29 @@ app.post(
 		function(tasks)
 		{
 			tasks = tasks === undefined ? [] : tasks
-			console.log(tasks)
+			
+			tasks.forEach((task) =>
+			{
+				const now = new moment()
+				const dueDate = new moment(task.dateTime)
+				
+				const deltaTime = moment.duration(now.diff(dueDate))
+				console.log(deltaTime)
+				task.deltaTime = deltaTime
+			})
+			
+			tasks.sort(function(firstEl, secondEl)
+			{
+				return firstEl.deltaTime.asSeconds() - secondEl.deltaTime.asSeconds()
+			})
+			
+			// Remove field so that they aren't sent to the frontend - they aren't needed
+			tasks.forEach((task) =>
+			{
+				task.deltaTime = undefined
+			})
+			
+			console.log("tasks: ", tasks)
 			res.json(tasks)
 		})
 	}
