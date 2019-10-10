@@ -86,6 +86,9 @@ function updateChat() {
       }
     });
   });
+  makeEmptyBubble();
+  makeEmptyBubble();
+  makeEmptyBubble();
 }
 
 function sendMessage() {
@@ -123,15 +126,29 @@ function makeToTextBubble(str) {
   document.getElementById("board").appendChild(container);
 }
 
+function makeEmptyBubble() {
+ let container = document.createElement("div");
+  let bubble = document.createElement("div");
+  let pad = document.createElement("div");
+  container.style = "display:block; margin:5px; ";
+  pad.style = "width:35%";
+  bubble.innerHTML = "Empty";
+  bubble.style =
+    "background-color: transparent; color:transparent; width:40%; font-size:20px; font-weight:bold;border-radius:15px; float:left";
+  container.appendChild(bubble);
+  container.appendChild(pad);
+  document.getElementById("board").appendChild(container);
+}
+
 function makeFromTextBubble(str) {
   let container = document.createElement("div");
   let bubble = document.createElement("div");
   let pad = document.createElement("div");
-  container.style = "display:block; margin:5px;";
+  container.style = "display:block; margin:5px; ";
   pad.style = "width:35%";
   bubble.innerHTML = str;
   bubble.style =
-    "background-color: #6df299; width:40%; font-size:20px; font-weight:bold; border-radius:15px; float:left";
+    "background-color: #6df299; width:40%; font-size:20px; font-weight:bold;border-radius:15px; float:left";
   container.appendChild(bubble);
   container.appendChild(pad);
   document.getElementById("board").appendChild(container);
