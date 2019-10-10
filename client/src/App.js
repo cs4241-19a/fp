@@ -17,7 +17,6 @@ class App extends React.Component{
     }
   }
 
-  handleClick
   renderTaskCard(z_index){
     const task_index = z_index%4;
     return (
