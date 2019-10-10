@@ -1,3 +1,18 @@
+const fetchGameState = async function() {
+    const username = {
+        username: document.getElementById("current-username").value
+    };
+
+    const body = JSON.stringify(username);
+
+    const response = await fetch('/getGameState', {
+        method: 'POST',
+        body
+    });
+    const data = await response.json();
+    return data;
+};
+
 const updatePlayer = function(eHP, eSrc, etier) {
     const mhm = document.getElementById('scoreboard');
     let sc = parseInt(mhm.innerText);
@@ -206,9 +221,20 @@ const pixiInit = function (){
     const renderer = new PIXI.Renderer({});
 
     let enemySrc = "../img/bokoblin.png";
+
+    const state = fetchGameState();
+    if (!isEmpty(state)) {
+        baseDamage = state.PlayerObj.attack;
+        baseCrit = state.PlayerObj.crit;
+        enemySrc = state.EnemyObj.filepath;
+        enemyTier = state.EnemyObj.tier;
+    }
+
     const enemyTexture = PIXI.Texture.from(enemySrc);
     const enemy = new PIXI.Sprite(enemyTexture);
     const enemyHealth = document.getElementById('health');
+
+    if (!isEmpty(state)) enemyHealth.value = state.EnemyObj.health;
 
     enemy.x = (game.renderer.width * 5) / 6;
     enemy.y = game.renderer.height / 2;
@@ -348,3 +374,11 @@ const mainClick = function () {
         enemyHealth.value -= totalDamage;
     }
 };
+
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}

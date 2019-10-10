@@ -62,6 +62,23 @@ app.post("/update", function(req, res) {
     })
 });
 
+app.post("/getGameState", function(req, res) {
+    let dataString = '';
+    req.on( 'data', function( data ) {
+        dataString += data
+    });
+
+    req.on( 'end', function() {
+        const username = JSON.parse(dataString);
+        const user = db.get('users').find({ username: username.username}).value();
+        const gameState = JSON.stringify({ data: user.gameState });
+        const type = mime.getType(user.gameState);
+        res.writeHead( 200, {'Content-Type': type });
+        res.write(gameState);
+        res.end();
+    })
+});
+
 app.get("/leaderboard", function(req, res) {
     const state = db.getState();
     const str = JSON.stringify(state, null, 2);
