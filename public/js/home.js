@@ -1,5 +1,4 @@
 const MAXIMUM_ENTRIES_LOADED = 25
-const refreshBtn = document.getElementById("refresh-btn")
 const addRecBtn = document.getElementById("add-rec-btn")
 const list = document.getElementById("recommendation-list")
 const recText = document.getElementById("exampleFormControlTextarea2")
@@ -44,6 +43,16 @@ const addRecommendation = function () {
         document.getElementById("secretSongName").innerHTML = "-1"
         getRecommendations()
     })
+
+    document.getElementById("star5").checked = false;
+    document.getElementById("star4").checked = false;
+    document.getElementById("star3").checked = false;
+    document.getElementById("star2").checked = false;
+    document.getElementById("star1").checked = false;
+    document.getElementById("songName").value = "";
+    recText.setAttribute('placeholder',"Write a note about the song here");
+    recText.value = "";
+    $("#songsTbody").empty();
 }
 
 const getData = function () {
