@@ -99,7 +99,7 @@ class TaskCard extends React.Component {
 		this.updated.priority_text = this.props.data.priority_text;
 		this.updated.date = this.props.data.date;
 		return (
-			<div className={'card-z-'+this.props.data.z+" w-100 row justify-content-center align-items-center"}>
+			<div className={'card-z-'+this.props.data.z+" w-100 row justify-content-center align-items-center" + (this.props.data.hidden ? " hidden": "")}>
 			<Card bg={this.props.data.priority_text} text="secondary" style={{ width: '30rem' }}>
 						<Card.Header>
 						<Card.Title className = "text-center" controlId="title">{this.props.data.title}</Card.Title>
