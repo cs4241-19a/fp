@@ -1,3 +1,4 @@
+/*jshint esversion: 8 */
 const express = require('express'),
       app = express(),
       bodyparser = require('body-parser'),
@@ -39,7 +40,7 @@ client.connect()
 const localStrategy = function(username, password, done) {
   console.log('Authenticating user:', username);
   userCol.findOne({username: username}, function(err, user) {
-    if(err) {return done(err)};
+    if(err) {return done(err);}
     console.log('User from DB:', user);
     if(!user) {
       return done(null, false, {message: 'Username does not exist'});
@@ -51,7 +52,7 @@ const localStrategy = function(username, password, done) {
     }
     return done(null, user);
   });
-}
+};
 
 passport.serializeUser(function(user, done) {
   console.log('User serialized:', user.name);
@@ -83,7 +84,7 @@ app.use((req,res,next) => {
   }
   else{
     res.sendStatus(503);
-  };
+  }
 });
 
 
@@ -98,8 +99,8 @@ app.get('/messages', async function(req, res){
     await msgCol.find({ }).toArray().then(result =>
       res.json(result)
       );
-  };
-})
+  }
+});
 app.get('/login', function(req, res) {
   res.sendFile(__dirname + '/public/views/login.html');
 });
@@ -120,7 +121,7 @@ app.get('/admin', async function(req, res) {
   }else{
     console.log("NotAuthed");
   res.redirect('/');
-  };
+  }
 });
 
 app.get('/users', async function(req,res){
@@ -128,7 +129,7 @@ app.get('/users', async function(req,res){
     await userCol.find({ }).toArray().then(result =>
       res.json(result)
       );
-  };
+  }
 });
 
 app.get('/register', function(req, res){
@@ -139,9 +140,9 @@ app.get('/register', function(req, res){
 app.get('/userData', function(req, res) {
   console.log('Looking for user:', req.session.passport.user);
   userCol.findOne({uuid: req.session.passport.user}, function(err, result) {
-    if(err) {res.sendStatus(503)}
+    if(err) {res.sendStatus(503);}
     else {
-      console.log(result)
+      console.log(result);
       res.json(result);
     }
   });
@@ -159,12 +160,12 @@ app.post('/login',
     (req, res, next) => {
   passport.authenticate('local', {failureFlash: true},
    (err, user, info) => {
-     if(err) {return next(err);};
-     if(!user) {return res.redirect('/login');};   
+     if(err) {return next(err);}
+     if(!user) {return res.redirect('/login');}   
     req.login(user, (err) => {
-      if(err) {return next(err);};
+      if(err) {return next(err);}
       return res.redirect('/user');
-    })
+    });
   })(req, res, next);
   
   });
@@ -176,7 +177,7 @@ app.post('/signoff', async function(req, res) {
     jobFound.status.complete = true;
     jobFound.status.signoff = req.session.passport.user;
 
-    jobCol.updateOne({jobCode:job.jobCode}, {$set: {status: jobFound.status}})
+    jobCol.updateOne({jobCode:job.jobCode}, {$set: {status: jobFound.status}});
   });
   res.sendStatus(200);
 });
@@ -188,8 +189,8 @@ app.post('/messages', function(req, res){
     
     message.from = userFound.name;
     msgCol.insertOne(message);
-  })
-})
+  });
+});
 app.post('/register', function(req, res){
   const per = req.body;
   per.level = "standard";
@@ -199,8 +200,8 @@ app.post('/register', function(req, res){
   per.preferred = [];
 
   userCol.findOne({uuid: per.uuid}, function(err, perFound){
-    if(err){return console.log(err)};
-    if(!perFound){userCol.insertOne(per)}
+    if(err){return console.log(err);}
+    if(!perFound){userCol.insertOne(per);}
     res.sendFile(__dirname + '/public/views/register.html');
   });
 });
@@ -225,7 +226,7 @@ app.post('/modify', function(req, res){
         day = "thur";
         break;
       default:
-        day = "Nope"
+        day = "Nope";
         break;
     }
      
@@ -236,14 +237,14 @@ app.post('/modify', function(req, res){
     }
     
     jobCol.findOne({jobCode: job.jobCode}, function(err, jobFound){
-      if(err){return console.log(err)};
-      if(!jobFound){jobCol.insertOne(job)}
+      if(err){return console.log(err);}
+      if(!jobFound){jobCol.insertOne(job);}
       else {
         jobCol.updateOne({jobCode: job.jobCode}, 
           {$set: {name: job.name,
             date: job.date,
             point: job.point,
-            status: job.status}})
+            status: job.status}});
       }
       res.sendFile(__dirname + '/public/views/admin.html');
     });
@@ -255,10 +256,10 @@ app.post('/modifyAll', function(req, res){
   jobs.forEach(function(job){
     jobCol.findOne({jobCode: job.jobCode}, function(err, jobFound){
       jobCol.updateOne({jobCode: job.jobCode},
-        {$set: {name: job.name}})
-    })
-  })
-})
+        {$set: {name: job.name}});
+    });
+  });
+});
 
 // Manual override for updating jobs
 app.post('/forceUpdate', function(req, res) {
@@ -268,7 +269,7 @@ app.post('/forceUpdate', function(req, res) {
 
 app.post('/resetjobs', function(req,res){
   userCol.updateMany({},{$set: {jobs:[]}});
-})
+});
 
 
 
@@ -284,8 +285,8 @@ var update = async function() {
     jobs.forEach(job => {
       // Calculate job point value base on status
       let pointVal = job.point;
-      if(!job.status.complete) {pointVal = -pointVal}
-      else {if(job.status.late) {pointVal /= 2}};
+      if(!job.status.complete) {pointVal = -pointVal;}
+      else {if(job.status.late) {pointVal /= 2;}}
       job.point = pointVal;
       // Adding job to user
       userCol.updateOne({name: job.name},
@@ -295,7 +296,7 @@ var update = async function() {
 
   let today = new Date();
   // Number of ms in a day
-  let day = 1000 * 60 * 60 * 24
+  let day = 1000 * 60 * 60 * 24;
 
   // Discard old jobs (more than 8 weeks ago)
   userCol.updateMany({}, {$pull: {jobs: {date: {$lt: today - (day * 42)}}}});
@@ -325,7 +326,7 @@ var update = async function() {
           {$set: {point: points}});
       }
       else {userCol.updateOne({name: user.name},
-        {$set: {point: 0}})};
+        {$set: {point: 0}});}
     });
 
     // Sort users by point value (default to uuid if points are identical)
@@ -346,7 +347,7 @@ var update = async function() {
       let rand = Math.round(Math.random() * 24);
       while(assigned.includes(rand)) {
         rand = Math.round(Math.random() * 24);
-      };
+      }
       assigned.push(rand);
       console.log('Selected User:', userList[rand].name, '  For Job:', job.jobCode, ' (Random Index):', rand);
       // Assigns job to random user
@@ -357,8 +358,8 @@ var update = async function() {
 };
 
 // Scheduled functions to mark jobs late
-var markLateTues = schedule.scheduleJob({hour: 9, minute: 0, dayOfWeek: 3}, async function() {if(active)markLate('tues')});
-var markLateThur = schedule.scheduleJob({hour: 9, minute: 0, dayOfWeek: 5}, async function() {if(active)markLate('thur')});
+var markLateTues = schedule.scheduleJob({hour: 9, minute: 0, dayOfWeek: 3}, async function() {if(active)markLate('tues');});
+var markLateThur = schedule.scheduleJob({hour: 9, minute: 0, dayOfWeek: 5}, async function() {if(active)markLate('thur');});
 
 // Marks all incomplete jobs as late for given day
 var markLate = async function(day) {
@@ -366,7 +367,7 @@ var markLate = async function(day) {
     jobs.forEach(job => {
       if(!job.status.complete) {
         jobCol.updateOne({jobCode: job.jobCode},
-          {$set: {status: {late: true}}})}
+          {$set: {status: {late: true}}});}
     });
   });
 };

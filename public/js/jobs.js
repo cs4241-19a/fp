@@ -1,9 +1,10 @@
+/*jshint esversion: 8 */
 var parseJobCode = function(jobCode) {
   let name = '', day = '';
 
   day = jobCode.substring(0, 4);
-  if(day === 'tues') {day = 'Tuesday'}
-  else {if(day === 'thur') {day = 'Thursday'}};
+  if(day === 'tues') {day = 'Tuesday';}
+  else {if(day === 'thur') {day = 'Thursday';}}
 
   switch(jobCode.substring(4)) {
     case 'knob':
@@ -28,13 +29,13 @@ var parseJobCode = function(jobCode) {
       name = 'Library';
       break;
     case 'stair':
-      name = 'Stairs'
+      name = 'Stairs';
       break;
     case 'tv':
       name = 'TV Room';
       break;
     case 'hall':
-      name = '2nd + 3rd Floor Halls'
+      name = '2nd + 3rd Floor Halls';
       break;
     case 'base':
       name = 'Basement';
@@ -45,14 +46,14 @@ var parseJobCode = function(jobCode) {
   }
 
   return {name: name, day: day};
-}
+};
 
 var parseStatus = function(job) {
   let msg = '';
-  if(job.status.complete) {msg= 'Signed Off'}
-  else {msg = 'Incomplete'};
-  if(job.status.late) {msg += '(Late)'};
+  if(job.status.complete) {msg= 'Signed Off';}
+  else {msg = 'Incomplete';}
+  if(job.status.late) {msg += '(Late)';}
   return msg;
-}
+};
 
 export {parseJobCode, parseStatus};

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script type="module" src="js/table.js" type="text/javascript"></script>
-    <script src="js/admin.js" type="text/javascript"></script>
+    <script type="module" src="js/table.js"></script>
+    <script src="js/admin.js"></script>
     <title>House Job Readout</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -34,7 +34,7 @@
       <div id="row" class="row">
         <table id="tuesReadout" class="col-sm">
           <tr>
-            <th id="tuesday" colspan="1">Tuesday</th>
+            <th id="tuesday" colspan="2" class="text-center">Tuesday</th>
           </tr>
           <tr id="tuesknob">
             <td>Knobs + Rags</td>
@@ -87,7 +87,7 @@
         </table>
         <table id="thurReadout" class="col-sm">
           <tr>
-            <th id="thursday" colspan="1">Thursday</th>
+            <th id="thursday" colspan="2" class="text-center">Thursday</th>
           </tr>
           <tr id="thurknob">
             <td>Knobs + Rags</td>
@@ -142,11 +142,11 @@
     </figure>
     <h3 class="edit" onclick="showHide()">Edit current jobs via below form</h3>
     <section  id="editForm" class="container">
-      <form class="text-center" autocomplete="off" id="adminForm" action="/modify" method="POST" display="">
+      <form class="text-center" autocomplete="off" id="adminForm" action="/modify" method="POST">
         <div class="autocomplete" style="width:300px;">
         Name:<input type="text" name="name" id="name" placeholder="Type Name" required>
           </div>
-        Job:<select name="jobCode" id="jobCode" required>
+        Job:<select name="jobCode" id="jobCode">
           <option value="knob">Knobs + Rags</option>
           <option value="3br">3rd Floor Bathroom</option>
           <option value="2brVan">2nd Floor Br, Toilet/Vanity</option>
@@ -174,14 +174,13 @@
         <button type="button" onclick="resetJobs()">Reset User Jobs</button>
       </section>
     </section>
-    <table class="table table-bordered text-center" id="messages" border="1" style="margin-left:25%; width:50%">
+    <table class="table table-bordered text-center" id="messages" style="margin-left:25%; width:50%">
       <!--<caption>Messages</caption>-->
       <tr>
           <th>From</th>
           <th>Message</th>
           <th>Tools</th>
       </tr>
-      <tr></tr>
   </table>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

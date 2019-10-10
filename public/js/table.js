@@ -1,3 +1,4 @@
+/*jshint esversion: 8 */
 import * as constants from './standards.js';
 
 window.onload = function(){
@@ -12,12 +13,12 @@ window.onload = function(){
 
   applyDates();
   fillBoard();
-}
+};
 
 const fillMessages = async function(){
 
   const table = document.getElementById("messages");
-  const response = await fetch('/messages')
+  const response = await fetch('/messages');
   const messages = await response.json();
 
   messages.forEach(function(msg){
@@ -28,8 +29,8 @@ const fillMessages = async function(){
 
     tCell1.innerHTML = msg.from;
     tCell2.innerHTML = msg.message;
-  })
-}
+  });
+};
 
 const addSignOff = function(){
   var table = document.getElementById("row").getElementsByTagName("TR");
@@ -51,60 +52,58 @@ const addSignOff = function(){
           if(res.status === 200){
             console.log('Job Signed Off:', jobToSign.jobCode);
           }
-        })
         });
+      });
       modifyBtn.style = "width:100%";
       buttonCell.append(modifyBtn);
     }
   }
-}
+};
 
 const applyDates = function(){
-
   let date = new Date();
   var diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1); 
   let day = new Date(date.setDate(diff)); //Finds monday of the current week
   document.getElementById("tuesday").innerHTML += (" " + (day.getMonth()+1) + "/" + (day.getDate()+1) + "/" + day.getFullYear());
   document.getElementById("thursday").innerHTML += (" " + (day.getMonth()+1) + "/" + (day.getDate()+3) + "/" + day.getFullYear());
-
-}
+};
 
 const setStandards = function(){
   var table = document.getElementById("row").getElementsByTagName("TR");
   for (let job of table) {
     
-    let jobCode = job.id.substring(4)
+    let jobCode = job.id.substring(4);
     
     if(jobCode !== ""){
-      if(jobCode === '3br' || jobCode === '2brVan' || jobCode === '2brFloor' 
-      || jobCode === "1br"){
+      if(jobCode === '3br' || jobCode === '2brVan' || jobCode === '2brFloor' || jobCode === "1br"){
         job.cells[0].addEventListener("click", function() {
-          changeStandardText("_br")});
+          changeStandardText("_br");});
       } else {
       job.cells[0].addEventListener("click", function() {
-        changeStandardText("_"+jobCode)});
+        changeStandardText("_"+jobCode);});
       }
     }
   }
-}
+};
 
 const changeStandardText = function(job){
     document.getElementById("standards").innerHTML = constants[job];
-}
+};
+
 const doAutoFill = async function(){
   const names = [];
   try{
       const response = await fetch('/users');
       let data = await response.json();
-      data.forEach(function(result){ names.push(result.name); })
+      data.forEach(function(result){ names.push(result.name);});
   } 
   catch(error){
        console.log(error);
   }
 
   autocomplete(document.getElementById("name"), names);
+};
 
-}
 const fillBoard = async function(){
     try{ 
         const jobR = await fetch('/jobList');
@@ -116,7 +115,7 @@ const fillBoard = async function(){
     catch(error){
          console.log(error);
     }
-}
+};
 
 
 // Chunk taken from W3 Schools

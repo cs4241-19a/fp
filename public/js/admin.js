@@ -1,3 +1,4 @@
+/*jshint esversion: 8 */
 const modifyForm = function( e ) {
     // prevent default form action from being carried out
     e.preventDefault();
@@ -10,7 +11,7 @@ const modifyForm = function( e ) {
     var mod =  document.getElementById(job).innerHTML;
     
     
-}
+};
 
 async function submitAllMods(){
     const newJobs = [];
@@ -19,14 +20,14 @@ async function submitAllMods(){
     try{
         const response = await fetch('/users');
         let data = await response.json();
-        data.forEach(function(result){ names.push(result.name); })
+        data.forEach(function(result){ names.push(result.name); });
     }
-    catch(error){console.log(error)};
+    catch(error){console.log(error);}
     var table = document.getElementById("row").getElementsByTagName("TR");
     for (let job of table) {
         if(job.id !== ""){
             if(job.cells[1].innerHTML !== "<br>"){
-                let name = job.cells[1].textContent
+                let name = job.cells[1].textContent;
                 
                 if(names.includes(name)){
                     newJobs.push({jobCode:job.id, name:name} );
@@ -41,7 +42,7 @@ async function submitAllMods(){
         method:'POST',
         body: JSON.stringify(newJobs),
         headers: {'Content-Type': 'application/json'}
-    })
+    });
 }
 
 //async function forceUpdate() {

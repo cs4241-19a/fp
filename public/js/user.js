@@ -1,4 +1,5 @@
-import {parseJobCode, parseStatus} from './jobs.js'
+/*jshint esversion: 8 */
+import {parseJobCode, parseStatus} from './jobs.js';
 
 window.onload = function() {
   const nameSlot = document.getElementById('name');
@@ -56,11 +57,11 @@ window.onload = function() {
         daySlot.innerHTML += parsedCode.day;
         statusSlot.innerHTML += parseStatus(job);
       }
-    })
+    });
     if(!hasJob) {
       jobSlot.innerHTML += 'None';
       daySlot.innerHTML += 'Not This Week';
       statusSlot.innerHTML += 'N/A';
-    };
+    }
   });
 };
