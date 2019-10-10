@@ -1,0 +1,85 @@
+<%- include ../common/header.ejs %>
+<%- include ../common/navigation.ejs %>
+<div class="container top-margin">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="/forum//backend/post/list.html" class="list-group-item active">List</a>
+                <a href="/forum//backend/post/publish.html" class="list-group-item">Publish</a>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="panel panel-primary">
+                <% if(postInfo) { %>
+                <div class="panel-heading text-left">
+                    <%= postInfo.title %>
+                </div>
+                <div class="panel-body" id="post-update-panel">
+                    <form class="form-horizontal" id="postUpdatedForm">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="text" required class="form-control" name="title" placeholder="post title"
+                                    value="<%= postInfo.title %>" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12" id="content">
+                                <input type="hidden" name="id" value="<%= postInfo._id%>" />
+                                <input type="hidden" value="<%= postInfo.content %>" id="hiddenContent" />
+                                <script type="text/plain" name="content" id="editor"
+                                    style="width:100%;height:400px;"></script>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 text-left">
+                                <a  href="/forum//backend/post/list.html" class="btn btn-warning">Back</a>
+                                <span id="update-post-btn" class="btn btn-primary">modify</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <% } else { %>
+                    <div class="alert alert-warning">
+                        No query result
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include ../common/commonjs.ejs %>
+<!-- <script src="/javascripts/post.js"></script> -->
+<script>
+    var editor = UE.getEditor('editor');
+    editor.ready(function () {
+        editor.setContent($('#hiddenContent').val());
+    });
+    $(function() {
+        $('#update-post-btn').on('click', function(){
+            let __postInfo = $('#postUpdatedForm').serialize();
+            $.ajax({
+                type: 'POST',
+                url: '/forum//backend/post/update.json',
+                data: __postInfo,
+                success: function(res) {
+                    let __html = '';
+                    console.log('res: ', res);
+                    if (res.code == 200) {
+                        __html += '<h2 class="text-success"><span class="glyphicon glyphicon-ok"></span>';
+                        __html += ' ' + res.msg;
+                        __html += '</h2>';
+                    } else {
+                        __html += '<h2 class="text-danger"><span class="glyphicon glyphicon-remove"></span>';
+                        __html += ' ' + res.msg;
+                        __html += '</h2>';
+                    }
+                    $('#post-update-panel').html(__html);
+                },
+                error: function(err) {
+                    console.log(err.status);
+                }
+            });
+        });
+    });
+</script>
+<%- include ../common/footer.ejs %>

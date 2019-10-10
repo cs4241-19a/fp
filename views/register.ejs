@@ -1,0 +1,23 @@
+<%- include common/header.ejs %>
+<%- include common/navigation.ejs %>
+<div class="top-margin container" id='register-panel'>
+    <div class="panel panel-info">
+        <div class="panel-heading">User sign up!</div>
+        <div class="panel-body text-center">
+            <form class="form-inline">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="email" class="form-control" id="email" placeholder="Please input your email!">
+                        <div class="input-group-addon" id="register" style="cursor: pointer;background-color:#337ab7; color:white;">
+                            <span class="glyphicon glyphicon-hand-right"></span>
+                        </div>
+                    </div>
+                    <span class="text-danger" id="error-tip"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/javascripts/jquery-1.12.4.min.js"></script>
+<script src="/javascripts/register.js"></script>
+<%- include common/footer.ejs %>

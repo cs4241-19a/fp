@@ -1,0 +1,70 @@
+<%- include ../common/header.ejs %>
+<%- include ../common/navigation.ejs %>
+<div class="container top-margin">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="/forum//backend/user/settings.html" class="list-group-item active">Information</a>
+                <a href="/forum//backend/user/password.html" class="list-group-item">Password</a>
+                <a href="/forum//backend/user/avatar.html" class="list-group-item">Avatar</a>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="panel panel-primary">
+                <div class="panel-heading text-left">
+                    <%= username %> personal information
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-offset-1 col-md-2">
+                            <img src="<%= userInfo.photo %>" class="img-responsive" width="140" height="140" />
+                            <p class="text-danger"><%= tips %></p>
+                        </div>
+                        <div class="col-md-9">
+                            <form class="form-horizontal" action="/forum//backend/user/username/modify.html" method="POST">
+                                <div class="form-group">
+                                    <label for="Username" class="col-sm-3 control-label">Username</label>
+                                    <div class="col-sm-9" >
+                                        <input type="text" style="border:1px solid #efefef;" class="form-control" value="<%= userInfo.username%>" name="username" />
+                                        <input type="hidden" name="_id" value="<%= userInfo._id %>" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-3 control-label">Email</label>
+                                    <div class="col-sm-9">
+                                        <input type="email" disabled class="form-control" id="email"
+                                            placeholder="<%= userInfo.email %>"/>
+                                        <!-- <p class="form-control-static"><%= userInfo.email %></p> -->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Status</label>
+                                    <div class="col-sm-9">
+                                        <% if(userInfo.isActivated) {%>
+                                            <input type="text" disabled class="form-control" value="Activated" />
+                                        <% } else { %>
+                                            <input type="text" disabled class="form-control" value="Deactivated" />
+                                        <% } %>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="createdDate" class="col-sm-3 control-label">Created date</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" disabled class="form-control" value="<%= userInfo.createdDate %>" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-10">
+                                        <button type="submit" class="btn btn-primary">Modify</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include ../common/commonjs.ejs %>
+<%- include ../common/footer.ejs %>

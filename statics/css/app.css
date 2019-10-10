@@ -1,0 +1,222 @@
+body {
+  background-color: white;
+  color: #666666;
+  font-family: "Open sans", Sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+#contentWrapper {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+  top: 50px;
+}
+
+#contentLeft {
+  z-index: 10;
+  width: 250px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #283c51;
+}
+
+
+
+#leftNavigation {
+  margin: 2rem 0;
+  display: block;
+  position: relative;
+  top: 50px;
+}
+#leftNavigation, #leftNavigation li ul {
+  list-style: none;
+  padding: 0;
+}
+#leftNavigation li a {
+  font-size: 0.875rem;
+  display: block;
+  padding: 0.8rem 1rem 0.8rem 3rem;
+  color: #adadad;
+  border-bottom: solid 1px #395673;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: relative;
+  -webkit-transition: color 0.2s ease;
+  transition: color 0.2s ease;
+}
+#leftNavigation li a, #leftNavigation li a .leftNavIcon {
+  line-height: 120%;
+}
+#leftNavigation li a .leftNavIcon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3rem;
+  padding: 0.8rem 0;
+  text-align: center;
+}
+#leftNavigation li a:hover {
+  color: white;
+}
+#leftNavigation li ul {
+  display: none;
+  margin: 0;
+  background-color: #17232f;
+}
+#leftNavigation li ul li a {
+  border-bottom: solid 1px #233547;
+}
+#leftNavigation li ul li:last-child a {
+  border-bottom: none;
+}
+#leftNavigation li ul li.active a {
+  color: white;
+}
+#leftNavigation li.active > a {
+  color: white;
+}
+#leftNavigation li.active ul {
+  display: block;
+}
+#leftNavigation > li.active {
+  background-color: #427c97;
+}
+
+
+#manchester {
+  padding: 1.3rem 2rem;
+  margin-left: 250px;
+   background-color: #f0f0f0;
+   display: block;
+   position: relative;
+   top: 50px;
+}
+
+#realmadrid {
+  padding: 1.3rem 2rem;
+  margin-left: 250px;
+  display: block;
+  position: relative;
+  top: 50px;
+}
+#fcbarcelona{
+  padding: 1.3rem 2rem;
+  margin-left: 250px;
+  background-color: #f0f0f0;
+  display: block;
+  position: relative;
+  top: 50px;
+
+}
+#fcbm{
+  padding: 1.3rem 2rem;
+  margin-left: 250px;
+  display: block;
+  position: relative;
+  top: 50px;
+
+}
+
+#psg{
+  padding: 1.3rem 2rem;
+  margin-left: 250px;
+  background-color: #f0f0f0;
+  display: block;
+  position: relative;
+  top: 50px;
+}
+#j{
+  padding: 1.3rem 2rem;
+  margin-left: 250px;
+  display: block;
+  position: relative;
+  top: 50px;
+
+}
+#c{
+  padding: 1.3rem 2rem;
+  margin-left: 250px;
+  background-color: #f0f0f0;
+  display: block;
+  position: relative;
+  top: 50px;
+}
+#l{
+  padding: 1.3rem 2rem;
+  margin-left: 250px;
+  display: block;
+  position: relative;
+  top: 50px;
+
+}
+
+@import url(http://fonts.useso.com/css?family=Raleway:200,500,700,800);
+@font-face {
+  font-family: 'icomoon';
+  src:url('../fonts/icomoon.eot?rretjt');
+  src:url('../fonts/icomoon.eot?#iefixrretjt') format('embedded-opentype'),
+    url('../fonts/icomoon.woff?rretjt') format('woff'),
+    url('../fonts/icomoon.ttf?rretjt') format('truetype'),
+    url('../fonts/icomoon.svg?rretjt#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body, html { font-size: 100%;   padding: 0; margin: 0;}
+
+/* Reset */
+*,
+*:after,
+*:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* Clearfix hack by Nicolas Gallagher: http://nicolasgallagher.com/micro-clearfix-hack/ */
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+body{
+  background: #f9f7f6;
+  color: #404d5b;
+  font-weight: 500;
+  font-size: 1.05em;
+  font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", "FontAwesome", sans-serif;
+}
+a{color: #2fa0ec;text-decoration: none;outline: none;}
+a:hover,a:focus{color:#74777b;}
+
