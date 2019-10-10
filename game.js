@@ -781,7 +781,6 @@ function playbackSound() {
         if (variables.currentPlaybackIndex < variables.dataArray[variables.arrayLoc].length) {
             if (variables.dataArray[variables.arrayLoc][variables.currentPlaybackIndex].timeVal === variables.currentPlaybackTime) {
                 playAudio(variables.dataArray[variables.arrayLoc][variables.currentPlaybackIndex].noteVal)
-                //PS.audioPlay(PS.piano(variables.dataArray[variables.arrayLoc][variables.currentPlaybackIndex].noteVal, false));
                 variables.currentPlaybackIndex++;
             }
             variables.currentPlaybackTime += 10;
@@ -804,7 +803,6 @@ function playbackSound() {
                     variables.playbackIndicies[i]++;
                 }
                 if (variables.playbackIndicies[i] === variables.maxLength) {
-                    //END PLAYBACK
                     variables.playingBack = false;
                     variables.currentPlaybackTime = 0;
                     PS.statusText("FINISHED PLAYBACK");
@@ -820,7 +818,6 @@ function playbackSound() {
             if (variables.playbackIndicies[i] < variables.playbackLength[i]) {
                 if (variables.dataArray[i][variables.playbackIndicies[i]].timeVal === variables.currentPlaybackTime) {
                     playAudio(variables.dataArray[i][variables.currentPlaybackIndex].noteVal)
-                    //PS.audioPlay(PS.piano(variables.dataArray[i][variables.playbackIndicies[i]].noteVal, false));
                     variables.playbackIndicies[i]++;
                 }
                 if (variables.playbackIndicies[i] === variables.maxLength) {
@@ -841,7 +838,6 @@ function playbackSound() {
                 if (variables.dataArray[i][variables.playbackIndicies[i]].timeVal === variables.currentPlaybackTime) {
                   console.log(variables.dataArray[i][variables.currentPlaybackIndex].noteVal)  
                   playAudio(variables.dataArray[i][variables.currentPlaybackIndex].noteVal)
-                    //PS.audioPlay(PS.piano(variables.dataArray[i][variables.playbackIndicies[i]].noteVal, false));
                     variables.playbackIndicies[i]++;
                 }
                 if (variables.playbackIndicies[i] === variables.maxLength) {
@@ -1794,8 +1790,23 @@ function saveTrack() {
     var trackName = "NONE";
     PS.statusInput("Track name:", function (text) {
         trackName = text
-        console.log("SAVING TRACK: " + trackName);
-        console.log(variables.dataArray);
-        //WRITE TO DB HERE
+        let body = {
+          songname: trackName,
+          songData: variables.dataArray
+        }
+        let json = JSON.stringify(body);
+    fetch("/addSong", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: json
+    }).then(function(res) {
+      console.log(res);
+      if (res.status === 200) {
+        window.alert("Successfully added to database");
+      } else {
+        window.alert("User already exists!\nNot added to database!");
+      }
+    });
+
     })
 }
