@@ -90,8 +90,13 @@ img {
 }
 
 #current-track {
-    width: 80px;
     height: auto;
+    width: 20%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
 }
 
 .hidden-data {

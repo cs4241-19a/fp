@@ -47,7 +47,6 @@ function createPlayerForSong(track) {
                         $('#current-track-name').text(state.track_window.current_track.name)
                         //edit this to incclude the whole atrists array?
                         $('#current-track-artist').text(state.track_window.current_track.artists[0].name)
-                        $("#current-track").roundImage()
                     }
 
                 })
@@ -88,7 +87,7 @@ function turningRecord(turn) {
         interval = setInterval(function () {
             console.log("interval")
             counter -= 1
-            $("svg").css({
+            $("#current-track").css({
                 MozTransform: 'rotate(-' + -counter + 'deg)',
                 WebkitTransform: 'rotate(' + -counter + 'deg)',
                 transform: 'rotate(' + -counter + 'deg)'
