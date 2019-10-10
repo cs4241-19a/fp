@@ -1,4 +1,4 @@
-window.onLoad = function(){
+window.onload = function(){
   fetch("api/users/getUsers", {
     headers: {
       "Content-Type": "application/json"
@@ -6,11 +6,15 @@ window.onLoad = function(){
     method: "POST",
   }).then(function(res) {
     res.json().then(function(ret) {
-      alert(ret)
      for(let i = 0; i < ret.length; i++){
        let l = document.createElement("li");
+       let a = document.createElement("a");
+       a.href = "#"
+       a.class = "pure-menu-link"
        l.class = "pure-menu-item";
        l.innerHTML = ret[i].username;
+       l.style = "padding: auto;"
+       l.appendChild(a);
        document.getElementById("people").appendChild(l)
      }
     });
