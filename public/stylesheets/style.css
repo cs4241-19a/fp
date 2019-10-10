@@ -219,6 +219,11 @@ li.navbar a:hover {
   color: white;
 }
 
+li:hover {
+  background-color: #D00000;
+  color: white;
+}
+
 div.login{
    display: flex;
    flex-direction: column;
