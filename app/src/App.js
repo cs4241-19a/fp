@@ -88,7 +88,7 @@ class App extends React.Component {
         )}
         <Game selectedRole={this.state.selectedRole}/>
         <div className="test1">
-          <button className="Reset">RESET</button>
+          <button className="Reset" onClick={resetAll}>RESET</button>
         </div>
       </div>
     );
@@ -608,6 +608,14 @@ function getBoardState() {
   }
   return cards;
 }
+
+function resetAll(){
+    socket.emit("resetAll");
+}
+
+socket.on("reset", ()=>{
+   window.location.reload();
+});
 
 socket.on("update hints", function(msg) {
   let final_message = document.createElement("p");

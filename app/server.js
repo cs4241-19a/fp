@@ -47,6 +47,22 @@ let roleState = {
 let currentTurn = null;
 let guessesRemaining = 0;
 
+function resetVars(){
+  clientList = [];
+  boardState = [];
+  hints = [];
+  roleState = {
+    bspymaster: "",
+    rspymaster: "",
+    bdetective: "",
+    rdetective: "",
+  };
+
+  currentTurn = null;
+  guessesRemaining = 0;
+  io.sockets.emit("reset");
+}
+
 function turnAfter(role) {
   switch (role) {
     case "bdetective":
@@ -263,6 +279,8 @@ io.on("connection", function(socket) {
   });
 
   socket.on("nextTurn", nextTurn);
+
+  socket.on("resetAll", resetVars);
 
 });
 
