@@ -14,9 +14,25 @@ export default function FeedItem(props) {
     async function handleClick() {
         console.log('paper has been clicked');
 
-        //get song and play it for the vis
+        //TODO pull song
 
+        console.log("yoooooooo")
+        const canvas = getCanvas()
 
+        const jsonAudioInit = audioInit(canvas)
+        const jsonAudioGraph = audioGraph(canvas, jsonAudioInit)
+
+        jsonAudioInit.audioElement.src = 'mello.mp3'
+        jsonAudioInit.audioElement.controls = true;
+        jsonAudioInit.audioElement.play()
+
+        const results = new Uint8Array(jsonAudioGraph.analyser.frequencyBinCount)
+
+        const draw = function () {
+            window.requestAnimationFrame(draw)
+            visualizer(canvas, jsonAudioInit, jsonAudioGraph, results, currColor, changeParam.barHeight, changeParam.barWidth, changeParam.barFit, changeParam.canvasClr)
+        }
+        draw()
     }
 
     const gui = new dat.GUI()
@@ -37,26 +53,6 @@ export default function FeedItem(props) {
         this.barFit = 2
         this.canvasClr = '#000000'
     }()
-
-    const startMello = function () {
-        console.log("yoooooooo")
-        const canvas = getCanvas()
-
-        const jsonAudioInit = audioInit(canvas)
-        const jsonAudioGraph = audioGraph(canvas, jsonAudioInit)
-
-        jsonAudioInit.audioElement.src = 'mello.mp3'
-        jsonAudioInit.audioElement.controls = true;
-        jsonAudioInit.audioElement.play()
-
-        const results = new Uint8Array(jsonAudioGraph.analyser.frequencyBinCount)
-
-        const draw = function () {
-            window.requestAnimationFrame(draw)
-            visualizer(canvas, jsonAudioInit, jsonAudioGraph, results, currColor, changeParam.barHeight, changeParam.barWidth, changeParam.barFit, changeParam.canvasClr)
-        }
-        draw()
-    }
 
     window.localStorage;
     window.onload = function () {
@@ -85,8 +81,8 @@ export default function FeedItem(props) {
                                 Visualize the awesome tracks that you upload! We have a wide range of customizable visualizers.
                             </p>
                         </div>
-                        <div className="w-full flex">
-                            <div className="flex w-1/2 items-center">
+                        <div className="w-full flex border-t-2 border-gray-400 pt-5">
+                            <div className="flex w-10/12 items-center">
                                 <img className="w-10 h-10 rounded-full mr-4" src={require("../media/Manas.jpg")}
                                      alt="Avatar of Manas Mehta"/>
                                 <div className="text-sm">
@@ -94,8 +90,8 @@ export default function FeedItem(props) {
                                     <p className="text-gray-600">Oct 8</p>
                                 </div>
                             </div>
-                            <div id="btnContainer" className="w-1/2">
-                                <button id="mello" className="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={startMello}>Play</button>
+                            <div id="btnContainer" className="w-2/12">
+                                <button id="mello" className="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleClick}>Play</button>
                             </div>
                         </div>
                     </div>
