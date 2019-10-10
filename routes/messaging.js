@@ -67,4 +67,17 @@ router.post('/getConversation', function(req, res) {
   })
 });
 
+router.post('/deleteMessages', function(req, res) {
+  console.log("deleting all messages!")
+  MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("finalproject");
+    var myobj = {};
+    dbo.collection("messages").deleteMany(myobj, function(err, res) {
+      if (err) throw err;
+      db.close();
+    });
+  });
+});
+
 module.exports = router;

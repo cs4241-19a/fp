@@ -152,4 +152,18 @@ router.post('/getUsers', function (req,res){
   })
 });
 
+router.post('/deleteUsers', function(req, res) {
+  console.log("deleting all users!")
+  MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("finalproject");
+    var myobj = {};
+    dbo.collection("users").deleteMany(myobj, function(err, res) {
+      if (err) throw err;
+      db.close();
+    });
+  });
+});
+
+
 module.exports = router;
