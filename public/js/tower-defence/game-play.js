@@ -41,7 +41,7 @@ const gamePlayState = new Phaser.Class({
                 removeEnemys();
                 return scene;
             }};
-        scene.EnemyUnits = {Trucks: Truck(enemy_events)};
+        scene.EnemyUnits = {Trucks: Truck(enemy_events, scene)};
         scene.Towers = {SandBags: SandBag(), MachineGuns: MachineGun(), Cannons: Cannon()};
 
         scene.addTruck3b = function (waveIndex) {
@@ -75,7 +75,7 @@ const gamePlayState = new Phaser.Class({
     update: function() {
         const scene = this;
         // console.log(scene.enemies);
-        updateMarker(scene);
+        updateCursor(scene);
         scene.enemies.forEach(enemy => {
             enemy.move();
         });
@@ -151,8 +151,8 @@ function selectTower(scene, coord) {
 
 }
 
-function updateMarker(scene) {
-    const coord = {x: Math.floor(scene.input.activePointer.worldX / cellSize.width), y: Math.floor(scene.input.activePointer.worldY / cellSize.height)}
+function updateCursor(scene) {
+    const coord = {x: Math.floor(scene.input.activePointer.worldX / cellSize.width), y: Math.floor(scene.input.activePointer.worldY / cellSize.height)};
     scene.cursor.x = coord.x * cellSize.width;
     scene.cursor.y = coord.y * cellSize.height;
 
@@ -163,7 +163,6 @@ function updateMarker(scene) {
             selectTower(scene, coord);
         }
     }
-
 }
 
 
@@ -179,10 +178,11 @@ function updateMarker(scene) {
  * @param healthPoints This enemies starting health points.
  * @param onDeath A call back that will be called on the death of this Enemy.
  * @param onBase
+ * @param scene
  * @returns {{damage: function(number), move: function, sprite: *}}
  * @constructor
  */
-function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
+function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase, scene) {
     let pathPoints;
     let moveIdx = 0;
     let atBase = false;
@@ -190,6 +190,8 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
     let hp = healthPoints;
     let alive = true;
     let waveWaitDur = waveSpacingDur * waveIndex;
+    let healthBar;
+    let healthBarBg;
 
     function move() {
         if (atBase || !alive) return false;  // halt movement
@@ -197,6 +199,7 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
             waveWaitDur--;
             if (waveWaitDur < 0) {
                 // set the sprite to the correct position
+                createHeathBar();
                 sprite.x = enemyEnterCoord.x * cellSize.width;
                 sprite.y = enemyEnterCoord.y * cellSize.height;
             } else {
@@ -227,6 +230,7 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
             sprite.rotation = spriteRotation + angle;
             sprite.x = newPos.x;
             sprite.y = newPos.y;
+            updateHealthBarPos();
             moveIdx += (moveSpeed * 2 / (pathPoints.x.length + pathPoints.y.length) );
             checkAtBase(newPathCoord);
         }
@@ -248,6 +252,36 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
         }
     }
 
+    function createHeathBar() {
+        healthBarBg = scene.add.graphics();
+        healthBarBg.fillStyle(0x000000, 1);
+        healthBarBg.fillRect(0, 0, cellSize.width, 6);
+        healthBar = scene.add.graphics();
+        healthBar.fillStyle(0x00ff00, 1);
+        healthBar.fillRect(0, 0, cellSize.width, 6);
+    }
+
+    function updateHealthBarPos() {
+        healthBar.x = sprite.x - (cellSize.width / 2);
+        healthBar.y = sprite.y - (cellSize.height / 2);
+        healthBarBg.x = sprite.x - (cellSize.width / 2);
+        healthBarBg.y = sprite.y - (cellSize.height / 2);
+    }
+
+    function updateHealthBarHealth() {
+        console.log("here");
+        console.log(healthBar);
+        healthBar.scaleX = (hp > 0) ? (hp / healthPoints) : 0;
+        console.log(healthBar.scaleX);
+        if (healthBar.scaleX < .6 && healthBar.scaleX > .3) {
+            healthBar.fillStyle(0xeeee00, 1);
+            healthBar.fillRect(0, 0, cellSize.width, 6);
+        } else if (healthBar.scaleX < .3) {
+            healthBar.fillStyle(0xff0000, 1);
+            healthBar.fillRect(0, 0, cellSize.width, 6);
+        }
+    }
+
     /**
      * Reduce this enemies health
      * @param damageAmount The number of hp to deduct
@@ -256,6 +290,7 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
     function damage(damageAmount) {
         if (!alive) return false;  // return false if the enemy is already dead
         hp -= damageAmount;  // damage the enemy
+        updateHealthBarHealth();
         if (isDead()) {
             alive = false;
             die(onDeath());
@@ -265,15 +300,18 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
     }
 
     function die(scene) {
-        // sprite.destroy();
         let fadeTween = scene.tweens.add({
-            targets: sprite,
-            alpha: { from: 1, to: 0.5 },
+            targets: [sprite, healthBar, healthBarBg],
+            alpha: { from: 1, to: 0 },
             ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
             duration: 1000,
             repeat: 0,            // -1: infinity
             yoyo: false,
-            onComplete: () => sprite.destroy()
+            onComplete: () => {
+                sprite.destroy();
+                healthBar.destroy();
+                healthBarBg.destroy();
+            }
         });
     }
 
@@ -336,7 +374,6 @@ function Tower(sprite, range, damage, fireRate) {
      * @returns {boolean}
      */
     function shoot() {
-        console.log(shootIdx, confirmTarget());
         if (shootIdx === 0 && confirmTarget()) {
             faceTarget();
             switch(target.damage(damage)) {
@@ -374,7 +411,7 @@ function Tower(sprite, range, damage, fireRate) {
 // ENEMIES //
 
 
-function Truck(events) {
+function Truck(events, scene) {
     /**
      * Create the enemy.
      * @param sprite The sprite the enemy will use.
@@ -382,7 +419,7 @@ function Truck(events) {
      * @returns {{damage: (function(number)), move: Function, sprite: *}}
      */
     function create(sprite, waveIndex) {
-        return Enemy(sprite, waveIndex, 0.06, 75, events.onDeath, events.onBase);
+        return Enemy(sprite, waveIndex, 0.06, 75, events.onDeath, events.onBase, scene);
     }
 
     function Truck3b(scene) {
