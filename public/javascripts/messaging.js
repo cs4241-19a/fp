@@ -70,7 +70,7 @@ function updateChat() {
   }).then(function(res) {
     res.json().then(function(ret) {
       //alert(ret)
-      for (let i = ret.length - 1; i >= 0; i--) {
+      for (let i =  0; i < ret.length; i++) {
         if (
           (ret[i].from == currentConvo && ret[i].to == getCookie("username")) ||
           (ret[i].to == currentConvo && ret[i].from == getCookie("username"))
@@ -86,9 +86,6 @@ function updateChat() {
       }
     });
   });
-  makeEmptyBubble();
-  makeEmptyBubble();
-  makeEmptyBubble();
 }
 
 function sendMessage() {
