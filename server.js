@@ -15,6 +15,7 @@ const passport   = require("passport")
 const Local      = require("passport-local").Strategy
 const pass       = require("pwd")
 const bodyParser = require("body-parser")
+const moment     = require("moment")
 const database   = require("./database.js")
 
 // Parse JSON bodies
@@ -154,13 +155,35 @@ app.post(
 			return
 		}
 		
-		console.log(req.user.username)
+		console.log("Getting tasks for: ", req.user.username)
 		
 		database.getUserTasks(req.user.username).then(
 		function(tasks)
 		{
+			console.log("tasks: ", tasks)
+			
 			tasks = tasks === undefined ? [] : tasks
-			console.log(tasks)
+			
+			tasks.forEach((task) =>
+			{
+				const now = new moment()
+				const dueDate = new moment(task.dueDate)
+				
+				const deltaTime = moment.duration(now.diff(dueDate))
+				console.log(deltaTime)
+				task.deltaTime = deltaTime
+			})
+			
+			tasks.sort(function(firstEl, secondEl)
+			{
+				return firstEl.deltaTime.asSeconds() - secondEl.deltaTime.asSeconds()
+			})
+			
+			// Remove field so that they aren't sent to the frontend - they aren't needed
+			tasks.forEach((task) =>
+			{
+				task.deltaTime = undefined
+			})
 			res.json(tasks)
 		})
 	}
@@ -177,12 +200,15 @@ app.post(
 			return
 		}
 		
+		const task = req.body
+		console.log(task)
+		
 		database.getUser(req.user.username).then(
 		function(user)
 		{
-			const task = JSON.parse(req.body)
 			task.userId = user.id
 			
+			console.log("created task: ", task.title)
 			database.createTask(task)
 			
 			res.status(200)
@@ -202,8 +228,11 @@ app.post(
 			return
 		}
 		
-		const task = JSON.parse(req.body)
+		const task = req.body
 		const taskId = task.id
+		
+		console.log("Updating task: ", taskId, task)
+		
 		task.id = undefined 	// Don't update the task id to be the same that it already is
 		
 		database.updateTask(taskId, task).then(
@@ -227,7 +256,7 @@ app.post(
 			return
 		}
 		
-		const json = JSON.parse(req.body)
+		const json = req.body
 		
 		database.deleteTask(json.id)
 		res.status(200)
