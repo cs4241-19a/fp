@@ -124,7 +124,11 @@ app.post('/updateInfo', function(request, response) {
             age: request.body.age,
             gender: request.body.gender,
             hobby: request.body.hobby,
-            pic: request.body.pic
+            pic: request.body.pic,
+            salary: request.body.salary,
+            whatsUp: request.body.whatsUp,
+            location: request.body.location,
+            selfIntro: request.body.selfIntro
         }
     }).then(result => {
         response.json(result)

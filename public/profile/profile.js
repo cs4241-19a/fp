@@ -11,7 +11,7 @@ window.onload = function() {
     refreshProfile()
 }
 
-function refreshProfile(){
+function refreshProfile() {
     fetch('/getYou', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
@@ -26,31 +26,35 @@ function refreshProfile(){
         document.getElementById('gender').innerHTML = you.gender
         document.getElementById('age').innerHTML = you.age
         document.getElementById('hobby').innerHTML = you.hobby
-    
+        document.getElementById('salary').innerHTML = you.salary
+        document.getElementById('location').innerHTML = you.location
+        document.getElementById('self-intro').innerHTML = you.selfIntro
+        document.getElementById('personal-msg').innerHTML = you.whatsUp
+
         const comments = document.getElementById('comments')
         const createNode = function(element) { return document.createElement(element) }
         const append = function(parent, el) { return parent.appendChild(el) }
         you.comments.map(function(comment) {
             // console.log(comment[0], comment[1], comment[2])
             comments.innerHTML = ''
-    
+
             let img = createNode('img')
             img.src = comment[0]
             img.className = 'rounded mr-2'
-    
+
             let strong = createNode('strong')
             strong.innerHTML = comment[1]
             strong.className = 'mr-auto'
-    
+
             let header = createNode('div')
             header.className = 'toast-header'
             append(header, img)
             append(header, strong)
-    
+
             let body = createNode('div')
             body.innerHTML = comment[2]
             body.className = 'toast-body'
-    
+
             let toast = createNode('div')
             toast.role = 'alert'
             toast.className = 'toast'

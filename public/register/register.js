@@ -58,7 +58,12 @@ registerBtn.onclick = function(e) {
         comments: [],
         likes: 0,
         dislikes: 0,
-        pic: imgSrc
+        pic: imgSrc,
+        favCount: 0,
+        whatsUp: null,
+        salary: null,
+        location: null,
+        selfIntro: null
     }
     fetch(`/add`, {
         method: 'POST',
