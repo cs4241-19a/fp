@@ -45,14 +45,22 @@ const client = new mongodb.MongoClient(uri, {
 let currentUser = "";
 let usersCollection = null;*/
 
-//app.use(express.static(path.join(__dirname + "")));
+app.use(express.static(path.join(__dirname + "public")));
 app.use(bodyParser.json());
 app.use(helmet());
 //app.use(morgan("combined"));
 app.use(cookieParser()); //needed to read cookies for auth
 
 app.get("/", function(req, res) {
-  res.sendFile("/game.html");
+  res.sendFile(path.join(__dirname + "/index.html"));
+});
+
+app.get("/Temp.css", function(req, res) {
+  res.sendFile(path.join(__dirname + "/Temp.css"));
+});
+
+app.get("/cover.png", function(req, res) {
+  res.sendFile(path.join(__dirname + "/cover.png"));
 });
 
 app.get("/game.html", function(req, res) {
@@ -60,7 +68,7 @@ app.get("/game.html", function(req, res) {
 });
 
 app.get("/loginPage", function(req, res) {
-  res.sendFile(path.join(__dirname + "/index.html"));
+  res.sendFile(path.join(__dirname + "/login.html"));
 });
 
 app.get("/game.js", function(req, res) {
@@ -82,10 +90,12 @@ const myLocalStrategy = function(username, password, done) {
     .then(function(snapshot) {
       const users = [];
       snapshot.forEach(function(child) {
+        console.log(child.val())
         users.push(child.val());
       });
       let user = users.find(__user => __user.username === username);
-      if (user === undefined) {
+    console.log(user)  
+    if (user === undefined) {
         console.log("NOT IN DB"); //not in database
         return done(null, false, { message: "user not found" });
       } else if (user.password === password) {

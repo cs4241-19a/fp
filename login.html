@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+    <link href="/Temp.css" rel="stylesheet" type="text/css" />
+    <link href="https://unpkg.com/sanitize.css" rel="stylesheet" />
+    <link href="https://unpkg.com/sanitize.css/typography.css" rel="stylesheet"/>
+    <script src="js/scripts.js"></script>
+  </head>
+  <body>
+    <div class="container">
+
+      <main>
+        <div id="login">
+          <form>
+            <div class="input">
+              <label for="login-username" class="label">Username:</label>
+              <input type="text" id="login-username" required />
+            </div>
+
+            <div class="input">
+              <label for="password" class="label">Password:</label>
+              <input type="text" id="password" required />
+            </div>
+
+            <div id="login-button">
+              <button type="button" onclick="doLogin()">Login</button>
+            </div>
+            <div id="signUp-button">
+              <button type="button" onclick="addUser()">SignUp</button>
+            </div>
+            <div id="cancel-button">
+              <button type="button" onclick="returnHome()">Cancel</button>
+            </div>
+          </form>
+        </div>
+        
+      </main>
+    </div>
+  </body>
+</html>
+ 
+        
+        
+<!--     <input type="text" name="username">
+    <input type="password" name="password">
+    <button type="submit">
+      Login
+    </button> -->
+    
+

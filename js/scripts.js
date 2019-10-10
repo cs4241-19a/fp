@@ -42,10 +42,9 @@ function doLogin() {
 }
 
 function addUser() {
-  let body = {
-    username: document.getElementById("uName").value,
-    password: document.getElementById("pass").value
-  };
+  let uName = document.getElementById("login-username").value;
+  let pass = document.getElementById("password").value;
+  let body = { username: uName, password: pass };
   let json = JSON.stringify(body);
   fetch("/addUser", {
     method: "POST",
@@ -67,7 +66,15 @@ function loadLoginPage() {
     method: "GET",
     headers: { "Content-Type": "application/json" }
   }).then(function(res) {
-    console.log(res)
-    //window.location = res.url;
+    window.location = res.url;
+  });
+}
+
+function returnHome() {
+  fetch("/", {
+    method: "GET",
+    headers: { "Content-Type": "application/json" }
+  }).then(function(res) {
+    window.location = res.url;
   });
 }
