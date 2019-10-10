@@ -4,12 +4,12 @@ import shortid from "shortid";
 import "./App.css";
 
 import socketIOClient from "socket.io-client";
-import { SSL_OP_SINGLE_DH_USE } from "constants";
+import {SSL_OP_SINGLE_DH_USE} from "constants";
 
 const socket = socketIOClient("localhost:8080");
 
-const RED = '#ff6666';
-const BLU = '#4d79ff';
+const RED = "#ff6666";
+const BLU = "#4d79ff";
 //would normally come from database but this is for testing
 //list of ALL words
 let allReady = false;
@@ -47,7 +47,7 @@ let allWords = [
   "buck",
   "day",
   "doctor",
-  "ball"
+  "ball",
 ];
 
 class App extends React.Component {
@@ -55,21 +55,22 @@ class App extends React.Component {
     super(props);
     this.state = {
       modalOpen: true,
-      selectedRole: ""
+      selectedRole: "",
     };
 
     console.log("App");
     socket.on("closeModal", this.closeModal.bind(this));
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+  }
 
   closeModal() {
-    this.setState({ modalOpen: false });
+    this.setState({modalOpen: false});
   }
 
   selectRole(role) {
-    this.setState({ selectedRole: role });
+    this.setState({selectedRole: role});
   }
 
   render() {
@@ -77,12 +78,12 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           <h1>Codenames</h1>
-          <Modals />
+          <Modals/>
         </header>
         {this.state.modalOpen && (
-          <Menu selectRole={this.selectRole.bind(this)} />
+          <Menu selectRole={this.selectRole.bind(this)}/>
         )}
-        <Game selectedRole={this.state.selectedRole} />
+        <Game selectedRole={this.state.selectedRole}/>
         <div className="test1">
           <button className="Reset">RESET</button>
         </div>
@@ -98,7 +99,7 @@ class Modals extends React.Component {
     super();
 
     this.state = {
-      modalIsOpen: false
+      modalIsOpen: false,
     };
 
     this.openModal = this.openModal.bind(this);
@@ -106,11 +107,11 @@ class Modals extends React.Component {
   }
 
   openModal() {
-    this.setState({ modalIsOpen: true });
+    this.setState({modalIsOpen: true});
   }
 
   closeModal() {
-    this.setState({ modalIsOpen: false });
+    this.setState({modalIsOpen: false});
   }
 
   render() {
@@ -125,11 +126,11 @@ class Modals extends React.Component {
               <span className="close" onClick={this.closeModal}>
                 &times;
               </span>
-              <br />
-              <br />
+              <br/>
+              <br/>
               <div className="modal-header">
                 <div>How to Play:</div>
-                <br />
+                <br/>
               </div>
               <div className="modal-body">
                 <img
@@ -144,8 +145,8 @@ class Modals extends React.Component {
                   blue team agent, red team agent, a civilian, or the assassin.
                   The game is played with two teams, a red team and a blue team.
                   Both teams have one spymaster and one detective.
-                  <br />
-                  <br />
+                  <br/>
+                  <br/>
                   At the beginning of the game, only the spymasters can see the
                   position of the agents (displayed by the border of the cards).
                   The spymasters will each take turns giving clues to their
@@ -160,8 +161,8 @@ class Modals extends React.Component {
                   pass. If the detective guesses incorrectly it becomes the
                   other teams turn. If any detective guesses the assassin then
                   their team atomatically loses the game.
-                  <br />
-                  <br />A team wins the game if their detective can find all of
+                  <br/>
+                  <br/>A team wins the game if their detective can find all of
                   their team's agents or if the other team accidentally finds
                   the assassin. Good Luck!
                 </p>
@@ -180,13 +181,13 @@ class Card extends React.Component {
     this.changeStyle = this.changeStyle.bind(this);
     this.state = {
       word: this.props.word,
-      borderColor: this.props.border
+      borderColor: this.props.border,
     };
   }
 
   changeStyle(color) {
     this.setState({
-      color: this.state.cardColor
+      color: this.state.cardColor,
     });
   }
 
@@ -198,7 +199,7 @@ class Card extends React.Component {
         style={{
           backgroundColor: this.props.revealedColor,
           borderStyle: SSL_OP_SINGLE_DH_USE,
-          borderColor: this.state.borderColor
+          borderColor: this.state.borderColor,
         }}
         onClick={() => socket.emit("guessed", this.props.value)}
       >
@@ -213,10 +214,10 @@ class Chat extends React.Component {
     super(props);
     this.state = {
       log: [],
-      clue: ""
+      clue: "",
     };
     socket.on("hintHistory", hints => {
-      this.setState({ log: hints });
+      this.setState({log: hints});
     });
   }
 
@@ -237,7 +238,7 @@ class Chat extends React.Component {
           className={"amount" + (i <= this.props.wordsLeft ? "" : " disabled")}
         >
           {i}
-        </div>
+        </div>,
       );
     }
     return table;
@@ -248,19 +249,20 @@ class Chat extends React.Component {
       <div className="chat">
         <div className="chat-container">
           <div className="log">
-          {this.state.log.map((hint, index) => {
-            return (
-              <div key={index} className="clue" style={{ color: hint.sender.startsWith('r') ? RED : BLU }}>
-                {hint.clue} : {hint.amt}
-              </div>
-            );
-          })}
+            {this.state.log.map((hint, index) => {
+              return (
+                <div key={index} className="clue"
+                     style={{color: hint.sender.startsWith("r") ? RED : BLU}}>
+                  {hint.clue} : {hint.amt}
+                </div>
+              );
+            })}
           </div>
           {this.props.role.endsWith("spymaster") && (
             <div className={"hintSubmission"}>
               <input
                 placeholder="Clue"
-                onChange={e => this.setState({ clue: e.target.value })}
+                onChange={e => this.setState({clue: e.target.value})}
                 id="msg"
               />
               <div className={"amountInput"}>{this.createAmounts()}</div>
@@ -273,17 +275,6 @@ class Chat extends React.Component {
 }
 
 class Board extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      cards: this.props.cards
-    };
-    socket.on("updateBoardState", bs => {
-      console.log("Received update board state");
-      console.log(bs);
-      this.setState({ cards: bs });
-    });
-  }
 
   renderCard(card) {
     return (
@@ -304,7 +295,7 @@ class Board extends React.Component {
             <div key={shortid.generate()} className="board-row">
               {" "}
               {[0, 1, 2, 3, 4].map(m => {
-                return this.renderCard(this.state.cards[n * 5 + m]);
+                return this.renderCard(this.props.cards[n * 5 + m]);
               })}
             </div>
           );
@@ -320,12 +311,19 @@ class Game extends React.Component {
     let firstteam = Math.floor(Math.random() * 2);
     this.state = {
       cards: setBoard(firstteam),
+      redLeft: firstteam === 0 ? 9 : 8,
+      bluLeft: firstteam === 1 ? 9 : 8,
       firstteam: firstteam,
       disabled: true,
     };
+    socket.on("updateBoardState", (bs, redLeft, bluLeft) => {
+      console.log("Received update board state");
+      console.log(bs);
+      this.setState({cards: bs, redLeft: redLeft, bluLeft: bluLeft});
+    });
     socket.on("lockup", () => {
       //banner to other player name
-     this.setState({disabled: true});
+      this.setState({disabled: true});
     });
     socket.on("your turn", lastTurnData => {
       this.setState({disabled: false});
@@ -333,19 +331,12 @@ class Game extends React.Component {
   }
 
   render() {
-    let status;
-    let order = this.state.firstteam;
-    if (!order) {
-      status = "Red";
-    } else {
-      status = "Blue";
-    }
     return (
       <div className={"game" + (this.state.disabled ? " disabled-events" : "")}>
-        <Board cards={this.state.cards} />
-        <Chat role={this.props.selectedRole} team={status} wordsLeft={9} />
-        <br />
-        <br />
+        <Board cards={this.state.cards}/>
+        <Chat role={this.props.selectedRole}  wordsLeft={this.props.selectedRole.startsWith('r') ? this.state.redLeft : this.state.bluLeft}/>
+        <br/>
+        <br/>
       </div>
     );
   }
@@ -358,7 +349,7 @@ class Menu extends React.Component {
     this.selectRole = props.selectRole;
     this.state = {
       modalIsOpen: true,
-      selectedRole: null
+      selectedRole: null,
     };
 
     this.openModal = this.openModal.bind(this);
@@ -366,11 +357,11 @@ class Menu extends React.Component {
   }
 
   openModal() {
-    this.setState({ modalIsOpen: true });
+    this.setState({modalIsOpen: true});
   }
 
   closeModal() {
-    this.setState({ modalIsOpen: false });
+    this.setState({modalIsOpen: false});
   }
 
   render() {
@@ -381,7 +372,7 @@ class Menu extends React.Component {
             shouldCloseOnOverlayClick={false}
             isOpen={this.state.modalIsOpen}
             onRequestClose={this.closeModal}
-            style={{ content: { backgroundColor: "#282c34", padding: 0 } }}
+            style={{content: {backgroundColor: "#282c34", padding: 0}}}
           >
             <div id="myModal" className="modal">
               <div className="modal-content">
@@ -394,8 +385,8 @@ class Menu extends React.Component {
                     id="menuName"
                     autoComplete="off"
                   ></input>
-                  <br />
-                  <br />
+                  <br/>
+                  <br/>
                   <img
                     className="center"
                     src="detective.png"
@@ -403,8 +394,8 @@ class Menu extends React.Component {
                     width="270"
                     height="333"
                   ></img>
-                  <br />
-                  <br />
+                  <br/>
+                  <br/>
                   <button
                     className="redrole"
                     id="rspymaster"
@@ -419,7 +410,7 @@ class Menu extends React.Component {
                   >
                     Blue Team Spymaster
                   </button>
-                  <br />
+                  <br/>
                   <button
                     className="redrole"
                     id="rdetective"
@@ -434,8 +425,8 @@ class Menu extends React.Component {
                   >
                     Blue Team Detective
                   </button>
-                  <br />
-                  <br />
+                  <br/>
+                  <br/>
                   <button
                     id="playBtn"
                     className="play"
@@ -519,7 +510,7 @@ function setBoard(order) {
 
   //for setting board words
   for (let i = 0; i < 25; i++) {
-    cards[i] = { revealedColor: "whitesmoke" };
+    cards[i] = {revealedColor: "whitesmoke"};
     let useCheck = false;
     let counter = Math.floor(Math.random() * allWords.length);
     for (let j = 0; j < cards.length; j++) {
@@ -565,7 +556,9 @@ function setBoard(order) {
       }
     }
   }
-  socket.emit("setInitState", cards, getBrowserData(), order === 0 ? "rspymaster" : "bspymaster");
+
+  socket.emit("setInitState", cards, getBrowserData(),
+    order === 0 ? "rspymaster" : "bspymaster");
   return cards;
 }
 
@@ -575,7 +568,7 @@ window.onload = function() {
 };
 
 function getBrowserData() {
-  return { user: sessionStorage.getItem("userInfo") || "USER" + Math.random() };
+  return {user: sessionStorage.getItem("userInfo") || "USER" + Math.random()};
 }
 
 function getBoardState() {
@@ -589,7 +582,7 @@ function getBoardState() {
         cards[i * NUM_CARDS_ROW + j] = {
           word: selCard.innerHTML,
           revealedColor: selCard.style.backgroundColor,
-          borderColor: selCard.style.borderColor
+          borderColor: selCard.style.borderColor,
         };
       }
     }
@@ -650,6 +643,5 @@ socket.on("resetRoles", () => {
 
   allReady = false;
 });
-
 
 export default App;
