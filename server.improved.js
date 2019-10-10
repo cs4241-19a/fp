@@ -182,14 +182,15 @@ app.post("/addSong", function(req, res) {
     .then(function(snapshot) {
       var tempArray = []
       for(var i = 0; i< 8; i++){
-        if(req.body.songdata[i] === []){
+        if(req.body.songdata[i].length === 0){
+          console.log("IN EMPTY CASE")
           tempArray.push([{noteVal : -1, timeVal: 0}])
         }
         else{
           tempArray.push(req.body.songdata[i])
         }
       }
-
+      console.log(tempArray)
       fdb
         .ref("/data/")
         .push({
