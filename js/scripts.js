@@ -30,8 +30,9 @@ function doLogin() {
   body = JSON.stringify(body);
   fetch("/login", {
     method: "POST",
+    body,
     headers: { "Content-Type": "application/json" },
-    body
+    
   }).then(function(res) {
     if (res.status === 200) {
       window.location = res.url;
@@ -45,20 +46,22 @@ function addUser() {
   let uName = document.getElementById("login-username").value;
   let pass = document.getElementById("password").value;
   let body = { username: uName, password: pass };
-  let json = JSON.stringify(body);
-  fetch("/addUser", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: json
-  }).then(function(res) {
-    console.log(res);
-    if (res.status === 200) {
-      window.alert("Successfully added to database");
-      doLogin()
-    } else {
-      window.alert("User already exists!\nNot added to database!");
-    }
-  });
+  if (uName !== "" && pass !== "") {
+    let json = JSON.stringify(body);
+    fetch("/addUser", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: json
+    }).then(function(res) {
+      console.log(res);
+      if (res.status === 200) {
+        window.alert("Successfully added to database");
+        doLogin();
+      } else {
+        window.alert("User already exists!\nNot added to database!");
+      }
+    });
+  }
 }
 
 function loadLoginPage() {
@@ -78,3 +81,4 @@ function returnHome() {
     window.location = res.url;
   });
 }
+

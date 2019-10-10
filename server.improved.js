@@ -90,19 +90,17 @@ const myLocalStrategy = function(username, password, done) {
     .then(function(snapshot) {
       const users = [];
       snapshot.forEach(function(child) {
-        console.log(child.val())
+        console.log(child.val());
         users.push(child.val());
       });
       let user = users.find(__user => __user.username === username);
-    console.log(user)  
-    if (user === undefined) {
+      if (user === undefined) {
         console.log("NOT IN DB"); //not in database
         return done(null, false, { message: "user not found" });
       } else if (user.password === password) {
-        //found and correct
         return done(null, { username, password });
       } else {
-        console.log("!PASSwORD");
+        console.log("!PASSWORD");
         return done(null, false, { message: "incorrect password" });
       }
     });
@@ -173,44 +171,57 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.post("/login", passport.authenticate("local"), function(req, res) {
-  res.cookie("TestCookie", req.body.username)
-  res.redirect('/game.html') 
-  //res.json({ status: true });
+  res.cookie("TestCookie", req.body.username);
+  res.redirect("game.html");
 });
 
-app.post('/addUser', function(req, res){
-  fdb.ref('/users/').once('value')
+app.post("/addUser", function(req, res) {
+  fdb
+    .ref("/users/")
+    .once("value")
+    .then(function(snapshot) {
+      const data = [];
+      snapshot.forEach(function(child) {
+        data.push(child.val());
+      });
+      let hasDup = checkForDuplicateUser(data, req.body);
+      if (hasDup.exists) {
+        res.status(409).send();
+      } else {
+        fdb
+          .ref("/users/")
+          .push({
+            username: req.body.username,
+            password: req.body.password
+          })
+          .then(function(response) {
+            res.status(200).send();
+          });
+      }
+    });
+});
+
+//DUPLICATE USER RETURNS BOOL AND INDEX
+function checkForDuplicateUser(data, original) {
+  let final = { exists: false, index: -1 };
+  data.forEach(function(comp, index) {
+    if (comp.username === original.username) {
+      final = { exists: true, index: index };
+    }
+  });
+  return final;
+}
+
+app.get('/allData', function(req, res){
+  fdb.ref('/data/').once('value')
   .then(function(snapshot){
     const data = []
     snapshot.forEach(function(child){
       data.push(child.val())
     })
-    let hasDup = checkForDuplicateUser(data, req.body)
-    if(hasDup.exists){
-      res.status(409).send()
-    }
-    else{
-      fdb.ref('/users/').push({
-        username: req.body.username,
-        password: req.body.password,
-      }).then(function(response){
-        res.status(200).send()
-      })
-    }
+    res.json(data)
   })
 })
 
-
-//DUPLICATE USER RETURNS BOOL AND INDEX
-function checkForDuplicateUser(data, original){
-  let final = {exists: false, index: -1}
-  data.forEach(function(comp, index){
-    if(comp.username === original.username){
-      final = {exists: true, index: index}
-    }
-  })
-  return final
-}
-
 //STARTING SERVER HERE
-app.listen( process.env.PORT || port )
+app.listen(process.env.PORT || port);
