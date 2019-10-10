@@ -165,7 +165,7 @@ app.post(
 			tasks.forEach((task) =>
 			{
 				const now = new moment()
-				const dueDate = new moment(task.dateTime)
+				const dueDate = new moment(task.dueDate)
 				
 				const deltaTime = moment.duration(now.diff(dueDate))
 				console.log(deltaTime)
