@@ -180,16 +180,16 @@ app.post("/addSong", function(req, res) {
     .ref("/data/")
     .once("value")
     .then(function(snapshot) {
-      const data = [];
-      snapshot.forEach(function(child) {
-        data.push(child.val());
-      });
+      var tempArray = []
+      for(var i = 0; i< 8; i++){
+        tempArray.push({i: req.body.songdata[i]})
+      }
 
       fdb
         .ref("/data/")
         .push({
           username: req.body.username,
-          songname: req.body.songname,
+          songname: tempArray,
           songdata: req.body.songdata
         })
         .then(function(response) {

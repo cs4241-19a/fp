@@ -1763,7 +1763,8 @@ function playAudio(data) {
 
 //LOAD SONG
 function loadTrack() {
-  variables.dataArray = document.getElementById("songDropdown").value;
+  console.log("LOADING")
+  variables.dataArray = JSON.parse(document.getElementById("songDropdown").value);
 }
 
 //SAVE SONG
@@ -1778,13 +1779,14 @@ function saveTrack() {
       songdata: variables.dataArray,
       username: getCookie("TestCookie")
     };
+    
     let json = JSON.stringify(body);
+    console.log(json)
     fetch("/addSong", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: json
     }).then(function(res) {
-      console.log(res);
       if (res.status === 200) {
         window.alert("Successfully added to database");
         loadSongs()
@@ -1810,14 +1812,10 @@ function loadSongs() {
     .then(function(ret) {
       return ret.json();
     })
-    .then(function(res) {
-      console.log(res);
-      
+    .then(function(res) {     
       res.forEach(function(single) {
-        console.log("LOOPING")
         var opt = document.createElement('option')
-        console.log(single.songdata)
-        opt.value = single.songdata.toString()
+        opt.value = JSON.stringify(single.songdata)
         opt.label = single.songname + " by " + single.username
         select.appendChild(opt)
       });
