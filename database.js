@@ -65,7 +65,7 @@ Task.init({
         allowNull: false,
     },
     priority: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
     },
     completed: {
@@ -140,7 +140,7 @@ function updateTask(taskId, object){
         where: {id: taskId}
     }).then(result => {
         return result.update(object)
-    });
+    }).catch(err => console.log(err))
 }
 
 //deleteTask

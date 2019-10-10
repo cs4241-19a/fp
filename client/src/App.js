@@ -14,13 +14,10 @@ class App extends React.Component{
     this.state = {
       task_head : 0,
       tasks: [
-        {title: "hi", z: 3, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333", hidden: false, id: 0},
-        {title: "hola", z: 2, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333", hidden: false, id: 1},
-        {title: "ohio", z: 1, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333", hidden: false, id: 2},
-        {title: "yo", z: 0, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333", hidden: false, id: 3},
-        {title: "yooooooo", z: -1, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333", hidden: true, id:4},
+        {title: "hi", z: 3, description: "Take your time back. Create a new task.", priority_text: "Medium", date: "11-22-3333", hidden: false, id: -1},
       ],
     }
+    this.fetchTasks();
   }
 
   fetchTasks(){
@@ -111,10 +108,11 @@ class App extends React.Component{
         })
         .then(console.log);
         this.updateFrontCard(data);
+        this.fetchTasks();
         break;
       case 4:
         this.removeTopTask();
-        fetch("/detetask", {
+        fetch("/deletetask", {
           method: "POST",
           body: JSON.stringify({
             id: data,
@@ -125,7 +123,6 @@ class App extends React.Component{
       default:
         break;
     }
-    this.fetchTasks();
   }
 
   renderTaskCard(num){

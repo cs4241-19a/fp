@@ -160,17 +160,19 @@ app.post(
 		database.getUserTasks(req.user.username).then(
 		function(tasks)
 		{
-			console.log("tasks: ", tasks)
+			//console.log("tasks: ", tasks)
 			
 			tasks = tasks === undefined ? [] : tasks
 			
+			tasks = tasks.filter(task => task.completed === false)
+
 			tasks.forEach((task) =>
 			{
 				const now = new moment()
 				const dueDate = new moment(task.dueDate)
 				
 				const deltaTime = moment.duration(now.diff(dueDate))
-				console.log(deltaTime)
+				//console.log(deltaTime)
 				task.deltaTime = deltaTime
 			})
 			
@@ -201,7 +203,7 @@ app.post(
 		}
 		
 		const task = req.body
-		console.log(task)
+		//console.log(task)
 		
 		database.getUser(req.user.username).then(
 		function(user)
@@ -230,6 +232,8 @@ app.post(
 		
 		const task = req.body
 		const taskId = task.id
+
+		if(task.priority_)
 		
 		console.log("Updating task: ", taskId, task)
 		

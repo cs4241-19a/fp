@@ -68,7 +68,7 @@ class TaskCard extends React.Component {
 	// On click for task complete
 	handleDone = event => {
 		// This is for testing, remove 
-		this.props.buttonCallback(0, null);
+		this.props.buttonCallback(0, this.props.data.id);
 		
 	}
 	
@@ -94,6 +94,7 @@ class TaskCard extends React.Component {
 	// deletes the current task on click
 	handleDelete = event => {
 		event.preventDefault();
+		this.props.buttonCallback(4, this.props.data.id);
 	//	fetch("/deletetask",
 		//{
 		/*	"method": "POST",

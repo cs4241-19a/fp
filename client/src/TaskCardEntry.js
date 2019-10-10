@@ -18,7 +18,7 @@ class TaskCardEntry extends React.Component {
 			show: false,
 		}
 		this.updated = {
-			taskTitle: "",
+			title: "",
 			dueDate: new Date(),
 			priority: 0,
 			description: "",
@@ -71,7 +71,7 @@ class TaskCardEntry extends React.Component {
 			"method": "POST",
 			"body": JSON.stringify(
 			{
-				"title": this.updated.taskTitle,
+				"title": this.updated.title,
 				"dueDate": this.updated.dueDate,
 				"priority": this.updated.priority,
 				"description": this.updated.description,
