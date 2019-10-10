@@ -117,6 +117,12 @@ function togglePlayPause() {
 }
 
 function playSomeTrackID(track) {
+
+    if(currentlyPlaying) {
+        let playPauseButton = document.getElementById("play-pause-button");
+        playPauseButton.setAttribute('src', "images/pause.png");
+    }
+
     player.disconnect()
     console.log("player disconnected")
     console.log("trying to play " + track)
