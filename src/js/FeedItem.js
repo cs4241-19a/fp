@@ -60,6 +60,14 @@ export default function FeedItem(props) {
         draw()
     }
 
+    const pauseA = function () {
+        console.log("yoooooooo")
+        const canvas = getCanvas()
+        const jsonAudioInit = audioInit(canvas)
+        jsonAudioInit.audioElement.pause()
+
+    }
+
     window.localStorage;
     window.onload = function () {
 
@@ -104,18 +112,13 @@ export default function FeedItem(props) {
             <div className="w-full my-5">
                 <div className="w-full">
                     <div className="w-full bg-white rounded overflow-hidden shadow-lg">
-                        <div className="w-full">
-                            <div id="container">
-                                <div id="canvas" className="h-64"></div>
-                                <div id="btnContainer">
-                                    <button id="mello" className="btn" onClick={startMello}>Mellow Music</button>
-                                </div>
-                                <div id="btnContainer2">
-                                    <button className="lbl">Color</button>
-                                    <button id="blue" className="btn">Blue - Green</button>
-                                    <button id="green" className="btn">Green - Red</button>
-                                </div>
-                            </div>
+                        <div id="btnContainer">
+                            <button id="mello" className="btn" onClick={startMello}>Mellow Music</button>
+                        </div>
+                        <div id="btnContainer2">
+                            <button className="lbl">Color</button>
+                            <button id="blue" className="btn" onClick={pauseA}>Blue - Green</button>
+                            <button id="green" className="btn">Green - Red</button>
                         </div>
                         <div className="w-full h-64 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-t lg:rounded-t-none lg:rounded-l p-4 flex flex-col justify-between leading-normal">
                             <div className="mb-8">
@@ -146,6 +149,11 @@ export default function FeedItem(props) {
                     </div>
                 </div>
             </div>
+
+
+
+
+
             <div className={classes.container}>
                 <Paper className={classes.paper} onClick={handleClick}>
                     {/* <Button
