@@ -7,6 +7,9 @@ import socketIOClient from "socket.io-client";
 import { SSL_OP_SINGLE_DH_USE } from "constants";
 
 const socket = socketIOClient("localhost:8080");
+
+const RED = '#ff6666';
+const BLU = '#4d79ff';
 //would normally come from database but this is for testing
 //list of ALL words
 let allReady = false;
@@ -83,6 +86,9 @@ class App extends React.Component {
           <Menu selectRole={this.selectRole.bind(this)} />
         )}
         <Game selectedRole={this.state.selectedRole} />
+        <div className="test1">
+          <button className="Reset">RESET</button>
+        </div>
       </div>
     );
   }
@@ -129,6 +135,12 @@ class Modals extends React.Component {
                 <br />
               </div>
               <div className="modal-body">
+                <img
+                  className="spyImage"
+                  src="spy.png"
+                  width="270"
+                  height="333"
+                ></img>
                 <p>
                   On the board there are 25 tiles, each of which have the
                   codename of different secret agent. Each agent is either a
@@ -215,7 +227,7 @@ class Chat extends React.Component {
     if (this.state.clue === "") {
       return;
     }
-    socket.emit("hintSubmission", this.props.team, this.state.clue, amount);
+    socket.emit("hintSubmission", this.props.role, this.state.clue, amount);
   }
 
   createAmounts() {
@@ -241,22 +253,22 @@ class Chat extends React.Component {
           <div className="log">
           {this.state.log.map((hint, index) => {
             return (
-              <div key={index} className="clue" style={{ color: hint.sender }}>
+              <div key={index} className="clue" style={{ color: hint.sender.startsWith('r') ? RED : BLU }}>
                 {hint.clue} : {hint.amt}
               </div>
             );
           })}
           </div>
-          {this.props.role.endsWith("spymaster") &&
-          <div className={"hintSubmission"}>
-            <input
+          {this.props.role.endsWith("spymaster") && (
+            <div className={"hintSubmission"}>
+              <input
                 placeholder="Clue"
-                onChange={e => this.setState({clue: e.target.value})}
+                onChange={e => this.setState({ clue: e.target.value })}
                 id="msg"
-            />
-            <div className={"amountInput"}>{this.createAmounts()}</div>
-          </div>
-          }
+              />
+              <div className={"amountInput"}>{this.createAmounts()}</div>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -311,8 +323,16 @@ class Game extends React.Component {
     let firstteam = Math.floor(Math.random() * 2);
     this.state = {
       cards: setBoard(firstteam),
-      firstteam: firstteam
+      firstteam: firstteam,
+      disabled: true,
     };
+    socket.on("lockup", () => {
+      //banner to other player name
+     this.setState({disabled: true});
+    });
+    socket.on("your turn", lastTurnData => {
+      this.setState({disabled: false});
+    });
   }
 
   render() {
@@ -324,7 +344,7 @@ class Game extends React.Component {
       status = "Blue";
     }
     return (
-      <div className="game">
+      <div className={"game" + (this.state.disabled ? " disabled-events" : "")}>
         <Board cards={this.state.cards} />
         <Chat role={this.props.selectedRole} team={status} wordsLeft={9} />
         <br />
@@ -457,7 +477,6 @@ function makeGray(btn, selected) {
   selected.state.selectedRole = btn;
   selected.selectRole(btn);
 
-
   let nameInput = document.getElementById("menuName");
   let name = nameInput.value || selected.state.selectedRole;
   nameInput.disabled = true;
@@ -526,9 +545,9 @@ function setBoard(order) {
     }
   }
   //for words to teams
-  setTeam("red", order);
+  setTeam(RED, order);
 
-  setTeam("blue", order);
+  setTeam(BLU, order);
 
   setTeam("black", order);
 
@@ -539,11 +558,11 @@ function setBoard(order) {
     if (type === "black") {
       amount = 1;
     }
-    if ((order === 0 && type === "red") || (order === 1 && type === "blue")) {
+    if ((order === 0 && type === RED) || (order === 1 && type === BLU)) {
       amount += 2;
     } else if (
-      (order === 1 && type === "red") ||
-      (order === 0 && type === "blue")
+      (order === 1 && type === RED) ||
+      (order === 0 && type === BLU)
     ) {
       amount++;
     }
@@ -557,7 +576,7 @@ function setBoard(order) {
       }
     }
   }
-  socket.emit("setInitState", cards, getBrowserData());
+  socket.emit("setInitState", cards, getBrowserData(), order === 0 ? "rspymaster" : "bspymaster");
   return cards;
 }
 
@@ -638,22 +657,12 @@ socket.on("resetRoles", () => {
   bluedet.style.backgroundColor = "#4d79ff";
   bluedet.style.borderColor = "black";
   bluedet.disabled = false;
-  
+
   document.getElementById("menuName").disabled = false;
 
   allReady = false;
   document.getElementById("playBtn").classList.remove('good-to-go');
 });
-socket.on("lockup", playerName => {
-  //banner to other player name
-  document
-      .getElementsByClassName("game")[0]
-      .classList.add("disabled-events");
-});
-socket.on("your turn", lastTurnData => {
-  //banner for yourself
-  document
-    .getElementsByClassName("game")[0]
-    .classList.remove("disabled-events");
-});
+
+
 export default App;

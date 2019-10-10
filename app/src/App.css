@@ -71,7 +71,8 @@ h1 {
 
 .card {
   height: 100%;
-  border-radius: 8px;
+  border-radius: 10px;
+  border-width: 5px;
   flex: 0 1 17%;
   font-size: x-large;
   min-width: 0;
@@ -182,7 +183,19 @@ input {
 
 .modal {
   font-family: verdana, "Lucida Grande", arial, sans-serif;
-  font-size: 20px;
+  font-size: x-large;
+}
+
+.modal-header,
+.modal-body {
+  margin-left: 3%;
+}
+
+.spyImage {
+  float: right;
+  margin-right: 50px;
+  margin-left: 30px;
+  margin-bottom: 20px;
 }
 
 .close:hover,
@@ -280,4 +293,16 @@ input {
 .disabled-events{
   pointer-events: none;
   opacity: 0.4;
+}
+
+.Reset {
+  font-size: x-large;
+  padding: 0.5%;
+  width: 40%;
+  border-radius: 8px;
+}
+
+.test1 {
+  text-align: center;
+  margin-bottom: 1.5%;
 }
