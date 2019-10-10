@@ -8,8 +8,8 @@ const clearForm = function() {
 
 const newAccount = function() {
   
-    const username = document.querySelector( '#username' ).value,
-          password = document.querySelector( '#password' ).value,
+    const username = document.getElementById( 'username' ).value,
+          password = document.getElementById( 'password' ).value,
           json = { 
                    'username': username,
                    'password': password,
@@ -55,7 +55,7 @@ const newAccount = function() {
     return false
   }
 
-
+/*
 const submitLogin = function() {
 
   console.log("hello")
@@ -96,35 +96,41 @@ const submitLogin = function() {
     }
   }) 
 }
+*/
 
 window.onload = function() {
 
     document.getElementById( "form" ).style.display = "none"
-    document.getElementById("newAccountButton").style.display = "none"
-    document.getElementById("loginButton").style.display = "none"
+    document.getElementById("newAccount").style.display = "none"
+    //document.getElementById("loginButton").style.display = "none"
 
     const showNewAccountForm = function() {
         document.getElementById( "form" ).style.display = "block"
-        document.getElementById("loginButton").style.display = "none"
         document.getElementById("showLoginButton").style.display = "block"
         document.getElementById("showNewAccountButton").style.display = "none"
+        document.getElementById("login").style.display = "none"
 
-        var submitNewAccount = document.getElementById("newAccountButton");
+        var submitNewAccount = document.getElementById("newAccount");
         submitNewAccount.onclick = newAccount;
         submitNewAccount.style.display = "block"
+        createAccount.style.display = "block"
+
 
     }
 
     const showLoginForm = function() {
       document.getElementById("form").style.display = "block"
-      document.getElementById("newAccountButton").style.display = "none"
+      document.getElementById("newAccount").style.display = "none"
       document.getElementById("showLoginButton").style.display = "none"
       document.getElementById("showNewAccountButton").style.display = "block"
-
-      var loginB = document.getElementById("loginButton")
-      loginB.onclick = submitLogin
-      loginB.style.display = "block"
+      document.getElementById("login").style.display = "block"
     }
+
+    var createAccount = document.getElementById("newAccount")
+    createAccount.style.display = "none"
+    createAccount.onclick = newAccount
+
+
     var newAccountButton = document.getElementById("showNewAccountButton")
     newAccountButton.onclick = showNewAccountForm
 

@@ -1,5 +1,5 @@
 {
-  "idCount": 4,
+  "idCount": 6,
   "users": [
     {
       "username": "jack",
@@ -26,6 +26,20 @@
       "username": "jane",
       "password": "intense",
       "id": 4,
+      "highscore": 0,
+      "games": []
+    },
+    {
+      "username": "ale4",
+      "password": "1234",
+      "id": 5,
+      "highscore": 0,
+      "games": []
+    },
+    {
+      "username": "thtfh",
+      "password": "24244",
+      "id": 6,
       "highscore": 0,
       "games": []
     }

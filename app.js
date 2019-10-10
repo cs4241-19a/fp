@@ -25,6 +25,7 @@ var leaderboardRouter = require('./routes/leaderboard');
 
 passport.use(new Strategy(
   function(username, password, cb) {
+    console.log("ayyyyyyy")
     db.users.findByUsername(username, function(err, user) {
       if (err) { return cb(err); }
       if (!user) { return cb(null, false); }

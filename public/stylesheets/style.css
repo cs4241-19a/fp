@@ -152,19 +152,18 @@ a {
   font-weight: bold;
 }
 
-#username{
+ #username{
   height: 25px;
   border: none;
   background-color: rgb(189, 187, 187);
   border-bottom: #053c61;
 
   font-size: 20px;
-  /*font-family: 'Press Start 2P', cursive;*/
   font-family: "Courier New", Courier, "Lucida Sans Typewriter";
   color: #053c61;
   font-weight: bold;
 
-}
+} 
 
 #password{
   height: 25px;

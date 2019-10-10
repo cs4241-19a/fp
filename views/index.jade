@@ -12,21 +12,18 @@ block content
     button(id="showLoginButton") Login 
     br
     br
-    form(action="" id="form")
+    form(action="/login", method="post", id="form")
       div
         label Username:
         input(type="text", id="username") 
         br
-        br
       div
         label Password:
         input(type="password", id="password")
-        br
-        br
+      div
+      input(type="submit", value="Submit",id="login")
+    button(id="newAccount") Create Account
     button(id="showNewAccountButton") Create Account
-    br  
-    button(id="loginButton") Login
-    button(id="newAccountButton") Create Account
  
 
   
