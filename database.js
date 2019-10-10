@@ -122,7 +122,7 @@ function getUserTasks(username){
 
 //createUser
 function createUser(username, salt, hash){
-    User.create({
+    return User.create({
         username: username,
         salt: salt,
         hash: hash,
@@ -131,12 +131,12 @@ function createUser(username, salt, hash){
 
 //createTask
 function createTask(object){
-    Task.create(object);
+    return Task.create(object);
 }
 
 //updateTask
 function updateTask(taskId, object){
-    Task.findOne({
+    return Task.findOne({
         where: {id: taskId}
     }).then(result => {
         result.update(object)
@@ -145,7 +145,7 @@ function updateTask(taskId, object){
 
 //deleteTask
 function deleteTask(taskId){
-	Task.destroy({
+	return Task.destroy({
 		where: {id: taskId}
 	})
 }
