@@ -1,0 +1,211 @@
+//SASS Compile command: sass --watch styles/style.scss:styles/style.css
+$colors: ( "primary": #1DB954, "primary-hover": #1ED760, "secondary": #535353, "secondary-hover": #B3B3B3, "text": #F3F3F3, "background": #181818);
+$font: 'Montserrat',
+sans-serif;
+html,
+body {
+	background-color: map-get($colors, "background") !important;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, button, td, input[type=text] {
+	color: map-get($colors, "text");
+	font-family: $font;
+	padding:0;
+}
+
+.log-in-modal {
+	display: block;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.4);
+	.log-in-modal-content {
+		background-color: map-get($colors, "secondary");
+		display: flex;
+		flex-direction: column;
+		align-content: center;
+		text-align: center;
+		margin: 15% auto;
+		padding: 20px;
+		border-radius: 30px;
+		width: 40%;
+		.log-in.btn{
+			p{
+				margin: auto;
+			}
+			align-self: center;
+			display: flex;
+			flex-flow: column wrap;
+			text-decoration: none;
+			align-content: center;
+			justify-content: center;
+			font-size: 25px;
+			height: 75px;
+			width: 300px;
+			border-radius: 30px;
+			background-color: map-get($colors, "primary");
+			margin-top: 20px;
+			&:hover {
+				background-color: map-get($colors, "primary-hover")
+			}
+		}
+	}
+}
+
+header {
+	top: 0;
+	left: 0;
+	padding: 20px;
+	width: 100%;
+	display: block;
+	h1 {
+		float: left;
+	}
+	a p{
+		float: right;
+		display: flex;
+		flex-flow: column wrap;
+		align-self: center;
+		text-decoration: none;
+		align-content: center;
+		justify-content: center;
+		font-size: 18px;
+		height: 50px;
+		width: 80px;
+		border-radius: 30px;
+		background-color: map-get($colors, "primary");
+		&:hover {
+			text-decoration: none;
+			background-color: map-get($colors, "primary-hover")
+		}
+	}
+}
+
+main {
+	width: 100%;
+	margin-top: 40px;
+	.queue-container {
+		margin: 0;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-around;
+	}
+	.earth{height: 35vh;}
+	.search{height: 75vh;}
+	.queue{height: 35vh}
+	.search,
+	.queue {
+		margin-top: 50px;
+		padding: 20px;
+		.searchTop,
+		.queueTop {
+			display: flex;
+			justify-content: center;
+			#searchForm {
+				display: inline-block;
+				border-radius: 30px;
+				overflow: hidden;
+				background: rgba(255, 255, 255, 0.1);
+				.search-btn {
+					text-decoration: none;
+					font-size: 18px;
+					height: 50px;
+					width: 80px;
+					border-radius: 30px;
+					border: none;
+					background-color: map-get($colors, "primary");
+					&:hover {
+						background-color: map-get($colors, "primary-hover");
+					}
+					&:active:focus,
+					&:focus {
+						outline: none;
+						box-shadow: none;
+					}
+				}
+				.search-input {
+					height: 50px;
+					font-size: 18px;
+					padding: 20px;
+					border: 0;
+					outline: 0;
+					background: transparent;
+					&:active:focus,
+					&:focus {
+						outline: none;
+						box-shadow: none;
+					}
+				}
+			}
+		}
+		.searchBody,
+		.queueBody {
+			margin-top: 10px;
+			padding-left: 20px;
+			padding-right: 20px;
+			overflow-y: scroll;
+			height: 100%;
+			table {
+				margin-top: 10px;
+				width: 100%;
+				thead {
+					height: 30px;
+					td {
+						font-weight: bold;
+						text-align: center;
+						font-size: 20px;
+					}
+				}
+				tbody {
+					tr {
+						height: 30px;
+						text-align: center;
+						td {
+							text-align: center;
+							overflow: auto;
+						}
+					}
+					tr:hover {
+						background-color: map-get($colors, "secondary");
+					}
+				}
+				.song {
+					width: 10px;
+				}
+				.artist {
+					width: 100px;
+				}
+				.album {
+					width: 100px;
+				}
+				.length {
+					width: 100px;
+				}
+				.added {
+					width: 100px;
+				}
+				.delete {
+					width: 100px;
+				}
+			}
+		}
+	}
+}
+
+::-webkit-scrollbar {
+	width: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: map-get($colors, "secondary");
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: map-get($colors, "secondary-hover");
+}

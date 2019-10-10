@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>The Q</title>
+      <meta charset="utf-8">
+
+      <!-- Styles [Font, Bootstrap, SCSS, FA] -->
+      <link rel=stylesheet href="style.css">
+      <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <script src="https://kit.fontawesome.com/6998a6816b.js" crossorigin="anonymous"></script>
+      
+      <!-- JS [JQuery, Spotify API, Bootstrap, Maps API, WE] -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://sdk.scdn.co/spotify-player.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+      <script src="https://www.gstatic.com/charts/loader.js"></script>
+      
+      <!-- Custom Scripts [Bundle and Init] -->
+      <script src="bundle.js"></script>
+      <script>
+        const q = require('queue');
+        const m = require('map');
+        window.onload = function(){
+            q.init();
+            m.init();
+        }
+      </script>
+   </head>
+   <body>
+      <div class="log-in-modal" id="log-in-modal">
+         <div class="log-in-modal-content">
+            <h1>Log in to access The Q</h1>
+            <a id="log-in-btn" class="log-in btn" href="/login-spotify"><p>Log in: Spotify</p></a>
+         </div>
+      </div>
+      <header>
+         <h1>Welcome to The Q!</h1>
+         <a href="/logout" id="logout"><p>Log out</p></a>
+      </header>
+      <main>
+         <div class="queue-container container-fluid">
+            <div class="search col-md-12 col-lg-6">
+               <div class="searchTop">
+                  <form id="searchForm">
+                     <input class="search-input" type="text" id="searchText">
+                     <button class="search-btn" id="search" type="submit">Search</button>
+                  </form>
+               </div>
+               <div class="searchBody">
+                  <table class="searchTable">
+                     <thead>
+                        <td class="song">Song</td>
+                        <td class="artist">Artist</td>
+                        <td class="album">Album</td>
+                        <td class="length">Length</td>
+                     </thead>
+                     <tbody id="searchTable"></tbody>
+                  </table>
+               </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+                <div id="map" class="earth w-100">
+                    
+                </div>
+                <div class="queue w-100">
+                    <div class="queueTop">
+                        <h2>Queue</h2>
+                    </div>
+                    <div class="queueBody">
+                        <table class="queueTable">
+                            <thead>
+                                <td class="song">Song</td>
+                                <td class="artist">Artist</td>
+                                <td class="length">Length</td>
+                                <td class="added">Added By</td>
+                            </thead>
+                            <tbody id="queueTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+         </div>
+      </main>
+   </body>
+</html>
