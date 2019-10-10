@@ -23,22 +23,17 @@ Our team consists of four members: Manasi Danke, Carla Duarte, Amanda Ezeobiejes
 
 
 Username: ciduarte@wpi.edu
-
 Password: 1234
 
 
 Username: mmdanke@wpi.edu
-
 Password: 1234
 
-
 Username: ylin7@wpi.edu
-
 Password: 1234
 
 
 Username: aezeobiejesi@wpi.edu
-
 Password: 1234
 
 8) If you have any additional questions, please do not hesitate to reach out to us.
@@ -71,8 +66,8 @@ key features in our project management dashboard:
   
   2)  A room availability dashboard which includes:
   
-  - a form that allows users to select which days and times of the week they'd like to book a meeting for, and
-  - a visual table display of rooms that are already booked for particular times
+   - a form that allows users to select which days and times of the week they'd like to book a meeting for, and
+   - a visual table display of rooms that are already booked for particular times
   
   3)  A tool that sends an email to recipients through our application to share booking details and provide confirmation.
   
@@ -98,17 +93,17 @@ Our project is a complete web application:
 
 ### Technologies Used and How We Used Them:
 
-- HTML: divided main pages into their own html files to help modularize the code and display certain content for certain aspects of the site
+- <b>HTML:</b> divided main pages into their own html files to help modularize the code and display certain content for certain aspects of the site
 
-- CSS: A bootstrap template found on TemplateMag; we additionally altered CSS through flexbox and editing style, color, font, size,etc...
+- <b>CSS:</b> A bootstrap template found on TemplateMag; we additionally altered CSS through flexbox and editing style, color, font, size,etc...
 
-- Javascript:
+- <b>Javascript:</b>
   - <u>In general:</u> helped to modify content on the website, interact with user’s actions, and connect the front-end and back-end of the project
   - <u>Node.js:</u> used for server-side
   - <u>Nodemailer:</u> used to help us send booking confirmation emails from our account to the specified recipients
   - <u>Lowdb:</u> used for our database and make sure that our data is persistent
 
-- Middleware:
+- <b>Middleware:</b>
   - <u>Express:</u> a middleware and routing web framework with minimal functionality that listens for requests and calls the appropriate functions
   - <u>bodyParser:</u> parses incoming http request bodies before handlers.
   - <u>Passport and Passport-local:</u> authenticates requests through strategies such as the Local strategy(in this example).
@@ -121,11 +116,11 @@ We had to research many components of our application and found resources on Sta
 
 Additional Technical/Design Achievements:
 
-- <b>*nodemailer:*<b> used to send emails from our specialized team gmail account that notified recipents of the day, start time, end time,
+- <b>*nodemailer:*</b> used to send emails from our specialized team gmail account that notified recipents of the day, start time, end time,
 and location of their scheduled meeting.
-- <b>*Responsive Layout:*<b> maintained a responsive layout throughout the entire website. This makes it more convenient for users to
+- <b>*Responsive Layout:*</b> maintained a responsive layout throughout the entire website. This makes it more convenient for users to
 book rooms on the go through their mobile devices.
-- <b>*Login security*:<b> We implemented login redirect cards in order to prevent users from booking meetings if they are not logged in.
+- <b>*Login security*:</b> We implemented login redirect cards in order to prevent users from booking meetings if they are not logged in.
 
 ## Challenges:
 
@@ -157,10 +152,10 @@ Potentially have a dropdown menu so it is easier to switch days
 <b>Room Sizes:</b> 
 We would implement different room sizes so that a user can choose if they want to book a room that holds 4 people, 6 people, or 8 people.
 
-- <b>Email Functionality:</b> 
+<b>Email Functionality:</b> 
 We would change the sending emails functionality so that when an email is sent to the recipients, it shows that that user is the one that booked the room. We could also allow users to add a message in the booking form so all recipients will receive the message.
 
-- <b>Past Meetings:</b> 
+<b>Past Meetings:</b> 
 For the Meetings page, we would have made it possible for a user to see their past meetings as if stored in their own personal calendar. Possibly a dropdown where the user could select a particular day and that day’s, meetings would show up. 
 
 
