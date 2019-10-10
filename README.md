@@ -1,51 +1,53 @@
-# cs4241-FinalProject
+Assignment 5
+=================
 
-For your final project, you'll implement a course project that exhibits your mastery of the course materials. 
-Similar to A4, this project gives you an opportunity to be creative and to pursue individual research and learning.
+**This Project was completed by Andrew Hand, WPI 2020**
 
-## General description
+The following link goes to my Magic the Gatherig Deckbuilder App that was designed to allow users a simple and effective way to create and edit
+custom desklists. To aid in the design I also implemented a dynamic vizual to help the user accurately determine the 'Mana Curve' and 'Color Identity'
+of the deck.
 
-Your project should consist of a complete Web application, exhibiting facets of the three main sections of the course material:
+https://fp-andrewhand.glitch.me/
 
-- Static Web page content and design. You should have a project that is accessible, easily navigable, and features significant content.
-- Dynamic behavior implemented with JavaScript.
-- Server-side programming *using Node.js*. Typically this will take the form of some sort of persistent data, authentication, and possibly server-side computation.
+The site requires you to log in before use.
 
-Additionally, you should incorporate features that you independently research, design, and implement for your project.
+One of the biggest challenges I faced during this assignment was **Callback  Hell**, and boi was it. Almost 100% of my Full-Stack experience was developed
+using Flask (The superior back-end; You can tell me anything and I will remain ignorant) which does not have to worry about synchronistic functionalities.
+Not knowing how to properly use asynchronous functions in JS (and not to keen on figuring it out) made implementing a few of my feature quite troublesome.
+There were multiple attempts to get the Gather API call to behave as expected and even still it gets behind of the /read request, making it neccessary to
+refresh the page to see any /add(ed) elements to the decklist.
 
-## Project ideation
 
-Excellent projects serve someone/some group; for this assignment you need to define your users and stakeholders. I encourage you to identify projects that will have impact, either artistically, politically, or in terms of productivity. Consider creating something useful for a cause or hobby you care about.
+To Use:
+------------
+The site requires you to log in before use.
 
-## Logistics
+- Click `Add` to add the information from the `Quantity` `Card Name` and `Set Name` Fields. (The page my need to be refreashed to see these changes)
+- Click `Update` to change the information in the `Quantity` field for a given `Card Name` and `Set Name`. <br />
+  **NOTE:** The `Card Name` and `Set Name` fields may not change for this.
+- Click `Update` then `Delete` to delete the a entry entirely.
+- Click `Login` in the nav bar to log into your account.
 
-### Team size
-Students are encouraged to work in teams of 2-5 students for the project. This will allow you to build a good project without expending an excessive amount of effort. While I would expect a team of four or five students to produce a project with more features, I expect a every team's work to exhibit all of the required facets described above.
+Currently the only user is: <br />
+**Username:** *Andrew* <br />
+**Password:** *Password*
 
-### Deliverables
+To create a new user: <br />
+- Click the `Sign Up` button. <br />
+- Enter a new `(username, password)`. <br />
+- Then click `Sign In` and you should be directed to the Login page.
 
-__Proposal:__ 
-Provide an outline of your project direction and the names of the team members. 
-The outline should have enough detail so that staff can determine if it meets the minimum expectations, or if it goes too far to be reasonable by the deadline.
-This file must be named proposal.md so we can find it.
-Submit a PR to turn it in by Monday, September 30th, before class
+To log out of your account:
+- Click `Sign Out`
 
-There are no other scheduled checkpoints for your project. 
-You must be done in time to present before the final project demo day (October 10th). 
 
-#### Turning in Your Outline / Project
+Achievements
+-------------------
+- Use of D3 to create a dyamically loaded vizual.
+- Use of the Gather (MtG) Api to obtain the all addtion card information based on the card (Name, Set)
+- Use of a enviromental variables to create a secure session secret.
+- Implementation of SQLite to store persistent data to be displayed in the deck list table. 
+- Use of automatic redirects for the sign in/out pages that vary for success and failure cases.
+- Users decklist will only appear for that user, and no other user.
+- Use of Bootstrap in place of traditonal CSS styling to simplify the design of the website.
 
-**NOTE: code is due before the project presentation day due to the end of term / grading schedule constraints**
-Submit a second PR on the final project repo to turn in your app and code.
-
-Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service.
-Folks on the same team do not need to post the same webpage, but must instead clearly state who is on the team in their proposal.
-(Staff will use the proposal to build the grading sheet.)
-
-## Final Presentation
-
-Presentations will occur during the final day of class.
-
-## FAQs
-
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use node.js.

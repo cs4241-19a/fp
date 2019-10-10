@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+      <!-- jQuery library -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+      <!-- Popper JS -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+      <!-- Latest compiled JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </head>
+    
+    
+  
+    <body>
+        <div class="container-fluid">
+          <div class="row no-gutter">
+<!--             <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div> -->
+            <div class="col-md-8 col-lg-6">
+              <div class="login d-flex align-items-center py-5">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-9 col-lg-8 mx-auto">
+                      <h3 class="login-heading mb-4">Welcome back!</h3>
+                      <form>
+
+                        <div class="form-label-group">
+                          <input type="username" id="username" class="form-control" placeholder="Username">
+                          <label for="inputUsername">Username</label>
+                        </div>
+
+                        <div class="form-label-group">
+                          <input type="password" id="password" class="form-control" placeholder="Password">
+                          <label for="inputPassword">Password</label>
+                        </div>
+
+                        <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" id="confirmLogin">Sign In</button>
+                        <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" id="signUp">Sign Up</button>
+
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+    </body>
+  
+    <script>
+          const redirectHome = function () {
+              fetch('/', {
+                  method: 'GET',
+                  credentials: 'include',
+              }).then(function (response) {
+                  window.location.href = response.url
+              })
+          }
+
+          const redirectLogin = function () {
+              fetch('/redirect-login', {
+                  method: 'GET',
+                  credentials: 'include',
+              }).then(function (response) {
+                  window.location.href = response.url
+              })
+          }
+
+          const redirectSignup = function () {
+              fetch('/redirect-signup', {
+                  method: 'GET',
+                  credentials: 'include',
+              }).then(function (response) {
+                  window.location.href = response.url
+              })
+          }
+
+          const login = function () {
+              const username = document.querySelector('#username'),
+                  password = document.querySelector('#password'),
+                  json = {
+                      'username': username.value,
+                      'password': password.value,
+                  },
+                  body = JSON.stringify(json)
+              username.value = ""
+              password.value = ""
+
+              fetch('/login', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  credentials: 'include',
+                  body
+              })
+                  .then(function (response) {
+                      // do something with the reponse 
+                      window.location.href = response.url
+                  })
+
+              return false
+          }
+
+          //const homeButton = document.getElementById('home-button');
+          const signupButton = document.getElementById('signUp');
+          const confirmLoginButton = document.getElementById('confirmLogin');
+          //homeButton.onclick = redirectHome;
+          signupButton.onclick = redirectSignup;
+          confirmLoginButton.onclick = login;
+    </script>
+</html>

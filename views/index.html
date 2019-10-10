@@ -1,0 +1,510 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Welcome to Glitch!</title>
+    <meta name="description" content="A cool thing made with Glitch">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    
+    <!-- import the webpage's client-side javascript file -->
+    <!-- <script src="/client.js" defer></script> --> 
+    <style type="text/css">
+      svg {
+        font: 10px sans-serif;
+        shape-rendering: crispEdges;
+      }
+
+      .axis path,
+      .axis line {
+        fill: none;
+        stroke: #000;
+      }
+
+      path.domain {
+        stroke: none;
+      }
+
+      .y .tick line {
+        stroke: #ddd;
+      }
+      
+/*       .arc text {
+        font: 10px sans-serif;
+        text-anchor: middle;
+      }
+
+      .arc path {
+        stroke: #000;
+        stroke-width: .5;
+      } */
+    </style>
+    
+  </head>
+  <body>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">MtG Deck Builder</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+<!--             <li class="nav-item active">
+              <a class="nav-link" href="#">Home
+                    <span class="sr-only">(current)</span>
+                  </a>
+            </li> -->
+            <li class="nav-item">
+              <div>
+                <button id = "login-button" class = "button">Login</button>
+                <button id = "signup-button" class = "button">Signup</button>  
+                <button id = "signout-button" class = "button">Signout</button>
+              </div>
+            </li>
+    <!--         <li class="nav-item">
+              <a class="nav-link" href="#">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+<!--     <header>
+      <h1>
+        Magic the Gathering Deck Builder
+      </h1>
+    </header> -->
+    
+<!--     <div>
+      <button id = "login-button" class = "button">Login</button>
+      <button id = "signup-button" class = "button">Signup</button>  
+      <button id = "signout-button" class = "button">Signout</button>
+    </div>
+     -->
+    <header class="masthead">
+<!--       <div class="container h-100">
+        <div class="row h-100 align-items-center">
+          <div class="col-12 text-center">
+            <h1 class="font-weight-light">Vertically Centered Masthead Content</h1>
+            <p class="lead">A great starter layout for a landing page</p>
+          </div>
+        </div>
+      </div> -->
+      <div style="padding:100px; padding-bottom: 25px !important;">
+        <h3>Edit a Card in the Deck List</h3>
+        <form>
+          <input id="quantity" type="number" placeholder="Quantity" style="width:100px">
+          <input id="card_name" type="text" placeholder="Card Name">
+          <input id="set_name" type="text" placeholder="Set Name">
+          <button id="addNew">Add</button>
+          <button id="update">Update</button>
+          <button id="del">Delete</button>
+        </form>
+      </div>
+
+      <div id="viz">
+        
+      </div>
+      
+      <div style="padding:50px; height:500px">
+        <table class="table table-striped" id="results">
+        </table>
+      </div>
+      
+    </header>
+    <!--
+    <div style="padding:100px; padding-bottom: 25px !important;">
+      <h3>Edit a Card in the Deck List</h3>
+      <form>
+        <input id="quantity" type="number" placeholder="Quantity" style="width:100px">
+        <input id="card_name" type="text" placeholder="Card Name">
+        <input id="set_name" type="text" placeholder="Set Name">
+        <button id="addNew">Add</button>
+        <button id="update">Update</button>
+        <button id="del">Delete</button>
+      </form>
+    </div>
+    
+    <div style="padding:50px; height:500px">
+      <table class="table table-striped" id="results">
+      </table>
+    </div> -->
+    
+  </body>
+</html>
+
+<script>
+  // reads all data from server, and calls build
+  let names_arr = [];
+  read();
+  
+  // Add button code
+  document.getElementById('addNew').addEventListener('click', function(evt) {
+    let card = {};
+    card.quantity = document.getElementById('quantity').value;
+    card.card_name = document.getElementById('card_name').value;
+    card.set_name = document.getElementById('set_name').value;
+    addNew(card);
+    event.preventDefault();
+  });
+  
+  // Save button code
+  document.getElementById('update').addEventListener('click', function(evt) {
+    let card = {};
+    card.quantity = document.getElementById('quantity').value;
+    card.card_name = document.getElementById('card_name').value;
+    card.set_name = document.getElementById('set_name').value;
+    update(card);
+    event.preventDefault();
+  });
+  
+  // Delete button code
+  document.getElementById('del').addEventListener('click', function(evt) {
+    let card = {};
+    card.quantity = document.getElementById('quantity').value;
+    card.card_name = document.getElementById('card_name').value;
+    card.set_name = document.getElementById('set_name').value;
+    del(card);
+    event.preventDefault();
+  });
+
+  function read() {
+    var request = new XMLHttpRequest();
+    request.open('GET', '/read');
+    request.responseType = 'json';
+    request.onload = function() {
+      names_arr = request.response;
+      console.log(names_arr);
+      build( names_arr );
+      build_ds( names_arr );
+    };
+    request.send();
+  }
+  
+  let data = []
+  
+  function build_ds( names_arr ) {
+    for (i = 0; i < 9; i++) {
+      let datapoint = {CMC: i, Colorless: 0, White: 0, Blue: 0, Black: 0, Red: 0, Green: 0}
+      data.push(datapoint)
+    }
+    names_arr.forEach(function (name) {
+      let CMC = name.cmc
+      let COLOR = name.color
+      let QUAN = name.quantity
+      
+      data.forEach(function (datapoint) {
+        if (datapoint.CMC === CMC) {
+          datapoint[COLOR] += QUAN;
+        }
+      })
+      // console.log(CMC)
+      // if (dataset.(CMC) === undefined) {
+      //   dataset.(CMC) = {}
+      //   dataset.(CMC).(COLOR) = 1
+      // } else if (dataset.$CMC.$COLOR === undefined) {
+      //   dataset.(CMC).(COLOR) = 1
+      // } else{
+      //   dataset.(CMC).(COLOR)++
+      // }
+      
+    })
+    console.log(data)
+    build_viz(data)
+  }
+
+  function build( names_arr ) {
+    var results_html = `${
+      names_arr.map(name =>
+        `
+        <tr card_name=${name.card_name}>
+          <td style="width:50px; text-align: center;">${name.quantity}</td>
+          <td style="width:200px; text-align: center;">
+            <div onmouseover="show_image( '${name.card_name}' )" onmouseleave="image_disappear( '${name.card_name}' )">
+              ${name.card_name}
+            </div>
+          <td style="width:150px; text-align: center;">${name.set_name}</td>
+          <td><button id="edit_${name.card_name}" class="edit_btn" onclick="move_row('${name.card_name}')"> Edit Quantity </button></td>
+        </tr>
+        `
+      ).join('')
+    }`
+    //console.log(results_html);
+    html = ''
+    html = html + '<table id="resultsTable">'
+    html = html + '<th>Quantity</th>'
+    html = html + '<th>Card Name</th>'
+    html = html + '<th>Set Name</th>'
+    // html = html + '<th>Select for Edit</th>'
+    html = html + '</table>'
+    html = html + results_html
+    //console.log(html)
+    document.getElementById('results').innerHTML = html;
+  }
+  
+  function show_image(card_name) {
+    var i = document.createElement("div");
+    i.setAttribute("id", "current_image")
+    i.setAttribute("src", "https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=457327&type=card");
+    console.log('here')
+  }
+  
+  function image_disappear(card_name) {
+    
+  }
+
+  // moves a row from results to the form, for user editing
+  function move_row( card_name ) {
+    name_current = names_arr.filter( function(d){ return d.card_name === card_name; } )[0];
+    document.getElementById('quantity').value = name_current.quantity;
+    document.getElementById('card_name').value = name_current.card_name;
+    document.getElementById('set_name').value = name_current.set_name;
+  }
+  
+  // add function
+  function addNew( card ) {
+    let xhttp = new XMLHttpRequest();
+    let target = JSON.stringify(card);
+    xhttp.open("POST", "/add", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(target);
+    console.log(target);
+    document.location.reload();
+  }
+  
+  // update function
+  function update( card ) {
+    let xhttp = new XMLHttpRequest();
+    let target = JSON.stringify(card);
+    xhttp.open("POST", "/update", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(target);
+    document.location.reload();
+  }
+  
+  // delete function
+  function del( card ) {
+    var xhttp = new XMLHttpRequest();
+    var target = JSON.stringify(card)
+    xhttp.open("PUT", "/delete", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(target);
+    document.location.reload();
+  }
+  
+  const redirectLogin = function () {
+    fetch('/redirect-login', {
+      method: 'GET',
+      credentials: 'include',
+    }).then(function (response) {
+      window.location.href = response.url
+    })
+  }
+
+  const redirectSignup = function () {
+    fetch('/redirect-signup', {
+      method: 'GET',
+      credentials: 'include',
+    }).then(function (response) {
+      window.location.href = response.url
+    })
+  }
+
+  const signout = function () {
+    fetch('/signout', {
+      method: 'POST',
+      credentials: 'include',
+    }).then(function (response) {
+      window.location.href = response.url
+    })
+  }
+  
+  const loginButton = document.getElementById('login-button');
+  const signupButton = document.getElementById('signup-button');
+  const signoutButton = document.getElementById('signout-button');
+  loginButton.onclick = redirectLogin;
+  signupButton.onclick = redirectSignup;
+  signoutButton.onclick = signout;
+  
+  const build_viz = function (data) {
+    var margin = {top: 20, right: 30, bottom: 35, left: 150};
+
+    var width = (960) - margin.left - margin.right,
+        height = (500) - margin.top - margin.bottom;
+
+    var svg = d3.select("#viz")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+  //   /* Data in strings like it would be if imported from a csv */
+
+  //   // var data = [
+  //   //   { CMC: "1", Colorless: "6", White: "0", Blue: "0", Black: "0", Red: "0", Green: "0" },
+  //   //   { CMC: "2", Colorless: "8", White: "0", Blue: "2", Black: "0", Red: "0", Green: "0" },
+  //   //   { CMC: "3", Colorless: "5", White: "0", Blue: "4", Black: "0", Red: "0", Green: "0" },
+  //   //   { CMC: "4", Colorless: "4", White: "0", Blue: "0", Black: "0", Red: "0", Green: "0" },
+  //   //   { CMC: "5", Colorless: "0", White: "0", Blue: "0", Black: "0", Red: "0", Green: "0" },
+  //   //   { CMC: "6", Colorless: "2", White: "0", Blue: "2", Black: "0", Red: "0", Green: "0" },
+  //   //   { CMC: "7", Colorless: "2", White: "0", Blue: "2", Black: "0", Red: "0", Green: "0" },
+  //   //   { CMC: "8", Colorless: "3", White: "0", Blue: "0", Black: "0", Red: "0", Green: "0" },
+  //   // ];
+
+
+
+
+    // Transpose the data into layers
+    var dataset = d3.layout.stack()(["Colorless", "White", "Blue", "Black", "Red", "Green"].map(function(fruit) {
+      return data.map(function(d) {
+        return {x: d.CMC, y: d[fruit]};
+      });
+    }));
+
+
+    // Set x, y and colors
+    var x = d3.scale.ordinal()
+      .domain(dataset[0].map(function(d) { return d.x; }))
+      .rangeRoundBands([10, width-10], 0.02);
+
+    var y = d3.scale.linear()
+      .domain([0, d3.max(dataset, function(d) {  return d3.max(d, function(d) { return d.y0 + d.y; });  })])
+      .range([height, 0]);
+
+    var colors = ["#ABB2B9", "#F7F9F9", "#5DADE2", "#2C3E50", "#E74C3C", "#28B463"];
+
+
+    // Define and draw axes
+    var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient("left")
+      .ticks(5)
+      .tickSize(-width, 0, 0)
+      .tickFormat( function(d) { return d } );
+
+    var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom")
+
+    svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis);
+
+    svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+
+    // Create groups for each series, rects for each segment 
+    var groups = svg.selectAll("g.cost")
+      .data(dataset)
+      .enter().append("g")
+      .attr("class", "cost")
+      .style("fill", function(d, i) { return colors[i]; });
+
+    var rect = groups.selectAll("rect")
+      .data(function(d) { return d; })
+      .enter()
+      .append("rect")
+      .attr("x", function(d) { return x(d.x); })
+      .attr("y", function(d) { return y(d.y0 + d.y); })
+      .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
+      .attr("width", x.rangeBand())
+      .style("stroke", "black")
+      .style("stroke-width", ".5")
+      .on("mouseover", function() { tooltip.style("display", null); })
+      .on("mouseout", function() { tooltip.style("display", "none"); })
+      .on("mousemove", function(d) {
+        var xPosition = d3.mouse(this)[0] - 15;
+        var yPosition = d3.mouse(this)[1] - 25;
+        tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+        tooltip.select("text").text(d.y);
+      });
+
+
+    // Draw legend
+    var legend = svg.selectAll(".legend")
+      .data(colors)
+      .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(30," + i * 19 + ")"; });
+
+    legend.append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("stroke", "black")
+      .style("stroke-width", ".5")
+      .style("fill", function(d, i) {return colors.slice()[i];});
+
+    legend.append("text")
+      .attr("x", width + 5)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "start")
+      .text(function(d, i) { 
+        switch (i) {
+          case 0: return "Colorless";
+          case 1: return "White";
+          case 2: return "Blue";
+          case 3: return "Black";
+          case 4: return "Red";
+          case 5: return "Green";
+        }
+      });
+
+    // text label for the x axis
+    svg.append("text")             
+        .attr("transform",
+              "translate(" + (width/2) + " ," + 
+                             (height + margin.top + 10) + ")")
+        .style("text-anchor", "middle")
+        .text("Converted Mana Cost (CMC)");
+
+
+    // Prep the tooltip bits, initial display is hidden
+    var tooltip = svg.append("g")
+      .attr("class", "tooltip")
+      .style("display", "none");
+
+    tooltip.append("rect")
+      .attr("width", 30)
+      .attr("height", 20)
+      .attr("fill", "white")
+      .style("opacity", 0.5);
+
+    tooltip.append("text")
+      .attr("x", 15)
+      .attr("dy", "1.2em")
+      .style("text-anchor", "middle")
+      .attr("font-size", "12px")
+      .attr("font-weight", "bold");
+  }
+  
+</script>
