@@ -471,7 +471,7 @@ function makeGray(btn, selected) {
 
   let b = document.getElementById(btn);
   let teamColor = b.style.backgroundColor;
-  let roleName = b.innerHTML.split("Team")[1];
+  let roleData = b.innerHTML.split("Team");
   b.style.backgroundColor = "gray";
   b.style.borderColor = "gold";
   selected.state.selectedRole = btn;
@@ -483,11 +483,19 @@ function makeGray(btn, selected) {
   sessionStorage.setItem("userInfo", name);
   socket.emit("roleSelection", selected.state.selectedRole, name);
 
-
   let whoYouAre = document.getElementById("yourTeam");
   console.log(teamColor);
-  whoYouAre.style.backgroundColor = teamColor;
-  whoYouAre.innerHTML = name + " (<i>" + roleName + "</i> )";
+  whoYouAre.style.backgroundColor = getColor(roleData[0]);
+  whoYouAre.innerHTML = name + " (<i>" + roleData[1] + "</i> )";
+}
+
+function getColor(color){
+  if(color === "Blue "){
+    console.log('blue');
+    return BLU;
+  }else{
+    return RED;
+  }
 }
 
 function resetMenu(play) {
