@@ -21,6 +21,8 @@ const cellTypes = {
 
 
 let waveSpacingDur = 40;  // how many update cycles to wait until moving
+let wavePauseTime = 200;
+let difInc = 0.12;
 const offScreenCoord = {x: -500, y: -500};
 
 const cellSize = {width: 40, height: 40};
@@ -112,13 +114,13 @@ function getGraph() {
 
 function getPath(startCoord) {
     const graphData = getGraph();
-    console.log("graph data:", graphData, startCoord);
+    // console.log("graph data:", graphData, startCoord);
     const graph = new Graph(graphData, {diagonal: true});
     // x and y are switched in grid
     const start = graph.grid[startCoord.y][startCoord.x];
     const end = graph.grid[baseEntrance.y][baseEntrance.x];
     const path = astar.search(graph, start, end, {heuristic: astar.heuristics.diagonal});
-    console.log("path:", path);
+    // console.log("path:", path);
     return path;
 }
 

@@ -58,7 +58,6 @@ const gamePlayState = new Phaser.Class({
             scene.towers.push(scene.Towers.Cannons.create(scene.Towers.Cannons.Cannon(scene, coord)));
         };
 
-        for (let i = 0; i < 5; i++) scene.addTruck3b(i * 10);
         // scene.addTruck3b(1);
         // scene.addSandBag({x: 1, y: 1});
 
@@ -70,11 +69,26 @@ const gamePlayState = new Phaser.Class({
         this.cursor = this.add.graphics();
         this.cursor.lineStyle(2, 0x000000, 1);
         this.cursor.strokeRect(0, 0, 40, 40);
+
+        // wave values
+        this.waveIdx = 0;
+        this.waveAmount = 3;
+        this.spacingChoices = [60, 40, 30, 20, 15, 10, 5];
         },
 
     update: function() {
         const scene = this;
         // console.log(scene.enemies);
+        if (scene.enemies.length === 0) {
+            waveSpacingDur = this.spacingChoices[Math.floor(Math.random() * this.spacingChoices.length + (this.waveIdx / 5)) % this.spacingChoices.length];
+            this.waveIdx++;
+            if (this.waveIdx % 2 === 0) {
+                this.waveAmount += 1;
+            }
+            for (let i = 0; i < this.waveAmount; i++) {
+                scene.addTruck3b(i);
+            }
+        }
         updateCursor(scene);
         scene.enemies.forEach(enemy => {
             enemy.move();
@@ -189,7 +203,7 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase, scen
     const spriteRotation = sprite.rotation;  // should be passed in facing right
     let hp = healthPoints;
     let alive = true;
-    let waveWaitDur = waveSpacingDur * waveIndex;
+    let waveWaitDur = waveSpacingDur * waveIndex + wavePauseTime;
     let healthBar;
     let healthBarBg;
 
@@ -269,10 +283,7 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase, scen
     }
 
     function updateHealthBarHealth() {
-        console.log("here");
-        console.log(healthBar);
         healthBar.scaleX = (hp > 0) ? (hp / healthPoints) : 0;
-        console.log(healthBar.scaleX);
         if (healthBar.scaleX < .6 && healthBar.scaleX > .3) {
             healthBar.fillStyle(0xeeee00, 1);
             healthBar.fillRect(0, 0, cellSize.width, 6);
@@ -419,7 +430,7 @@ function Truck(events, scene) {
      * @returns {{damage: (function(number)), move: Function, sprite: *}}
      */
     function create(sprite, waveIndex) {
-        return Enemy(sprite, waveIndex, 0.06, 75, events.onDeath, events.onBase, scene);
+        return Enemy(sprite, waveIndex, 0.06, 75 * (scene.waveIdx * difInc + 1), events.onDeath, events.onBase, scene);
     }
 
     function Truck3b(scene) {
