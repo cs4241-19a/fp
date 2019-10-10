@@ -54,7 +54,7 @@ window.onload = function() {
       }
     });
   });
-  //setInterval(updateChat, 3000);
+  setInterval(updateChat, 100000);
 };
 
 function updateChat() {
@@ -117,7 +117,7 @@ function makeToTextBubble(str) {
   pad.style = "width:55%";
   bubble.innerHTML = str;
   bubble.style =
-    "background-color: #70dafa; width:20%; font-weight:bold; border-radius:15px;  float:right";
+    "background-color: #70dafa; width:20%; font-size:40px; font-weight:bold; border-radius:15px;  float:right";
   container.appendChild(pad);
   container.appendChild(bubble);
   document.getElementById("board").appendChild(container);
@@ -131,7 +131,7 @@ function makeFromTextBubble(str) {
   pad.style = "width:55%";
   bubble.innerHTML = str;
   bubble.style =
-    "background-color: #6df299; width:20%; font-weight:bold; border-radius:15px; float:left";
+    "background-color: #6df299; width:20%; font-size:40px; font-weight:bold; border-radius:15px; float:left";
   container.appendChild(bubble);
   container.appendChild(pad);
   document.getElementById("board").appendChild(container);
