@@ -1,0 +1,236 @@
+@import url(https://fonts.googleapis.com/css?family=Rajdhani:300);
+html, body {
+    background: url(http://aaronchuo.cc/assets/images/ironwall.jpg) #212121 top center no-repeat;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: .1em;
+}
+
+.scifiUI {
+    width: 600px;
+    margin: 50px auto;
+    font-size: 18px;
+    color: #00bebe;
+}
+.scifiUI * {
+    transition: all 250ms ease-in-out;
+    outline: none;
+}
+.scifiUI :before,
+.scifiUI :after {
+    transition: all 200ms ease-in-out;
+    content: '';
+}
+.scifiUI .inline {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+}
+.scifiUI .inline label {
+    padding-right: 5px;
+}
+.scifiUI input[type=text] {
+    height: 50px;
+    border: 1px solid #00bebe;
+    padding: 0 10px;
+    background: transparent;
+}
+.scifiUI input[type=text]:hover {
+    box-shadow: 0 0 8px #00bebe inset, 0 0 8px #00bebe;
+    border: 1px solid #00dcdc;
+}
+.scifiUI input[type=text]:focus {
+    box-shadow: 0 0 20px #00dcdc inset, 0 0 10px #00dcdc, 0 0 20px white;
+    border: 1px solid #00dcdc;
+    background: #00dcdc;
+    color: #212121;
+}
+.scifiUI .radioWrapper {
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    width: 20%;
+}
+.scifiUI .radioWrapper input[type=radio] {
+    position: absolute;
+    top: -100%;
+}
+.scifiUI .radioWrapper input[type=radio] ~ label {
+    display: block;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 35px;
+    text-align: left;
+    cursor: pointer;
+}
+.scifiUI .radioWrapper input[type=radio] ~ label:before {
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    top: 13px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #00bebe;
+}
+.scifiUI .radioWrapper input[type=radio] ~ label:after {
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity: 0;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 100%;
+}
+.scifiUI .radioWrapper input[type=radio]:hover ~ label {
+    color: #00dcdc;
+}
+.scifiUI .radioWrapper input[type=radio]:hover ~ label:before {
+    box-shadow: 0 0 8px #00bebe inset, 0 0 8px #00bebe;
+    border: 1px solid #00dcdc;
+}
+.scifiUI .radioWrapper input[type=radio]:checked ~ label {
+    color: #00dcdc;
+}
+.scifiUI .radioWrapper input[type=radio]:checked ~ label:before {
+    box-shadow: 0 0 8px #00bebe inset, 0 0 8px #00bebe;
+    border: 1px solid #00dcdc;
+}
+.scifiUI .radioWrapper input[type=radio]:checked ~ label:after {
+    filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+    opacity: 1;
+    box-shadow: 0 0 20px #00dcdc inset, 0 0 10px #00dcdc, 0 0 20px white;
+    border: 1px solid #00dcdc;
+    background: #00dcdc;
+    top: 18px;
+    left: 10px;
+    width: 10px;
+    height: 20%;
+}
+.scifiUI .checkboxWrapper {
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    margin-right: 15px;
+}
+.scifiUI .checkboxWrapper input[type=checkbox] {
+    position: absolute;
+    top: -100%;
+}
+.scifiUI .checkboxWrapper input[type=checkbox] ~ label {
+    display: block;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 35px;
+    text-align: left;
+    cursor: pointer;
+}
+.scifiUI .checkboxWrapper input[type=checkbox] ~ label:before {
+    display: block;
+    position: absolute;
+    top: 7px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #00bebe;
+}
+.scifiUI .checkboxWrapper input[type=checkbox] ~ label:after {
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity: 0;
+    box-shadow: 1px -7px 5px 3px #00bebe, 5px 5px 5px 3px #00dcdc;
+    display: block;
+    position: absolute;
+    top: 7px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+}
+.scifiUI .checkboxWrapper input[type=checkbox]:hover ~ label {
+    color: #00dcdc;
+}
+.scifiUI .checkboxWrapper input[type=checkbox]:hover ~ label:before {
+    box-shadow: 0 0 8px #00bebe inset, 0 0 8px #00bebe;
+    border: 1px solid #00dcdc;
+}
+.scifiUI .checkboxWrapper input[type=checkbox]:checked ~ label {
+    color: #00dcdc;
+}
+.scifiUI .checkboxWrapper input[type=checkbox]:checked ~ label:before {
+    box-shadow: 0 0 8px #00bebe inset, 0 0 8px #00bebe;
+    border: 1px solid #00dcdc;
+}
+.scifiUI .checkboxWrapper input[type=checkbox]:checked ~ label:after {
+    filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+    opacity: 1;
+    box-shadow: 0 0 20px #00dcdc inset, 0 0 10px #00dcdc, 0 0 20px white;
+    border: 1px solid #00dcdc;
+    background: #00dcdc;
+    top: 14px;
+    left: 10px;
+    width: 10px;
+    height: 10px;
+}
+.scifiUI .selectWrapper {
+    overflow: hidden;
+    position: relative;
+    width: 1200px;
+    height: 50px;
+    border-left: 5px solid #00bebe;
+}
+.scifiUI .selectWrapper:hover {
+    box-shadow: 0 0 20px #00dcdc inset, 0 0 10px #00dcdc, 0 0 20px white;
+    border: 1px solid #00dcdc;
+    background: #00dcdc;
+    width: 200px;
+    height: 50px;
+}
+.scifiUI .selectWrapper:hover select {
+    color: #212121;
+}
+.scifiUI .selectWrapper:hover select + i {
+    border-top-color: #212121;
+}
+.scifiUI .selectWrapper i {
+    position: absolute;
+    top: 18px;
+    left: 10px;
+    width: 0;
+    height: 100%;
+    border-top: 15px solid #00bebe;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
+.scifiUI .selectWrapper select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    box-shadow: none;
+    position: absolute;
+    width: 200px;
+    height: 100%;
+    padding-left: 40px;
+    border: 0;
+    outline: 0;
+    background: none;
+    z-index: 99;
+    cursor: pointer;
+}
+.scifiUI button {
+    overflow: hidden;
+    position: relative;
+    width: 200px;
+    height: 50px;
+    border: 1px solid #00bebe;
+    background: rgba(0, 190, 190, 0.2);
+}
+.scifiUI button:hover {
+    box-shadow: 0 0 8px #00bebe inset, 0 0 8px #00bebe;
+    border: 1px solid #00dcdc;
+    color: #00dcdc;
+    background: rgba(0, 220, 220, 0.3);
+}
