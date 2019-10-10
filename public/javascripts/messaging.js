@@ -50,7 +50,7 @@ window.onload = function() {
     });
   });
   setInterval(updateChat, 3000);
-}
+};
 
 function updateChat() {
   fetch("messaging/getConversation/", {
@@ -66,10 +66,10 @@ function updateChat() {
           (ret[i].to == currentConvo && ret[i].from == getCookie("username"))
         ) {
           if (ret[i].to == getCookie("username")) {
-            makeToTextBubble(ret[i].message)
+            makeToTextBubble(ret[i].message);
           }
           if (ret[i].from == getCookie("username")) {
-            makeFromTextBubble(ret[i].message)
+            makeFromTextBubble(ret[i].message);
           }
         }
       }
@@ -77,8 +77,12 @@ function updateChat() {
   });
 }
 
-function sendMessage(){
-  let message = {from: getCookie("username"), to:currentConvo, message:document.querySelector('#msg').value}
+function sendMessage() {
+  let message = {
+    from: getCookie("username"),
+    to: currentConvo,
+    message: document.querySelector("#msg").value
+  };
   let body = JSON.stringify(message);
 
   fetch("messaging/sendMessage/", {
@@ -86,23 +90,37 @@ function sendMessage(){
       "Content-Type": "application/json"
     },
     method: "POST",
-    body:body
-  })
-  
-  makeToTextBubble(document.querySelector('#msg').value)
+    body: body
+  });
+
+  makeToTextBubble(document.querySelector("#msg").value);
+  window.reload();
 }
 
-
-function makeToTextBubble(str){
+function makeToTextBubble(str) {
+  let container = document.createElement("div");
   let bubble = document.createElement("div");
+  let pad = document.createElement("div");
+  container.style = "width:100%";
+  pad.style = "width:80%";
   bubble.innerHTML = str;
-  bubble.style = "background-color: #70dafa; width:20%; height:10%; margin:auto; font-weight:bold; border-radius:15px"
-  document.getElementById("board").appendChild(bubble)
+  bubble.style =
+    "background-color: #70dafa; width:20%; height:10%; font-weight:bold; border-radius:15px;  float:right";
+  container.appendChild(pad);
+  container.appendChild(bubble);
+  document.getElementById("board").appendChild(container);
 }
 
-function makeFromTextBubble(str){
+function makeFromTextBubble(str) {
+  let container = document.createElement("div");
   let bubble = document.createElement("div");
+  let pad = document.createElement("div");
+  container.style = "width:100%";
+  pad.style = "width:80%";
   bubble.innerHTML = str;
-  bubble.style = "background-color: #6df299; width:20%; height:10%;  margin:auto; font-weight:bold; border-radius:15px"
-  document.getElementById("board").appendChild(bubble)
+  bubble.style =
+    "background-color: #6df299; width:20%; height:10%; font-weight:bold; border-radius:15px; float:left";
+  container.appendChild(pad);
+  container.appendChild(bubble);
+  document.getElementById("board").appendChild(container);
 }
