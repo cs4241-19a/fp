@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import "./App.css";
 
 import socketIOClient from "socket.io-client";
+import { SSL_OP_SINGLE_DH_USE } from "constants";
 
 const socket = socketIOClient("localhost:8080");
 //would normally come from database but this is for testing
@@ -64,6 +65,7 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           <h1>Codenames</h1>
+          <Modals />
         </header>
         {this.state.modalOpen && <Menu />}
         <Game />
@@ -161,11 +163,7 @@ class Card extends React.Component {
     } else if (this.props.team === "assassin") {
       cardColor = "black";
     }
-    if (this.props.keyboard === true) {
-      this.state = { color: cardColor, cardColor: cardColor };
-    } else {
-      this.state = { color: null, cardColor: cardColor };
-    }
+    this.state = { color: null, cardColor: cardColor, cardBorder: cardColor };
   }
 
   changeStyle(color) {
@@ -178,13 +176,25 @@ class Card extends React.Component {
     return (
       <button
         className="button card"
-        style={{ backgroundColor: this.state.color }}
+        style={{
+          backgroundColor: this.state.color,
+          borderStyle: SSL_OP_SINGLE_DH_USE,
+          borderColor: this.state.cardColor
+        }}
         onClick={() => clickGuessButton(this)}
       >
         {this.props.value}
       </button>
     );
   }
+}
+
+function clickGuessButton(btn) {
+  btn.changeStyle(btn.props.team);
+  setTimeout(function() {
+    let state = getBoardState();
+    socket.emit("button selected", state);
+  }, 1);
 }
 
 class Chat extends React.Component {
@@ -254,19 +264,12 @@ class Board extends React.Component {
     super(props);
     this.state = {
       words: this.props.words,
-      teams: this.props.teams,
-      keyboard: this.props.keyboard
+      teams: this.props.teams
     };
   }
 
   renderCard(i) {
-    return (
-      <Card
-        value={this.state.words[i]}
-        team={this.state.teams[i]}
-        keyboard={this.state.keyboard}
-      />
-    );
+    return <Card value={this.state.words[i]} team={this.state.teams[i]} />;
   }
 
   render() {
@@ -337,11 +340,7 @@ class Game extends React.Component {
     }
     return (
       <div className="game">
-        <Board
-          words={this.state.boardWords}
-          teams={this.state.boardTeams}
-          keyboard={false}
-        />
+        <Board words={this.state.boardWords} teams={this.state.boardTeams} />
         <Chat team={status} wordsLeft={9} />
         <br />
         <br />
@@ -576,14 +575,6 @@ function clickHint(hintbtn) {
     let newHint = document.getElementById("msg").value;
     let state = getClueState(newHint);
     socket.emit("clue sent", state);
-  }, 1);
-}
-
-function clickGuessButton(btn) {
-  btn.changeStyle(btn.props.team);
-  setTimeout(function() {
-    let state = getBoardState();
-    socket.emit("button selected", state);
   }, 1);
 }
 
