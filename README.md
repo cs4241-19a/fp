@@ -17,12 +17,12 @@ able to message them in order to possibly trade for the book.
 Just create an account, and you will have all the privileges you need to use our app! 
 
 ## Technologies
-We use MongoDB to store our users, books, and messages.
+We use MongoDB to store our users, books, and messages. Node.js is used for the server, along with Express. We opted to use a clear folder structure for our Express app, so that developers can quicly edit our existing codebase, and run into fewer merge conflicts while doing it. This means front end has a clear structure, and the routes for the back end are tiered by purpose. Such that the API is in a seperate file for each purpose.
 
 ## Challenges
-We encountered issues 
+We encountered issues upon sending data to the server and redirecting the client. If they were out of sync, the page would hang and the user wouldn't know if the request went through. To remedy this, we instead pulled JSON data from the server and had the client redirect to the correct view. This refreshes the pages on submit and so the data is up to date.
 
 ## Individual Responsibilities
 - Joe Bartone - front end, 
-- Chris Mercer - routing, 
+- Chris Mercer - routing, front end JS, session saving
 - Danny Sullivan - MongoDB and other database functionality
