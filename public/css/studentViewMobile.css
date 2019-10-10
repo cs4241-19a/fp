@@ -1,0 +1,44 @@
+/*### Smartphones (portrait and landscape)(small)### */
+@media screen and (min-width : 0px) and (max-width : 767px){
+
+  .classcodeButton {
+    padding: 10px;
+    padding-left:15px;
+    padding-right:15px;
+  }
+  
+  .classcodeInput {
+    padding: 10px;
+  }
+
+  main {
+    height: 53vh;
+  }
+  
+  .question-format {
+    margin-left: -7vw;
+    font-size: 16px;
+  }
+
+  .questionInput {
+    width: 90vw; 
+    height: 7vh;
+    font-size: 16px;
+    margin-top: 5px;
+  }
+
+  .askButton {
+    height: 20vh;
+    width: 100vw;
+    margin-top: 5px;
+    margin-left: 0;
+  }
+  
+  footer {
+    top: 60vh;
+    height: 40vh;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  
+}
