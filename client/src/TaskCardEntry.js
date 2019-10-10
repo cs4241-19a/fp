@@ -81,7 +81,7 @@ class TaskCardEntry extends React.Component {
 			}),
 			"headers": {"Content-Type": "application/json"}
 		})
-		.then(console.log);
+		.then(window.location.reload());
    }
    
    // cancel and close the card
