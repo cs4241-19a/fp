@@ -6,9 +6,31 @@ import Grid from '@material-ui/core/Grid';
 export default function FeedContainer(props) {
 
     //get this from server somewhere else, maybe store?
-    let items = []
 
-    function getItems() {
+    // function getItems() {
+
+    //     let list = []
+
+    //     fetch( '/feed')
+    //         .then( function( response ) {
+    //             return response.json();
+    //         }).then(function (response) {
+    //         window.localStorage;
+    //         let userN = localStorage.getItem('currUser');
+    //         console.log(userN)
+    //         for(let i = 0; i < response.length; i++) {
+    //             if(response[i].user === userN) {
+    //                 list.push(response[i])
+    //             }
+    //         }
+    //     })
+
+    //     return list
+    // }
+
+    const [items, setItems] = useState( () => {
+        let list = []
+
         fetch( '/feed')
             .then( function( response ) {
                 return response.json();
@@ -18,17 +40,22 @@ export default function FeedContainer(props) {
             console.log(userN)
             for(let i = 0; i < response.length; i++) {
                 if(response[i].user === userN) {
-                    items.push(response[i])
+                    list.push(response[i])
                 }
             }
         })
-    }
 
-    useEffect( () => {
-        console.log("YYYYYYYYYYYYYYYYYY")
-        console.log(items)
-        getItems();
+        return list
     })
+
+    console.log(items)
+
+
+    // useEffect( () => {
+    //     console.log("YYYYYYYYYYYYYYYYYY")
+    //     console.log(items)
+    //     getItems();
+    // })
 
     //when getting array of 10 items from server
     //items.map(item) => <FeedItem etcetcetc />
@@ -41,6 +68,24 @@ export default function FeedContainer(props) {
 
     return (
         <Grid container direction='column' justify='center' alignItems='center'>
+
+            {/*{ () => {
+                // setItems(getItes())
+
+                items.map(item => {
+                    return (
+                        <div key={item.title + item.user}>
+                            <FeedItem
+                                key={item.title}
+                                user={item.user}
+                                title={item.title}
+                            />
+                        </div>
+                    )
+                })}}*/}
+
+
+
             {items.map(item => {
                 return (
                     <div key={item.title + item.user}>
