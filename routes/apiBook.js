@@ -81,13 +81,14 @@ let dbBookLookup = function(arr) {
     })
 };
 
-// delete book given username, bookName, and crn
-function dbBookDeleteBook(username, bookName, crn) {
+// delete book given _id
+function dbBookDeleteBook(id, res) {
     try {
         MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) {
             const db = client.db('finalproject');
-            db.collection('books').deleteOne({username: username, name: bookName, crn: crn})
+            db.collection('books').deleteOne({_id: id})
             client.close();
+            res.redirect('/index')
         })
     }
     catch(e) {
@@ -178,12 +179,10 @@ router.post('/searchBook', function(req, res) {
 });
 
 router.post('/deleteBook', function(req, res) {
-    console.log("exchanging book...");
-    const username = req.body.username;
-    const bookName = req.body.name;
-    const crn = req.body.crn;
+    console.log("removing book...");
+    const id = req.body._id;
 
-    dbBookDeleteBook(username, bookName, crn)
+    dbBookDeleteBook(id);
 });
 
 router.post('/getBooks', function (req,res){
@@ -202,7 +201,7 @@ router.post('/editBook', function (req,res){
     const crn = req.body.crn;
 
     dbBookEdit([id, bookName, crn]).then(data => {
-        res.send(data)
+        res.redirect('/index')
     }).catch(e => {
         console.log(e)
     })
