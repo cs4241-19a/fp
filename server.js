@@ -69,18 +69,13 @@ app.post('/newLeaderboardTime', function (request, response) {
         time: request.body.time,
         attempts: 1
     };
-    let newLeaderboardData;
     db.get('leaderboardData').catch(err => {
         if (err.name === 'not_found') {
             leaderboardData.push(newData);
-            newLeaderboardData = {
-                _id: 'leaderboardData',
-                leaderboardData: leaderboardData
-            };
             db.upsert('leaderboardData', function(doc) {
                 doc.counter = doc.counter || 0;
                 doc.counter++;
-                doc.leaderboardData = newLeaderboardData;
+                doc.leaderboardData = leaderboardData;
                 return doc;
             }).catch (err => {
                 console.log(err);
