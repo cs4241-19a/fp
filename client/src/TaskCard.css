@@ -1,0 +1,37 @@
+.card-z-1 {
+    z-index: 1;
+    height: 70vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    opacity: .2;
+}
+
+.card-z-2 {
+    z-index: 2;
+    height: 75vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    opacity: .3;
+}
+
+.card-z-3 {
+    z-index: 3;
+    height: 85vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    opacity: .6;
+}
+
+.card-z-4 {
+    z-index: 4;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
