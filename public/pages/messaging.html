@@ -31,7 +31,7 @@
       <li class="navbar"><a href="/search">Find a Book</a></li>
       <li class="navbar"><a id="messgaing" href="/">Messages</a></li>
       <li class="navbar" style="float:right">
-        <a id="login" href="/" onclick="document.cookie='username=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';">Logout</a>
+        <a id="login" href="/">Logout</a>
       </li>
       <li class="navbar" id="create">
         <a href="create">Create Account</a>
@@ -54,10 +54,28 @@
         <ul class="pure-menu-list" id="people"></ul>
       </div>
       <div
-        style="background-color:blue; width:80%; display:flex; flex-direction:column"
+        style="background-color:transparent; width:80%; display:flex; flex-direction:column"
       >
-        <div style="background-color:green; height:80%"></div>
-        <div style="background-color:yellow; height:20%"></div>
+        <div style="background-color:transparent; height:80%;  border-radius:20px; border-style:solid; border-width:5px; border-color:grey"></div>
+        <div style="background-color:yellow; height:20%; border-radius:20px">
+         <form style="margin:auto; width:85%" class="pure-form" action="">
+          <input
+            name="msg"
+            class="pure-input-1"
+            style="margin:auto"
+            id="msg"
+            placeholder="..."
+            value=""
+          />
+        </form>
+        <button
+          style="margin:auto; width:10%;"
+          id="sendButton"
+          class="pure-button translate"
+        >
+          Send!
+        </button>
+        </div>
       </div>
       <div name="padding" style="background-color:transparent; width:20%"></div>
     </div>
