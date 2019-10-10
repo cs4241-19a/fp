@@ -1,7 +1,4 @@
 import React from 'react';
-import { Paper, Typography, Avatar, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
-import { useStoreState, useStoreActions } from 'easy-peasy';
 import * as dat from "dat.gui";
 import {audioGraph, audioInit, getCanvas} from "./setUpModule";
 import {visualizer} from "./visualizerModule";
@@ -75,29 +72,6 @@ export default function FeedItem(props) {
         gui.add(changeParam, 'barFit', 0.5, 5).name('Visualizer Fit')
         gui.addColor(changeParam, 'canvasClr').name('Canvas Color')
     }
-
-    const useStyles = makeStyles({
-        container: {
-            
-        },
-        paper: {
-            display: 'flex',
-            flexDirection: 'row',
-            padding: '15px 15px',
-            borderRadius: '15px',
-            cursor: 'pointer',
-            margin: '10px'
-        },
-        avatar: {
-            margin: 10,
-            backgroundColor: '#141115'
-        },
-        button: {
-            // margin: '1'
-        }
-    })
-
-    const classes = useStyles();
 
     return (
             <div className="w-full my-5">
