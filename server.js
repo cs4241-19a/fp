@@ -88,7 +88,7 @@ app.post('/newLeaderboardTime', function (request, response) {
         leaderboardData.forEach(entry => {
             if (entry.user === request.session.passport.user) {
                 entry.attempts++;
-                if (entry.time > request.body.time) {
+                if (entry.time < request.body.time) {
                     entry.time = request.body.time;
                 }
                 foundUser = true;

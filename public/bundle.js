@@ -44547,9 +44547,6 @@ var dog = PIXI.Sprite.from('images/dog.png');
 var turtle = PIXI.Sprite.from('images/turtle.png');
 var highBat = PIXI.Sprite.from('images/bat.png');
 var mediumBat = PIXI.Sprite.from('images/bat.png');
-var finish = PIXI.Sprite.from('images/finish.png');
-finish.height = 52;
-finish.width = 52;
 var activeChar = paw;
 var tics = 0;
 var time = 0;
@@ -44604,16 +44601,7 @@ function resetDog() {
   dog.width = 60;
   time = 0;
   tics = 0;
-} //setup finish
-
-
-app.stage.addChild(finish);
-finish.anchor.set(1);
-finish.x = app.screen.width;
-finish.y = app.screen.height;
-finish.vx = 0;
-finish.vy = 0;
-finish.visible = true;
+}
 
 function collisionDetect(a, b) {
   var ab = a.getBounds();
@@ -44668,12 +44656,6 @@ function addMediumBat(vx) {
   mediumBat.vx = vx;
   mediumBat.height = 45;
   mediumBat.width = 45;
-}
-
-function addTurtles(num, vx) {
-  for (var i = 0; i < num; i++) {
-    addTurtle(vx);
-  }
 } // animation loop running at 60 fps
 
 
@@ -44684,8 +44666,8 @@ app.ticker.add(function (delta) {
     pixiTimer.text = 'Time: ' + time.toString();
     victory.text = '';
 
-    if (collisionDetect(activeChar, finish)) {
-      victory.text = 'You win! Your final time was: ' + time.toString();
+    if (collisionDetect(activeChar, turtle) || collisionDetect(activeChar, highBat) || collisionDetect(activeChar, mediumBat)) {
+      victory.text = 'Game Over! You lasted: ' + time.toString() + ' seconds!';
       app.stage.addChild(victory);
       pixiTimer.visible = false;
       victory.visible = true;
@@ -44714,19 +44696,11 @@ app.ticker.add(function (delta) {
       });
     }
 
-    if (collisionDetect(activeChar, turtle)) {
-      victory.text = 'You Lose';
-      app.stage.addChild(victory);
-      pixiTimer.visible = false;
-      victory.visible = true;
-      start = false;
-    }
-
     if (time < 20 && time % 8 === 0) {
       addTurtle(-2);
     } else if (time < 40 && time % 8 === 0) {
       addHighBat(-4);
-      addTurtles(1, -4);
+      addTurtle(-4);
     }
 
     if (time < 40 && time % 6 === 0 && time !== 0) {
@@ -44737,6 +44711,8 @@ app.ticker.add(function (delta) {
       hasTouchedGround = true;
     }
 
+    mediumBat.x += mediumBat.vx;
+    highBat.x += highBat.vx;
     turtle.x += turtle.vx;
 
     if (up.isDown && count < 45 && fallDone && hasTouchedGround) {

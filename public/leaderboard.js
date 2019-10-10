@@ -2,19 +2,16 @@ let leaderboard = document.getElementById('leaderboard');
 
 sortLeaderboardData = function(a, b) {
     'use strict';
-    return a.time - b.time;
+    return b.time - a.time;
 };
 
 updateLeaderboard = function(leaderboardData) {
     'use strict';
     let rowLength = leaderboard.rows.length;
     console.log(leaderboardData);
-    leaderboardData = leaderboardData.sort(function(a, b) {
-        sortLeaderboardData(a, b);
-    });
+    leaderboardData = leaderboardData.sort((a,b) => b.time-a.time);
     console.log(leaderboardData);
     leaderboardData.forEach(entry => {
-        console.log(rowLength);
         let newRow = leaderboard.insertRow(rowLength);
         let username = newRow.insertCell(0);
         let time = newRow.insertCell(1);

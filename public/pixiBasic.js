@@ -10,9 +10,6 @@ let dog = PIXI.Sprite.from('images/dog.png');
 let turtle = PIXI.Sprite.from('images/turtle.png');
 let highBat = PIXI.Sprite.from('images/bat.png');
 let mediumBat = PIXI.Sprite.from('images/bat.png');
-let finish = PIXI.Sprite.from('images/finish.png');
-finish.height = 52;
-finish.width = 52;
 
 let activeChar = paw;
 let tics = 0;
@@ -61,15 +58,6 @@ function resetDog() {
     time = 0;
     tics = 0;
 }
-
-//setup finish
-app.stage.addChild(finish);
-finish.anchor.set(1);
-finish.x = app.screen.width;
-finish.y = app.screen.height;
-finish.vx = 0;
-finish.vy = 0;
-finish.visible = true;
 
 function collisionDetect(a, b)
 {
@@ -128,13 +116,6 @@ function addMediumBat(vx) {
     mediumBat.width = 45;
 }
 
-
-function addTurtles(num, vx) {
-    for (let i = 0; i<num; i++) {
-        addTurtle(vx);
-    }
-}
-
 // animation loop running at 60 fps
 app.ticker.add(function(delta) {
     if(start) {
@@ -142,8 +123,8 @@ app.ticker.add(function(delta) {
         bgPic.tilePosition.x += -0.4;
         pixiTimer.text = 'Time: ' + time.toString();
         victory.text = '';
-        if(collisionDetect(activeChar, finish)){
-            victory.text = 'You win! Your final time was: ' + time.toString();
+        if(collisionDetect(activeChar, turtle) || collisionDetect(activeChar, highBat) || collisionDetect(activeChar, mediumBat)){
+            victory.text = 'Game Over! You lasted: ' + time.toString() + ' seconds!';
             app.stage.addChild(victory);
             pixiTimer.visible = false;
             victory.visible = true;
@@ -169,18 +150,11 @@ app.ticker.add(function(delta) {
                 })
             });
         }
-        if(collisionDetect(activeChar, turtle)){
-            victory.text = 'You Lose';
-            app.stage.addChild(victory);
-            pixiTimer.visible = false;
-            victory.visible = true;
-            start = false;
-        }
         if (time < 20 && time % 8 === 0) {
             addTurtle(-2);
         } else if (time < 40 && time % 8 === 0) {
             addHighBat(-4);
-            addTurtles(1, -4)
+            addTurtle(-4);
         }
         if (time < 40 && time % 6 === 0 && time !== 0) {
             addMediumBat(-3);
