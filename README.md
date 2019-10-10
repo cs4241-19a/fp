@@ -11,6 +11,8 @@ Think of 1,3, and 4 in particular in a similar vein to the design / tech achieve
 
 For our project, we created a web application that connects to a MySQL server and provides an easy way for inexperienced database users to add, modify, and delete items from a database. Upon loading the website, you will be taken to the home screen which shows a graph constructed from data in a MySQL database. Click on the login tab to login and then you will be able to access the dashboard, which shows you the same graph along with a table below. You will be able to add, modify, and delete items from the glass and the table and graph will reload. 
 
+Link: <https://fp-admin-page.glitch.me/>
+
 **Login Info:**
 
 User: `root`
