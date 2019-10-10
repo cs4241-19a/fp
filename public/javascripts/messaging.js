@@ -117,7 +117,7 @@ function sendMessage() {
 
   updateChat();
   document.getElementById("msg").value = "";
-  window.reload();
+  //window.reload();
 }
 
 function makeToTextBubble(str) {

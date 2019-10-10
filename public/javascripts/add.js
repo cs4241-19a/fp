@@ -43,4 +43,20 @@ function getCookie(cname) {
     return "";
 }
 
-document.getElementById("submitAdd").onclick = addBook
+ document.getElementById("submitAdd").onclick = addBook
+
+  var input = document.getElementById("url");
+  input.addEventListener("keydown", function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      document.getElementById("submitAdd").click();
+    }
+  });
+
+  var input2 = document.getElementById("crn");
+  input2.addEventListener("keydown", function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      document.getElementById("submitAdd").click();
+    }
+  });

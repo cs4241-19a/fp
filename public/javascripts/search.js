@@ -55,4 +55,12 @@ function query() {
 
 window.onload = function() {
   document.getElementById("searchButton").onclick = query;
+  
+  var input = document.getElementById("search");
+  input.addEventListener("keydown", function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      document.getElementById("searchButton").click();
+    }
+  });
 };
