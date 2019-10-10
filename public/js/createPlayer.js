@@ -47,6 +47,7 @@ function createPlayerForSong(track) {
                         $('#current-track-name').text(state.track_window.current_track.name)
                         //edit this to incclude the whole atrists array?
                         $('#current-track-artist').text(state.track_window.current_track.artists[0].name)
+                        $("#current-track").roundImage()
                     }
 
                 })
@@ -87,7 +88,7 @@ function turningRecord(turn) {
         interval = setInterval(function () {
             console.log("interval")
             counter -= 1
-            $("#current-track").css({
+            $("svg").css({
                 MozTransform: 'rotate(-' + -counter + 'deg)',
                 WebkitTransform: 'rotate(' + -counter + 'deg)',
                 transform: 'rotate(' + -counter + 'deg)'
@@ -98,6 +99,7 @@ function turningRecord(turn) {
         clearInterval(interval)
 
     }
+
 }
 
 turningRecord(currentlyPlaying)
@@ -112,7 +114,7 @@ function togglePlayPause() {
     console.log("currentlyplaying is " + currentlyPlaying)
     turningRecord(currentlyPlaying)
     player.togglePlay()
-    let playPauseButton = document.getElementById("play-pause-button");
+    let playPauseButton = document.getElementById("play-pause-button-player");
     let imageSrc = playPauseButton.getAttribute('src')
     if(imageSrc === "images/play.png")
     {
