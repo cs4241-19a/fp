@@ -7,6 +7,7 @@ import socketIOClient from "socket.io-client";
 const socket = socketIOClient("localhost:8080");
 //would normally come from database but this is for testing
 //list of ALL words
+let allReady = false;
 let allWords = [
   "wall",
   "back",
@@ -424,7 +425,11 @@ class Menu extends React.Component {
                   </button>
                   <br />
                   <br />
-                  <button className="play" onClick={() => closeMenu(this)}>
+                  <button
+                    id="playBtn"
+                    className="play"
+                    onClick={() => closeMenu(this)}
+                  >
                     Play
                   </button>
                   <button className="play" onClick={() => resetMenu(this)}>
@@ -484,13 +489,10 @@ function closeMenu(play) {
   var bluedet = document.getElementById("bdetective");
   var username = u.value;
   console.log(username);
-  if (allSelected()) {
+  if (allReady) {
     play.closeModal();
+    socket.emit("startGame");
   }
-}
-
-function allSelected() {
-  return true;
 }
 
 //takes full list of words and picks 25 unique for a game
@@ -655,6 +657,18 @@ socket.on("greyRole", function(role) {
   let button = document.getElementById(role);
   button.style.backgroundColor = "grey";
   button.disabled = true;
+  socket.emit("allSelected");
+});
+
+socket.on("allSelectedStatus", function(status) {
+  console.log("status", status);
+  if (status) {
+    allReady = true;
+  }
+});
+
+socket.on("closeModal", () => {
+  //document.getElementById("playBtn").click();
 });
 
 export default App;
