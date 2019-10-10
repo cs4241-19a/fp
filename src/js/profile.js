@@ -35,20 +35,44 @@ const changeParam = new function () {
     this.canvasClr = '#000000'
 }()
 
-const newPost = function(e) {
+const songChange = function(e) {
     e.preventDefault();
 
     console.log('paper has been clicked');
 
-    //TODO pull song
+    let song = document.getElementById("songTest").value;
 
-    console.log("yoooooooo")
+    //document.getElementById("songTest").onchange = songChange
+
+    console.log("yuuuuuuuu")
     const canvas = getCanvas()
 
     const jsonAudioInit = audioInit(canvas)
     const jsonAudioGraph = audioGraph(canvas, jsonAudioInit)
 
     jsonAudioInit.audioElement.src = 'music/shelter.mp3'
+
+    switch (song) {
+        case 'Back in Black (AC/DC)':
+            jsonAudioInit.audioElement.src = 'music/acdc.mp3'
+            break;
+        case 'Deutschland (Rammstein)':
+            jsonAudioInit.audioElement.src = 'music/deutschland.mp3'
+            break;
+        case 'Bangarang (Skrillex)':
+            jsonAudioInit.audioElement.src = 'music/dubstep.mp3'
+            break;
+        case 'Exploder (Audioslave)':
+            jsonAudioInit.audioElement.src = 'music/exploder.mp3'
+            break;
+        case 'Divenire (Ludovico Einaudi)':
+            jsonAudioInit.audioElement.src = 'music/inst.mp3'
+            break;
+        case 'Shelter (Porter Robinson)':
+            jsonAudioInit.audioElement.src = 'music/shelter.mp3'
+            break;
+    }
+
     jsonAudioInit.audioElement.controls = true;
     jsonAudioInit.audioElement.play()
 
@@ -84,13 +108,12 @@ window.onload = function () {
     document.getElementById("profileGo").onclick = myProfile
     document.getElementById("updatePassBtn").onclick = updatePass
     document.getElementById("shareBtn").onclick = home
-    document.getElementById("newBtn").onclick = newPost
+    document.getElementById("songTest").onchange = songChange
 
     gui.add(changeParam, 'barHeight', 0, 3).name('Bar Height')
     gui.add(changeParam, 'barWidth', 0, 6).name('Bar Width')
     gui.add(changeParam, 'barFit', 0.5, 5).name('Visualizer Fit')
     gui.addColor(changeParam, 'canvasClr').name('Canvas Color')
-
 }
 
 function updatePass(e) {
