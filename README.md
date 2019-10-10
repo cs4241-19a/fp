@@ -1,51 +1,138 @@
-# cs4241-FinalProject
+![sixpact](img/six-pact-logo-transparent-brown.png)
 
-For your final project, you'll implement a course project that exhibits your mastery of the course materials. 
-Similar to A4, this project gives you an opportunity to be creative and to pursue individual research and learning.
+Developed by Kit Zellerbach and Petra Kumi
 
-## General description
+https://six-pact.herokuapp.com
 
-Your project should consist of a complete Web application, exhibiting facets of the three main sections of the course material:
 
-- Static Web page content and design. You should have a project that is accessible, easily navigable, and features significant content.
-- Dynamic behavior implemented with JavaScript.
-- Server-side programming *using Node.js*. Typically this will take the form of some sort of persistent data, authentication, and possibly server-side computation.
+We created a web app that would facilitate group weight loss competitions, known as 'six pact'. We created
+an example pact that you can use.
 
-Additionally, you should incorporate features that you independently research, design, and implement for your project.
+#### Login Information
+Username: korra@gmail.com
 
-## Project ideation
+Password: password
 
-Excellent projects serve someone/some group; for this assignment you need to define your users and stakeholders. I encourage you to identify projects that will have impact, either artistically, politically, or in terms of productivity. Consider creating something useful for a cause or hobby you care about.
+#### Technologies Used
+We used several technologies, such as:
 
-## Logistics
+- Angular CLI 8: We used this as the client's web framework
+- Nebular UI: We used this as our UI library
+- D3.js: We used this to create charts and animations
+- jQScheduler: We used this for our calendar
+- Nodescheduler: We used this to send scheduled notifications
+- MongoDB: We used this as our database
+- Typescript: We programmed both our frontend and backend with this
+- Node.js: We used this for the server
+- Google Cloud S3: We used this for blob (image) storage for user avatars
+- Multer Middleware: We used this to access image from http requests
+- Fitbit Integration: We used this for more user data
+- Nodemailer: We used this to send emails
 
-### Team size
-Students are encouraged to work in teams of 2-5 students for the project. This will allow you to build a good project without expending an excessive amount of effort. While I would expect a team of four or five students to produce a project with more features, I expect a every team's work to exhibit all of the required facets described above.
 
-### Deliverables
+#### Challenges
+The main challenges were developing in Angular CLI, as well as integrating several technologies together in one app.
+The app was created to be extremely scalable and modular, reusing components often.
+A big challenge between the two of us was to adapt to each other's level of knowledge: Petra had never worked with Angular, 
+typescript, or blob storage before, so we had to work very closely together to make sure she moved past the learning curve 
+as quickly as possible. 
+We were able to overcome this challenge by being patient, understanding each other's limitations, and motivating each other.
+At the end of the day we both learned a lot!
 
-__Proposal:__ 
-Provide an outline of your project direction and the names of the team members. 
-The outline should have enough detail so that staff can determine if it meets the minimum expectations, or if it goes too far to be reasonable by the deadline.
-This file must be named proposal.md so we can find it.
-Submit a PR to turn it in by Monday, September 30th, before class
 
-There are no other scheduled checkpoints for your project. 
-You must be done in time to present before the final project demo day (October 10th). 
+#### Responsibilities
+Both members of the group collaborated together on most of the features. However, given Kit's previous experience with our main
+libraries she was able to work much faster than Petra. Our jobs were split as follows:
 
-#### Turning in Your Outline / Project
+Kit:
+- Created initial framework
+    - Set up Angular project with Nebular UI
+    - Set up fitbit auth (including the privacy policy and terms of service pages required)
+    - Implemented NodeJS server with MongoDB
+- Designed database and authentication system 
+- Set up the pact system
+- Set up the weight logging system
+- Designed and implemented the "trello" board
+- Designed the settings and preferences sections of our site
+- Set up email and in-site notifications
+- Set up cloud blob storage
+- Worked on the calendar system
 
-**NOTE: code is due before the project presentation day due to the end of term / grading schedule constraints**
-Submit a second PR on the final project repo to turn in your app and code.
+Petra:
+- Designed profile page
+- Implemented graphs and charts
+    - Used Angular 8 and Nebular UI components for graphs
+    - Created the progress circles from scratch using SVGs
+- Retrieved data from the Fitbit API to populate profile page
+- Set up a badge collection system for users, integrating fitbit badges with custom-made ones
+- Worked on the calendar system
+- Added details such as hover over avatar and click to change avatar photo
 
-Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service.
-Folks on the same team do not need to post the same webpage, but must instead clearly state who is on the team in their proposal.
-(Staff will use the proposal to build the grading sheet.)
+## System Design Document
 
-## Final Presentation
+### Features
 
-Presentations will occur during the final day of class.
+#### Logs & Charlieworks
 
-## FAQs
+Users can use the log page to log their current weight.
+When users reach their goal weight they are presented with fireworks. These were created using d3.js.
 
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use node.js.
+![logs](img/logs.png)
+![charlieworks](img/charlieworks.png)
+
+#### Trello Board
+
+There is a trello board for exercise and recipe sharing that is private to pact members. Nebular UI cards
+were used in combination with Angular Material drag and drop functionality.
+
+![trello](img/trello.png)
+
+
+#### Calendar
+
+A calendar was implemented using jqxScheduler. This allows pact members to see each other's workout schedules and set their own.
+There are also options to download the calendar as CSV, JSON, and ICS data.
+
+![calendar](img/calendar.png)
+
+
+#### Reminder Notifications 
+
+Node-scheduler (a flexible cron-like and not-cron-like job scheduler for Node.js) is used on the back-end to send reminder
+notifications every day at 12.00pm, and then weekly results on Sunday at
+12.00pm.
+
+![trello](img/notifications.png)
+
+
+#### Badge Collection
+
+Users are able to collect badges based on their achievements, and Fitbit data. Badges show on the profile page and are 
+persistently stored in the database.
+
+#### Profile Page
+
+Users are able to see data about their logged activities in their profile page. This is intended to be a location that 
+provides quick and easy information to the user, as well as access to other resources in the site such as joining or creating a pact. 
+
+![profile page top](img/profile-page-1.png)
+![profile page bottom](img/profile-page-2.png)
+
+
+
+#### Mobile Compatibility
+
+The app also scales/responds to mobile dimensions.
+
+![mobile](img/mobile.png)
+
+
+## Project Work
+
+### Task Management
+![project board](img/project_board.png)
+
+### UI Mockups
+![UI mockups](img/ui_mockups.png)
+
+
