@@ -1,3 +1,15 @@
+.hidden {
+    transition: all .9s ease;
+
+    z-index: 1;
+    height: 50vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    opacity: 0;
+}
+
 .card-z-0 {
     transition: all .9s ease;
 
