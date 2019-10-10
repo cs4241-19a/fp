@@ -63,16 +63,12 @@ class TaskCard extends React.Component {
 			<div className={'card-z-'+this.props.card_z+" w-100 row justify-content-center align-items-center"}>
 				<Card bg="warning" text="white" style={{ width: '30rem' }}>
 						<Card.Header>
-						<Card.Title className = "text-center" controlId="title"> Task Title</Card.Title>
-						<Card.Text className = "text-right" controlId="dueDate"> Due: 10/12 </Card.Text>
+						<Card.Title className = "text-center" controlId="title">{this.props.data.title}</Card.Title>
+						<Card.Text className = "text-right" controlId="dueDate">{this.props.data.date}</Card.Text>
 						</Card.Header>
 					<Card.Body>
-					<div key= 'priority' className="mb-3 text-center">
-						<Form.Check inline label="Low" type='checkbox' id='low' disabled />
-						<Form.Check inline label="Medium" type='checkbox' id='medium' checked disabled />
-						<Form.Check inline label="High" type='checkbox' id='high' disabled/>
-					</div>
-					<Card.Text className = "text-justify" controlId = 'discription'> This is the assignment desicription. The details of the task are outlined in this section by the user when creating the task</Card.Text>
+					<div className="mb-3 text-center">{this.props.data.priority_text}</div>
+					<Card.Text className = "text-justify" controlId = 'discription'>{this.props.data.description}</Card.Text>
 					<ButtonToolbar>
 						<Button variant="outline-success" style={{ margin: '5px' }} onClick = {this.handleDone}>Done</Button>
 						<Button variant="outline-secondary" style={{ margin: '5px' }} onClick = {this.handleDoLater}>Do Later</Button>
