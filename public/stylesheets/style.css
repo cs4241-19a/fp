@@ -1,10 +1,27 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-image: url(/images/background5.jpg);
+  background-image: url(/images/background4.gif);
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+#profile{
+  background-color:rgb(223, 222, 222);
+  width: 300px;
+  border: 15px solid #053c61;
+  padding: 50px;
+  margin: 10px;
+  position: left;
+
+  font-size: 40px;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter";
+  text-shadow: -1px 0 white, 1px 1px white, 1px 1px white, 0 -1px white;
+  color: #053c61;
+  font-weight: bold;
+}
+
+
 
 #content{
   background-color:rgb(223, 222, 222);
@@ -12,8 +29,13 @@ body {
   border: 15px solid #053c61;
   padding: 50px;
   margin: 20px;
-  position: relative;
-  left: 500px;
+  position: left;
+
+
+  font-size: 20px;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter";
+  color: #053c61;
+  font-weight: bold;
   
 }
 
@@ -23,7 +45,7 @@ a {
 
 /*in login page*/
 #message{
-  text-align: center;
+  text-align: left;
   font-family: 'Press Start 2P', cursive;
   color: #053c61;
   text-shadow: -1px 0 white, 1px 1px white, 1px 1px white, 0 -1px white;
@@ -75,8 +97,8 @@ a {
   top: 0.1em;
 }
 
-#showNewAccountButton{
-  display: inline-block;
+#createAccountButton{
+ display: inline-block;
   font-family: 'Press Start 2P', cursive;
   background-color:#668fff;
   display:inline-block;
@@ -94,11 +116,11 @@ a {
   position:relative;
 }
 
-#showNewAccountButton{
+#createAccountButton{
   top: 0.1em;
 }
 
-#showNewAccountButton{
+#createNewAccountButton{
   display: inline-block;
   font-family: 'Press Start 2P', cursive;
   background-color:#668fff;
@@ -117,7 +139,7 @@ a {
   position:relative;
 }
 
-#showNewAccountButton{
+#createNewAccountButton{
   top: 0.1em;
 }
 
@@ -176,4 +198,49 @@ a {
   font-family: "Courier New", Courier, "Lucida Sans Typewriter";
   color: #053c61;
   font-weight: bold;
-}vgh
+}
+
+#newLogin{
+  display: inline-block;
+  font-family: 'Press Start 2P', cursive;
+  background-color:#668fff;
+  display:inline-block;
+  padding:1em 2em;
+  margin:0 0.5em 0.5em 0;
+  border-radius:0.15em;
+  box-sizing: border-box;
+  text-decoration:none;
+  text-transform:uppercase;
+  font-weight:400;
+  color:rgb(255, 255, 255);
+  background-color:#316eb4;
+  box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+  text-align:center;
+  position:relative;
+}
+#newLogin{
+  top: 0.1em;
+}
+
+#play{
+  display: inline-block;
+  font-family: 'Press Start 2P', cursive;
+  background-color:#668fff;
+  display:inline-block;
+  padding:1em 2em;
+  margin:0 0.5em 0.5em 0;
+  border-radius:0.15em;
+  box-sizing: border-box;
+  text-decoration:none;
+  text-transform:uppercase;
+  font-weight:400;
+  color:rgb(255, 255, 255);
+  background-color:#316eb4;
+  box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+  text-align:center;
+  position:relative;
+}
+
+#play{
+  top: 0.1em;
+}
