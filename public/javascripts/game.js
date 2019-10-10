@@ -54,11 +54,14 @@ var player_x,
 	player_y,
 	timer = "",
 	jump = false,
-	moving = false,
+	moving1 = false,
+	moving2 = false,
 	FRAME_COUNT = 0,
 	has_UP = false,
 	has_DOWN = false,
-	player_alive = true
+	player_alive = true,
+	waiting2 = false; 
+	waiting3 = false 
 var up = 0;
 var down = 0;
 //var moving = false; //for object movement
@@ -76,7 +79,7 @@ var obj1 = {
 
 var obj2 = {
 	name: "obj2",
-	color: PS.COLOR_YELLOW,
+	color: PS.COLOR_ORANGE,
 	x: 0, //GRID_W -1
 	y: 0,	//GRID_Y
 	length: 2,
@@ -109,19 +112,63 @@ var TIMER = {
 		}
 
 		//object 1 movement 
-		if (moving){
+		if (moving1){
 			// PS.debug("pos: " + obj1.x + "\n");
 			// moving = false;
 			if(TIMER.global % 30 === 0 && obj1.x > 1){
-				PS.color(obj1.x, obj1.y, PS.COLOR_WHITE);//make current one disappear	
-				PS.debug("Current x pos: " + obj1.x + "\n");
-				obj1.x -= 1;//move left
-				PS.color(obj1.x, obj1.y, obj1.color);//draw new obj
+				if(obj1.x == player_x && obj1.y == player_y){ //hit player 
+					PS.color(obj1.x, player_y, PS.COLOR_RED);
+					PS.debug("player is dead");
+					moving1 = false;
+					player_alive = false; 
+				} else {
+					PS.color(obj1.x, obj1.y, PS.COLOR_WHITE);//make current one disappear	
+					//PS.debug("Current x pos: " + obj1.x + "\n");
+					obj1.x -= 1;//move left
+					PS.color(obj1.x, obj1.y, obj1.color);//draw new obj
+				}
+				
 			}
 			else if( obj1.x === 1 || obj1.x < 0){
-				moving = false; 
+				moving1 = false; 
 				//make object disappear from board 
 				PS.color(obj1.x, obj1.y, PS.COLOR_WHITE);
+			}
+		}
+		//object 2 movement 
+		if (moving2){
+			// PS.debug("pos: " + obj1.x + "\n");
+			// moving = false;
+			if(TIMER.global % 30 === 0 && obj2.x > 1){
+				if(obj2.x == player_x && obj2.y == player_y){ //hit player 
+					PS.color(obj2.x, player_y, PS.COLOR_RED);
+					PS.debug("player is dead");
+					moving2 = false;
+					player_alive = false; 
+				} else {
+					PS.color(obj2.x, obj2.y, PS.COLOR_WHITE);//make current one disappear	
+					//PS.debug("Current x pos: " + obj1.x + "\n");
+					obj2.x -= 1;//move left
+					PS.color(obj2.x, obj2.y, obj2.color);//draw new obj
+				}
+			}
+			else if( obj2.x === 1 || obj2.x < 0){
+				moving2 = false; 
+				//make object disappear from board 
+				PS.color(obj2.x, obj2.y, PS.COLOR_WHITE);
+			}
+		}
+		
+		//wait until obj2 reaches middle of board 
+		if(waiting3){
+			if(obj2.x < GRID_W/2){ //once it has reached half of board
+				waiting3 = false; 
+			}
+		}
+		//wait until obj3 reaches middle of board 
+		if(waiting2){
+			if(obj1.x < GRID_W/2){ //once it has reached half of board
+				waiting2 = false; 
 			}
 		}
 	}
@@ -178,50 +225,151 @@ PS.init = function( system, options ) {
 };
 
 var startMap = function(){
-	PS.debug("Start Map was called\n")
-	var arr = [2];
+	var previous = 0; //object in front of the one that has just been called
 	var next;
-	
-	while(player_alive){
-		next = PS.random(3) + 1; //random number between 2 - 4
+	//make sure objects on board are not on top of each other 
+	waiting2 = false; 
+	waiting3 = false;
 
-		if (next == 2 && !moving){ //load object 1 
-			PS.debug(next + '\n');//print random number
-			TIMER.global = 0;
-			//render object
-			obj1.x= GRID_W -1; 
-			obj1.y = GRID_H -3; 
-			PS.color(obj1.x, obj1.y, obj1.color);
-			PS.debug( "Was rendered once\n");
+	if(player_alive){
+		if(!waiting2 && !waiting3){
+			next = PS.random(3)+1;
+
+			next = PS.random(3) + 1; //random number between 2 - 4
+			if (next == 2){ //load object 1 
+				PS.debug(next + '\n');
+				if(previous === 0){ //we are first object in board
+					previous = 2; //obj1 is now on board
+					//PS.debug(next + '\n');//print random number
+					TIMER.global = 0;
+					//render object
+					obj1.x= GRID_W -1; 
+					obj1.y = GRID_H -3; 
+					PS.color(obj1.x, obj1.y, obj1.color);
+					PS.debug( "Was rendered once\n");
+					
+					moving1 = true; 
+				
+				}	else if (previous === 3){ //obj2 is on board
+					PS.debug("Previous was 3 and 2 was called\n");
+					previous = 2; //obj1 is now on board 
+					//wait until obj2 had reached half of board 
+					waiting3 = true; 
+					// while(waiting3){
+					// 	PS.debug("Waiting for obj2 \n");
+					// }
+					if(!waiting3){ //we can enter board
+						PS.debug("waiting3 was " + waiting3 + "\n");
+						//render obj1
+						//PS.debug(next + '\n');//print random number
+						TIMER.global = 0;
+						//render object
+						obj1.x= GRID_W -1; 
+						obj1.y = GRID_H -3; 
+						PS.color(obj1.x, obj1.y, obj1.color);
+						PS.debug( "Was rendered once\n");
+						
+						moving1 = true;
+					}
+					
+					
+				} else if( previous === 2){
+					PS.debug("previous is 2\n");
+				}
 			
-			moving = true; //move it left
-			// while(obj1.x > GRID_W/2){
-			// 	PS.color(obj1.x, obj1.y, obj1.color); //draw new obj
-			// 	obj1.x -= 1; //move left
-			// }
-			
-		} else if(next == 3){
-			//print random number
-			PS.debug(next + '\n');
-			PS.debug("2\n");
-			// TIMER.global = 0;
-			// //render object
-			// obj2.x_pos = GRID_W -1; 
-			// obj2.y_pos = GRID_H -5; 
-			// PS.color(obj2.x_pos, obj2.y_pos, obj2.color);
-			// //wait a couple of ticks 
-			// while(true){
-			// 	if(TIMER.global % 475 == 0){
-			// 		break;
-			// 	}
-			// }
-		} else  if(next == 4){
-			PS.debug(next + '\n'); //print random number
-			player_alive = false; 
+				//else if(previous === 2){ ///another obj1 on borad
+				// 	//wait until obj1 has left board
+				// 	while(obj1.x > 1){
+				// 		PS.debug("Waiting for " + obj1.x + " to reach" + 1 + "\n");
+				// 	}
+				// 	//render obj1
+				// 	PS.debug(next + '\n');//print random number
+				// 	TIMER.global = 0;
+				// 	//render object
+				// 	obj1.x= GRID_W -1; 
+				// 	obj1.y = GRID_H -3; 
+				// 	PS.color(obj1.x, obj1.y, obj1.color);
+				// 	PS.debug( "Was rendered once\n");
+					
+				// 	moving1 = true;
+				// 	previous = 2; //obj1 is now on board	
+				//} //there shouldn't be a need for an else statement
+
+				//move it left
+				// while(obj1.x > GRID_W/2){
+				// 	PS.color(obj1.x, obj1.y, obj1.color); //draw new obj
+				// 	obj1.x -= 1; //move left
+				// }
+				
+			} else if(next == 3){
+				PS.debug(next + '\n');
+				if(previous === 0){ //we are first object in board
+					previous = 3; //obj2 is now on board
+					//PS.debug(next + '\n');//print random number
+					TIMER.global = 0;
+					//render object
+					obj2.x= GRID_W -1; 
+					obj2.y = GRID_H -3; 
+					PS.color(obj2.x, obj2.y, obj2.color);
+					PS.debug( "Was rendered once\n");
+					
+					moving2 = true; 
+				
+				}	else if (previous === 2){ //obj2 is on board
+					PS.debug("Previous was 2 and 3 was called\n");
+					previous = 3; //obj1 is now on board 
+					//wait until obj2 had reached half of board 
+					waiting2 = true; 
+					// while(waiting2){
+					// 	PS.debug("Waiting for obj1 \n");
+					// }
+					if(!waiting2){ //we can enter board
+						PS.debug("waiting2 was " + waiting2 + "\n");
+						//render obj1
+						//PS.debug(next + '\n');//print random number
+						TIMER.global = 0;
+						//render object
+						obj2.x= GRID_W -1; 
+						obj2.y = GRID_H -3; 
+						PS.color(obj2.x, obj2.y, obj2.color);
+						PS.debug( "Was rendered once\n");
+						
+						moving2 = true;
+					}
+					
+					
+				} else if( previous === 3){
+					PS.debug("previous is 3\n");
+				}
+					
+				//  else if (previous === 3){ //obj2 is on board
+				// 	previous = 2; //obj1 is now on board 
+				// 	//wait until obj2 had reached half of board 
+				// 	// while(obj2.x > GRID_W/2){
+				// 	// 	PS.debug("Waiting for " + obj2.x + " to reach" + GRID_W/2 + "\n");
+				// 	// }
+				// 	//render obj1
+				// 	//PS.debug(next + '\n');//print random number
+				// 	TIMER.global = 0;
+				// 	//render object
+				// 	obj1.x= GRID_W -1; 
+				// 	obj1.y = GRID_H -3; 
+				// 	PS.color(obj1.x, obj1.y, obj1.color);
+				// 	PS.debug( "Was rendered once\n");
+					
+				// 	moving1 = true;
+					
+				//  } else if( previous === 2){
+				// 	PS.debug("previous is 2\n");
+				//  }
+				
+			} else  if(next == 4){
+				PS.debug(next + '\n'); //print random number
+				//player_alive = false; 
+			}
 		}
- 	}
+	}
 	
-
 	// for(var i = 0; i < 4; i++){
 	// 	next = PS.random(3) + 1;
 	
@@ -403,6 +551,11 @@ PS.keyDown = function( key, shift, ctrl, options ) {
 
 	switch (key) {
 		case 32:
+			// if(player_alive){
+			// 	jump = true;
+			// } else {
+			// 	PS.debug("Cannot jump, player is dead");
+			// }
 			jump = true;
 			break;
 	}
