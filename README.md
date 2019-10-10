@@ -1,4 +1,4 @@
-### Jumpin' in the City Game
+### CS4241 Final Project
 
 **Description**  
 We created a jumping character game where the user can select one of two characters to control and the goal is to avoid obstacles. Our game features login authentication and a leadership board.
