@@ -57,7 +57,7 @@ window.onload = function() {
         let trNode = document.createElement("tr");
         tdNode.appendChild(document.createTextNode(ret[i].name));
         tdNode2.appendChild(document.createTextNode(ret[i].crn));
-        tdNode3.appendChild(document.createTextNode("Physical"));
+        tdNode3.innerHTML = (ret[i].location == "" || ret[i].location == "Physical" ? "Digital" : "<a href='" + ret[i].location + "'>Link</a>");
         tdNode4.appendChild(editButton);
         tdNode4.appendChild(deleteButton);
         trNode.appendChild(tdNode);
