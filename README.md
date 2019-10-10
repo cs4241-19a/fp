@@ -16,6 +16,9 @@ updating that information real-time) was very challenging, as it was something n
 all socket information was kept up-to-date in addition to random board setup generation was a task which we struggled with tackling at first,
 however we were able to overcome our difficulties!
 
+**How To Run**
+We were unable to place the game on a remote client due to socketing conflicts. In the future we're hoping to get this to work so that people can play our game online. The game can be run by running npm intall and then npm start in the app package.json directory. After running these commands the application can be accessed via localhost:3000 in a browser. Multiple tabs can count as multiple players (for testing purposes) as long as they are connected to localhost:3000 as well.
+
 
 ## This project features:
 - A React.js front-end framework that dynamically renders DOM elements for players.
