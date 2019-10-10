@@ -790,11 +790,8 @@ function playbackSound() {
           variables.dataArray[i][variables.playbackIndicies[i]].timeVal ===
           variables.currentPlaybackTime
         ) {
-          console.log(
-            variables.dataArray[i][variables.currentPlaybackIndex].noteVal
-          );
           playAudio(
-            variables.dataArray[i][variables.currentPlaybackIndex].noteVal
+            variables.dataArray[i][variables.playbackIndicies[i]].noteVal
           );
           variables.playbackIndicies[i]++;
         }
@@ -817,10 +814,10 @@ function playbackSound() {
           variables.currentPlaybackTime
         ) {
           console.log(
-            variables.dataArray[i][variables.currentPlaybackIndex].noteVal
+            variables.dataArray[i][variables.playbackIndicies[i]].noteVal
           );
           playAudio(
-            variables.dataArray[i][variables.currentPlaybackIndex].noteVal
+            variables.dataArray[i][variables.playbackIndicies[i]].noteVal
           );
           variables.playbackIndicies[i]++;
         }
@@ -844,10 +841,10 @@ function playbackSound() {
           variables.currentPlaybackTime
         ) {
           console.log(
-            variables.dataArray[i][variables.currentPlaybackIndex].noteVal
+            variables.dataArray[i][variables.playbackIndicies[i]].noteVal
           );
           playAudio(
-            variables.dataArray[i][variables.currentPlaybackIndex].noteVal
+            variables.dataArray[i][variables.playbackIndicies[i]].noteVal
           );
           variables.playbackIndicies[i]++;
         }
