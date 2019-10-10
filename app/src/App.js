@@ -49,6 +49,7 @@ function App() {
       <header className="App-header">
         <h1>Codenames</h1>
       </header>
+      <Menu />
       <Game />
     </div>
   );
@@ -387,6 +388,137 @@ class Game extends React.Component {
         <br />
       </div>
     );
+  }
+}
+
+class Menu extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      modalIsOpen: true,
+      addGame: false,
+      selectedRole: "rspymaster"
+    };
+
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  openModal() {
+    this.setState({ modalIsOpen: true });
+  }
+
+  closeModal() {
+    this.setState({ modalIsOpen: false });
+  }
+
+  render() {
+    return (
+      <div className="codenames">
+        <div className="modal-menu">
+          <Modal
+            isOpen={this.state.modalIsOpen}
+            onRequestClose={this.closeModal}
+            style={{ content: { backgroundColor: "#282c34" } }}
+          >
+            <div id="myModal" className="modal">
+              <div className="modal-content">
+                <div className="modal-header-menu">
+                  <div>Codenames</div>
+                </div>
+                <div className="modal-body-menu">
+                  <input
+                    placeholder="Username"
+                    id="menuName"
+                    autoComplete="off"
+                  ></input>
+                  <br />
+                  <br />
+                  <img
+                    className="center"
+                    src="detective.png"
+                    alt="Trulli"
+                    width="270"
+                    height="333"
+                  ></img>
+                  <br />
+                  <br />
+                  <button
+                    className="redrole"
+                    id="rspymaster"
+                    onClick={() => makeGray("rspymaster", this)}
+                  >
+                    Red Team Spymaster
+                  </button>
+                  <button
+                    className="bluerole"
+                    id="bspymaster"
+                    onClick={() => makeGray("bspymaster", this)}
+                  >
+                    Blue Team Spymaster
+                  </button>
+                  <br />
+                  <button
+                    className="redrole"
+                    id="rdetective"
+                    onClick={() => makeGray("rdetective", this)}
+                  >
+                    Red Team Detective
+                  </button>
+                  <button
+                    className="bluerole"
+                    id="bdetective"
+                    onClick={() => makeGray("bdetective", this)}
+                  >
+                    Blue Team Detective
+                  </button>
+                  <br />
+                  <br />
+                  <button className="play" onClick={() => closeMenu(this)}>
+                    Play
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Modal>
+        </div>
+      </div>
+    );
+  }
+}
+
+function makeGray(btn, selected) {
+  let last = document.getElementById(selected.state.selectedRole);
+  last.disabled = false;
+  if (last.className === "redrole") {
+    last.style.backgroundColor = "#ff6666";
+  } else {
+    last.style.backgroundColor = "#4d79ff";
+  }
+
+  let b = document.getElementById(btn);
+  b.style.backgroundColor = "gray";
+  b.disabled = true;
+  selected.state.selectedRole = btn;
+}
+
+function closeMenu(play) {
+  var u = document.getElementById("menuName");
+  var redspy = document.getElementById("rspymaster");
+  var reddet = document.getElementById("rdetective");
+  var bluespy = document.getElementById("bspymaster");
+  var bluedet = document.getElementById("bdetective");
+  var username = u.value;
+  console.log(username);
+  if (
+    redspy.disabled === true &&
+    bluespy.disabled === true &&
+    reddet.disabled === true &&
+    bluedet.disabled === true
+  ) {
+    play.state.addGame = true;
+    play.closeModal();
   }
 }
 
