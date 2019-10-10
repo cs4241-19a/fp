@@ -4,6 +4,7 @@ fetch('/getYou', {
 }).then(function(response) {
     return response.json();
 }).then(function(you) {
+    localStorage.id = you._id
     document.getElementById('handwritten').innerHTML = 'Welcome, ' + you.name + '!'
     document.getElementById('favCount').innerHTML = you.favCount
     document.getElementById('likes').innerHTML = you.likes
@@ -97,7 +98,6 @@ fetch('/getYou', {
 
         heart.onclick = function(e) {
             if (heart.className === 'fa fa-heart') {
-                console.log('remove')
                 heart.className = 'fa fa-heart-o';
                 heart.style.color = 'black';
                 you.favCount -= 1
@@ -105,7 +105,6 @@ fetch('/getYou', {
                 update(you)
                 refresh()
             } else {
-                console.log('add')
                 heart.className = 'fa fa-heart';
                 heart.style.color = 'red';
                 you.favCount += 1
@@ -192,8 +191,14 @@ fetch('/getYou', {
     }
     const makeImg = function(row) {
         let img = createNode('img')
-        if (row.pic) {
-            img.src = row.pic
+        if (row.pic) img.src = row.pic
+        img.onclick = function(e) {
+            let id = row._id
+            console.log(id)
+            localStorage.id = id
+            location.href = '../profile/profile.html'
+            e.preventDefault()
+            return false
         }
         return img
     }
