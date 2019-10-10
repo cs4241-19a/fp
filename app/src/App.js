@@ -196,13 +196,6 @@ class Card extends React.Component {
   }
 }
 
-function clickGuessButton(btn) {
-  btn.changeStyle(btn.props.team);
-  setTimeout(function() {
-    let state = getBoardState();
-    socket.emit("button selected", state);
-  }, 1);
-}
 
 class Chat extends React.Component {
   constructor(props) {
@@ -476,7 +469,12 @@ function makeGray(btn, selected) {
   b.style.borderColor = "gold";
   selected.state.selectedRole = btn;
   selected.selectRole(btn);
-  socket.emit("roleSelection", selected.state.selectedRole);
+
+  let nameInput = document.getElementById("menuName");
+  let name = nameInput.value || selected.state.selectedRole;
+  nameInput.disabled = true;
+  sessionStorage.setItem("userInfo", name);
+  socket.emit("roleSelection", selected.state.selectedRole, name);
 }
 
 function resetMenu(play) {
@@ -573,20 +571,15 @@ function setBoard(order) {
 window.onload = function() {
   console.log("the sessionstorage: ", sessionStorage.getItem("userInfo"));
   socket.emit("setInitState", getBoardState(), getBrowserData());
+
+  //for disabling events
+  //document.getElementsByClassName("modal-body-menu")[0].classList.add('disabled-events');
 };
 
 function getBrowserData() {
   return { user: sessionStorage.getItem("userInfo")  || 'USER' + Math.random()};
 }
 
-function clickHint(hintbtn) {
-  setTimeout(function() {
-    let newHint = document.getElementById("msg").value;
-    let state = getClueState(newHint);
-    console.log("hint clicked");
-    socket.emit("clue sent", state);
-  }, 1);
-}
 
 function clickGuessButton(btn) {
   btn.changeStyle(btn.props.team);
@@ -595,7 +588,6 @@ function clickGuessButton(btn) {
     console.log("button clicked");
     socket.emit("button selected", state);
   }, 1);
-  return { user: sessionStorage.getItem("userInfo") || "USER" };
 }
 
 function getBoardState() {
@@ -666,6 +658,7 @@ socket.on("resetRoles", ()=>{
     var reddet = document.getElementById("rdetective");
     var bluespy = document.getElementById("bspymaster");
     var bluedet = document.getElementById("bdetective");
+
     redspy.style.backgroundColor = "#ff6666";
     redspy.style.borderColor = "black";
     redspy.disabled = false;
@@ -679,7 +672,16 @@ socket.on("resetRoles", ()=>{
     bluedet.style.borderColor = "black";
     bluedet.disabled = false;
 
+    document.getElementById("menuName").disabled = false;
+
     allReady = false;
 });
-
+socket.on("lockup", (playerName)=>{
+  //banner to other player name
+  document.getElementsByClassName("game")[0].classList.add('disabled-events');
+});
+socket.on("your turn", (lastTurnData)=>{
+  //banner for yourself
+  document.getElementsByClassName("game")[0].classList.remove('disabled-events');
+});
 export default App;

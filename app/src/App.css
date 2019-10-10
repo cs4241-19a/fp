@@ -254,3 +254,8 @@ input {
   text-align: center;
   padding: 0.5%;
 }
+
+.disabled-events{
+  pointer-events: none;
+  opacity: 0.4;
+}

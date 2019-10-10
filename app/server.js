@@ -42,6 +42,19 @@ let roleState = {
   rdetective: ""
 };
 
+function turnAfter(role){
+    switch(role){
+        case 'bdetective':
+            return 'rspymaster';
+        case 'rspymaster':
+            return 'rdetective';
+        case 'rdetective':
+            return 'bspymaster';
+        case 'bspymaster':
+            return 'bdetective';
+    }
+}
+
 function updateAll() {
   sendBoardUpdate();
   sendClueUpdate();
@@ -132,10 +145,10 @@ io.on("connection", function(socket) {
     socket.broadcast.emit("update hints", full_msg, msg);
   });
 
-  socket.on("roleSelection", function(role) {
+  socket.on("roleSelection", function(role, name) {
     console.log('JUST SELECTED ROLE', role);
 
-    setRole(socket.id, role);
+    setRoleAndName(socket.id, role, name);
     greyRole(role);
     console.log(clientList);
     console.log(roleState);
@@ -165,26 +178,45 @@ io.on("connection", function(socket) {
       };
       io.sockets.emit("resetRoles");
   });
+
+
+  socket.on("nextTurn", function(lastTurnData){
+      let nextRole = "";
+        clientList.forEach(function(cli){
+            if(socket.id === cli.connection){
+                nextRole = turnAfter(cli.role);
+            }
+        });
+        clientList.forEach(function(cli){
+           if(cli.role === nextRole){
+            io.to(cli.connection).emit("your turn", lastTurnData);
+           }else{
+               io.to(cli.connection).emit("lockup", getClient(nextRole));
+           }
+        });
+  });
+
 });
 
 function greyRole(role) {
   io.sockets.emit("greyRole", role);
 }
 
-function setRole(socketID, role) {
+function setRoleAndName(socketID, role, name) {
   clientList.forEach(function(cl) {
     if (cl.connection === socketID) {
       cl.role = role;
+      cl.name = name;
       roleState[role] = socketID;
     }
   });
 }
 
-function getSocketFromClient(cl) {
+
+function getClient(role) {
   clientList.forEach(function(element) {
-    if (element.name === cl) {
-      console.log("GetsockFromCl", element.name, element.connection);
-      return element.connection;
+    if (element.role === role) {
+      return element;
     }
   });
 }
