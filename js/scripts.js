@@ -81,29 +81,3 @@ function returnHome() {
   });
 }
 
-function loadSongs() {
-  var select = document.getElementById("songDropdown");
-  select.innerHTML = "";
-  fetch("/allData", {
-    method: "GET",
-    headers: { "Content-Type": "application/json" }
-  })
-    .then(function(ret) {
-      return ret.json();
-    })
-    .then(function(res) {
-      console.log(res);
-      var html = "";
-      res.forEach(function(single) {
-        html = '<option value="';
-        html += single.songdata;
-        html += '">';
-        html += single.songname;
-        html += " by ";
-        html += single.username;
-        html += "</option>";
-      });
-    select.innerHTML = html
-    });
-}
-

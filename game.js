@@ -1787,6 +1787,7 @@ function saveTrack() {
       console.log(res);
       if (res.status === 200) {
         window.alert("Successfully added to database");
+        loadSongs()
       }
     });
   });
@@ -1797,3 +1798,29 @@ function getCookie(name) {
   var val = re.exec(document.cookie);
   return val != null ? unescape(val[1]) : null;
 }
+
+
+function loadSongs() {
+  var select = document.getElementById("songDropdown");
+  select.innerHTML = "";
+  fetch("/allData", {
+    method: "GET",
+    headers: { "Content-Type": "application/json" }
+  })
+    .then(function(ret) {
+      return ret.json();
+    })
+    .then(function(res) {
+      console.log(res);
+      
+      res.forEach(function(single) {
+        console.log("LOOPING")
+        var opt = document.createElement('option')
+        console.log(single.songdata)
+        opt.value = single.songdata.toString()
+        opt.label = single.songname + " by " + single.username
+        select.appendChild(opt)
+      });
+    });
+}
+
