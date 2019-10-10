@@ -232,6 +232,7 @@ app.post(
 		
 		const task = req.body
 		const taskId = task.id
+		task.priority = task.priority_text
 
 		if(task.priority_)
 		

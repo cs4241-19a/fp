@@ -23,7 +23,6 @@ class TaskCard extends React.Component {
 			date: new moment().format('MM-DD-YYYY'),
 			priority_text: 'Low',
 			description: "",
-			id: this.props.data.id,
 		};
     }
 	
@@ -60,6 +59,7 @@ class TaskCard extends React.Component {
 	}
   
 	handleSubmit = event => {
+    this.updated.id = this.props.data.id;
 		this.props.buttonCallback(3, this.updated);
 		this.setState({show: false});
 	}

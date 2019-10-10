@@ -56,7 +56,7 @@ class TaskCardEntry extends React.Component {
 					text = 'Medium';
 					break;
 			}
-			this.updated.priority_text = text;
+			this.updated.priority = text;
 		}
 	}
 
@@ -121,7 +121,7 @@ class TaskCardEntry extends React.Component {
 				   </Card.Header>
 				  <Card.Body>
 					<Form>						
-						<div className = "mb-3 text-center" onChange={(e) => this.handleChange("piority", e)}>
+						<div className = "mb-3 text-center" onChange={(e) => this.handleChange("priority", e)}>
 							<input type="radio" value='0' name="priority" style={{ margin: '5px' }}/> Low
 							<input type="radio" value='1' name="priority" style={{ margin: '5px' }}/> Medium
 							<input type="radio" value='2' name="priority" style={{ margin: '5px' }}/> High
