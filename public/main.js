@@ -16,7 +16,7 @@ login.onclick = function(e) {
         .then(res => res.json())
         .then(res => {
             console.log(res)
-            location.href = '../tables/overview.html'
+            location.href = 'table/table.html'
         })
         .catch(err => {
             console.log(err)

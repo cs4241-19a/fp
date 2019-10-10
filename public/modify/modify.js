@@ -3,7 +3,7 @@ window.onload = function() {
 }
 
 document.getElementById('cancel-btn').onclick = function(e) {
-    location.href = '../tables/overview.html'
+    location.href = '../table/table.html'
     e.preventDefault()
     return false
 }

@@ -5,9 +5,25 @@ fetch('/getYou', {
     return response.json();
 }).then(function(you) {
     document.getElementById('handwritten').innerHTML = 'Welcome, ' + you.name + '!'
+    document.getElementById('favCount').innerHTML = you.favCount
+    document.getElementById('likes').innerHTML = you.likes
+    document.getElementById('dislikes').innerHTML = you.dislikes
+
     document.getElementById('goTop-btn').onclick = function() {
         document.body.scrollTop = 0
         document.documentElement.scrollTop = 0
+    }
+    document.getElementById('ovLink').onclick = function() {
+        document.title = 'Overview'
+        refresh()
+    }
+    document.getElementById('favLink').onclick = function() {
+        document.title = 'Favorite'
+        refresh()
+    }
+    document.getElementById('blackLink').onclick = function() {
+        document.title = 'Black List'
+        refresh()
     }
 
     const table = document.getElementById('table')
@@ -81,6 +97,7 @@ fetch('/getYou', {
 
         heart.onclick = function(e) {
             if (heart.className === 'fa fa-heart') {
+                console.log('remove')
                 heart.className = 'fa fa-heart-o';
                 heart.style.color = 'black';
                 you.favCount -= 1
@@ -88,6 +105,7 @@ fetch('/getYou', {
                 update(you)
                 refresh()
             } else {
+                console.log('add')
                 heart.className = 'fa fa-heart';
                 heart.style.color = 'red';
                 you.favCount += 1
@@ -101,7 +119,7 @@ fetch('/getYou', {
         return heart;
     };
     const makeBomb = function(row) {
-        let bomb = createNode('i');
+        let bomb = createNode('i')
         if (document.title === 'Black List') bomb.className = 'fa fa-recycle';
         else bomb.className = 'fa fa-bomb';
 
@@ -190,8 +208,11 @@ fetch('/getYou', {
         let td7 = createNode('th')
         let td8 = createNode('th')
         let td9 = createNode('th')
-        let td10 = createNode('th')
-        let td11 = createNode('th')
+
+        let space1 = createNode('span')
+        let space2 = createNode('span')
+        space1.innerHTML = '\xa0\xa0'
+        space2.innerHTML = '\xa0\xa0'
 
         append(td1, makeImg(row))
         td2.innerHTML = row.name
@@ -204,8 +225,10 @@ fetch('/getYou', {
         append(td7, makeDislike(row))
         td8.innerHTML = calculateScore(row)
         append(td9, makeHeart(row))
-        append(td10, makeComment(row))
-        append(td11, makeBomb(row))
+        append(td9, space1)
+        append(td9, makeComment(row))
+        append(td9, space2)
+        append(td9, makeBomb(row))
 
         append(tr, td1)
         append(tr, td2)
@@ -216,8 +239,6 @@ fetch('/getYou', {
         append(tr, td7)
         append(tr, td8)
         append(tr, td9)
-        append(tr, td10)
-        append(tr, td11)
 
         return tr
     }
