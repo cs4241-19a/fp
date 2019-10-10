@@ -17,7 +17,7 @@ select{
 }
 
 option{
-  display: visible;
+  z-index: 100;  
 }
 
 #login {

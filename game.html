@@ -54,6 +54,26 @@ along with the Perlenspiel devkit. If not, see <http://www.gnu.org/licenses/>.
       src="https://perlenspiel.net/ps3/engine/ps3.3x.js"
     ></script>
     <link rel="stylesheet" type="text/css" href="Temp.css" />
+    <footer>
+      <section class="DATABASE_BUTTONS">
+        <!--POPULATE BASED ON DATABASE SHOW TRACKNAME VALUE = trackArray -->
+        <select id="songDropdown">
+          <option>TEST1</option>
+          <option>TEST 2</option>
+                  
+        </select>
+        <button onclick="loadTrack()">LOAD TRACK</button>
+        <button onclick="saveTrack()">SAVE TRACK</button>
+        
+      </section>
+    </footer>
+    
+    <script>
+      function interaction(){
+        console.log(document.getElementById("songDropdown").label)
+        console.log("TOUCHING SELECT")
+      }
+        </script>
   </head>
   <body onload="PS._sys( 0xFFFFFF, 0x000000, 'Touch image to begin' );">
     <!--
@@ -96,25 +116,6 @@ along with the Perlenspiel devkit. If not, see <http://www.gnu.org/licenses/>.
 
     <script type="text/javascript" src="game.js"></script>
     
-    <footer>
-      <section class="DATABASE_BUTTONS">
-        <!--POPULATE BASED ON DATABASE SHOW TRACKNAME VALUE = trackArray -->
-        <select id="songDropdown">
-          <option>TEST1</option>
-          <option>TEST 2</option>
-                  
-        </select>
-        <button onclick="loadTrack()">LOAD TRACK</button>
-        <button onclick="saveTrack()">SAVE TRACK</button>
-        
-      </section>
-    </footer>
     
-    <script>
-      function interaction(){
-        console.log(document.getElementById("songDropdown").label)
-        console.log("TOUCHING SELECT")
-      }
-        </script>
   </body>
 </html>
