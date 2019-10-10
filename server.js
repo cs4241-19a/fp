@@ -21,16 +21,6 @@ const database   = require("./database.js")
 // Parse JSON bodies
 app.use(bodyParser.json())
 
-// Serve our compiled react program
-const directory = "client/build"
-app.use(express.static(directory))
-
-// Redirect to the default webpage
-app.get("/", function(request, response)
-{
-	response.sendFile(__dirname + directory + "/index.html")
-})
-
 
 // ####################
 // ## AUTHENTICATION ##
@@ -139,6 +129,25 @@ passport.deserializeUser((username, done) =>
 	})
 })
 
+// Redirect to the default webpage
+const directory = "client/build"
+app.get("/", function(request, response)
+{
+	response.sendFile(__dirname + "/" + directory + "/login.html")
+})
+app.get("/tasks", function(request, response)
+{
+	if (request.user === undefined)
+	{
+		response.redirect("/")
+		return
+	} 
+	response.sendFile(__dirname + "/" + directory + "/index.html")
+})
+
+// Serve our compiled react program
+app.use(express.static(directory))
+
 
 // ###########
 // ## TASKS ##
@@ -170,22 +179,39 @@ app.post(
 			{
 				const now = new moment()
 				const dueDate = new moment(task.dueDate)
-				
-				const deltaTime = moment.duration(now.diff(dueDate))
-				//console.log(deltaTime)
+
+				let deltaTime = moment.duration(now.diff(dueDate)).asHours()
+				console.log(task.dueDate, deltaTime)
+
+				if (task.uhoh && (deltaTime >= 0))
+				{
+					deltaTime *= 3
+				}
+				if (task.priority === "Medium")
+				{
+					deltaTime += 1
+				}
+				if (task.priority === "High")
+				{
+					deltaTime += 2
+				}
+
 				task.deltaTime = deltaTime
 			})
-			
+
 			tasks.sort(function(firstEl, secondEl)
 			{
-				return firstEl.deltaTime.asSeconds() - secondEl.deltaTime.asSeconds()
+				return secondEl.deltaTime - firstEl.deltaTime
 			})
 			
 			// Remove field so that they aren't sent to the frontend - they aren't needed
 			tasks.forEach((task) =>
 			{
-				task.deltaTime = undefined
+				delete task.deltaTime
 			})
+			
+			//console.log(tasks)
+			
 			res.json(tasks)
 		})
 	}
@@ -232,13 +258,16 @@ app.post(
 		
 		const task = req.body
 		const taskId = task.id
+		
+		task.dueDate = task.date
+		delete task.date  //    : ^  (
+		
 		task.priority = task.priority_text
-
-		if(task.priority_)
+		delete task.priority_text
+		
+		delete task.id 	// Don't update the task id to be the same that it already is
 		
 		console.log("Updating task: ", taskId, task)
-		
-		task.id = undefined 	// Don't update the task id to be the same that it already is
 		
 		database.updateTask(taskId, task).then(
 		function()

@@ -1,0 +1,92 @@
+/* -- GLITCH DEFAULT STYLING, MOSTLY -- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  /* font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif; */
+  margin: 2em;
+}
+
+h1 {
+  font-style: italic;
+  text-align: center;
+  /* color: #373fff; */
+}
+
+.bold {
+  font-weight: bold;
+}
+
+p {
+  max-width: 600px;
+}
+
+form {
+  margin-bottom: 25px;
+  padding: 15px;
+  /* background-color: cyan; */
+  display: inline-block;
+  width: 100%;
+  max-width: 340px;
+  border-radius: 3px;
+}
+
+input {
+  display: block;
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 100%;
+  /* border: 1px solid lightgrey; */
+  border-radius: 3px;
+  font-size: 16px;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+footer {
+  margin-top: 50px;
+  padding-top: 25px;
+  border-top: 1px solid lightgrey;
+}
+
+
+/* -- CENTERED BODY -- */
+
+main {
+	max-width: 1460px;
+	margin: auto;
+	padding: 20px;
+}
+
+
+/* -- CHAT STYLING -- */
+
+.chat-username {
+  font-weight: bold;
+  font-size: 120%;
+  text-align: right;
+  padding: 1em;
+  min-width: 150px;
+}
+
+.chat-contents {
+  font-weight: normal;
+  text-align: left;
+  width: 100%;
+}
+
+.chat-timestamp {
+  font-weight: italic;
+  font-size: 75%;
+  color: #808080;
+  text-align: left;
+  min-width: 150px;
+}
+
+#chat-contents {
+  padding: 15px;
+	width: 100%;
+}

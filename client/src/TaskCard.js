@@ -135,7 +135,6 @@ class TaskCard extends React.Component {
 					<Card.Text className = "text-justify" controlId = 'discription'>{this.props.data.description}</Card.Text>
 					<ButtonToolbar>
 						<Button variant="outline-success" style={{ margin: '5px' }} onClick = {this.handleDone}>Done</Button>
-						<Button variant="outline-secondary" style={{ margin: '5px' }} onClick = {this.handleMoreTime}>More Time</Button>
 						<Button variant="outline-secondary" style={{ margin: '5px' }} onClick = {this.handleEdit}>Edit</Button>
 						<Button variant="outline-danger" style={{ margin: '5px' }} onClick = {this.handleDelete}>Delete</Button>
 					</ButtonToolbar>

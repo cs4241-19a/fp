@@ -9,6 +9,7 @@ import moment from 'moment';
 //import 'rc-time-picker/assets/index.css';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
+import './TaskCardEntry.css';
 
 class TaskCardEntry extends React.Component {
 
@@ -27,7 +28,7 @@ class TaskCardEntry extends React.Component {
 	
 	// handle the date day changing (seperate from the rest of the data changing
 	handleDateChange = date => {
-		this.updated.dueDate = moment(date).format("MM-DD-YYYY")
+		this.updated.dueDate = moment(date.target.value).format("MM-DD-YYYY")
 	};
   
 	
@@ -98,7 +99,7 @@ class TaskCardEntry extends React.Component {
 	
 	render() {
 		return (
-		<div className = "text-center">
+		<div className = "text-center new-task">
 		<Button variant="info"  onClick = {this.handleEdit}>New Task</Button>
 		 <Modal  show={this.state.show} onHide={this.handleClose}>
 			<div> 

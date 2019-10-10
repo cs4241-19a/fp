@@ -6,38 +6,10 @@ https://fp-qme.glitch.me/
 Welcome to qMe! qMe is a priority queue application to assist in personal scheduling and time management. Any user can create an account with qMe. With an account created, users can enter tasks that they need to complete, along with the deadline. Depending on when the task is due, and what priority the task is ranked, qMe display the tasks in order of when the user should complete the task. Additional customization of tasks is offered, like the ability to say you need more time, or to push a task off until later, all with one click. Once a task is completed, it can be checked off as the user continues to their next task.
 
 ## Additional Instructions
-- Steps to use (login front end not hooked up)
-  - Execute these commands in your console.
-  - If you want to sign up for a new account, run:
-  - ```js 
-    fetch("/signup", {
-      method: 'POST',
-      body: JSON.stringify({
-          username: "<YOUR USERNAME HERE>",
-          password: "<YOUR PASSWORD HERE>"
-      }),
-      headers: {
-          "Content-Type": "application/json"
-      }
-    }).then(console.log)
-  - If you do not want to sign up for a new account, then the default user is `user1`, password `hunter2`.
-  - To log in to your account, run:
-  - ```js
-    fetch("/login", {
-      method: 'POST',
-      body: JSON.stringify({
-          username: "<YOUR USERNAME HERE>",
-          password: "<YOUR PASSWORD HERE>"
-      }),
-      headers: {
-          "Content-Type": "application/json"
-      }
-    }).then(console.log)
 
-- Click to create a new task, fill in all the necessary blanks and submit
-- try to mark an item as done, or delete it from your queue.
-- click the "Do Later" button on an existing task to move it further back in your stack
-- Click the "More Time" Button to move a task higher on the priority list.
+- Create an account using our login page. If you do not want to create an account, use the default account `user1`, password `hunter2`.
+- You can create tasks with the button in the top left corner. It will show you your highest priority tasks at the very front, then less high priority tasks are shown behind the first task.
+- The algorithm to determine what your highest priority assignment is based on how soon it is until the task is due and what priority level (low, medium, high) the task was set to.
 
 ## Technologies Used
 - For our front end, we used `React`, `Bootstrap`, and `React-Bootstrap`. These were all used in conjuction to create the cards and thier behaviors.

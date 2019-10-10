@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>CS 4241 Final Project</title>
+    <meta name="description" content="CS 4241 Final Project">
+    
+    <!-- Milligram stylesheets -->
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/milligram/1.3.0/milligram.css">
+    
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+    
+    <!-- import the webpage's client-side javascript file -->
+    <script src="/login.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>
+        qMe
+      </h1>
+    </header>
+    
+    <main>
+      <p class="bold">The Priority Queue for your Life</p>
+      
+      <h3>Returning members, please log in:</h3>
+      
+      <form>
+        <input name="username" type="text" maxlength="100" placeholder="Username" aria-labelledby="button-login">
+        <input name="password" type="password" maxlength="100" placeholder="Password" aria-labelledby="button-login">
+        <button type="submit" id="button-login">Login</button>
+      </form>
+      
+      <h3>New members, please create a new account!</h3>
+      
+      <form>
+        <input name="username" type="text" maxlength="100" placeholder="Choose a username" aria-labelledby="button-signup">
+        <input name="password" type="password" maxlength="100" placeholder="Choose a password" aria-labelledby="button-signup">
+        <button type="submit" id="button-signup">Sign up</button>
+      </form>
+    </main>
+  </body>
+</html>
