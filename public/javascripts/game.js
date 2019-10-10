@@ -54,30 +54,31 @@ var player_x,
 	player_y,
 	timer = "",
 	jump = false,
-	FRAME_COUNT = 0;
-	var jump_pos; 
-	has_UP = false;
-	has_DOWN = false;
-	player_alive = true;
+	moving = false,
+	FRAME_COUNT = 0,
+	has_UP = false,
+	has_DOWN = false,
+	player_alive = true
 var up = 0;
 var down = 0;
+//var moving = false; //for object movement
 	
 
 //Objects in Map
 var obj1 = {
 	name: "obj1",
-	color: PS.COLOR_PINK,
-	x_pos: 0, //GRID_W -1
-	y_pos: 0,	//GRID_Y
+	color: PS.COLOR_INDIGO,
+	x: 0, //GRID_W -1
+	y: 0,	//GRID_Y
 	length: 1,
-	height: 1,
+	height: 1
 }
 
 var obj2 = {
 	name: "obj2",
-	color: PS.COlOR_BLUE,
-	x_pos: 0, //GRID_W -1
-	y_pos: 0,	//GRID_Y
+	color: PS.COLOR_YELLOW,
+	x: 0, //GRID_W -1
+	y: 0,	//GRID_Y
 	length: 2,
 	height: 1,
 }
@@ -87,6 +88,7 @@ var TIMER = {
 	global : 0,
 	tick : function() {
 		TIMER.global+=1;
+		//player jump
 		if (jump) {
 			//PS.debug("hh\n");
 			if(TIMER.global % 30 === 0 && up != 2) {
@@ -105,46 +107,25 @@ var TIMER = {
 				}
 			}
 		}
-	},
-	up: function(){ //jump upwards
-		PS.debug( "I am in up function\n");
-		//make sure we have onyl jumped two pixels 
-		if( jump_pos < 2){
-			//PS.debug("jum_pos"+ jump_pos);
-			//make current spot white 
-			PS.color(player_x, player_y, PS.COLOR_WHITE);
-			//decrease y position 
-			player_y -= 1;
-			//color new square 
-			PS.color(player_x, player_y, PS.COLOR_BLACK);
-			//update jump position 
-			jump_pos++;
-			PS.debug("inside up: " + jump_pos + "\n");
-		} else {
-			//call down function
-			TIMER.down(jump_pos);
-		}
-		//return ;
-	},
-	down: function(down_pos){
-		PS.debug("I am in down funtion\n");
-		if(down_pos > -1){
-			//PS.debug("jum_pos"+ jump_pos);
-			//make current spot white 
-			PS.color(player_x, player_y, PS.COLOR_WHITE);
-			//increase y position 
-			player_y += 1;
-			//color new square 
-			PS.color(player_x, player_y, PS.COLOR_BLACK);
-			//update jump position 
-			down_pos--;
+
+		//object 1 movement 
+		if (moving){
+			// PS.debug("pos: " + obj1.x + "\n");
+			// moving = false;
+			if(TIMER.global % 30 === 0 && obj1.x > 1){
+				PS.color(obj1.x, obj1.y, PS.COLOR_WHITE);//make current one disappear	
+				PS.debug("Current x pos: " + obj1.x + "\n");
+				obj1.x -= 1;//move left
+				PS.color(obj1.x, obj1.y, obj1.color);//draw new obj
+			}
+			else if( obj1.x === 1 || obj1.x < 0){
+				moving = false; 
+				//make object disappear from board 
+				PS.color(obj1.x, obj1.y, PS.COLOR_WHITE);
+			}
 		}
 	}
 }
-
-
-
-
 
 PS.init = function( system, options ) {
 	"use strict"; // Do not remove this directive!
@@ -174,6 +155,7 @@ PS.init = function( system, options ) {
 	PS.color(player_x,player_y,PS.COLOR_BLACK);
 	timer = PS.timerStart(1, TIMER.tick);
 	
+	startMap(); //start generating map objects 
 	//wait a bit before the map starts moving 
 	/*TIMER.global = 0 
 	while(true){
@@ -196,27 +178,29 @@ PS.init = function( system, options ) {
 };
 
 var startMap = function(){
+	PS.debug("Start Map was called\n")
 	var arr = [2];
 	var next;
-
+	
 	while(player_alive){
-		next = PS.random(2) + 1; //random number between 1 - 3
+		next = PS.random(3) + 1; //random number between 2 - 4
 
-		if (next == 1){ //load object 1 
-			//print random number
-			PS.debug(next + '\n');
+		if (next == 2 && !moving){ //load object 1 
+			PS.debug(next + '\n');//print random number
 			TIMER.global = 0;
 			//render object
-			obj1.x_pos = GRID_W -1; 
-			obj1.y_pos = GRID_H -3; 
-			PS.color(obj1.x_pos, obj1.y_pos, obj1.color);
-			//wait a couple of ticks 
-			while(true){
-				if(TIMER.global % 475 == 0){
-					break;
-				}
-			}
-		} else if(next == 2){
+			obj1.x= GRID_W -1; 
+			obj1.y = GRID_H -3; 
+			PS.color(obj1.x, obj1.y, obj1.color);
+			PS.debug( "Was rendered once\n");
+			
+			moving = true; //move it left
+			// while(obj1.x > GRID_W/2){
+			// 	PS.color(obj1.x, obj1.y, obj1.color); //draw new obj
+			// 	obj1.x -= 1; //move left
+			// }
+			
+		} else if(next == 3){
 			//print random number
 			PS.debug(next + '\n');
 			PS.debug("2\n");
@@ -231,9 +215,8 @@ var startMap = function(){
 			// 		break;
 			// 	}
 			// }
-		} else { //assuming it is 3 
-			//print random number
-			PS.debug(next + '\n');
+		} else  if(next == 4){
+			PS.debug(next + '\n'); //print random number
 			player_alive = false; 
 		}
  	}
