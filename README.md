@@ -17,6 +17,11 @@ To play the game, the user will need to create an account. Simply choose any use
 
 **Challenges**  
 What challenges you faced in completing the project.
+- getting passport authentication to work with multiple html views and adding user accounts to database was tricky
+- if you selected a character twice it would have two timers
+- making game scene borders was tricky with the sprite images
+- embedding background image
+- we were going to use heroku but because none of us had figured out how to use it by the final project we decided to go with glitch and used pouchdb database instead of heroku's sql integration
 
 **Work Distribution**
 - Noble: Set up project with node js server and gulp pipeline; created leadership board; added CSS design to the scenes; set up pouchdb database
