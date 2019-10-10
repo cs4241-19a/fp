@@ -1,0 +1,271 @@
+#nav {
+    height: 60px;
+    width: 105%;
+    margin-top: -10px;
+    margin-left: -75px;
+    text-align: center;
+    background: rgb(255,0,0);
+    background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(0,0,255,1) 50%, rgba(0,255,31,1) 100%);
+    overflow: hidden;
+    background-color: transparent;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    left: 0;
+    box-shadow: 0 1px 10px #999;
+}
+
+body {
+    background-color: black ;
+}
+
+h1 {
+    color: white;
+    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", serif;
+    margin-top: 6px;
+    font-size: 3em;
+    font-weight: 600;
+}
+
+#container {
+    width: 1532px;
+    padding-left: 75px;
+    padding-right: 75px;
+    padding-top: 50px;
+    text-align: center;
+    background-color: black;
+    margin-top: -30px;
+    margin-left: -10px;
+    margin-right: -10px;
+    margin-bottom: -10px;
+}
+
+#canvas {
+    height: 770px;
+    width: 100%;
+}
+
+#btnContainer {
+    padding-bottom: 2px;
+    padding-top: 2px;
+    height: 60px;
+    width: 100%;
+}
+
+#btnContainer2 {
+    padding-bottom: 2px;
+    padding-top: 2px;
+    height: 60px;
+    width: 100%;
+}
+
+.btn {
+    width: 200px;
+    height: 40px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 20px;
+    font-family: 'Source Code Pro', 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+    background-color: gray;
+    text-decoration: none;
+    color: white;
+    font-size: 1em;
+    font-weight: 500;
+    text-transform: uppercase;
+    display: inline-block;
+    box-shadow: 0 1px 10px black;
+    border: none;
+    transition: 0.9s;
+}
+
+.btn:hover {
+    background-color: dodgerblue;
+    box-shadow: 0 1px 10px darkslategray;
+    cursor: pointer;
+}
+
+.lbl {
+    width: 200px;
+    height: 40px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 20px;
+    font-family: 'Source Code Pro', 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+    background-color: transparent;
+    text-decoration: none;
+    color: white;
+    font-size: 1em;
+    font-weight: 500;
+    text-transform: uppercase;
+    display: inline-block;
+    border: 2px solid white;
+}
+
+#blue:hover {
+    background-color: blue;
+    box-shadow: 0 1px 10px darkslategray;
+    cursor: pointer;
+}
+
+#red:hover {
+    background-color: red;
+    box-shadow: 0 1px 10px darkslategray;
+    cursor: pointer;
+}
+
+#pink:hover {
+    background-color: hotpink;
+    box-shadow: 0 1px 10px darkslategray;
+    cursor: pointer;
+}
+
+#green:hover {
+    background-color: green;
+    box-shadow: 0 1px 10px darkslategray;
+    cursor: pointer;
+}
+
+.btn2 {
+    width: 40px;
+    height: 40px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 20px;
+    font-family: 'Source Code Pro', 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+    background-color: gray;
+    text-decoration: none;
+    color: white;
+    font-size: 1.2em;
+    font-weight: 600;
+    font-style: italic;
+    display: inline-block;
+    box-shadow: 0 1px 10px black;
+    border: none;
+    transition: 0.9s;
+}
+
+.btn2:hover {
+    background-color: dodgerblue;
+    box-shadow: 0 1px 10px darkslategray;
+    cursor: pointer;
+}
+
+.popup {
+    margin-top: -50px;
+
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: absolute;
+    left: 10px;
+    box-shadow: 0 1px 10px darkslategray;
+}
+
+.popup .popuptext {
+    text-align: left;
+    padding: 20px;
+    visibility: hidden;
+    width: 1200px;
+    min-width: 1200px;
+    background-color: #555;
+    color: #fff;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1000;
+    opacity: 0.8;
+    top: 200%;
+    left: 300%;
+    margin-left: 80px;
+    margin-top: 80px;
+    box-shadow: 0 1px 10px darkslategray;
+
+}
+
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 0.8;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:0.8 ;}
+}
+
+p {
+    font-family: 'Source Code Pro', 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+    text-decoration: none;
+    color: white;
+    font-size: 0.8em;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.head {
+    font-size: 1.2em;
+    font-weight: 600;
+    font-style: italic;
+
+}
+
+.boldT {
+    background-color: orangered;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px;
+    font-size: 1em;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.defaultTo {
+    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", serif;
+    font-style: italic;
+}
+
+.infoB {
+    background-color: dodgerblue;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px;
+    font-size: 1em;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.imp {
+    background-color: yellow;
+    color: black;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px;
+    font-size: 1em;
+    font-weight: 600;
+    font-style: italic;
+}
+
+#lol {
+    background: rgb(255,0,0);
+    background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(0,0,255,1) 50%, rgba(0,255,31,1) 100%);
+    box-shadow: 0 1px 10px darkslategray;
+    cursor: pointer;
+}
+
+
+
+
+

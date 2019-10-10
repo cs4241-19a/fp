@@ -20,15 +20,20 @@
     "parcel": "parcel src/html/main.html",
     "watch": "parcel watch src/html/*.html",
     "build": "parcel build src/html/*.html",
-    "css": "npx tailwind build src/css/main-t.css -o src/css/main-styles.css; npx tailwind build src/css/login-t.css -o src/css/login-styles.css; npx tailwind build src/css/profile-t.css -o src/css/profile-styles.css;"
+    "css": "npx tailwind build src/css/main-t.css -o src/css/main-styles.css; npx tailwind build src/css/login-t.css -o src/css/login-styles.css; npx tailwind build src/css/profile-t.css -o src/css/profile-styles.css;",
+    "bundle-vis": "browserify src/js/vis/visualizer.js -o src/js/bundle.js -t [ babelify --presets [@babel/preset-env] ]"
   },
   "proxy": "http://localhost:3000/",
   "dependencies": {
+    "@babel/preset-env": "^7.6.3",
     "@material-ui/core": "^4.5.0",
     "aos": "^2.3.4",
+    "babelify": "^10.0.0",
     "body-parser": "^1.19.0",
+    "browserify": "^16.5.0",
     "bulma": "^0.7.5",
     "compression": "^1.7.4",
+    "dat.gui": "^0.7.6",
     "easy-peasy": "^3.1.0",
     "express": "^4.17.1",
     "firebase-admin": "^8.6.0",
@@ -42,7 +47,8 @@
     "react-dom": "^16.10.2",
     "serve-favicon": "^2.5.0",
     "show-toast": "^1.1.4",
-    "tailwindcss": "^1.1.2"
+    "tailwindcss": "^1.1.2",
+    "vis": "^4.21.0-EOL"
   },
   "devDependencies": {
     "@babel/core": "^7.6.3",

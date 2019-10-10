@@ -11402,6 +11402,10 @@ html {
   background-image: linear-gradient(to top, #000104, #121214, #1d1d1e, #282829, #333334);
 }
 
+div {
+  min-height: 0 !important;
+}
+
 body {
   overflow: hidden;
   height: 100%;
@@ -11463,6 +11467,7 @@ body {
   padding-right: 100px;
   padding-top: 50px;
   padding-bottom: 50px;
+  overflow: scroll !important;
 }
 
 #navBar img {

@@ -5,8 +5,6 @@ import ReactDOM from "react-dom";
 import ProfileApp from "./profileApp";
 import Toast from "./show-toast";
 
-ReactDOM.render(<ProfileApp />, document.getElementById("root"));
-
 window.onload = function () {
     fetch( '/receive')
         .then( function( response ) {
@@ -96,3 +94,5 @@ function logout(e) {
     e.preventDefault();
     window.location = "/login.html"
 }
+
+ReactDOM.render(<ProfileApp />, document.getElementById("root"));

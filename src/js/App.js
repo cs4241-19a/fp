@@ -6,9 +6,10 @@ import FeedItem from './FeedItem';
 
 export default function App(props) {
 
-    window.localStorage;
-    window.onload = function () {
-    }
+
+    const song = {title: "asdf", artist: "asdf", file: 0},
+          user = {username: "XxX_420_newbRekr_69_XxX", name: "Bob"},
+          options  = {height: 0, length: 0};
 
     return (
         <React.Fragment>
