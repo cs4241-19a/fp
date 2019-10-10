@@ -121,7 +121,10 @@ const gamePlayState = new Phaser.Class({
             scene.gameover = true;
             const scoreModel = $("#gameScoreFormModal");
             attachHeading(`Score: ${scene.score.toFixed(0)}`);
-            scoreModel.on("hidden.bs.modal", () => scene.scene.start());
+            scoreModel.on("hidden.bs.modal", () => {
+                scene.scene.start();
+                resetGrid();
+            });
             attachSubmit({score: scene.score}, () => {
                 scoreModel.modal("hide");
             });

@@ -33,7 +33,7 @@ const btmLeft = {x: 0, y: playArea.height + menuArea.height - menuArea.height - 
 const baseEntrance = {x: btmLeft.x, y: btmLeft.y};
 
 const grid = [];
-(() => {
+function resetGrid() {
     for (let i = 0; i < playArea.height; i++) {
         grid[i] = [];
         for (let j = 0; j < playArea.width; j++) {
@@ -69,7 +69,8 @@ const grid = [];
     // add enemy buffer area
     grid[enemyEnterCoord.y][enemyEnterCoord.x] = cellTypes.OPEN;
 
-})();
+}
+resetGrid();
 console.log(grid);
 
 /**
