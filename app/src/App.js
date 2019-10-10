@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import "./App.css";
 
 import socketIOClient from "socket.io-client";
+import { SSL_OP_SINGLE_DH_USE } from "constants";
 
 const socket = socketIOClient("localhost:8080");
 //would normally come from database but this is for testing
@@ -50,33 +51,35 @@ class App extends React.Component {
     super(props);
     this.state = {
       modalOpen: true,
+      selectedRole: ""
     };
 
     socket.on("closeModal", this.closeModal.bind(this));
   }
 
   closeModal() {
-    console.log("closeModal");
-    this.setState({modalOpen: false});
+    this.setState({ modalOpen: false });
   }
 
-
+  selectRole(role) {
+    this.setState({ selectedRole: role });
+  }
 
   render() {
     return (
-        <div className="App">
-          <header className="App-header">
-            <h1>Codenames</h1>
-          </header>
-          {this.state.modalOpen &&
-          <Menu/>
-          }
-          <Game/>
-        </div>
+      <div className="App">
+        <header className="App-header">
+          <h1>Codenames</h1>
+          <Modals />
+        </header>
+        {this.state.modalOpen && (
+          <Menu selectRole={this.selectRole.bind(this)} />
+        )}
+        <Game selectedRole={this.state.selectedRole} />
+      </div>
     );
   }
 }
-
 
 Modal.setAppElement("#root");
 
@@ -167,11 +170,7 @@ class Card extends React.Component {
     } else if (this.props.team === "assassin") {
       cardColor = "black";
     }
-    if (this.props.keyboard === true) {
-      this.state = { color: cardColor, cardColor: cardColor };
-    } else {
-      this.state = { color: null, cardColor: cardColor };
-    }
+    this.state = { color: null, cardColor: cardColor, cardBorder: cardColor };
   }
 
   changeStyle(color) {
@@ -184,7 +183,11 @@ class Card extends React.Component {
     return (
       <button
         className="button card"
-        style={{ backgroundColor: this.state.color }}
+        style={{
+          backgroundColor: this.state.color,
+          borderStyle: SSL_OP_SINGLE_DH_USE,
+          borderColor: this.state.cardColor
+        }}
         onClick={() => clickGuessButton(this)}
       >
         {this.props.value}
@@ -193,17 +196,22 @@ class Card extends React.Component {
   }
 }
 
+function clickGuessButton(btn) {
+  btn.changeStyle(btn.props.team);
+  setTimeout(function() {
+    let state = getBoardState();
+    socket.emit("button selected", state);
+  }, 1);
+}
+
 class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      team: this.props.team,
-      wordsLeft: props.wordsLeft,
       log: [],
       clue: ""
     };
     socket.on("hintHistory", hints => {
-      console.log(hints);
       this.setState({ log: hints });
     });
   }
@@ -212,7 +220,7 @@ class Chat extends React.Component {
     if (this.state.clue === "") {
       return;
     }
-    socket.emit("hintSubmission", this.state.team, this.state.clue, amount);
+    socket.emit("hintSubmission", this.props.team, this.state.clue, amount);
   }
 
   createAmounts() {
@@ -222,7 +230,7 @@ class Chat extends React.Component {
         <div
           key={i}
           onClick={() => this.submitHint(i)}
-          className={"amount" + (i <= this.state.wordsLeft ? "" : " disabled")}
+          className={"amount" + (i <= this.props.wordsLeft ? "" : " disabled")}
         >
           {i}
         </div>
@@ -237,23 +245,21 @@ class Chat extends React.Component {
         <div className="chat-container">
           {this.state.log.map((hint, index) => {
             return (
-              <div
-                key={index}
-                className="clue"
-                style={{ color: hint.sender }}
-              >
+              <div key={index} className="clue" style={{ color: hint.sender }}>
                 {hint.clue} : {hint.amt}
               </div>
             );
           })}
-          <div className={"hintSubmission"}>
-            <input
-              placeholder="Clue"
-              onChange={e => this.setState({ clue: e.target.value })}
-              id="msg"
-            />
-            <div className={"amountInput"}>{this.createAmounts()}</div>
-          </div>
+          {this.props.role.endsWith("spymaster") && (
+            <div className={"hintSubmission"}>
+              <input
+                placeholder="Clue"
+                onChange={e => this.setState({ clue: e.target.value })}
+                id="msg"
+              />
+              <div className={"amountInput"}>{this.createAmounts()}</div>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -265,19 +271,12 @@ class Board extends React.Component {
     super(props);
     this.state = {
       words: this.props.words,
-      teams: this.props.teams,
-      keyboard: this.props.keyboard
+      teams: this.props.teams
     };
   }
 
   renderCard(i) {
-    return (
-      <Card
-        value={this.state.words[i]}
-        team={this.state.teams[i]}
-        keyboard={this.state.keyboard}
-      />
-    );
+    return <Card value={this.state.words[i]} team={this.state.teams[i]} />;
   }
 
   render() {
@@ -348,12 +347,8 @@ class Game extends React.Component {
     }
     return (
       <div className="game">
-        <Board
-          words={this.state.boardWords}
-          teams={this.state.boardTeams}
-          keyboard={false}
-        />
-        <Chat team={status} wordsLeft={9} />
+        <Board words={this.state.boardWords} teams={this.state.boardTeams} />
+        <Chat role={this.props.selectedRole} team={status} wordsLeft={9} />
         <br />
         <br />
       </div>
@@ -365,6 +360,7 @@ class Menu extends React.Component {
   constructor(props) {
     super(props);
 
+    this.selectRole = props.selectRole;
     this.state = {
       modalIsOpen: true,
       selectedRole: null
@@ -479,6 +475,7 @@ function makeGray(btn, selected) {
   b.style.backgroundColor = "gray";
   b.style.borderColor = "gold";
   selected.state.selectedRole = btn;
+  selected.selectRole(btn);
   socket.emit("roleSelection", selected.state.selectedRole);
 }
 
@@ -510,7 +507,6 @@ function closeMenu(play) {
   var bluespy = document.getElementById("bspymaster");
   var bluedet = document.getElementById("bdetective");
   var username = u.value;
-  console.log(username);
   if (allReady) {
     play.closeModal();
     socket.emit("startGame");
@@ -569,13 +565,13 @@ function setBoard(order) {
       }
     }
   }
-
+  console.log(boardTeams);
   return [boardWords, boardTeams];
 }
 
 //send out message to set initial state if it hasnt already
 window.onload = function() {
-  console.log('the sessionstorage: ', sessionStorage.getItem("userInfo"));
+  console.log("the sessionstorage: ", sessionStorage.getItem("userInfo"));
   socket.emit("setInitState", getBoardState(), getBrowserData());
 };
 
@@ -599,6 +595,7 @@ function clickGuessButton(btn) {
     console.log("button clicked");
     socket.emit("button selected", state);
   }, 1);
+  return { user: sessionStorage.getItem("userInfo") || "USER" };
 }
 
 function getBoardState() {
@@ -615,37 +612,10 @@ function getBoardState() {
       };
     }
   }
-  console.log(cards);
   return cards;
 }
 
-function getClueState(newHint) {
-  let chatCont = document.getElementsByClassName("chat-container")[0];
-  let chats = chatCont.getElementsByTagName("p");
-  let chatText = [];
-  for (let i = 0; i < chats.length; i++) {
-    chatText.push(chats[i].innerHTML);
-  }
-  if (newHint) {
-    chatText.push(newHint);
-  }
-  return chatText;
-}
-
-socket.on("updateCluestate", function(cs) {
-  let chatCont = document.getElementsByClassName("chat-container")[0];
-  //chatCont.innerHTML = '';
-  cs.forEach(function(msg) {
-    let final_message = document.createElement("p");
-    console.log(msg);
-    final_message.innerHTML = msg;
-    console.log(final_message);
-    chatCont.append(final_message);
-  });
-});
-
 socket.on("updateBoardstate", function(bs) {
-  console.log("updating board state", bs);
   if (bs.length < 1) {
     return;
   }
@@ -654,25 +624,20 @@ socket.on("updateBoardstate", function(bs) {
     let cardsInRow = rows[i].getElementsByClassName("card");
     for (let j = 0; j < cardsInRow.length; j++) {
       let button = cardsInRow[j];
-      console.log(bs[i][j]);
       button.innerHTML = bs[i][j].word;
       button.style.backgroundColor = bs[i][j].color;
     }
   }
-  console.log("number clicked");
   //socket.emit('send hint', 'sent!');
 });
 
 socket.on("update hints", function(msg) {
   let final_message = document.createElement("p");
-  console.log(msg);
   final_message.innerHTML = msg;
-  console.log(final_message);
   document.getElementsByClassName("chat-container")[0].append(final_message);
 });
 
 socket.on("greyRole", function(role) {
-  console.log("greying role", role);
   let button = document.getElementById(role);
   button.style.backgroundColor = "grey";
   button.disabled = true;
@@ -680,22 +645,20 @@ socket.on("greyRole", function(role) {
 });
 
 socket.on("allSelectedStatus", function(status) {
-  console.log("status", status);
   if (status) {
     allReady = true;
   }
 });
 
-socket.on("updateRoleState", function(rs){
-  for(let role in rs){
-    if(rs.hasOwnProperty(role) && rs[role]){
-      console.log('greying role', role);
-      let button  = document.getElementById(role);
+socket.on("updateRoleState", function(rs) {
+  for (let role in rs) {
+    if (rs.hasOwnProperty(role) && rs[role]) {
+      console.log("greying role", role);
+      let button = document.getElementById(role);
       button.style.backgroundColor = "grey";
       button.disabled = true;
     }
   }
-
 });
 
 socket.on("resetRoles", ()=>{
