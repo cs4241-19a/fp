@@ -1,31 +1,31 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var app = express();
-var server = require('http').createServer(app);
-var fs = require('fs');
-var session = require("express-session")({
-        secret: "my-secret",
-        resave: true,
-        saveUninitialized: true
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const app = express();
+const server = require('http').createServer(app);
+const fs = require('fs');
+const session = require('express-session')({
+      secret: 'my-secret',
+      resave: true,
+      saveUninitialized: true,
     }),
-    sharedsession = require("express-socket.io-session");
-var socketio = require('socket.io');
-var io = socketio.listen(server);
+    sharedsession = require('express-socket.io-session');
+const socketio = require('socket.io');
+const io = socketio.listen(server);
 io.use(sharedsession(session));
 
 app.use(logger('dev'));
 app.use(session);
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.applyPort = function(port){
-    server.listen(port);
-    let message = "listening on port: " + port;
-    console.log(message);
+app.applyPort = function(port) {
+  server.listen(port);
+  let message = 'listening on port: ' + port;
+  console.log(message);
 };
 app.applyPort(8080);
 
@@ -34,7 +34,7 @@ module.exports = app;
 ///connections and usages
 var clientList = [];
 var boardState = [];
-var clueLog = [];
+let hints = [];
 
 function updateAll(){
     sendBoardUpdate();
@@ -57,12 +57,13 @@ io.on("connect", function(client){
 
 io.on("connection", function(socket) {
 
-    socket.on("disableOthers", function(){
-        console.log('clicked disable');
-        socket.broadcast.emit("specMsg", 'only for ' + socket.handshake.session.userdata);
+  socket.on('disableOthers', function() {
+    console.log('clicked disable');
+    socket.broadcast.emit('specMsg',
+        'only for ' + socket.handshake.session.userdata);
 
-        //io.sockets.to(getSocketFromClient(socket.handshake.session.userdata)).emit("specMsg", 'only for ' + socket.handshake.session.userdata);
-    });
+    //io.sockets.to(getSocketFromClient(socket.handshake.session.userdata)).emit("specMsg", 'only for ' + socket.handshake.session.userdata);
+  });
 
     socket.on("setInitState", function(state, browserCache){
         console.log('session for: ', browserCache, 'socket', socket.id);
@@ -104,24 +105,43 @@ io.on("connection", function(socket) {
         sendClueUpdate();
     });
 
+  socket.on('hintSubmission', (sender, clue, amt) => {
+    console.log("hello");
+    hints.push({sender: sender, clue: clue, amt: amt});
+    socket.emit('hintHistory', hints);x``
+  });
+
+  socket.on('send hint', function(msg) {
+    socket.handshake.session.userdata = msg;
+    clientList.push({name: msg, connection: socket.id});
+    socket.handshake.session.save();
+
+    let full_msg = '[ ' + getCurrentDate() + ' ]: ' + msg;
+    //io.sockets.emit("update hints", full_msg, msg);
+    socket.broadcast.emit('update hints', full_msg, msg);
+  });
 });
 
-function getSocketFromClient(cl){
-    clientList.forEach(function (element) {
-        if(element.name == cl){
-            console.log("GetsockFromCl", element.name, element.connection);
-            return element.connection;
-        }
-    })
+function getSocketFromClient(cl) {
+  clientList.forEach(function(element) {
+    if (element.name === cl) {
+      console.log('GetsockFromCl', element.name, element.connection);
+      return element.connection;
+    }
+  });
 }
 
 function getCurrentDate() {
-    var currentDate = new Date();
-    var day = (currentDate.getDate() < 10 ? '0' : '') + currentDate.getDate();
-    var month = ((currentDate.getMonth() + 1) < 10 ? '0' : '') + (currentDate.getMonth() + 1);
-    var year = currentDate.getFullYear();
-    var hour = (currentDate.getHours() < 10 ? '0' : '') + currentDate.getHours();
-    var minute = (currentDate.getMinutes() < 10 ? '0' : '') + currentDate.getMinutes();
-    var second = (currentDate.getSeconds() < 10 ? '0' : '') + currentDate.getSeconds();
-    return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+  let currentDate = new Date();
+  let day = (currentDate.getDate() < 10 ? '0' : '') + currentDate.getDate();
+  let month = ((currentDate.getMonth() + 1) < 10 ? '0' : '') +
+      (currentDate.getMonth() + 1);
+  let year = currentDate.getFullYear();
+  let hour = (currentDate.getHours() < 10 ? '0' : '') + currentDate.getHours();
+  let minute = (currentDate.getMinutes() < 10 ? '0' : '') +
+      currentDate.getMinutes();
+  let second = (currentDate.getSeconds() < 10 ? '0' : '') +
+      currentDate.getSeconds();
+  return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' +
+      second;
 }
