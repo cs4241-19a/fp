@@ -706,10 +706,7 @@ function recordData(data, timing) {
 
 function playBackData(arrayPos) {
   if (!variables.playingBack) {
-    console.log(variables.dataArray);
     variables.playingBack = true;
-    console.log("Starting playback");
-
     variables.arrayLoc = arrayPos;
     variables.currentPlaybackTime = 0;
     variables.playbackLength = [];
@@ -813,9 +810,6 @@ function playbackSound() {
           variables.dataArray[i][variables.playbackIndicies[i]].timeVal ===
           variables.currentPlaybackTime
         ) {
-          console.log(
-            variables.dataArray[i][variables.playbackIndicies[i]].noteVal
-          );
           playAudio(
             variables.dataArray[i][variables.playbackIndicies[i]].noteVal
           );
@@ -840,9 +834,6 @@ function playbackSound() {
           variables.dataArray[i][variables.playbackIndicies[i]].timeVal ===
           variables.currentPlaybackTime
         ) {
-          console.log(
-            variables.dataArray[i][variables.playbackIndicies[i]].noteVal
-          );
           playAudio(
             variables.dataArray[i][variables.playbackIndicies[i]].noteVal
           );
@@ -1510,7 +1501,6 @@ function drumSetup() {
 ////////////////////////////////////////
 //SOUND PLAYBACK FUNCTION
 function playAudio(data) {
-  console.log(data);
   switch (data) {
     //PIANO
     case 0:
@@ -1774,11 +1764,6 @@ function playAudio(data) {
 //LOAD SONG
 function loadTrack() {
   variables.dataArray = document.getElementById("songDropdown").value;
-  //SAVE TRACK UNDER USERNAME
-  //TRACK IS variables.dataArray
-  console.log("LOADING TRACK");
-  //SET variables.dataArray to the value of the select option
-  console.log(variables.dataArray);
 }
 
 //SAVE SONG
@@ -1790,7 +1775,7 @@ function saveTrack() {
     trackName = text;
     let body = {
       songname: trackName,
-      songData: variables.dataArray,
+      songdata: variables.dataArray,
       username: getCookie("TestCookie")
     };
     let json = JSON.stringify(body);
