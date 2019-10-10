@@ -12,7 +12,7 @@ To play the game, the user will need to create an account. Simply choose any use
 - express middleware packages: used many packages, including helmet and compression
 - gulp: made a gulpfile as a pipeline for managing front-end tasks
 - css: embedded style into html views
-- pixi js: used pixi to render sprites
+- pixi js: used pixi to render sprites and animate the scene with a refresh rate of 60 fps
 - passport local strategy: used local strategy middleware package to let users create accounts
 
 **Challenges**  
