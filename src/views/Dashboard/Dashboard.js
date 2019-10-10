@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Field from '../../components/Field.js'
 import Table from './Table.js'
 
@@ -22,6 +23,7 @@ class Dashboard extends Component {
     }
 
     render() {
+        console.log(this.props.session);
         return(
             <div>
                 <Field getData={this.getData}></Field>
@@ -31,4 +33,13 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard
+const mapStateToProps = (state, ownProps) => {
+    return {
+        route: state.session
+    };
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+    }
+}
+export default connect(mapDispatchToProps, mapStateToProps)(Dashboard);

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import "./Login.css";
+import { connect } from 'react-redux';
+import { login } from '../../apis/session';
 import 'bulma/css/bulma.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -29,18 +31,8 @@ class Login extends Component {
         });
     }
 
-    login = async () => {
-        const response = await fetch('/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username: this.state.username, password: this.state.password }),
-        });
-        const body = await response;
-        if (body) {
-            console.log(body);
-        }
+    login = () => {
+        this.props.onLogin(this.state, ()=>{window.location('/dashboard')});
     }
 
     render() {
@@ -84,4 +76,19 @@ class Login extends Component {
     }
 }
 
-export default Login;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        isLoggedIn: state.session.isLoggedIn,
+        session: state.session,
+        error: state.error,
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLogin: (userData, cb) => { dispatch(login(userData, cb)); },
+    }
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

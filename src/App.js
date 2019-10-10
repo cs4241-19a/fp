@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './views/Home/Home';
 import Dashboard from './views/Dashboard/Dashboard';
 import Login from './views/Login/Login';
@@ -11,17 +13,17 @@ class App extends Component {
     const App = () => (
       <div>
         <Header />
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <Route path='/dashboard' component={Dashboard} />
-          <Route path='/login' component={Login} />
-        </Switch>
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route path='/dashboard' component={Dashboard} />
+            <Route path='/login' component={Login} />
+          </Switch>
       </div>
     )
     return (
-      <Switch>
+      <Provider store={store}>
         <App />
-      </Switch>
+      </Provider>
     );
   }
 }
