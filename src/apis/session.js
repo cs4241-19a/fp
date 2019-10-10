@@ -19,7 +19,9 @@ export function login(userData, cb) {
                 console.log(parseJSON(response));
                 const object = Object.assign(userData, { isLoggedIn: parseJSON(response) });
                 dispatch(loginSuccess(object));
-                cb();
+                cb(object);
+            } else {
+                alert("Invalid username or password!");
             }
         })
             .catch(error => {

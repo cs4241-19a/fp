@@ -21,7 +21,7 @@ class Login extends Component {
         this.setState({
             username: e.target.value
         });
-        
+
     }
     updatePassword = (e) => {
         this.setState({
@@ -30,7 +30,9 @@ class Login extends Component {
     }
 
     login = () => {
-        this.props.onLogin(this.state, ()=>{window.location('/dashboard')});
+        this.props.onLogin(this.state, async (object) => {
+            this.props.history.push('/dashboard')
+        });
     }
 
     render() {
@@ -42,32 +44,32 @@ class Login extends Component {
                 <div className="vessel">
                     <div className="columns">
                         <div className="column is-one-third">
-                            <FontAwesomeIcon className = "right" icon="user-lock" size="2x" />
+                            <FontAwesomeIcon className="right" icon="user-lock" size="2x" />
                         </div>
                         <div className="column is-one-third">
-                            <input className = { this.state.username === '' ? 'input' : 'input is-success'}
+                            <input className={this.state.username === '' ? 'input' : 'input is-success'}
                                 type="text"
                                 name={this.state.username}
                                 placeholder="Username"
-                                onChange={this.updateUsername}/>
+                                onChange={this.updateUsername} />
                         </div>
                     </div>
                     <div className="columns">
                         <div className="column is-one-third">
-                            <FontAwesomeIcon className = "right" icon="key" size="2x" />
+                            <FontAwesomeIcon className="right" icon="key" size="2x" />
                         </div>
                         <div className="column is-one-third">
-                            <input className = { this.state.password === '' ? 'input' : 'input is-success'}
+                            <input className={this.state.password === '' ? 'input' : 'input is-success'}
                                 type="password"
                                 name={this.state.password}
                                 placeholder="Password"
-                                onChange={this.updatePassword}/>
+                                onChange={this.updatePassword} />
                         </div>
                     </div>
                 </div>
                 <div className="vessel">
-                    <button 
-                        className={ (this.state.username === '' || this.state.password === '') ? 'button submit-button' : 'button is-danger submit-button'} onClick={this.login}
+                    <button
+                        className={(this.state.username === '' || this.state.password === '') ? 'button submit-button' : 'button is-danger submit-button'} onClick={this.login}
                         disabled={this.state.username === '' || this.state.password === ''}>Submit</button>
                 </div>
             </div>

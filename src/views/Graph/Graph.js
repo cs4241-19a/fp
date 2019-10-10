@@ -50,7 +50,7 @@ class BarGraph extends Component {
 
         console.log(this.badData);
         return (
-            <div id="chart" class='ct-chart-bar ct-golden-section'>
+            <div id="chart" className='ct-chart-bar ct-golden-section'>
                 <ChartistGraph data={gooddata} options={options} type={"Bar"} />
             </div>
         );

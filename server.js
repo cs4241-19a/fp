@@ -105,11 +105,15 @@ app.post('/api/login', (req, res) => {
     let password = req.body.password;
     let user;
     con.query("SELECT * FROM accounts where username = '" + username + "' AND password = '" + password + "';", function (err, data) {
-        console.log(JSON.stringify(data[0]));
-        user = data[0];
-        user.ok = true;
-        console.log(user);
-        (err) ? res.send(err) : res.json(JSON.stringify(data[0]));
+        user = data;
+        if(err) {
+            res.send(err);
+        } else if(Object.entries(user).length > 0 ) {
+            user.ok = true;
+            res.json(user)
+        } else {
+            res.sendStatus(401);
+        }
     })
 });
 

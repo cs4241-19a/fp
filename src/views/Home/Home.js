@@ -54,11 +54,10 @@ class Home extends Component {
         </li>
 
     render() {
-        const { users, budgets } = this.state;
         return (
             <div className="App">
                 {/* <p>{this.state.response}</p> */}
-                <div class='ct-chart-bar ct-golden-section'>
+                <div className='ct-chart-bar ct-golden-section'>
                     <BarGraph/>
                 </div>
             </div>

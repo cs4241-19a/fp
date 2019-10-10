@@ -6,9 +6,9 @@ export let headers = {
 export function parseJSON(response) {
     console.log(response);
     if (response.ok) {
-        return response.json();
+        return response.clone().json();
     }
-    return Promise.reject(response);
+    return Promise.reject(response.clone());
 }
 
 export function updateHeaders(newHeaders) {
