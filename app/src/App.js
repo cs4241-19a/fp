@@ -560,14 +560,12 @@ function setBoard(order) {
 
 //send out message to set initial state if it hasnt already
 window.onload = function() {
-  //sets random name upon connecting
-  localStorage.setItem("userInfo", "u::" + Math.random());
-
+  console.log('the sessionstorage: ', sessionStorage.getItem("userInfo"));
   socket.emit("setInitState", getBoardState(), getBrowserData());
 };
 
 function getBrowserData() {
-  return { user: localStorage.getItem("userInfo") };
+  return { user: sessionStorage.getItem("userInfo")  || 'USER'};
 }
 
 function clickHint(hintbtn) {
@@ -653,8 +651,20 @@ socket.on("allSelectedStatus", function(status) {
   }
 });
 
-socket.on("closeModal", () => {
-  //document.getElementById("playBtn").click();
+socket.on("updateRoleState", function(rs){
+  for(let role in rs){
+    if(rs.hasOwnProperty(role) && rs[role]){
+      console.log('greying role', role);
+      let button  = document.getElementById(role);
+      button.style.backgroundColor = "grey";
+      button.disabled = true;
+    }
+  }
+
+});
+
+socket.on("closeModal", ()=>{
+    //document.getElementById("playBtn").click();
 });
 
 export default App;

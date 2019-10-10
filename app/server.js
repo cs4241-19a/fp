@@ -47,8 +47,8 @@ function updateAll() {
   sendClueUpdate();
 }
 
-function sendRoleState() {
-  //io.sockets.emit("updateBoardstate", boardState);
+function sendRoleState(){
+    io.sockets.emit("updateRoleState", roleState);
 }
 
 function sendBoardUpdate() {
@@ -75,28 +75,23 @@ io.on("connection", function(socket) {
     //io.sockets.to(getSocketFromClient(socket.handshake.session.userdata)).emit("specMsg", 'only for ' + socket.handshake.session.userdata);
   });
 
-  socket.on("setInitState", function(state, browserCache) {
-    console.log("session for: ", browserCache, "socket", socket.id);
-    let user = browserCache.user;
-    let found = false;
-    clientList.forEach(function(element) {
-      if (element.name && element.name === user) {
-        console.log(
-          "updating " + user + " connection from ",
-          element.connection,
-          "to",
-          socket.id
-        );
-        element.connection = socket.id;
-        io.sockets.emit("displayUser", user);
-        found = true;
-      }
-    });
-    if (!found) {
-      console.log("adding client", user, "with socket", socket.id);
-      clientList.push({ name: user, connection: socket.id, role: "none" });
-      //io.sockets.emit("displayUser", "New User");
-    }
+    socket.on("setInitState", function(state, browserCache){
+        console.log('session for: ', browserCache, 'socket', socket.id);
+        let user = browserCache.user;
+        let found = false;
+        clientList.forEach(function (element) {
+            if (element.name && element.name === user) {
+                console.log("updating " + user + " connection from ", element.connection, 'to', socket.id);
+                element.connection = socket.id;
+                //io.sockets.emit("displayUser", user);
+                found = true;
+            }
+        });
+        if(!found){
+            console.log('adding client', user, 'with socket', socket.id);
+            clientList.push({name: user, connection: socket.id, role: 'none'})
+            //io.sockets.emit("displayUser", "New User");
+        }
 
     //The first user that connects sets the base cards
     if (boardState.length < 1) {
