@@ -18,7 +18,7 @@ Users are required to have an account. Click the login button in the navigation 
 
 ## Technologies
 
-The key technologies we used in this project are React for the client and MongoDB (via Mongoose) for the database, as well as Express for the server itself. Parcel was used to compile and bundle the project.
+The key technologies we used in this project are React for the client and MongoDB (via Mongoose) for the database, as well as Express for the server itself. Parcel was used to compile and bundle the project. We also implemented a custom domain for our site.
 
 ### React
 
