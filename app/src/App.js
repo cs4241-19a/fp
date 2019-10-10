@@ -79,7 +79,7 @@ class Card extends React.Component {
         <button
             className="button card"
             style={{backgroundColor: this.state.color}}
-            onClick={() => clickAction(this)}
+            onClick={() => clickGuessButton(this)}
         >
           {this.props.value}
         </button>
@@ -115,7 +115,8 @@ class Chat extends React.Component {
             })}
             <div className={'hintSubmission'}>
               <input placeholder="Clue" id="msg"></input>
-              <div className={'amountInput'}>
+              <div className={'amountInput'}
+                   onClick={() => clickHint(this)}>
                 {this.createAmounts()}
               </div>
             </div>
@@ -273,18 +274,95 @@ function setBoard(order) {
   return [boardWords, boardTeams];
 }
 
-function clickAction(btn){
-  btn.changeStyle(btn.props.team);
-  console.log('number clicked');
-  socket.emit("send hint", "sent!");
+//send out message to set initial state if it hasnt already
+window.onload = function(){
+  //sets random name upon connecting
+  localStorage.setItem('userInfo', 'u::'+ Math.random());
+
+  socket.emit("setInitState", getBoardState(), getBrowserData());
+  console.log('initial state is: ', getBoardState());
+};
+
+function getBrowserData(){
+  return {user: localStorage.getItem('userInfo')};
 }
 
-socket.on("update hints", function(msg){
-  var final_message = document.createElement('p');
-  console.log(msg);
-  final_message.innerHTML = msg;
-  console.log(final_message);
-  document.getElementsByClassName('chat-container')[0].append(final_message);
+function clickHint(hintbtn){
+  setTimeout(function(){
+    let newHint = document.getElementById('msg').value;
+    let state = getClueState(newHint);
+    console.log('hint clicked');
+    socket.emit("clue sent", state);
+  }, 1);
+}
+
+function clickGuessButton(btn){
+  btn.changeStyle(btn.props.team);
+  setTimeout(function(){
+    let state = getBoardState();
+    console.log('button clicked');
+    socket.emit("button selected", state);
+  }, 1);
+}
+
+function getBoardState(){
+  let cards = [];
+  let collectedCards = document.getElementsByClassName('card');
+  const NUM_CARDS_ROW = 5;
+  for(let i=0; i<NUM_CARDS_ROW; i++){
+    cards[i] = [];
+    for(let j=0; j<NUM_CARDS_ROW; j++){
+      let selCard = collectedCards[i*NUM_CARDS_ROW + j];
+      cards[i][j] = {
+        "word": selCard.innerHTML,
+        "color": selCard.style.backgroundColor
+      };
+    }
+  }
+  console.log(cards);
+  return cards;
+}
+
+function getClueState(newHint){
+  let chatCont = document.getElementsByClassName('chat-container')[0];
+  let chats = chatCont.getElementsByTagName('p');
+  let chatText =[];
+  for(let i=0; i<chats.length; i++){
+    chatText.push(chats[i].innerHTML);
+  }
+  if(newHint){
+    chatText.push(newHint);
+  }
+  return chatText;
+}
+
+socket.on("updateCluestate", function(cs){
+  let chatCont = document.getElementsByClassName('chat-container')[0];
+  chatCont.innerHTML = '';
+  cs.forEach(function(msg){
+    let final_message = document.createElement('p');
+    console.log(msg);
+    final_message.innerHTML = msg;
+    console.log(final_message);
+    chatCont.append(final_message);
+  });
+});
+
+socket.on("updateBoardstate", function(bs){
+  console.log("updating board state", bs);
+  if(bs.length < 1){
+    return;
+  }
+  let rows = document.getElementsByClassName('board-row');
+  for(let i=0; i<rows.length; i++){
+    let cardsInRow = rows[i].getElementsByClassName('card');
+    for(let j=0; j<cardsInRow.length; j++){
+      let button = cardsInRow[j];
+      console.log(bs[i][j]);
+      button.innerHTML = bs[i][j].word;
+      button.style.backgroundColor = bs[i][j].color;
+    }
+  }
 });
 
 
