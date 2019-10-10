@@ -195,7 +195,7 @@ app.post(
 	"/edittask",
 	function(req, res)
 	{
-		if (res.user === undefined)
+		if (req.user === undefined)
 		{
 			res.status(401) // Unauthorized
 			res.send()
@@ -221,7 +221,7 @@ app.post(
 	"/deletetask",
 	function(req, res)
 	{
-		if (res.user === undefined)
+		if (req.user === undefined)
 		{
 			res.status(401) // Unauthorized
 			res.send()
