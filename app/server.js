@@ -70,6 +70,8 @@ function sendRoleState() {
 }
 
 function sendBoardUpdate() {
+  let redLeft = boardState.filter((card) => card.revealedColor !== card.borderColor && card.borderColor === RED).length;
+  let bluLeft = boardState.filter((card) => card.revealedColor !== card.borderColor && card.borderColor === BLU).length;
   let detectivelist = boardState.map(card => {
     return {
       word: card.word,
@@ -79,9 +81,9 @@ function sendBoardUpdate() {
   });
   clientList.forEach(c => {
     if (c.role.endsWith("spymaster")) {
-      io.to(c.connection).emit("updateBoardState", boardState);
+      io.to(c.connection).emit("updateBoardState", boardState, redLeft, bluLeft);
     } else {
-      io.to(c.connection).emit("updateBoardState", detectivelist);
+      io.to(c.connection).emit("updateBoardState", detectivelist, redLeft, bluLeft);
     }
   });
 }
