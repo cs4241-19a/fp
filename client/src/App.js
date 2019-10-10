@@ -27,27 +27,29 @@ class App extends React.Component{
     fetch("/gettasks",{
       method: "POST",
     }).then(res => {
-      let cards = res.json();
-      for(let i=0; i<cards.length; i++){
-        cards[i].z = -1;
-        cards[i].hidden = true;
-        if(i<4){
-          cards[i].z = 3-i;
-          cards[i].hidden = false;
+      let cards = res.json()
+      .then((cards) => {
+        for(let i=0; i<cards.length; i++){
+          cards[i].z = -1;
+          cards[i].hidden = true;
+          if(i<4){
+            cards[i].z = 3-i;
+            cards[i].hidden = false;
+          }
+  
+          let text = "";
+          if(cards[i] == '0'){
+            text = "Low"
+          }else if (cards[i] == '1'){
+            text = "Medium"
+          }else{
+            text = "High"
+          }
+          cards[i].priority_text = text;
+          cards[i].date = cards[i].dueDate;
         }
-
-        let text = "";
-        if(cards[i] == '0'){
-          text = "Low"
-        }else if (cards[i] == '1'){
-          text = "Medium"
-        }else{
-          text = "High"
-        }
-        cards[i].priority_text = text;
-        cards[i].date = cards[i].dueDate;
-      }
-      this.setState({tasks: cards})
+        this.setState({tasks: cards, task_head:this.state.task_head})
+      })
     });
   }
 
