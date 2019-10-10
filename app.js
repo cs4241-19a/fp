@@ -13,6 +13,7 @@ var addRouter = require('./routes/add');
 var searchRouter = require('./routes/search');
 var apiUserRouter = require('./routes/apiUser');
 var apiBookRouter = require('./routes/apiBook');
+var resetRouter = require('./routes/reset')
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.use('/search', searchRouter);
 app.use('/add', addRouter);
 app.use('/api/users', apiUserRouter);
 app.use('/api/books', apiBookRouter);
+app.use('/reset', resetRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

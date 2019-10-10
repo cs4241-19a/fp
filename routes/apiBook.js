@@ -219,4 +219,18 @@ router.post('/getBooksFromUser', function(req, res) {
     })
 });
 
+router.post('/deleteBooks', function(req, res) {
+    console.log("deleting all books!")
+    MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("finalproject");
+        var myobj = {};
+        dbo.collection("books").deleteMany(myobj, function(err, res) {
+            if (err) throw err;
+            db.close();
+        });
+    });
+});
+
+
 module.exports = router;
