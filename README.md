@@ -7,29 +7,32 @@ Welcome to qMe! qMe is a priority queue application to assist in personal schedu
 
 ## Additional Instructions
 - Steps to use (login front end not hooked up)
-  - Execute these commands in your console
+  - Execute these commands in your console.
+  - If you want to sign up for a new account, run:
   - ```js 
     fetch("/signup", {
       method: 'POST',
       body: JSON.stringify({
-          username: "user1",
-          password: "hunter2"
+          username: "<YOUR USERNAME HERE>",
+          password: "<YOUR PASSWORD HERE>"
       }),
       headers: {
           "Content-Type": "application/json"
       }
     }).then(console.log)
+  - If you do not want to sign up for a new account, then the default user is `user1`, password `hunter2`.
+  - To log in to your account, run:
   - ```js
     fetch("/signup", {
       method: 'POST',
       body: JSON.stringify({
-          username: "user1",
-          password: "hunter2"
+          username: "<YOUR USERNAME HERE>",
+          password: "<YOUR PASSWORD HERE>"
       }),
       headers: {
           "Content-Type": "application/json"
       }
-    }).then(console.log)
+    }).then(console.log)```
 
 - Click to create a new task, fill in all the necessary blanks and submit
 - try to mark an item as done, or delete it from your queue.
