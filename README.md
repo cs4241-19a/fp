@@ -1,51 +1,27 @@
 # cs4241-FinalProject
+###Michael Bosik###
+###Hunter Caouette###
+###https://fp-michaelbosik-huntercaouette.glitch.me ###
 
-For your final project, you'll implement a course project that exhibits your mastery of the course materials. 
-Similar to A4, this project gives you an opportunity to be creative and to pursue individual research and learning.
 
-## General description
+##Proposal##
 
-Your project should consist of a complete Web application, exhibiting facets of the three main sections of the course material:
+Our final project proposal is to create a website utilising the Spotify web API,
+to have a user search for an artist or a song, add it to a persistant database,
+and to visualize data about the search using the Google Maps API.
+The Spotify Web API not only allows us to authenticate a user with their spotify account,
+but we can query anything in the Spotify database, including individual songs, artists, albums, etc.
+Also, we can access song data including but not limited to: most listened to in countries, song loudness,
+artist popularity and information.
+We want to try and visualize an artist or songs top 10 countries in the world that they are most listened to
+by using the Google Maps API.
+Lastly, as an extra feature, we want to try and have the songs queued able to play to the browser and be controlled
+by the user.
 
-- Static Web page content and design. You should have a project that is accessible, easily navigable, and features significant content.
-- Dynamic behavior implemented with JavaScript.
-- Server-side programming *using Node.js*. Typically this will take the form of some sort of persistent data, authentication, and possibly server-side computation.
+##Project
 
-Additionally, you should incorporate features that you independently research, design, and implement for your project.
-
-## Project ideation
-
-Excellent projects serve someone/some group; for this assignment you need to define your users and stakeholders. I encourage you to identify projects that will have impact, either artistically, politically, or in terms of productivity. Consider creating something useful for a cause or hobby you care about.
-
-## Logistics
-
-### Team size
-Students are encouraged to work in teams of 2-5 students for the project. This will allow you to build a good project without expending an excessive amount of effort. While I would expect a team of four or five students to produce a project with more features, I expect a every team's work to exhibit all of the required facets described above.
-
-### Deliverables
-
-__Proposal:__ 
-Provide an outline of your project direction and the names of the team members. 
-The outline should have enough detail so that staff can determine if it meets the minimum expectations, or if it goes too far to be reasonable by the deadline.
-This file must be named proposal.md so we can find it.
-Submit a PR to turn it in by Monday, September 30th, before class
-
-There are no other scheduled checkpoints for your project. 
-You must be done in time to present before the final project demo day (October 10th). 
-
-#### Turning in Your Outline / Project
-
-**NOTE: code is due before the project presentation day due to the end of term / grading schedule constraints**
-Submit a second PR on the final project repo to turn in your app and code.
-
-Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service.
-Folks on the same team do not need to post the same webpage, but must instead clearly state who is on the team in their proposal.
-(Staff will use the proposal to build the grading sheet.)
-
-## Final Presentation
-
-Presentations will occur during the final day of class.
-
-## FAQs
-
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use node.js.
+1.  Per our proposal, we created a webpage that is capable of querying spotify's song data through the use of their free web API
+2. To use our project, you will need to authenticate with Spotify credentials. You can use the mbosik@wpi.edu and a3tempaccount to login.
+3. For this project we used a simple express server to support the back end, like we have been using thus far this term. We used lowdb again to store users, song data and the status of the song queue. We used bootstrap as a style base, and made our own modifications to customize it. We also used the spotify api to query data, and the google maps api to plot the data that we retrieved on a map panel.
+4. The biggest challenges that we faced in this project were in trying to manage asynchronicity with the large number of requests that we were making to spotify, upon which our next methods were dependent on receiving data from.
+5. We largely worked on developing and designing most aspects of the project cooperatively. We used the teletype plugin for Atom to be able to work in the same file at the same time, and reduce the number of meaningless commits.
