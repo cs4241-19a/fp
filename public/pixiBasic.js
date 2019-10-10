@@ -155,9 +155,14 @@ app.ticker.add(function(delta) {
         } else if (time < 40 && time % 8 === 0) {
             addHighBat(-4);
             addTurtle(-4);
+        } else if (time < 40 && time % 6 === 0) {
+            addHighBat(-7);
+            addTurtle(-5);
         }
         if (time < 40 && time % 6 === 0 && time !== 0) {
             addMediumBat(-3);
+        } else if (time < 80 && time % 5 === 0) {
+            addMediumBat(-6);
         }
         if (activeChar.y === app.screen.height - 62) {
             hasTouchedGround = true;
