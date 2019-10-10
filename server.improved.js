@@ -175,6 +175,29 @@ app.post("/login", passport.authenticate("local"), function(req, res) {
   res.redirect("game.html");
 });
 
+app.post("/addSong", function(req, res) {
+  fdb
+    .ref("/data/")
+    .once("value")
+    .then(function(snapshot) {
+      const data = [];
+      snapshot.forEach(function(child) {
+        data.push(child.val());
+      });
+
+      fdb
+        .ref("/data/")
+        .push({
+          username: req.body.username,
+          songname: req.body.songname,
+          songdata: req.body.songdata
+        })
+        .then(function(response) {
+          res.status(200).send();
+        });
+    });
+});
+
 app.post("/addUser", function(req, res) {
   fdb
     .ref("/users/")
@@ -212,16 +235,18 @@ function checkForDuplicateUser(data, original) {
   return final;
 }
 
-app.get('/allData', function(req, res){
-  fdb.ref('/data/').once('value')
-  .then(function(snapshot){
-    const data = []
-    snapshot.forEach(function(child){
-      data.push(child.val())
-    })
-    res.json(data)
-  })
-})
+app.get("/allData", function(req, res) {
+  fdb
+    .ref("/data/")
+    .once("value")
+    .then(function(snapshot) {
+      const data = [];
+      snapshot.forEach(function(child) {
+        data.push(child.val());
+      });
+      res.json(data);
+    });
+});
 
 //STARTING SERVER HERE
 app.listen(process.env.PORT || port);
