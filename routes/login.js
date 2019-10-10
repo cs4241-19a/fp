@@ -7,11 +7,10 @@ router.post('/',
     passport.authenticate('local', {failureRedirect: '/'}),
     function(req,res){
         app.user = req.user;
-        res.render( 'profile' , { user: app.user.username });
+        res.end();
     });
-
-router.get('/', function(req, res, next) {
-    res.render( 'login' );
-    });
+router.get('/profile', function(req, res) {
+    res.render('profile',{user: app.user.username})
+})    
 
 module.exports = router;
