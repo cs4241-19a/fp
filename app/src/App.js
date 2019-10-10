@@ -45,6 +45,7 @@ let allWords = [
   "ball"
 ];
 
+<<<<<<< HEAD
 function App() {
   return (
     <div className="App">
@@ -56,7 +57,40 @@ function App() {
       <Game />
     </div>
   );
+=======
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalOpen: true,
+    };
+
+    socket.on("closeModal", this.closeModal.bind(this));
+  }
+
+  closeModal() {
+    console.log("closeModal");
+    this.setState({modalOpen: false});
+  }
+
+
+
+  render() {
+    return (
+        <div className="App">
+          <header className="App-header">
+            <h1>Codenames</h1>
+          </header>
+          {this.state.modalOpen &&
+          <Menu/>
+          }
+          <Game/>
+        </div>
+    );
+  }
+>>>>>>> 0bc42ec1c42c5ae6f24bb768e046dfa8635cd8ee
 }
+
 
 Modal.setAppElement("#root");
 
@@ -215,10 +249,10 @@ class Chat extends React.Component {
     return (
       <div className="chat">
         <div className="chat-container">
-          {this.state.log.map(hint => {
+          {this.state.log.map((hint, index) => {
             return (
               <div
-                key={hint.clue + hint.amt}
+                key={index}
                 className="clue"
                 style={{ color: hint.sender }}
               >
