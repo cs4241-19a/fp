@@ -49,27 +49,42 @@
 </div>
 </body>
 <script>
+    /// STATE MACHINE ///
+
+    /** START SCREEN **/
     let Startscreen = function(){
     this.drawAll = function(){
-        let logo = document.createElement("svg");
-        logo.id = "logo";
-        logo.width = 1044;
-        logo.height = 434;
-        let img = document.createElement("img");
-        img.src = "./resources/images/starstepLogo.png";
-        img.width = 1044;
-        logo.appendChild(img);
-        document.querySelector("#banner").appendChild(logo);
-
-        d3.select("#backgroundImg")
-            .attr("xlink:href", "./resources/images/backgrounds/space.jpg")
-            .style("position: inherit; width: 100%; height: auto");
-
+        //get currently selected menu option
+        let notearea = document.createElement("svg");
+        notearea.setAttribute("style", "height: 100%; width: 300px; z-index: 1;");
+        notearea.id = "notearea";
+        // let noteareaContainer = document.createElement("div");
+        // noteareaContainer.className = "row content";
+        // noteareaContainer.appendChild(notearea);
+        document.querySelector("#bottom").appendChild(notearea);
         d3.select("#notearea")
             .append("image")
             .attr("y", 400)
             .attr("x", 0)
             .attr("xlink:href", "./resources/images/blank_arrow_left.png");
+
+        d3.select("#notearea")
+            .append("image")
+            .attr("y", 400)
+            .attr("x", 72)
+            .attr("xlink:href", "./resources/images/blank_arrow_down.png");
+
+        d3.select("#notearea")
+            .append("image")
+            .attr("y", 400)
+            .attr("x", 144)
+            .attr("xlink:href", "./resources/images/blank_arrow_up.png");
+
+        d3.select("#notearea")
+            .append("image")
+            .attr("y", 400)
+            .attr("x", 216)
+            .attr("xlink:href", "./resources/images/blank_arrow_right.png");
     };
         this.drawAll();
         this.prevStates = this;
@@ -87,15 +102,7 @@
         element.parentNode.removeChild(element);
     }
 
-    let Helpmenu = function(){
-        this.next = function (){
-            //return new Mainmenu(this.prevStates);
-        };
-        this.prev = function(){
-            return new Mainmenu(this.prevStates);
-        };
-    };
-
+    /**Main Menu**/
     let Mainmenu = function(prevStates){
         this.drawAll = function(){
             let container = document.createElement("div");
@@ -139,7 +146,6 @@
             }else if(event.target.id === "register"){
 
             }
-            return new Mainmenu(this);
         };
         this.prev = function(){
             removeElement("freeplay");
@@ -151,9 +157,11 @@
         };
     };
     function selectMenuOption(event){
-        console.log(event);
-        currState.next(event);
+        currState = currState.next(event);
+
     }
+/*
+    /!**Course Menu**!/
     let Coursemenu = function(prevStates){
         this.prevStates = prevStates;
         this.next = function (){
@@ -164,46 +172,111 @@
             return prevStates;
         };
     };
+*/
+    /**Song Menu**/
     let Songmenu = function(prevStates){
+        this.populateSongs = function(container){
+            console.log(currState);
+            const body = JSON.stringify({ "username" : "anonymous" });
+            fetch('songRequest', {
+                headers: { "Content-Type": "application/json" },
+                method: 'POST',
+                body
+            }).then(function (response) {
+                response.json().then(function(parsedJson) {
+                    let songList = parsedJson["songs"];
+                    songList.forEach(function (song) {
+                        let newOption = document.createElement('button');
+                        newOption.innerText = song;
+                        newOption.value = song;
+                        newOption.onclick = selectMenuOption;
+                        container.appendChild(newOption);
+                    });
+                });
+            });
+        };
         this.drawAll = function(){
             let container = document.createElement("div");
             container.className = "widecontainer";
             container.id = "trackSelect";
-            populateSongs(container);
+            this.populateSongs(container);
             document.querySelector("#banner").appendChild(container);
         };
         this.drawAll();
         this.prevStates = prevStates;
-        this.next = function (songJson, dir){
-            removeElement("container");
-            return new Difficultymenu(prevStates, songJson, dir);
+        this.next = function(event){
+            // let state = currState;
+            let dir = './resources/audio/songs/'+event.target.value+'/'+event.target.value;
+            return new Difficultymenu(this, dir);
         };
         this.prev = function(){
             removeElement("container");
             return prevStates;
         };
     };
-    let Difficultymenu = function(prevStates, songJson, dir){
+
+    /**Difficulty Menu**/
+    let Difficultymenu = function(prevStates, dir){
+        this.populateDifficulty = function(){
+            console.log("message");
+            console.log(currState);
+            removeElement("trackSelect");
+            let container = document.createElement("div");
+            container.className = "widecontainer";
+            container.id = "difficultySelect";
+            document.querySelector("#banner").appendChild(container);
+            $.getJSON(dir+'.json', function(songJson) {
+                let allCharts = songJson["charts"];
+                let i;
+                for(i = 0; i < allCharts.length; i++){
+                    if(allCharts[i]["type"] === "dance-double")
+                    {
+                        break;
+                    }
+                }
+                for(let j = 0; j < i; j++){
+                    let newOption = document.createElement('button');
+                    newOption.innerText = allCharts[j]["diff"];
+                    console.log(allCharts[j]["diff"]);
+                    newOption.value = i.toString();
+                    newOption.onclick = selectMenuOption;
+                    container.appendChild(newOption);
+                }
+            });
+        };
+        this.populateDifficulty();
+        /*
+                $.getJSON(dir+'.json', function(songJson) {
+                    return populateDifficulty(songJson, dir /!*state*!/);
+                });
+        */
         this.prevStates = prevStates;
-        this.next = function (){
-            //get currently selected menu option
-            return new Gameplaying(prevStates, songJson, dir);
+        this.next = function (event){
+            console.log(event);
+            let difficulty = event.target.value;
+            removeElement("difficultySelect");
+            return new Gameplaying(prevStates, dir, difficulty);
         };
         this.prev = function(){
             return prevStates;
         };
     };
+
+    /**Login Menu**/
     let Loginmenu;
+    /**Registration Menu**/
     let Registermenu;
-    let Gameplaying = function(prevStates, songJson, dir){
+    /**Gameplay state**/
+    let Gameplaying = function(prevStates, dir, difficulty){
         this.drawAll = function (){
             //get currently selected menu option
             let notearea = document.createElement("svg");
-            notearea.setAttribute("style", "height: 100%; width: 300px");
+            notearea.setAttribute("style", "height: 100%; width: 300px; z-index: 1;");
             notearea.id = "notearea";
-            let noteareaContainer = document.createElement("div");
-            noteareaContainer.className = "row content";
-            noteareaContainer.appendChild(notearea);
+            // let noteareaContainer = document.createElement("div");
+            // noteareaContainer.className = "row content";
+            // noteareaContainer.appendChild(notearea);
+            document.querySelector("#bottom").appendChild(notearea);
             d3.select("#notearea")
                 .append("image")
                 .attr("y", 400)
@@ -227,6 +300,9 @@
                 .attr("y", 400)
                 .attr("x", 216)
                 .attr("xlink:href", "./resources/images/blank_arrow_right.png");
+            $.getJSON(dir+'.json', function(songJson) {
+                playSong(songJson, dir, difficulty);
+            });
         };
         this.drawAll();
 
@@ -268,6 +344,7 @@
             return prevStates;
         };
     };
+    /**Pause Menu**/
     let Pausemenu = function(prevStates){
         this.prevStates = prevStates;
         this.next = function (){
@@ -278,6 +355,7 @@
             return prevStates;
         };
     };
+    /**Song Complete Screen**/
     let Songcomplete = function(prevStates){
         this.prevStates = prevStates;
         this.next = function (){
@@ -288,8 +366,18 @@
             return prevStates;
         };
     };
+    /**Help Menu**/
+    let Helpmenu = function(){
+        this.next = function (){
+            //return new Mainmenu(this.prevStates);
+        };
+        this.prev = function(){
+            return new Mainmenu(this.prevStates);
+        };
+    };
 
-//    const slideDown
+
+    //    const slideDown
 //  const slightZoomIn
     const fadeOut = d3.transition()
         .duration(500)
@@ -298,20 +386,6 @@
     const fadeIn = d3.transition()
         .duration(500)
         .ease(d3.easeExpIn);
-
-
-/*
-    let background = d3.select("#background")
-        .append("image")
-        .attr("id", "firstimage")
-        .attr("xlink:href", "./resources/images/wanbard_small.png")
-        .style("opacity", 1.0)
-        .append("image")
-        .attr("id", "#secondimage")
-        .style("opacity", 0.0);
-    d3.select("#background").attr("width", d3.select("#firstimage").attr("width"))
-        .attr("height", d3.select("#firstimage").attr("height"));
-*/
 
     // let selectedTrack = d3.select("#selectedTrack")
         // .append("svg")
@@ -560,55 +634,13 @@
         this.arrowShape = d3.select("#" + tempid);
     }
 
-    function populateDifficulty(songJson, dir){
-        tempJson = songJson;
-        tempDir = dir;
-        removeElement("trackSelect");
-        let container = document.createElement("div");
-        container.className = "widecontainer";
-        container.id = "difficultySelect";
-        document.querySelector("#banner").appendChild(container);
-
-        let allCharts = songJson["charts"];
-        let i;
-        for(i = 0; i < allCharts.length; i++){
-            if(allCharts[i]["type"] === "dance-double")
-            {
-                break;
-            }
-        }
-        console.log(i);
-        for(let j = 0; j < i; j++){
-            let newOption = document.createElement('button');
-            newOption.innerText = allCharts[j]["diff"];
-            console.log(allCharts[j]["diff"]);
-            newOption.value = i.toString();
-            newOption.onclick = changeDifficulty;
-            container.appendChild(newOption);
-        }
-        console.log(currState);
-        currState.next(currState);
-    }
-    let tempJson;
-    let tempDir;
     function changeTrack(event){
-        let dir = './resources/audio/songs/'+event.target.value+'/'+event.target.value;
-        $.getJSON(dir+'.json', function(songJson) {
-            populateDifficulty(songJson, dir);
-        });
+        currState = currState.next(event);
     }
 
     function changeDifficulty(event){
-        let currTrack = document.getElementById("trackSelect");
-        // let trackVal = currTrack.value;
-        // let dir = './resources/audio/songs/'+trackVal+'/'+trackVal;
-        let difficulty = event.target.value;
-        let prevImgURL = d3.select('#firstimage')
-            .attr("xlink:href");
-
-        $.getJSON(tempDir+'.json', function(songJson) {
-            playSong(songJson, tempDir, difficulty);
-        });
+        console.log(currState);
+        currState = currState.next(event);
     }
 
     async function playSong(songJson, dir, difficulty){
@@ -746,6 +778,7 @@
     let audio = new Audio();
 
     window.onload = function() {
+/*
         const playbutton = document.querySelector( '#playbutton' );
         const pausebutton = document.querySelector( '#pausebutton' );
         const stopbutton = document.querySelector( '#stopbutton' );
@@ -753,6 +786,7 @@
         playbutton.onclick = play;
         pausebutton.onclick = pause;
         stopbutton.onclick = stop;
+*/
     };
 
     function play(){
@@ -767,29 +801,6 @@
         audio.stop();
     }
 
-    function populateSongs(container){
-        const body = JSON.stringify({ "username" : "anonymous" });
-        fetch('songRequest', {
-            headers: { "Content-Type": "application/json" },
-            method: 'POST',
-            body
-        }).then(function (response) {
-            response.json().then(function(parsedJson) {
-                let songList = parsedJson["songs"];
-                console.log(songList);
-                songList.forEach(function (song) {
-                    let newOption = document.createElement('button');
-                    newOption.innerText = song;
-                    newOption.value = song;
-                    newOption.onclick = changeTrack;
-                    console.log(newOption);
-                    container.appendChild(newOption);
-                });
-
-                // Functions
-            });
-        });
-    }
 
     function populateHighScores(songname){
 
