@@ -29,6 +29,3 @@ to send confirmations to users phones or emails would be a desirable feature. Th
 adding more Bootstrap, cleaning up backend code, and adding more funcinality to the ordering page. This application can fully be used
 to take orders from customers by storing them in a succinct database. The work and effort shown in this project is over 20 hours of 
 programming in the last weeks. 
-
-
-
