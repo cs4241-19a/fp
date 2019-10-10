@@ -45,6 +45,7 @@ export default function FeedContainer(props) {
 
         await fetch('/feed')
         .then( function( response ) {
+            console.log(response.json())
             return response.json();
         }).then(function (response){
             console.log(response)
