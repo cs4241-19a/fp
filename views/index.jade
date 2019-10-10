@@ -2,18 +2,34 @@ extends layout
 
 block content
   script(type="module" src="/javascripts/login.js")
-  p(id="message")
-  button(id="showLoginButton") Login
-  button(id="showNewAccountButton") Create Account
-  form(action="" id="form")
-    div
-      label Username:
-      input(type="text", id="username") 
-      br
-    div
-      label Password:
-      input(type="password", id="password")
-  button(id="newAccountButton") Create Account
-  button(id="loginButton") Login
+  link(href='https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap', rel='stylesheet')
+  link(href='https://fonts.googleapis.com/css?family=Dosis:700', rel='stylesheet')
+  #content  
+    h1(id ="message")  Welcome! 
+    h1(id="message") Please login or signup! 
+    br
+    p(id="message")
+    button(id="showLoginButton") Login 
+    br
+    br
+    form(action="" id="form")
+      div
+        label Username:
+        input(type="text", id="username") 
+        br
+        br
+      div
+        label Password:
+        input(type="password", id="password")
+        br
+        br
+    button(id="showNewAccountButton") Create Account
+    br  
+    button(id="loginButton") Login
+    button(id="newAccountButton") Create Account
+ 
 
   
+
+
+
