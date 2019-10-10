@@ -1,51 +1,54 @@
 # cs4241-FinalProject
 
-For your final project, you'll implement a course project that exhibits your mastery of the course materials. 
-Similar to A4, this project gives you an opportunity to be creative and to pursue individual research and learning.
+Our project: 
 
-## General description
+### Our Team 
+Elizabeth Kirschner 
+Alejandra Garza
 
-Your project should consist of a complete Web application, exhibiting facets of the three main sections of the course material:
+3. An outline of the technologies you used and how you used them.
+4. What challenges you faced in completing the project.
+5. What each group member was responsible for designing / developing.
 
-- Static Web page content and design. You should have a project that is accessible, easily navigable, and features significant content.
-- Dynamic behavior implemented with JavaScript.
-- Server-side programming *using Node.js*. Typically this will take the form of some sort of persistent data, authentication, and possibly server-side computation.
+## Decription
 
-Additionally, you should incorporate features that you independently research, design, and implement for your project.
+Since we are bot CS and IMGD double majors, we wanted to make a game that will serve as a portfolio piece using the mini-game engine Perlenspiel, which was by WPI's very own Professor Brian Moriarty: https://perlenspiel.net/
 
-## Project ideation
+Our original goal was to created our ownversion of the Impossible Game: 
 
-Excellent projects serve someone/some group; for this assignment you need to define your users and stakeholders. I encourage you to identify projects that will have impact, either artistically, politically, or in terms of productivity. Consider creating something useful for a cause or hobby you care about.
+![alt text](https://github.com/elizabethkirschner/fp/blob/master/screenshots/impossible_game.gif)
 
-## Logistics
+However, as we began implementing our idea, we realized that our game was more similar to T-REX Run: 
 
-### Team size
-Students are encouraged to work in teams of 2-5 students for the project. This will allow you to build a good project without expending an excessive amount of effort. While I would expect a team of four or five students to produce a project with more features, I expect a every team's work to exhibit all of the required facets described above.
+***T-Rex Run
 
-### Deliverables
+![alt text](https://github.com/elizabethkirschner/fp/blob/master/screenshots/dinosaur_game.gif)
 
-__Proposal:__ 
-Provide an outline of your project direction and the names of the team members. 
-The outline should have enough detail so that staff can determine if it meets the minimum expectations, or if it goes too far to be reasonable by the deadline.
-This file must be named proposal.md so we can find it.
-Submit a PR to turn it in by Monday, September 30th, before class
+***Our Game (as your score increases, so does the speed of the obstacles!)
 
-There are no other scheduled checkpoints for your project. 
-You must be done in time to present before the final project demo day (October 10th). 
+![alt text](https://github.com/elizabethkirschner/fp/blob/master/screenshots/our_game.gif)
 
-#### Turning in Your Outline / Project
+While the game was important, our biggest goal was to create a project that allowed users to create their own accounts and have their scores saved and placed in a leaderboard, which we were able to accomplish as seen below.
 
-**NOTE: code is due before the project presentation day due to the end of term / grading schedule constraints**
-Submit a second PR on the final project repo to turn in your app and code.
+![alt text](https://github.com/elizabethkirschner/fp/blob/master/screenshots/profile_page.PNG)
 
-Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service.
-Folks on the same team do not need to post the same webpage, but must instead clearly state who is on the team in their proposal.
-(Staff will use the proposal to build the grading sheet.)
+## Additional Instructions
 
-## Final Presentation
+As mentioned before, our application allows users to either login or sign up, however, if you do not wish to creare an account you can use one of our default accounts: 
 
-Presentations will occur during the final day of class.
+Username: jack
+Password: secret 
 
-## FAQs
+However, we heavily encourage you to create your own account so you can keep track of your score!
 
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use node.js.
+## Technologies Used 
+
+## Challenges
+
+In the front-end side, we wanted to challenge ourselves to create a "good-looking" website without using any CSS Framework, and we think we were very successful!
+
+![alt text](https://github.com/elizabethkirschner/fp/blob/master/screenshots/login_screen.PNG)
+
+Some of our 
+
+## Work Distribution
