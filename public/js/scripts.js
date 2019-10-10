@@ -1,18 +1,3 @@
-const fetchGameState = async function() {
-    const username = {
-        username: document.getElementById("current-username").value
-    };
-
-    const body = JSON.stringify(username);
-
-    const response = await fetch('/getGameState', {
-        method: 'POST',
-        body
-    });
-    const data = await response.json();
-    return data;
-};
-
 const updatePlayer = function(eHP, eSrc, etier) {
     const mhm = document.getElementById('scoreboard');
     let sc = parseInt(mhm.innerText);
@@ -91,7 +76,6 @@ const fetchLeaderboard = async function() {
 };
 
 const login = function (e) {
-    //debugger;
     e.preventDefault();
 
     const loginInfo = {
@@ -204,7 +188,21 @@ const animateCSS = function (element, animationName, callback) {
     node.addEventListener('animationend', handleAnimationEnd);
 };
 
-const pixiInit = function (){
+const pixiInit = async function () {
+
+    const username = {
+        username: document.getElementById("current-username").value
+    };
+
+    const body = JSON.stringify(username);
+
+    const response = await fetch('/getGameState', {
+        method: 'POST',
+        body
+    });
+    const data = await response.json();
+    const state = data.data;
+
     const canvas = document.getElementById("game-canvas");
     const container = document.getElementById('main-container');
     let enemyTier = 1;
@@ -222,7 +220,6 @@ const pixiInit = function (){
 
     let enemySrc = "../img/bokoblin.png";
 
-    const state = fetchGameState();
     if (!isEmpty(state)) {
         baseDamage = state.PlayerObj.attack;
         baseCrit = state.PlayerObj.crit;
