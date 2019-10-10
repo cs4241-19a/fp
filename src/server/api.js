@@ -8,9 +8,6 @@ import {
     User,
     Event
 } from './db'
-import {
-    async
-} from "q";
 
 const api = db => {
     const router = express.Router();
