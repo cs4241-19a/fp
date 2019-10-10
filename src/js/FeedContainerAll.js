@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import FeedItem from './FeedItem';
 import Grid from '@material-ui/core/Grid';
 
-export default function FeedContainer(props) {
+export default function FeedContainerAll(props) {
 
     //get this from server somewhere else, maybe store?
 
@@ -45,9 +45,7 @@ export default function FeedContainer(props) {
                 let userN = localStorage.getItem('currUser');
                 console.log(userN)
                 for(let i = 0; i < response.length; i++) {
-                    if(response[i].user === userN) {
-                        list.push(response[i])
-                    }
+                    list.push(response[i])
                 }
             })
             console.log(list)

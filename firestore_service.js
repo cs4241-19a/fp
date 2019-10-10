@@ -65,7 +65,7 @@ exports.addPost = function (json) {
     profiles_coll.doc().set(json).then(r => console.log(r))
 }
 
-exports.getFeed = function (username) {
+exports.getFeed = function () {
     let profiles_coll = this.firestore.collection("music_profiles")
     return new Promise((resolve, reject) => {
         let myData = [];

@@ -11463,6 +11463,10 @@ body {
   margin-top: -5px;
 }
 
+.yaay {
+  min-width: 1000px;
+}
+
 #navBar {
   height: 70px;
   min-height: 70px !important;

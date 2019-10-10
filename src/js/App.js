@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStore, StoreProvider } from 'easy-peasy';
 // import model from './store';
-import FeedContainer from './FeedContainer'
+import FeedContainerAll from './FeedContainerAll'
 import FeedItem from './FeedItem';
 
 export default function App(props) {
@@ -13,7 +13,7 @@ export default function App(props) {
 
     return (
         <React.Fragment>
-            <FeedContainer />
+            <FeedContainerAll />
             <div className="lg:text-center bottomBanner"> Designed and developed in Worcester, Massachusetts </div>
         </React.Fragment>
     )

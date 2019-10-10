@@ -11577,6 +11577,10 @@ button:hover {
   border-radius: 30px;
 }
 
+.yaay {
+  min-width: 1000px;
+}
+
 ul {
   list-style: none !important;
   margin: 0 !important;

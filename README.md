@@ -4,7 +4,7 @@ soundcloudish.glitch.me
 
 ### The Team and Responsibilities
 Perdo de V Oporto - server and database
-Manas Mehta - styling, components & connections, visualizer
+Manas Mehta - styling, server and database, components & connections, visualizer, architecture
 Brandon Navarro - visualizer, comoponents
 Joseph Caltabiano - components & connections, architecture
 

@@ -10,11 +10,11 @@ export default function FeedItem(props) {
      * options - {height: 0, length: 0, file: 0}
      */
 
-    let currColor = 1;
-
     const handleClick = function (e) {
         e.preventDefault();
         console.log('paper has been clicked');
+
+        let currColor = 0;
 
         //TODO pull song
 
@@ -24,7 +24,42 @@ export default function FeedItem(props) {
         const jsonAudioInit = audioInit(canvas)
         const jsonAudioGraph = audioGraph(canvas, jsonAudioInit)
 
-        jsonAudioInit.audioElement.src = 'music/shelter.mp3'
+        switch (props.color) {
+            case 'Blue - Green':
+                currColor = 0;
+                break;
+            case 'Green - Red':
+                currColor = 1;
+                break;
+            case 'Pink - Green':
+                currColor = 2;
+                break;
+            case 'Red - Green':
+                currColor = 3;
+                break;
+        }
+
+        switch (props.song) {
+            case 'Back in Black (AC/DC)':
+                jsonAudioInit.audioElement.src = 'music/acdc.mp3'
+                break;
+            case 'Deutschland (Rammstein)':
+                jsonAudioInit.audioElement.src = 'music/deutschland.mp3'
+                break;
+            case 'Bangarang (Skrillex)':
+                jsonAudioInit.audioElement.src = 'music/dubstep.mp3'
+                break;
+            case 'Exploder (Audioslave)':
+                jsonAudioInit.audioElement.src = 'music/exploder.mp3'
+                break;
+            case 'Divenire (Ludovico Einaudi)':
+                jsonAudioInit.audioElement.src = 'music/inst.mp3'
+                break;
+            case 'Shelter (Porter Robinson)':
+                jsonAudioInit.audioElement.src = 'music/shelter.mp3'
+                break;
+        }
+
         jsonAudioInit.audioElement.controls = true;
         jsonAudioInit.audioElement.play()
 
@@ -32,28 +67,21 @@ export default function FeedItem(props) {
 
         const draw = function () {
             window.requestAnimationFrame(draw)
-            visualizer(canvas, jsonAudioInit, jsonAudioGraph, results, currColor, changeParam.barHeight, changeParam.barWidth, changeParam.barFit, changeParam.canvasClr)
+            visualizer(canvas, jsonAudioInit, jsonAudioGraph, results, currColor, props.barH, props.barW, props.barW, props.canClr)
         }
         draw()
     }
 
-    const changeParam = new function () {
-        this.barHeight = 1
-        this.barWidth = 4
-        this.barFit = 2
-        this.canvasClr = '#000000'
-    }()
-
     return (
         <div className="w-full my-5">
-            <div className="w-full bg-white rounded overflow-hidden shadow-lg glower">
+            <div className="w-full bg-white rounded overflow-hidden shadow-lg glower yaay">
                 <div className="w-full h-48 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-t lg:rounded-t-none lg:rounded-l p-4 flex flex-col justify-between leading-normal">
                     <div className="mb-8">
                         <p className="text-sm text-gray-600 flex items-center">
                         </p>
                         <div className="text-gray-900 font-bold text-xl mb-2">{props.title}</div>
                         <p className="text-gray-700 text-base">
-                            Visualize the awesome tracks that you upload! We have a wide range of customizable visualizers.
+                            {props.desc}
                         </p>
                     </div>
                     <div className="w-full flex border-t-2 border-gray-400 pt-5">
