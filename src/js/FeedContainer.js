@@ -1,19 +1,12 @@
 //Container for feed items, holds FeedItem comps in material ui Grid
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import FeedItem from './FeedItem';
 import Grid from '@material-ui/core/Grid';
 
 export default function FeedContainer(props) {
 
     //get this from server somewhere else, maybe store?
-    let items = [{
-        title: "yo",
-        user: "yoyo"
-    },
-    {
-        title: "noo",
-        user: "nono"
-    }]
+    let items = []
 
     function getItems() {
         fetch( '/feed')
@@ -29,11 +22,13 @@ export default function FeedContainer(props) {
                 }
             }
         })
-
-
     }
 
-    getItems()
+    useEffect( () => {
+        console.log("YYYYYYYYYYYYYYYYYY")
+        console.log(items)
+        getItems();
+    })
 
     //when getting array of 10 items from server
     //items.map(item) => <FeedItem etcetcetc />
@@ -43,20 +38,21 @@ export default function FeedContainer(props) {
 
     //TODO: Each of the FeedItems in the generated list needs a unique 'key' field
     //Currently have it set to the song title but not guarantee this is unique
-    
+
     return (
         <Grid container direction='column' justify='center' alignItems='center'>
             {items.map(item => {
                 return (
-                <div key={item.title + item.user}>
-                    <FeedItem
-                        key={item.title}
-                        user={item.user}
-                        title={item.title}
-                    />
-                </div>
-            )
+                    <div key={item.title + item.user}>
+                        <FeedItem
+                            key={item.title}
+                            user={item.user}
+                            title={item.title}
+                        />
+                    </div>
+                )
             })}
         </Grid>
     )
+
 }
