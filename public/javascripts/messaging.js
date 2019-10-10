@@ -46,15 +46,15 @@ window.onload = function() {
           l.appendChild(a);
           document.getElementById("people").appendChild(l);
           currentConvo = ret[i].username;
-        }
-        document.getElementById("t").innerHTML =
+          document.getElementById("t").innerHTML =
           "Messages with " + ret[i].username;
 
         updateChat();
+        }
       }
     });
   });
-  setInterval(updateChat, 100000);
+  setInterval(updateChat, 10000);
 };
 
 function updateChat() {
@@ -113,11 +113,11 @@ function makeToTextBubble(str) {
   let container = document.createElement("div");
   let bubble = document.createElement("div");
   let pad = document.createElement("div");
-  container.style = "display:block; margin:5px;";
-  pad.style = "width:55%";
+  container.style = "display:block; margin:5px; height:10%";
+  pad.style = "width:35%";
   bubble.innerHTML = str;
   bubble.style =
-    "background-color: #70dafa; width:20%; font-size:40px; font-weight:bold; border-radius:15px;  float:right";
+    "background-color: #70dafa; width:40%; font-size:20px; font-weight:bold; border-radius:15px;  float:right";
   container.appendChild(pad);
   container.appendChild(bubble);
   document.getElementById("board").appendChild(container);
@@ -127,11 +127,11 @@ function makeFromTextBubble(str) {
   let container = document.createElement("div");
   let bubble = document.createElement("div");
   let pad = document.createElement("div");
-  container.style = "display:block; margin:5px;";
-  pad.style = "width:55%";
+  container.style = "display:block; margin:5px; height:10%";
+  pad.style = "width:35%";
   bubble.innerHTML = str;
   bubble.style =
-    "background-color: #6df299; width:20%; font-size:40px; font-weight:bold; border-radius:15px; float:left";
+    "background-color: #6df299; width:40%; font-size:20px; font-weight:bold; border-radius:15px; float:left";
   container.appendChild(bubble);
   container.appendChild(pad);
   document.getElementById("board").appendChild(container);
