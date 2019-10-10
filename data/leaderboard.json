@@ -1,0 +1,36 @@
+{
+  "jack": [
+    {
+      "title": "The Hobbit",
+      "author": "J.R.R. Tolkien",
+      "genre": "Fantasy"
+    },
+    {
+      "title": "Dracula",
+      "author": "Bram Stoker",
+      "genre": "Drama"
+    },
+    {
+      "title": "Catcher in the Rye",
+      "author": "J.D. Salinger",
+      "genre": "Fiction"
+    },
+    {
+      "title": "1984",
+      "author": "George Orwell",
+      "genre": "Science Fiction"
+    }
+  ],
+  "jill": [
+    {
+      "title": "Looking For Alaska",
+      "author": "John Greene",
+      "genre": "Young Adult Fiction"
+    },
+    {
+      "title": "Awards For Goodboy's",
+      "author": "Shelby Lorman",
+      "genre": "Humor"
+    }
+  ]
+}

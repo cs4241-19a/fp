@@ -1,0 +1,39 @@
+{
+  "idCount": 2,
+  "users": [
+    {
+      "username": "jack",
+      "password": "secret",
+      "id": 1,
+      "highscore": 10,
+      "games": [
+        {
+          "score": 10
+        },
+        {
+          "score": 10
+        },
+        {
+          "score": 10
+        }
+      ]
+    },
+    {
+      "username": "jill",
+      "password": "birthday",
+      "id": 2,
+      "highscore": 9,
+      "games": [
+        {
+          "score": 6
+        },
+        {
+          "score": 9
+        },
+        {
+          "score": 9
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  script(type="module" src="/javascripts/login.js")
+  link(href='https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap', rel='stylesheet')
+  link(href='https://fonts.googleapis.com/css?family=Dosis:700', rel='stylesheet')
+  #content  
+    h1(id ="message")  Welcome! 
+    h1(id="message") Please login or signup! 
+    br
+    p(id="message")
+    button(id="loginButton") Login 
+    button(id="createAccountButton") Create Account
+    br
+    br
+    div(id="login")
+      form(action="/login", method="post")
+        div
+          label Username:
+          input(type="text", name="username", id="username") 
+          br
+          br
+        div
+          label Password:
+          input(type="password", name="password", id="password")
+        div
+        input(type="submit", value="Login", id="newLogin")
+    div(id="createNewAccount")    
+      form(action="")
+        div
+          label Username:
+          input(type="text", id="username") 
+          br
+          br
+        div
+          label Password:
+          input(type="password", id="password")
+        div
+        button(id="createNewAccountButton") Create Account
+ 
+
+  
+
+
+
