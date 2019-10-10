@@ -6,7 +6,7 @@
     <link type="text/css" rel="stylesheet" href="../css/styles.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.5/pixi.js"></script>
     <script src="../js/jquery.min.js"></script>
-    <script src="../js/scripts.js"></script>
+    <script type="text/javascript" src="../js/scripts.js"></script>
 </head>
 <body>
     <div class="game">
@@ -22,12 +22,10 @@
             <button>Leaderboard</button>
         </div>
 
-        <div>
-            <h3 id="level">1</h3>
-        </div>
-
         <div class="currency">
-            <h2 id="currency-text">0</h2>
+            <h3 id="level">1</h3>
+            <p id="currency-text">0</p>
+            <p id="scoreboard">0</p>
             <p id="crit-rate">0.00</p>
         </div>
 
@@ -38,9 +36,9 @@
         <div class="button-container">
             <button id="main-button" onclick="mainClick()">Click This!</button>
             <br>
-            <button class="upgrade-button" id="upgrade-attack" onclick="damageUpgrade()">Upgrade Cost: ${attackCost}</button>
+            <button class="upgrade-button" id="upgrade-attack" onclick="damageUpgrade()">Attack Upgrade Cost: <p id="attack-cost">10</p></button>
             <br>
-            <button class="upgrade-button" id="upgrade-crit" onclick="critUpgrade()">Upgrade${critCost}</button>
+            <button class="upgrade-button" id="upgrade-crit" onclick="critUpgrade()">Crit. Upgrade Cost: <p id="crit-cost">20</p></button>
             <br>
         </div>
     </div>
