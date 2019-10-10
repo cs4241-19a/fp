@@ -17,6 +17,7 @@ function getCookie(cname) {
 }
 
 window.onload = function() {
+  document.getElementById("sendButton").onclick = sendMessage;
   fetch("api/users/getUsers", {
     headers: {
       "Content-Type": "application/json"
@@ -40,7 +41,6 @@ window.onload = function() {
               "Messages with " + ret[i].username;
             currentConvo = ret[i].username;
             updateChat();
-            // SET MESSAGES
           };
           a.style = "color:white; text-decoration: none";
           l.appendChild(a);
@@ -49,7 +49,9 @@ window.onload = function() {
       }
     });
   });
-};
+  setInterval(updateChat, 3000);
+  
+}
 
 function updateChat() {
   fetch("messaging/getConversation/", {
@@ -65,7 +67,6 @@ function updateChat() {
           (ret[i].to == currentConvo && ret[i].from == getCookie("username"))
         ) {
           if (ret[i].to == getCookie("username")) {
-            //PLACE IN LEFT
           }
           if (ret[i].from == getCookie("username")) {
             //PLACE IN RIGHT
@@ -77,7 +78,7 @@ function updateChat() {
 }
 
 function sendMessage(){
-  let message = {from: getCookie("username"), to:currentConvo, message:document.querySelector('#sendButton').value}
+  let message = {from: getCookie("username"), to:currentConvo, message:document.querySelector('#msg').value}
   fetch("messaging/sendMessage/", {
     headers: {
       "Content-Type": "application/json"
@@ -86,4 +87,8 @@ function sendMessage(){
     body:message
   })
   updateChat();
+}
+
+
+function makeTextBubble(str){
 }
