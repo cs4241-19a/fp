@@ -30,63 +30,12 @@ app.get('/receive', function (request, response) {
   });
 });
 
-/*
-get url: /user_feed
-response:
-list of:
-232: {
-  music_post:{
-    song: {title: "title1", artist: "artist1", song_id: 3},
-    user: {username: "uname1", name: "Bob"},
-    options: {height: 0, length: 0},
-    postOrder: 2
-  }
-}
-*/
-
 app.get('/feed', function (request, response) {
-  fs_service.readFeedData().then(feedData =>{
-    response.end(JSON.stringify(feedData))
+  fs_service.getFeed().then(myData=> {
+    response.end(JSON.stringify(myData))
   });
 });
 
-
-/*
-get url: /user_feed?username=bob
-response:
-list of:
-232: {
-  music_post:{
-    song: {title: "title1", artist: "artist1", song_id: 3},
-    user: {username: "uname1", name: "Bob"},
-    options: {height: 0, length: 0},
-    postOrder: 2
-  }
-}
-*/
-app.get('/user_feed', function (request, response) {
-  fs_service.readUserFeed(request.query.username).then(feedData =>{
-    response.end(JSON.stringify(feedData))
-  })
-})
-
-/*
-get url: /song_data?id=1
-response:
-{
-  song_id: 2,
-  song_bytes: "8936249872yr9h"
-}
-*/
-
-app.get('/song_data', function (request, response){
-  let song_id = request.query.id;
-  fs_service.getSongData(song_id).then(song_data => {
-    response.end(JSON.stringify(
-      {song_id: song_id, song_bytes: song_data.byte_string} //base64 which is what mp3 needs to be converted from/to
-    ))
-  })
-})
 
 passport.use('local', new LocalStrategy( {
   usernameField: 'username',
@@ -166,25 +115,9 @@ response:
 
 app.post('/newPost', function(request, response) {
   let json = request.body;
-  let user = JSON.stringify(json.user).replace(/^"(.*)"$/, '$1');
-  fs_service.addPost(user, json);
-
+  fs_service.addPost(json);
   response.writeHead( 200, { 'Content-Type': 'application/json'})
   response.end( JSON.stringify( request.body ) )
-})
-
-
-app.post('/post_music', function(request, response) {
-  let body = request.body;
-  let song = body.song_bytes;
-  let post = body.music_post;
-  fs_service.addSongData(song).then(song_id => {
-    post.song.song_id = song_id;
-    fs_service.addFeedPost(post).then(post_id => {
-      response.writeHead( 200, { 'Content-Type': 'application/json'})
-      response.end( JSON.stringify( {post_id: post_id} ) )
-    })
-  })
 })
 
 // listen for requests

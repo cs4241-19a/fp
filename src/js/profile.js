@@ -7,6 +7,8 @@ import Toast from "./show-toast";
 import * as dat from 'dat.gui'
 import {audioGraph, audioInit, getCanvas} from "./setUpModule";
 import {visualizer} from "./visualizerModule";
+import FeedItem from './FeedItem';
+import App from "./App";
 
 let gui = new dat.GUI;
 
@@ -129,6 +131,27 @@ const songChange = function(e) {
     draw()
 }
 
+const fillFeed = function() {
+    // fetch( '/feed')
+    //     .then( function( response ) {
+    //         return response.json();
+    //     }).then(function (response) {
+    //     window.localStorage;
+    //     let userN = localStorage.getItem('currUser');
+    //     console.log(userN)
+    //     for(let i = 0; i < response.length; i++) {
+    //         if(response[i].user === userN) {
+    //             document.getElementById("nameCurr").innerText = JSON.stringify(response[i].firstName).replace(/^"(.*)"$/, '$1');
+    //             document.getElementById("myName").innerText = JSON.stringify(response[i].firstName).replace(/^"(.*)"$/, '$1') + " " +
+    //                 JSON.stringify(response[i].lastName).replace(/^"(.*)"$/, '$1');
+    //             document.getElementById("myUName").innerText = "Username: " + JSON.stringify(response[i].username).replace(/^"(.*)"$/, '$1');
+    //             break;
+    //         }
+    //     }
+    // })
+
+}
+
 window.onload = function () {
     fetch( '/receive')
         .then( function( response ) {
@@ -137,7 +160,7 @@ window.onload = function () {
         window.localStorage;
         let user = localStorage.getItem('currUser');
         console.log(user)
-        for(let i = 0; i < Object.keys(response).length; i++) {
+        for(let i = 0; i < response.length; i++) {
             if(response[i].username === user) {
                 document.getElementById("nameCurr").innerText = JSON.stringify(response[i].firstName).replace(/^"(.*)"$/, '$1');
                 document.getElementById("myName").innerText = JSON.stringify(response[i].firstName).replace(/^"(.*)"$/, '$1') + " " +
@@ -159,6 +182,8 @@ window.onload = function () {
     gui.add(changeParam, 'barWidth', 0, 6).name('Bar Width')
     gui.add(changeParam, 'barFit', 0.5, 5).name('Visualizer Fit')
     gui.addColor(changeParam, 'canvasClr').name('Canvas Color')
+
+    fillFeed();
 }
 
 function updatePass(e) {
@@ -177,7 +202,7 @@ function updatePass(e) {
         let user = localStorage.getItem('currUser');
         console.log(user);
         let i;
-        for(i = 0; i < Object.keys(response).length; i++) {
+        for(i = 0; i < response.length; i++) {
             if(response[i].username === user) {
                 console.log(response[i].password)
                 if(response[i].password === oldPass.value) {

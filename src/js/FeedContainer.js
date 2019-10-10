@@ -6,55 +6,30 @@ import Grid from '@material-ui/core/Grid';
 export default function FeedContainer(props) {
 
     //get this from server somewhere else, maybe store?
-    let items = [
-        {
-            song: {title: "title1", artist: "artist1", song_id: 0},
-            user: {username: "uname1", name: "Bob"},
-            options: {height: 0, length: 0},
-            datetime: "20/02/2010"
-        },
-        {
-            song: {title: "asdf", artist: "asdf", song_id: 0},
-            user: {username: "-0q9[2 34", name: "Boq23sdfgb"},
-            options: {height: 0, length: 0},
-            datetime: "01/01/2012"
-        },
-        {
-            song: {title: "title", artist: "artist", song_id: 0},
-            user: {username: "XxX_420_newbRekr_69_XxX", name: "Bob"},
-            options: {height: 0, length: 0},
-            datetime: "01/02/2015"
-        },
-    ]
+    let items = [{
+        title: "yo",
+        user: "yoyo"
+    },
+    {
+        title: "noo",
+        user: "nono"
+    }]
 
-    // fetch('/feed')
-    //     .then( function( response ) {
-    //         return response.json();
-    //     }).then(function (response){
-    //         response.forEach(feed_item => {
-    //             items.push(feed_item)
-    //         });
-    //     });
+    function getItems() {
+        fetch( '/feed')
+            .then( function( response ) {
+                return response.json();
+            }).then(function (response) {
+            window.localStorage;
+            let userN = localStorage.getItem('currUser');
+            console.log(userN)
+            for(let i = 0; i < response.length; i++) {
+                if(response[i].user === userN) {
+                    items.push(response[i])
+                }
+            }
+        })
 
-    // console.log(items)
-
-
-    async function getItems() {
-
-        console.log(items)
-
-        await fetch('/feed')
-        .then( function( response ) {
-            console.log(response.json())
-            return response.json();
-        }).then(function (response){
-            console.log(response)
-            response.forEach(feed_item => {
-                items.push(feed_item)
-            });
-        });
-
-        console.log(items)
 
     }
 
@@ -73,12 +48,10 @@ export default function FeedContainer(props) {
         <Grid container direction='column' justify='center' alignItems='center'>
             {items.map(item => {
                 return (
-                <div key={item.song.title + item.user.username}>
+                <div key={item.title + item.user}>
                     <FeedItem
-                        key={item.song.title} 
-                        song={item.song}
+                        key={item.title}
                         user={item.user}
-                        ptions={item.options}
                     />
                 </div>
             )

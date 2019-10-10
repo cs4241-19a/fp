@@ -51,7 +51,7 @@ export default function FeedItem(props) {
                     <div className="mb-8">
                         <p className="text-sm text-gray-600 flex items-center">
                         </p>
-                        <div className="text-gray-900 font-bold text-xl mb-2">{props.song.title}</div>
+                        <div className="text-gray-900 font-bold text-xl mb-2">{props.title}</div>
                         <p className="text-gray-700 text-base">
                             Visualize the awesome tracks that you upload! We have a wide range of customizable visualizers.
                         </p>
@@ -61,7 +61,7 @@ export default function FeedItem(props) {
                             <img className="w-10 h-10 rounded-full mr-4" src={require("../media/Manas.jpg")}
                                  alt="Avatar of Manas Mehta"/>
                             <div className="text-sm">
-                                <p className="text-gray-900 leading-none">{props.user.username}</p>
+                                <p className="text-gray-900 leading-none">{props.user}</p>
                                 <p className="text-gray-600">Oct 8</p>
                             </div>
                         </div>

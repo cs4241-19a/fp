@@ -14,7 +14,7 @@ window.onload = function () {
             window.localStorage;
             let user = localStorage.getItem('currUser');
             console.log(user)
-            for(let i = 0; i < Object.keys(response).length; i++) {
+            for(let i = 0; i < response.length; i++) {
                 if(response[i].username === user) {
                     document.getElementById("nameCurr").innerText = JSON.stringify(response[i].firstName).replace(/^"(.*)"$/, '$1');
                     break;
