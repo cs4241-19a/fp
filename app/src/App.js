@@ -45,39 +45,42 @@ let allWords = [
   "ball"
 ];
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Codenames</h1>
-      </header>
-      <Menu />
-      <Game />
-    </div>
-  );
-}
-
-Modal.setAppElement("#root");
-
-class Modals extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      words: this.props.words,
-      teams: this.props.teams
+      modalOpen: true,
     };
+
+    socket.on("closeModal", this.closeModal.bind(this));
   }
+
+  closeModal() {
+    console.log("closeModal");
+    this.setState({modalOpen: false});
+  }
+
+
 
   render() {
     return (
-      <div>
-        <Info />
-      </div>
+        <div className="App">
+          <header className="App-header">
+            <h1>Codenames</h1>
+          </header>
+          {this.state.modalOpen &&
+          <Menu/>
+          }
+          <Game/>
+        </div>
     );
   }
 }
 
-class Info extends React.Component {
+
+Modal.setAppElement("#root");
+
+class Modals extends React.Component {
   constructor() {
     super();
 
@@ -101,7 +104,7 @@ class Info extends React.Component {
     return (
       <div>
         <button className="modalButton" onClick={this.openModal}>
-          How to Play
+          i
         </button>
         <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
           <div id="myModal" className="modal">
@@ -232,10 +235,10 @@ class Chat extends React.Component {
     return (
       <div className="chat">
         <div className="chat-container">
-          {this.state.log.map(hint => {
+          {this.state.log.map((hint, index) => {
             return (
               <div
-                key={hint.clue + hint.amt}
+                key={index}
                 className="clue"
                 style={{ color: hint.sender }}
               >
@@ -351,8 +354,6 @@ class Game extends React.Component {
           keyboard={false}
         />
         <Chat team={status} wordsLeft={9} />
-
-        <Modals words={this.state.boardWords} teams={this.state.boardTeams} />
         <br />
         <br />
       </div>
@@ -366,7 +367,6 @@ class Menu extends React.Component {
 
     this.state = {
       modalIsOpen: true,
-      addGame: false,
       selectedRole: null
     };
 
@@ -387,6 +387,7 @@ class Menu extends React.Component {
       <div className="codenames">
         <div className="modal-menu">
           <Modal
+            shouldCloseOnOverlayClick={false}
             isOpen={this.state.modalIsOpen}
             onRequestClose={this.closeModal}
             style={{ content: { backgroundColor: "#282c34", padding: 0 } }}
@@ -444,7 +445,11 @@ class Menu extends React.Component {
                   </button>
                   <br />
                   <br />
-                  <button id = "playBtn" className="play" onClick={() => closeMenu(this)}>
+                  <button
+                    id="playBtn"
+                    className="play"
+                    onClick={() => closeMenu(this)}
+                  >
                     Play
                   </button>
                   <button className="play" onClick={() => resetMenu(this)}>
@@ -461,18 +466,6 @@ class Menu extends React.Component {
 }
 
 function makeGray(btn, selected) {
-  /*let last = document.getElementById(selected.state.selectedRole);
-  console.log(last);
-  if (last !== null) {
-    last.disabled = false;
-    last.style.borderColor = "black";
-    if (last.className === "redrole") {
-      last.style.backgroundColor = "#ff6666";
-    } else {
-      last.style.backgroundColor = "#4d79ff";
-    }
-  }*/
-
   var redspy = document.getElementById("rspymaster");
   var reddet = document.getElementById("rdetective");
   var bluespy = document.getElementById("bspymaster");
@@ -488,8 +481,6 @@ function makeGray(btn, selected) {
   selected.state.selectedRole = btn;
   socket.emit("roleSelection", selected.state.selectedRole);
 }
-
-
 
 function resetMenu(play) {
   var redspy = document.getElementById("rspymaster");
@@ -522,7 +513,6 @@ function closeMenu(play) {
     play.closeModal();
     socket.emit("startGame");
   }
-
 }
 
 //takes full list of words and picks 25 unique for a game
@@ -667,7 +657,7 @@ socket.on("updateBoardstate", function(bs) {
       button.style.backgroundColor = bs[i][j].color;
     }
   }
-  console.log('number clicked');
+  console.log("number clicked");
   //socket.emit('send hint', 'sent!');
 });
 
@@ -679,19 +669,19 @@ socket.on("update hints", function(msg) {
   document.getElementsByClassName("chat-container")[0].append(final_message);
 });
 
-socket.on('greyRole', function(role){
-  console.log('greying role', role);
-  let button  = document.getElementById(role);
+socket.on("greyRole", function(role) {
+  console.log("greying role", role);
+  let button = document.getElementById(role);
   button.style.backgroundColor = "grey";
   button.disabled = true;
   socket.emit("allSelected");
 });
 
-socket.on("allSelectedStatus", function(status){
-   console.log('status', status);
-   if(status){
-       allReady = true;
-   }
+socket.on("allSelectedStatus", function(status) {
+  console.log("status", status);
+  if (status) {
+    allReady = true;
+  }
 });
 
 socket.on("updateRoleState", function(rs){
@@ -709,7 +699,5 @@ socket.on("updateRoleState", function(rs){
 socket.on("closeModal", ()=>{
     //document.getElementById("playBtn").click();
 });
-
-
 
 export default App;
