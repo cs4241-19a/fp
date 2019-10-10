@@ -1,0 +1,50 @@
+{
+  "data": [],
+  "users": [
+    {
+      "username": "cas",
+      "id": "ae1c251a-a267-48bc-8b1a-ff8483dec4bb",
+      "password": "$2a$10$D/etk/wR/N8c67MYpnn8/eP/rVvuE5mQs3SQvC85e4Kvpn.ZMnp7S"
+    },
+    {
+      "username": "qweqwe",
+      "id": "3806d4d7-3e1b-414a-bc05-4418ce34b034",
+      "password": "$2a$10$OPote0IDKlp1LJ9uL86hyewfzg582dAQEOd0IDplMbjJnEMclwHLC"
+    },
+    {
+      "username": "jamevor",
+      "id": "c12b370f-bfed-447c-bb59-8ea29825ac95",
+      "password": "$2a$10$p/6u49r1KVwQ8nsegcRtCOV6CqwWVfkpKN2QYMN5R5Dp5lZqPY3SG"
+    },
+    {
+      "username": "qweqweq",
+      "id": "48ed6371-6522-425f-9eb0-e06a6248ed35",
+      "password": "$2a$10$5nCklDV19TnfBEU4RWl4ruD7mq8WeR4SFp4bNY7qUv.5N/zCENT6G"
+    },
+    {
+      "username": "asdasd",
+      "id": "bcc3c609-4a81-487e-a3cb-755635a37a16",
+      "password": "$2a$10$NYRONFroj3ngjReVwAJIfuSErulYk6GLm34/nbIdm9VUkSBXdjPNu"
+    },
+    {
+      "username": "bnm",
+      "id": "64b3fe4a-6a4d-44c6-89d5-78444c832cd3",
+      "password": "$2a$10$Vv2GKvM3pcSwXmSjEXvTOu4LnA6fnKlKM7MPGY5Of5YnH6nfgi8TO"
+    },
+    {
+      "username": "jkl",
+      "id": "e6df127d-8e42-4fa6-a554-1f0bac2d9a57",
+      "password": "$2a$10$rkXRz8k4198SPTz3ojTqLuF/Gp7SJbvjthfCh/GMZGUrIMRBgyDoi"
+    },
+    {
+      "username": "jkljkl",
+      "id": "618c1e43-6611-4b58-8af3-af3c6d0fa31d",
+      "password": "$2a$10$FJRafHBzYYQaqnyiZS/I4.xlWTobZd55o4Eon.VW2if9FglsLwW9S"
+    },
+    {
+      "username": "t",
+      "id": "9a62b8da-6a0f-469e-83d0-879a2868325c",
+      "password": "$2a$10$1jQcYttp61ejpwhfNu1OfumSza3I7oWOWGJmDVE3KuTA4sgYx3r6W"
+    }
+  ]
+}
