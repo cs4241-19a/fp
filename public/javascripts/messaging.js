@@ -17,9 +17,6 @@ function getCookie(cname) {
 }
 
 window.onload = function() {
-  setTimeout(function (){ 
-  document.getElementById("board").scrollTop = 999999999
-  }, 10)
   document.getElementById("sendButton").onclick = sendMessage;
   fetch("api/users/getUsers", {
     headers: {
@@ -89,7 +86,8 @@ function updateChat() {
       }
     });
   });
-
+  //let myDiv = document.getElementById("board");
+  //myDiv.scrollTop = myDiv.scrollHeight;
 }
 
 function sendMessage() {
