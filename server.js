@@ -29,17 +29,54 @@ app.get('/receive', function (request, response) {
   });
 });
 
+/*
+get url: /user_feed
+response:
+list of:
+232: {
+  music_post:{
+    song: {title: "title1", artist: "artist1", song_id: 3},
+    user: {username: "uname1", name: "Bob"},
+    options: {height: 0, length: 0},
+    postOrder: 2
+  }
+}
+*/
+
 app.get('/feed', function (request, response) {
   fs_service.readFeedData().then(feedData =>{
     response.end(JSON.stringify(feedData))
   });
 });
 
+
+/*
+get url: /user_feed?username=bob
+response:
+list of:
+232: {
+  music_post:{
+    song: {title: "title1", artist: "artist1", song_id: 3},
+    user: {username: "uname1", name: "Bob"},
+    options: {height: 0, length: 0},
+    postOrder: 2
+  }
+}
+*/
 app.get('/user_feed', function (request, response) {
-  fs_service.readUserFeed(request.body.username).then(feedData =>{
+  fs_service.readUserFeed(request.query.username).then(feedData =>{
     response.end(JSON.stringify(feedData))
   })
 })
+
+/*
+get url: /song_data?id=1
+response:
+{
+  song_id: 2,
+  song_bytes: "8936249872yr9h"
+}
+*/
 
 app.get('/song_data', function (request, response){
   let song_id = request.query.id;
@@ -109,6 +146,22 @@ app.post( '/changePass', function( request, response ) {
   response.writeHead( 200, { 'Content-Type': 'application/json'})
   response.end( JSON.stringify( request.body ) )
 })
+
+/*
+Format for post:
+{
+  music_post:{
+    song: {title: "title1", artist: "artist1"},
+    user: {username: "uname1", name: "Bob"},
+    options: {height: 0, length: 0}
+  },
+  song_bytes: "826348379hd92..."
+}
+response:
+{
+  post_id: 3
+}
+*/
 
 app.post('/post_music', function(request, response) {
   let body = request.body;

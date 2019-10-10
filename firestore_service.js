@@ -58,16 +58,16 @@ exports.readAllUserData = function() {
 
 exports.readFeedData = async function() {
     let feed_posts = await this.firestore.collection("music_profiles").orderBy("postOrder", "desc").limit(10).get();
-    return feed_posts;
+    return feed_posts.data();
 }
 
 exports.readUserFeed = async function(username){
     let feed_posts = await this.firestore.collection("music_profiles").where("username", "==", username).orderBy("postOrder", "desc").get();
-    return feed_posts;
+    return feed_posts.data();
 }
 
 exports.getSongData = async function(song_id){
-    return await this.firestore.collection("song_data").doc(song_id).get();
+    return (await this.firestore.collection("song_data").doc(song_id).get()).data();
 }
 exports.updateUserPassword = function (username, password) {
     let profiles_coll = this.firestore.collection("user_profiles").doc(username);
