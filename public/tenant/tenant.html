@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>CS4241 Final Project - Tenant</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="tenantstyle.css" />
+  <script src="https://cdn.jsdelivr.net/npm/simple-jscalendar@1.4.4/source/jsCalendar.min.js"
+          integrity="sha384-0LaRLH/U5g8eCAwewLGQRyC/O+g0kXh8P+5pWpzijxwYczD3nKETIqUyhuA8B/UB"
+          crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-jscalendar@1.4.4/source/jsCalendar.min.css"
+        integrity="sha384-44GnAqZy9yUojzFPjdcUpP822DGm1ebORKY8pe6TkHuqJ038FANyfBYBpRvw8O9w" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="nav-top">
+    <h1 class="welcome">Welcome</h1>
+    <button class="logoutBtn" onclick="window.location.href='/login.html'"><i class="fa fa-sign-out"></i></button>
+  </div>
+
+  <div class="nav-btn-group">
+    <button id="contact" class="button"><i class="fa fa-address-card"></i></button>
+    <button id="calendar" class="button"><i class="fa fa-calendar"></i></button>
+    <button id="payment" class="button"><i class="fa fa-credit-card"></i></button>
+  </div>
+
+  <div class="content">
+
+    <div id="contactScreen">
+      <div id="contactLeft">
+        <div id="apartments">
+          <div class="screenTitle">Apartment Address</div>
+          <div class="subTitle">Landlord</div>
+          <div class="landlordInfo">
+            <div class="landlord">
+              <a id="landlordName"></a><br><br>
+              <i class="fa fa-phone"></i>&nbsp;&nbsp;<b id="landlordPhone"></b><br><br>
+              <i class="fa fa-envelope"></i>&nbsp;&nbsp;<c id="landlordEmail"></c>
+            </div>
+          </div>
+          <div class="subTitle">Roommates</div>
+          <div class="tenants-group">
+          </div>
+        </div>
+      </div> 
+
+      <div id="contactRight">
+        <div id="tenantProfile">
+          <div class="contactRightTitle" id="profileName"></div></br></br></br></br></br></br>
+          <div class="user">
+            <i class="fa fa-phone"></i>&nbsp;&nbsp;
+            <b id="userPhone"></b><br><br>
+            <i class="fa fa-envelope"></i>&nbsp;&nbsp;
+            <c id="userEmail"></c>
+          </div>
+          <div class="subTitle">Edit Information</div>
+          <div id="form">
+            <label for="FirstName">First Name</label>
+            <input id="FirstName" type="text">
+
+            <label for="LastName">Last Name</label>
+            <input id="LastName" type="text">
+
+            <label for="PhoneNumber">Phone Number</label>
+            <input id="PhoneNumber" type="text">
+
+            <label for="Email">Email</label>
+            <input id="Email" type="text">
+          </div>
+          <button class="updateBtnFun">Update</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="calendarScreen">
+      <div class="container">
+        <div id="my-calendar" class="material-theme red"></div>
+        <div id="events">
+          <p id='date'></p>
+          <div id="CalPayment"></div>
+          <div id="Event"></div>
+          <div id="Service"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="paymentScreen">
+        <div class="container">
+            <div id="paymentList">
+                <h3>Payment List</h3>
+                <div id="payButtons"></div>
+            </div>
+            <div id="paymentdetails">
+                <h3>Details</h3>
+                <div id="payInfo"></div>
+            </div>
+        </div>
+     </div>
+  </div>
+  
+  <script type="module" src="tenantscript.js"></script>
+
+</body>
+
+</html>

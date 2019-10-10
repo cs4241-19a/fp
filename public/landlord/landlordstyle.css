@@ -1,0 +1,514 @@
+body {
+  background-color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+}
+
+input {
+  width: 250px;
+  height: 25px;
+  margin: 5px;
+  padding: 5px;
+}
+
+label {
+  font-size: 15pt;
+  width: 264px;
+  margin: 5px;
+}
+
+.welcome {
+  float: left;
+  font-size: 30px;
+  margin-left: 2%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-110%);
+  color: white;
+}
+
+.logoutBtn {
+  width: 9%;
+  height: 100%;
+  font-size: 40px;
+  float: right;
+  background-color: #79C4BD;
+  border: none;
+  color: white;
+  padding: 0px 60px;
+  cursor: pointer;
+}
+
+.logoutBtn:hover {
+  background-color: #61A49E;
+}
+
+#paymentform, #serviceform, #eventform {
+  display: flex;
+  flex-direction: column;
+}
+
+.PaymentBtn {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.3s;
+  background-color: red;
+  border: 4px solid red;
+  border-radius: 2px;
+  color: white;
+  padding: 12px;
+  width: 200px;
+  text-align: center;
+  font-weight: bold;
+  display: inline-block;
+  font-size: 18px;
+}
+
+.PaymentBtn:hover {
+  cursor: pointer;
+  background-color: white;
+  color: red;
+}
+
+.ServiceBtn {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.3s;
+  background-color: #7FC8EC;
+  border: 4px solid #7FC8EC;
+  border-radius: 2px;
+  color: white;
+  padding: 12px;
+  width: 200px;
+  text-align: center;
+  font-weight: bold;
+  display: inline-block;
+  font-size: 18px;
+}
+
+.ServiceBtn:hover {
+  cursor: pointer;
+  background-color: white;
+  color: #7FC8EC;
+}
+
+.EventBtn {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.3s;
+  background-color: lightseagreen;
+  border: 4px solid lightseagreen;
+  border-radius: 2px;
+  color: white;
+  padding: 12px;
+  width: 200px;
+  text-align: center;
+  font-weight: bold;
+  display: inline-block;
+  font-size: 18px;
+}
+
+.EventBtn:hover {
+  cursor: pointer;
+  background-color: white;
+  color: lightseagreen;
+}
+
+.ScheduleBtn {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.3s;
+  background-color: lightgreen;
+  border: 4px solid lightgreen;
+  border-radius: 2px;
+  color: white;
+  padding: 12px;
+  width: 200px;
+  text-align: center;
+  font-weight: bold;
+  display: inline-block;
+  font-size: 18px;
+}
+
+.ScheduleBtn:hover {
+  cursor: pointer;
+  background-color: white;
+  color: lightgreen;
+}
+
+.nav-top {
+  overflow: visible;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #79C4BD;
+  height: 10%;
+}
+
+.nav-btn-group {
+  height: 90%;
+  width: 15%;
+  margin: 0px;
+  padding: 0px;
+  position: fixed;
+
+  top: 10%;
+  left: 0px;
+}
+
+.content {
+  height: 90%;
+  width: 85%;
+  position: fixed;
+  top: 10%;
+  left: 15%;
+  background-color: white;
+}
+
+.nav-btn-group .button {
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 550%;
+  cursor: pointer;
+  width: 100%;
+  display: block;
+  height: 33.33%;
+}
+
+.profileBtn {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.3s;
+  font-size: 24px;
+  background-color: #7FC8EC;
+  border: none;
+  color: white;
+  padding: 20px 26px;
+  cursor: pointer;
+  border-radius: 50px;
+}
+
+.profileBtn:hover {
+  background-color: #66ADCF;
+}
+
+.updateBtnFun {
+  margin-top: 30px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.3s;
+  background-color: white;
+  border: 4px solid #808080;
+  border-radius: 2px;
+  color: #808080;
+  padding: 12px;
+  width: 250px;
+  text-align: center;
+  font-weight: bold;
+  display: inline-block;
+  font-size: 18px;
+}
+
+.updateBtnFun:hover {
+  cursor: pointer;
+  background-color: #808080;
+  color: white;
+}
+
+.addApartmentBtnFun {
+  margin-top: 30px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.3s;
+  background-color: white;
+  border: 4px solid #95BF74;
+  border-radius: 2px;
+  color: #95BF74;
+  padding: 12px;
+  width: 250px;
+  text-align: center;
+  font-weight: bold;
+  display: inline-block;
+  font-size: 18px;
+}
+
+.addApartmentBtnFun:hover {
+  cursor: pointer;
+  background-color: #95BF74;
+  color: white;
+}
+
+.addApartmentBtn {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.3s;
+  font-size: 24px;
+  background-color: #95BF74;
+  border: none;
+  color: white;
+  padding: 20px 26px;
+  cursor: pointer;
+  border-radius: 50px;
+}
+
+.addApartmentBtn:hover {
+  background-color: #7DA45E;
+}
+
+.manageBtns-group {
+  position: relative;
+  float: right;
+}
+
+.screenTitle {
+  float: left;
+  font-size: 48px;
+  color: #808080;
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+.manageRightTitle {
+  text-align: left;
+  float: left;
+  font-size: 48px;
+  color: #808080;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  font-weight: bold;
+  vertical-align: top;
+}
+
+.keyTitle {
+  text-align: left;
+  font-size: 36px;
+  color: #808080;
+  margin-top: 40px;
+  font-weight: bold;
+}
+
+.subTitle {
+  text-align: left;
+  font-size: 36px;
+  color: #808080;
+  margin-top: 40px;
+  font-weight: bold;
+}
+
+.user {
+  display: inline-block;
+  color: #808080;
+}
+
+.user b {
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.user c {
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.tenants-group {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  color: #808080;
+}
+
+.tenant {
+  display: inline-block;
+  margin-top: 35px; 
+  width: 100%;
+}
+
+.tenant a {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.tenant b {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.tenant c {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.apartment-group {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.apartment-group button {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.3s;
+  border: none;
+  background-color: #79C4BD;
+  color: white;
+  padding: 18px 24px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-size: 36px;
+}
+
+/* Add a background color on hover */
+
+.apartment-group button:hover {
+  background-color: #61A49E;
+}
+
+#manageLeft {
+  height: 90%;
+  width: 45%;
+  position: fixed;
+  top: 10%;
+  left: 15%;
+  background-color: white;
+  overflow-y: scroll;
+  overflow-x: auto;
+}
+
+#apartments {
+  margin-top: 8%;
+  margin-left: 8%;
+  margin-right: 8%;
+  margin-bottom: 7%;
+  position: relative;
+}
+
+#manageScreen {
+  display: block;
+}
+
+#addApartment {
+  margin-top: 8%;
+  margin-left: 8%;
+  margin-right: 8%;
+  margin-bottom: 7%;
+  position: relative;
+  display: none;
+}
+
+#landlordProfile {
+  margin-top: 8%;
+  margin-left: 8%;
+  margin-right: 8%;
+  margin-bottom: 7%;
+  position: relative;
+}
+
+#apartmentInfo {
+  margin-top: 8%;
+  margin-left: 8%;
+  margin-right: 8%;
+  margin-bottom: 7%;
+  position: relative;
+  display: none;
+}
+
+#manageRight {
+  height: 90%;
+  width: 40%;
+  position: fixed;
+  top: 10%;
+  left: 60%;
+  background-color: #F9F9F9;
+  overflow-y: scroll;
+  overflow-x: auto;
+  display: block;
+}
+
+#form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  color: #808080;
+}
+
+#calendarScreen {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+#scheduleScreen {
+  display: none;
+}
+
+#manage {
+  background: #F7CD54;
+}
+
+#manage:hover {
+  background: #E5B429;
+}
+
+#calendar {
+  background: #F2655A
+}
+
+#calendar:hover {
+  background: #D24B3F
+}
+
+#schedule {
+  background: #7FC8EC;
+}
+
+#schedule:hover {
+  background: #66ADCF;
+}
+
+#my-calendar {
+  display: block;
+  overflow-x: scroll;
+  overflow-y: auto;
+  vertical-align: center;
+  horiz-align: center;
+  width: 50%;
+  zoom: 200%;
+}
+
+#events {
+  width: 50%;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.eventType {
+  font-weight: bold;
+  font-size: 25pt;
+  margin: 5% 5% 0 5%;
+}
+
+#payTitle {
+  color: #F2655A;
+}
+
+#eventTitle {
+  color: #7FC8Ec;
+}
+
+#serviceTitle {
+  color: #95BF74;
+}
+
+#caldate {
+  margin: 5%;
+  font-weight:bold;
+  font-size: 30pt;
+  color: #808080;
+}
+
+ul {
+  list-style: circle;
+  margin: 10px 5% 5% 5%;
+}

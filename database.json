@@ -1,0 +1,284 @@
+{
+  "users": [
+    {
+      "userType": "tenant",
+      "first": "Winny",
+      "last": "Cheng",
+      "username": "ccheng",
+      "password": "123",
+      "phone": "123",
+      "email": "123",
+      "key": 8
+    },
+    {
+      "userType": "landlord",
+      "first": "Joe",
+      "last": "Yuen",
+      "username": "janette",
+      "password": "janette1",
+      "phone": "512-576-6716",
+      "email": "jhyuen@wpi.edu"
+    },
+    {
+      "userType": "tenant",
+      "first": "Vandana",
+      "last": "Anand",
+      "username": "vandu",
+      "password": "123",
+      "phone": "12345",
+      "email": "hello@gmail.com",
+      "key": ""
+    },
+    {
+      "userType": "tenant",
+      "first": "WebwareFirst",
+      "last": "WebwareLast",
+      "username": "webware",
+      "password": "webware1",
+      "phone": "0000000000",
+      "email": "webware@wpi.edu"
+    },
+    {
+      "userType": "tenant",
+      "first": "WebFirst",
+      "last": "WebLast",
+      "username": "web",
+      "password": "web1",
+      "phone": "1111111111",
+      "email": "web@wpi.edu",
+      "key": "webkey"
+    },
+    {
+      "userType": "tenant",
+      "first": "Joe",
+      "last": "Yuen",
+      "username": "t1",
+      "password": "t1",
+      "phone": "123-456-7890",
+      "email": "jhyuen@wpi.edu",
+      "key": 8
+    },
+    {
+      "userType": "tenant",
+      "first": "John",
+      "last": "Smith",
+      "username": "t2",
+      "password": "t2",
+      "phone": "21323",
+      "email": "2313",
+      "key": 8
+    },
+    {
+      "userType": "tenant",
+      "first": "John",
+      "last": "Smith",
+      "username": "t3",
+      "password": "t3",
+      "phone": "21323",
+      "email": "2313",
+      "key": 8
+    },
+    {
+      "userType": "tenant",
+      "first": "John",
+      "last": "Smith",
+      "username": "t4",
+      "password": "t4",
+      "phone": "21323",
+      "email": "2313",
+      "key": 8
+    },
+    {
+      "userType": "tenant",
+      "first": "foisie",
+      "last": "foisielast",
+      "username": "foisie",
+      "password": "foisie1",
+      "phone": "8888888888",
+      "email": "foisie@wpi.edu",
+      "key": 400
+    },
+    {
+      "userType": "tenant",
+      "first": "ww",
+      "last": "www",
+      "username": "wwww",
+      "password": "www",
+      "phone": "1111111111",
+      "email": "asdf",
+      "key": 123445
+    }
+  ],
+  "apartments": [
+    {
+      "address": "44 Somerset St. Apt. 2",
+      "key": 8,
+      "landlord": "janette"
+    },
+    {
+      "address": "hjhk",
+      "key": 1,
+      "landlord": "janette"
+    }
+  ],
+  "keycount": 9,
+  "events": [
+    {
+      "eventname": "BBQ",
+      "day": "2019-10-23",
+      "desc": "Veggis can die",
+      "apt": 8,
+      "eventid": "BBQ56 Fluffy St"
+    },
+    {
+      "eventname": "House Tour",
+      "day": "2019-10-23",
+      "desc": "",
+      "apt": 8,
+      "eventid": ""
+    },
+    {
+      "eventname": "test",
+      "day": "2019-10-16",
+      "desc": "test",
+      "apt": 1,
+      "eventid": "testtest"
+    },
+    {
+      "eventname": "BBQ2",
+      "day": "2019-10-23",
+      "desc": "Veggis can die",
+      "apt": 1,
+      "eventid": "BBQ56 Fluffy St"
+    },
+    {
+      "eventname": "House Tour2",
+      "day": "2019-10-16",
+      "desc": "",
+      "apt": 1,
+      "eventid": ""
+    },
+    {
+      "eventname": "test2",
+      "day": "2019-10-16",
+      "desc": "test",
+      "apt": 8,
+      "eventid": "testtest"
+    },
+    {
+      "eventname": "finalproject",
+      "day": "2019-10-11",
+      "desc": "webware ha",
+      "apt": 198,
+      "eventid": "finalproject1"
+    },
+    {
+      "eventname": "hi",
+      "day": "2019-10-13",
+      "desc": "bye",
+      "apt": 535,
+      "eventid": "hi1"
+    },
+    {
+      "eventname": "water",
+      "day": "2019-10-14",
+      "desc": "bye",
+      "apt": 1,
+      "eventid": "water1"
+    }
+  ],
+  "payments": [
+    {
+      "amount": "$20",
+      "due": "2019-10-23",
+      "desc": "Rent",
+      "apt": 8,
+      "paymentid": "Rent56 Dover st"
+    },
+    {
+      "amount": "$500",
+      "due": "2019-10-16",
+      "desc": "Fridge",
+      "apt": 1,
+      "paymentid": "Fridge44 Dover St"
+    },
+    {
+      "amount": "$9,000.00",
+      "due": "2020-01-10",
+      "desc": "New House",
+      "apt": 33,
+      "paymentid": "New House33 Dover St"
+    },
+    {
+      "amount": "$0.00",
+      "due": "2019-10-02",
+      "desc": "test",
+      "apt": 44,
+      "paymentid": "testtest"
+    },
+    {
+      "amount": "8",
+      "due": "2019-10-11",
+      "desc": "yuop",
+      "apt": 27,
+      "paymentid": "yuop2"
+    },
+    {
+      "amount": "$90.00",
+      "due": "2019-10-17",
+      "desc": "ujfvjhrwvlh,",
+      "apt": 80,
+      "paymentid": "ujfvjhrwvlh,1"
+    },
+    {
+      "amount": "$999.00",
+      "due": "2019-10-10",
+      "desc": "mean girls 10",
+      "apt": 562,
+      "paymentid": "mean girls 101"
+    },
+    {
+      "amount": "$77.00",
+      "due": "2019-10-25",
+      "desc": "food",
+      "apt": 8,
+      "paymentid": "food8"
+    }
+  ],
+  "services": [
+    {
+      "service": "Shower Repair",
+      "date": "2019-10-15",
+      "desc": "No water",
+      "apt": 8,
+      "serviceid": "Shower Repair56"
+    },
+    {
+      "service": "Drain",
+      "date": "2019-10-16",
+      "desc": "no hole",
+      "apt": 56,
+      "serviceid": "Drain56 Dover St"
+    },
+    {
+      "service": "Deomlish",
+      "date": "2019-10-16",
+      "desc": "Time to go..",
+      "apt": 1,
+      "serviceid": "Deomlish55 Dover"
+    },
+    {
+      "service": "Test",
+      "date": "2019-10-14",
+      "desc": "test",
+      "apt": 5,
+      "serviceid": "Testtest"
+    },
+    {
+      "service": "broken toilet",
+      "desc": "it's leeking",
+      "apt": 8,
+      "serviceid": "broken toilet8"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>CS4241 Final Project - Login</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+
+<body>
+  <div class="logincolor">
+
+  <!-- Logo -->
+  <div id="logoform">
+  <img src="/logos/knockKnockLogoGreen.png" alt="Green Knock Knock Logo">
+  </div>
+
+  <!-- Back Button -->
+  <button class="loginToHome" onclick="window.location.href='/index.html'"><i class="fa fa-chevron-left"></i></button>
+
+  <!-- Login Form -->
+  <div id="form">
+    <h1 class="formHeader">LOGIN</h1>
+
+    <label for="Username">Username</label>
+    <input id="username" type="text" name="user" placeholder="jonsmith@wpi.edu">
+
+    <label for="Password">Password</label>
+    <input id="password" type="password" name="password" placeholder="password123">
+
+    <!-- Log In button -->
+    <button class="loginBtnFun" style="margin-top: 20px;" id="loginButton">Login</button>
+    <p>_________________________________</p>
+
+    <!-- Sign Up -->
+    <p>Don't have an account?</p>
+    <button class="loginBtnFun" style="margin-top: 5px;" id="registerButton">Sign Up</button>
+
+  </div>
+  </div>
+  <script src="js/main.js" type="module"></script>
+  <script type="module">
+    import {login, signUpFromLogin} from "./js/main.js";
+    window.onload = function() {
+      const loginBtn = document.getElementById('loginButton')
+      loginBtn.onclick = login
+      const loginSignUpBtn = document.getElementById('registerButton')
+      loginSignUpBtn.onclick = signUpFromLogin
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,7 @@
+node_modules/
+*sublime*
+server/
+coverage/
+*.bmp
+*.exe
+.DS_Store

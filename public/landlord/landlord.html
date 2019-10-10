@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>CS4241 Final Project - Landlord</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="landlordstyle.css" />
+  <script
+          src="https://code.jquery.com/jquery-3.4.1.min.js"
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/simple-jscalendar@1.4.4/source/jsCalendar.min.js" integrity="sha384-0LaRLH/U5g8eCAwewLGQRyC/O+g0kXh8P+5pWpzijxwYczD3nKETIqUyhuA8B/UB" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-jscalendar@1.4.4/source/jsCalendar.min.css" integrity="sha384-44GnAqZy9yUojzFPjdcUpP822DGm1ebORKY8pe6TkHuqJ038FANyfBYBpRvw8O9w" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+  <div class="nav-top">
+    <h1 class="welcome">Welcome</h1>
+    <button class="logoutBtn" onclick="window.location.href='/login.html'"><i class="fa fa-sign-out"></i></button>
+  </div>
+
+  <div class="nav-btn-group">
+    <button id="manage" class="button"><i class="fa fa-address-book"></i></button>
+    <button id="calendar" class="button"><i class="fa fa-calendar"></i></button>
+    <button id="schedule" class="button"><i class="fa fa-pencil"></i></button>
+  </div>
+
+  <div class="content">
+    <div id="manageScreen">
+      <div id="manageLeft">
+        <div id="apartments">
+          <div class="screenTitle">Manage</div>
+          <div class="manageBtns-group">
+            <button class="profileBtn"><i class="fa fa-user"></i></button>
+            <button class="addApartmentBtn"><i class="fa fa-plus"></i></button>
+          </div>
+
+          <div class="apartment-group">
+            
+          </div>
+        </div>
+      </div>
+
+      <div id="manageRight">
+
+        <div id="addApartment">
+          <div class="manageRightTitle">Add Apartment</div></br></br></br></br></br>
+          <div id="form">
+            <label for="Address">Address</label>
+            <input id="Address" type="text" placeholder="100 Institute Road">
+          </div>
+          <button class="addApartmentBtnFun">Add Apartment</button>
+        </div>
+
+        <div id="landlordProfile">
+          <div class="manageRightTitle" id="profileName"></div></br></br></br></br></br></br>
+          <div class="user">
+            <i class="fa fa-phone"></i>&nbsp;&nbsp;
+            <b id="userPhone"></b><br><br>
+            <i class="fa fa-envelope"></i>&nbsp;&nbsp;
+            <c id="userEmail"></c>
+          </div>
+          <div class="subTitle">Edit Information</div>  
+          <div id="form">
+            <label for="FirstName">First Name</label>
+            <input id="FirstName" type="text">
+
+            <label for="LastName">Last Name</label>
+            <input id="LastName" type="text">
+
+            <label for="PhoneNumber">Phone Number</label>
+            <input id="PhoneNumber" type="text">
+
+            <label for="Email">Email</label>
+            <input id="Email" type="text">
+          </div>
+          <button class="updateBtnFun">Update</button>
+        </div>
+
+        <div id="apartmentInfo">
+          <div class="manageRightTitle" id="apartmentName">Apartment Name</div></br></br></br></br>
+          <div class="keyTitle" id="landlordkey">Key: ABCDE</div>
+          <div class="subTitle">Roommates</div>
+          <div class="tenants-group">
+            <div class="tenant">
+              <a>FirstName LastName</a><br><br>
+              <i class="fa fa-phone"></i>&nbsp;&nbsp;<b>123-456-7890</b><br><br>
+              <i class="fa fa-envelope"></i>&nbsp;&nbsp;<c>jonsmith@wpi.edu</c>
+            </div>
+
+            <div class="tenant">
+              <a>FirstName LastName</a><br><br>
+              <i class="fa fa-phone"></i>&nbsp;&nbsp;<b>123-456-7890</b><br><br>
+              <i class="fa fa-envelope"></i>&nbsp;&nbsp;<c>jonsmith@wpi.edu</c>
+            </div>
+
+            <div class="tenant">
+              <a>FirstName LastName</a><br><br>
+              <i class="fa fa-phone"></i>&nbsp;&nbsp;<b>123-456-7890</b><br><br>
+              <i class="fa fa-envelope"></i>&nbsp;&nbsp;<c>jonsmith@wpi.edu</c>
+            </div>
+
+            <div class="tenant">
+              <a>FirstName LastName</a><br><br>
+              <i class="fa fa-phone"></i>&nbsp;&nbsp;<b>123-456-7890</b><br><br>
+              <i class="fa fa-envelope"></i>&nbsp;&nbsp;<c>jonsmith@wpi.edu</c>
+            </div>
+
+            <div class="tenant">
+              <a>FirstName LastName</a><br><br>
+              <i class="fa fa-phone"></i>&nbsp;&nbsp;<b>123-456-7890</b><br><br>
+              <i class="fa fa-envelope"></i>&nbsp;&nbsp;<c>jonsmith@wpi.edu</c>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="calendarScreen">
+      <div class="container">
+        <div id="my-calendar" class="material-theme red"></div>
+        <div id="events">
+          <p id='caldate'></p>
+          <div id="Payment"></div>
+          <div id="Event"></div>
+          <div id="Service"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="scheduleScreen">
+      <div class="container">
+
+        <div id="my-scheduler" class="material-theme blue">
+          <h3 style="padding-left: 40px;">1. Choose a Type</h3>
+          <ul style="list-style-type:none;">
+            <li><button class="PaymentBtn" style="margin-top: 20px;" id="PaymentBtn" >Payment</button></li>
+            <li><button class="ServiceBtn" style="margin-top: 20px;" id="ServiceBtn" >Service</button></li>
+            <li><button class="EventBtn" style="margin-top: 20px;" id="EventBtn" >Event</button></li>
+          </ul>
+        </div>
+        <div id="paymentDetails" style="margin-left: 300px;">
+          <h3>2. Insert Details</h3>
+          <div id="paymentform" style=" margin-top: 36px;">
+
+            <label for="Amount" style="margin-left: 10px;">Amount</label>
+            <input type="text" name="amount" id="amount" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" placeholder="$1,000.00" style="margin: 10px;">
+
+            <label for="Due" style="margin-left: 10px;">Due By</label>
+
+            <input id="due" type="date" name="due" placeholder="01/01/2019" style="margin: 10px;">
+
+            <label for="PayDescription" style="margin-left: 10px;">Description</label>
+
+            <input id="paydescription" type="text" name="paydescription" placeholder="Nothing's free in this world, gotta pay up peasants" style="margin: 10px;">
+
+            <label for="PaymentApartment" style="margin-left: 10px;">Apartment</label>
+            <select id="paymentapartment" type="number" name="paymentapartment" style="margin: 10px;">
+              <option value="">-- Select an apartment key --</option>
+            </select>
+<!--            <input id="paymentapartment" type="text" name="paymentapartment" placeholder="46 Dover St" style="margin: 10px;">-->
+            <button class="ScheduleBtn" style="margin-top: 20px; margin-left: 10px;" id="PaymentScheduleBtn">Schedule</button>
+
+          </div>
+        </div>
+        <div id="serviceDetails" style="margin-left: 300px;">
+          <h3>2. Insert Details</h3>
+          <div id="serviceform" style="margin-top: 36px;">
+
+            <label for="ServiceTitle" style="margin-left: 10px;">Service Title</label>
+
+            <input id="servicetitle" type="text" name="service" placeholder="Attitude Repair" style="margin: 10px;">
+
+            <label for="Date" style="margin-left: 10px;">Date</label>
+
+            <input id="date" type="date" name="date" placeholder="01/01/2019" style="margin: 10px;">
+
+            <label for="ServiceDescription" style="margin-left: 10px;">Description</label>
+
+            <input id="servicedescription" type="text" name="description" placeholder="Handyman Joe coming in on Friday at midnight to fix your nightmares" style="margin: 10px;">
+
+            <label for="ServiceApartment" style="margin-left: 10px;">Apartment</label>
+
+            <select id="serviceapartment" type="number" name="serviceapartment" style="margin: 10px;">
+              <option value="">-- Select an apartment key --</option>
+            </select>
+            <button class="ScheduleBtn" style="margin-top: 20px; margin-left: 10px;" id="ServiceScheduleBtn">Schedule</button>
+
+          </div>
+        </div>
+        <div id="eventDetails" style="margin-left: 300px;">
+          <h3>2. Insert Details</h3>
+          <div id="eventform" style="margin-top: 36px;">
+
+            <label for="Eventname" style="margin-left: 10px;">Event</label>
+
+            <input id="eventname" type="text" name="eventname" placeholder="New Tenant Slaughter" style="margin: 10px;">
+
+            <label for="Day" style="margin-left: 10px;">Day</label>
+
+            <input id="day" type="date" name="day" placeholder="01/01/2019" style="margin: 10px;">
+
+            <label for="EventDescription" style="margin-left: 10px;">Description</label>
+
+            <input id="eventdescription" type="text" name="eventdescription" placeholder="Life is painful; you must know suffer.." style="margin: 10px;">
+
+            <label for="EventApartment" style="margin-left: 10px;">Apartment</label>
+
+            <select id="eventapartment" type="number" name="eventapartment" style="margin: 10px;">
+              <option value="">-- Select an apartment key --</option>
+            </select>
+            <button class="ScheduleBtn" style="margin-top: 20px; margin-left: 10px;" id="EventScheduleBtn">Schedule</button>
+          </div>
+    </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <script type="module" src="landlordscript.js"></script>
+    <script type="module">
+      import {addEvent, addPayment, addService} from "./mods/schedule.js";
+        let event = document.getElementById("EventScheduleBtn")
+        event.onclick = addEvent
+        let payment = document.getElementById("PaymentScheduleBtn")
+        payment.onclick = addPayment
+        let service = document.getElementById("ServiceScheduleBtn")
+        service.onclick = addService
+    </script>
+  </body>
+
+</html>
