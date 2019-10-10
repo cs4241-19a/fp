@@ -8,7 +8,7 @@ Ben Hetherington - @bwhetherington
 
 ## Outline
 
-Our group created our When3Meet web app to improve upon the existing When2Meet. We provide a way to schedule events similar to When2Meet, where a user can specify their availability using a table of hours across different days, and dragging to select which hours they are available for. Another table then displays the availability of everyone attending the event. The key improvements we made to When2Meet are in our account system. By allowing users to create an account and save their availability to their account, they can simply automatically fill in their availability on events using the stored availability in their account, so they do not need to repeat filling out the same information for every event.
+Our group created our When3Meet web app to improve upon the existing When2Meet. We provide a way to schedule events similar to When2Meet, where a user can specify their availability using a table of hours across different days, and dragging to select which hours they are available for. Another table then displays the availability of everyone attending the event. The key improvements we made to When2Meet are in our account system and responsive UI.
 
 The project itself can be found [here](http://www.when3meet.com).
 

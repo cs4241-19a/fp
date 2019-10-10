@@ -8,6 +8,9 @@ import {
     User,
     Event
 } from './db'
+import {
+    async
+} from "q";
 
 const api = db => {
     const router = express.Router();
@@ -96,9 +99,47 @@ const api = db => {
         }
     });
 
-    // router.get('/user/:user/events')
-    router.post('/event/create', async (req, res) => {
+    router.post('/user/events', ensureLoggedIn('/login'), async (req, res) => {
         const {
+            user,
+            body
+        } = req;
+        // const {
+        //     userId
+        // } = body;
+        const userId = user._id;
+        console.log('/user/events called')
+        const events = await Event.find()
+        console.log(body)
+        console.log(userId)
+        console.log(typeof userId)
+        let userEvents = []
+        if (events) {
+            events.forEach(event => {
+                if (event.availabilities.hasOwnProperty(String(userId))) {
+                    console.log('found user in event', event.title)
+                    userEvents.push({
+                        name: event.title,
+                        eventId: event._id
+                    })
+                }
+            })
+            res.json({
+                events: userEvents
+            });
+        } else {
+            res.status(404);
+            res.json({
+                message: "Events not found."
+            });
+        }
+
+    })
+
+
+    router.post('/event/create', ensureLoggedIn('/login'), async (req, res) => {
+        const {
+            user,
             body
         } = req;
         const {
@@ -121,6 +162,7 @@ const api = db => {
         await newEvent.save();
         res.redirect(`/event/${newEvent._id}`);
     })
+
     router.get('/event/:eventId', ensureLoggedIn('/login'), async (req, res) => {
         const {
             user,

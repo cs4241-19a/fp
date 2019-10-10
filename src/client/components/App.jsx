@@ -5,6 +5,7 @@ import NewEvent from "./NewEvent";
 import Viewer from "./Viewer";
 import Selector from "./Selector";
 import Authentication from "./Authentication";
+import Events from "./Events";
 import { Row, Col, Container } from "react-bootstrap";
 
 // Please not that the contents here are just a placeholder and do not
@@ -15,7 +16,7 @@ const Home = () => (
     <Row>
       <Col lg="12">
         <h1 className="text-center">When3Meet</h1>
-        <h3 className="text-center">A slightly better When2Meet (maybe)</h3>
+        <h3 className="text-center">A slightly better When2Meet</h3>
         <br />
         <p>
           A new version of the scheduling service everyone at WPI loves to use,
@@ -101,6 +102,7 @@ const App = () => (
     <Route exact path="/new" component={NewEvent} />
     <Route exact path="/select" component={SelectorHardcode} />
     <Route exact path="/login" component={LoginScreen} />
+    <Route exact path="/events" component={Events} />
     <Route path="/event/:name" component={FillOut} />
     <Route path="/*" component={NotFound} />
   </Switch>
