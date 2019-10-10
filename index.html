@@ -6,13 +6,14 @@
     <link href="/Temp.css" rel="stylesheet" type="text/css" />
     <link href="https://unpkg.com/sanitize.css" rel="stylesheet" />
     <link href="https://unpkg.com/sanitize.css/typography.css" rel="stylesheet"/>
+    <script src="js/scripts.js"></script>
   </head>
   <body>
     <div class="container">
 
       <main>
         <div id="login">
-          <form action="game.html">
+          <form>
             <div class="input">
               <label for="login-username" class="label">Username:</label>
               <input type="text" id="login-username" required />
@@ -24,7 +25,7 @@
             </div>
 
             <div id="login-button">
-              <button>Login</button>
+              <button type="button" onclick="doLogin()">Login</button>
             </div>
           </form>
         </div>

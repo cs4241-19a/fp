@@ -24,8 +24,9 @@ const login = function(e) {
 
 
 function doLogin(){
-  let uName = document.getElementById("uName").value
-  let pass = document.getElementById("pass").value
+  console.log("IN USERNAME")
+  let uName = document.getElementById("login-username").value
+  let pass = document.getElementById("password").value
   let body = {username: uName, password: pass}
   body = JSON.stringify(body)
   fetch('/login', {

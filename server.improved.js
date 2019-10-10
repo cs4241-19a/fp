@@ -52,7 +52,7 @@ app.use(morgan("combined"));
 app.use(cookieParser()); //needed to read cookies for auth
 
 app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname + "/index.html"));
+  res.sendFile(path.join(__dirname + "/game.html"));
 });
 
 app.get("/game.html", function(req, res) {
