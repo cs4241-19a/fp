@@ -13,19 +13,29 @@ add and remove data. We are hoping that these admin tools can be used for any ty
 or any type of user, with the graph itself being easy enough to change and modify to view
 the data in other ways.
 
-Login Info: // put these here pinzie boy
+Link: <https://fp-admin-page.glitch.me/>
+
+**Login Info:**
+
+User: `root`
+Pass: `root`
 
 We used many technologies/features in the making of this project:
+    1. React Framework
+       1. React-router
+       2. React-Redux
+    2. Express server
+       1. MySQL integration
+       2. Login Functionality
+       3. Add/Edit/Delete MySQL Data
+    3. MySQL Server
+    4. Bulma Design Pattern
+    5. Tabulator interactive table
+    6. Chartist.js for react and legend plugins for the var graph
+    7. Chartist CSS for our graph color scheme legend
+    8. Animating inputs and buttons based off of entries
+    9. Clean design and layout
 
-    1. React Framework for our entire application
-    2. MySQL Server with add, edit, delete
-    3. Bulma Design Pattern for the overall styling
-    4. Tabulator for the interactive viewing
-    5. Chartist.js for react and legend plugins for the var graph
-    6. Chartist CSS for our graph color scheme legend
-    7. Animating inputs and buttons based off of entries
-    8. Clean design and layout and easy to use
-    
 Technical Achievements:
 
 - Since the majority of our group used React for the first time in the making of this project, the biggest challenge we faced was properly integrating all of our javascript code into the React framework. 

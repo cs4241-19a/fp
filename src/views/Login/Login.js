@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import "./Login.css";
+import { connect } from 'react-redux';
+import { login } from '../../apis/session';
 import 'bulma/css/bulma.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -19,7 +21,7 @@ class Login extends Component {
         this.setState({
             username: e.target.value
         });
-        
+
     }
     updatePassword = (e) => {
         this.setState({
@@ -27,18 +29,10 @@ class Login extends Component {
         });
     }
 
-    login = async () => {
-        const response = await fetch('/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username: this.state.username, password: this.state.password }),
+    login = () => {
+        this.props.onLogin(this.state, async (object) => {
+            this.props.history.push('/dashboard')
         });
-        const body = await response;
-        if (body) {
-            console.log(body);
-        }
     }
 
     render() {
@@ -50,32 +44,32 @@ class Login extends Component {
                 <div className="vessel">
                     <div className="columns">
                         <div className="column is-one-third">
-                            <FontAwesomeIcon className = "right" icon="user-lock" size="2x" />
+                            <FontAwesomeIcon className="right" icon="user-lock" size="2x" />
                         </div>
                         <div className="column is-one-third">
-                            <input className = { this.state.username === '' ? 'input' : 'input is-success'}
+                            <input className={this.state.username === '' ? 'input' : 'input is-success'}
                                 type="text"
                                 name={this.state.username}
                                 placeholder="Username"
-                                onChange={this.updateUsername}/>
+                                onChange={this.updateUsername} />
                         </div>
                     </div>
                     <div className="columns">
                         <div className="column is-one-third">
-                            <FontAwesomeIcon className = "right" icon="key" size="2x" />
+                            <FontAwesomeIcon className="right" icon="key" size="2x" />
                         </div>
                         <div className="column is-one-third">
-                            <input className = { this.state.password === '' ? 'input' : 'input is-success'}
+                            <input className={this.state.password === '' ? 'input' : 'input is-success'}
                                 type="password"
                                 name={this.state.password}
                                 placeholder="Password"
-                                onChange={this.updatePassword}/>
+                                onChange={this.updatePassword} />
                         </div>
                     </div>
                 </div>
                 <div className="vessel">
-                    <button 
-                        className={ (this.state.username === '' || this.state.password === '') ? 'button submit-button' : 'button is-danger submit-button'} onClick={this.login}
+                    <button
+                        className={(this.state.username === '' || this.state.password === '') ? 'button submit-button' : 'button is-danger submit-button'} onClick={this.login}
                         disabled={this.state.username === '' || this.state.password === ''}>Submit</button>
                 </div>
             </div>
@@ -83,4 +77,19 @@ class Login extends Component {
     }
 }
 
-export default Login;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        isLoggedIn: state.session.isLoggedIn,
+        session: state.session,
+        error: state.error,
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLogin: (userData, cb) => { dispatch(login(userData, cb)); },
+    }
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -100,12 +100,20 @@ app.post('/api/deleteBudget', function (req, res) {
 });
 
 app.post('/api/login', (req, res) => {
+    console.log(req.body);
     let username = req.body.username;
     let password = req.body.password;
     let user;
     con.query("SELECT * FROM accounts where username = '" + username + "' AND password = '" + password + "';", function (err, data) {
-        console.log(data.length > 0);
-        (err) ? res.send(err) : res.json(user);
+        user = data;
+        if(err) {
+            res.send(err);
+        } else if(Object.entries(user).length > 0 ) {
+            user.ok = true;
+            res.json(user)
+        } else {
+            res.sendStatus(401);
+        }
     })
 });
 

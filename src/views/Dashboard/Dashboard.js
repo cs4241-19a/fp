@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import BarGraph from '../Graph/Graph';
 import Field from '../../components/Field.js';
 import Table from './Table.js';
@@ -23,7 +24,8 @@ class Dashboard extends Component {
     }
 
     render() {
-        return(
+        console.log(this.props.session);
+        return (
             <div>
                 <br/>
                 <BarGraph></BarGraph>
@@ -34,4 +36,13 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard
+const mapStateToProps = (state, ownProps) => {
+    return {
+        route: state.session
+    };
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+    }
+}
+export default connect(mapDispatchToProps, mapStateToProps)(Dashboard);
