@@ -45,19 +45,6 @@ let allWords = [
   "ball"
 ];
 
-<<<<<<< HEAD
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Codenames</h1>
-        <Modals />
-      </header>
-      <Menu />
-      <Game />
-    </div>
-  );
-=======
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -88,7 +75,6 @@ class App extends React.Component {
         </div>
     );
   }
->>>>>>> 0bc42ec1c42c5ae6f24bb768e046dfa8635cd8ee
 }
 
 
