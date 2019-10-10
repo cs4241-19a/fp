@@ -1,14 +1,18 @@
-.card-z-1 {
+.card-z-0 {
+    transition: all .9s ease;
+
     z-index: 1;
-    height: 70vh;
+    height: 50vh;
     position: absolute;
     top: 0;
     left: 0;
 
-    opacity: .2;
+    opacity: 0;
 }
 
-.card-z-2 {
+.card-z-1 {
+    transition: all .5s ease;
+
     z-index: 2;
     height: 75vh;
     position: absolute;
@@ -18,7 +22,9 @@
     opacity: .3;
 }
 
-.card-z-3 {
+.card-z-2 {
+    transition: all .5s ease;
+
     z-index: 3;
     height: 85vh;
     position: absolute;
@@ -28,7 +34,9 @@
     opacity: .6;
 }
 
-.card-z-4 {
+.card-z-3 {
+    transition: all .5s ease;
+
     z-index: 4;
     height: 100vh;
     position: absolute;

@@ -15,7 +15,9 @@
     "express-session": "^1.16.2",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "pwd": "^1.1.0"
+    "pwd": "^1.1.0",
+    "sequelize": "^5.19.5",
+    "sqlite3": "^4.1.0"
   },
   "engines": {
     "node": "8.x"

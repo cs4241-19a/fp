@@ -52,6 +52,14 @@ Task.init({
       primaryKey: true,
       autoIncrement: true,
     },
+    userId: {
+    	type: Sequelize.INTEGER,
+    	references: {
+    		model: User,
+    		key: 'id',
+    		deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
+    	},
+    },
     title: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -83,7 +91,7 @@ Task.init({
 },{sequelize: sequelize, modelName: 'task'});
 
 //startDB function
-export function startDB(){
+function startDB(){
     return sequelize.authenticate()
         .then(() => {
             Task.belongsTo(User);
@@ -97,21 +105,23 @@ export function startDB(){
 //-----------
 
 //getUser
-export function getUser(username){
+function getUser(username){
     return User.findOne({
         where: {username: username}
     });
 }
 
 //getUserTasks
-export function getUserTasks(username){
-    return User.getTasks({
-        where: {username: username}
-    });
+function getUserTasks(username){
+	return getUser(username).then((user) => {
+		Task.findAll({
+		    where: {userId: user.id}
+		});
+    })
 }
 
 //createUser
-export function createUser(username, salt, hash){
+function createUser(username, salt, hash){
     User.create({
         username: username,
         salt: salt,
@@ -120,15 +130,17 @@ export function createUser(username, salt, hash){
 }
 
 //createTask
-export function createTask(object){
+function createTask(object){
     Task.create(object);
 }
 
 //updateTask
-export function updateTask(taskId, object){
+function updateTask(taskId, object){
     Task.findOne({
         where: {id: taskId}
     }).then(result => {
         result.update(object)
     });
 }
+
+module.exports = {startDB, getUser, getUserTasks, createUser, createTask, updateTask}

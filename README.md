@@ -1,51 +1,48 @@
-# cs4241-FinalProject
+# cs4241-FinalProject: qMe 
+### by Terry Hearst, Demi Karavoussianis, Kyle Reese, and Tom White
+Welcome to qMe! qMe is a priority queue application to assist in personal scheduling and time management. Any user can create an account with qMe. With an account created, users can enter tasks that they need to complete, along with the deadline. Depending on when the task is due, and what priority the task is ranked, qMe display the tasks in order of when the user should complete the task. Additional customization of tasks is offered, like the ability to say you need more time, or to push a task off until later, all with one click. Once a task is completed, it can be checked off as the user continues to their next task.
 
-For your final project, you'll implement a course project that exhibits your mastery of the course materials. 
-Similar to A4, this project gives you an opportunity to be creative and to pursue individual research and learning.
+## Additional Instructions
+- Log in or create an account, our data is persistant!
+- Click to create a new task, fill in all the necessary blanks and submit
+- try to mark an item as done, or delete it from your queue.
+- click the "Do Later" button on an existing task to move it further back in your stack
+- Click the "More Time" Button to move a task higher on the priority list.
 
-## General description
+## Technologies Used
+- For our front end, we used React, Bootstrap, and React-Bootstrap. These were all used in conjuction to create the cards and thier behaviors. 
+- Using react, we were able to create the layered stacking card effect that you can see by creating more than one task. This effect deploys transitions (click "done" on a task when there is more than one queued, it's beautiful), as well as z-indexing for the stacking. It also uses variable vertical height to give the illusion of the splayed cards
+- We used of react-bootstrap to create the ability for the user to create a new card. This option let us explore various react-bootstrap props, like cards themselves, but also Forms, radio buttions, and text. Formatting the form within the card was tricky.
+- We went beyond the standard bootstrap css, and overrided it with custom scss. The colors were carefully selected looking at pastel palattes from https://visme.co/blog/pastel-colors/
+- In addition, we worked heavily with the interaction between props at different components of our code. This involved working with the different binding methods beyond just default binding.
+- To store our data persistantly, we used SQLite. The database stores the users, as well as the the tasks and associated data.
+- Our passwords are salted and Hashed to ensure security. 
+- Our code is overall consistant with HTML standards, in the respect that we deployed correct error codes on all GET and POST responses.
+- The front end and back end are in different modules, so they have different packages, builds, and dependencies, which allowed the front end and back end developers to work seperately, but easily merge code when necessary.
 
-Your project should consist of a complete Web application, exhibiting facets of the three main sections of the course material:
 
-- Static Web page content and design. You should have a project that is accessible, easily navigable, and features significant content.
-- Dynamic behavior implemented with JavaScript.
-- Server-side programming *using Node.js*. Typically this will take the form of some sort of persistent data, authentication, and possibly server-side computation.
+## Challenges Faced
+All group members decided to challenge themselves, and work on a portion of the project with which they had little to no experience, while helping other teammates in areas they were more familiar. Besides that, one of our biggest challenges was coordinating code structure and architecture and trying to remain consistant to avoid messy Git merging.
+  - Terry, who worked on the back end implemented salting and hashing for the login. 
+  - Demi worked with React, Bootstrap, and React-Bootstrap, specifically in designing the cards and the card-input menu. The biggest challenge was finding solid documentation, specifically with React-Bootstrap. Usually there was only the offical React-Bootstrap documentation and not too many third parties sites discussing React-Bootstrap.  In addition, getting the SCSS to work successfully took some time and debugging, which was difficult because the code in question was not Javascript, but CSS.
+  - Kyle worked with an ORM for databases. He had not used an SQL based language before, so learning that quickly, and implementing a database was a challenge.
+  - Tom worked with React and React-Bootstrap. He had challenges creating the proper z-indexing and queue structure to create the splayed card effect. In addition, he worked on getting the necessary information to each code layer through the use of props, which required more research (and some frustration) with bindings. Tom also set up the seperate front-end and back-end development structure to allow us to work independently as a team.
 
-Additionally, you should incorporate features that you independently research, design, and implement for your project.
+## Group Contributions
+### Terry Hearst
+- Set Up back-end server
+- Developed all endpoints
+- Created salted and hashed passcodes for logging in
+- Wrote algorithm to prioritize cards
+### Demi Karavoussianis
+- Created Task cards using React, Bootstrap, and React-Bootstrap. This included both the card to create an new task, as well as the cards in the splayed view.
+- Created log-in screen with validation to ensure the appropriate fields were filled out before submitting
+- Created custom Bootstrap SCSS using a pastel pallete (cited above)
+### Kyle Reese
+- Created databases holding information about users and their associated tasks
+- Created functions for retrieving data from databases
+### Tom White
+- Worked with React, Bootstrap, and React-Bootstrap to create the interaction between cards. He created the layering effect, and the translations when a card is moved
+- Handled edge case of no cards in deck
+- Translated API calls to retrieve information from card class to application layer
 
-## Project ideation
-
-Excellent projects serve someone/some group; for this assignment you need to define your users and stakeholders. I encourage you to identify projects that will have impact, either artistically, politically, or in terms of productivity. Consider creating something useful for a cause or hobby you care about.
-
-## Logistics
-
-### Team size
-Students are encouraged to work in teams of 2-5 students for the project. This will allow you to build a good project without expending an excessive amount of effort. While I would expect a team of four or five students to produce a project with more features, I expect a every team's work to exhibit all of the required facets described above.
-
-### Deliverables
-
-__Proposal:__ 
-Provide an outline of your project direction and the names of the team members. 
-The outline should have enough detail so that staff can determine if it meets the minimum expectations, or if it goes too far to be reasonable by the deadline.
-This file must be named proposal.md so we can find it.
-Submit a PR to turn it in by Monday, September 30th, before class
-
-There are no other scheduled checkpoints for your project. 
-You must be done in time to present before the final project demo day (October 10th). 
-
-#### Turning in Your Outline / Project
-
-**NOTE: code is due before the project presentation day due to the end of term / grading schedule constraints**
-Submit a second PR on the final project repo to turn in your app and code.
-
-Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service.
-Folks on the same team do not need to post the same webpage, but must instead clearly state who is on the team in their proposal.
-(Staff will use the proposal to build the grading sheet.)
-
-## Final Presentation
-
-Presentations will occur during the final day of class.
-
-## FAQs
-
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use node.js.
