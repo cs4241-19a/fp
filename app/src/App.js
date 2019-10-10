@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
+import shortid from "shortid";
 import "./App.css";
 
 import socketIOClient from "socket.io-client";
@@ -54,8 +55,11 @@ class App extends React.Component {
       selectedRole: ""
     };
 
+    console.log("App");
     socket.on("closeModal", this.closeModal.bind(this));
   }
+
+  componentDidMount() {}
 
   closeModal() {
     this.setState({ modalOpen: false });
@@ -162,15 +166,10 @@ class Card extends React.Component {
   constructor(props) {
     super(props);
     this.changeStyle = this.changeStyle.bind(this);
-    let cardColor = "tan";
-    if (this.props.team === "teamA") {
-      cardColor = "red";
-    } else if (this.props.team === "teamB") {
-      cardColor = "blue";
-    } else if (this.props.team === "assassin") {
-      cardColor = "black";
-    }
-    this.state = { color: null, cardColor: cardColor, cardBorder: cardColor };
+    this.state = {
+      word: this.props.word,
+      borderColor: this.props.border
+    };
   }
 
   changeStyle(color) {
@@ -182,20 +181,20 @@ class Card extends React.Component {
   render() {
     return (
       <button
+        key={shortid.generate()}
         className="button card"
         style={{
-          backgroundColor: this.state.color,
+          backgroundColor: this.props.revealedColor,
           borderStyle: SSL_OP_SINGLE_DH_USE,
-          borderColor: this.state.cardColor
+          borderColor: this.state.borderColor
         }}
-        onClick={() => clickGuessButton(this)}
+        onClick={() => socket.emit("guessed", this.props.value)}
       >
         {this.props.value}
       </button>
     );
   }
 }
-
 
 class Chat extends React.Component {
   constructor(props) {
@@ -263,53 +262,39 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      words: this.props.words,
-      teams: this.props.teams
+      cards: this.props.cards
     };
+    socket.on("updateBoardState", bs => {
+      console.log("Received update board state");
+      console.log(bs);
+      this.setState({ cards: bs });
+    });
   }
 
-  renderCard(i) {
-    return <Card value={this.state.words[i]} team={this.state.teams[i]} />;
+  renderCard(card) {
+    return (
+      <Card
+        key={shortid.generate()}
+        value={card.word}
+        border={card.borderColor}
+        revealedColor={card.revealedColor}
+      />
+    );
   }
 
   render() {
     return (
-      <div className="board">
-        <div className="board-row">
-          {this.renderCard(0)}
-          {this.renderCard(1)}
-          {this.renderCard(2)}
-          {this.renderCard(3)}
-          {this.renderCard(4)}
-        </div>
-        <div className="board-row">
-          {this.renderCard(5)}
-          {this.renderCard(6)}
-          {this.renderCard(7)}
-          {this.renderCard(8)}
-          {this.renderCard(9)}
-        </div>
-        <div className="board-row">
-          {this.renderCard(10)}
-          {this.renderCard(11)}
-          {this.renderCard(12)}
-          {this.renderCard(13)}
-          {this.renderCard(14)}
-        </div>
-        <div className="board-row">
-          {this.renderCard(15)}
-          {this.renderCard(16)}
-          {this.renderCard(17)}
-          {this.renderCard(18)}
-          {this.renderCard(19)}
-        </div>
-        <div className="board-row">
-          {this.renderCard(20)}
-          {this.renderCard(21)}
-          {this.renderCard(22)}
-          {this.renderCard(23)}
-          {this.renderCard(24)}
-        </div>
+      <div key={shortid.generate()} className="board">
+        {[0, 1, 2, 3, 4].map(n => {
+          return (
+            <div key={shortid.generate()} className="board-row">
+              {" "}
+              {[0, 1, 2, 3, 4].map(m => {
+                return this.renderCard(this.state.cards[n * 5 + m]);
+              })}
+            </div>
+          );
+        })}
       </div>
     );
   }
@@ -319,13 +304,8 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     let firstteam = Math.floor(Math.random() * 2);
-    let ingame = setBoard(firstteam);
-    let ingameCards = ingame[0];
-    let ingameTeams = ingame[1];
-
     this.state = {
-      boardWords: ingameCards,
-      boardTeams: ingameTeams,
+      cards: setBoard(firstteam),
       firstteam: firstteam
     };
   }
@@ -340,7 +320,7 @@ class Game extends React.Component {
     }
     return (
       <div className="game">
-        <Board words={this.state.boardWords} teams={this.state.boardTeams} />
+        <Board cards={this.state.cards} />
         <Chat role={this.props.selectedRole} team={status} wordsLeft={9} />
         <br />
         <br />
@@ -513,81 +493,67 @@ function closeMenu(play) {
 
 //takes full list of words and picks 25 unique for a game
 function setBoard(order) {
-  let boardWords = Array(25).fill(null);
-  let boardTeams = Array(25).fill(null);
+  let cards = [];
 
   //for setting board words
   for (let i = 0; i < 25; i++) {
+    cards[i] = { revealedColor: "whitesmoke" };
     let useCheck = false;
     let counter = Math.floor(Math.random() * allWords.length);
-    for (let j = 0; j < boardWords.length; j++) {
-      if (boardWords[j] === allWords[counter]) {
+    for (let j = 0; j < cards.length; j++) {
+      if (cards[j].word === allWords[counter]) {
         useCheck = true;
       }
     }
-    if (useCheck === false) {
-      boardWords[i] = allWords[counter];
+    if (!useCheck) {
+      cards[i].word = allWords[counter];
     } else {
       i--;
     }
   }
-
   //for words to teams
-  setTeam("teamA", order);
-  setTeam("teamB", order);
-  setTeam("assassin", order);
-  setTeam("citizen", order);
+  setTeam("red", order);
+
+  setTeam("blue", order);
+
+  setTeam("black", order);
+
+  setTeam("tan", order);
 
   function setTeam(type, order) {
     let amount = 7;
-    if (type === "assassin") {
+    if (type === "black") {
       amount = 1;
     }
-    if (
-      (order === 0 && type === "teamA") ||
-      (order === 1 && type === "teamB")
-    ) {
+    if ((order === 0 && type === "red") || (order === 1 && type === "blue")) {
       amount += 2;
     } else if (
-      (order === 1 && type === "teamA") ||
-      (order === 0 && type === "teamB")
+      (order === 1 && type === "red") ||
+      (order === 0 && type === "blue")
     ) {
       amount++;
     }
+
     for (let j = 0; j < amount; j++) {
       let counter = Math.floor(Math.random() * 25);
-      if (boardTeams[counter] == null) {
-        boardTeams[counter] = type;
+      if (cards[counter].borderColor == null) {
+        cards[counter].borderColor = type;
       } else {
         j--;
       }
     }
   }
-  console.log(boardTeams);
-  return [boardWords, boardTeams];
+  socket.emit("setInitState", cards, getBrowserData());
+  return cards;
 }
 
 //send out message to set initial state if it hasnt already
 window.onload = function() {
   console.log("the sessionstorage: ", sessionStorage.getItem("userInfo"));
-  socket.emit("setInitState", getBoardState(), getBrowserData());
-
-  //for disabling events
-  //document.getElementsByClassName("modal-body-menu")[0].classList.add('disabled-events');
 };
 
 function getBrowserData() {
-  return { user: sessionStorage.getItem("userInfo")  || 'USER' + Math.random()};
-}
-
-
-function clickGuessButton(btn) {
-  btn.changeStyle(btn.props.team);
-  setTimeout(function() {
-    let state = getBoardState();
-    console.log("button clicked");
-    socket.emit("button selected", state);
-  }, 1);
+  return { user: sessionStorage.getItem("userInfo") || "USER" + Math.random() };
 }
 
 function getBoardState() {
@@ -595,33 +561,19 @@ function getBoardState() {
   let collectedCards = document.getElementsByClassName("card");
   const NUM_CARDS_ROW = 5;
   for (let i = 0; i < NUM_CARDS_ROW; i++) {
-    cards[i] = [];
     for (let j = 0; j < NUM_CARDS_ROW; j++) {
       let selCard = collectedCards[i * NUM_CARDS_ROW + j];
-      cards[i][j] = {
-        word: selCard.innerHTML,
-        color: selCard.style.backgroundColor
-      };
+      if (selCard) {
+        cards[i * NUM_CARDS_ROW + j] = {
+          word: selCard.innerHTML,
+          revealedColor: selCard.style.backgroundColor,
+          borderColor: selCard.style.borderColor
+        };
+      }
     }
   }
   return cards;
 }
-
-socket.on("updateBoardstate", function(bs) {
-  if (bs.length < 1) {
-    return;
-  }
-  let rows = document.getElementsByClassName("board-row");
-  for (let i = 0; i < rows.length; i++) {
-    let cardsInRow = rows[i].getElementsByClassName("card");
-    for (let j = 0; j < cardsInRow.length; j++) {
-      let button = cardsInRow[j];
-      button.innerHTML = bs[i][j].word;
-      button.style.backgroundColor = bs[i][j].color;
-    }
-  }
-  //socket.emit('send hint', 'sent!');
-});
 
 socket.on("update hints", function(msg) {
   let final_message = document.createElement("p");
@@ -653,35 +605,37 @@ socket.on("updateRoleState", function(rs) {
   }
 });
 
-socket.on("resetRoles", ()=>{
-    var redspy = document.getElementById("rspymaster");
-    var reddet = document.getElementById("rdetective");
-    var bluespy = document.getElementById("bspymaster");
-    var bluedet = document.getElementById("bdetective");
+socket.on("resetRoles", () => {
+  var redspy = document.getElementById("rspymaster");
+  var reddet = document.getElementById("rdetective");
+  var bluespy = document.getElementById("bspymaster");
+  var bluedet = document.getElementById("bdetective");
 
-    redspy.style.backgroundColor = "#ff6666";
-    redspy.style.borderColor = "black";
-    redspy.disabled = false;
-    bluespy.style.backgroundColor = "#4d79ff";
-    bluespy.style.borderColor = "black";
-    bluespy.disabled = false;
-    reddet.style.backgroundColor = "#ff6666";
-    reddet.style.borderColor = "black";
-    reddet.disabled = false;
-    bluedet.style.backgroundColor = "#4d79ff";
-    bluedet.style.borderColor = "black";
-    bluedet.disabled = false;
+  redspy.style.backgroundColor = "#ff6666";
+  redspy.style.borderColor = "black";
+  redspy.disabled = false;
+  bluespy.style.backgroundColor = "#4d79ff";
+  bluespy.style.borderColor = "black";
+  bluespy.disabled = false;
+  reddet.style.backgroundColor = "#ff6666";
+  reddet.style.borderColor = "black";
+  reddet.disabled = false;
+  bluedet.style.backgroundColor = "#4d79ff";
+  bluedet.style.borderColor = "black";
+  bluedet.disabled = false;
 
-    document.getElementById("menuName").disabled = false;
+  document.getElementById("menuName").disabled = false;
 
-    allReady = false;
+  allReady = false;
 });
-socket.on("lockup", (playerName)=>{
+socket.on("lockup", playerName => {
   //banner to other player name
-  document.getElementsByClassName("game")[0].classList.add('disabled-events');
+  document.getElementsByClassName("game")[0].classList.add("disabled-events");
 });
-socket.on("your turn", (lastTurnData)=>{
+socket.on("your turn", lastTurnData => {
   //banner for yourself
-  document.getElementsByClassName("game")[0].classList.remove('disabled-events');
+  document
+    .getElementsByClassName("game")[0]
+    .classList.remove("disabled-events");
 });
 export default App;

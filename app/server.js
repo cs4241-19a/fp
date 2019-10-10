@@ -60,12 +60,27 @@ function updateAll() {
   sendClueUpdate();
 }
 
-function sendRoleState(){
-    io.sockets.emit("updateRoleState", roleState);
+function sendRoleState() {
+  io.sockets.emit("updateRoleState", roleState);
 }
 
 function sendBoardUpdate() {
-  io.sockets.emit("updateBoardstate", boardState);
+  let detectivelist = boardState.map(card => {
+    return {
+      word: card.word,
+      borderColor: card.revealedColor,
+      revealedColor: card.revealedColor
+    };
+  });
+  clientList.forEach(c => {
+    console.log(c);
+    if (c.role.endsWith("spymaster")) {
+      io.to(c.connection).emit("updateBoardState", boardState);
+    } else {
+      io.to(c.connection).emit("updateBoardState", detectivelist);
+    }
+  });
+  console.log(boardState);
 }
 function sendClueUpdate() {
   //io.sockets.emit("updateCluestate", clueLog);
@@ -88,23 +103,28 @@ io.on("connection", function(socket) {
     //io.sockets.to(getSocketFromClient(socket.handshake.session.userdata)).emit("specMsg", 'only for ' + socket.handshake.session.userdata);
   });
 
-    socket.on("setInitState", function(state, browserCache){
-        console.log('session for: ', browserCache, 'socket', socket.id);
-        let user = browserCache.user;
-        let found = false;
-        clientList.forEach(function (element) {
-            if (element.name && element.name === user) {
-                console.log("updating " + user + " connection from ", element.connection, 'to', socket.id);
-                element.connection = socket.id;
-                //io.sockets.emit("displayUser", user);
-                found = true;
-            }
-        });
-        if(!found){
-            console.log('adding client', user, 'with socket', socket.id);
-            clientList.push({name: user, connection: socket.id, role: 'none'})
-            //io.sockets.emit("displayUser", "New User");
-        }
+  socket.on("setInitState", function(state, browserCache) {
+    console.log("session for: ", browserCache, "socket", socket.id);
+    let user = browserCache.user;
+    let found = false;
+    clientList.forEach(function(element) {
+      if (element.name && element.name === user) {
+        console.log(
+          "updating " + user + " connection from ",
+          element.connection,
+          "to",
+          socket.id
+        );
+        element.connection = socket.id;
+        //io.sockets.emit("displayUser", user);
+        found = true;
+      }
+    });
+    if (!found) {
+      console.log("adding client", user, "with socket", socket.id);
+      clientList.push({ name: user, connection: socket.id, role: "none" });
+      //io.sockets.emit("displayUser", "New User");
+    }
 
     //The first user that connects sets the base cards
     if (boardState.length < 1) {
@@ -112,7 +132,6 @@ io.on("connection", function(socket) {
       boardState = state;
     } else {
       sendRoleState();
-      updateAll();
       console.log("state already is ", boardState);
     }
   });
@@ -145,13 +164,25 @@ io.on("connection", function(socket) {
     socket.broadcast.emit("update hints", full_msg, msg);
   });
 
+<<<<<<< HEAD
   socket.on("roleSelection", function(role, name) {
     console.log('JUST SELECTED ROLE', role);
 
     setRoleAndName(socket.id, role, name);
+=======
+  socket.on("guessed", word => {
+    boardState.forEach(card => {
+      if (card.word === word) {
+        card.revealedColor = card.borderColor;
+      }
+    });
+    sendBoardUpdate();
+  });
+
+  socket.on("roleSelection", function(role) {
+    setRole(socket.id, role);
+>>>>>>> Show correct card colors for spymasters and detectives
     greyRole(role);
-    console.log(clientList);
-    console.log(roleState);
   });
 
   socket.on("allSelected", function() {
@@ -160,11 +191,11 @@ io.on("connection", function(socket) {
       roleState["rdetective"] &&
       roleState["bspymaster"] &&
       roleState["rspymaster"];
-    console.log(allSel, "ROLES", roleState);
     io.sockets.emit("allSelectedStatus", allSel);
   });
 
   socket.on("startGame", function() {
+    sendBoardUpdate();
     socket.broadcast.emit("closeModal");
     //logic to start the game
   });
@@ -199,10 +230,16 @@ io.on("connection", function(socket) {
 });
 
 function greyRole(role) {
+  console.log("Sending greyRole");
   io.sockets.emit("greyRole", role);
 }
 
+<<<<<<< HEAD
 function setRoleAndName(socketID, role, name) {
+=======
+function setRole(socketID, role) {
+  console.log(`setRole(${socketID}, ${role})`);
+>>>>>>> Show correct card colors for spymasters and detectives
   clientList.forEach(function(cl) {
     if (cl.connection === socketID) {
       cl.role = role;
