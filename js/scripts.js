@@ -21,3 +21,46 @@ const login = function(e) {
       document.getElementById("current-username").value = loginInfo.username;
     });
 };
+
+
+function doLogin(){
+  let uName = document.getElementById("uName").value
+  let pass = document.getElementById("pass").value
+  let body = {username: uName, password: pass}
+  body = JSON.stringify(body)
+  fetch('/login', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body
+  })
+  .then(function(res){
+    if(res.status === 200){
+      window.location = res.url
+    }
+    else{
+      window.alert("Incorrect Username or Password!\nTry again!")
+    }
+  })
+}
+
+function addUser(){
+  let body = {
+    username: document.getElementById('uName').value,
+    password: document.getElementById('pass').value
+  }
+  let json = JSON.stringify(body)
+  fetch('/addUser', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: json
+  })
+  .then(function(res){
+    console.log(res)
+    if(res.status === 200){
+      window.alert("Successfully added to database")
+    }
+    else{
+      window.alert("Data already exists!\nNot added to database!")
+    }
+  })
+}
