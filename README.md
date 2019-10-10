@@ -23,18 +23,22 @@ Our team consists of four members: Manasi Danke, Carla Duarte, Amanda Ezeobiejes
 
 
 Username: ciduarte@wpi.edu
+
 Password: 1234
 
-<br>
+<br><br>
 Username: mmdanke@wpi.edu
+
 Password: 1234
 
-<br>
+<br><br>
 Username: ylin7@wpi.edu
+
 Password: 1234
 
-<br>
+<br><br>
 Username: aezeobiejesi@wpi.edu
+
 Password: 1234
 
 8) If you have any additional questions, please do not hesitate to reach out to us.
@@ -149,7 +153,7 @@ Made a week-by-week scrolling system that allows the user to book rooms based on
 
 <b>Different Table Layout:</b> 
 Set up the room availability table in a different way (room vs. hours) so it becomes easier to check the most recent available rooms since people are more concerned with the first day they can book any room rather than the actual room
-Potentially have a dropdown menu so it is easier to switch days
+- Potentially have a dropdown menu so it is easier to switch days
 
 <b>Room Sizes:</b> 
 We would implement different room sizes so that a user can choose if they want to book a room that holds 4 people, 6 people, or 8 people.
@@ -159,7 +163,4 @@ We would change the sending emails functionality so that when an email is sent t
 
 <b>Past Meetings:</b> 
 For the Meetings page, we would have made it possible for a user to see their past meetings as if stored in their own personal calendar. Possibly a dropdown where the user could select a particular day and that day’s, meetings would show up. 
-
-
-
 
