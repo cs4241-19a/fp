@@ -32,7 +32,7 @@ Welcome to qMe! qMe is a priority queue application to assist in personal schedu
       headers: {
           "Content-Type": "application/json"
       }
-    }).then(console.log)```
+    }).then(console.log)
 
 - Click to create a new task, fill in all the necessary blanks and submit
 - try to mark an item as done, or delete it from your queue.
