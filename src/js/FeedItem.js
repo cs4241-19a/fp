@@ -24,7 +24,7 @@ export default function FeedItem(props) {
         const jsonAudioInit = audioInit(canvas)
         const jsonAudioGraph = audioGraph(canvas, jsonAudioInit)
 
-        jsonAudioInit.audioElement.src = 'mello.mp3'
+        jsonAudioInit.audioElement.src = 'music/shelter.mp3'
         jsonAudioInit.audioElement.controls = true;
         jsonAudioInit.audioElement.play()
 
