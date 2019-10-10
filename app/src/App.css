@@ -7,6 +7,10 @@ body {
   height: 100vh;
 }
 
+button:hover{
+    cursor: pointer;
+}
+
 #root {
   height: 100%;
 }
@@ -261,6 +265,16 @@ input {
   width: 40%;
   text-align: center;
   padding: 0.5%;
+}
+
+#yourTeam{
+    margin-bottom: 35px;
+    text-align: center;
+    padding: 5px;
+}
+
+.good-to-go{
+    background-color: limegreen;
 }
 
 .disabled-events{

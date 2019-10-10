@@ -73,7 +73,10 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1>Codenames</h1>
+          <div>
+            <h1>Codenames</h1>
+            <div id ="yourTeam"></div>
+          </div>
           <Modals />
         </header>
         {this.state.modalOpen && (
@@ -447,16 +450,25 @@ function makeGray(btn, selected) {
   bluedet.disabled = true;
 
   let b = document.getElementById(btn);
+  let teamColor = b.style.backgroundColor;
+  let roleName = b.innerHTML.split("Team")[1];
   b.style.backgroundColor = "gray";
   b.style.borderColor = "gold";
   selected.state.selectedRole = btn;
   selected.selectRole(btn);
+
 
   let nameInput = document.getElementById("menuName");
   let name = nameInput.value || selected.state.selectedRole;
   nameInput.disabled = true;
   sessionStorage.setItem("userInfo", name);
   socket.emit("roleSelection", selected.state.selectedRole, name);
+
+
+  let whoYouAre = document.getElementById("yourTeam");
+  console.log(teamColor);
+  whoYouAre.style.backgroundColor = teamColor;
+  whoYouAre.innerHTML = name + " (<i>" + roleName + "</i> )";
 }
 
 function resetMenu(play) {
@@ -593,6 +605,7 @@ socket.on("greyRole", function(role) {
 socket.on("allSelectedStatus", function(status) {
   if (status) {
     allReady = true;
+    document.getElementById("playBtn").classList.add('good-to-go');
   }
 });
 
@@ -625,14 +638,17 @@ socket.on("resetRoles", () => {
   bluedet.style.backgroundColor = "#4d79ff";
   bluedet.style.borderColor = "black";
   bluedet.disabled = false;
-
+  
   document.getElementById("menuName").disabled = false;
 
   allReady = false;
+  document.getElementById("playBtn").classList.remove('good-to-go');
 });
 socket.on("lockup", playerName => {
   //banner to other player name
-  document.getElementsByClassName("game")[0].classList.add("disabled-events");
+  document
+      .getElementsByClassName("game")[0]
+      .classList.add("disabled-events");
 });
 socket.on("your turn", lastTurnData => {
   //banner for yourself
