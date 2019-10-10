@@ -1,5 +1,5 @@
 {
-  "idCount": 25,
+  "idCount": 30,
   "users": [
     {
       "username": "jack",
@@ -30,6 +30,31 @@
       "username": "k",
       "password": "k",
       "id": 25
+    },
+    {
+      "username": "todd",
+      "password": "packer",
+      "id": 26
+    },
+    {
+      "username": "puddlejamper",
+      "password": "loserville",
+      "id": 27
+    },
+    {
+      "username": "puddlejamper1",
+      "password": "hellll",
+      "id": 28
+    },
+    {
+      "username": "please",
+      "password": "loco",
+      "id": 29
+    },
+    {
+      "username": "sadly",
+      "password": "yours",
+      "id": 30
     }
   ]
 }

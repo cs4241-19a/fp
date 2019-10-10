@@ -9,17 +9,23 @@ router.post('/create', function (req, res, next) {
   if (app.database == undefined) {
     app.database = low(adapter);
   }
-
   var newUser = req.body;
-  var count = app.database.get("idCount").value();
-  newUser.id = count+1;
-  app.database.set('idCount', count+1)
-  .write();
-  app.database.get("users")
-  .push(newUser)
-  .write();
-
-  res.end()
+  var condition = 0;
+  console.log("help me")
+  if (app.database.get("users").find({"username":newUser.username}).value() != undefined) {
+    console.log("repeat user")
+    condition = 1;
+  }
+  else {
+    var count = app.database.get("idCount").value();
+    newUser.id = count+1;
+    app.database.set('idCount', count+1)
+    .write();
+    app.database.get("users")
+    .push(newUser)
+    .write();
+  }
+  res.json({"condition": condition})
   });
 
 module.exports = router;

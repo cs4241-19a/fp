@@ -2,8 +2,9 @@ extends layout
 
 block content
   script(type="module" src="/javascripts/createAccount.js")
+  p(id="message")
   a(href="login")
-   button(type="button") Login
+   button(id="loginButton" type="button") Login
   button(id="createFormButton") Create Account
   form(action="" id="createForm")
     div
