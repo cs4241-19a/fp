@@ -235,6 +235,7 @@ class Chat extends React.Component {
     return (
       <div className="chat">
         <div className="chat-container">
+          <div className="log">
           {this.state.log.map((hint, index) => {
             return (
               <div key={index} className="clue" style={{ color: hint.sender }}>
@@ -242,16 +243,17 @@ class Chat extends React.Component {
               </div>
             );
           })}
-          {this.props.role.endsWith("spymaster") && (
-            <div className={"hintSubmission"}>
-              <input
+          </div>
+          {this.props.role.endsWith("spymaster") &&
+          <div className={"hintSubmission"}>
+            <input
                 placeholder="Clue"
-                onChange={e => this.setState({ clue: e.target.value })}
+                onChange={e => this.setState({clue: e.target.value})}
                 id="msg"
-              />
-              <div className={"amountInput"}>{this.createAmounts()}</div>
-            </div>
-          )}
+            />
+            <div className={"amountInput"}>{this.createAmounts()}</div>
+          </div>
+          }
         </div>
       </div>
     );

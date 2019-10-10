@@ -164,12 +164,13 @@ io.on("connection", function(socket) {
     socket.broadcast.emit("update hints", full_msg, msg);
   });
 
-<<<<<<< HEAD
   socket.on("roleSelection", function(role, name) {
     console.log('JUST SELECTED ROLE', role);
 
     setRoleAndName(socket.id, role, name);
-=======
+
+    greyRole(role);
+  });
   socket.on("guessed", word => {
     boardState.forEach(card => {
       if (card.word === word) {
@@ -179,11 +180,6 @@ io.on("connection", function(socket) {
     sendBoardUpdate();
   });
 
-  socket.on("roleSelection", function(role) {
-    setRole(socket.id, role);
->>>>>>> Show correct card colors for spymasters and detectives
-    greyRole(role);
-  });
 
   socket.on("allSelected", function() {
     let allSel =
@@ -234,12 +230,7 @@ function greyRole(role) {
   io.sockets.emit("greyRole", role);
 }
 
-<<<<<<< HEAD
 function setRoleAndName(socketID, role, name) {
-=======
-function setRole(socketID, role) {
-  console.log(`setRole(${socketID}, ${role})`);
->>>>>>> Show correct card colors for spymasters and detectives
   clientList.forEach(function(cl) {
     if (cl.connection === socketID) {
       cl.role = role;
