@@ -5,23 +5,52 @@ import NewEvent from "./NewEvent";
 import Viewer from "./Viewer";
 import Selector from "./Selector";
 import Authentication from "./Authentication";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Container } from "react-bootstrap";
 
 // Please not that the contents here are just a placeholder and do not
 // represent what will be present in the actual website.
 
 const Home = () => (
-  <React.Fragment>
-    <h1>Home</h1>
-    <p>This is the home page.</p>
-  </React.Fragment>
+  <Container>
+    <Row>
+      <Col lg="12">
+        <h1 className="text-center">When3Meet</h1>
+        <h3 className="text-center">A slightly better When2Meet (maybe)</h3>
+        <br />
+        <p>
+          A new version of the scheduling service everyone at WPI loves to use,
+          updated with some new features and a new look.
+        </p>
+        <br />
+        <p>
+          The look and feel is heavily inspired by When2Meet, but updated to be
+          responsive so the mobile website looks better.
+        </p>
+        <h4>New Features</h4>
+        <ul>
+          <li>User accounts</li>
+          <li>Responsive design through bootstrap</li>
+          <li>Ability to disable users while viewing availability</li>
+        </ul>
+
+        <h4>Convinced?</h4>
+        <a class="btn btn-primary" href="/login" role="button">
+          Create Your Account
+        </a>
+      </Col>
+    </Row>
+  </Container>
 );
 
 const About = () => (
-  <React.Fragment>
-    <h1>About</h1>
-    <p>This is the about page.</p>
-  </React.Fragment>
+  <Container>
+    <Row>
+      <Col lg="12">
+        <h1>About</h1>
+        <p>This is the about page.</p>
+      </Col>
+    </Row>
+  </Container>
 );
 
 const NotFound = () => (

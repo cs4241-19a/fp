@@ -35,6 +35,8 @@ export const eventSchema = new mongoose.Schema({
     startTime: String,
     stopTime: String,
     availabilities: Object
+}, {
+    minimize: false
 });
 
 export const User = mongoose.model('W3MUsers', userSchema);

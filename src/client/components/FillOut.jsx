@@ -115,7 +115,6 @@ export default class FillOut extends React.Component {
       return (
         <Container>
           <h1 className="text-center">{eventTitle}</h1>
-          <p>Insert sharing buttons here ish</p>
           <Row>
             <Col lg="5">
               <Selector
