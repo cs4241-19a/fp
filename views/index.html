@@ -1,0 +1,76 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+
+<!-- You might want to try something fancier: -->
+<!-- html/nunjucks docs: https://mozilla.github.io/nunjucks/ -->
+<!-- pug: https://pugjs.org/ -->
+<!-- haml: http://haml.info/ -->
+<!-- hbs(handlebars): http://handlebarsjs.com/ -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Login Page</title>
+    <meta name="description" content="login page for both students and teachers" />
+    <link
+      id="favicon"
+      rel="icon"
+      href="https://glitch.com/edit/favicon-app.ico"
+      type="image/x-icon"
+    />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
+
+
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/css/index.css"/>
+    
+        
+    <!-- import the webpage's client-side javascript file -->
+    <script src="/client.js"></script>
+  </head>
+
+  <body>
+    <main>
+      <header>
+        <h1>Ask It! - Login </h1>
+      </header>
+      <form>
+        <div class="form-group">
+          <label for="inputUsername">Email</label>
+          <input type="text" class="form-control" id="username">
+        </div>
+        <div class="form-group">
+          <label for="passwordInput">Password</label>
+          <input type="password" class="form-control" id="password">
+        </div>
+        <pre id="state"></pre>   
+        <footer class="form-group">
+          <div class="footer-group">
+            <label class="switch">
+              <input type="checkbox" id="switch">
+              <span class="slider round"></span>
+            </label>
+            <label for="userClassification" id="roleText">Attendant</label>
+            <button id="login" type="submit" onclick="login()">Login</button> 
+          </div>
+          <div class="footer-group">
+            <label for="newUser" id="newUserLabel">New User?</label>
+            <button id="newUser" type="submit" onclick="register()">Register</button>
+          </div>
+        </footer>
+      </form>  
+    </main>
+
+<!--     <script src = "/login.js" type = "module" defer></script>
+    <script src = "/createAccount.js" type = "module" defer></script> -->
+    <script>
+      window.onload = function() {
+        document.querySelector("#login").onclick = login
+        document.querySelector("#switch").onclick = updateRoleText
+      }
+    </script>
+  </body>
+  
+</html>

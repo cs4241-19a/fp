@@ -1,0 +1,63 @@
+<!-- name, email, password, confirm password -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Login Page</title>
+    <meta name="description" content="login page for both students and teachers" />
+    <link
+      id="favicon"
+      rel="icon"
+      href="https://glitch.com/edit/favicon-app.ico"
+      type="image/x-icon"
+    />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
+
+
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/css/index.css"/>
+  </head>
+
+  <body>
+    <main>
+      <header>
+       <h1> User Registration </h1>
+      </header>
+      <form>
+        <div class="form-group">
+          <label for="inputUsername">Username</label>
+          <input type="text" class="form-control" id="username">
+        </div>
+        <div class="form-group">
+          <label for="inputUsername">Email</label>
+          <input type="email" class="form-control" id="email">
+        </div>
+        <div class="form-group">
+          <label for="passwordInput">Password</label>
+          <input type="password" class="form-control" id="password">
+        </div>
+        <div class="form-group">
+          <label for="confirmingPassword">Confirm Password</label>
+          <input type="password" class="form-control" id="confirmPassword">
+        </div>
+        <pre id="state"></pre>   
+        <footer class="form-group">
+          <div class="footer-group">
+            <button id="newUser" type="submit">Register</button>
+            <pre id="success"></pre>
+          </div>
+        </footer>
+      </form>  
+    </main>
+    <script src = "./registerAccount.js" defer></script>
+    
+    <script>
+      window.onload = function() {
+        document.querySelector("#newUser").onclick = registerAccount 
+      }
+    </script>
+  </body>
+  
+</html>
