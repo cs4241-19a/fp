@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker'
 import TimePicker from 'rc-time-picker';
 import moment from 'moment';
 import 'rc-time-picker/assets/index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-datepicker/dist/react-datepicker.css";
 
 class TaskCardEntry extends React.Component {
@@ -77,7 +77,7 @@ class TaskCardEntry extends React.Component {
 	render() {
 		return (
 			<div> 
-				<Card bg="info" text="white" style={{ width: '30rem' }}>
+				<Card bg="info" text="secondary" style={{ width: '30rem' }}>
 				   <Card.Header>
 						<Form>
 							<Form.Group controlId="taskTitle">
@@ -119,8 +119,8 @@ class TaskCardEntry extends React.Component {
 						</Form.Group>
 					</Form>
 					<ButtonToolbar>
-						<Button variant="outline-light" style={{ margin: '5px' }} type = "submit" onClick = {this.handleSubmit}> Add Task</Button>
-						<Button variant="outline-light" style={{ margin: '5px' }}onClick = {this.cancel}>Cancel</Button>
+						<Button variant="outline-secondary" style={{ margin: '5px' }} type = "submit" onClick = {this.handleSubmit}> Add Task</Button>
+						<Button variant="outline-secondary" style={{ margin: '5px' }}onClick = {this.cancel}>Cancel</Button>
 					</ButtonToolbar>
 				  </Card.Body>
 				</Card>

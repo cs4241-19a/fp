@@ -4,6 +4,8 @@ import TaskCard from './TaskCard';
 
 import './App.css';
 
+import './Login.scss'
+
 class App extends React.Component{
   constructor(props) {
     super(props);

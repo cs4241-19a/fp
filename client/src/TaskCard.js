@@ -1,14 +1,22 @@
 import React from 'react';
 import {Card} from 'react-bootstrap';
 import {Button, ButtonToolbar} from 'react-bootstrap';
+import {Modal} from 'react-bootstrap';
 import {Form, FormGroup, ControlLabel, FormControl, inputRef, row, col, Col, DatePicker} from 'react-bootstrap';
 //import './Login.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 class TaskCard extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.state = {
+			show: false,
+		};
+		
+
     }
 	// On click for task complete
 	handleDone = event => {
@@ -26,11 +34,18 @@ class TaskCard extends React.Component {
 		
 	}
 	
-	handleEdit = event => {
+/*	handleEdit = event => {
 		
 		
 	}
-	
+	*/
+	handleClose = () => {
+		this.setState({show: false});
+	}
+	handleEdit = () => {
+		this.setState({show: true});
+	}
+
 	
 	
 	// deletes the current task on click
@@ -60,7 +75,7 @@ class TaskCard extends React.Component {
 	render() {
 		return (
 			<div> 
-				<Card bg="warning" text="white" style={{ width: '30rem' }}>
+				<Card bg="Low" text="secondary" style={{ width: '30rem' }}>
 				   <Card.Header>
 						<Card.Title className = "text-center" controlId="title"> Task Title</Card.Title>
 						<Card.Text className = "text-right" controlId="dueDate"> Due: 10/12 </Card.Text>
@@ -81,6 +96,22 @@ class TaskCard extends React.Component {
 					</ButtonToolbar>
 				  </Card.Body>
 				</Card>
+				
+				 <Modal show={this.state.show} onHide={this.handleClose}>
+					<Modal.Header closeButton>
+						<Modal.Title>Modal heading</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+					<Modal.Footer>
+						<Button variant="secondary" onClick={this.handleClose}>
+							Close
+						</Button>
+						<Button variant="primary" onClick={this.handleClose}>
+							Save Changes
+						</Button>
+					</Modal.Footer>
+				  </Modal>
+				
 			</div>
 		);
 		
