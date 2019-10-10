@@ -30,8 +30,13 @@ router.get('/',function(req,res){
     if (app.database == undefined) {
         app.database = low(adapter);
     }
-
-    res.json(app.database.get("users").find({"username":app.user.username}).value());
+    res.json(app.database.get("users").find({"username":app.theUser.username}).value());
+})
+router.get('/highscore',function(req,res){
+    if (app.database == undefined) {
+        app.database = low(adapter);
+    }
+    res.json(app.database.get("users").find({"username":app.theUser.username}).get("highscore").value());
 })
 
 

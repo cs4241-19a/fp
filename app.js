@@ -10,7 +10,7 @@ var logger = require('morgan'),
     aNum = 5,
     database,
     leaderboard,
-    user;
+    theUser;
 
 var FileSync = require('lowdb/adapters/FileSync');
 var adapter = new FileSync('./data/userData.json');
@@ -68,7 +68,8 @@ app.use('/users/create', usersRouter);
 app.use('/game', gameRouter);
 app.use('/scores', scoresRouter);
 app.use('/leaderboard',leaderboardRouter);
-app.use('login/profile', loginRouter);
+app.use('/login/profile', loginRouter);
+app.use('/scores/highscore', scoresRouter);
 
 
 // catch 404 and forward to error handler

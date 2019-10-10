@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
     if (app.database == undefined) {
         app.database = low(adapter);
     }
+    /*
     var count = app.database.get('idCount').value()
     var users = app.database.get('users')
     var highscores = []
@@ -17,8 +18,8 @@ router.get('/', function(req, res, next) {
         highscores.push(current.get('highscore').value())
     }
     console.log(highscores)
-
-    res.json(highscores);
+    */
+    res.json(app.database.get('users'));
   });
 
 

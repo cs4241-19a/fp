@@ -35,6 +35,7 @@ exports.findByUsername = function(username, cb) {
 
   process.nextTick(function() {
     if (records.username === username) {
+      console.log("huhhhhhhhhh?")
       return cb(null, records);
     }
     else {

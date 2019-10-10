@@ -86,8 +86,14 @@ const submitLogin = function() {
     headers: {'Content-Type':'application/json'}
   })
   .then( function( response ) {
-    console.log( response )
-    window.location.href = "/login/profile"
+    //console.log( response )
+    //console.log(response.status)
+    if (response.status != 200) {
+      return false;
+    }
+    else {
+      //window.location.href = "/login/profile"
+    }
   }) 
 }
 
