@@ -410,7 +410,7 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase, scen
     }
 
     function getMoneyValue() {
-        return Math.round(healthPoints * moveSpeed * 3 * (1 + difInc));
+        return Math.round(healthPoints * moveSpeed * 4 * (1 + difInc));
     }
 
     return {sprite, move, damage, isAlive};
@@ -509,7 +509,7 @@ function Truck(events, scene) {
      * @returns {{damage: (function(number)), move: Function, sprite: *}}
      */
     function create(sprite, waveIndex) {
-        return Enemy(sprite, waveIndex, 0.03 + (0.002 * scene.waveIdx * (difInc + 1)), 65 + (20 * scene.waveIdx * (difInc + 1) * (scene.towers.length / 3)), events.onDeath, events.onBase, scene);
+        return Enemy(sprite, waveIndex, 0.025 + (0.002 * scene.waveIdx * (difInc + 1)), 55 + (25 * scene.waveIdx * (difInc + 1) * (scene.towers.length / 3)), events.onDeath, events.onBase, scene);
     }
 
     function Truck3b(scene) {
@@ -549,7 +549,7 @@ function SandBag() {
 }
 
 function MachineGun() {
-    const price = 180;
+    const price = 160;
     /**
      * Create the Tower at the coordinates.
      * @returns {{resetTargets: *, sprite: *, shoot: *}}
@@ -573,7 +573,7 @@ function MachineGun() {
 }
 
 function Cannon() {
-    const price = 300;
+    const price = 280;
     /**
      * Create the Tower at the coordinates.
      * @returns {{resetTargets: *, sprite: *, shoot: *}}
