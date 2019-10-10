@@ -15,6 +15,10 @@ const gamePlayState = new Phaser.Class({
         console.log(scene);
         scene.menuSelection = null;  // set to {type, add} when has a value of types cellTypes, function
 
+        this.score = 0;
+        this.money = 400;
+        this.lives = 10;
+
         // Create objects
         console.log("GamePlay");
         // const pistol = scene.add.image(250, 300, "pistol");
@@ -74,7 +78,20 @@ const gamePlayState = new Phaser.Class({
         this.waveIdx = 0;
         this.waveAmount = 3;
         this.spacingChoices = [60, 40, 30, 20, 15, 10, 5];
-        },
+
+        // ui text
+        this.waveText = scene.add.text(0, 0, `Wave: ${this.waveIdx}`, {fontSize: 22, color: "#000000", backgroundColor: "#ffffff"});
+        this.livesText = scene.add.text(0, 30, `Lives: ${this.lives}`, {fontSize: 22, color: "#000000", backgroundColor: "#ffffff"});
+        this.scoreText = scene.add.text(160, 0, `Score: ${this.score}`, {fontSize: 22, color: "#000000", backgroundColor: "#ffffff"});
+        this.moneyText = scene.add.text(160, 30, `Money: $${this.money}`, {fontSize: 22, color: "#000000", backgroundColor: "#ffffff"});
+
+        const uiContainer = scene.add.container((playArea.width - 9) * cellSize.width, (playArea.height - 1) * cellSize.height);
+        uiContainer.add(this.scoreText);
+        uiContainer.add(this.moneyText);
+        uiContainer.add(this.waveText);
+        uiContainer.add(this.livesText);
+
+    },
 
     update: function() {
         const scene = this;
@@ -89,6 +106,7 @@ const gamePlayState = new Phaser.Class({
                 scene.addTruck3b(i);
             }
         }
+        updateUiText(scene);
         updateCursor(scene);
         scene.enemies.forEach(enemy => {
             enemy.move();
@@ -130,6 +148,13 @@ function initFromGrid(scene) {
 
 
 // Update
+
+function updateUiText(scene) {
+    scene.waveText.setText(`Wave: ${scene.waveIdx}`);
+    scene.livesText.setText(`Lives: ${scene.lives}`);
+    scene.scoreText.setText(`Score: ${scene.score}`);
+    scene.moneyText.setText(`Money: $${scene.money}`);
+}
 
 
 function placeTower(scene, coord) {
@@ -311,6 +336,12 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase, scen
     }
 
     function die(scene) {
+        if (atBase) {
+            scene.lives -= 1;
+        } else {
+            scene.score += getScoreValue();
+            scene.money += getMoneyValue();
+        }
         let fadeTween = scene.tweens.add({
             targets: [sprite, healthBar, healthBarBg],
             alpha: { from: 1, to: 0 },
@@ -332,6 +363,14 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase, scen
     
     function isAlive() {
         return alive;
+    }
+
+    function getScoreValue() {
+        return 4;
+    }
+
+    function getMoneyValue() {
+        return Math.round(healthPoints * moveSpeed * 10 * (1 + difInc));
     }
 
     return {sprite, move, damage, isAlive};
