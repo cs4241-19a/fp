@@ -1,0 +1,30 @@
+<div class="container">
+    <h1>Open Tower Defence</h1>
+    <div id="game-area"></div>
+</div>
+
+{{#section "js"}}
+    <script src="/scripts/phaser/dist/phaser.js"></script>
+    <script src="/js/tower-defence/astar.js"></script>
+    <script src="/js/tower-defence/defs.js"></script>
+    <script src="/js/tower-defence/preload.js"></script>
+    <script src="/js/tower-defence/main-menu.js"></script>
+    <script src="/js/tower-defence/game-play.js"></script>
+    <script>
+        const config = {
+            type: Phaser.AUTO,
+            width: myGame.width,
+            height: myGame.height,
+            parent: "game-area",
+            backgroundColor: "#a3cca3",
+            scene: myGame.scenes
+        };
+        const game = new Phaser.Game(config);
+    </script>
+{{/section}}
+
+{{#> layouts/modal-layout type="gameScore" title="Submit Score" submitText="Submit" }}
+    {{#*inline "form-content"}}
+        {{> includes/game-submit-default }}
+    {{/inline}}
+{{/layouts/modal-layout}}
