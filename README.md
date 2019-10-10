@@ -34,4 +34,3 @@ This project was a very collaborative effort, as multiple members did multiple t
 - Creation of Socket Communication: Daniel, Tim.
 - Creation of Backend Node.js and Socket.io setup: Daniel.
 - Refactoring and State Manipulation (as well as hiding game elements from browser's DOM lookup): Tim.
-
