@@ -27,6 +27,7 @@ class Dashboard extends Component {
         console.log(this.props.session);
         return (
             <div>
+                <br/>
                 <BarGraph></BarGraph>
                 <Field getData={this.getData}></Field>
                 <Table data={this.state.budgets}></Table>
