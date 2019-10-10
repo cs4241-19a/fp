@@ -45,52 +45,32 @@ let allWords = [
   "ball"
 ];
 
-<<<<<<< HEAD
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Codenames</h1>
-        <Modals />
-      </header>
-      <Menu />
-      <Game />
-    </div>
-  );
-=======
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalOpen: true,
+      modalOpen: true
     };
 
     socket.on("closeModal", this.closeModal.bind(this));
   }
 
   closeModal() {
-    console.log("closeModal");
-    this.setState({modalOpen: false});
+    this.setState({ modalOpen: false });
   }
-
-
 
   render() {
     return (
-        <div className="App">
-          <header className="App-header">
-            <h1>Codenames</h1>
-          </header>
-          {this.state.modalOpen &&
-          <Menu/>
-          }
-          <Game/>
-        </div>
+      <div className="App">
+        <header className="App-header">
+          <h1>Codenames</h1>
+        </header>
+        {this.state.modalOpen && <Menu />}
+        <Game />
+      </div>
     );
   }
->>>>>>> 0bc42ec1c42c5ae6f24bb768e046dfa8635cd8ee
 }
-
 
 Modal.setAppElement("#root");
 
@@ -217,7 +197,6 @@ class Chat extends React.Component {
       clue: ""
     };
     socket.on("hintHistory", hints => {
-      console.log(hints);
       this.setState({ log: hints });
     });
   }
@@ -251,11 +230,7 @@ class Chat extends React.Component {
         <div className="chat-container">
           {this.state.log.map((hint, index) => {
             return (
-              <div
-                key={index}
-                className="clue"
-                style={{ color: hint.sender }}
-              >
+              <div key={index} className="clue" style={{ color: hint.sender }}>
                 {hint.clue} : {hint.amt}
               </div>
             );
@@ -522,7 +497,6 @@ function closeMenu(play) {
   var bluespy = document.getElementById("bspymaster");
   var bluedet = document.getElementById("bdetective");
   var username = u.value;
-  console.log(username);
   if (allReady) {
     play.closeModal();
     socket.emit("startGame");
@@ -581,7 +555,7 @@ function setBoard(order) {
       }
     }
   }
-
+  console.log(boardTeams);
   return [boardWords, boardTeams];
 }
 
@@ -591,7 +565,6 @@ window.onload = function() {
   localStorage.setItem("userInfo", "u::" + Math.random());
 
   socket.emit("setInitState", getBoardState(), getBrowserData());
-  console.log("initial state is: ", getBoardState());
 };
 
 function getBrowserData() {
@@ -602,7 +575,6 @@ function clickHint(hintbtn) {
   setTimeout(function() {
     let newHint = document.getElementById("msg").value;
     let state = getClueState(newHint);
-    console.log("hint clicked");
     socket.emit("clue sent", state);
   }, 1);
 }
@@ -611,7 +583,6 @@ function clickGuessButton(btn) {
   btn.changeStyle(btn.props.team);
   setTimeout(function() {
     let state = getBoardState();
-    console.log("button clicked");
     socket.emit("button selected", state);
   }, 1);
 }
@@ -630,7 +601,6 @@ function getBoardState() {
       };
     }
   }
-  console.log(cards);
   return cards;
 }
 
@@ -652,15 +622,12 @@ socket.on("updateCluestate", function(cs) {
   //chatCont.innerHTML = '';
   cs.forEach(function(msg) {
     let final_message = document.createElement("p");
-    console.log(msg);
     final_message.innerHTML = msg;
-    console.log(final_message);
     chatCont.append(final_message);
   });
 });
 
 socket.on("updateBoardstate", function(bs) {
-  console.log("updating board state", bs);
   if (bs.length < 1) {
     return;
   }
@@ -669,25 +636,20 @@ socket.on("updateBoardstate", function(bs) {
     let cardsInRow = rows[i].getElementsByClassName("card");
     for (let j = 0; j < cardsInRow.length; j++) {
       let button = cardsInRow[j];
-      console.log(bs[i][j]);
       button.innerHTML = bs[i][j].word;
       button.style.backgroundColor = bs[i][j].color;
     }
   }
-  console.log("number clicked");
   //socket.emit('send hint', 'sent!');
 });
 
 socket.on("update hints", function(msg) {
   let final_message = document.createElement("p");
-  console.log(msg);
   final_message.innerHTML = msg;
-  console.log(final_message);
   document.getElementsByClassName("chat-container")[0].append(final_message);
 });
 
 socket.on("greyRole", function(role) {
-  console.log("greying role", role);
   let button = document.getElementById(role);
   button.style.backgroundColor = "grey";
   button.disabled = true;
@@ -695,7 +657,6 @@ socket.on("greyRole", function(role) {
 });
 
 socket.on("allSelectedStatus", function(status) {
-  console.log("status", status);
   if (status) {
     allReady = true;
   }
