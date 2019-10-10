@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<title>The GYM Spotify</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
+.w3-row-padding img {margin-bottom: 12px}
+/* Set the width of the sidebar to 120px */
+.w3-sidebar {width: 120px;background: #222;}
+/* Add a left margin to the "page content" that matches the width of the sidebar (120px) */
+#main {margin-left: 120px}
+/* Remove margins from "page content" on small screens */
+@media only screen and (max-width: 600px) {#main {margin-left: 0}}
+</style>
+<body class="w3-black">
+
+<!-- Icon Bar (Sidebar - hidden on small screens) -->
+<nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
+  <a href="#" class="w3-bar-item w3-button w3-padding-large w3-black">
+    <i class="fa fa-home w3-xxlarge"></i>
+    <p>HOME</p>
+  </a>
+  <a href="#about" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class="fa fa-user w3-xxlarge"></i>
+    <p>ABOUT</p>
+  </a>
+  <a href="#photos" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+    <i class= "fa fa-refresh w3-xxlarge"></i>
+    <p>Generator</p>
+  </a>
+</nav>
+
+<!-- Navbar on small screens (Hidden on medium and large screens) -->
+<div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
+  <div class="w3-bar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
+    <a href="#" class="w3-bar-item w3-button" style="width:25% !important">HOME</a>
+    <a href="#about" class="w3-bar-item w3-button" style="width:25% !important">ABOUT</a>
+    <a href="#photos" class="w3-bar-item w3-button" style="width:25% !important">PHOTOS</a>
+    <a href="#contact" class="w3-bar-item w3-button" style="width:25% !important">CONTACT</a>
+  </div>
+</div>
+
+<!-- Page Content -->
+<div class="w3-padding-large" id="main">
+  <!-- Header/Home -->
+  <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
+    <h1 class="w3-jumbo"><span class="w3-hide-small">Welcome To</span> GYM-ify</h1>
+    <p>Music Generator for GYM Workouts</p>
+    <img src="https://cdn.glitch.com/49b0e32e-843b-4ea2-ac73-5b72f977da48%2FspotifyLogo.jpg?v=1570059856061" alt="logo" class="w3-image" width="500" height="500">
+  </header>
+
+  <!-- About Section -->
+  <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
+    <h2 class="w3-text-light-grey">About this Generator</h2>
+    <hr style="width:200px" class="w3-opacity">
+    <p> All athletes have to endure intense workout at the gym. Regarless of speed, length, and intensity of the workouts
+      music is needed to fuel our motivation to keep pushing harder. This music generator takes in the length of 
+      your workout, the intensity, and a genre of music, and will output a playlist for your specific training.
+    </p> 
+  </div>
+  </div>
+  <!-- End About Section -->
+  
+  <!-- Generator Section -->
+  <div class="w3-padding-64 w3-content" id="photos">
+    <h2 class="w3-text-light-grey">Generator</h2>
+    <hr style="width:200px" class="w3-opacity">
+      <p>Name of Playlist<input class="w3-input w3-padding-16" type="text" placeholder="Workout Songs" required name="playlist"></p>
+      <br>
+      <p>Duration of Workout (In Minutes)<input class="w3-input w3-padding-16" type="text" placeholder="60" required id="time"></p>
+      <br>
+      <p>Intensity
+        <select class="w3-input w3-padding-16" id="intensity">
+          <option value="High">High Intensity</option>
+          <option value="Low">Low Intensity</option>
+        </select>
+      </p>
+        <br>
+        <p>Prefered Genres of Music<br>
+        <input type="checkbox" id="pop" value="pop"> Pop<br>
+        <input type="checkbox" id="rock" value="rock"> Rock<br>
+        <input type="checkbox" id="rap" value="rap"> Rap<br>
+        <input type="checkbox" id="country" value="country"> Country<br>
+        <input type="checkbox" id="edm" value="edm"> EDM<br>
+      </p>
+      <p>
+        <button class="w3-button w3-light-grey w3-padding-large" type="submit" onclick="createPlaylist()">
+          <i class="fa fa-paper-plane"></i> Generate
+        </button>
+      </p>
+  <!-- End Portfolio Section -->
+  </div>
+  <div>
+    <table id="playlistTable" class="w3-table-all w3-padding-16" align="center" style="width:50%; color:black; border: 1px solid black;">
+      <tr style="font-weight:bold;">
+        <th>Song</th>
+        <th>Artist</th>
+        <th>Spotify URL</th>
+      </tr>
+   </table>
+  </div>
+  <!-- Contact Section -->
+  <div class="w3-padding-64 w3-content w3-text-grey" id="contact">
+    <h2 class="w3-text-light-grey">Contact Us with Ideas</h2>
+    <hr style="width:200px" class="w3-opacity">
+
+    <div class="w3-section">
+      <p><i class="fa fa-map-marker fa-fw w3-text-white w3-xxlarge w3-margin-right"></i> Worcester, MA</p>
+      <p><i class="fa fa-envelope fa-fw w3-text-white w3-xxlarge w3-margin-right"> </i> Email: fakename@wpi.edu</p>
+    </div><br>
+    <p>Have an idea? Send us a message:</p>
+
+    <form action="/action_page.php" target="_blank">
+      <p><input class="w3-input w3-padding-16" type="text" placeholder="Name" required name="Name"></p>
+      <p><input class="w3-input w3-padding-16" type="text" placeholder="Email" required name="Email"></p>
+      <p><input class="w3-input w3-padding-16" type="text" placeholder="Subject" required name="Subject"></p>
+      <p><input class="w3-input w3-padding-16" type="text" placeholder="Message" required name="Message"></p>
+      <p>
+        <button class="w3-button w3-light-grey w3-padding-large" type="submit">
+          <i class="fa fa-paper-plane"></i> SEND MESSAGE
+        </button>
+      </p>
+    </form>
+  <!-- End Contact Section -->
+  </div>
+  
+    <!-- Footer -->
+  <footer class="w3-content w3-padding-64 w3-text-grey w3-xlarge">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-snapchat w3-hover-opacity"></i>
+    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
+  <!-- End footer -->
+  </footer>
+
+<!-- END PAGE CONTENT -->
+<script src="https://www.gstatic.com/firebasejs/6.6.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+<script type="text/javascript" src="app.js"></script>
+
+</body>
+</html>
