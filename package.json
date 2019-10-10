@@ -1,6 +1,9 @@
 {
   "name": "fp",
   "version": "1.0.0",
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "body-parser": "latest",
     "compression": "^1.7.4",
