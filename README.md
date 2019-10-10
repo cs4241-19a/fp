@@ -1,5 +1,8 @@
 # cs4241-FinalProject: qMe 
 ### by Terry Hearst, Demi Karavoussianis, Kyle Reese, and Tom White
+
+https://fp-qme.glitch.me/
+
 Welcome to qMe! qMe is a priority queue application to assist in personal scheduling and time management. Any user can create an account with qMe. With an account created, users can enter tasks that they need to complete, along with the deadline. Depending on when the task is due, and what priority the task is ranked, qMe display the tasks in order of when the user should complete the task. Additional customization of tasks is offered, like the ability to say you need more time, or to push a task off until later, all with one click. Once a task is completed, it can be checked off as the user continues to their next task.
 
 ## Additional Instructions
