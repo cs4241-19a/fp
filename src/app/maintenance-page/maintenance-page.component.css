@@ -1,0 +1,17 @@
+center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div {
+  text-align: center;
+}
+
+p.give-me-some-space {
+  margin: 30px auto 10px;
+  width: 100%;
+  font-size: 40px;
+  font-weight: bolder;
+  text-align: center;
+}

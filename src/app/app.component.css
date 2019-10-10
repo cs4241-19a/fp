@@ -1,0 +1,19 @@
+img.logo {
+  width: 100%;
+  height: auto;
+}
+
+#navbar{
+  opacity: 1 !important;
+  background: dodgerblue;
+  width: 100%;
+  position: fixed;
+  height: 7vh;
+  z-index: 1;
+  top: 0;
+}
+
+li.nav-item{
+  opacity: 1;
+  color: dodgerblue !important;
+}

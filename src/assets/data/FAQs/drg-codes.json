@@ -1,0 +1,10 @@
+{
+  "question1": {
+    "question": "What is a DRG Code?",
+    "answer": "A DRG, or diagnosis related group, is a system created by medicare to improve hospital price transperancy by grouping similar procedures together and creating a single base price for each DRG"
+  },
+  "question2": {
+    "question": "question 2 goes here",
+    "answer": "answer 3 goes here"
+  }
+}

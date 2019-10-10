@@ -1,0 +1,42 @@
+.title {
+    margin-top: 200px;
+    font-size: 100px !important;
+    font-weight: bolder;
+    color: white;
+    text-shadow: 3px 3px 5px #3b3355;
+}
+
+.subTitle {
+    font-size: 40px !important;
+    color: white;
+    text-shadow: 3px 3px 5px #3b3355;
+}
+
+div.quotes {
+    padding: 40px;
+    background-color:#3b3355;
+    color:white;
+}
+
+div.solution {
+    padding: 40px;
+    background-color:#c1e0f7;
+    color:#293132;
+}
+
+img.logo2 {
+    width: 50%;
+    position: relative;
+    margin-left: 25%;
+}
+
+img.banner {
+    width: 100%;
+    height: auto;
+}
+
+.parallaxWrapper {
+    height: 600px;
+    width: 100%;
+    background-image: url("src/assets/img/bannerImg.jpg");
+}

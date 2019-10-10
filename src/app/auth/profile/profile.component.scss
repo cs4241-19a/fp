@@ -1,0 +1,57 @@
+.container {
+  width: 100%;
+}
+
+form {
+  width: 100%;
+}
+
+div.info-container {
+  left: 5%;
+  width: 90%;
+  position: relative;
+  padding: 30px;
+  padding-bottom: 70px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: white;
+}
+
+.red {
+  color: red;
+}
+
+.centerCustomImg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 5px;
+  margin-bottom: 15px;
+  width: 20%;
+}
+
+.bg-primary {
+  background-color: #c4e3f8 !important;
+}
+
+form>* {
+  margin-bottom: 1.5em;
+  width: 100%;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.signout {
+  float: right;
+}
+
+@media (min-width: 900px) {
+  .container {
+    margin: 0 auto;
+    width: 75%;
+  }
+}

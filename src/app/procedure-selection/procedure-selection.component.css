@@ -1,0 +1,52 @@
+.title {
+  text-align: center;
+  font-size: 60px;
+  font-weight: bold;
+  color: #3b3355;
+}
+
+.subTitle {
+  font-size: 20px;
+  text-align: center;
+  color: #3b3355;
+}
+
+.centerCustomImg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 30px;
+  margin-bottom: 15px;
+  width: 20%;
+}
+
+.centerCustom {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.emphasis {
+  font-weight: bolder;
+  font-size: 20px;
+  letter-spacing: 2px;
+  background-color: #3b3355;
+  color: #ffffff;
+}
+
+.mat-form-field {
+  color: #3b3355 !important;
+
+}
+
+.input:focus {
+  color: #3b3355;
+}
+
+.bg-primary {
+  background-color: #c4e3f8 !important;
+  /*height: 100%;*/
+}
+
+/*body, html {height: 100%; }*/

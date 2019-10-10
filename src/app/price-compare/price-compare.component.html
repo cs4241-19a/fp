@@ -1,0 +1,196 @@
+<br>
+<div class="page-body">
+  <div class="container-fluid row">
+    <div *ngIf="!this.displayUserData"class="col-md-auto" style="width: 20%;">
+      <nav class="sidebar-offset" id="sidebar">
+        <div class="sidebar-header">
+          <h4>Filters</h4>
+        </div>
+        <h5 class="filter-header">Location(s)</h5>
+        <div class="slidecontainer">
+          <button class="btn btn-primary dropdown-toggle statedropdown" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">States</button>
+          <div class="dropdown-menu" style="width: 100%;">
+            <ng-autocomplete placeHolder="Enter a State..." [(ngModel)]="input" (inputChanged)="filterByState(input)">
+            </ng-autocomplete>
+            <div class="checkboxes" style="height: auto; max-height: 20vh;">
+              <div class="custom-control custom-checkbox dropdown-item" *ngFor="let state of this.filteredstates">
+                <label>
+                  <input style="font-size: 20px" type="checkbox" [(ngModel)]="state.checked"> {{state.name}}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h5 class="filter-header">Rating</h5>
+        <div class="starratingsystem">
+          <input id="star-1" type="radio" value="star-1" name="rating" (click)="ratingChanged(5)">
+          <label for="star-1">
+            <i class="fa fa-star" aria-hidden="true"></i>
+          </label>
+          <input id="star-2" type="radio" value="star-2" name="rating" (click)="ratingChanged(4)">
+          <label for="star-2">
+            <i class="fa fa-star" aria-hidden="true"></i>
+          </label>
+          <input id="star-3" type="radio" value="star-3" name="rating" (click)="ratingChanged(3)">
+          <label for="star-3">
+            <i class="fa fa-star" aria-hidden="true"></i>
+          </label>
+          <input id="star-4" type="radio" value="star-4" name="rating" (click)="ratingChanged(2)">
+          <label for="star-4">
+            <i class="fa fa-star" aria-hidden="true"></i>
+          </label>
+          <input id="star-5" type="radio" value="star-5" name="rating" (click)="ratingChanged(1)">
+          <label for="star-5">
+            <i class="fa fa-star" aria-hidden="true"></i>
+          </label>
+        </div>
+        <h5 class="filter-header">Price</h5>
+        <div class="slidecontainer" style="display: flex; justify-content: center;">
+          <button (click)="sortBy($event)" class="customRadio ascending" style="margin-right: 10%;">
+            <p style="margin: 0;">Ascending</p>
+            <mat-icon matSuffix>{{'keyboard_arrow_up'}}</mat-icon>
+          </button>
+          <button (click)="sortBy($event)" class="customRadio descending">
+            <p style="margin: 0;">Descending</p>
+            <mat-icon matSuffix>{{'keyboard_arrow_down'}}</mat-icon>
+          </button>
+        </div>
+        <br>
+        <button class="btn btn-primary" (click)="filterAll()">Apply</button>
+      </nav>
+    </div>
+    <div *ngIf="!this.displayUserData; else userData" class="col">
+      <div class="col" *ngIf="activeSubset && loading === false; else loadingWheel">
+        <div class="row">
+          <div class="col">
+            <h3>Showing {{activeSubset.length}} results for {{this.drgDisplayedCode}} </h3>
+          </div>
+          <div class="col">
+            <mat-slide-toggle (change)="dataViewToggled($event)" class="slider-container">
+              User Data
+            </mat-slide-toggle>
+          </div>
+        </div>
+        <table class="fixedColumns" align="center">
+          <tr *ngFor="let hospital of this.activeSubset | paginate: {itemsPerPage:10, currentPage: p}">
+            <td>
+              <div class="newStyleCard shadow-lg" data-toggle="modal" *ngIf="hospital" (click)="selected(hospital)"
+                data-target="#fullDetails">
+                <div [ngClass]="hospital.getHeaderColor()"></div>
+                <div>
+                  <div [ngClass]="hospital.getTextColor()">
+                    <p class="card-title">{{hospital.getName() | titlecase}}</p>
+                    <p class="price">Hospital Total Price: {{hospital.totalPayments | currency}}</p>
+                  </div>
+                  <p class="address">{{hospital.getFullAddress()}}</p>
+                  <div class="card-rating" [ngSwitch]="hospital.getRating()">
+                    <div *ngSwitchCase=1 style="color: #b30000">
+                      <ng-container *ngFor="let i of [].constructor(1)">
+                        <span class="fa fa-star" aria-hidden="true"></span>
+                      </ng-container>
+                      <ng-container *ngFor="let i of [].constructor(4)">
+                        <span style="color: #e7e7e7" class="fa fa-star" aria-hidden="true"></span>
+                      </ng-container>
+                    </div>
+                    <div *ngSwitchCase=2 style="color: #ffcc00">
+                      <ng-container *ngFor="let i of [].constructor(2)">
+                        <span class="fa fa-star" aria-hidden="true"></span>
+                      </ng-container>
+                      <ng-container *ngFor="let i of [].constructor(3)">
+                        <span style="color: #e7e7e7" class="fa fa-star" aria-hidden="true"></span>
+                      </ng-container>
+                    </div>
+                    <div *ngSwitchCase=3 style="color: #ffcc00">
+                      <ng-container *ngFor="let i of [].constructor(3)">
+                        <span class="fa fa-star" aria-hidden="true"></span>
+                      </ng-container>
+                      <ng-container *ngFor="let i of [].constructor(2)">
+                        <span style="color: #e7e7e7" class="fa fa-star" aria-hidden="true"></span>
+                      </ng-container>
+                    </div>
+                    <div *ngSwitchCase=4 style="color: #00b300">
+                      <ng-container *ngFor="let i of [].constructor(4)">
+                        <span class="fa fa-star" aria-hidden="true"></span>
+                      </ng-container>
+                      <ng-container *ngFor="let i of [].constructor(1)">
+                        <span style="color: #e7e7e7" class="fa fa-star" aria-hidden="true"></span>
+                      </ng-container>
+                    </div>
+                    <div *ngSwitchCase=5 style="color: #00b300">
+                      <ng-container *ngFor="let i of [].constructor(5)">
+                        <span class="fa fa-star" aria-hidden="true"></span>
+                      </ng-container>
+                    </div>
+                    <div *ngSwitchDefault style="color: dimgrey">
+                      N/A
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <pagination-controls *ngIf="this.activeSubset.length > 10" (pageChange)="p =$event"></pagination-controls>
+          </tr>
+          <app-hospital-popup [hospitalData]="this.activeHospital" [userLat]="this.userLat" [userLong]="this.userLong"
+            [allowUserLocation]="this.allowUserLocation">
+          </app-hospital-popup>
+        </table>
+      </div>
+      <ng-template #loadingWheel>
+        <p class="align-center">
+          <img src="assets/img/loadingWheel.gif">
+        </p>
+      </ng-template>
+      <br>
+    </div>
+    <ng-template #userData>
+      <div class="col">
+        <div class="row">
+          <h3 class="headerLayout">User Reported Data</h3>
+          <div class="col">
+            <mat-slide-toggle [checked]="true" (change)="dataViewToggled($event)" class="slider-container">
+              User Data
+            </mat-slide-toggle>
+          </div>
+        </div>
+        <div class="row">
+          <table class="userDataTable">
+            <thead class="userDataHeader">
+              <td>
+                Hospital
+              </td>
+              <td>
+                Insurance
+              </td>
+              <td>
+                Procedure
+              </td>
+              <td>
+                Cost
+              </td>
+            </thead>
+            <tr class="customRow" *ngFor="let data of this.getUserData() | paginate: {itemsPerPage:10, currentPage: curPage}">
+              <td>
+                {{data.location}}
+              </td>
+              <td>
+                {{data.insurance}}
+              </td>
+              <td>
+                {{data.name}}
+              </td>
+              <td>
+                {{data.cost}}
+              </td>
+            </tr>
+            <tr>
+              <pagination-controls *ngIf="this.getUserData().length > 10" (pageChange)="curPage =$event"></pagination-controls>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="bg-primary page-body">
+  <h3 id="question">Got a Question?</h3>
+  <h1 id="contact">Contact Care Compare!</h1>
+  <p class="content">We're devoted to hearing all user feedback and questions.<br><b>We look forward to hearing from you!</b></p>
+  <div class="contactform">
+    <br>
+    <form>
+      Name<br>
+      <input class="inputs" type="text" name="name" id="name" required/>
+      <br>
+      Email<br>
+      <input class="inputs" type="email" name="email" id="email" required/>
+      <br>
+      Subject<br>
+      <input class="inputs" type="text" name="subject" id="subject" required/>
+      <br>
+      Message<br>
+      <textarea class="inputs" name="message" rows="10" id="message" style="width: 70%;" required></textarea>
+      <br>
+      <button (click)="sendEmail()" style="background-color:#1E90FF; color: white; border-radius: 20%; width: auto;">Send Message</button>
+    </form>
+  </div>
+</div>

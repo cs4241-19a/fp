@@ -1,0 +1,18 @@
+.bg-primary{
+    background-color: #c4e3f8 !important;
+    text-align: center;
+}
+.contactform{
+    background-color: white;
+    color: black;
+    margin: auto;
+    height: auto;
+    width: 50%;
+    border-radius: 20%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.inputs{
+    margin-top: 0;
+    width: 70%;
+    border: 1px solid #1E90FF; 
+}

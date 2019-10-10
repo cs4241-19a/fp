@@ -1,0 +1,12 @@
+table{
+  font-size: 25px;
+  height:100%;
+}
+
+thead{
+  background-color: #1e90ff;
+  color: #fff;
+}
+.data:hover{
+  background-color: gray;
+}

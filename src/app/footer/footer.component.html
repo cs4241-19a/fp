@@ -1,0 +1,18 @@
+<footer class="footer">
+  <div>
+    <a class="whiteLink" id="terms" data-toggle="modal" data-target="#termsmodal">Terms of Service</a>
+    <a class="whiteLink" id="privacy" data-toggle="modal" data-target="#privacymodal">Privacy Statement</a>
+  </div>
+  <div>
+    <p>CareCompare {{this.currentyear}}</p>
+  </div>
+  <br>
+</footer>
+<app-footer-modal
+  [title]="this.termsTitle"
+  [ID]="this.termsID"
+  [body]="this.termsBody"></app-footer-modal>
+<app-footer-modal
+  [title]="this.privacyTitle"
+  [ID]="this.privacyID"
+  [body]="this.privacyBody"></app-footer-modal>

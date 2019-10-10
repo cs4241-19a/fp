@@ -1,0 +1,57 @@
+<div class="bg-primary page-body">
+  <img class='centerCustomImg' src='assets/img/mediumLogo.png'>
+  <div class="info-container">
+    <h2>Manage Profile</h2>
+    <form [formGroup]="profileForm" autocomplete="on">
+      <mat-form-field>
+        <input matInput placeholder="First Name" type="text" formControlName="fname" autocomplete="family-name"
+          required>
+        <mat-hint *ngIf="!fnameInput.value">Enter your first name</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Last Name" type="text" formControlName="lname" autocomplete="given-name" required>
+        <mat-hint *ngIf="!lnameInput.value">Enter your last name</mat-hint>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="editProfile()"
+        [disabled]="loading.loading || !profileForm.valid">Save</button>
+      <button mat-raised-button (click)="signOut()" class="signout">Sign Out</button>
+    </form>
+  </div>
+
+  <div class="info-container">
+    <h2>Medical History Form</h2>
+    <p> <strong>NOTICE: </strong> Please complete this form if you have underwent a recent medical procedure. The data
+      you provide will be publically available on the platform without any
+      identifying user information. <span class="red">All of the of the information recorded is completely
+        anonymous.</span></p>
+    <form [formGroup]="procedureForm" autocomplete="on">
+      <mat-form-field>
+        <input matInput placeholder="Procedure Name" type="text" formControlName="procName" autocomplete="family-name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="text" placeholder="Select a DRG Code..." [matAutocomplete]="auto" formControlName="drg"
+          (ngModelChange)="filter()" required>
+      </mat-form-field>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let code of filteredCodes" [value]="code" (click)="setCode(code)">
+          {{code}}
+        </mat-option>
+      </mat-autocomplete>
+
+      <mat-form-field>
+        <input matInput placeholder="Location" type="text" formControlName="location" autocomplete="family-name">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Insurance Provider" type="text" formControlName="insurance"
+          autocomplete="family-name">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Cost of Procedure - $" type="number" formControlName="cost"
+          autocomplete="family-name" required>
+      </mat-form-field>
+      <button mat-raised-button color="primary" [disabled]="!procedureForm.valid" (click)="submitForm()">Submit</button>
+    </form>
+  </div>
+</div>

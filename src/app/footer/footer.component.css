@@ -1,0 +1,25 @@
+.footer{
+  position: fixed;
+  bottom: 0;
+  height: 6.5vh;
+  color: white;
+  width: 100%;
+  background-color: dodgerblue;
+  clear: both;
+  text-align: center;
+}
+#terms:hover{
+  color: #c4e3f8;
+  cursor: pointer;
+}
+#privacy:hover{
+  color: #c4e3f8;
+  cursor: pointer;
+}
+#privacy, #terms{
+  font-size: 2vh;
+}
+p{
+  font-size: 1.5vh;
+  line-height: 1;
+}

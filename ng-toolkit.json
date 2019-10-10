@@ -1,0 +1,13 @@
+{
+  "serverless": {
+    "provider": "aws",
+    "project": "CareCompare",
+    "skipInstall": false,
+    "directory": ".",
+    "clientProject": "CareCompare",
+    "serverless": {
+      "aws": {},
+      "gcloud": {}
+    }
+  }
+}

@@ -1,0 +1,30 @@
+.formContainer {
+    width: 80%;
+    margin-left: 10%;
+}
+
+div.info-container {
+    left: 5%;
+    width: 90%;
+    position: relative;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+}
+
+.bg-primary {
+    //padding-top: 10px;
+    background-color: #c4e3f8 !important;
+    //height: 100%;
+}
+
+.centerCustomImg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 5px;
+    margin-bottom: 15px;
+    width: 20%;
+}

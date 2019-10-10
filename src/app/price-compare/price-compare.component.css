@@ -1,0 +1,259 @@
+div.card:hover {
+  background-color: gray;
+}
+
+.sidebar-style {
+  margin-bottom: -5000px; /* any large number will do */
+  padding-bottom: 5000px;
+  background-color: #1E90FF;
+}
+
+.slider-container {
+  z-index: 0;
+  position: relative;
+  margin-left: 80%;
+}
+
+#sidebar{
+  position: fixed;
+  width: 20%;
+  top: auto;
+  z-index: 1;
+}
+
+.sidebar-offset {
+  top: 90px;
+  text-align: center;
+}
+
+td {
+  padding-top: 20px;
+}
+
+label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+table.fixedColumns {
+  table-layout: fixed;
+  width: 100%;
+}
+
+h3 {
+  margin-bottom: 10px;
+}
+
+.filter-header {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.slidecontainer {
+  width: 100%; /* Width of the outside container */
+}
+
+.card {
+  width: 95%;
+  padding: 5px;
+}
+td.row-container {
+  width: 100px;
+}
+
+.card-title {
+  text-align: left;
+  overflow: paged-x-controls;
+  color: black;
+  display: inline-block;
+  margin: 0;
+  white-space: nowrap;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+/* The slider itself */
+.slider {
+  margin-top: 10px;
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 25px; /* Specified height */
+  border-radius: 12.5px;
+  background: #e7e7e7; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+  margin-bottom: 20px;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #1e90ff; /* Green background */
+  border-radius: 50%;
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #1e90ff; /* Green background */
+  border-radius: 50%;
+  cursor: pointer; /* Cursor on hover */
+}
+
+.resizeSingle {
+  margin-top: 5px;
+  width: 30px;
+  height: auto;
+}
+
+.resizeTriple {
+  width: 40px;
+  height: auto;
+}
+
+h6 {
+  font-size: 10px;
+}
+h5 {
+  font-size: 18px;
+}
+
+#map{
+  height: 800px;
+  width: 750px;
+}
+
+.align-center {
+  text-align: center;
+  margin-top: 200px;
+}
+
+h3.prevent-overflow {
+  text-overflow: ellipsis;
+  font-size: 20px;
+}
+
+.checkboxes{
+  height: 250px;
+  overflow: auto;
+}
+
+.statedropdown{
+  width: 100%;
+}
+.starratingsystem{
+  direction: rtl;
+  text-align: center;
+  padding-top: 20px;
+  display: inline-block;
+}
+.starratingsystem input[type=radio] {
+  display: none;
+}
+.starratingsystem label{
+  font-size: 20px;
+  padding-right: 3px;
+  color: black;
+  cursor: pointer;
+}
+.starratingsystem label:hover,
+.starratingsystem label:hover ~ label,
+.starratingsystem input[type=radio]:checked ~ label{
+  color: gold;
+}
+
+.newStyleCard{
+  padding-bottom: 20px;
+  border: black 2px solid;
+  border-radius: 10px;
+  padding: 7px;
+  width: 100%;
+}
+.newStyleCard:hover{
+  background-color: gray;
+}
+.greenHeader{
+  background-color: #00b300;
+  border-radius: 10px;
+  height: 7px;
+}
+.greyHeader{
+  background-color: dimgrey;
+  border-radius: 10px;
+  height: 7px;
+}
+.redHeader{
+  background-color: #b30000;
+  border-radius: 10px;
+  height: 7px;
+}
+.yellowHeader{
+  background-color: #ffcc00;
+  border-radius: 10px;
+  height: 7px;
+}
+.redText{
+  color: #b30000;
+}
+
+.yellowText{
+  color: #ffcc00;
+}
+.greyText{
+  color: dimgrey;
+}
+.greenText{
+  color: #00b300;
+}
+.address{
+  font-size: 15px;
+  margin: 0;
+  color: black;
+}
+.card-rating{
+  color: #979797;
+  font-size: 20px;
+}
+.price{
+  font-size: 24px;
+  float: right;
+  font-weight: bold;
+}
+
+table.userDataTable {
+  margin-top: 5px;
+  position: relative;
+  margin-left: 5%;
+  width: 90%
+}
+
+h3.headerLayout {
+  position:relative;
+  margin-left: 5%;
+}
+
+.customRow:nth-child(even) {background: #CCC}
+.customRow:nth-child(odd) {background: #FFF}
+
+thead.userDataHeader {
+  background-color: #1e90ff;
+  color: #fff;
+}
+
+.customRadio{
+  background-color: white;
+  height: auto;
+  border: 2px #1E90FF solid;
+  border-radius: 5%;
+}

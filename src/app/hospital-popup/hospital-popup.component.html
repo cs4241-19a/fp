@@ -1,0 +1,134 @@
+<div *ngIf="hospitalData !== undefined && hospitalData.isGeocoded()" class="modal fade" data-toggle="modal" id="fullDetails" tabindex="-1" role="dialog" aria-labelledby="detailsLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{hospitalData.name | titlecase}}</h3>
+        <button (click)="setActivePage(0)" type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="tab" role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" (click)="setActivePage(0)" [class.active]="pageIndex === 0"><a href="#Section1" role="tab" data-toggle="tab">Overview</a></li>
+          <li role="presentation" (click)="setActivePage(1)" [class.active]="pageIndex === 1"><a href="#Section2" role="tab" data-toggle="tab">Pricing Details</a></li>
+          <li role="presentation" (click)="setActivePage(2)" [class.active]="pageIndex === 2"><a href="#Section3" role="tab" data-toggle="tab">Rating Details</a></li>
+          <li role="presentation" (click)="setActivePage(3)" [class.active]="pageIndex === 3"><a href="#Section4" role="tab" data-toggle="tab">View Map</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content tabs">
+          <div role="tabpanel" class="tab-pane active" id="Section1">
+            <div class = "row">
+              <div class = "col">
+                <h6>Price</h6>
+              </div>
+              <div class = "col">
+                <h6>{{this.hospitalData.getApproxOutOfPocket() | currency}}</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class = "col">
+                <h6>Rating</h6>
+              </div>
+              <div class = "col">
+                <h6>{{this.hospitalData.getRating()}}</h6>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="Section2">
+            <div class = "row">
+              <div class = "col">
+                <h6 data-toggle="tooltip"
+                    data-container="body"
+                    data-placement="left"
+                    title="The provider's average charge for services covered by Medicare for all discharges in the MS-DRG. These will vary from hospital to hospital because of differences in hospital charge structures."
+                    onmouseover="$(this).tooltip('show')">Average covered charges</h6>
+              </div>
+              <div class = "col">
+                <h6>{{this.hospitalData.coveredCharges | currency}}</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class = "col">
+                <h6 data-toggle="tooltip"
+                    data-placement="left"
+                    data-container="body"
+                    title="The average total payments to all providers for the MS-DRG including the MS-DRG amount, teaching, disproportionate share, capital, and outlier payments for all cases. Also included in average total payments are co-payment and deductible amounts that the patient is responsible for and any additional payments by third parties for coordination of benefits."
+                    onmouseover="$(this).tooltip('show')">Average total payment</h6>
+              </div>
+              <div class = "col">
+                <h6>{{this.hospitalData.totalPayments | currency}}</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class = "col">
+                <h6 data-toggle="tooltip"
+                    data-placement="left"
+                    data-container="body"
+                    title="The average amount that Medicare pays to the provider for Medicare's share of the MS-DRG. Average Medicare payment amounts include the MS-DRG amount, teaching, disproportionate share, capital, and outlier payments for all cases. Medicare payments DO NOT include beneficiary co-payments and deductible amounts nor any additional payments from third parties for coordination of benefits. Note: In general, Medicare FFS claims with dates-of-service or dates-of-discharge on or after April 1, 2013, incurred a 2 percent reduction in Medicare payment. This is in response to mandatory across-the-board reductions in Federal spending, also known as sequestration."
+                    onmouseover="$(this).tooltip('show')">Average Medicare payments</h6>
+              </div>
+              <div class = "col">
+                <h6>{{this.hospitalData.averageMedicarePayment | currency}}</h6>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="Section3">
+            <div class = "row">
+              <div class = "col">
+                <h6>Mortality comparison</h6>
+              </div>
+              <div class = "col">
+                <h6>{{this.hospitalData.mortalityComparison}}</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class = "col">
+                <h6>Safety rate</h6>
+              </div>
+              <div class = "col">
+                <h6>{{this.hospitalData.safetyComparison}}</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class = "col">
+                <h6>Readmission rate</h6>
+              </div>
+              <div class = "col">
+                <h6>{{this.hospitalData.readmissionComparison}}</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class = "col">
+                <h6>Patient experience</h6>
+              </div>
+              <div class = "col">
+                <h6>{{this.hospitalData.patientComparison}}</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class = "col">
+                <h6>Timeliness of care</h6>
+              </div>
+              <div class = "col">
+                <h6>{{this.hospitalData.timelinessComparison}}</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class = "col">
+                <h6>Effective imaging use</h6>
+              </div>
+              <div class = "col">
+                <h6>{{this.hospitalData.imagingComparison}}</h6>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="Section4">
+            <agm-map id="map" [latitude]="this.userLat" [longitude]="this.userLong">
+              <agm-marker *ngIf="allowUserLocation" [longitude]="this.userLong" [latitude]="this.userLat" title="me"></agm-marker>
+              <agm-marker [latitude]="hospitalData.getLat()" [longitude]="hospitalData.getLong()" [title]="hospitalData.getName()"></agm-marker>
+            </agm-map>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
