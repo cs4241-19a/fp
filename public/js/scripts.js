@@ -68,13 +68,15 @@ const fetchLeaderboard = async function() {
     const data = await response.json();
     const users = data.users;
 
+    users.sort(function(a, b){return a.gameState.score - b.gameState.score});
+
     let HTMLDiv = document.getElementById("leaderboard");
 
     HTMLDiv.innerHTML = '<tr>\n' + '<th>Username</th>\n' +
         '<th>Score</th>\n' + '</tr>';
 
     for (let i = 0; i < users.length; i++) {
-        const currentUser = users[i];
+        const currentUser = users[users.length - 1 - i];
         let row = '<tr>\n';
         row += (`<td> ${currentUser.username} </td>\n`);
         row += (`<td> ${currentUser.gameState.score} </td>\n`);
