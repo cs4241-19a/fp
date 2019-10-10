@@ -35,18 +35,29 @@ module.exports = app;
 var clientList = [];
 var boardState = [];
 let hints = [];
+let roleState = {
+    bspymaster: '',
+    rspymaster:'',
+    bdetective: '',
+    rdetetctive: '',
+};
 
 function updateAll() {
   sendBoardUpdate();
   sendClueUpdate();
 }
 
-function sendBoardUpdate() {
-  io.sockets.emit("updateBoardstate", boardState);
+function sendRoleState(){
+    //io.sockets.emit("updateBoardstate", boardState);
 }
-function sendClueUpdate() {
-  //    io.sockets.emit("updateCluestate", clueLog);
+
+function sendBoardUpdate(){
+    io.sockets.emit("updateBoardstate", boardState);
 }
+function sendClueUpdate(){
+    //io.sockets.emit("updateCluestate", clueLog);
+}
+
 
 io.on("connect", function(client) {
   console.log("establishing connection with", client.id);
@@ -65,38 +76,34 @@ io.on("connection", function(socket) {
     //io.sockets.to(getSocketFromClient(socket.handshake.session.userdata)).emit("specMsg", 'only for ' + socket.handshake.session.userdata);
   });
 
-  socket.on("setInitState", function(state, browserCache) {
-    console.log("session for: ", browserCache, "socket", socket.id);
-    let user = browserCache.user;
-    let found = false;
-    clientList.forEach(function(element) {
-      if (element.name && element.name === user) {
-        console.log(
-          "updating " + user + " connection from ",
-          element.connection,
-          "to",
-          socket.id
-        );
-        element.connection = socket.id;
-        io.sockets.emit("displayUser", user);
-        found = true;
-      }
-    });
-    if (!found) {
-      console.log("adding client", user, "with socket", socket.id);
-      clientList.push({ name: user, connection: socket.id });
-      //io.sockets.emit("displayUser", "New User");
-    }
+    socket.on("setInitState", function(state, browserCache){
+        console.log('session for: ', browserCache, 'socket', socket.id);
+        let user = browserCache.user;
+        let found = false;
+        clientList.forEach(function (element) {
+            if (element.name && element.name === user) {
+                console.log("updating " + user + " connection from ", element.connection, 'to', socket.id);
+                element.connection = socket.id;
+                io.sockets.emit("displayUser", user);
+                found = true;
+            }
+        });
+        if(!found){
+            console.log('adding client', user, 'with socket', socket.id);
+            clientList.push({name: user, connection: socket.id, role: 'none'})
+            //io.sockets.emit("displayUser", "New User");
+        }
 
-    //The first user that connects sets the base cards
-    if (boardState.length < 1) {
-      console.log("state set to", state);
-      boardState = state;
-    } else {
-      updateAll();
-      console.log("state already is ", boardState);
-    }
-  });
+        //The first user that connects sets the base cards
+       if(boardState.length<1){
+           console.log('state set to', state);
+           boardState = state;
+       }else{
+           sendRoleState();
+           updateAll();
+           console.log('state already is ', boardState);
+       }
+    });
 
   socket.on("button selected", function(state) {
     boardState = state;
@@ -105,10 +112,10 @@ io.on("connection", function(socket) {
     sendBoardUpdate();
   });
 
-  /* socket.on("clue sent", function(clue){
-        clueLog.push(clue);
+    socket.on("clue sent", function(clue){
+        //clueLog.push(clue);
         sendClueUpdate();
-    });*/
+    });
 
   socket.on("hintSubmission", (sender, clue, amt) => {
     console.log("hello");
@@ -125,7 +132,29 @@ io.on("connection", function(socket) {
     //io.sockets.emit("update hints", full_msg, msg);
     socket.broadcast.emit("update hints", full_msg, msg);
   });
+
+  socket.on("roleSelection", function(role){
+     console.log(role);
+
+     setRole(socket.id, role);
+     greyRole(role);
+     console.log(clientList);
+     console.log(roleState);
+  });
 });
+
+function greyRole(role){
+    io.sockets.emit("greyRole", role);
+}
+
+function setRole(socketID, role){
+    clientList.forEach(function(cl){
+       if(cl.connection === socketID){
+           cl.role = role;
+           roleState[role] = socketID;
+       }
+    });
+}
 
 function getSocketFromClient(cl) {
   clientList.forEach(function(element) {

@@ -485,7 +485,10 @@ function makeGray(btn, selected) {
   b.style.backgroundColor = "gray";
   b.style.borderColor = "gold";
   selected.state.selectedRole = btn;
+  socket.emit("roleSelection", selected.state.selectedRole);
 }
+
+
 
 function resetMenu(play) {
   var redspy = document.getElementById("rspymaster");
@@ -669,8 +672,8 @@ socket.on("updateBoardstate", function(bs) {
       button.style.backgroundColor = bs[i][j].color;
     }
   }
-  console.log("number clicked");
-  socket.emit("send hint", "sent!");
+  console.log('number clicked');
+  //socket.emit('send hint', 'sent!');
 });
 
 socket.on("update hints", function(msg) {
@@ -679,6 +682,13 @@ socket.on("update hints", function(msg) {
   final_message.innerHTML = msg;
   console.log(final_message);
   document.getElementsByClassName("chat-container")[0].append(final_message);
+});
+
+socket.on('greyRole', function(role){
+  console.log('greying role', role);
+  let button  = document.getElementById(role);
+  button.style.backgroundColor = "grey";
+  button.disabled = true;
 });
 
 export default App;
