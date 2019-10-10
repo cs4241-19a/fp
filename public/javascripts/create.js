@@ -30,4 +30,14 @@ window.onload = function() {
 
   const navbar = document.getElementsByClassName('navbar')
   navbar.style.display = "none";
+  
+  var input = document.getElementById("newPassword");
+  input.addEventListener("keydown", function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      button.click();
+    }
+  });
 }
+
+

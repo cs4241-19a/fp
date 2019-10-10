@@ -17,6 +17,15 @@ function getCookie(cname) {
 }
 
 window.onload = function() {
+  
+  var input = document.getElementById("msg");
+  input.addEventListener("keydown", function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      document.getElementById("sendButton").click();
+    }
+  });
+  
   document.getElementById("sendButton").onclick = sendMessage;
   fetch("api/users/getUsers", {
     headers: {
