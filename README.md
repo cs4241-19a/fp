@@ -11,22 +11,34 @@ Think of 1,3, and 4 in particular in a similar vein to the design / tech achieve
 
 For our project, we created a web application that connects to a MySQL server and provides an easy way for inexperienced database users to add, modify, and delete items from a database. Upon loading the website, you will be taken to the home screen which shows a graph constructed from data in a MySQL database. Click on the login tab to login and then you will be able to access the dashboard, which shows you the same graph along with a table below. You will be able to add, modify, and delete items from the glass and the table and graph will reload. 
 
-Login Info: // put these here pinzie boy
+**Login Info:**
+
+User: `root`
+Pass: `root`
 
 We used many technologies/features in the making of this project:
     1. React Framework
-    2. MySQL Server
-    3. Bulma Design Pattern
-    4. Tabulator
-    5. Chartist for the graph
-    6. Animating inputs and buttons based off of entries
-    7. Clean design and layout
+       1. React-router
+       2. React-Redux
+    2. Express server
+       1. MySQL integration
+       2. Login Functionality
+       3. Add/Edit/Delete MySQL Data
+    3. MySQL Server
+    4. Bulma Design Pattern
+    5. Tabulator
+    6. Chartist for the graph
+    7. Animating inputs and buttons based off of entries
+    8. Clean design and layout
 
 Since the majority of our group used React for the first time in the making of this project, the biggest challenge we faced was properly integrating all of our javascript code into the React framework. 
 
 ## Member Responsibilities
 
 Peter Christakos - tabulator design/integration and add/modify/delete front end
+
 Andrew Morrison - login page front end and header design
+
 Julian Pinzer - MySQL Server / React server setup and communication with data
+
 Katherine Thompson - Chartist design/integration
