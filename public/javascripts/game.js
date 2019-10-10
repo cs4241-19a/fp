@@ -40,12 +40,17 @@ var player_x,
 	has_UP = false,
 	has_DOWN = false,
 	player_alive = true,
-	waiting2 = false; 
-	waiting3 = false 
+	waiting2 = false, 
+	waiting3 = false,
+	isRed = false
 var up = 0;
 var down = 0;
+var once = false;
+
 
 var score = 0;
+var player_speed = 9;
+var enemy_speed = 14;
 
 
 var enemy;
@@ -90,7 +95,7 @@ var TIMER = {
 		TIMER.global+=1;
 
 		// enemy move
-		if (TIMER.global % 50 == 0) {
+		if (TIMER.global % enemy_speed == 0) {
 			touching = false
 			enemy_x -= 1
 			PS.spriteMove(enemy, enemy_x, enemy_y)
@@ -102,7 +107,7 @@ var TIMER = {
 		}
 
 		// player move
-		if (jump && TIMER.global % 37 === 0 && up != 2) {
+		if (jump && TIMER.global % player_speed === 0 && up != 2) {
 			player_y -= 1;
 			PS.spriteMove(player, player_x, player_y);
 			up+=1;
@@ -110,8 +115,8 @@ var TIMER = {
 				jump = false
 			}
 		}
-		else if (TIMER.global % 37 == 0 && player_y < 6 && up == 2 && !touching) {
-			player_y += 1
+		else if (TIMER.global % player_speed == 0 && player_y < 6 && up == 2 && !touching) {
+			player_y += 1;
 			PS.spriteMove(player,player_x,player_y)
 			if (player_y == 6) {
 				up = 0;
@@ -119,11 +124,32 @@ var TIMER = {
 		} 
 		
 		if (player_x == enemy_x && player_y == enemy_y) {
-			isAlive = false
+			isAlive = false;
+			score = 0;
+			player_speed = 11;
+			enemy_speed = 16;
 			PS.statusText( "Game over, press space to try again" );
 		}
 
+		//increase speed
+		if(score % 3 == 0 && score != 0 && once){
+			if (player_speed >3){
+				player_speed -= 2;
+				//PS.debug("\nplayer speed: " + player_speed);
+			}
+			
+			if(enemy_speed > 3){
+				enemy_speed -= 2;
+				//PS.debug("\nEnemy speed: " + enemy_speed);
+			}
+			once = false; //so it doesn't keep increase the score before it updates 
+		}
 
+		//pulse status line green
+		if(isRed){
+			PS.statusColor(PS.COLOR_GREEN);
+			isRed = false;
+		}
 
 	}
 }
@@ -159,6 +185,11 @@ const playerInit = function() {
 
 const increaseScore = function(){
 	score++;
+	once = true; 
+	if(score % 3 == 0){
+		isRed = true;
+	}
+	PS.statusColor(PS.COLOR_BLACK);
 	PS.statusText("SCORE= " + score);
 }
 
@@ -168,7 +199,9 @@ PS.init = function( system, options ) {
 	//grid setup
 	PS.gridSize( GRID_W, GRID_H );
 	PS.gridColor(PS.COLOR_WHITE);
-	//PS.border(PS.ALL,PS.ALL,0);
+	PS.gridShadow(PS.COLOR_GRAY_LIGHT);
+	PS.border(PS.ALL,PS.ALL,0);
+
 	playerInit() // generate player
 	newEnemy() // generate first enemy
 	isAlive = true;
