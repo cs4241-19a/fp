@@ -12,8 +12,9 @@ window.onload = function(){
        a.href = "#"
        a.class = "pure-menu-link"
        l.class = "pure-menu-item";
-       l.innerHTML = ret[i].username;
+       a.innerHTML = ret[i].username;
        l.style = "padding: auto; margin:10px; color:white; font-weight:bold;"
+       a.style = "color:white; text-decoration: none"
        l.appendChild(a);
        document.getElementById("people").appendChild(l)
      }

@@ -1,4 +1,4 @@
-body.home {
+abody.home {
   background-color: #EF233C
 }
 
@@ -215,6 +215,11 @@ li.navbar a {
 }
 
 li.navbar a:hover {
+  background-color: #D00000;
+  color: white;
+}
+
+li:hover {
   background-color: #D00000;
   color: white;
 }
