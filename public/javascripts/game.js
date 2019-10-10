@@ -45,6 +45,8 @@ var player_x,
 var up = 0;
 var down = 0;
 
+var score = 0;
+
 
 var enemy;
 var enemy_x, enemy_y;
@@ -94,6 +96,7 @@ var TIMER = {
 			PS.spriteMove(enemy, enemy_x, enemy_y)
 			if (enemy_x + enemy_width == 0) {
 				PS.spriteDelete(enemy)
+				increaseScore();
 				newEnemy()
 			}
 		}
@@ -154,6 +157,11 @@ const playerInit = function() {
 	PS.spriteCollide( player, myFunc );
 }
 
+const increaseScore = function(){
+	score++;
+	PS.statusText("SCORE= " + score);
+}
+
 PS.init = function( system, options ) {
 	"use strict"; // Do not remove this directive!
 
@@ -161,7 +169,6 @@ PS.init = function( system, options ) {
 	PS.gridSize( GRID_W, GRID_H );
 	PS.gridColor(PS.COLOR_WHITE);
 	//PS.border(PS.ALL,PS.ALL,0);
-
 	playerInit() // generate player
 	newEnemy() // generate first enemy
 	isAlive = true;
@@ -171,7 +178,7 @@ PS.init = function( system, options ) {
 		first = false;
 	}
 
-	PS.statusText( "Game" );
+	PS.statusText( "SCORE = " + score );
 
 };
 
