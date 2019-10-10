@@ -28,7 +28,7 @@ export default function FeedContainer(props) {
     //     return list
     // }
 
-    const [data, setData] = useState( { items: [] });
+    const [data, setData] = useState( [] );
 
     useEffect(() => {
         
@@ -53,10 +53,10 @@ export default function FeedContainer(props) {
             console.log(list)
             setData(list);
         }
-        // getItems()
-    })
+        getItems()
+    }, [])
 
-    // console.log(data)
+    console.log(data)
 
 
     // useEffect( () => {
@@ -76,25 +76,7 @@ export default function FeedContainer(props) {
 
     return (
         <Grid container direction='column' justify='center' alignItems='center'>
-
-            {/*{ () => {
-                // setItems(getItes())
-
-                items.map(item => {
-                    return (
-                        <div key={item.title + item.user}>
-                            <FeedItem
-                                key={item.title}
-                                user={item.user}
-                                title={item.title}
-                            />
-                        </div>
-                    )
-                })}}*/}
-
-
-
-            {/*{data.map(item => {
+            {data.map(item => {
                 return (
                     <div key={item.title + item.user}>
                         <FeedItem
@@ -104,7 +86,7 @@ export default function FeedContainer(props) {
                         />
                     </div>
                 )
-            })}*/}
+            })}
         </Grid>
     )
 
