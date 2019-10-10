@@ -16,6 +16,7 @@
             src="https://code.jquery.com/jquery-3.4.1.js"
             integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
             crossorigin="anonymous"></script>
+    <script src="js/jquery.roundimage.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <link href="stylesheets/style.css" rel="stylesheet">
@@ -52,9 +53,9 @@
             <div class="row">
                 <div class="col-md-4 col-sm-4 col-xs-12 side-container mb-2">
                     <form class="form-inline my-2 my-lg-0 leftJustify">
-                        <input aria-label="Search" class="form-control mr-sm-2 songInput" id="songName"
+                        <input aria-label="Search" class="form-control mb-2 mt-lg-2 float-left col-12 songInput" id="songName"
                                placeholder="Search for a Song" type="search">
-                        <button class="btn btn-outline-danger my-2 my-sm-0 searchButton" id="songSearch" type="button">
+                        <button class="btn btn-outline-danger my-2 my-sm-0 mb-lg-2 searchButton" id="songSearch" type="button">
                             Search
                         </button>
                     </form>
@@ -87,28 +88,15 @@
                         </button>
                     </div>
                 </div>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/logout" id="logoutLink">Log out<span
-                                    class="sr-only">(current)</span></a>
-                        </li>
-                    </ul>
-                </div>
-                </nav>
-                <div class="col">
+
+                <div class="col-md-8 col-sm-8 col-xs-12">
                     <nav class="navbar navbar-expand-lg navbar-light bg-light player-header">
-                        <div class="circular">
-                            <img alt="image of song cover" id="current-track" src="images/songnotfound.png"/>
-                        </div>
-                        <h5 class="card-title" id="current-track-name">Song Name, Artist, Album</h5>
-                        <h5 class="card-title"> - </h5>
-                        <h5 class="card-title" id="current-track-artist"></h5>
-                        <div class="nav-right">
-                            <input type="image" src="images/pause.png" id="play-pause-button" name="play button"
+                        <img class="float-left" alt="image of song cover" id="current-track"
+                             src="images/songnotfound.png"/>
+                        <h5 class="card-title col-4" id="current-track-name">Song Name, Artist, Album</h5>
+                        <h5 class="card-title col-4" id="current-track-artist"></h5>
+                        <div class="nav-right row col-2">
+                            <input type="image" src="images/pause.png" id="play-pause-button-player" name="play button"
                                    onclick="togglePlayPause()"/>
                         </div>
                     </nav>

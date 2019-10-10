@@ -126,3 +126,4 @@ const getRecommendations = function () {
 getData()
 getRecommendations()
 addRecBtn.onclick = addRecommendation
+

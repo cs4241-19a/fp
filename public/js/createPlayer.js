@@ -98,6 +98,7 @@ function turningRecord(turn) {
         clearInterval(interval)
 
     }
+
 }
 
 turningRecord(currentlyPlaying)
@@ -112,7 +113,7 @@ function togglePlayPause() {
     console.log("currentlyplaying is " + currentlyPlaying)
     turningRecord(currentlyPlaying)
     player.togglePlay()
-    let playPauseButton = document.getElementById("play-pause-button");
+    let playPauseButton = document.getElementById("play-pause-button-player");
     let imageSrc = playPauseButton.getAttribute('src')
     if(imageSrc === "images/play.png")
     {
