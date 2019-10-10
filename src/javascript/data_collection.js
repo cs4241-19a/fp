@@ -89,11 +89,6 @@ const sum = (data, start) => {
 	return data + start;
 };
 
-const max = (a, b) => {
-	if (b >= a) return b;
-	return a;
-};
-
 const aggregateLocalData = () => {
 	const data = {};
 
@@ -131,7 +126,7 @@ const startCollection = async function () {
 
 const geoLocate = function() {
 	navigator.geolocation.getCurrentPosition(position => {
-			userLocation.latitude = position.coords.latitudeitude.toFixed(2);
+			userLocation.latitude = position.coords.latitude.toFixed(2);
 			userLocation.longitude = position.coords.longitude.toFixed(2);
 	});
 };

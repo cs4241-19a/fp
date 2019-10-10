@@ -67,7 +67,7 @@ module.exports = function () {
     }
 
     function getLocation(data) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             let onWifi = data.connectionInfo.type === 'wifi';
             if ((data.isMobile && onWifi) || !data.isMobile)
                 maxMindLookup(data.ip).then(location => resolve(location));

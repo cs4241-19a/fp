@@ -3,8 +3,6 @@ import {group} from 'd3-array';
 import * as topojson from 'topojson';
 import domains from './domain_list'
 import socket from './index';
-import constant from "d3-array/src/constant";
-import {max} from "d3";
 
 const d3 = Object.assign(d3Base, {group});
 let svg = null;
@@ -179,7 +177,7 @@ const displayBar = function (raw_data) {
 
 const chartHeader = 60;
 const setupMap = function (width, height) {
-    const scaleLength = 400
+    const scaleLength = 400;
     mapHeight = height;
     projection = d3.geoAlbersUsa()
         .translate([width / 2, height / 2 + chartHeader])
@@ -260,9 +258,9 @@ const setupMap = function (width, height) {
         .attr("y", mapHeight - 20 + chartHeader)
         .attr("height", 20)
         .attr("width", 1)
-        .style("fill", function (d, i) {
+        .style("fill", function (d) {
             return constGradient(d);
-        })
+        });
 
     svg.append('text')
         .attr("id", "maxScaleLabel")
@@ -315,7 +313,7 @@ const updateMap = function () {
                 .style("top", (d3.event.pageY - 28) + "px")
                 .style("font-size", "15px")
         })
-        .on("mouseout", d => {
+        .on("mouseout", () => {
             div.transition()
                 .duration(200)
                 .style("opacity", 0)
