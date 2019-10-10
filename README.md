@@ -27,10 +27,12 @@ Note: to collect data and see the bar chart in action, you must click "Start" an
 * Webpack: we used webpack for bundling javascript. We had to create two bundles because there is a second page built specifically for the demo that allows us to delete all data in the database, but we didn't want this capability published in the main bundle.
 * Geocoding API: we used a geocoding API from Texas A&M to look up cities to aggregate by in case of MaxMind unreliability
 * MongoDB: we used MongoDB to store all data
+* Bootstrap: used for styling and for responsiveness on mobile
 
 ## Challenges
 * Live data display with D3
 * Promises, promises, promises
+* Testing is inherently difficult (we're all in Worcester)
 
 ## Division of Work
 * David: Front end display (D3). Styling
