@@ -100,74 +100,32 @@ export default function FeedItem(props) {
     const classes = useStyles();
 
     return (
-
-        <div className="w-full">
             <div className="w-full my-5">
-                <div className="w-full">
-                    <div className="w-full bg-white rounded overflow-hidden shadow-lg">
-                        <div id="btnContainer">
-                            <button id="mello" className="btn" onClick={startMello}>Mellow Music</button>
+                <div className="w-full bg-white rounded overflow-hidden shadow-lg glower">
+                    <div className="w-full h-48 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-t lg:rounded-t-none lg:rounded-l p-4 flex flex-col justify-between leading-normal">
+                        <div className="mb-8">
+                            <p className="text-sm text-gray-600 flex items-center">
+                            </p>
+                            <div className="text-gray-900 font-bold text-xl mb-2">{props.song.title}</div>
+                            <p className="text-gray-700 text-base">
+                                Visualize the awesome tracks that you upload! We have a wide range of customizable visualizers.
+                            </p>
                         </div>
-                        <div id="btnContainer2">
-                            <button className="lbl">Color</button>
-                            <button id="blue" className="btn">Blue - Green</button>
-                            <button id="green" className="btn">Green - Red</button>
-                        </div>
-                        <div className="w-full h-64 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-t lg:rounded-t-none lg:rounded-l p-4 flex flex-col justify-between leading-normal">
-                            <div className="mb-8">
-                                <p className="text-sm text-gray-600 flex items-center">
-                                </p>
-                                <div className="text-gray-900 font-bold text-xl mb-2">We have awesome audio visualizers!</div>
-                                <p className="text-gray-700 text-base">
-                                    Visualize the awesome tracks that you upload! We have a wide range of customizable visualizers.
-                                </p>
-                            </div>
-                            <div className="w-full">
-                                        <span
-                                            className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#visualize</span>
-                                <span
-                                    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#graphics</span>
-                                <span
-                                    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#colors</span>
-                            </div>
-                            <div className="flex items-center">
+                        <div className="w-full flex">
+                            <div className="flex w-1/2 items-center">
                                 <img className="w-10 h-10 rounded-full mr-4" src={require("../media/Manas.jpg")}
                                      alt="Avatar of Manas Mehta"/>
                                 <div className="text-sm">
-                                    <p className="text-gray-900 leading-none">Manas Mehta</p>
+                                    <p className="text-gray-900 leading-none">{props.user.username}</p>
                                     <p className="text-gray-600">Oct 8</p>
                                 </div>
+                            </div>
+                            <div id="btnContainer" className="w-1/2">
+                                <button id="mello" className="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={startMello}>Play</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
-
-
-            <div className={classes.container}>
-                <Paper className={classes.paper} onClick={handleClick}>
-                    {/* <Button
-                        variant="contained"
-                        className={classes.button}
-                        color="primary">
-                            View
-                    </Button> */}
-
-                    <div>
-                        <Typography variant="h5">
-                            {props.song.title} - {props.song.artist}
-                        </Typography>
-                        <Typography component="p">
-                            Uploaded by {props.user.username}
-                        </Typography>
-                    </div>
-                    <Avatar className={classes.avatar}>N</Avatar>
-                </Paper>
-            </div>
-        </div>
     )
-
 }
