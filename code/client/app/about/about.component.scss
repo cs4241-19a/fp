@@ -1,0 +1,31 @@
+ul {
+  &:first-child {
+    list-style-type: none;
+    margin-left: -20px;
+  }
+}
+
+.reveal {
+  overflow:hidden;
+  position:relative;
+  display:inline-block;
+}
+
+.reveal:after {
+  content:" ";
+  position:absolute;
+  display:block;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#fff;
+  z-index:2;
+  transition: all 3s ease;
+}
+
+.reveal.show:after {
+  left:100%
+}
+
+

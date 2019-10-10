@@ -1,0 +1,43 @@
+<app-toast [message]="toast.message"></app-toast>
+
+<h1 id="title" class="title">Register</h1>
+<form [formGroup]="registerForm" (ngSubmit)="register()">
+    <div class="input-group" [ngClass]="setClassUsername()">
+        <label for="input-username">Username:</label>
+        <input nbInput id="input-username"
+               fullWidth class="form-control" type="text" name="username"
+               [status]="username.dirty ? (username.invalid  ? 'danger' : 'success') : ''"
+               formControlName="username" placeholder="Username" autofocus>
+    </div>
+    <div class="input-group" [ngClass]="setClassEmail()">
+        <label for="input-email">Email:</label>
+        <input nbInput id="input-email"
+               fullWidth class="form-control" type="email" name="email"
+               [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''"
+               formControlName="email" placeholder="Email">
+    </div>
+    <div class="input-group" [ngClass]="setClassPassword()">
+        <label for="input-password">Password:</label>
+        <input nbInput id="input-password"
+               fullWidth class="form-control" type="password" name="password"
+               [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : ''"
+               formControlName="password" placeholder="Password (6 characters minimum)">
+        <p class="caption status-danger" *ngIf="password?.hasError('minlength') && password.touched">Your password should have 6 characters minimum.</p>
+    </div>
+    <label for="input-role">Role:</label>
+    <div class="input-group">
+        <select nbInput id="input-role"
+                class="custom-select" name="role" formControlName="role">
+            <option value="" selected disabled>Role</option>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+        </select>
+    </div>
+    <button nbButton fullWidth class="btn btn-primary" type="submit" [disabled]="!registerForm.valid">
+        <i class="fa fa-user-plus"></i> Register
+    </button>
+</form>
+
+<section class="another-action" aria-label="Sign in">
+    Already have an account? <a class="text-link" routerLink="../login">Log in</a>
+</section>

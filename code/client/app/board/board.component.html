@@ -1,0 +1,68 @@
+<div class="card-row" *ngIf="pact">
+    <div class="card-col example-list" style="background-color: rgba(50, 50, 50, 0.05); padding: 10px"
+         cdkDropList
+         #todoList="cdkDropList"
+         [cdkDropListData]="test_data_a"
+         [cdkDropListConnectedTo]="[doneList]"
+         (cdkDropListDropped)="drop($event)">
+        <nb-card>
+            <nb-card-header>Recipes
+                <button nbButton class="float-right" (click)="open(dialog, 'Recipes')" shape="round" size="small" status="success">+</button>
+            </nb-card-header>
+        </nb-card>
+
+        <nb-card *ngFor="let d of test_data_a" cdkDrag>
+            <nb-card-header>{{d.title}}
+                <button nbButton class="float-right" (click)="deleteRecipe(d)" shape="round" size="small" status="danger">x</button>
+            </nb-card-header>
+            <nb-card-body>
+                <p>{{d.content}}</p>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div class="card-col example-list" style="background-color: rgba(50, 50, 50, 0.05); padding: 10px"
+         cdkDropList
+         #doneList="cdkDropList"
+         [cdkDropListData]="test_data_b"
+         [cdkDropListConnectedTo]="[todoList]"
+         (cdkDropListDropped)="drop($event)">
+        <nb-card>
+            <nb-card-header>Exercises
+                <button nbButton class="float-right" (click)="open(dialog, 'Exercise')" shape="round" size="small" status="success">+</button>
+            </nb-card-header>
+        </nb-card>
+
+        <nb-card *ngFor="let d of test_data_b" cdkDrag>
+            <nb-card-header>{{d.title}}
+                <button nbButton class="float-right" (click)="deleteExercise(d)" shape="round" size="small" status="danger">x</button>
+            </nb-card-header>
+            <nb-card-body>
+                <p>{{d.content}}</p>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+
+
+<ng-template #dialog let-data let-ref="dialogRef">
+    <nb-card>
+        <nb-card-header>Add Card</nb-card-header>
+        <nb-card-body>
+            Title: <input nbInput fullWidth #title>
+            <br>
+            Content: <textarea nbInput fullWidth #content></textarea>
+        </nb-card-body>
+        <nb-card-footer>
+            <button nbButton (click)="ref.close([data, title.value, content.value])">Add</button>
+            <span style="padding: 10px"></span>
+            <button nbButton (click)="ref.close()">Cancel</button>
+        </nb-card-footer>
+    </nb-card>
+</ng-template>
+
+
+<nb-card *ngIf="!pact && !isLoading">
+    <nb-card-body style="text-align: center">
+        <h1>You are not in a pact! Please join one for this functionality.</h1>
+    </nb-card-body>
+</nb-card>

@@ -1,0 +1,72 @@
+<app-toast [message]="toast.message"></app-toast>
+
+<nb-card *ngIf="!isLoading">
+    <nb-card-header>Pact settings</nb-card-header>
+    <nb-card-body >
+                <form #pactForm="ngForm" (ngSubmit)="save(pact)">
+
+                    <div class="input-group">
+                        <label for="name">Name:</label>
+                        <input nbInput fullWidth class="form-control" type="text" name="name" id="name"
+                               [(ngModel)]="pact.name" placeholder="Name" required>
+                    </div>
+
+                    <div class="input-group">
+                        <nb-toggle [(ngModel)]="pact.private" name="private" id="private">Private</nb-toggle>
+                    </div>
+
+                    <div class="input-group">
+                    <nb-select placeholder="Weigh Date" [(ngModel)]="pact.weigh_date" name="weigh_date" id="weigh_date">
+                        <nb-option value="Sunday">Sunday</nb-option>
+                        <nb-option value="Monday">Monday</nb-option>
+                        <nb-option value="Tuesday">Tuesday</nb-option>
+                        <nb-option value="Wednesday">Wednesday</nb-option>
+                        <nb-option value="Thursday">Thursday</nb-option>
+                        <nb-option value="Friday">Friday</nb-option>
+                        <nb-option value="Saturday">Saturday</nb-option>
+                    </nb-select>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit" [disabled]="!pactForm.form.valid">
+                        <i class="fa fa-save"></i> Save
+                    </button>
+
+                </form>
+    </nb-card-body>
+</nb-card>
+
+
+<nb-card *ngIf="!isLoading">
+    <nb-card-header>Pact members ({{pact?.users.length}})</nb-card-header>
+    <nb-card-body>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="pact?.users.length === 0">
+            <tr>
+                <td colspan="4">There are no registered users.</td>
+            </tr>
+            </tbody>
+            <tbody>
+            <tr *ngFor="let user of pact?.users">
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.role}}</td>
+                <td>
+                    <button class="btn btn-sm btn-danger" (click)="deleteUser(user)"
+                            [disabled]="auth.currentUser._id === user._id">
+                        <i class="fa fa-trash"></i> Delete
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </nb-card-body>
+</nb-card>

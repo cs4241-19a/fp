@@ -1,0 +1,26 @@
+<app-toast [message]="toast.message"></app-toast>
+<img src="assets/six-pact-logo-transparent brown.png" class="responsive">
+<h1 id="title" class="title">Login</h1>
+<p class="sub-title">Hello! Log in with your email.</p>
+
+<form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div class="input-group" [ngClass]="setClassEmail()">
+        <label for="input-email">Email address:</label>
+        <input nbInput fullWidth class="form-control" type="email" name="email"
+               id="input-email"
+               formControlName="email" placeholder="Email" autofocus>
+    </div>
+    <div class="input-group" [ngClass]="setClassPassword()">
+        <label for="input-password">Password:</label>
+
+        <input nbInput fullWidth class="form-control" type="password" name="password"
+               formControlName="password" placeholder="Password" id="input-password">
+    </div>
+    <button nbButton fullWidth class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">
+        <i class="fa fa-sign-in"></i> Login
+    </button>
+</form>
+
+<section class="another-action" aria-label="Register">
+    Don't have an account? <a class="text-link" routerLink="/auth/register">Register</a>
+</section>

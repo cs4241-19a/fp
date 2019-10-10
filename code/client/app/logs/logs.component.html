@@ -1,0 +1,102 @@
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+
+<nb-card *ngIf="!isLoading">
+    <nb-card-header>
+        Current logs ({{logs.length}})
+    </nb-card-header>
+
+    <nb-card-body>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Weight</th>
+                <th scope="col">Unit</th>
+                <th scope="col">Date</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="logs.length === 0">
+            <tr>
+                <td colspan="4">There are no logs in the DB. Add a new log below.</td>
+            </tr>
+            </tbody>
+            <tbody *ngIf="!isEditing">
+            <tr *ngFor="let log of logs">
+                <td>{{log.weight}}</td>
+                <td>{{log.unit}}</td>
+                <td>{{log.date}}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" (click)="enableEditing(log)">
+                        <i class="fa fa-pencil"></i> Edit
+                    </button>
+                    <button class="btn btn-sm btn-danger ml-1" (click)="deleteLog(log)">
+                        <i class="fa fa-trash"></i> Delete
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+            <tbody *ngIf="isEditing">
+            <tr>
+                <td colspan="4">
+                    <form class="form-inline" #form="ngForm" (ngSubmit)="editLog(log)">
+
+                        <input nbInput class="form-control mr-2" type="number" name="weight"
+                               [(ngModel)]="log.weight" placeholder="Weight" min="0" required>
+
+                        <div nbInput class="mr-2">
+                            <nb-select placeholder="Unit" [(ngModel)]="log.unit" name="unit" id="unit" required>
+                                <nb-option value="lb">lb</nb-option>
+                                <nb-option value="kg">kg</nb-option>
+                                <nb-option value="st">st</nb-option>
+                            </nb-select>
+                        </div>
+
+
+                        <input nbInput [nbDatepicker]="datepicker" [(ngModel)]="log.date" name="date" id="date"
+                               class="form-control mr-2">
+                        <nb-datepicker #datepicker format="MM.dd.yyyy"></nb-datepicker>
+
+                        <button class="btn btn-sm btn-primary mr-2" type="submit" [disabled]="!form.form.valid">
+                            <i class="fa fa-floppy-o"></i> Save
+                        </button>
+                        <button class="btn btn-sm btn-warning" (click)="cancelEditing()">
+                            <i class="fa fa-times"></i> Cancel
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </nb-card-body>
+</nb-card>
+<nb-card *ngIf="!isEditing">
+    <nb-card-header>
+        Add new log
+    </nb-card-header>
+    <nb-card-body>
+        <form class="form-inline" [formGroup]="addLogForm" (ngSubmit)="addLog()">
+
+            <input nbInput class="form-control mr-2" type="number" name="weight"
+                   formControlName="weight" placeholder="Weight" min="0">
+
+            <div class="mr-2">
+                <nb-select placeholder="Unit" formControlName="unit" name="unit" id="unit" required>
+                    <nb-option value="lb">lb</nb-option>
+                    <nb-option value="kg">kg</nb-option>
+                    <nb-option value="st">st</nb-option>
+                </nb-select>
+            </div>
+
+            <input nbInput [nbDatepicker]="datepicker" formControlName="date" class="form-control mr-2">
+            <nb-datepicker #datepicker format="MM.dd.yyyy"></nb-datepicker>
+
+            <button class="btn btn-primary" type="submit" [disabled]="!addLogForm.valid">
+                <i class="fa fa-plus"></i> Add
+            </button>
+        </form>
+    </nb-card-body>
+</nb-card>
+
+

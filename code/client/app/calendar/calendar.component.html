@@ -1,0 +1,22 @@
+<nb-card>
+    <nb-card-body>
+        <jqxScheduler #scheduler
+                      [date]="date" [width]="innerWidth" [height]="innerHeight" [source]="dataAdapter"
+                      [showLegend]="true"
+                      [view]="startingView"
+                      [appointmentDataFields]="appointmentDataFields" [resources]="resources" [views]="views"
+                      (onAppointmentAdd)="onAppointmentAdd($event)"
+                      (onAppointmentDelete)="onAppointmentDelete($event)"
+                      (onAppointmentChange)="onAppointmentChange($event)">
+        </jqxScheduler>
+    </nb-card-body>
+</nb-card>
+
+<nb-card *ngIf="!customView">
+    <nb-card-body style="text-align: center">
+        <button nbButton (click)="exportCalendar('csv')">CSV Export</button>
+        <button nbButton (click)="exportCalendar('json')">JSON Export</button>
+        <button nbButton (click)="exportCalendar('ics')">ICS Export</button>
+    </nb-card-body>
+</nb-card>
+

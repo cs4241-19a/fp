@@ -1,0 +1,106 @@
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+
+<nb-card *ngIf="!isLoading">
+    <nb-card-header>Account settings</nb-card-header>
+    <nb-card-body>
+        <form #accountForm="ngForm" (ngSubmit)="save(user)">
+
+            <div class="input-group">
+                <label for="username">Username:</label>
+                <input nbInput fullWidth class="form-control" type="text" name="username" id="username"
+                       [(ngModel)]="user.username" placeholder="Username" required>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email:</label>
+                <input nbInput fullWidth class="form-control" type="email" name="email" id="email"
+                       [(ngModel)]="user.email" placeholder="Email" required>
+            </div>
+
+            <label for="role">Role:</label>
+            <div class="input-group">
+                <select nbInput fullWidth class="custom-select" name="role" [(ngModel)]="user.role" id="role">
+                    <option value="" disabled>Role</option>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" type="submit" [disabled]="!accountForm.form.valid">
+                <i class="fa fa-save"></i> Save
+            </button>
+
+            <a class="float-right" href="{{fitbitUrl}}">Fitbit Auth</a>
+        </form>
+    </nb-card-body>
+</nb-card>
+
+<nb-card>
+    <nb-card-header>Avatar</nb-card-header>
+    <nb-card-body>
+        <form action="/api/user/1000/file" method="post" enctype="multipart/form-data" (ngSubmit)="onSubmit()">
+            <input nbInput type="file" name="avatar" (change)="onFileChange($event)" />
+            <button nbButton type="submit">Upload</button>
+        </form>
+
+        <img [src]="imgSrc">
+
+        <button nbButton (click)="setAvatar()">Set as avatar</button>
+
+    </nb-card-body>
+</nb-card>
+
+<nb-card *ngIf="!isLoading">
+    <nb-card-header>User settings</nb-card-header>
+    <nb-card-body>
+        <form #statsForm="ngForm" (ngSubmit)="save(user)">
+            <div class="input-group">
+                <label for="starting_weight">Starting weight:</label>
+                <input nbInput fullWidth class="form-control" type="number" name="starting_weight" id="starting_weight"
+                       [(ngModel)]="user.stats.starting_weight" placeholder="Starting weight" required>
+            </div>
+
+            <div class="input-group">
+                <label for="goal_weight">Goal weight:</label>
+                <input nbInput fullWidth class="form-control" type="number" name="goal_weight" id="goal_weight"
+                       [(ngModel)]="user.stats.goal_weight" placeholder="Goal weight" required>
+            </div>
+
+            <div class="input-group">
+                <label for="weight_unit">Weight unit:</label>
+                <input nbInput fullWidth class="form-control" type="text" name="weight_unit" id="weight_unit"
+                       [(ngModel)]="user.stats.weight_unit" placeholder="Weight unit" required>
+            </div>
+
+            <div class="input-group">
+                <label for="occupation">Occupation:</label>
+                <input nbInput fullWidth class="form-control" type="text" name="occupation" id="occupation"
+                       [(ngModel)]="user.stats.occupation" placeholder="Occupation" required>
+            </div>
+
+            <button class="btn btn-primary" type="submit" [disabled]="!statsForm.form.valid">
+                <i class="fa fa-save"></i> Save
+            </button>
+        </form>
+    </nb-card-body>
+</nb-card>
+
+<nb-card *ngIf="!isLoading">
+    <nb-card-header>Preferences</nb-card-header>
+    <nb-card-body>
+        <form #prefForm="ngForm" (ngSubmit)="save(user)">
+            <div class="input-group">
+                <nb-toggle [(ngModel)]="user.preferences.notifications" name="notifications" id="notifications">Notifications</nb-toggle>
+            </div>
+
+            <div class="input-group">
+                <nb-toggle [(ngModel)]="user.preferences.emails" name="emails" id="emails">Emails</nb-toggle>
+            </div>
+
+            <button class="btn btn-primary" type="submit" [disabled]="!prefForm.form.valid">
+                <i class="fa fa-save"></i> Save
+            </button>
+        </form>
+    </nb-card-body>
+</nb-card>

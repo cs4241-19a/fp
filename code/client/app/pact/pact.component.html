@@ -1,0 +1,117 @@
+<!--If in pact-->
+<div *ngIf="pact">
+    <nb-card>
+        <nb-card-body>
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>{{pact.name}}</h2>
+                    <h5>{{pact.users.length}} members</h5>
+                    <h6>{{pact.private ? 'Private' : 'Public'}} group</h6>
+                    <h6>Created on {{pact.date_created}}</h6>
+                </div>
+
+                <div class="col-md-4">
+                    <button class="float-right m-2" nbButton (click)="open(dialog)">Leave Pact</button>
+                    <button class="float-right m-2" routerLink="/dashboard/pactsettings" nbButton
+                            *ngIf="pact.owner == user._id">Settings
+                    </button>
+                </div>
+            </div>
+
+        </nb-card-body>
+    </nb-card>
+
+    <app-user-list [users]="pact?.users"></app-user-list>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <nb-card>
+                <nb-card-header>Total Weight Loss</nb-card-header>
+                <nb-card-body>
+                    <ngx-d3-pie [users]="pact?.users"></ngx-d3-pie>
+                </nb-card-body>
+            </nb-card>
+        </div>
+        <div class="col-lg-6">
+            <nb-card>
+                <nb-card-header>Monthly Weight Loss</nb-card-header>
+                <nb-card-body>
+                    <ngx-d3-line [users]="pact?.users"></ngx-d3-line>
+                </nb-card-body>
+            </nb-card>
+        </div>
+    </div>
+
+    <app-calendar [customView]="['agendaView']"></app-calendar>
+
+</div>
+
+
+<!-- If not in pact -->
+<div *ngIf="!pact && !isLoading">
+
+    <nb-card style="padding: 20px; text-align: center">
+        <h2> You aren't part of a pact</h2>
+    </nb-card>
+
+    <nb-card>
+
+        <nb-card-body>
+            <h1> Join a pact </h1>
+            <input id="input-pact-join" type="text" nbInput placeholder="Name" [(ngModel)]="pactId">
+            <input id="input-pact-secret" type="text" nbInput placeholder="Secret" [(ngModel)]="pactSecret">
+            <br><br>
+            <button nbButton (click)="joinPact()">Join Pact</button>
+
+            <hr>
+
+            <h1> Create a Pact </h1>
+
+            <nb-stepper #stepper>
+                <nb-step [stepControl]="firstForm" label="First step">
+                    <form [formGroup]="firstForm" (ngSubmit)="onFirstSubmit()" class="step-container">
+                        <div class="input-group">
+                            <input nbInput type="text" placeholder="Enter pact name" class="form-control"
+                                   formControlName="firstCtrl"
+                                   [ngClass]="{'form-control-danger': firstForm.invalid && (firstForm.dirty || firstForm.touched)}">
+                        </div>
+                        <button nbButton nbStepperNext type="submit">next</button>
+                    </form>
+                </nb-step>
+                <nb-step [stepControl]="secondForm" label="Second step">
+                    <form [formGroup]="secondForm" (ngSubmit)="onSecondSubmit()" class="step-container">
+                        <div class="input-group">
+                            <nb-radio-group formControlName="secondCtrl">
+                                <nb-radio value="public">Public</nb-radio>
+                                <nb-radio value="private">Private</nb-radio>
+                            </nb-radio-group>
+                        </div>
+                        <div class="input-group" *ngIf="secondForm.value.secondCtrl == 'private'">
+                            <input nbInput type="text" placeholder="Enter password" class="form-control"
+                                   formControlName="password"
+                                   [ngClass]="{'form-control-danger': secondForm.invalid && (secondForm.dirty || secondForm.touched)}">
+                        </div>
+                        <button nbButton nbStepperPrevious type="button">prev</button>
+                        <button nbButton nbStepperNext type="submit">next</button>
+                    </form>
+                </nb-step>
+                <nb-step label="Third step">
+                    <button nbButton (click)="createPact()">Make Group</button>
+                </nb-step>
+            </nb-stepper>
+        </nb-card-body>
+    </nb-card>
+</div>
+
+
+<ng-template #dialog let-data let-ref="dialogRef">
+    <nb-card>
+        <nb-card-header>Confirm</nb-card-header>
+        <nb-card-body>{{ data }}</nb-card-body>
+        <nb-card-footer>
+            <button nbButton (click)="leavePact(); ref.close()">Yes</button>
+            <span style="padding: 10px"></span>
+            <button nbButton (click)="ref.close()">No</button>
+        </nb-card-footer>
+    </nb-card>
+</ng-template>

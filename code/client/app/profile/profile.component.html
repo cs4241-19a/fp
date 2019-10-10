@@ -1,0 +1,171 @@
+<div class="card-row" id="first-card">
+        <nb-card class="col-md-6">
+            <nb-card-body *ngIf="!isLoading" class="user-info-container">
+
+                <!--avatar image-->
+                <div id="avatar-container" class="align-left col-md-4 avatar-container">
+                    <img id="avatar" src="{{user.avatarUrl ? user.avatarUrl : '/assets/groot-avatar.png'}}" class="rounded mb-0 avatar-img" alt="profile picture"
+                         nbTooltip="Click to change avatar photo" nbTooltipPlacement="bottom" tooltip-background-color="grey"
+                         (mouseover)="addImgOverlay()" (mouseout)="removeImgOverlay()" routerLink="/dashboard/account">
+                </div>
+
+                <!--user data next to image-->
+                <div class="align-right col-md-8 user-info">
+                    <h2 class="user-name">Hi, {{fitBitUser?.user.fullName? fitBitUser?.user.fullName : user?.username}}!</h2>
+                    <h4 id="pact-text" routerLink="/dashboard/pact" *ngIf="!isLoading">{{generatePactMessage()}}</h4>
+                    <a id="redirect-to-pact" href="/dashboard/pact" class="pact-link"></a>
+<!--                        {{fitBitUser?.user.age? fitBitUser?.user.age : user?.email}} {{', ' + fitBitUser?.user.country? fitBitUser?.user.country : ""}}</h5>-->
+<!--                    <h5>{{fitBitUser?.user.dateOfBirth}}</h5>-->
+                </div>
+            </nb-card-body>
+        </nb-card>
+
+    <!--badges-->
+    <div class="col-md-6">
+        <nb-card>
+            <nb-card-body class="horizontal-items" *ngIf="!isLoading">
+                <span class="align-middle col-sm-2" *ngFor="let badge of user.badges">
+                    <img class="responsive" src="{{badge.imgUrl}}" nbTooltip="{{badge.message}}">
+                </span>
+                <span class="col-sm-1 align-middle" *ngFor="let i of Arr(num).fill(1)">
+                    <i class="fas fa-question-circle responsive" style="font-min-size: 100%" nbTooltip="Log your activity to unlock these badges!"></i>
+                </span>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+
+<!--first row of stats-->
+<div class="card-row">
+    <!--sleep -->
+    <nb-card class="col-md-6">
+        <nb-card-header>Your Weekly ZZZ's</nb-card-header>
+        <div class="row" *ngIf="!isLoading">
+            <nb-card-body>
+                <ngx-charts-bar-vertical
+                        [view]="view"
+                        [scheme]="colorScheme"
+                        [results]="graphSleepJson"
+                        [gradient]="gradient"
+                        [xAxis]="showXAxis"
+                        [yAxis]="showYAxis"
+                        [legend]="showLegend"
+                        [showXAxisLabel]="showXAxisLabel"
+                        [showYAxisLabel]="showYAxisLabel"
+                        [xAxisLabel]="xAxisLabelSleep"
+                        [yAxisLabel]="yAxisLabelSleep">
+                </ngx-charts-bar-vertical>
+            </nb-card-body>
+        </div>
+    </nb-card>
+
+    <div class="col-md-3">
+        <!--distance circle-->
+        <nb-card class="tiny">
+            <nb-card-body>
+                <svg id="distanceCircle"></svg>
+            </nb-card-body>
+        </nb-card>
+
+        <!--steps circle-->
+        <nb-card class="tiny">
+            <nb-card-body>
+                <svg id="stepCircle"></svg>
+            </nb-card-body>
+        </nb-card>
+    </div>
+
+    <div class="col-md-3">
+        <!--active mins circle-->
+        <nb-card class="tiny">
+            <nb-card-body>
+                <svg id="exerciseCircle"></svg>
+            </nb-card-body>
+        </nb-card>
+
+        <!--calories circle-->
+        <nb-card class="tiny">
+            <nb-card-body>
+                <svg id="calorieCircle"></svg>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+
+<!--second row of stats-->
+<!--weight bar and info-->
+<div class="card-row" *ngIf="!isLoading">
+    <div class="card-col">
+        <nb-card size="tiny">
+            <nb-card-header> Weight Stats</nb-card-header>
+            <nb-card-body>
+                <nb-progress-bar value="{{getWeightPercent()}}"
+                                 [displayValue]="true"
+                                 size="giant" nbTooltip="{{getWeightData()}}"
+                                 status="{{setProgressBarColor()}}">
+
+                </nb-progress-bar>
+                <div class="horizontal-items" style="padding-top: 2%">
+                    <div class="weight-container">
+                        <div class="col-md-4 weight-info">
+                            <p>Current</p>
+                            <h4>{{getLastLog()}}</h4>
+                        </div>
+                        <div class="col-md-4">
+                            <p>Goal</p>
+                            <h4>{{user.stats.goal_weight}}</h4>
+                        </div>
+                        <div class="col-md-4">
+                            <p>Remaining</p>
+                            <h4>{{getLastLog()-user.stats.goal_weight}}</h4>
+                        </div>
+                        <div class="col-md-4 weight-percent-display">
+                            <p>Complete</p>
+                            <h1 class="percentage-val">{{getWeightPercent()+"%"}}</h1>
+                        </div>
+                    </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+
+        <!--calories chart-->
+        <nb-card size="medium">
+            <nb-card-header>Calorie card</nb-card-header>
+            <ngx-charts-area-chart
+                    [view]="calView"
+                    [scheme]="colorScheme"
+                    [results]="graphCalsJson"
+                    [xAxis]="showXAxis"
+                    [yAxis]="showYAxis"
+                    [yScaleMin]="calYStepMin"
+                    [legend]="showLegend"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [xAxisLabel]="xAxisLabelCals"
+                    [yAxisLabel]="yAxisLabelCals">
+            </ngx-charts-area-chart>
+        </nb-card>
+    </div>
+<!--steps -->
+    <div class="card-col">
+        <nb-card size="giant" *ngIf="!isLoading">
+            <nb-card-header>Your Weekly Steps</nb-card-header>
+            <nb-card-body>
+                <ngx-charts-bar-vertical
+                        [view]="stepsView"
+                        [scheme]="colorScheme"
+                        [results]="graphStepsJson"
+                        [gradient]="gradient"
+                        [xAxis]="showXAxis"
+                        [yAxis]="showYAxis"
+                        [legend]="showLegend"
+                        [showXAxisLabel]="showXAxisLabel"
+                        [showYAxisLabel]="showYAxisLabel"
+                        [xAxisLabel]="xAxisLabelSteps"
+                        [yAxisLabel]="yAxisLabelSteps">
+                </ngx-charts-bar-vertical>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
+

@@ -1,0 +1,20 @@
+<nb-layout windowMode>
+    <nb-layout-header fixed>
+        <ngx-header></ngx-header>
+    </nb-layout-header>
+
+    <nb-sidebar class="menu-sidebar" tag="menu-sidebar" responsive start>
+        <!--    <ng-content select="nb-menu"></ng-content>-->
+        <nb-menu [items]="menu"></nb-menu>
+
+        <img [src]="imgSrc" class="responsive" style="position: fixed; bottom: 0; margin-left: -20px">
+    </nb-sidebar>
+
+    <nb-layout-column>
+        <router-outlet></router-outlet>
+    </nb-layout-column>
+
+    <nb-layout-footer fixed>
+        <ngx-footer></ngx-footer>
+    </nb-layout-footer>
+</nb-layout>
