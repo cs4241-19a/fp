@@ -80,6 +80,9 @@ class App extends React.Component {
           <Menu selectRole={this.selectRole.bind(this)} />
         )}
         <Game selectedRole={this.state.selectedRole} />
+        <div className="test1">
+          <button className="Reset">RESET</button>
+        </div>
       </div>
     );
   }
@@ -126,6 +129,12 @@ class Modals extends React.Component {
                 <br />
               </div>
               <div className="modal-body">
+                <img
+                  className="spyImage"
+                  src="spy.png"
+                  width="270"
+                  height="333"
+                ></img>
                 <p>
                   On the board there are 25 tiles, each of which have the
                   codename of different secret agent. Each agent is either a
@@ -236,24 +245,28 @@ class Chat extends React.Component {
       <div className="chat">
         <div className="chat-container">
           <div className="log">
-          {this.state.log.map((hint, index) => {
-            return (
-              <div key={index} className="clue" style={{ color: hint.sender }}>
-                {hint.clue} : {hint.amt}
-              </div>
-            );
-          })}
+            {this.state.log.map((hint, index) => {
+              return (
+                <div
+                  key={index}
+                  className="clue"
+                  style={{ color: hint.sender }}
+                >
+                  {hint.clue} : {hint.amt}
+                </div>
+              );
+            })}
           </div>
-          {this.props.role.endsWith("spymaster") &&
-          <div className={"hintSubmission"}>
-            <input
+          {this.props.role.endsWith("spymaster") && (
+            <div className={"hintSubmission"}>
+              <input
                 placeholder="Clue"
-                onChange={e => this.setState({clue: e.target.value})}
+                onChange={e => this.setState({ clue: e.target.value })}
                 id="msg"
-            />
-            <div className={"amountInput"}>{this.createAmounts()}</div>
-          </div>
-          }
+              />
+              <div className={"amountInput"}>{this.createAmounts()}</div>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -514,9 +527,9 @@ function setBoard(order) {
     }
   }
   //for words to teams
-  setTeam("red", order);
+  setTeam("#ff6666", order);
 
-  setTeam("blue", order);
+  setTeam("#4d79ff", order);
 
   setTeam("black", order);
 
@@ -527,11 +540,14 @@ function setBoard(order) {
     if (type === "black") {
       amount = 1;
     }
-    if ((order === 0 && type === "red") || (order === 1 && type === "blue")) {
+    if (
+      (order === 0 && type === "#ff6666") ||
+      (order === 1 && type === "#4d79ff")
+    ) {
       amount += 2;
     } else if (
-      (order === 1 && type === "red") ||
-      (order === 0 && type === "blue")
+      (order === 1 && type === "#ff6666") ||
+      (order === 0 && type === "#4d79ff")
     ) {
       amount++;
     }
