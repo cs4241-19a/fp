@@ -19,7 +19,6 @@ GNU Lesser General Public License for more details.
 
 */
 
-
 /*
 PS.init( system, options )
 Called once after engine is initialized but before event-polling begins.
@@ -41,12 +40,10 @@ var up = 0;
 var down = 0;
 var once = false;
 
-
 var score = 0;
 var highscore = 0;
 var player_speed = 9;
 var enemy_speed = 14;
-
 
 var enemy;
 var enemy_x, enemy_y;
@@ -57,36 +54,14 @@ var player;
 var isAlive = true;
 var canMove = true;
 var touching = false;
-var first = true;
-//var moving = false; //for object movement
-	
-//Objects in Map
-var obj1 = {
-	name: "obj1",
-	color: PS.COLOR_INDIGO,
-	x: 0, //GRID_W -1
-	y: 0,	//GRID_Y
-	length: 1,
-	height: 1
-}
+var first = true;	
 
-var obj2 = {
-	name: "obj2",
-	color: PS.COLOR_ORANGE,
-	x: 0, //GRID_W -1
-	y: 0,	//GRID_Y
-	length: 2,
-	height: 1,
-}
 const GRID_W = 16, GRID_H = 8;
 
 var TIMER = {
 	global : 0,
 	tick : function() {
-		if (!isAlive) {
-			return
-		}
-
+		if (!isAlive) { return }
 		TIMER.global+=1;
 
 		// enemy move
@@ -101,30 +76,57 @@ var TIMER = {
 			}
 		}
 
-		// player move
+		// player move up
 		if (jump && TIMER.global % player_speed === 0 && up != 2) {
 			player_y -= 1;
 			PS.spriteMove(player, player_x, player_y);
 			up+=1;
-			if (up == 2) {
-				jump = false
-			}
-		}
+			if (up == 2) { jump = false }
+		}  //player move down
 		else if (TIMER.global % player_speed == 0 && player_y < 6 && up == 2 && !touching) {
 			player_y += 1;
 			PS.spriteMove(player,player_x,player_y)
-			if (player_y == 6) {
-				up = 0;
-			}
+			if (player_y == 6) { up = 0 }
 		} 
 		
 		// kill player
 		if (player_x == enemy_x && player_y == enemy_y) {
-			isAlive = false;
-			score = 0;
-			player_speed = 11;
-			enemy_speed = 16;
-			PS.statusText( "Game over, press space to try again" );
+			if ( score > 0 ) {
+
+				var json = {'score': score },
+					body = JSON.stringify( json );
+
+				fetch('/scores', {
+					method: 'POST',
+					body,
+					headers: {'Content-Type':'application/json'}
+				}).then(function( response ){
+					console.log( response )
+					return response.json()
+				}).then(function( json ){
+					if (json.condition == 1) {
+						PS.statusText("NEW HIGH SCORE!! PRESS SPACE TO PLAY AGAIN")
+						isAlive = false;
+						score = 0;
+						player_speed = 11;
+						enemy_speed = 16;
+					}
+					else {
+						isAlive = false;
+						score = 0;
+						player_speed = 11;
+						enemy_speed = 16;
+						PS.statusText( "Game over, press space to try again" );
+					}
+				});
+			}
+			else {
+				isAlive = false;
+				score = 0;
+				player_speed = 11;
+				enemy_speed = 16;
+				PS.statusText( "Game over, press space to try again" );
+			}
 		}
 
 		//increase speed
@@ -211,9 +213,6 @@ PS.init = function( system, options ) {
 	
 		PS.statusText( "SCORE = " + score + " HIGHSCORE = " + highscore);
 	});
-
-
-
 };
 
 /*

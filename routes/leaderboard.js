@@ -9,21 +9,7 @@ router.get('/', function(req, res, next) {
     if (app.database == undefined) {
         app.database = low(adapter);
     }
-    /*
-    var count = app.database.get('idCount').value()
-    var users = app.database.get('users')
-    var highscores = []
-    for (var i = 1; i <= count; i++) {
-        var current = users.find({id:i})
-        highscores.push(current.get('highscore').value())
-    }
-    console.log(highscores)
-    */
     res.json(app.database.get('users'));
   });
-
-
-
-
 
 module.exports = router;

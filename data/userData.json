@@ -1,58 +1,39 @@
 {
-
-  "idCount": 7,
-
+  "idCount": 2,
   "users": [
     {
       "username": "jack",
       "password": "secret",
       "id": 1,
-      "highscore": 500,
-      "games": []
+      "highscore": 10,
+      "games": [
+        {
+          "score": 10
+        },
+        {
+          "score": 10
+        },
+        {
+          "score": 10
+        }
+      ]
     },
     {
       "username": "jill",
       "password": "birthday",
       "id": 2,
-      "highscore": 1000,
-      "games": []
-    },
-    {
-      "username": "tada",
-      "password": "secret",
-      "id": 3,
-      "highscore": 0,
-      "games": []
-    },
-    {
-      "username": "jane",
-      "password": "intense",
-      "id": 4,
-      "highscore": 0,
-      "games": []
-    },
-    {
-      "username": "ale4",
-      "password": "1234",
-      "id": 5,
-      "highscore": 0,
-      "games": []
-    },
-    {
-      "username": "thtfh",
-      "password": "24244",
-      "id": 6,
-      "highscore": 0,
-      "games": []
-
-    },
-    {
-      "username": "lizzie",
-      "password": "hello",
-      "id": 7,
-      "highscore": 0,
-      "games": []
-
+      "highscore": 9,
+      "games": [
+        {
+          "score": 6
+        },
+        {
+          "score": 9
+        },
+        {
+          "score": 9
+        }
+      ]
     }
   ]
 }
