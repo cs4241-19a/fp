@@ -23,6 +23,6 @@ We use MongoDB to store our users, books, and messages. Node.js is used for the 
 We encountered issues upon sending data to the server and redirecting the client. If they were out of sync, the page would hang and the user wouldn't know if the request went through. To remedy this, we instead pulled JSON data from the server and had the client redirect to the correct view. This refreshes the pages on submit and so the data is up to date.
 
 ## Individual Responsibilities
-- Joe Bartone - front end, 
+- Joe Bartone - front end, messaging JS functionality, 
 - Chris Mercer - routing, front end JS, session saving
 - Danny Sullivan - MongoDB and other database functionality
