@@ -73,7 +73,7 @@ Task.init({
         allowNull: false,
     },
     dueDate: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
         allowNull: false,
     },
     uhoh: {
@@ -114,7 +114,7 @@ function getUser(username){
 //getUserTasks
 function getUserTasks(username){
 	return getUser(username).then((user) => {
-		Task.findAll({
+		return Task.findAll({
 		    where: {userId: user.id}
 		});
     })
@@ -139,7 +139,7 @@ function updateTask(taskId, object){
     return Task.findOne({
         where: {id: taskId}
     }).then(result => {
-        result.update(object)
+        return result.update(object)
     });
 }
 

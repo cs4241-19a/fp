@@ -155,11 +155,13 @@ app.post(
 			return
 		}
 		
-		console.log(req.user.username)
+		console.log("Getting tasks for: ", req.user.username)
 		
 		database.getUserTasks(req.user.username).then(
 		function(tasks)
 		{
+			console.log("tasks: ", tasks)
+			
 			tasks = tasks === undefined ? [] : tasks
 			
 			tasks.forEach((task) =>
@@ -182,8 +184,6 @@ app.post(
 			{
 				task.deltaTime = undefined
 			})
-			
-			console.log("tasks: ", tasks)
 			res.json(tasks)
 		})
 	}
@@ -200,12 +200,15 @@ app.post(
 			return
 		}
 		
+		const task = req.body
+		console.log(task)
+		
 		database.getUser(req.user.username).then(
 		function(user)
 		{
-			const task = JSON.parse(req.body)
 			task.userId = user.id
 			
+			console.log("created task: ", task.title)
 			database.createTask(task)
 			
 			res.status(200)
@@ -225,8 +228,11 @@ app.post(
 			return
 		}
 		
-		const task = JSON.parse(req.body)
+		const task = req.body
 		const taskId = task.id
+		
+		console.log("Updating task: ", taskId, task)
+		
 		task.id = undefined 	// Don't update the task id to be the same that it already is
 		
 		database.updateTask(taskId, task).then(
@@ -250,7 +256,7 @@ app.post(
 			return
 		}
 		
-		const json = JSON.parse(req.body)
+		const json = req.body
 		
 		database.deleteTask(json.id)
 		res.status(200)
