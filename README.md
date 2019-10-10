@@ -1,10 +1,10 @@
 # cs4241-FinalProject
-###Michael Bosik###
-###Hunter Caouette###
-###https://fp-michaelbosik-huntercaouette.glitch.me ###
+###Michael Bosik
+###Hunter Caouette
+###https://fp-michaelbosik-huntercaouette.glitch.me
 
 
-##Proposal##
+##Proposal
 
 Our final project proposal is to create a website utilising the Spotify web API,
 to have a user search for an artist or a song, add it to a persistant database,
