@@ -1,13 +1,14 @@
 import React from 'react';
 import {Card} from 'react-bootstrap';
+import {Modal} from 'react-bootstrap';
 import {Button, ButtonToolbar} from 'react-bootstrap';
 import {Form, FormGroup, ControlLabel, FormControl, inputRef, row, col, Col} from 'react-bootstrap';
 import DatePicker from 'react-datepicker'
-import TimePicker from 'rc-time-picker';
+//import TimePicker from 'rc-time-picker';
 import moment from 'moment';
-import 'rc-time-picker/assets/index.css';
+//import 'rc-time-picker/assets/index.css';
 //import 'bootstrap/dist/css/bootstrap.min.css';
-import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker.css';
 
 class TaskCardEntry extends React.Component {
 
@@ -15,28 +16,21 @@ class TaskCardEntry extends React.Component {
 		super(props);
 		this.state = {
 			taskTitle: "",
-			dueDateDay: new Date(),
-			dueDateTime: new Date(),
+			dueDate: new Date(),
 			priority: 0,
 			description: "",
+			show: false
 		};
     }
 	
 	// handle the date day changing (seperate from the rest of the data changing
 	handleDateChange = date => {
 		this.setState({
-		  dueDateDay: date
+		  dueDate: date
 		});
-		console.log(this.state.dueDateDay);
 	};
   
-	handleTimeChange = time => {
-		this.setState({
-		  dueDateTime: time
-		});
-		console.log(this.state.dueDateTime)
-	}; 
-  
+	
   
     // default data updating
     handleChange = event => {
@@ -49,33 +43,44 @@ class TaskCardEntry extends React.Component {
 	// on submit click
    handleSubmit = event => {
 		event.preventDefault();
-		var dueDate = moment().format(this.state.dueDateDay + " " + this.state.dueDateTime)
-		console.log(dueDate);
+		this.setState({show: false});
+	//	var dueDate = moment().format(this.state.dueDate)
+	//	console.log(dueDate);
 		fetch("/createtask",
 		{
 			"method": "POST",
 			"body": JSON.stringify(
 			{
 				"title": this.state.taskTitle,
-				"dueDate": dueDate,
+				"dueDate": this.state.dueDate,
 				"priority": this.state.priority,
-				"discription": this.state.description,
+				"description": this.state.description,
 				"completed": false,
 				"uhoh": false,
 				"doLater": false,
 			}),
 			"headers": {"Content-Type": "application/json"}
 		})
-		.then(console.log)
+		.then(console.log);
    }
    
    // cancel and close the card
    cancel = event => {
 	   console.log("Cancelled");
    }
+   
+   handleClose = () => {
+		this.setState({show: false});
+	}
+	handleEdit = () => {
+		this.setState({show: true});
+	}
 	
 	render() {
 		return (
+		<div className = "text-center">
+		<Button variant="info"  onClick = {this.handleEdit}>New Task</Button>
+		 <Modal  show={this.state.show} onHide={this.handleClose}>
 			<div> 
 				<Card bg="info" text="secondary" style={{ width: '30rem' }}>
 				   <Card.Header>
@@ -92,19 +97,15 @@ class TaskCardEntry extends React.Component {
 						</Form>
 						<Form.Group className ="text-right" controlId = "dueDateDay">
 							<Form.Label>Select a Due Date: </Form.Label>
-							<DatePicker dateFormat="mm/dd/yyyy" selected={this.state.dueDateDay} onChange={this.handleDateChange} />
-						</Form.Group>
-						<Form.Group className ="text-right" controlId = "dueDateTime" >
-							<Form.Label>Select a Due Date Time: </Form.Label>
-							<TimePicker onChange={this.handleTimeChange} default = {moment()}/>
+							<input type = 'date' onChange={this.handleDateChange}/>
 						</Form.Group>
 				   </Card.Header>
 				  <Card.Body>
 					<Form>						
 						<div className = "mb-3 text-center" onChange={this.handleChange}>
-							<input type="radio" value='0' name="gender" style={{ margin: '5px' }}/> Low
-							<input type="radio" value='1' name="gender" style={{ margin: '5px' }}/> Medium
-							<input type="radio" value='2' name="gender" style={{ margin: '5px' }}/> High
+							<input type="radio" value='0' name="priority" style={{ margin: '5px' }}/> Low
+							<input type="radio" value='1' name="priority" style={{ margin: '5px' }}/> Medium
+							<input type="radio" value='2' name="priority" style={{ margin: '5px' }}/> High
 						</div>
 											  
 						<Form.Group controlId="description">
@@ -120,11 +121,13 @@ class TaskCardEntry extends React.Component {
 					</Form>
 					<ButtonToolbar>
 						<Button variant="outline-secondary" style={{ margin: '5px' }} type = "submit" onClick = {this.handleSubmit}> Add Task</Button>
-						<Button variant="outline-secondary" style={{ margin: '5px' }}onClick = {this.cancel}>Cancel</Button>
+						<Button variant="outline-secondary" style={{ margin: '5px' }}onClick = {this.handleClose}>Cancel</Button>
 					</ButtonToolbar>
 				  </Card.Body>
 				</Card>
 			</div>
+		 </Modal>
+		 </div>
 		);	
 	}
 }

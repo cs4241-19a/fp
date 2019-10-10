@@ -1,6 +1,8 @@
 import React from 'react';
+import {Button} from 'react-bootstrap';
 
 import TaskCard from './TaskCard';
+import TaskCardEntry from './TaskCardEntry';
 
 import './App.css';
 
@@ -11,10 +13,10 @@ class App extends React.Component{
     super(props);
     this.state = {
       tasks: [
-        {title: "hi", z: 3, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333"},
-        {title: "hola", z: 2, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333"},
-        {title: "ohio", z: 1, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333"},
-        {title: "yo", z: 0, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333"},
+        {title: "hi", z: 3, description: "Take your time back.", priority_text: "Medium", date: "3333-11-22"},
+        {title: "hola", z: 2, description: "Take your time back.", priority_text: "Medium", date: "3333-11-22"},
+        {title: "ohio", z: 1, description: "Take your time back.", priority_text: "Medium", date: "3333-11-22"},
+        {title: "yo", z: 0, description: "Take your time back.", priority_text: "Medium", date: "3333-11-22"},
       ],
     }
   }
@@ -57,15 +59,24 @@ class App extends React.Component{
         buttonCallback={() => {this.handleClick()}} />
     )
   }
+  
+  renderTaskCardEntry(){
+	  console.log("Doing this");
+	  
+  }
 
   render() {
     return (
       <div>
+			  
         {this.renderTaskCard(0)}
         {this.renderTaskCard(1)}
         {this.renderTaskCard(2)}
         {this.renderTaskCard(3)}
+
+		
       </div>
+	  
     );
   }
 }
