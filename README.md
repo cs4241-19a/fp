@@ -1,51 +1,51 @@
-# cs4241-FinalProject
+# When3Meet
 
-For your final project, you'll implement a course project that exhibits your mastery of the course materials. 
-Similar to A4, this project gives you an opportunity to be creative and to pursue individual research and learning.
+## The Team
 
-## General description
+Max Westwater - @Max5254
+Cat Sherman - @catsherman
+Ben Hetherington - @bwhetherington
 
-Your project should consist of a complete Web application, exhibiting facets of the three main sections of the course material:
+## Outline
 
-- Static Web page content and design. You should have a project that is accessible, easily navigable, and features significant content.
-- Dynamic behavior implemented with JavaScript.
-- Server-side programming *using Node.js*. Typically this will take the form of some sort of persistent data, authentication, and possibly server-side computation.
+Our group created our When3Meet web app to improve upon the existing When2Meet. We provide a way to schedule events similar to When2Meet, where a user can specify their availability using a table of hours across different days, and dragging to select which hours they are available for. Another table then displays the availability of everyone attending the event. The key improvements we made to When2Meet are in our account system. By allowing users to create an account and save their availability to their account, they can simply automatically fill in their availability on events using the stored availability in their account, so they do not need to repeat filling out the same information for every event.
 
-Additionally, you should incorporate features that you independently research, design, and implement for your project.
+The project itself can be found [here](http://www.when3meet.com).
 
-## Project ideation
+## Usage
 
-Excellent projects serve someone/some group; for this assignment you need to define your users and stakeholders. I encourage you to identify projects that will have impact, either artistically, politically, or in terms of productivity. Consider creating something useful for a cause or hobby you care about.
+Users are required to have an account. Click the login button in the navigation bar or on the home page in order to login or create an account. From there you can create a new event by selecting the title, time range, and days of the week. This will then redirect to the page where you can fill in the availability, and also serve as the link to send for others to fill out this When3Meet.
 
-## Logistics
+## Technologies
 
-### Team size
-Students are encouraged to work in teams of 2-5 students for the project. This will allow you to build a good project without expending an excessive amount of effort. While I would expect a team of four or five students to produce a project with more features, I expect a every team's work to exhibit all of the required facets described above.
+The key technologies we used in this project are React for the client and MongoDB (via Mongoose) for the database, as well as Express for the server itself. Parcel was used to compile and bundle the project.
 
-### Deliverables
+### React
 
-__Proposal:__ 
-Provide an outline of your project direction and the names of the team members. 
-The outline should have enough detail so that staff can determine if it meets the minimum expectations, or if it goes too far to be reasonable by the deadline.
-This file must be named proposal.md so we can find it.
-Submit a PR to turn it in by Monday, September 30th, before class
+We opted to use React along with server-side rendering for this project. We chose React due to its flexibility in usage, as well as the large selection of components already made for it that we could base our app off of. Partly as an experiment, and also to improve the rendering speed of the website, we chose to render the pages on the server, and then transfer the rendered page to the user when they request a page. The client then "hydrates" the page. This stage essentially just attaches necessary event listeners to the HTML rendered by the server to maintain the expected functionality.
 
-There are no other scheduled checkpoints for your project. 
-You must be done in time to present before the final project demo day (October 10th). 
+### MongoDB and Mongoose
 
-#### Turning in Your Outline / Project
+For our database, we used MongoDB Atlas, along with Mongoose as the driver on the server. MongoDB makes it easy to store data in JSON, a very Javascript-friendly data format. Mongoose provides us with the ability to specify schemas for the database, a feature MongoDB does not provide on its own. This greatly simplifies much of the code for interacting with the database, as well as ensures that we have consistent data going into and out of the database. The database itself was hosted using MongoDB Atlas. By hosting the database in the cloud, we can host our server anywhere we wish. This is particularly useful for us as we opted to host our server on Heroku. Unlike Glitch, Heroku does not provide any form of persistent file system. If the project sleeps due to inactivity and then restarts, all of the files on the server that were created while it ran are deleted. Extracing out our persistent data to another service solves this problem.
 
-**NOTE: code is due before the project presentation day due to the end of term / grading schedule constraints**
-Submit a second PR on the final project repo to turn in your app and code.
+### Parcel
 
-Deploy your app, in the form of a webpage, to Glitch/Heroku/Digital Ocean or some other service.
-Folks on the same team do not need to post the same webpage, but must instead clearly state who is on the team in their proposal.
-(Staff will use the proposal to build the grading sheet.)
+Parcel provided an easy way to use modern Javascript features in our project, such as React's JSX syntax, ES6 modules, as well as `async`/`await` syntax. In addition, it provides a "watch" mode to allow us to automatically recompile the project whenever a file was changed. In addition, it allows for "hot reloading", where, if the code for the website is recompiled, whatever page the developer has open can be automatically reloaded. Along with nodemon to automatically reload the server when it is changed, this allows for rapid iteration on the website and on the server and website.
 
-## Final Presentation
+## Challenges
 
-Presentations will occur during the final day of class.
+The projects front end involved a lot of complex user interactions and dynamic rendering. React enabled this but came with a strong learning curve as there were some advanced component interactions. The translation from event parameters, to availability grid, to populating with users availability required a lot of complex interactions. This took significantly longer than initially budged for.
 
-## FAQs
+## Group
 
-- **Can I use XYZ framework?** You can use any web-based frameworks or tools available, but for your server programming you need to use node.js.
+### Benjamin Hetherington
+
+Ben implemented much of the behavior for the server, as well as set up the tooling for the project itself, such as compilation, and the implementation of server-side rendering.
+
+### Cat Sherman
+
+Cat implemented much of the tooling for the database, as well as created the database itself, and designed the various schema for the database.
+
+### Max Westwater
+
+Max designed and implemented the front-facing website, including creating the interface to select availability using React, and all of the other pages on the website. This includes the form validation for creating accounts and new events, as well as most of the communication with the database from the front end and associated debugging.
