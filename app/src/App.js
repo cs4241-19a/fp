@@ -50,7 +50,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalOpen: true
+      modalOpen: true,
+      selectedRole: '',
     };
 
     socket.on("closeModal", this.closeModal.bind(this));
@@ -60,16 +61,22 @@ class App extends React.Component {
     this.setState({ modalOpen: false });
   }
 
+  selectRole(role) {
+    this.setState({selectedRole: role})
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1>Codenames</h1>
-          <Modals />
-        </header>
-        {this.state.modalOpen && <Menu />}
-        <Game />
-      </div>
+        <div className="App">
+          <header className="App-header">
+            <h1>Codenames</h1>
+            <Modals/>
+          </header>
+          {this.state.modalOpen &&
+          <Menu selectRole={this.selectRole.bind(this)}/>
+          }
+          <Game selectedRole={this.state.selectedRole}/>
+        </div>
     );
   }
 }
@@ -201,8 +208,6 @@ class Chat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      team: this.props.team,
-      wordsLeft: props.wordsLeft,
       log: [],
       clue: ""
     };
@@ -215,7 +220,7 @@ class Chat extends React.Component {
     if (this.state.clue === "") {
       return;
     }
-    socket.emit("hintSubmission", this.state.team, this.state.clue, amount);
+    socket.emit("hintSubmission", this.props.team, this.state.clue, amount);
   }
 
   createAmounts() {
@@ -225,7 +230,7 @@ class Chat extends React.Component {
         <div
           key={i}
           onClick={() => this.submitHint(i)}
-          className={"amount" + (i <= this.state.wordsLeft ? "" : " disabled")}
+          className={"amount" + (i <= this.props.wordsLeft ? "" : " disabled")}
         >
           {i}
         </div>
@@ -245,15 +250,17 @@ class Chat extends React.Component {
               </div>
             );
           })}
-          <div className={"hintSubmission"}>
-            <input
-              placeholder="Clue"
-              onChange={e => this.setState({ clue: e.target.value })}
-              id="msg"
-            />
-            <div className={"amountInput"}>{this.createAmounts()}</div>
-          </div>
-        </div>
+          {this.props.role.endsWith("spymaster") &&
+            <div className={"hintSubmission"}>
+              <input
+                  placeholder="Clue"
+                  onChange={e => this.setState({clue: e.target.value})}
+                  id="msg"
+              />
+              <div className={"amountInput"}>{this.createAmounts()}</div>
+            </div>
+          }
+            </div>
       </div>
     );
   }
@@ -326,7 +333,7 @@ class Game extends React.Component {
     this.state = {
       boardWords: ingameCards,
       boardTeams: ingameTeams,
-      firstteam: firstteam
+      firstteam: firstteam,
     };
   }
 
@@ -340,8 +347,11 @@ class Game extends React.Component {
     }
     return (
       <div className="game">
-        <Board words={this.state.boardWords} teams={this.state.boardTeams} />
-        <Chat team={status} wordsLeft={9} />
+        <Board
+          words={this.state.boardWords}
+          teams={this.state.boardTeams}
+        />
+        <Chat role={this.props.selectedRole}  team={status} wordsLeft={9} />
         <br />
         <br />
       </div>
@@ -353,6 +363,8 @@ class Menu extends React.Component {
   constructor(props) {
     super(props);
 
+    this.selectRole = props.selectRole;
+
     this.state = {
       modalIsOpen: true,
       selectedRole: null
@@ -361,6 +373,7 @@ class Menu extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
+
 
   openModal() {
     this.setState({ modalIsOpen: true });
@@ -467,6 +480,7 @@ function makeGray(btn, selected) {
   b.style.backgroundColor = "gray";
   b.style.borderColor = "gold";
   selected.state.selectedRole = btn;
+  selected.selectRole(btn);
   socket.emit("roleSelection", selected.state.selectedRole);
 }
 
@@ -568,14 +582,6 @@ function getBrowserData() {
   return { user: sessionStorage.getItem("userInfo")  || 'USER'};
 }
 
-function clickHint(hintbtn) {
-  setTimeout(function() {
-    let newHint = document.getElementById("msg").value;
-    let state = getClueState(newHint);
-    socket.emit("clue sent", state);
-  }, 1);
-}
-
 function getBoardState() {
   let cards = [];
   let collectedCards = document.getElementsByClassName("card");
@@ -592,29 +598,6 @@ function getBoardState() {
   }
   return cards;
 }
-
-function getClueState(newHint) {
-  let chatCont = document.getElementsByClassName("chat-container")[0];
-  let chats = chatCont.getElementsByTagName("p");
-  let chatText = [];
-  for (let i = 0; i < chats.length; i++) {
-    chatText.push(chats[i].innerHTML);
-  }
-  if (newHint) {
-    chatText.push(newHint);
-  }
-  return chatText;
-}
-
-socket.on("updateCluestate", function(cs) {
-  let chatCont = document.getElementsByClassName("chat-container")[0];
-  //chatCont.innerHTML = '';
-  cs.forEach(function(msg) {
-    let final_message = document.createElement("p");
-    final_message.innerHTML = msg;
-    chatCont.append(final_message);
-  });
-});
 
 socket.on("updateBoardstate", function(bs) {
   if (bs.length < 1) {
