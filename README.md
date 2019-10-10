@@ -37,7 +37,7 @@ The impact that you have on the environment is greater than you think. The purpo
 - Getting the data visualization using plotly to work properly : we tried getting d3 to work and had a hard time time with it
 - difficulties handling and processing the data in and out of the MongoDB
 - Alot of time spent in the UI design (page layout, text, fonts, colors, etc) 
-- 
+
 ## Background Research Questions
 - what is a carbon footprint ? 
 - How is carbon output calculated ? 
