@@ -19,44 +19,31 @@ GNU Lesser General Public License for more details.
 
 */
 
-/*
-PS.init( system, options )
-Called once after engine is initialized but before event-polling begins.
-This function doesn't have to do anything, although initializing the grid dimensions with PS.gridSize() is recommended.
-If PS.grid() is not called, the default grid dimensions (8 x 8 beads) are applied.
-Any value returned is ignored.
-[system : Object] = A JavaScript object containing engine and host platform information properties; see API documentation for details.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
-
-var player_x,
-	player_y,
-	timer = "",
-	jump = false,
-	FRAME_COUNT = 0,
-
-	isRed = false
-var up = 0;
-var down = 0;
-var once = false;
-
-var score = 0;
-var highscore = 0;
-var player_speed = 9;
-var enemy_speed = 14;
-
-var enemy;
-var enemy_x, enemy_y;
-var enemy_width = 0;
-
-
-var player;
-var isAlive = true;
-var canMove = true;
-var touching = false;
-var first = true;	
+// global
+var	timer = "",
+	first = true,	
+	isRed = false,
+    once = false;
 
 const GRID_W = 16, GRID_H = 8;
+
+// player 
+var player,
+    player_x, player_y,
+	player_speed = 9,
+	jump = false,
+	up = 0,
+    down = 0,
+	isAlive = true,
+	score = 0,
+	highscore = 0,
+	touching = false;
+
+// enemy
+var enemy, 
+	enemy_x, enemy_y,
+	enemy_width = 0,
+	enemy_speed = 14;
 
 var TIMER = {
 	global : 0,
@@ -64,17 +51,8 @@ var TIMER = {
 		if (!isAlive) { return }
 		TIMER.global+=1;
 
-		// enemy move
-		if (TIMER.global % enemy_speed == 0) {
-			touching = false
-			enemy_x -= 1
-			PS.spriteMove(enemy, enemy_x, enemy_y)
-			if (enemy_x + enemy_width == 0) {
-				PS.spriteDelete(enemy)
-				increaseScore();
-				newEnemy()
-			}
-		}
+		// move enemy
+		if (TIMER.global % enemy_speed == 0) { moveEnemy() }
 
 		// player move up
 		if (jump && TIMER.global % player_speed === 0 && up != 2) {
@@ -82,7 +60,8 @@ var TIMER = {
 			PS.spriteMove(player, player_x, player_y);
 			up+=1;
 			if (up == 2) { jump = false }
-		}  //player move down
+		}  
+		//player move down
 		else if (TIMER.global % player_speed == 0 && player_y < 6 && up == 2 && !touching) {
 			player_y += 1;
 			PS.spriteMove(player,player_x,player_y)
@@ -90,54 +69,12 @@ var TIMER = {
 		} 
 		
 		// kill player
-		if (player_x == enemy_x && player_y == enemy_y) {
-			if ( score > 0 ) {
-
-				var json = {'score': score },
-					body = JSON.stringify( json );
-
-				fetch('/scores', {
-					method: 'POST',
-					body,
-					headers: {'Content-Type':'application/json'}
-				}).then(function( response ){
-					console.log( response )
-					return response.json()
-				}).then(function( json ){
-					if (json.condition == 1) {
-						PS.statusText("NEW HIGH SCORE!! PRESS SPACE TO PLAY AGAIN")
-						isAlive = false;
-						score = 0;
-						player_speed = 11;
-						enemy_speed = 16;
-					}
-					else {
-						isAlive = false;
-						score = 0;
-						player_speed = 11;
-						enemy_speed = 16;
-						PS.statusText( "Game over, press space to try again" );
-					}
-				});
-			}
-			else {
-				isAlive = false;
-				score = 0;
-				player_speed = 11;
-				enemy_speed = 16;
-				PS.statusText( "Game over, press space to try again" );
-			}
-		}
+		if (player_x == enemy_x && player_y == enemy_y) { killPlayer() }
 
 		//increase speed
-		if(score % 3 == 0 && score != 0 && once){
-			if (player_speed >3){
-				player_speed -= 2;
-			}
-			
-			if(enemy_speed > 3){
-				enemy_speed -= 2;
-			}
+		if(score % 3 == 0 && score != 0 && once) {
+			if (player_speed >3){ player_speed -= 2; }
+			if(enemy_speed > 3){ enemy_speed -= 2; }
 			once = false; //so it doesn't keep increase the score before it updates 
 		}
 
@@ -146,9 +83,20 @@ var TIMER = {
 			PS.statusColor(PS.COLOR_GREEN);
 			isRed = false;
 		}
-
 	}
 }
+
+const moveEnemy = function() {
+	touching = false
+	enemy_x -= 1
+	PS.spriteMove(enemy, enemy_x, enemy_y)
+	if (enemy_x + enemy_width == 0) {
+		PS.spriteDelete(enemy)
+		increaseScore();
+		newEnemy()
+	}
+}
+
 const newEnemy = function() {
 	enemy_width = PS.random(9) / 2;
 	enemy_width = Math.ceil(enemy_width);
@@ -160,8 +108,46 @@ const newEnemy = function() {
 	PS.spriteMove(enemy, enemy_x, enemy_y); 
 }
 
-const playerInit = function() {
+const killPlayer = function() {
+	if ( score > 0 ) {
 
+		var json = {'score': score },
+			body = JSON.stringify( json );
+
+		fetch('/scores', {
+			method: 'POST',
+			body,
+			headers: {'Content-Type':'application/json'}
+		}).then(function( response ){
+			console.log( response )
+			return response.json()
+		}).then(function( json ){
+			if (json.condition == 1) {
+				PS.statusText("NEW HIGH SCORE!! PRESS SPACE TO PLAY AGAIN")
+				isAlive = false;
+				score = 0;
+				player_speed = 11;
+				enemy_speed = 16;
+			}
+			else {
+				isAlive = false;
+				score = 0;
+				player_speed = 11;
+				enemy_speed = 16;
+				PS.statusText( "Game over, press space to try again" );
+			}
+		});
+	}
+	else {
+		isAlive = false;
+		score = 0;
+		player_speed = 11;
+		enemy_speed = 16;
+		PS.statusText( "Game over, press space to try again" );
+	}
+}
+
+const playerInit = function() {
 	player = PS.spriteSolid( 1, 1 );
 	player_x = GRID_W / 4;
 	player_y = GRID_H - 2;
@@ -170,16 +156,13 @@ const playerInit = function() {
 	var myFunc = function ( s1, p1, s2, p2, type ) {
 		touching = true;
 	};
-	   
 	PS.spriteCollide( player, myFunc );
 }
 
 const increaseScore = function(){
 	score++;
 	once = true; 
-	if(score % 3 == 0){
-		isRed = true;
-	}
+	if(score % 3 == 0) { isRed = true; }
 	PS.statusColor(PS.COLOR_BLACK);
 	PS.statusText("SCORE= " + score + " HIGHSCORE = " + highscore);
 }
@@ -187,7 +170,7 @@ const increaseScore = function(){
 PS.init = function( system, options ) {
 	"use strict"; // Do not remove this directive!
 
-	//grid setup
+	// initial grid setup
 	PS.gridSize( GRID_W, GRID_H );
 	PS.gridColor(PS.COLOR_WHITE);
 	PS.gridShadow(PS.COLOR_GRAY_LIGHT);
@@ -205,248 +188,24 @@ PS.init = function( system, options ) {
 		playerInit() // generate player
 		newEnemy() // generate first enemy
 		isAlive = true;
-	
-		if (first) {
-			timer = PS.timerStart(1, TIMER.tick); // start game timer
-			first = false;
-		}
-	
-		PS.statusText( "SCORE = " + score + " HIGHSCORE = " + highscore);
+		PS.statusText( "Press space to jump" );
 	});
 };
-
-/*
-PS.touch ( x, y, data, options )
-Called when the left mouse button is clicked over bead(x, y), or when bead(x, y) is touched.
-This function doesn't have to do anything. Any value returned is ignored.
-[x : Number] = zero-based x-position (column) of the bead on the grid.
-[y : Number] = zero-based y-position (row) of the bead on the grid.
-[data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
-
-// UNCOMMENT the following code BLOCK to expose the PS.touch() event handler:
-
-/*
-
-PS.touch = function( x, y, data, options ) {
-	"use strict"; // Do not remove this directive!
-
-	// Uncomment the following code line
-	// to inspect x/y parameters:
-
-	// PS.debug( "PS.touch() @ " + x + ", " + y + "\n" );
-
-	// Add code here for mouse clicks/touches
-	// over a bead.
-};
-
-*/
-
-/*
-PS.release ( x, y, data, options )
-Called when the left mouse button is released, or when a touch is lifted, over bead(x, y).
-This function doesn't have to do anything. Any value returned is ignored.
-[x : Number] = zero-based x-position (column) of the bead on the grid.
-[y : Number] = zero-based y-position (row) of the bead on the grid.
-[data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
-
-// UNCOMMENT the following code BLOCK to expose the PS.release() event handler:
-
-/*
-
-PS.release = function( x, y, data, options ) {
-	"use strict"; // Do not remove this directive!
-
-	// Uncomment the following code line to inspect x/y parameters:
-
-	// PS.debug( "PS.release() @ " + x + ", " + y + "\n" );
-
-	// Add code here for when the mouse button/touch is released over a bead.
-};
-
-*/
-
-/*
-PS.enter ( x, y, button, data, options )
-Called when the mouse cursor/touch enters bead(x, y).
-This function doesn't have to do anything. Any value returned is ignored.
-[x : Number] = zero-based x-position (column) of the bead on the grid.
-[y : Number] = zero-based y-position (row) of the bead on the grid.
-[data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
-
-// UNCOMMENT the following code BLOCK to expose the PS.enter() event handler:
-
-/*
-
-PS.enter = function( x, y, data, options ) {
-	"use strict"; // Do not remove this directive!
-
-	// Uncomment the following code line to inspect x/y parameters:
-
-	// PS.debug( "PS.enter() @ " + x + ", " + y + "\n" );
-
-	// Add code here for when the mouse cursor/touch enters a bead.
-};
-
-*/
-
-/*
-PS.exit ( x, y, data, options )
-Called when the mouse cursor/touch exits bead(x, y).
-This function doesn't have to do anything. Any value returned is ignored.
-[x : Number] = zero-based x-position (column) of the bead on the grid.
-[y : Number] = zero-based y-position (row) of the bead on the grid.
-[data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
-
-// UNCOMMENT the following code BLOCK to expose the PS.exit() event handler:
-
-/*
-
-PS.exit = function( x, y, data, options ) {
-	"use strict"; // Do not remove this directive!
-
-	// Uncomment the following code line to inspect x/y parameters:
-
-	// PS.debug( "PS.exit() @ " + x + ", " + y + "\n" );
-
-	// Add code here for when the mouse cursor/touch exits a bead.
-};
-
-*/
-
-/*
-PS.exitGrid ( options )
-Called when the mouse cursor/touch exits the grid perimeter.
-This function doesn't have to do anything. Any value returned is ignored.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
-
-// UNCOMMENT the following code BLOCK to expose the PS.exitGrid() event handler:
-
-/*
-
-PS.exitGrid = function( options ) {
-	"use strict"; // Do not remove this directive!
-
-	// Uncomment the following code line to verify operation:
-
-	// PS.debug( "PS.exitGrid() called\n" );
-
-	// Add code here for when the mouse cursor/touch moves off the grid.
-};
-
-*/
-
-/*
-PS.keyDown ( key, shift, ctrl, options )
-Called when a key on the keyboard is pressed.
-This function doesn't have to do anything. Any value returned is ignored.
-[key : Number] = ASCII code of the released key, or one of the PS.KEY_* constants documented in the API.
-[shift : Boolean] = true if shift key is held down, else false.
-[ctrl : Boolean] = true if control key is held down, else false.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
 
 PS.keyDown = function( key, shift, ctrl, options ) {
 	"use strict"; // Do not remove this directive!
 
-	//PS.debug( "PS.keyDown(): key=" + key + ", shift=" + shift + ", ctrl=" + ctrl + "\n" );
-
 	switch (key) {
 		case 32:
 			if (isAlive) {
+				PS.statusText( "SCORE = " + score + " HIGHSCORE = " + highscore);
 				jump = true;
+				if (first) {
+					timer = PS.timerStart(1, TIMER.tick); // start game timer
+					first = false;
+				}
 			}
-			else {
-				PS.init();
-			}		
+			else { PS.init(); }		
 			break;
 	}
-
 };
-
-/*
-PS.keyUp ( key, shift, ctrl, options )
-Called when a key on the keyboard is released.
-This function doesn't have to do anything. Any value returned is ignored.
-[key : Number] = ASCII code of the released key, or one of the PS.KEY_* constants documented in the API.
-[shift : Boolean] = true if shift key is held down, else false.
-[ctrl : Boolean] = true if control key is held down, else false.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
-
-// UNCOMMENT the following code BLOCK to expose the PS.keyUp() event handler:
-
-/*
-
-PS.keyUp = function( key, shift, ctrl, options ) {
-	"use strict"; // Do not remove this directive!
-
-	// Uncomment the following code line to inspect first three parameters:
-
-	// PS.debug( "PS.keyUp(): key=" + key + ", shift=" + shift + ", ctrl=" + ctrl + "\n" );
-
-	// Add code here for when a key is released.
-};
-
-*/
-
-/*
-PS.input ( sensors, options )
-Called when a supported input device event (other than those above) is detected.
-This function doesn't have to do anything. Any value returned is ignored.
-[sensors : Object] = A JavaScript object with properties indicating sensor status; see API documentation for details.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-NOTE: Currently, only mouse wheel events are reported, and only when the mouse cursor is positioned directly over the grid.
-*/
-
-// UNCOMMENT the following code BLOCK to expose the PS.input() event handler:
-
-/*
-
-PS.input = function( sensors, options ) {
-	"use strict"; // Do not remove this directive!
-
-	// Uncomment the following code lines to inspect first parameter:
-
-//	 var device = sensors.wheel; // check for scroll wheel
-//
-//	 if ( device ) {
-//	   PS.debug( "PS.input(): " + device + "\n" );
-//	 }
-
-	// Add code here for when an input event is detected.
-};
-
-*/
-
-/*
-PS.shutdown ( options )
-Called when the browser window running Perlenspiel is about to close.
-This function doesn't have to do anything. Any value returned is ignored.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-NOTE: This event is generally needed only by applications utilizing networked telemetry.
-*/
-
-// UNCOMMENT the following code BLOCK to expose the PS.shutdown() event handler:
-
-/*
-
-PS.shutdown = function( options ) {
-	"use strict"; // Do not remove this directive!
-
-	// Uncomment the following code line to verify operation:
-
-	// PS.debug( "“Dave. My mind is going. I can feel it.”\n" );
-
-	// Add code here to tidy up when Perlenspiel is about to close.
-};
-
-*/

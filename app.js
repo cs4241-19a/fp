@@ -20,6 +20,7 @@ var loginRouter = require('./routes/login');
 var gameRouter = require('./routes/game');
 var scoresRouter = require('./routes/scores');
 var leaderboardRouter = require('./routes/leaderboard');
+var profileRouter = require('./routes/profile');
 
 passport.use(new Strategy(
   function(username, password, cb) {
@@ -68,7 +69,7 @@ app.use('/scores', scoresRouter);
 app.use('/leaderboard',leaderboardRouter);
 app.use('/login/profile', loginRouter);
 app.use('/scores/highscore', scoresRouter);
-
+app.use('/profile', profileRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

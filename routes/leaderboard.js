@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
     if (app.database == undefined) {
         app.database = low(adapter);
     }
-    res.json(app.database.get('users'));
+    res.json(app.database.get('users').sortBy('highscore'));
   });
 
 module.exports = router;

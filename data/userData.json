@@ -1,15 +1,12 @@
 {
-  "idCount": 2,
+  "idCount": 3,
   "users": [
     {
       "username": "jack",
       "password": "secret",
       "id": 1,
-      "highscore": 10,
+      "highscore": 18,
       "games": [
-        {
-          "score": 10
-        },
         {
           "score": 10
         },
@@ -32,6 +29,17 @@
         },
         {
           "score": 9
+        }
+      ]
+    },
+    {
+      "username": "kjfabrizio",
+      "password": "password",
+      "id": 4,
+      "highscore": 21,
+      "games": [
+        {
+          "score": 21
         }
       ]
     }

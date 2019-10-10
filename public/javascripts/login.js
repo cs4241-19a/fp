@@ -6,8 +6,8 @@ const clearForm = function() {
 
 const newAccount = function() {
   
-    const username = document.getElementById( 'username' ).value,
-          password = document.getElementById( 'password' ).value,
+    const username = document.getElementById( 'username1' ).value,
+          password = document.getElementById( 'password1' ).value,
           json = { 
                    'username': username,
                    'password': password,
@@ -17,6 +17,7 @@ const newAccount = function() {
     clearForm()
 
     // check username and password lengths
+    console.log(username.length)
     if (username.length < 4 ) {
       document.getElementById("message").innerHTML = "username must be at least 4 characters";
       return false;  
@@ -68,6 +69,7 @@ window.onload = function() {
       loginForm.style.display = "block" // show login
       newAccountForm.style.display = "none" // hide new account
       loginButton.style.display = "none" // hide login button
+      document.getElementById("createAccountButton").style.display = "block"
     }
 
     var createAccountButton = document.getElementById("createAccountButton")
@@ -75,6 +77,7 @@ window.onload = function() {
       newAccountForm.style.display = "block" // show new account
       loginForm.style.display = "none" // hide login
       createAccountButton.style.display = "none" 
+      loginButton.style.display = "block"
       var submitNewAccountButton = document.getElementById("createNewAccountButton")
       submitNewAccountButton.onclick = newAccount    
     }
