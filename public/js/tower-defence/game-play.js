@@ -92,6 +92,15 @@ const gamePlayState = new Phaser.Class({
         uiContainer.add(this.waveText);
         uiContainer.add(this.livesText);
 
+        this.sandText = scene.add.text(0, 0, "Sandbag\n$65", {fontSize: 12, color: "#ffffff", backgroundColor: "#000000"});
+        this.mgText = scene.add.text(cellSize.width , 0, "Machine Gun\n$220", {fontSize: 12, color: "#ffffff", backgroundColor: "#000000"});
+        this.cannonText = scene.add.text(cellSize.width * 2, 0, "Cannon\n$370", {fontSize: 12, color: "#ffffff", backgroundColor: "#000000"});
+
+        const towerUiContainer = scene.add.container(6 * cellSize.width, (playArea.height - 1) * cellSize.height);
+        towerUiContainer.add(this.sandText);
+        towerUiContainer.add(this.mgText);
+        towerUiContainer.add(this.cannonText);
+
         scene.pauseKey = scene.input.keyboard.addKey("P");
         scene.prevPauseDown = false;
         scene.gameover = false;
@@ -492,7 +501,7 @@ function Truck(events, scene) {
      * @returns {{damage: (function(number)), move: Function, sprite: *}}
      */
     function create(sprite, waveIndex) {
-        return Enemy(sprite, waveIndex, 0.06, 75 * (scene.waveIdx * difInc + 1), events.onDeath, events.onBase, scene);
+        return Enemy(sprite, waveIndex, 0.02 * (scene.waveIdx * (difInc + 1)), 75 * (scene.waveIdx * (difInc + 1)), events.onDeath, events.onBase, scene);
     }
 
     function Truck3b(scene) {

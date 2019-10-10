@@ -22,7 +22,7 @@ const cellTypes = {
 
 let waveSpacingDur = 40;  // how many update cycles to wait until moving
 let wavePauseTime = 200;
-let difInc = 0.12;
+let difInc = 0.02;
 const offScreenCoord = {x: -500, y: -500};
 
 const cellSize = {width: 40, height: 40};
