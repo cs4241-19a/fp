@@ -6,8 +6,7 @@
   height: 100vh;
 }
 
-.App,
-.gameCreate {
+.App {
   background-color: #282c34;
   display: flex;
   flex-flow: column;
@@ -136,8 +135,7 @@ input {
 
 .amount.disabled {
   color: lightgray;
-  pointer-events:none;
-
+  pointer-events: none;
 }
 .amount.disabled:hover {
   cursor: default;
@@ -196,8 +194,14 @@ input {
 }
 
 .modalButton {
-  height: 100%;
-  width: 100%;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: white;
+}
+
+.modalButton:hover {
+  cursor: pointer;
 }
 
 .redrole {
