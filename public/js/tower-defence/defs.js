@@ -22,7 +22,7 @@ const cellTypes = {
 
 let waveSpacingDur = 40;  // how many update cycles to wait until moving
 let wavePauseTime = 200;
-let difInc = 0.02;
+let difInc = 0.08;
 const offScreenCoord = {x: -500, y: -500};
 
 const cellSize = {width: 40, height: 40};
@@ -68,20 +68,6 @@ const grid = [];
 
     // add enemy buffer area
     grid[enemyEnterCoord.y][enemyEnterCoord.x] = cellTypes.OPEN;
-
-    // // test pathfinding
-    // grid[1][15] = cellTypes.WALL;
-    // grid[2][14] = cellTypes.WALL;
-    // grid[3][14] = cellTypes.WALL;
-    // grid[4][14] = cellTypes.WALL;
-    // grid[5][15] = cellTypes.WALL;
-    // grid[6][15] = cellTypes.WALL;
-    // grid[7][15] = cellTypes.WALL;
-    // grid[8][15] = cellTypes.WALL;
-    // grid[9][15] = cellTypes.WALL;
-    // grid[10][15] = cellTypes.WALL;
-    // grid[11][15] = cellTypes.WALL;
-    // grid[12][15] = cellTypes.WALL;
 
 })();
 console.log(grid);

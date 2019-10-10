@@ -17,7 +17,7 @@ const gamePlayState = new Phaser.Class({
         this.pause = false;
 
         this.score = 0;
-        this.money = 400;
+        this.money = 600;
         this.lives = 10;
 
         // Create objects
@@ -129,7 +129,9 @@ const gamePlayState = new Phaser.Class({
         }
         // console.log(scene.enemies);
         if (scene.enemies.length === 0) {
-            waveSpacingDur = this.spacingChoices[Math.floor(Math.random() * this.spacingChoices.length + (this.waveIdx / 5)) % this.spacingChoices.length];
+            if (this.waveIdx > 10) {
+                waveSpacingDur = this.spacingChoices[Math.floor(Math.random() * this.spacingChoices.length + (this.waveIdx / 5)) % this.spacingChoices.length];
+            }
             this.waveIdx++;
             if (this.waveIdx % 2 === 0) {
                 this.waveAmount += 1;
@@ -190,11 +192,13 @@ function updateUiText(scene) {
 
 
 function placeTower(scene, coord) {
-    if (scene.menuSelection && grid[coord.y][coord.x] === cellTypes.OPEN) {
+    console.log(scene);
+    if (scene.menuSelection && grid[coord.y][coord.x] === cellTypes.OPEN && scene.menuSelection.cost <= scene.money) {
         grid[coord.y][coord.x] = cellTypes.TOWER;
         if (getPath(enemyEnterCoord).length === 0) {
             grid[coord.y][coord.x] = cellTypes.OPEN;  // reset to open since this blocks a path from the entrance
         } else if (scene.menuSelection) {
+            scene.money -= scene.menuSelection.cost;
             scene.menuSelection.add(coord);
         }
     }
@@ -207,13 +211,13 @@ function clearTowerSelection(scene) {
 function selectTower(scene, coord) {
     switch (grid[coord.y][coord.x]) {
         case cellTypes.MENU_SAND:
-            scene.menuSelection = {type: cellTypes.MENU_SAND, add: scene.addSandBag};
+            scene.menuSelection = {type: cellTypes.MENU_SAND, cost: scene.Towers.SandBags.price, add: scene.addSandBag};
             break;
         case cellTypes.MENU_MG:
-            scene.menuSelection = {type: cellTypes.MENU_MG, add: scene.addMachineGun};
+            scene.menuSelection = {type: cellTypes.MENU_MG, cost: scene.Towers.MachineGuns.price, add: scene.addMachineGun};
             break;
         case cellTypes.MENU_CANNON:
-            scene.menuSelection = {type: cellTypes.MENU_CANNON, add: scene.addCannon};
+            scene.menuSelection = {type: cellTypes.MENU_CANNON, cost: scene.Towers.Cannons.price, add: scene.addCannon};
             break;
         default:
             clearTowerSelection(scene);
@@ -340,6 +344,7 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase, scen
     }
 
     function updateHealthBarHealth() {
+        if (!healthBar) return;
         healthBar.scaleX = (hp > 0) ? (hp / healthPoints) : 0;
         if (healthBar.scaleX < .6 && healthBar.scaleX > .3) {
             healthBar.fillStyle(0xeeee00, 1);
@@ -402,7 +407,7 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase, scen
     }
 
     function getMoneyValue() {
-        return Math.round(healthPoints * moveSpeed * 10 * (1 + difInc));
+        return Math.round(healthPoints * moveSpeed * 3 * (1 + difInc));
     }
 
     return {sprite, move, damage, isAlive};
@@ -501,7 +506,7 @@ function Truck(events, scene) {
      * @returns {{damage: (function(number)), move: Function, sprite: *}}
      */
     function create(sprite, waveIndex) {
-        return Enemy(sprite, waveIndex, 0.02 * (scene.waveIdx * (difInc + 1)), 75 * (scene.waveIdx * (difInc + 1)), events.onDeath, events.onBase, scene);
+        return Enemy(sprite, waveIndex, 0.03 + (0.005 * scene.waveIdx * (difInc + 1)), 55 + (5 * scene.waveIdx * (difInc + 1)), events.onDeath, events.onBase, scene);
     }
 
     function Truck3b(scene) {
@@ -517,6 +522,7 @@ function Truck(events, scene) {
 // TOWERS //
 
 function SandBag() {
+    const price = 65;
     /**
      * Create the Tower at the coordinates.
      * @returns {{resetTargets: *, sprite: *, shoot: *}}
@@ -536,10 +542,11 @@ function SandBag() {
         return scene.add.image(coord.x * cellSize.width + (cellSize.width / 2), coord.y * cellSize.height + (cellSize.height / 2), "sand").setOrigin(0.5, 0.5);
     }
 
-    return {create, Sand}
+    return {create, price, Sand}
 }
 
 function MachineGun() {
+    const price = 220;
     /**
      * Create the Tower at the coordinates.
      * @returns {{resetTargets: *, sprite: *, shoot: *}}
@@ -559,10 +566,11 @@ function MachineGun() {
         return scene.add.image(coord.x * cellSize.width + (cellSize.width / 2), coord.y * cellSize.height + (cellSize.height / 2), "machine gun").setOrigin(0.5, 0.5).setRotation(Math.PI / 2);
     }
 
-    return {create, MachineGun}
+    return {create, price, MachineGun}
 }
 
 function Cannon() {
+    const price = 370;
     /**
      * Create the Tower at the coordinates.
      * @returns {{resetTargets: *, sprite: *, shoot: *}}
@@ -582,7 +590,7 @@ function Cannon() {
         return scene.add.image(coord.x * cellSize.width + (cellSize.width / 2), coord.y * cellSize.height + (cellSize.height / 2), "cannon").setOrigin(0.5, 0.5).setRotation(Math.PI / 2);
     }
 
-    return {create, Cannon}
+    return {create, price, Cannon}
 }
 
 // Add scene to list of scenes
