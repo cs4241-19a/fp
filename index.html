@@ -161,7 +161,6 @@
             return new Mainmenu(prevStates);
         };
         this.prev = function(){
-
             return prevStates;
         };
     };
@@ -175,20 +174,20 @@
         };
         this.drawAll();
         this.prevStates = prevStates;
-        this.next = function (){
+        this.next = function (songJson, dir){
             removeElement("container");
-            return new Difficultymenu(prevStates);
+            return new Difficultymenu(prevStates, songJson, dir);
         };
         this.prev = function(){
             removeElement("container");
             return prevStates;
         };
     };
-    let Difficultymenu = function(prevStates){
+    let Difficultymenu = function(prevStates, songJson, dir){
         this.prevStates = prevStates;
         this.next = function (){
             //get currently selected menu option
-            return new Gameplaying(prevStates, songJson);
+            return new Gameplaying(prevStates, songJson, dir);
         };
         this.prev = function(){
             return prevStates;
@@ -196,7 +195,7 @@
     };
     let Loginmenu;
     let Registermenu;
-    let Gameplaying = function(prevStates, songJson){
+    let Gameplaying = function(prevStates, songJson, dir){
         this.drawAll = function (){
             //get currently selected menu option
             let notearea = document.createElement("svg");
@@ -561,7 +560,9 @@
         this.arrowShape = d3.select("#" + tempid);
     }
 
-    function populateDifficulty(songJson){
+    function populateDifficulty(songJson, dir){
+        tempJson = songJson;
+        tempDir = dir;
         removeElement("trackSelect");
         let container = document.createElement("div");
         container.className = "widecontainer";
@@ -585,42 +586,28 @@
             newOption.onclick = changeDifficulty;
             container.appendChild(newOption);
         }
-        currState.next(currState, songJson);
+        console.log(currState);
+        currState.next(currState);
     }
+    let tempJson;
+    let tempDir;
     function changeTrack(event){
         let dir = './resources/audio/songs/'+event.target.value+'/'+event.target.value;
         $.getJSON(dir+'.json', function(songJson) {
-            populateDifficulty(songJson);
+            populateDifficulty(songJson, dir);
         });
     }
 
     function changeDifficulty(event){
         let currTrack = document.getElementById("trackSelect");
-        let trackVal = currTrack.value;
-        let dir = './resources/audio/songs/'+trackVal+'/'+trackVal;
+        // let trackVal = currTrack.value;
+        // let dir = './resources/audio/songs/'+trackVal+'/'+trackVal;
         let difficulty = event.target.value;
         let prevImgURL = d3.select('#firstimage')
             .attr("xlink:href");
 
-        // d3.select('#firstimage')
-        //     .attr('xlink:href', dir+'.png')
-        //     .style("opacity", 1e-6)
-        //     .transition(fadeIn)
-        //     .style("opacity", 1.0);
-        //
-        // d3.select('#secondimage')
-        //     .attr('xlink:href', prevImgURL)
-        //     .style("opacity", 1.0)
-        //     .transition(fadeOut)
-        //     .style("opacity", 1e-6);
-        //
-        // d3.select('#backgroundImg')
-        //     .attr('xlink:href', dir+"-bg.png")
-        //     .style("opacity", 0.7);
-
-
-        $.getJSON(dir+'.json', function(songJson) {
-            playSong(songJson, dir, difficulty);
+        $.getJSON(tempDir+'.json', function(songJson) {
+            playSong(songJson, tempDir, difficulty);
         });
     }
 
@@ -781,14 +768,12 @@
     }
 
     function populateSongs(container){
-        console.log("songreq");
         const body = JSON.stringify({ "username" : "anonymous" });
         fetch('songRequest', {
             headers: { "Content-Type": "application/json" },
             method: 'POST',
             body
         }).then(function (response) {
-            console.log(response);
             response.json().then(function(parsedJson) {
                 let songList = parsedJson["songs"];
                 console.log(songList);

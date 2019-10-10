@@ -37,19 +37,19 @@ body {
 .container button:hover {
     background-color: rgba(66, 214, 202, 0.2);
 }
-.container button:hover:before {
-    content: " ";
-    border-radius: 60px;
-    border: 2px #AB83FF solid;
-    position: absolute;
-    left: 405px;
-    top: 168px;
-    box-sizing: border-box;
-    width: 285px;
-    height: 120px;
-    transition: all 0.7s ease;
-    animation: grow 1s infinite;
-}
+/*.container button:hover:before {*/
+/*    content: " ";*/
+/*    border-radius: 60px;*/
+/*    border: 2px #AB83FF solid;*/
+/*    position: absolute;*/
+/*    left: 405px;*/
+/*    top: 168px;*/
+/*    box-sizing: border-box;*/
+/*    width: 285px;*/
+/*    height: 120px;*/
+/*    transition: all 0.7s ease;*/
+/*    animation: grow 1s infinite;*/
+/*}*/
 
 .widecontainer {
     width: 1005px;
@@ -82,19 +82,19 @@ body {
 .widecontainer button:hover {
     background-color: rgba(66, 214, 202, 0.2);
 }
-.widecontainer button:hover:before {
-    content: " ";
-    border-radius: 60px;
-    border: 2px #AB83FF solid;
-    position: absolute;
-    left: 405px;
-    top: 168px;
-    box-sizing: border-box;
-    width: 285px;
-    height: 120px;
-    transition: all 0.7s ease;
-    animation: grow 1s infinite;
-}
+/*.widecontainer button:hover:before {*/
+/*    content: " ";*/
+/*    border-radius: 60px;*/
+/*    border: 2px #AB83FF solid;*/
+/*    position: absolute;*/
+/*    left: 405px;*/
+/*    top: 168px;*/
+/*    box-sizing: border-box;*/
+/*    width: 285px;*/
+/*    height: 120px;*/
+/*    transition: all 0.7s ease;*/
+/*    animation: grow 1s infinite;*/
+/*}*/
 
 
 @keyframes grow {
