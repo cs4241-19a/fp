@@ -49,27 +49,32 @@ window.onload = function() {
       }
     });
   });
-  setInterval(updateChat, 3000);
+  //setInterval(updateChat, 3000);
 };
 
 function updateChat() {
+  let packet = {from:getCookie("username"), to:currentConvo}
+  let body = JSON.stringify(packet)
   fetch("messaging/getConversation/", {
     headers: {
       "Content-Type": "application/json"
     },
-    method: "POST"
+    method: "POST",
+    body:body
   }).then(function(res) {
     res.json().then(function(ret) {
+      //alert(ret)
       for (let i = 0; i < ret.length; i++) {
         if (
           (ret[i].from == currentConvo && ret[i].to == getCookie("username")) ||
           (ret[i].to == currentConvo && ret[i].from == getCookie("username"))
         ) {
           if (ret[i].to == getCookie("username")) {
-            makeToTextBubble(ret[i].message);
+            makeFromTextBubble(ret[i].message);
           }
           if (ret[i].from == getCookie("username")) {
-            makeFromTextBubble(ret[i].message);
+            //alert(ret[i])
+            makeToTextBubble(ret[i].message);
           }
         }
       }
@@ -101,11 +106,11 @@ function makeToTextBubble(str) {
   let container = document.createElement("div");
   let bubble = document.createElement("div");
   let pad = document.createElement("div");
-  container.style = "width:100%";
-  pad.style = "width:80%";
+  container.style = "width:100%; display:block; margin:5px;";
+  pad.style = "width:55%";
   bubble.innerHTML = str;
   bubble.style =
-    "background-color: #70dafa; width:20%; height:10%; font-weight:bold; border-radius:15px;  float:right";
+    "background-color: #70dafa; width:20%;  height:100%; font-weight:bold; border-radius:15px;  float:right";
   container.appendChild(pad);
   container.appendChild(bubble);
   document.getElementById("board").appendChild(container);
@@ -115,12 +120,12 @@ function makeFromTextBubble(str) {
   let container = document.createElement("div");
   let bubble = document.createElement("div");
   let pad = document.createElement("div");
-  container.style = "width:100%";
-  pad.style = "width:80%";
+  container.style = "width:100% ;display:block margin:5px;";
+  pad.style = "width:55%";
   bubble.innerHTML = str;
   bubble.style =
-    "background-color: #6df299; width:20%; height:10%; font-weight:bold; border-radius:15px; float:left";
-  container.appendChild(pad);
+    "background-color: #6df299; width:20%;  height:100%; font-weight:bold; border-radius:15px; float:left";
   container.appendChild(bubble);
+  container.appendChild(pad);
   document.getElementById("board").appendChild(container);
 }
