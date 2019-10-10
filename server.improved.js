@@ -182,15 +182,20 @@ app.post("/addSong", function(req, res) {
     .then(function(snapshot) {
       var tempArray = []
       for(var i = 0; i< 8; i++){
-        tempArray.push({i: req.body.songdata[i]})
+        if(req.body.songdata[i] === []){
+          tempArray.push([{noteVal : -1, timeVal: 0}])
+        }
+        else{
+          tempArray.push(req.body.songdata[i])
+        }
       }
 
       fdb
         .ref("/data/")
         .push({
           username: req.body.username,
-          songname: tempArray,
-          songdata: req.body.songdata
+          songname: req.body.songname,
+          songdata: tempArray
         })
         .then(function(response) {
           res.status(200).send();
