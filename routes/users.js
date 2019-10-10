@@ -11,7 +11,6 @@ router.post('/create', function (req, res, next) {
   }
   var newUser = req.body;
   var condition = 0;
-  console.log("help me")
   if (app.database.get("users").find({"username":newUser.username}).value() != undefined) {
     console.log("repeat user")
     condition = 1;

@@ -7,9 +7,7 @@ var logger = require('morgan'),
     Strategy = require('passport-local').Strategy,
     db = require('./db'),
     low = require('lowdb'),
-    aNum = 5,
     database,
-    leaderboard,
     theUser;
 
 var FileSync = require('lowdb/adapters/FileSync');
@@ -25,7 +23,6 @@ var leaderboardRouter = require('./routes/leaderboard');
 
 passport.use(new Strategy(
   function(username, password, cb) {
-    console.log("ayyyyyyy")
     db.users.findByUsername(username, function(err, user) {
       if (err) { return cb(err); }
       if (!user) { return cb(null, false); }
@@ -75,7 +72,7 @@ app.use('/scores/highscore', scoresRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  console.log(req.url)
+  console.log("404 url: " + req.url)
   next(createError(404));
 });
 

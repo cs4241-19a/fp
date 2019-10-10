@@ -3,7 +3,6 @@ var low = require('lowdb');
 
 const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('data/userData.json');
-//const database = low(adapter);
 
 exports.findById = function(id, cb) {
   if (app.database == undefined) {

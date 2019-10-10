@@ -1,5 +1,3 @@
-//import { setTrue } from './global.js'
-//var global = requirejs('./global.js');
 
 const clearForm = function() {
     document.querySelector( '#username' ).value = ""
@@ -18,7 +16,7 @@ const newAccount = function() {
     
     clearForm()
 
-
+    // check username and password lengths
     if (username.length < 4 ) {
       document.getElementById("message").innerHTML = "username must be at least 4 characters";
       return false;  
@@ -36,6 +34,7 @@ const newAccount = function() {
       return false;
     }
 
+    // submit new user
     fetch( '/users/create', {
       method:'POST',
       body, 
@@ -57,37 +56,12 @@ const newAccount = function() {
 
 window.onload = function() {
 
+    // hide login form
     var loginForm = document.getElementById("login")
     loginForm.style.display = "none"
+    // hide new account form
     var newAccountForm = document.getElementById("createNewAccount")
     newAccountForm.style.display = "none"
-
-    //document.getElementById( "form" ).style.display = "none"
-    //document.getElementById("newAccount").style.display = "none"
-    //document.getElementById("loginButton").style.display = "none"
-/*
-    const showNewAccountForm = function() {
-        document.getElementById( "form" ).style.display = "block"
-        document.getElementById("showLoginButton").style.display = "block"
-        document.getElementById("showNewAccountButton").style.display = "none"
-        document.getElementById("login").style.display = "none"
-
-        var submitNewAccount = document.getElementById("newAccount");
-        submitNewAccount.onclick = newAccount;
-        submitNewAccount.style.display = "block"
-        createAccount.style.display = "block"
-
-
-    }
-
-    const showLoginForm = function() {
-      document.getElementById("form").style.display = "block"
-      document.getElementById("newAccount").style.display = "none"
-      document.getElementById("showLoginButton").style.display = "none"
-      document.getElementById("showNewAccountButton").style.display = "block"
-      document.getElementById("login").style.display = "block"
-    }
-    */
 
     var loginButton = document.getElementById("loginButton")
     loginButton.onclick = function() {
@@ -100,23 +74,9 @@ window.onload = function() {
     createAccountButton.onclick = function() {
       newAccountForm.style.display = "block" // show new account
       loginForm.style.display = "none" // hide login
-      createAccountButton.style.display = "none"
+      createAccountButton.style.display = "none" 
       var submitNewAccountButton = document.getElementById("createNewAccountButton")
-      submitNewAccountButton.onclick = newAccount
-      
+      submitNewAccountButton.onclick = newAccount    
     }
-
-    /*
-    var createAccount = document.getElementById("newAccount")
-    createAccount.style.display = "none"
-    createAccount.onclick = newAccount
-
-
-    var newAccountButton = document.getElementById("showNewAccountButton")
-    newAccountButton.onclick = showNewAccountForm
-
-    var loginButton  = document.getElementById("showLoginButton")
-    loginButton.onclick = showLoginForm
-    */
 
 }

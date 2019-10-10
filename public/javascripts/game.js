@@ -34,14 +34,8 @@ var player_x,
 	player_y,
 	timer = "",
 	jump = false,
-	moving1 = false,
-	moving2 = false,
 	FRAME_COUNT = 0,
-	has_UP = false,
-	has_DOWN = false,
-	player_alive = true,
-	waiting2 = false, 
-	waiting3 = false,
+
 	isRed = false
 var up = 0;
 var down = 0;
@@ -49,6 +43,7 @@ var once = false;
 
 
 var score = 0;
+var highscore = 0;
 var player_speed = 9;
 var enemy_speed = 14;
 
@@ -123,6 +118,7 @@ var TIMER = {
 			}
 		} 
 		
+		// kill player
 		if (player_x == enemy_x && player_y == enemy_y) {
 			isAlive = false;
 			score = 0;
@@ -135,12 +131,10 @@ var TIMER = {
 		if(score % 3 == 0 && score != 0 && once){
 			if (player_speed >3){
 				player_speed -= 2;
-				//PS.debug("\nplayer speed: " + player_speed);
 			}
 			
 			if(enemy_speed > 3){
 				enemy_speed -= 2;
-				//PS.debug("\nEnemy speed: " + enemy_speed);
 			}
 			once = false; //so it doesn't keep increase the score before it updates 
 		}
@@ -173,11 +167,6 @@ const playerInit = function() {
 	PS.spriteMove(player, player_x,player_y);
 	var myFunc = function ( s1, p1, s2, p2, type ) {
 		touching = true;
-		/*if (type == PS.SPRITE_OVERLAP) {
-			//PS.debug("uhhhhh")
-			isAlive = false;
-		}
-		*/
 	};
 	   
 	PS.spriteCollide( player, myFunc );
@@ -190,7 +179,7 @@ const increaseScore = function(){
 		isRed = true;
 	}
 	PS.statusColor(PS.COLOR_BLACK);
-	PS.statusText("SCORE= " + score);
+	PS.statusText("SCORE= " + score + " HIGHSCORE = " + highscore);
 }
 
 PS.init = function( system, options ) {
@@ -202,16 +191,28 @@ PS.init = function( system, options ) {
 	PS.gridShadow(PS.COLOR_GRAY_LIGHT);
 	PS.border(PS.ALL,PS.ALL,0);
 
-	playerInit() // generate player
-	newEnemy() // generate first enemy
-	isAlive = true;
+	fetch('/scores/highscore', {
+		method:'GET',
+	})
+	.then( function ( response ) {
+		console.log( response )
+		return response.json()
+	})
+	.then(function( json ) {
+		highscore = json
+		playerInit() // generate player
+		newEnemy() // generate first enemy
+		isAlive = true;
+	
+		if (first) {
+			timer = PS.timerStart(1, TIMER.tick); // start game timer
+			first = false;
+		}
+	
+		PS.statusText( "SCORE = " + score + " HIGHSCORE = " + highscore);
+	});
 
-	if (first) {
-		timer = PS.timerStart(1, TIMER.tick); // start game timer
-		first = false;
-	}
 
-	PS.statusText( "SCORE = " + score );
 
 };
 
@@ -368,7 +369,7 @@ PS.keyDown = function( key, shift, ctrl, options ) {
 				PS.init();
 			}		
 			break;
-		}
+	}
 
 };
 
