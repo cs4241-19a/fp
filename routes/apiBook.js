@@ -113,6 +113,25 @@ let dbBookGetAll = function() {
     })
 };
 
+// edit baby book boy
+// array should be [ _id, bookName, crn ]
+let dbBookEdit = function(arr) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            try {
+                MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) {
+                    const db = client.db('finalproject');
+                        resolve(db.collection('books').updateOne({ _id: arr[0] }, {$set: {name: arr[1], crn: arr[2]}}).toArray())
+                    client.close();
+                })
+            }
+            catch(e) {
+                console.log(e)
+            }
+        }, 100)
+    })
+};
+
 // get all books from a user
 let dbBookGetFromUser = function(arr) {
     return new Promise((resolve, reject) => {
@@ -170,6 +189,19 @@ router.post('/deleteBook', function(req, res) {
 router.post('/getBooks', function (req,res){
     console.log("getting all books...");
     dbBookGetAll().then(data => {
+        res.send(data)
+    }).catch(e => {
+        console.log(e)
+    })
+});
+
+router.post('/editBook', function (req,res){
+    console.log("editing book...");
+    const id = req.body._id;
+    const bookName = req.body.name;
+    const crn = req.body.crn;
+
+    dbBookEdit([id, bookName, crn]).then(data => {
         res.send(data)
     }).catch(e => {
         console.log(e)
