@@ -1,5 +1,11 @@
-$myColor: red;
+$theme-colors: (
+	"secondary": #FCF0CF,
+	"success": #FFFFFF,
+	"danger": #A02C2D,
+	"Low": #70AE98,
+	"Medium": #F0A35E,
+	"High": #CA7E8D,
+	"info": #9DABDD
+);
 
-h1 {
-  color: $myColor;
-}
+@import "~bootstrap/scss/bootstrap";

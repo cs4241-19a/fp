@@ -3,7 +3,31 @@
 Welcome to qMe! qMe is a priority queue application to assist in personal scheduling and time management. Any user can create an account with qMe. With an account created, users can enter tasks that they need to complete, along with the deadline. Depending on when the task is due, and what priority the task is ranked, qMe display the tasks in order of when the user should complete the task. Additional customization of tasks is offered, like the ability to say you need more time, or to push a task off until later, all with one click. Once a task is completed, it can be checked off as the user continues to their next task.
 
 ## Additional Instructions
-- Log in or create an account, our data is persistant!
+- Steps to use (login front end not hooked up)
+  - Execute these commands in your console
+  - ```js 
+    fetch("/signup", {
+      method: 'POST',
+      body: JSON.stringify({
+          username: "user1",
+          password: "hunter2"
+      }),
+      headers: {
+          "Content-Type": "application/json"
+      }
+    }).then(console.log)
+  - ```js
+    fetch("/signup", {
+      method: 'POST',
+      body: JSON.stringify({
+          username: "user1",
+          password: "hunter2"
+      }),
+      headers: {
+          "Content-Type": "application/json"
+      }
+    }).then(console.log)
+
 - Click to create a new task, fill in all the necessary blanks and submit
 - try to mark an item as done, or delete it from your queue.
 - click the "Do Later" button on an existing task to move it further back in your stack

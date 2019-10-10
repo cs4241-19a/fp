@@ -2,7 +2,7 @@ import React from 'react';
 import {Form, FormGroup, ControlLabel, FormControl, inputRef} from 'react-bootstrap';
 import {Button} from 'react-bootstrap';
 //import './Login.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 
 //function Login() {
 class Login extends React.Component {
