@@ -71,7 +71,9 @@ let variables = {
   playbackTimer: null,
   countdownTimerCount: 3,
   countdownTimer: null,
-  recordingPiano: false
+  recordingPiano: false,
+  databaseTracks:  [],
+  databaseIndex: 0,
 };
 
 ////////////////////////////////////////
@@ -89,6 +91,10 @@ PS.init = function(system, options) {
   PS.gridColor(PS.COLOR_GRAY);
   PS.borderColor(PS.ALL, PS.ALL, PS.COLOR_BLACK);
 
+  window.alert("Use the arrow keys to navigate existing tracks")
+  PS.debug("Use the arrow keys to navigate existing tracks. Press Load track to load into audio player");
+  
+  
   pianoSetup();
 
   drumSetup();
@@ -150,394 +156,9 @@ PS.touch = function(x, y, data, options) {
   }
 
   playAudio(data[0]);
-
-  {
-    /* switch (data[0]) {
-        //PIANO
-        case 0:
-            PS.audioPlay(PS.piano(44, false));
-            break;
-        case 0.5:
-            PS.audioPlay(PS.piano(45, false));
-            break;
-        case 1:
-            PS.audioPlay(PS.piano(46, false));
-            break;
-        case 1.5:
-            PS.audioPlay(PS.piano(47, false));
-            break;
-        case 2:
-            PS.audioPlay(PS.piano(48, false));
-            break;
-        case 3:
-            PS.audioPlay(PS.piano(49, false));
-            break;
-        case 3.5:
-            PS.audioPlay(PS.piano(50, false));
-            break;
-        case 4:
-            PS.audioPlay(PS.piano(51, false));
-            break;
-        case 4.5:
-            PS.audioPlay(PS.piano(52, false));
-            break;
-        case 5:
-            PS.audioPlay(PS.piano(53, false));
-            break;
-        case 5.5:
-            PS.audioPlay(PS.piano(54, false));
-            break;
-        case 6:
-            PS.audioPlay(PS.piano(55, false));
-            break;
-        case 7:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case "R1":
-            if (!variables.recordInfo) {
-                startRecording(0);
-            }
-            break;
-        case "R2":
-            if (!variables.recordInfo) {
-                startRecording(1);
-            }
-            break;
-        case "R3":
-            if (!variables.recordInfo) {
-                startRecording(2);
-            }
-            break;
-        case "R4":
-            if (!variables.recordInfo) {
-                startRecording(3);
-            }
-            break;
-        case "P1":
-            if (!variables.playingBack) {
-                playBackData(0);
-            }
-            break;
-        case "P2":
-            if (!variables.playingBack) {
-                playBackData(1);
-            } break;
-        case "P3":
-            if (!variables.playingBack) {
-                playBackData(2);
-            }
-            break;
-        case "P4":
-            if (!variables.playingBack) {
-                playBackData(3);
-            }
-            break;
-        case "PALL":
-            if (!variables.playingBack) {
-                playBackData("PIANO");
-            }
-            break;
-        //DRUMS
-        case 8:
-            PS.audioPlay("perc_drum_bass");
-            break;
-        case 9:
-            PS.audioPlay("perc_drum_snare");
-            break;
-        case 10:
-            PS.audioPlay("perc_drum_tom1");
-            break;
-        case 11:
-            PS.audioPlay("perc_drum_tom2");
-            break;
-        case 12:
-            PS.audioPlay("perc_drum_tom3");
-            break;
-        case 13:
-            PS.audioPlay("perc_drum_tom4");
-            break;
-        case 14:
-            PS.audioPlay("perc_hihat_closed");
-            break;
-        case 15:
-            PS.audioPlay("perc_hihat_open");
-            break;
-        case 16:
-            PS.audioPlay("perc_hihat_pedal");
-            break;
-        case 17:
-            PS.audioPlay("perc_cymbal_crash1");
-            break;
-        case 18:
-            PS.audioPlay("perc_cymbal_crash2");
-            break;
-        case 19:
-            PS.audioPlay("perc_cymbal_crash3");
-            break;
-        case 20:
-            PS.audioPlay("perc_cymbal_crash4");
-            break;
-        case "DR1":
-            if (!variables.recordInfo) {
-                startRecording(4);
-            }
-            break;
-        case "DR2":
-            if (!variables.recordInfo) {
-                startRecording(5);
-            }
-            break;
-        case "DR3":
-            if (!variables.recordInfo) {
-                startRecording(6);
-            }
-            break;
-        case "DR4":
-            if (!variables.recordInfo) {
-                startRecording(7);
-            }
-            break;
-        case "DP1":
-            if (!variables.playingBack) {
-                playBackData(4);
-            }
-            break;
-        case "DP2":
-            if (!variables.playingBack) {
-                playBackData(5);
-            } break;
-        case "DP3":
-            if (!variables.playingBack) {
-                playBackData(6);
-            }
-            break;
-        case "DP4":
-            if (!variables.playingBack) {
-                playBackData(7);
-            }
-            break;
-        case "DALL":
-            if (!variables.playingBack) {
-                playBackData("DRUMS");
-            }
-            break;
-        //GUITAR
-        case 21:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 22:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 23:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 24:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 25:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 26:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 27:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 28:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 29:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 30:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 31:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 32:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 33:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 34:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 35:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 36:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 37:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 38:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 39:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 40:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 41:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 42:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 43:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 44:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 45:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 46:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 47:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 48:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 49:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 50:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 51:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 52:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 53:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 54:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 55:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case 56:
-            PS.audioPlay(PS.piano(56, false));
-            break;
-        case "GR1":
-            if (!variables.recordInfo) {
-                startRecording(8);
-            }
-            break;
-        case "GR2":
-            if (!variables.recordInfo) {
-                startRecording(9);
-            }
-            break;
-        case "GR3":
-            if (!variables.recordInfo) {
-                startRecording(10);
-            }
-            break;
-        case "GR4":
-            if (!variables.recordInfo) {
-                startRecording(11);
-            }
-            break;
-        case "GP1":
-            if (!variables.playingBack) {
-                playBackData(8);
-            }
-            break;
-        case "GP2":
-            if (!variables.playingBack) {
-                playBackData(9);
-            } break;
-        case "GP3":
-            if (!variables.playingBack) {
-                playBackData(10);
-            }
-            break;
-        case "GP4":
-            if (!variables.playingBack) {
-                playBackData(11);
-            }
-            break;
-        case "GALL":
-            if (!variables.playingBack) {
-                playBackData("GUITAR");
-            }
-            break;
-    }*/
-  }
 };
 
-PS.release = function(x, y, data, options) {
-  "use strict"; // Do not remove this directive!
-
-  // RevertKey(data[0]);
-
-};
-
-////////////////////////////////////////
-////////////////////////////////////////
-////////////////////////////////////////
-////////////////////////////////////////
-//UNUSED PS FUNCTIONS
-{
-  /*
-    PS.enter ( x, y, button, data, options )
-    Called when the mouse cursor/touch enters bead(x, y).
-    This function doesn't have to do anything. Any value returned is ignored.
-    [x : Number] = zero-based x-position (column) of the bead on the grid.
-    [y : Number] = zero-based y-position (row) of the bead on the grid.
-    [data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-    [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-    */
-  // UNCOMMENT the following code BLOCK to expose the PS.enter() event handler:
-  /*
-    
-    PS.enter = function( x, y, data, options ) {
-        "use strict"; // Do not remove this directive!
-    
-        // Uncomment the following code line to inspect x/y parameters:
-    
-        // PS.debug( "PS.enter() @ " + x + ", " + y + "\n" );
-    
-        // Add code here for when the mouse cursor/touch enters a bead.
-    };
-    
-    */
-  /*
-    PS.exit ( x, y, data, options )
-    Called when the mouse cursor/touch exits bead(x, y).
-    This function doesn't have to do anything. Any value returned is ignored.
-    [x : Number] = zero-based x-position (column) of the bead on the grid.
-    [y : Number] = zero-based y-position (row) of the bead on the grid.
-    [data : *] = The JavaScript value previously associated with bead(x, y) using PS.data(); default = 0.
-    [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-    */
-  // UNCOMMENT the following code BLOCK to expose the PS.exit() event handler:
-  /*
-    
-    PS.exit = function( x, y, data, options ) {
-        "use strict"; // Do not remove this directive!
-    
-        // Uncomment the following code line to inspect x/y parameters:
-    
-        // PS.debug( "PS.exit() @ " + x + ", " + y + "\n" );
-    
-        // Add code here for when the mouse cursor/touch exits a bead.
-    };
-    
-    */
-  /*
+ /*
 PS.keyDown ( key, shift, ctrl, options )
 Called when a key on the keyboard is pressed.
 This function doesn't have to do anything. Any value returned is ignored.
@@ -547,10 +168,21 @@ This function doesn't have to do anything. Any value returned is ignored.
 [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
 */
   // UNCOMMENT the following code BLOCK to expose the PS.keyDown() event handler:
-  /*
+  
 
 PS.keyDown = function( key, shift, ctrl, options ) {
 	"use strict"; // Do not remove this directive!
+  
+  if(key == PS.KEY_ARROW_LEFT){
+    variables.databaseIndex += 1
+    if(variables.databaseIndex >= variables.databaseTracks.length){
+          variables.databaseIndex = 0
+    }
+    
+  }
+  if(key == PS.KEY_ARROW_RIGHT){
+    
+  }
 
 	// Uncomment the following code line to inspect first three parameters:
 
@@ -558,90 +190,6 @@ PS.keyDown = function( key, shift, ctrl, options ) {
 
 	// Add code here for when a key is pressed.
 };
-
-PS.keyDown = function (key, shift, ctrl, options) {
-    "use strict"; // Do not remove this directive!
-
-    PS.audioPlay("3-oct-e", { path: "guitarAudio/" })
-    // Uncomment the following code line to inspect first three parameters:
-
-    // PS.debug( "PS.keyDown(): key=" + key + ", shift=" + shift + ", ctrl=" + ctrl + "\n" );
-
-    // Add code here for when a key is pressed.
-};
-
-*/
-  /*
-PS.keyUp ( key, shift, ctrl, options )
-Called when a key on the keyboard is released.
-This function doesn't have to do anything. Any value returned is ignored.
-[key : Number] = ASCII code of the released key, or one of the PS.KEY_* constants documented in the API.
-[shift : Boolean] = true if shift key is held down, else false.
-[ctrl : Boolean] = true if control key is held down, else false.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-*/
-  // UNCOMMENT the following code BLOCK to expose the PS.keyUp() event handler:
-  /*
-
-PS.keyUp = function( key, shift, ctrl, options ) {
-	"use strict"; // Do not remove this directive!
-
-	// Uncomment the following code line to inspect first three parameters:
-
-	// PS.debug( "PS.keyUp(): key=" + key + ", shift=" + shift + ", ctrl=" + ctrl + "\n" );
-
-	// Add code here for when a key is released.
-};
-
-*/
-  /*
-PS.input ( sensors, options )
-Called when a supported input device event (other than those above) is detected.
-This function doesn't have to do anything. Any value returned is ignored.
-[sensors : Object] = A JavaScript object with properties indicating sensor status; see API documentation for details.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-NOTE: Currently, only mouse wheel events are reported, and only when the mouse cursor is positioned directly over the grid.
-*/
-  // UNCOMMENT the following code BLOCK to expose the PS.input() event handler:
-  /*
-
-PS.input = function( sensors, options ) {
-	"use strict"; // Do not remove this directive!
-
-	// Uncomment the following code lines to inspect first parameter:
-
-//	 var device = sensors.wheel; // check for scroll wheel
-//
-//	 if ( device ) {
-//	   PS.debug( "PS.input(): " + device + "\n" );
-//	 }
-
-	// Add code here for when an input event is detected.
-};
-
-*/
-  /*
-PS.shutdown ( options )
-Called when the browser window running Perlenspiel is about to close.
-This function doesn't have to do anything. Any value returned is ignored.
-[options : Object] = A JavaScript object with optional data properties; see API documentation for details.
-NOTE: This event is generally needed only by applications utilizing networked telemetry.
-*/
-  // UNCOMMENT the following code BLOCK to expose the PS.shutdown() event handler:
-  /*
-
-PS.shutdown = function( options ) {
-	"use strict"; // Do not remove this directive!
-
-	// Uncomment the following code line to verify operation:
-
-	// PS.debug( "“Dave. My mind is going. I can feel it.”\n" );
-
-	// Add code here to tidy up when Perlenspiel is about to close.
-};
-
-*/
-}
 
 ////////////////////////////////////////
 ////////////////////////////////////////
