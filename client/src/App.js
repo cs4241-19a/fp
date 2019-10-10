@@ -1,8 +1,12 @@
 import React from 'react';
+import {Button} from 'react-bootstrap';
 
 import TaskCard from './TaskCard';
+import TaskCardEntry from './TaskCardEntry';
 
 import './App.css';
+
+import './Login.scss'
 
 class App extends React.Component{
   constructor(props) {
@@ -86,12 +90,18 @@ class App extends React.Component{
       cards
     )
   }
+  
+  renderTaskCardEntry(){
+	  console.log("Doing this");
+	  
+  }
 
   render() {
     return (
       <div>
         {this.renderTaskCard(this.state.tasks.length)}
       </div>
+	  
     );
   }
 }
