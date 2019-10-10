@@ -1,3 +1,7 @@
+@font-face {
+    font-family: "Pixel";
+    src: url("PixelEmulator.ttf");
+}
 :root{
     --black: #000000;
     --orange: #FFB53C;
@@ -59,6 +63,7 @@ progress[value] {
 
 #health{
     margin-top: 600px;
+    margin-right: 50px;
     width: 250px;
 }
 
@@ -79,6 +84,14 @@ progress[value] {
 
 }
 
+#main-button:hover{
+    background: var(--blue);
+}
+
+#main-button:active{
+    background: var(--orange);
+}
+
 .upgrade-button{
     box-shadow: 0 5px 10px 5px;
     margin-top: 20px;
@@ -86,6 +99,14 @@ progress[value] {
     width: 200px;
     height: 50px;
 
+}
+
+#upgrade-button:hover{
+    background: var(--blue);
+}
+
+#upgrade-button:active{
+    background: var(--orange);
 }
 
 #leaderboard-button{
@@ -104,8 +125,33 @@ progress[value] {
     display: none;
 }
 
-#main-button:hover{
-    background: var(--blue);
+.coins{
+    position: absolute;
+    display: flex;
+    top: 50px;
+    left: 2%;
+}
+
+.coins p{
+    font-family: "Pixel";
+    font-size: 1.1em;
+    margin-left: 5px;
+    margin-right: 10px;
+}
+
+.currency{
+    position: absolute;
+    left: 2%;
+    width: 50%;
+    display: flex;
+
+}
+.currency p{
+
+    display: flex;
+    margin-right: 15px;
+    margin-left: 15px;
+
 }
 
 .point{
