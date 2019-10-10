@@ -293,6 +293,8 @@ function Tower(sprite, range, damage, fireRate) {
     let targets = [];  // list of all enemies in range
     let target;  // the current enemy being targeted
     let shootIdx = 0;
+    const spriteRotation = sprite.rotation;  // should be passed in facing right
+
 
     /**
      * Goes through all the given enemies and stores them if in range
@@ -317,7 +319,7 @@ function Tower(sprite, range, damage, fireRate) {
      * @returns {boolean} True when confirmed, else false.
      */
     function confirmTarget() {
-        if (!(target && target.isAlive())) {  // if no current target get the next one in range
+        if (!(target && target.isAlive() && isInRange(target))) {  // if no current target get the next one in range
             for (let i = 0; i < targets.length; i++) {
                 if (isInRange(targets[i]) && targets[i].isAlive()) {
                     target = targets[i];
@@ -326,7 +328,7 @@ function Tower(sprite, range, damage, fireRate) {
                 }
             }
         }
-        return target && target.isAlive();
+        return target && target.isAlive() && isInRange(target);
     }
 
     /**
@@ -334,7 +336,9 @@ function Tower(sprite, range, damage, fireRate) {
      * @returns {boolean}
      */
     function shoot() {
+        console.log(shootIdx, confirmTarget());
         if (shootIdx === 0 && confirmTarget()) {
+            faceTarget();
             switch(target.damage(damage)) {
                 case false:
                     console.log("bad target");
@@ -349,9 +353,18 @@ function Tower(sprite, range, damage, fireRate) {
                     return true;
             }
         } else {
-            shootIdx--;
+            if (shootIdx > 0) {
+                shootIdx--;
+            } else if (shootIdx < 0) {
+                shootIdx = fireRate;
+            }
         }
         return false; // no targets
+    }
+
+    function faceTarget() {
+        const angle = Phaser.Math.Angle.Between(sprite.x, sprite.y, target.sprite.x, target.sprite.y);
+        sprite.rotation = spriteRotation + angle;
     }
 
     return {sprite, shoot, resetTargets};
@@ -401,7 +414,7 @@ function SandBag() {
      * @returns {Phaser.GameObjects.Image} The sprite.
      */
     function Sand(scene, coord) {
-        return scene.add.image(coord.x * cellSize.width, coord.y * cellSize.height, "sand").setOrigin(0, 0);
+        return scene.add.image(coord.x * cellSize.width + (cellSize.width / 2), coord.y * cellSize.height + (cellSize.height / 2), "sand").setOrigin(0.5, 0.5);
     }
 
     return {create, Sand}
@@ -424,7 +437,7 @@ function MachineGun() {
      * @returns {Phaser.GameObjects.Image} The sprite.
      */
     function MachineGun(scene, coord) {
-        return scene.add.image(coord.x * cellSize.width, coord.y * cellSize.height, "machine gun").setOrigin(0, 0);
+        return scene.add.image(coord.x * cellSize.width + (cellSize.width / 2), coord.y * cellSize.height + (cellSize.height / 2), "machine gun").setOrigin(0.5, 0.5).setRotation(Math.PI / 2);
     }
 
     return {create, MachineGun}
@@ -447,7 +460,7 @@ function Cannon() {
      * @returns {Phaser.GameObjects.Image} The sprite.
      */
     function Cannon(scene, coord) {
-        return scene.add.image(coord.x * cellSize.width, coord.y * cellSize.height, "cannon").setOrigin(0, 0);
+        return scene.add.image(coord.x * cellSize.width + (cellSize.width / 2), coord.y * cellSize.height + (cellSize.height / 2), "cannon").setOrigin(0.5, 0.5).setRotation(Math.PI / 2);
     }
 
     return {create, Cannon}
