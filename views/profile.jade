@@ -1,10 +1,11 @@
 extends layout 
 
 block content
-    hi Welcome #{user}
-    p(id='leaderBoard')
-    p(id='stats')
-    form(action="/game" method="get")
-        button(type="submit") Play!
-    form(action="/users" method="get")
-        button(type="submit") User test
+    #profile
+        hi Welcome #{user}
+        p(id='leaderBoard')
+        p(id='stats')
+        form(action="/game" method="get")
+            button(type="submit") Play!
+        form(action="/users" method="get")
+            button(type="submit") User test
