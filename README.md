@@ -15,7 +15,7 @@ The website is fully functional without having to log in, but if you want to sav
  - The Perlenspiel engine can cause regular html elements (for example select boxes) to stop responding, and that caused some major problems when trying to figure out how to let the user naviagte through the saved songs.
  - We initally planned to use MongoDB, but for some reason the database was not loading properly so we switched to Firebase.
 ### Authorship
-git - Perlenspiel: Natalie
+- Perlenspiel: Natalie
 - Server: Anagha
 - Design/Functionality: Natalie
 - Passport: Anagha
