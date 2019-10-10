@@ -1,0 +1,36 @@
+import io from 'socket.io-client';
+import { throttle } from 'throttle-debounce';
+import { processGameUpdate } from './state';
+
+const Constants = require('../shared/constants');
+
+const socket = io(`ws://${window.location.host}`, { reconnection: false });
+const connectedPromise = new Promise(resolve => {
+  socket.on('connect', () => {
+    console.log('Connected to server!');
+    resolve();
+  });
+});
+
+export const connect = onGameOver => (
+  connectedPromise.then(() => {
+    // Register callbacks
+    socket.on(Constants.MSG_TYPES.GAME_UPDATE, processGameUpdate);
+    socket.on(Constants.MSG_TYPES.GAME_OVER, onGameOver);
+    socket.on('disconnect', () => {
+      console.log('Disconnected from server.');
+      document.getElementById('disconnect-modal').classList.remove('hidden');
+      document.getElementById('reconnect-button').onclick = () => {
+        window.location.reload();
+      };
+    });
+  })
+);
+
+export const play = username => {
+  socket.emit(Constants.MSG_TYPES.JOIN_GAME, username, document.getElementById('health_header').class, document.getElementById('selected_map').value);
+};
+
+export const updateUser = throttle(20, dir => {
+  socket.emit(Constants.MSG_TYPES.INPUT, dir);
+});

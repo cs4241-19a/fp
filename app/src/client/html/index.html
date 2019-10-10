@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>TinyTanks.io</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="/assets/icon64.png">
+  <meta property="description" content="A complete example multiplayer .io web game implemented from scratch. Built with Javascript and Node.js. Open source on Github.">
+  <meta property="og:title" content="An example .io game">
+  <meta property="og:description" content="A complete example multiplayer .io web game implemented from scratch. Built with Javascript and Node.js. Open source on Github.">
+  <meta property="og:image" content="/assets/icon1200.png">
+  
+  <link rel="stylesheet" href="https://unpkg.com/bulma@0.7.5/css/bulma.min.css" />
+  <link rel="stylesheet" type="text/css" href="/css/login.css">
+  <script src="js/login.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-58664433-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-58664433-3');
+	 
+		function instructions(){
+			document.getElementById("instructions").style.display = 'block'
+			document.getElementById("instructions").innerHTML = 
+			'<div>How to Start:</div><ul>\
+			<li>Select a color for your tank</li>\
+			<li>Type in a username</li></ul\
+			<div>User Interface:</div><ul>\
+			<li>Use the left and right arrow keys to turn</li>\
+			<li>Use the up and down arrow keys to move forwared or backwards</li>\
+			<li>Use the spacebar to shoot bullets</li></ul>\
+			<div> Type "q" to bring up this prompt"</div>\
+			<button onclick="close_instructions()" style="font-size:1em;">Close Prompt</button>'
+		};
+
+		function close_instructions(){
+			document.getElementById("instructions").style.display = 'none'
+		}
+  </script>
+</head>
+<body>
+ 
+  <div id="login">
+     <section class="hero is-success is-fullheight" style="background-color:#ac2b37;"> 
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <div class="column is-4 is-offset-4">
+                    <h3 class="title has-text-white">Login</h3>
+                    <p class="subtitle has-text-white">Please login to proceed.</p>
+                    <div class="box">
+                        <figure class="avatar">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/1/1b/WPI_logo.png">
+                        </figure>
+                        <div>
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input is-large" id="LOGIN_USERNAME" type="text" name="username" value="matt" placeholder="Username" autofocus="">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input is-large" id="LOGIN_PASSWORD" type="password" name="password" value="matt" placeholder="Your Password">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="checkbox"><input type="checkbox">Remember me</label>
+                            </div>
+                            <button type="submit" onclick="loginUser()" class="button is-block is-info is-large is-fullwidth" style="background-color:#ac2b37">Login</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  </div>
+  
+  <div id="instructions"></div>
+  <script>instructions()</script>
+  <canvas id="game-canvas"></canvas>
+ 
+  
+  <div id="play-menu" class="hidden">
+    <h1>Tiny Tanks .io</h1>
+    <p>
+      Stay alive and shoot other players.
+      <br />
+      Use the arrow keys to move
+    </p>
+    <hr />
+    <p>
+      <!-- <br /> -->
+      How to Play: <button onclick="instructions()" style="font-size: .95em; padding:5px 5px 5px 5px;">Click Here</button>.
+      <br />
+      See the source code on <a href="https://github.com/mjadiletta/a3-mjadiletta-matthew-adiletta" target="_blank">Github</a>.
+      <br />
+      Created by <a href="https://a1-mjadiletta.glitch.me">Matt Adiletta</a>.
+    </p>
+    <hr />
+	 
+	 <div id="tank_color"> Select Tank Color: 
+		 <select id="selected_color">
+		  <option id="red">red</option>
+		  <option id="green">green</option>
+		  <option id="blue">blue</option>
+		  <option id="purple">purple</option>
+		 </select> 
+    </div>
+    
+    <div id="map_num"> Select Map: 
+		 <select id="selected_map">
+		  <option id="map1">0</option>
+		  <option id="map2">1</option>
+		  <option id="map3">2</option>
+		  <option id="map4">3</option>
+		 </select>
+    </div>
+	 
+    <input type="text" id="username-input" placeholder="Username" />
+    <button id="play-button">PLAY</button>
+  </div>
+  
+  <div id="leaderboard" class="hidden">
+    <table>
+      <tr>
+        <th>Username</th>
+        <th>Score</th>
+      </tr>
+      <tr><td></td><td></td></tr>
+      <tr><td></td><td></td></tr>
+      <tr><td></td><td></td></tr>
+      <tr><td></td><td></td></tr>
+      <tr><td></td><td></td></tr>
+    </table>
+  </div>
+  
+	<div id="health" class="hidden">
+		<div id="health_header" class=""><strong>User Health</strong></div>
+		<div id="health_number"></div>
+	</div>
+  
+  <div id="turn" class="hidden">
+		<div id="turn_header" class=""><strong> Turning Speed </strong></div>
+    <select id="turn_number">
+		  <option id="50t">50%</option>
+		  <option id="75t">75%</option>
+		  <option id="100t">100%</option>
+		  <option id="125t">125%</option>
+      <option id="150t">150%</option>
+		 </select>
+	</div>
+  
+  
+  <div id="scale" class="hidden">
+		<div id="scale_header" class=""><strong> Scale Screen </strong></div>
+    <select id="scale_number">
+		  <option id="50">50%</option>
+		  <option id="75">75%</option>
+		  <option id="100">100%</option>
+		  <option id="125">125%</option>
+		 </select>
+	</div>
+  
+  <div id="disconnect-modal" class="hidden">
+    <div>
+      <h2>Disconnected from Server </h2>
+      <hr />
+      <button id="reconnect-button">RECONNECT</button>
+    </div>
+  </div>
+</body>
+</html>
