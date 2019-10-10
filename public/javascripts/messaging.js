@@ -47,9 +47,9 @@ window.onload = function() {
           document.getElementById("people").appendChild(l);
           currentConvo = ret[i].username;
           document.getElementById("t").innerHTML =
-          "Messages with " + ret[i].username;
+            "Messages with " + ret[i].username;
 
-        updateChat();
+          updateChat();
         }
       }
     });
