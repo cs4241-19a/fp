@@ -45,14 +45,14 @@ const client = new mongodb.MongoClient(uri, {
 let currentUser = "";
 let usersCollection = null;*/
 
-app.use(express.static(path.join(__dirname + "/public")));
+//app.use(express.static(path.join(__dirname + "")));
 app.use(bodyParser.json());
 app.use(helmet());
-app.use(morgan("combined"));
+//app.use(morgan("combined"));
 app.use(cookieParser()); //needed to read cookies for auth
 
 app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname + "/game.html"));
+  res.sendFile("/game.html");
 });
 
 app.get("/game.html", function(req, res) {
@@ -64,6 +64,10 @@ app.get("/loginPage", function(req, res) {
 });
 
 app.get("/game.js", function(req, res) {
+  res.sendFile(path.join(__dirname + "/game.js"));
+});
+
+app.get("/TEMP.css", function(req, res) {
   res.sendFile(path.join(__dirname + "/game.js"));
 });
 
@@ -199,7 +203,4 @@ function checkForDuplicateUser(data, original){
 }
 
 //STARTING SERVER HERE
-let server = http.createServer(app);
-server.listen(port, function() {
-  console.log("server started running");
-});
+app.listen( process.env.PORT || port )
