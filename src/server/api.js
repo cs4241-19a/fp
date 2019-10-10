@@ -13,35 +13,35 @@ const api = db => {
     const router = express.Router();
 
     router.post('/user/create', async (req, res, next) => {
-        const {
-            body
-        } = req;
-        const {
-            name,
-            email,
-            password
-        } = body;
-        const users = await User.find({
-            email
-        });
-        if (users.length > 0) {
-            res.status(500).json({
-                message: "That email is not available."
-            });
-        } else {
-            // Encrypt password
-            const passwordHash = await hashPassword(password);
-            const newUser = new User({
+            const {
+                body
+            } = req;
+            const {
                 name,
                 email,
-                password: passwordHash,
-                globalAvailability: []
+                password
+            } = body;
+            const users = await User.find({
+                email
+            });
+            if (users.length > 0) {
+                res.status(500).json({
+                    message: "That email is not available."
+                });
+            } else {
+                // Encrypt password
+                const passwordHash = await hashPassword(password);
+                const newUser = new User({
+                    name,
+                    email,
+                    password: passwordHash,
+                    globalAvailability: []
 
-            })
-            await newUser.save();
-            next();
-        }
-    },
+                })
+                await newUser.save();
+                next();
+            }
+        },
         passport.authenticate("local", {
             session: true,
             successRedirect: "/",
@@ -119,21 +119,35 @@ const api = db => {
         await newEvent.save();
         res.redirect(`/event/${newEvent._id}`);
     })
-    router.get('/event/:eventId', async (req, res) => {
-        const { params } = req;
-        const { eventId } = params;
+    router.get('/event/:eventId', ensureLoggedIn, async (req, res) => {
+        const {
+            user,
+            params
+        } = req;
+        const {
+            eventId
+        } = params;
 
         const event = await Event.findById(eventId);
+        event.currentUser = user._id;
         if (event) {
             res.json(event);
         } else {
-            res.status(404).json({ message: "Event not found." });
+            res.status(404).json({
+                message: "Event not found."
+            });
         }
     })
 
     router.post('/event/:eventId/update', ensureLoggedIn, async (req, res) => {
-        const { user, body, params } = req;
-        const { userAvailability } = body;
+        const {
+            user,
+            body,
+            params
+        } = req;
+        const {
+            userAvailability
+        } = body;
 
         const event = await Event.findById(params.eventId);
         event.availabilities[user._id] = userAvailability;
