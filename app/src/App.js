@@ -71,7 +71,6 @@ class Modals extends React.Component {
   render() {
     return (
       <div>
-        <Key boardWords={this.state.words} boardTeams={this.state.teams} />
         <Info />
       </div>
     );
@@ -126,79 +125,24 @@ class Info extends React.Component {
                   <br />
                   <br />
                   At the beginning of the game, only the spymasters can see the
-                  position of the agents (this can be viewed by clicking on the
-                  key button). The spymasters will each take turns giving clues
-                  to their team's detective on which agents belong to their
-                  team. These clues will include a one word hint and the amount
-                  of agents that the hint relates to. The detective will then
-                  guess which word the clue relates to by clicking on a codename
-                  tile. If the detective guesses correctly then they will be
-                  able to continue guessing until they have guessed the amount
-                  specified by the spymaster. If the detective's guesses are all
-                  correct, they will get a free guess which they can choose to
-                  make or pass. If the detective guesses incorrectly it becomes
-                  the other teams turn. If any detective guesses the assassin
-                  then their team atomatically loses the game.
+                  position of the agents (displayed by the border of the cards).
+                  The spymasters will each take turns giving clues to their
+                  team's detective on which agents belong to their team. These
+                  clues will include a one word hint and the amount of agents
+                  that the hint relates to. The detective will then guess which
+                  word the clue relates to by clicking on a codename tile. If
+                  the detective guesses correctly then they will be able to
+                  continue guessing until they have guessed the amount specified
+                  by the spymaster. If the detective's guesses are all correct,
+                  they will get a free guess which they can choose to make or
+                  pass. If the detective guesses incorrectly it becomes the
+                  other teams turn. If any detective guesses the assassin then
+                  their team atomatically loses the game.
                   <br />
                   <br />A team wins the game if their detective can find all of
                   their team's agents or if the other team accidentally finds
                   the assassin. Good Luck!
                 </p>
-              </div>
-            </div>
-          </div>
-        </Modal>
-      </div>
-    );
-  }
-}
-
-class Key extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      modalIsOpen: false,
-      boardWords: this.props.boardWords,
-      boardTeams: this.props.boardTeams
-    };
-
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-  }
-
-  openModal() {
-    this.setState({ modalIsOpen: true });
-  }
-
-  closeModal() {
-    this.setState({ modalIsOpen: false });
-  }
-
-  render() {
-    return (
-      <div>
-        <button className="modalButton" onClick={this.openModal}>
-          Key
-        </button>
-        <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
-          <div id="myModal" className="modal">
-            <div className="modal-content">
-              <span className="close" onClick={this.closeModal}>
-                &times;
-              </span>
-              <br />
-              <br />
-              <div className="modal-header">
-                <div>Key:</div>
-                <br />
-              </div>
-              <div className="modal-body">
-                <Board
-                  words={this.state.boardWords}
-                  teams={this.state.boardTeams}
-                  keyboard={true}
-                />
               </div>
             </div>
           </div>
