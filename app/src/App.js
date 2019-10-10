@@ -536,7 +536,7 @@ function makeGray(btn, selected) {
   b.style.borderColor = "gold";
   b.disabled = true;
   selected.state.selectedRole = btn;
-  //socket.emit("roleSelection", grabRoleState());
+  socket.emit("roleSelection", selected.state.selectedRole);
 }
 
 
@@ -706,7 +706,7 @@ socket.on("updateBoardstate", function(bs) {
     }
   }
   console.log('number clicked');
-  socket.emit('send hint', 'sent!');
+  //socket.emit('send hint', 'sent!');
 });
 
 socket.on('update hints', function(msg) {
@@ -715,6 +715,13 @@ socket.on('update hints', function(msg) {
   final_message.innerHTML = msg;
   console.log(final_message);
   document.getElementsByClassName('chat-container')[0].append(final_message);
+});
+
+socket.on('greyRole', function(role){
+  console.log('greying role', role);
+  let button  = document.getElementById(role);
+  button.style.backgroundColor = "grey";
+  button.disabled = true;
 });
 
 export default App;

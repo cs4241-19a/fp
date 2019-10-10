@@ -35,17 +35,27 @@ module.exports = app;
 var clientList = [];
 var boardState = [];
 let hints = [];
+let roleState = {
+    bspymaster: '',
+    rspymaster:'',
+    bdetective: '',
+    rdetetctive: '',
+};
 
 function updateAll(){
     sendBoardUpdate();
     sendClueUpdate();
 }
 
+function sendRoleState(){
+    //io.sockets.emit("updateBoardstate", boardState);
+}
+
 function sendBoardUpdate(){
     io.sockets.emit("updateBoardstate", boardState);
 }
 function sendClueUpdate(){
-    io.sockets.emit("updateCluestate", clueLog);
+    //io.sockets.emit("updateCluestate", clueLog);
 }
 
 
@@ -56,7 +66,6 @@ io.on("connect", function(client){
 });
 
 io.on("connection", function(socket) {
-
   socket.on('disableOthers', function() {
     console.log('clicked disable');
     socket.broadcast.emit('specMsg',
@@ -79,7 +88,7 @@ io.on("connection", function(socket) {
         });
         if(!found){
             console.log('adding client', user, 'with socket', socket.id);
-            clientList.push({name: user, connection: socket.id})
+            clientList.push({name: user, connection: socket.id, role: 'none'})
             //io.sockets.emit("displayUser", "New User");
         }
 
@@ -88,6 +97,7 @@ io.on("connection", function(socket) {
            console.log('state set to', state);
            boardState = state;
        }else{
+           sendRoleState();
            updateAll();
            console.log('state already is ', boardState);
        }
@@ -101,14 +111,14 @@ io.on("connection", function(socket) {
     });
 
     socket.on("clue sent", function(clue){
-        clueLog.push(clue);
+        //clueLog.push(clue);
         sendClueUpdate();
     });
 
   socket.on('hintSubmission', (sender, clue, amt) => {
     console.log("hello");
     hints.push({sender: sender, clue: clue, amt: amt});
-    socket.emit('hintHistory', hints);x``
+    socket.emit('hintHistory', hints);
   });
 
   socket.on('send hint', function(msg) {
@@ -120,7 +130,29 @@ io.on("connection", function(socket) {
     //io.sockets.emit("update hints", full_msg, msg);
     socket.broadcast.emit('update hints', full_msg, msg);
   });
+
+  socket.on("roleSelection", function(role){
+     console.log(role);
+
+     setRole(socket.id, role);
+     greyRole(role);
+     console.log(clientList);
+     console.log(roleState);
+  });
 });
+
+function greyRole(role){
+    io.sockets.emit("greyRole", role);
+}
+
+function setRole(socketID, role){
+    clientList.forEach(function(cl){
+       if(cl.connection === socketID){
+           cl.role = role;
+           roleState[role] = socketID;
+       }
+    });
+}
 
 function getSocketFromClient(cl) {
   clientList.forEach(function(element) {
