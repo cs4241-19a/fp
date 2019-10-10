@@ -13,7 +13,7 @@ window.onload = function(){
        a.class = "pure-menu-link"
        l.class = "pure-menu-item";
        l.innerHTML = ret[i].username;
-       l.style = "padding: auto;"
+       l.style = "padding: auto; margin:10px; color:white; font-weight:bold;"
        l.appendChild(a);
        document.getElementById("people").appendChild(l)
      }
