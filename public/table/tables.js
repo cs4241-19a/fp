@@ -97,17 +97,20 @@ fetch('/getYou', {
         }
 
         heart.onclick = function(e) {
+            console.log(you)
             if (heart.className === 'fa fa-heart') {
                 heart.className = 'fa fa-heart-o';
                 heart.style.color = 'black';
-                you.favCount -= 1
+                row.favCount -= 1
+                update(row)
                 you.likedList = you.likedList.filter((value => { return value !== row.username }))
                 update(you)
                 refresh()
             } else {
                 heart.className = 'fa fa-heart';
                 heart.style.color = 'red';
-                you.favCount += 1
+                row.favCount += 1
+                update(row)
                 you.likedList.push(row.username)
                 update(you)
                 refresh()

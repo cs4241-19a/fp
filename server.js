@@ -143,7 +143,8 @@ app.post('/updateUser', function(request, response) {
             blackList: request.body.blackList,
             comments: request.body.comments,
             likes: request.body.likes,
-            dislikes: request.body.dislikes
+            dislikes: request.body.dislikes,
+            favCount: request.body.favCount
         }
     }).then(result => {
         response.json(result)
