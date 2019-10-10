@@ -49,6 +49,7 @@ export default function FeedItem(props) {
         const jsonAudioGraph = audioGraph(canvas, jsonAudioInit)
 
         jsonAudioInit.audioElement.src = 'mello.mp3'
+        jsonAudioInit.audioElement.controls = true;
         jsonAudioInit.audioElement.play()
 
         const results = new Uint8Array(jsonAudioGraph.analyser.frequencyBinCount)
@@ -58,14 +59,6 @@ export default function FeedItem(props) {
             visualizer(canvas, jsonAudioInit, jsonAudioGraph, results, currColor, changeParam.barHeight, changeParam.barWidth, changeParam.barFit, changeParam.canvasClr)
         }
         draw()
-    }
-
-    const pauseA = function () {
-        console.log("yoooooooo")
-        const canvas = getCanvas()
-        const jsonAudioInit = audioInit(canvas)
-        jsonAudioInit.audioElement.pause()
-
     }
 
     window.localStorage;
@@ -117,7 +110,7 @@ export default function FeedItem(props) {
                         </div>
                         <div id="btnContainer2">
                             <button className="lbl">Color</button>
-                            <button id="blue" className="btn" onClick={pauseA}>Blue - Green</button>
+                            <button id="blue" className="btn">Blue - Green</button>
                             <button id="green" className="btn">Green - Red</button>
                         </div>
                         <div className="w-full h-64 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-t lg:rounded-t-none lg:rounded-l p-4 flex flex-col justify-between leading-normal">

@@ -11455,6 +11455,7 @@ body {
           align-items: center;
   -webkit-box-pack: center;
           justify-content: center;
+  box-shadow: 0 1px 10px dodgerblue;
 }
 
 #homeDiv img {

@@ -55,6 +55,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 1px 10px dodgerblue;
 }
 
 #homeDiv img {
