@@ -39,7 +39,7 @@ let roleState = {
     bspymaster: '',
     rspymaster:'',
     bdetective: '',
-    rdetetctive: '',
+    rdetective: '',
 };
 
 function updateAll() {
@@ -141,6 +141,18 @@ io.on("connection", function(socket) {
      console.log(clientList);
      console.log(roleState);
   });
+
+  socket.on("allSelected", function(){
+      let allSel = roleState["bdetective"] && roleState["rdetective"] && roleState["bspymaster"] && roleState["rspymaster"];
+      console.log(allSel, 'ROLES', roleState);
+      io.sockets.emit("allSelectedStatus", allSel);
+  });
+
+  socket.on("startGame", function(){
+      socket.broadcast.emit("closeModal");
+      //logic to start the game
+  });
+
 });
 
 function greyRole(role){
