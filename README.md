@@ -10,6 +10,11 @@ Welcome to qMe! qMe is a priority queue application for use in personal scheduli
   - This is what we did with SCSS
 
 ## Challenges Faced
+- All group members worked on a portion of the project with which they had little to no experience
+  - Terry worked with salting and hashing
+  - Demi worked with React and Bootstrap
+  - Kyle worked with an ORM for databases
+  - Tom worked with React
 
 ## Group Contributions
 ### Terry Hearst
@@ -20,7 +25,6 @@ Welcome to qMe! qMe is a priority queue application for use in personal scheduli
 ### Kyle Reese
 - Created databases for Users and Tasks
 - Created functions for retrieving data from databases
-- Wrote ReadMe
 ### Tom White
 - Translated API calls into cards shown on the front end
 - Created stcking transparency effect on task cards
