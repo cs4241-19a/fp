@@ -94,10 +94,7 @@ res.sendFile(__dirname + '/public/views/index.html');
 });
 
 app.get('/messages', async function(req, res){
-  if( msgCol !== null ) {
-    //console.log( await userCol.find({ }).toArray());
-    // get array and pass to res.json
-    
+  if( msgCol !== null ) {    
     await msgCol.find({ }).toArray().then(result =>
       res.json(result)
       );
@@ -117,7 +114,6 @@ app.get('/user', function(req, res) {
 });
 
 app.get('/admin', async function(req, res) {
-  //console.log(await jobCol.find({ }).toArray());
   if(req.isAuthenticated() && req.user.level === 'admin'){
     console.log("Authenticated");
     res.sendFile(__dirname + '/public/views/admin.html');
@@ -129,8 +125,6 @@ app.get('/admin', async function(req, res) {
 
 app.get('/users', async function(req,res){
   if( userCol !== null ) {
-    //console.log( await userCol.find({ }).toArray());
-    // get array and pass to res.json
     await userCol.find({ }).toArray().then(result =>
       res.json(result)
       );
@@ -142,7 +136,6 @@ app.get('/register', function(req, res){
 });
 
 // Returning statistics of the user for user view page
-// TODO handle users who aren't logged in
 app.get('/userData', function(req, res) {
   console.log('Looking for user:', req.session.passport.user);
   userCol.findOne({uuid: req.session.passport.user}, function(err, result) {
@@ -164,11 +157,13 @@ app.get('/jobList', async function(req, res) {
 // Passport authentication on login
 app.post('/login', 
     (req, res, next) => {
-  console.log('Inside POST /login callback')
-  passport.authenticate('local', (err, user, info) => {   
+  passport.authenticate('local', {failureFlash: true},
+   (err, user, info) => {
+     if(err) {return next(err);};
+     if(!user) {return res.redirect('/login');};   
     req.login(user, (err) => {
-      // TODO get redirect to work
-      return res.redirect('/');
+      if(err) {return next(err);};
+      return res.redirect('/user');
     })
   })(req, res, next);
   
@@ -182,7 +177,8 @@ app.post('/signoff', async function(req, res) {
     jobFound.status.signoff = req.session.passport.user;
 
     jobCol.updateOne({jobCode:job.jobCode}, {$set: {status: jobFound.status}})
-  })
+  });
+  res.sendStatus(200);
 });
 
 app.post('/messages', function(req, res){
@@ -236,9 +232,8 @@ app.post('/modify', function(req, res){
     job.jobCode = day + job.jobCode;
     job.status = {completed: false, late: false, signoff: ''};
     if(job.point === ''){
-      job.point = 69;
+      job.point = 1;
     }
-    console.log(job);
     
     jobCol.findOne({jobCode: job.jobCode}, function(err, jobFound){
       if(err){return console.log(err)};
@@ -256,22 +251,19 @@ app.post('/modify', function(req, res){
 });
 
 app.post('/modifyAll', function(req, res){
-  //console.log(req.body);
   let jobs = req.body;
-
   jobs.forEach(function(job){
     jobCol.findOne({jobCode: job.jobCode}, function(err, jobFound){
       jobCol.updateOne({jobCode: job.jobCode},
         {$set: {name: job.name}})
     })
-    //console.log(job);
   })
 })
 
 // Manual override for updating jobs
 app.post('/forceUpdate', function(req, res) {
   update();
-  res.sendStatus(200);
+  res.redirect('/admin');
 });
 
 app.post('/resetjobs', function(req,res){
@@ -282,8 +274,7 @@ app.post('/resetjobs', function(req,res){
 
 // Automatic scheduled updates
 // Updates job list every Sunday at 5:00 PM
-var schedUpdate = schedule.scheduleJob({hour: 17, minute: 0, dayOfWeek: 0}, function() {update();});
-
+var schedUpdate = schedule.scheduleJob({hour: 17, minute: 0, dayOfWeek: 0}, function() {if(active)update();});
 // Function to update listing of house jobs 
 // TODO change job date values for next week
 var update = async function() {
@@ -320,7 +311,7 @@ var update = async function() {
         signoff: ''}}});
 
   // Change job dates
-  //TODO
+  // TODO
   let userList = [];
   // Calculate points
   await userCol.find({}).toArray().then(users => {
@@ -341,7 +332,7 @@ var update = async function() {
     // Currently sorts with lowest points being first
     // Lower UUID will be put to the front
     // Swap the comparisons to reverse (later implementation of a new system)
-    // TODO remove people from the lsit who are N/A
+    // TODO remove people from the list who are N/A
     let sortedList = users.sort((a, b) => (a.point > b.point) ? 1 : (a.point === b.point) ? ((parseInt(a.uuid) < parseInt(b.uuid)) ? 1 : -1) : -1);
     console.log('List of Users:', sortedList);
     userList = sortedList;
@@ -366,8 +357,8 @@ var update = async function() {
 };
 
 // Scheduled functions to mark jobs late
-var markLateTues = schedule.scheduleJob({hour: 9, minute: 0, dayOfWeek: 3}, async function() {markLate('tues')});
-var markLateThur = schedule.scheduleJob({hour: 9, minute: 0, dayOfWeek: 5}, async function() {markLate('thur')});
+var markLateTues = schedule.scheduleJob({hour: 9, minute: 0, dayOfWeek: 3}, async function() {if(active)markLate('tues')});
+var markLateThur = schedule.scheduleJob({hour: 9, minute: 0, dayOfWeek: 5}, async function() {if(active)markLate('thur')});
 
 // Marks all incomplete jobs as late for given day
 var markLate = async function(day) {

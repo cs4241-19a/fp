@@ -47,4 +47,12 @@ var parseJobCode = function(jobCode) {
   return {name: name, day: day};
 }
 
-export {parseJobCode};
+var parseStatus = function(job) {
+  let msg = '';
+  if(job.status.complete) {msg= 'Signed Off'}
+  else {msg = 'Incomplete'};
+  if(job.status.late) {msg += '(Late)'};
+  return msg;
+}
+
+export {parseJobCode, parseStatus};

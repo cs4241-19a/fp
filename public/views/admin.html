@@ -20,9 +20,6 @@
           <li>
             <a href="/user">Profile</a>
           </li>
-          <li>
-            <a href="/stats">Sheet</a>
-          </li>
           <li class="active">
             <a href="/admin">Admin</a>
           </li>
@@ -145,7 +142,7 @@
     </figure>
     <h3 class="edit" onclick="showHide()">Edit current jobs via below form</h3>
     <section  id="editForm" class="container">
-      <form autocomplete="off" id="adminForm" action="/modify" method="POST" display="">
+      <form class="text-center" autocomplete="off" id="adminForm" action="/modify" method="POST" display="">
         <div class="autocomplete" style="width:300px;">
         Name:<input type="text" name="name" id="name" placeholder="Type Name" required>
           </div>
@@ -167,13 +164,17 @@
         Point Value: <input type="number" name="point" required><br>
         <input type="submit" value="Submit Mod">
       </form>
-      <button type="button" id="submitBtn" onclick="submitAllMods()">Submit All Mods</button>
-      <button type="button" onclick="window.location='/register'">Register New Account</h3>
-      <button type="button" onclick="forceUpdate()">Force Update</h3>
-      <button type="button" onclick="fill()">Fill All</h3>
-      <button type="button" onclick="resetJobs()">Reset User Jobs</h3>
+      <section id="buttons" class="text-center">
+        <button type="button" id="submitBtn" onclick="submitAllMods()">Submit All Mods</button>
+        <button type="button" onclick="window.location='/register'">Register New Account</button>
+        <form action="/forceUpdate" method="POST">
+          <input type="submit" value="Force Update">
+        </form>
+        <button type="button" onclick="fill()">Fill All</button>
+        <button type="button" onclick="resetJobs()">Reset User Jobs</button>
+      </section>
     </section>
-    <table id="messages" border="1" style="width:100%">
+    <table class="table table-bordered text-center" id="messages" border="1" style="margin-left:25%; width:50%">
       <!--<caption>Messages</caption>-->
       <tr>
           <th>From</th>

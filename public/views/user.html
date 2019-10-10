@@ -20,9 +20,6 @@
             <a href="/user">Profile</a>
           </li>
           <li>
-            <a href="/stats">Sheet</a>
-          </li>
-          <li>
             <a href="/admin">Admin</a>
           </li>
           <li>
@@ -31,22 +28,35 @@
         </ul>
       </div>
     </nav>
-    <h1 id="name">Hello,</h1><br>
-    <h3>Your job this week is:</h3><br>
-    <h2 id="job"></h2><h2>on</h2><h2 id="day"></h2><br><br>
-    <h2 id="status">Status:</h2>
+    <section id="userJobInfo" class="text-center">
+      <h1 id="name">Hello, </h1><br>
+      <h3>Your job this week is: </h3><br>
+      <h2 id="job"></h2><h3> on </h3><h2 id="day"></h2><br>
+      <h3 id="status">Status: </h3><br><br>
+    </section>
 
-    <h4 id="points">Current Points:</h4><br>
-    <h4 id="rank">Points Rank:</h4><br><br>
-
-    <h4>Point History</h4><br>
-    <table>
-      <!--Table generated on window load-->
-    </table>
-
-    <form action="/messages" method='POST'>
-    <textarea name="message"></textarea>
-    <input type="submit" value="Submit Message">
+    <h4 class="text-center">Submit an excuse if necessary</h4>
+    <form class="d-flex justify-content-center" action="/messages" method='POST'>
+      <textarea class="d-flex justify-content-center" name="message"></textarea>
+      <input type="submit" value="Submit Message">
     </form>
+    <br><br>
+    <section id="userPointInfo" class="container">
+      <h4 class="text-center" id="points">Current Points: </h4><br>
+      <!--<h4 id="rank">Points Rank:</h4><br><br>-->
+      <h4 class="text-center">Point History</h4><br>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Job Name</th>
+            <th>Status</th>
+            <th>+/-</th>
+          </tr>
+        </thead>
+        <tbody id="historyTable">
+          <!--Table generated on window load-->
+        </tbody>
+      </table>
+    </section>
   </body>
 </html>

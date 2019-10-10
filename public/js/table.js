@@ -20,7 +20,6 @@ const fillMessages = async function(){
   const response = await fetch('/messages')
   const messages = await response.json();
 
-  console.log("messages are ", messages);
   messages.forEach(function(msg){
     var tableRow = table.insertRow(1);
         var tCell1 = tableRow.insertCell(0);
@@ -47,15 +46,16 @@ const addSignOff = function(){
           method:'POST',
           body: JSON.stringify(jobToSign),
           headers: {'Content-Type': 'application/json'}
-
         })
-        //console.log(jobToSign);
+        .then(res => {
+          if(res.status === 200){
+            console.log('Job Signed Off:', jobToSign.jobCode);
+          }
+        })
         });
       modifyBtn.style = "width:100%";
       buttonCell.append(modifyBtn);
-
     }
-  
   }
 }
 
@@ -84,10 +84,8 @@ const setStandards = function(){
       job.cells[0].addEventListener("click", function() {
         changeStandardText("_"+jobCode)});
       }
-    //console.log(job.cells[0]);
     }
   }
-  
 }
 
 const changeStandardText = function(job){
@@ -121,7 +119,7 @@ const fillBoard = async function(){
 }
 
 
-//Chunk taken from W3 Schools
+// Chunk taken from W3 Schools
 function autocomplete(inp, arr) {
     /*the autocomplete function takes two arguments,
     the text field element and an array of possible autocompleted values:*/
