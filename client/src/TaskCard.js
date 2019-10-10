@@ -4,6 +4,7 @@ import {Button, ButtonToolbar} from 'react-bootstrap';
 import {Form, FormGroup, ControlLabel, FormControl, inputRef, row, col, Col, DatePicker} from 'react-bootstrap';
 //import './Login.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './TaskCard.css'
 
 class TaskCard extends React.Component {
 
@@ -59,13 +60,13 @@ class TaskCard extends React.Component {
 
 	render() {
 		return (
-			<div> 
+			<div className={'card-z-'+this.props.card_z+" w-100 row justify-content-center align-items-center"}>
 				<Card bg="warning" text="white" style={{ width: '30rem' }}>
-				   <Card.Header>
+						<Card.Header>
 						<Card.Title className = "text-center" controlId="title"> Task Title</Card.Title>
 						<Card.Text className = "text-right" controlId="dueDate"> Due: 10/12 </Card.Text>
-				   </Card.Header>
-				  <Card.Body>
+						</Card.Header>
+					<Card.Body>
 					<div key= 'priority' className="mb-3 text-center">
 						<Form.Check inline label="Low" type='checkbox' id='low' disabled />
 						<Form.Check inline label="Medium" type='checkbox' id='medium' checked disabled />
@@ -79,7 +80,7 @@ class TaskCard extends React.Component {
 						<Button variant="outline-secondary" style={{ margin: '5px' }} onClick = {this.handleEdit}>Edit</Button>
 						<Button variant="outline-danger" style={{ margin: '5px' }} onClick = {this.handleDelete}>Delete</Button>
 					</ButtonToolbar>
-				  </Card.Body>
+					</Card.Body>
 				</Card>
 			</div>
 		);
