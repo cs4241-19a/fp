@@ -72,10 +72,6 @@ app.post('/newLeaderboardTime', function (request, response) {
     db.get('leaderboardData').catch(err => {
         if (err.name === 'not_found') {
             leaderboardData.push(newData);
-            leaderboardData = {
-                _id: 'leaderboardData',
-                leaderboardData: leaderboardData
-            };
             db.upsert('leaderboardData', function(doc) {
                 doc.counter = doc.counter || 0;
                 doc.counter++;
@@ -86,24 +82,20 @@ app.post('/newLeaderboardTime', function (request, response) {
             });
         }
     }).then(doc => {
-        leaderboardData = doc.leaderboardData;
-        if (!leaderboardData) {
-            leaderboardData = [];
-        } else {
-            console.log(leaderboardData);
-            leaderboardData.forEach(entry => {
-                if (entry.user === request.session.passport.user) {
-                    entry.attempts++;
-                    if (entry.time > request.body.time) {
-                        entry.time = request.body.time;
-                    }
-                } else {
-                    foundUser = true;
+        if (doc) {
+            leaderboardData = doc.leaderboardData;
+        }
+        leaderboardData.forEach(entry => {
+            if (entry.user === request.session.passport.user) {
+                entry.attempts++;
+                if (entry.time > request.body.time) {
+                    entry.time = request.body.time;
                 }
-            });
-            if (foundUser === true) {
-                leaderboardData.push(newData);
+                foundUser = true;
             }
+        });
+        if (foundUser === false) {
+            leaderboardData.push(newData);
         }
         db.upsert('leaderboardData', function(doc) {
             doc.counter = doc.counter || 0;
