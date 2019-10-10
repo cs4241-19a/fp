@@ -1,20 +1,20 @@
 fetch('/getYou', {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
-}).then(function (response) {
+}).then(function(response) {
     return response.json();
-}).then(function (you) {
+}).then(function(you) {
     document.getElementById('handwritten').innerHTML = 'Welcome, ' + you.name + '!'
-    document.getElementById('goTop-btn').onclick = function () {
+    document.getElementById('goTop-btn').onclick = function() {
         document.body.scrollTop = 0
         document.documentElement.scrollTop = 0
     }
 
     const table = document.getElementById('table')
 
-    const createNode = function (element) { return document.createElement(element) }
-    const append = function (parent, el) { return parent.appendChild(el) }
-    const makeHeadings = function () {
+    const createNode = function(element) { return document.createElement(element) }
+    const append = function(parent, el) { return parent.appendChild(el) }
+    const makeHeadings = function() {
         let thead = createNode('thead')
         thead.className = 'thead-dark'
 
@@ -52,44 +52,45 @@ fetch('/getYou', {
         append(table, thead)
     }
 
-    const makeGender = function (row) {
+    const makeGender = function(row) {
         let gender = createNode('i')
         if (row.gender === 'Male') gender.className = 'fa fa-male'
         else gender.className = 'fa fa-female'
         return gender
     }
 
-    const update = function (user) {
+    const update = function(user) {
         fetch('/updateUser', {
             method: 'POST',
             body: JSON.stringify(user),
             headers: { 'Content-Type': 'application/json' }
-        }).then(function (response) {
+        }).then(function(response) {
             console.log("Post sent to server: " + response)
         })
     }
 
-    const makeHeart = function (row) {
+    const makeHeart = function(row) {
         let heart = createNode('i');
         if (you.likedList.includes(row.username)) {
             heart.className = 'fa fa-heart';
             heart.style.color = 'red';
-        }
-        else {
+        } else {
             heart.className = 'fa fa-heart-o';
             heart.style.color = 'black';
         }
 
-        heart.onclick = function (e) {
+        heart.onclick = function(e) {
             if (heart.className === 'fa fa-heart') {
                 heart.className = 'fa fa-heart-o';
                 heart.style.color = 'black';
+                you.favCount -= 1
                 you.likedList = you.likedList.filter((value => { return value !== row.username }))
                 update(you)
                 refresh()
             } else {
                 heart.className = 'fa fa-heart';
                 heart.style.color = 'red';
+                you.favCount += 1
                 you.likedList.push(row.username)
                 update(you)
                 refresh()
@@ -99,12 +100,12 @@ fetch('/getYou', {
         };
         return heart;
     };
-    const makeBomb = function (row) {
+    const makeBomb = function(row) {
         let bomb = createNode('i');
         if (document.title === 'Black List') bomb.className = 'fa fa-recycle';
         else bomb.className = 'fa fa-bomb';
 
-        bomb.onclick = function (e) {
+        bomb.onclick = function(e) {
             if (bomb.className === 'fa fa-bomb') {
                 you.blackList.push(row.username)
                 update(you)
@@ -119,10 +120,10 @@ fetch('/getYou', {
         };
         return bomb
     }
-    const makeComment = function (row) {
+    const makeComment = function(row) {
         let comment = createNode('i')
         comment.className = 'fas fa-comments'
-        comment.onclick = function (e) {
+        comment.onclick = function(e) {
             let comment = prompt("Please enter your comment", "You look hot!")
             if (comment !== null && comment !== "") {
                 alert("You have made the following comment: \n" + comment)
@@ -134,12 +135,12 @@ fetch('/getYou', {
         }
         return comment
     }
-    const makeLike = function (row) {
+    const makeLike = function(row) {
         let like = createNode('i')
         like.className = 'fa fa-thumbs-o-up'
-        like.onmouseover = function () { like.className = 'fa fa-thumbs-up' }
-        like.onmouseleave = function () { like.className = 'fa fa-thumbs-o-up' }
-        like.onclick = function (e) {
+        like.onmouseover = function() { like.className = 'fa fa-thumbs-up' }
+        like.onmouseleave = function() { like.className = 'fa fa-thumbs-o-up' }
+        like.onclick = function(e) {
             row.likes += 1
             update(row)
             refresh()
@@ -148,12 +149,12 @@ fetch('/getYou', {
         }
         return like
     }
-    const makeDislike = function (row) {
+    const makeDislike = function(row) {
         let dislike = createNode('i')
         dislike.className = 'fa fa-thumbs-o-down'
-        dislike.onmouseover = function () { dislike.className = 'fa fa-thumbs-down' }
-        dislike.onmouseleave = function () { dislike.className = 'fa fa-thumbs-o-down' }
-        dislike.onclick = function (e) {
+        dislike.onmouseover = function() { dislike.className = 'fa fa-thumbs-down' }
+        dislike.onmouseleave = function() { dislike.className = 'fa fa-thumbs-o-down' }
+        dislike.onclick = function(e) {
             row.dislikes += 1
             update(row)
             refresh()
@@ -162,7 +163,7 @@ fetch('/getYou', {
         }
         return dislike
     }
-    const calculateScore = function (row) {
+    const calculateScore = function(row) {
         let score = 0;
         if (you.gender === row.gender) score -= 30;
         else score += 30;
@@ -171,14 +172,14 @@ fetch('/getYou', {
         score -= Math.abs(you.age - row.age);
         return score;
     }
-    const makeImg = function (row) {
+    const makeImg = function(row) {
         let img = createNode('img')
         if (row.pic) {
             img.src = row.pic
         }
         return img
     }
-    const makeRow = function (row) {
+    const makeRow = function(row) {
         let tr = createNode('tr')
         let td1 = createNode('th')
         let td2 = createNode('th')
@@ -221,16 +222,16 @@ fetch('/getYou', {
         return tr
     }
 
-    const refresh = function () {
+    const refresh = function() {
         fetch('/refreshAll', {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
-        }).then(function (response) {
+        }).then(function(response) {
             return response.json()
-        }).then(function (data) {
+        }).then(function(data) {
             table.innerHTML = "";
             makeHeadings()
-            data.map(function (row) {
+            data.map(function(row) {
                 if (row.username !== you.username) {
                     switch (document.title) {
                         case 'Overview':

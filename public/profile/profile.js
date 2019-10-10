@@ -5,9 +5,6 @@ window.onload = function() {
         document.body.scrollTop = 0
         document.documentElement.scrollTop = 0
     }
-    document.getElementById('comment-btn').onclick = function(e) {
-        console.log(document.getElementById('comment-text').value)
-    }
     refreshProfile()
 }
 
@@ -21,6 +18,7 @@ function refreshProfile() {
         if (you.pic) document.getElementById('avatar').style.backgroundImage = `url(${you.pic})`
         document.getElementById('name').innerHTML = you.name
         document.getElementById('name2').innerHTML = you.name
+        document.getElementById('favCount').innerHTML = you.favCount
         document.getElementById('likes').innerHTML = you.likes
         document.getElementById('dislikes').innerHTML = you.dislikes
         document.getElementById('gender').innerHTML = you.gender
@@ -30,14 +28,30 @@ function refreshProfile() {
         document.getElementById('location').innerHTML = you.location
         document.getElementById('self-intro').innerHTML = you.selfIntro
         document.getElementById('personal-msg').innerHTML = you.whatsUp
+        document.getElementById('comment-img').src = you.pic
+
+        const update = function(user) {
+            fetch('/updateUser', {
+                method: 'POST',
+                body: JSON.stringify(user),
+                headers: { 'Content-Type': 'application/json' }
+            }).then(function(response) {
+                console.log("Post sent to server: " + response)
+                setTimeout(function() { refreshProfile() }, 1500)
+            })
+        }
+        document.getElementById('comment-btn').onclick = function(e) {
+            you.comments.push([you.pic, you.name, document.getElementById('comment-text').value])
+            update(you)
+            e.preventDefault()
+            return false
+        }
 
         const comments = document.getElementById('comments')
+        comments.innerHTML = ''
         const createNode = function(element) { return document.createElement(element) }
         const append = function(parent, el) { return parent.appendChild(el) }
         you.comments.map(function(comment) {
-            // console.log(comment[0], comment[1], comment[2])
-            comments.innerHTML = ''
-
             let img = createNode('img')
             img.src = comment[0]
             img.className = 'rounded mr-2'
@@ -57,7 +71,7 @@ function refreshProfile() {
 
             let toast = createNode('div')
             toast.role = 'alert'
-            toast.className = 'toast'
+            toast.className = 'toast fade show'
             append(toast, header)
             append(toast, body)
             append(comments, toast)
