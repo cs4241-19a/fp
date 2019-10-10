@@ -74,5 +74,5 @@ nav .dropdown-menu {
 /* score board */
 #scoreModal .tab-content{
     overflow-y: scroll;
-    height: 50vh;
+    max-height: 50vh;
 }
