@@ -33,7 +33,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 let fdb = firebase.database();
 
-const uri =
+/*const uri =
   "mongodb+srv://anagha:" +
   process.env.MONGO_PASS +
   "@cluster0-vy0ms.azure.mongodb.net/admin?retryWrites=true&w=majority";
@@ -43,7 +43,7 @@ const client = new mongodb.MongoClient(uri, {
   useUnifiedTopology: true
 });
 let currentUser = "";
-let usersCollection = null;
+let usersCollection = null;*/
 
 app.use(express.static(path.join(__dirname + "/public")));
 app.use(bodyParser.json());
@@ -57,6 +57,10 @@ app.get("/", function(req, res) {
 
 app.get("/game.html", function(req, res) {
   res.sendFile(path.join(__dirname + "/game.html"));
+});
+
+app.get("/loginPage", function(req, res) {
+  res.sendFile(path.join(__dirname + "/index.html"));
 });
 
 app.get("/game.js", function(req, res) {
