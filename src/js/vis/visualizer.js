@@ -1,5 +1,5 @@
-import { getCanvas, audioInit, audioGraph } from './setUpModule.js'
-import { visualizer } from './visualizerModule'
+import { getCanvas, audioInit, audioGraph } from '../setUpModule.js'
+import { visualizer } from '../visualizerModule'
 import * as dat from 'dat.gui'
 
 const gui = new dat.GUI()

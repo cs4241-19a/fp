@@ -10,8 +10,9 @@ const express = require('express'),
       app = express()
 
 // http://expressjs.com/en/starter/static-files.html
+//app.use( express.static(__dirname + '/public' ) );
 app.use(express.static('dist'));
-app.use(compression({level: 1}))
+app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(favicon(path.join(__dirname, '/src/media', 'favicon.jpg')));
