@@ -23,22 +23,18 @@ Our team consists of four members: Manasi Danke, Carla Duarte, Amanda Ezeobiejes
 
 
 Username: ciduarte@wpi.edu
-
 Password: 1234
 
-<br></br>
+<br>
 Username: mmdanke@wpi.edu
-
 Password: 1234
 
-<br></br>
+<br>
 Username: ylin7@wpi.edu
-
 Password: 1234
 
-<br></br>
+<br>
 Username: aezeobiejesi@wpi.edu
-
 Password: 1234
 
 8) If you have any additional questions, please do not hesitate to reach out to us.
@@ -149,7 +145,7 @@ In addition, we encountered a few difficulties when we first began to implement 
 If we had more time, we would have implemented the following features:
 
 <b>MM-DD-YYYY System:</b> 
-Made a week-by-week scrolling system that allows the user to book rooms based on a particular week and in accordance with dates from the calendar. For example, a user could book the Friday Kahlo room  from 10:00AM - 12:00PM on Oct 15th, 2019 rather than just being limited to the current week Sunday - Monday.
+Made a week-by-week scrolling system that allows the user to book rooms based on a particular week and in accordance with dates from the calendar. For example, a user could book the Frida Kahlo room  from 10:00AM - 12:00PM on Oct 15th, 2019 rather than just being limited to the current week Sunday - Monday.
 
 <b>Different Table Layout:</b> 
 Set up the room availability table in a different way (room vs. hours) so it becomes easier to check the most recent available rooms since people are more concerned with the first day they can book any room rather than the actual room
