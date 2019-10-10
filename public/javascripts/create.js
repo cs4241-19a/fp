@@ -27,4 +27,7 @@ function createAccount(){
 window.onload = function() {
   const button = document.getElementById('createButton')
   button.onclick = createAccount
+
+  const navbar = document.getElementsByClassName('navbar')
+  navbar.style.display = "none";
 }
