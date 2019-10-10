@@ -13,7 +13,8 @@ class TaskCard extends React.Component {
     }
 	// On click for task complete
 	handleDone = event => {
-		
+		// This is for testing, remove 
+		this.props.buttonCallback();
 		
 	}
 	
@@ -60,7 +61,7 @@ class TaskCard extends React.Component {
 
 	render() {
 		return (
-			<div className={'card-z-'+this.props.card_z+" w-100 row justify-content-center align-items-center"}>
+			<div className={'card-z-'+this.props.data.z+" w-100 row justify-content-center align-items-center"}>
 				<Card bg="warning" text="secondary" style={{ width: '30rem' }}>
 						<Card.Header>
 						<Card.Title className = "text-center" controlId="title">{this.props.data.title}</Card.Title>
