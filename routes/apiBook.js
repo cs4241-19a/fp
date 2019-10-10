@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var router = express.Router();
+var ObjectId = require('mongodb').ObjectId;
 
 /* ### DB QUERIES ### */
 const MongoClient = require('mongodb').MongoClient;
@@ -88,7 +89,6 @@ function dbBookDeleteBook(id, res) {
             const db = client.db('finalproject');
             db.collection('books').deleteOne({_id: id})
             client.close();
-            res.redirect('/index')
         })
     }
     catch(e) {
@@ -117,12 +117,13 @@ let dbBookGetAll = function() {
 // edit baby book boy
 // array should be [ _id, bookName, crn ]
 let dbBookEdit = function(arr) {
+    console.log("from array: " + arr[0])
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             try {
                 MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) {
                     const db = client.db('finalproject');
-                        resolve(db.collection('books').updateOne({ _id: arr[0] }, {$set: {name: arr[1], crn: arr[2]}}).toArray())
+                    resolve(db.collection('books').updateOne({ _id: arr[0] }, {$set: {name: arr[1], crn: arr[2]}}))
                     client.close();
                 })
             }
@@ -181,8 +182,9 @@ router.post('/searchBook', function(req, res) {
 router.post('/deleteBook', function(req, res) {
     console.log("removing book...");
     const id = req.body._id;
-
-    dbBookDeleteBook(id);
+    const o_id = ObjectId(id)
+    dbBookDeleteBook(o_id);
+    res.redirect('/index')
 });
 
 router.post('/getBooks', function (req,res){
@@ -197,10 +199,14 @@ router.post('/getBooks', function (req,res){
 router.post('/editBook', function (req,res){
     console.log("editing book...");
     const id = req.body._id;
+    var o_id = new ObjectId(id)
+    console.log(id)
+    console.log(o_id)
     const bookName = req.body.name;
     const crn = req.body.crn;
 
-    dbBookEdit([id, bookName, crn]).then(data => {
+    dbBookEdit([o_id, bookName, crn]).then(data => {
+        console.log(data)
         res.redirect('/index')
     }).catch(e => {
         console.log(e)
