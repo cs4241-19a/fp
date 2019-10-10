@@ -24,16 +24,21 @@ const gamePlayState = new Phaser.Class({
         scene.enemies = [];
         scene.towers = [];
         // Enemy types
-        function removeEnemy(enemy) {
-            scene.enemies.slice(scene.enemies.indexOf(enemy), 1);
+        function removeEnemys(enemy) {
+            scene.enemies.forEach((enemy, idx) => {
+                if (!enemy.isAlive()) {
+                    scene.enemies.splice(idx, 1);
+                }
+            });
+            console.log(scene.enemies);
         }
         const enemy_events = {onBase: () => {
                 console.log('-1 life');
-                removeEnemy();
+                removeEnemys();
                 return scene;
             }, onDeath: () => {
                 console.log('-1 Enemy');
-                removeEnemy();
+                removeEnemys();
                 return scene;
             }};
         scene.EnemyUnits = {Trucks: Truck(enemy_events)};
@@ -53,8 +58,8 @@ const gamePlayState = new Phaser.Class({
             scene.towers.push(scene.Towers.Cannons.create(scene.Towers.Cannons.Cannon(scene, coord)));
         };
 
-        // for (let i = 0; i < 10; i++) scene.addTruck3b(i * 10);
-        scene.addTruck3b(1);
+        for (let i = 0; i < 5; i++) scene.addTruck3b(i * 10);
+        // scene.addTruck3b(1);
         // scene.addSandBag({x: 1, y: 1});
 
         // scene.enemies.push(scene.EnemyUnits.Trucks.create(scene.EnemyUnits.Trucks.Truck3b(scene), 2));
@@ -65,14 +70,11 @@ const gamePlayState = new Phaser.Class({
         this.cursor = this.add.graphics();
         this.cursor.lineStyle(2, 0x000000, 1);
         this.cursor.strokeRect(0, 0, 40, 40);
-
-        // scene.e1 = Enemy(truck, 0.003, 75);
-        // scene.e1 = Enemy(truck, 0.003, 75);
-        console.log(scene.enemies);
-    },
+        },
 
     update: function() {
         const scene = this;
+        // console.log(scene.enemies);
         updateMarker(scene);
         scene.enemies.forEach(enemy => {
             enemy.move();
@@ -155,7 +157,6 @@ function updateMarker(scene) {
     scene.cursor.y = coord.y * cellSize.height;
 
     if (scene.input.mousePointer.isDown) {
-        console.log(scene.menuSelection);
         if (coord.y < playArea.height ) {
             placeTower(scene, coord);
         } else if (coord.y >= playArea.height && coord.y < playArea.height + menuArea.height) {
@@ -207,7 +208,6 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
         let newPathCoord;
         if (!pathPoints) {
             pathPoints = getPathPoints(coord);
-            console.log(pathPoints)
         }
         if (pathPoints) {
             // CatmullRom
@@ -243,7 +243,8 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
     function checkAtBase(coord) {
         if (coord.x <= baseEntrance.x && coord.y >= baseEntrance.y) {
             atBase = true;
-            onBase();
+            alive = false;
+            die(onBase());
         }
     }
 
@@ -284,13 +285,14 @@ function Enemy(sprite, waveIndex, moveSpeed, healthPoints, onDeath, onBase) {
         return alive;
     }
 
-    return {sprite, move, damage, isAlive}
+    return {sprite, move, damage, isAlive};
 }
 
 // Update
 function Tower(sprite, range, damage, fireRate) {
     let targets = [];  // list of all enemies in range
     let target;  // the current enemy being targeted
+    let shootIdx = 0;
 
     /**
      * Goes through all the given enemies and stores them if in range
@@ -332,18 +334,22 @@ function Tower(sprite, range, damage, fireRate) {
      * @returns {boolean}
      */
     function shoot() {
-        if (confirmTarget()) {
+        if (shootIdx === 0 && confirmTarget()) {
             switch(target.damage(damage)) {
                 case false:
                     console.log("bad target");
+                    shootIdx = 0;
                     return false;  // bad target so try again next update
                 case true:
-                    // do nothing
+                    shootIdx = fireRate;
                     return true;
                 case undefined:
                     targets.splice(targets.indexOf(target), 1);  // remove the enemy from the targets
+                    shootIdx = 0;
                     return true;
             }
+        } else {
+            shootIdx--;
         }
         return false; // no targets
     }
