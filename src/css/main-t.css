@@ -48,6 +48,7 @@ body {
 
 #canvas {
     height: 400px;
+    min-height: 400px;
     padding: 25px;
     background-color: black !important;
     text-align: center !important;

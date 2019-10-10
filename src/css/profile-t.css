@@ -16,6 +16,19 @@ html {
 div {
     min-height: 0 !important;
 }
+
+#canvas {
+    height: 400px;
+    padding: 25px;
+    background-color: black !important;
+    text-align: center !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 10px dodgerblue;
+}
+
   
 body {
     overflow: hidden;
@@ -70,9 +83,8 @@ body {
 #root {
     padding-left: 100px;
     padding-right: 100px;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    overflow: scroll !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 #navBar img {

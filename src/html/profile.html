@@ -36,8 +36,11 @@
       </div>
     </div>
     <div class="w-full flex">
-      <div class="w-4/5 flex">
-        <div class="overflow-scroll" id="root"></div>
+      <div class="w-4/5 flex flex-col">
+          <div id="canvas" class="flex flex-shrink-0"></div>
+          <div class="w-full flex">
+            <div class="overflow-y-auto w-full" id="root"></div>
+          </div>
       </div>
       <div id="infoContainer" class="w-1/5 p-5">
         <div class="w-full bg-white rounded p-5" id="userInfo">
