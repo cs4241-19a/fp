@@ -45,8 +45,13 @@ window.onload = function() {
 
         updateForm.innerHTML = "<input type='text' name='_id' value='" + ret[i]._id + "'><input id='form-name-" + ret[i]._id +"' type='text' name='name' value='" + ret[i].name + "'><input type='text' name='crn' id='form-crn-" + ret[i]._id + "' value='" + ret[i].crn + "'>"
         updateForm.setAttribute("id", "update-form-" + ret[i]._id);
-        updateForm.setAttribute("action", "/api/books/editBook");
+        updateForm.setAttribute("action", "/api/books/deleteBook");
         updateForm.setAttribute("method", "POST");
+
+        deleteForm.innerHTML = "<input type='text' name='_id' value='" + ret[i] +"'>";
+        deleteForm.setAttribute("id", "delete-form-" + ret[i]._id);
+        deleteForm.setAttribute("action", "/api/books/editBook");
+        deleteForm.setAttribute("method", "POST");
 
         deleteButton.className = "pure-button deleteButton";
         deleteButton.innerHTML = "Delete";
@@ -54,6 +59,7 @@ window.onload = function() {
         editButton.innerHTML = "Edit";
 
         deleteButton.setAttribute("id", "delete-id-" + ret[i]._id);
+        deleteButton.setAttribute("onclick", "document.getElementById('delete-form-" + ret[i]._id + "').submit();");
         editButton.setAttribute("id", "edit-id-" + ret[i]._id);
         editButton.setAttribute("onclick", "document.getElementById('update-form-" + ret[i]._id + "').submit();");
         editButton.style.display = "none";
@@ -79,6 +85,7 @@ window.onload = function() {
         trNode.appendChild(tdNode3);
         trNode.appendChild(tdNode4);
         trNode.appendChild(updateForm);
+        trNode.appendChild(deleteForm);
         document.getElementById("results").appendChild(trNode);
       }
     });
