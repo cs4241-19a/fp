@@ -11486,6 +11486,12 @@ body {
   padding-bottom: 10px;
 }
 
+#visEdit {
+  min-height: 500px;
+  max-height: 500px;
+  height: 500px;
+}
+
 #navBar img {
   margin-left: auto;
   margin-right: auto;

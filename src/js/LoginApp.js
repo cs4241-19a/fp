@@ -242,7 +242,7 @@ export default function LoginApp(props) {
 									<div className="text-gray-900 font-bold text-xl mb-2">Share your sound!
 									</div>
 									<p className="text-gray-700 text-base">
-										Upload your awesome creations and share them with fellow audiophiles!
+										Choose your favorite creations and share them with fellow audiophiles!
 									</p>
 								</div>
 								<div className="w-full">
