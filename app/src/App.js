@@ -232,13 +232,13 @@ class Card extends React.Component {
 
   render() {
     return (
-        <button
-            className="button card"
-            style={{backgroundColor: this.state.color}}
-            onClick={() => clickGuessButton(this)}
-        >
-          {this.props.value}
-        </button>
+      <button
+        className="button card"
+        style={{ backgroundColor: this.state.color }}
+        onClick={() => clickGuessButton(this)}
+      >
+        {this.props.value}
+      </button>
     );
   }
 }
@@ -266,7 +266,6 @@ class Chat extends React.Component {
     }
     return table;
   }
-
 
   render() {
     return (
@@ -399,7 +398,7 @@ class Menu extends React.Component {
     this.state = {
       modalIsOpen: true,
       addGame: false,
-      selectedRole: "rspymaster"
+      selectedRole: null
     };
 
     this.openModal = this.openModal.bind(this);
@@ -421,7 +420,7 @@ class Menu extends React.Component {
           <Modal
             isOpen={this.state.modalIsOpen}
             onRequestClose={this.closeModal}
-            style={{ content: { backgroundColor: "#282c34" } }}
+            style={{ content: { backgroundColor: "#282c34", padding: 0 } }}
           >
             <div id="myModal" className="modal">
               <div className="modal-content">
@@ -491,15 +490,20 @@ class Menu extends React.Component {
 
 function makeGray(btn, selected) {
   let last = document.getElementById(selected.state.selectedRole);
-  last.disabled = false;
-  if (last.className === "redrole") {
-    last.style.backgroundColor = "#ff6666";
-  } else {
-    last.style.backgroundColor = "#4d79ff";
+  console.log(last);
+  if (last !== null) {
+    last.disabled = false;
+    last.style.borderColor = "black";
+    if (last.className === "redrole") {
+      last.style.backgroundColor = "#ff6666";
+    } else {
+      last.style.backgroundColor = "#4d79ff";
+    }
   }
 
   let b = document.getElementById(btn);
   b.style.backgroundColor = "gray";
+  b.style.borderColor = "gold";
   b.disabled = true;
   selected.state.selectedRole = btn;
 }
@@ -580,47 +584,47 @@ function setBoard(order) {
 }
 
 //send out message to set initial state if it hasnt already
-window.onload = function(){
+window.onload = function() {
   //sets random name upon connecting
-  localStorage.setItem('userInfo', 'u::'+ Math.random());
+  localStorage.setItem("userInfo", "u::" + Math.random());
 
   socket.emit("setInitState", getBoardState(), getBrowserData());
-  console.log('initial state is: ', getBoardState());
+  console.log("initial state is: ", getBoardState());
 };
 
-function getBrowserData(){
-  return {user: localStorage.getItem('userInfo')};
+function getBrowserData() {
+  return { user: localStorage.getItem("userInfo") };
 }
 
-function clickHint(hintbtn){
-  setTimeout(function(){
-    let newHint = document.getElementById('msg').value;
+function clickHint(hintbtn) {
+  setTimeout(function() {
+    let newHint = document.getElementById("msg").value;
     let state = getClueState(newHint);
-    console.log('hint clicked');
+    console.log("hint clicked");
     socket.emit("clue sent", state);
   }, 1);
 }
 
-function clickGuessButton(btn){
+function clickGuessButton(btn) {
   btn.changeStyle(btn.props.team);
-  setTimeout(function(){
+  setTimeout(function() {
     let state = getBoardState();
-    console.log('button clicked');
+    console.log("button clicked");
     socket.emit("button selected", state);
   }, 1);
 }
 
-function getBoardState(){
+function getBoardState() {
   let cards = [];
-  let collectedCards = document.getElementsByClassName('card');
+  let collectedCards = document.getElementsByClassName("card");
   const NUM_CARDS_ROW = 5;
-  for(let i=0; i<NUM_CARDS_ROW; i++){
+  for (let i = 0; i < NUM_CARDS_ROW; i++) {
     cards[i] = [];
-    for(let j=0; j<NUM_CARDS_ROW; j++){
-      let selCard = collectedCards[i*NUM_CARDS_ROW + j];
+    for (let j = 0; j < NUM_CARDS_ROW; j++) {
+      let selCard = collectedCards[i * NUM_CARDS_ROW + j];
       cards[i][j] = {
-        "word": selCard.innerHTML,
-        "color": selCard.style.backgroundColor
+        word: selCard.innerHTML,
+        color: selCard.style.backgroundColor
       };
     }
   }
@@ -628,24 +632,24 @@ function getBoardState(){
   return cards;
 }
 
-function getClueState(newHint){
-  let chatCont = document.getElementsByClassName('chat-container')[0];
-  let chats = chatCont.getElementsByTagName('p');
-  let chatText =[];
-  for(let i=0; i<chats.length; i++){
+function getClueState(newHint) {
+  let chatCont = document.getElementsByClassName("chat-container")[0];
+  let chats = chatCont.getElementsByTagName("p");
+  let chatText = [];
+  for (let i = 0; i < chats.length; i++) {
     chatText.push(chats[i].innerHTML);
   }
-  if(newHint){
+  if (newHint) {
     chatText.push(newHint);
   }
   return chatText;
 }
 
-socket.on("updateCluestate", function(cs){
-  let chatCont = document.getElementsByClassName('chat-container')[0];
+socket.on("updateCluestate", function(cs) {
+  let chatCont = document.getElementsByClassName("chat-container")[0];
   //chatCont.innerHTML = '';
-  cs.forEach(function(msg){
-    let final_message = document.createElement('p');
+  cs.forEach(function(msg) {
+    let final_message = document.createElement("p");
     console.log(msg);
     final_message.innerHTML = msg;
     console.log(final_message);
@@ -653,15 +657,15 @@ socket.on("updateCluestate", function(cs){
   });
 });
 
-socket.on("updateBoardstate", function(bs){
+socket.on("updateBoardstate", function(bs) {
   console.log("updating board state", bs);
-  if(bs.length < 1){
+  if (bs.length < 1) {
     return;
   }
-  let rows = document.getElementsByClassName('board-row');
-  for(let i=0; i<rows.length; i++){
-    let cardsInRow = rows[i].getElementsByClassName('card');
-    for(let j=0; j<cardsInRow.length; j++){
+  let rows = document.getElementsByClassName("board-row");
+  for (let i = 0; i < rows.length; i++) {
+    let cardsInRow = rows[i].getElementsByClassName("card");
+    for (let j = 0; j < cardsInRow.length; j++) {
       let button = cardsInRow[j];
       console.log(bs[i][j]);
       button.innerHTML = bs[i][j].word;
@@ -669,6 +673,5 @@ socket.on("updateBoardstate", function(bs){
     }
   }
 });
-
 
 export default App;
