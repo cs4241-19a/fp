@@ -50,7 +50,6 @@ window.onload = function() {
     });
   });
   setInterval(updateChat, 3000);
-  
 }
 
 function updateChat() {
@@ -67,10 +66,10 @@ function updateChat() {
           (ret[i].to == currentConvo && ret[i].from == getCookie("username"))
         ) {
           if (ret[i].to == getCookie("username")) {
-            makeToTextBubble()
+            makeToTextBubble(ret[i].message)
           }
           if (ret[i].from == getCookie("username")) {
-            makeFromTextBubble()
+            makeFromTextBubble(ret[i].message)
           }
         }
       }
@@ -80,25 +79,30 @@ function updateChat() {
 
 function sendMessage(){
   let message = {from: getCookie("username"), to:currentConvo, message:document.querySelector('#msg').value}
+  let body = JSON.stringify(message);
+
   fetch("messaging/sendMessage/", {
     headers: {
       "Content-Type": "application/json"
     },
     method: "POST",
-    body:message
+    body:body
   })
-  updateChat();
+  
+  makeToTextBubble(document.querySelector('#msg').value)
 }
 
 
 function makeToTextBubble(str){
   let bubble = document.createElement("div");
-  bubble.setHTML = str;
-  bubble.style = "background-color: #70dafa; width:20%; height:10%; float:right; font-weight:bold"
+  bubble.innerHTML = str;
+  bubble.style = "background-color: #70dafa; width:20%; height:10%; margin:auto; font-weight:bold; border-radius:15px"
+  document.getElementById("board").appendChild(bubble)
 }
 
 function makeFromTextBubble(str){
   let bubble = document.createElement("div");
-  bubble.setHTML = str;
-  bubble.style = "background-color: #6df299; width:20%; height:10%; float:left; font-weight:bold"
+  bubble.innerHTML = str;
+  bubble.style = "background-color: #6df299; width:20%; height:10%;  margin:auto; font-weight:bold; border-radius:15px"
+  document.getElementById("board").appendChild(bubble)
 }

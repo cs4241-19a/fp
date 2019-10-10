@@ -33,6 +33,9 @@
       <li class="navbar" style="float:right">
         <a id="login" href="/">Logout</a>
       </li>
+      <li class="navbar" id="create">
+        <a href="create">Create Account</a>
+      </li>
       <li class="navbar" style="float:right">
         <a class="active" href="about">About</a>
       </li>
@@ -50,27 +53,31 @@
         <ul class="pure-menu-list" id="people"></ul>
       </div>
       <div
+        id="canvas"
         style="background-color:transparent; width:80%; display:flex; flex-direction:column"
       >
-        <div style="background-color:#d1d1d1; height:80%;  border-radius:1px;"></div>
+        <div
+          id="board"
+          style="background-color:#d1d1d1; height:80%;  border-radius:1px; display:flex; flex-direction:column"
+        ></div>
         <div style="background-color:#ff9191; height:20%; border-radius:1px">
-         <form style="margin:auto; width:85%" class="pure-form" action="">
-          <input
-            name="msg"
-            class="pure-input-1"
-            style="margin:auto"
-            id="msg"
-            placeholder="..."
-            value=""
-          />
-        </form>
-        <button
-          style="margin:auto; width:10%;"
-          id="sendButton"
-          class="pure-button translate"
-        >
-          Send!
-        </button>
+          <form style="margin:auto; width:85%" class="pure-form" action="">
+            <input
+              name="msg"
+              class="pure-input-1"
+              style="margin:auto"
+              id="msg"
+              placeholder="..."
+              value=""
+            />
+          </form>
+          <button
+            style="margin:auto; width:10%;"
+            id="sendButton"
+            class="pure-button translate"
+          >
+            Send!
+          </button>
         </div>
       </div>
       <div name="padding" style="background-color:transparent; width:20%"></div>
