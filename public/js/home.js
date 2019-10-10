@@ -104,7 +104,7 @@ const getRecommendations = function () {
                     `      <p class="card-text">`
 
                 for (let j = 0; j < rating; j++)
-                    newRecommendation += `<img src="../images/fullstar.png" alt="Star"/>`
+                    newRecommendation += `<img src="../images/purplestar.png" alt="Star"/>`
                 for (let j = rating; j < 5; j++)
                     newRecommendation += `<img src="../images/emptystar.png" alt="Blank Star"/>`
 
