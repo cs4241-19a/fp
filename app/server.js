@@ -228,6 +228,7 @@ io.on("connection", function(socket) {
     if (isTurn(socket.id)) {
       console.log("out of order");
     }
+    if (currentTurn.endsWith("spymaster")) return;
     console.log(word);
     boardState.forEach(card => {
       if (card.word === word) {
