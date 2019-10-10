@@ -1,0 +1,14 @@
+.comment-row:first-child {
+    margin-top: 0px;
+    /* border: 1px solid green; */
+}
+.comment-row {
+    margin-bottom: 20px; 
+    border: 1px solid #efefef;
+    padding: 15px 0px 15px 15px; 
+    background-color: #efefef;
+}
+.comment-row .date {
+    font-size: 10px;
+    color: rosybrown;
+}

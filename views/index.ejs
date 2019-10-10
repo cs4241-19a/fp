@@ -1,0 +1,72 @@
+<%- include common/header.ejs %>
+<%- include common/navigation.ejs %>
+<style type="text/css">
+    .margin-right-5 {
+        margin-right: 5px;
+    }
+</style>
+<div class="container top-margin">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading text-left">
+                    Posts lists
+                </div>
+                <div class="panel-body">
+                    <% if (postInfos && postInfos.length > 0) { %>
+                        <%for(var i = 0; i < postInfos.length; ++i) { %>
+                            <div class="list-group">
+                                <a href="/forum/post/query.html?id=<%= postInfos[i]._id%>" class="list-group-item">
+                                    <h4 class="list-group-item-heading"><%= postInfos[i].title %></h4>
+                                    <div class="list-group-item-text row" style="font-size: 12px;margin-top:15px;">
+                                        <div class="col-sm-2">
+                                            <span class="label label-info"><%= postInfos[i].publisher.username %></span>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <%= postInfos[i].createdDate %>
+                                        </div>
+                                        <div class="col-sm-6 text-right">
+                                            <span class="glyphicon glyphicon-thumbs-up text-danger" title="Like times">(<%= postInfos[i].unlike %>)</span>
+                                            <span class="glyphicon glyphicon-thumbs-down text-success" title="Read times">(<%= postInfos[i].like %>)</span>
+                                            <span class="glyphicon glyphicon-comment text-info" title="Comment times">(<%= postInfos[i].comment %>)</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        <% } %>
+                    <% } else { %>
+                    <div class="alert alert-danger">
+                        Has no posts published!
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-danger">
+                <div class="panel-heading text-left">Top 5 comment</div>
+                <div class="panel-body list-group text-left" style="padding-top:0px;">
+                    <% if (top5CommentPosts && top5CommentPosts.length > 0) { %>
+                        <% for(var i = 0; i < top5CommentPosts.length; ++i) { %>
+                            <div class="row" style="font-size: 10px;line-height: 30px;">
+                                <a href="/forum/post/query.html?id=<%= top5CommentPosts[i]._id %>" class="list-group-item">
+                                    <span class="label label-danger margin-right-5">
+                                        <%- i + 1 %>
+                                    </span>
+                                    <%= top5CommentPosts[i].title %>
+                                </a>
+                            </div>
+                        <% } %>
+                    <% } else { %>
+                        <div class="alert alert-warning" style="margin-top:15px;">
+                            No posts published
+                        </div>
+                    <% } %>
+                    <!-- <%= top5CommentPosts %> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include common/commonjs.ejs %>
+<%- include common/footer.ejs %>

@@ -1,0 +1,62 @@
+<%- include ../common/header.ejs %>
+<%- include ../common/navigation.ejs %>
+<div class="container top-margin">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="/forum//backend/post/list.html" class="list-group-item active">List</a>
+                <a href="/forum//backend/post/publish.html" class="list-group-item">Publish</a>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="panel panel-primary">
+                <div class="panel-heading text-left">
+                    List all post
+                </div>
+                <div class="panel-body">
+                    <% if (postInfos && postInfos.length > 0) {%>
+                        <table class="table">
+                            <thead>
+                                <tr class="info">
+                                    <td>No</td>
+                                    <td>Title</td>
+                                    <td>Date</td>
+                                    <td>Operation</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(var i = 0; i < postInfos.length; ++i){ %>
+                                    <tr>
+                                        <td>
+                                            <%- i+1 %>
+                                        </td>
+                                        <td>
+                                            <%= postInfos[i].title %>
+                                        </td>
+                                        <td>
+                                            <%= postInfos[i].createdDate %>
+                                        </td>
+                                        <td>
+                                            <a href="/forum//backend/post/query.html?id=<%= postInfos[i]._id%>">
+                                                <span class="glyphicon glyphicon-edit cursor text-success" title="edit"></span>
+                                            </a>
+                                            <a href="/forum//backend/post/delete.html?id=<%= postInfos[i]._id%>">
+                                                <span class="glyphicon glyphicon-trash cursor text-danger" title="delete"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    <% } else { %>
+                        <div class="alert alert-warning">
+                            Has no posts published!
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include ../common/commonjs.ejs %>
+<%- include ../common/footer.ejs %>
