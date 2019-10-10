@@ -97,21 +97,21 @@ along with the Perlenspiel devkit. If not, see <http://www.gnu.org/licenses/>.
     <script type="text/javascript" src="game.js"></script>
     
     <footer>
-      <div class="DATABASE_BUTTONS">
+      <section class="DATABASE_BUTTONS">
         <!--POPULATE BASED ON DATABASE SHOW TRACKNAME VALUE = trackArray -->
-        <select id="songDropdown" onclick="interaction()">
+        <select id="songDropdown" size="2" onclick="interaction()">
         </select>
         <button onclick="loadTrack()">LOAD TRACK</button>
         <button onclick="saveTrack()">SAVE TRACK</button>
         
-      </div>
+      </section>
     </footer>
     
     <script>
       function interaction(){
+        console.log(document.getElementById("songDropdown").label)
         console.log("TOUCHING SELECT")
       }
-        loadSongs()
         </script>
   </body>
 </html>
