@@ -1,0 +1,271 @@
+<!doctype html>
+    <html lang="en">
+      <head>
+        <title>CS4241 Assignment 2</title>
+        <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+       <script type="text/javascript" charset="utf8" src="js/scripts.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+       
+       <script src="js/three.js"></script>
+       <script src="js/GLTFLoader.js"></script>
+       <script src="js/orbControls.js"></script>
+       <script type="text/javascript" src="js/dat.gui.js"></script>
+       <script type="module" src="js/module1.js"></script>
+       <script type="module" src="js/module2.js"></script>
+       <link rel="stylesheet" type="text/css" href="css/style.css">
+     </head>
+   
+         <style>
+         .bd-placeholder-img {
+           font-size: 1.125rem;
+           text-anchor: middle;
+           -webkit-user-select: none;
+           -moz-user-select: none;
+           -ms-user-select: none;
+           user-select: none;
+         }
+   
+         @media (min-width: 768px) {
+          .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+          }
+         }
+       </style>
+   
+   <header>
+       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+     <a class="navbar-brand" href="index.html">Doughboyz Catering</a>
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+     <div class="collapse navbar-collapse" id="navbarNav">
+       <ul class="navbar-nav">
+         <li class="nav-item active">
+           <a class="nav-link" href="login.html">Log In <span class="sr-only">(current)</span></a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" href="results.html">Results</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" href="userInfo.html">Order</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" href="visualizer.html">Visualizer</a>
+         </li>
+       </ul>
+     </div>
+   </nav>
+   </header>
+   <body>
+     
+       <div class="controls" id="controls">  
+   
+     </div>
+           
+           <script type="module">
+         
+         import { setUpOrbitalControls, makeSceneBackgroundWhite } from './js/module1.js';
+         import { createGUIInDiv, existsModel } from './js/module2.js';
+         
+         
+         alert('Hello! Welcome to the Doughboyz visualizer. In this interface you can interact wiith certain menu items and choose the toppings you would like to see on your order. In the menu on the left of the screen you can select the item you would like and see what toppings you can put on it. If you need to see the instructons again you can click the help button at the bottom of the page.');
+   
+               var scene = new THREE.Scene();
+               var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+   
+               var renderer = new THREE.WebGLRenderer({ alpha: true });
+         makeSceneBackgroundWhite(renderer);
+         
+               renderer.setSize( window.innerWidth, window.innerHeight );
+               document.body.appendChild( renderer.domElement );
+               var radius = 5;
+               var height = 2;
+         
+         camera.position.z = 200;
+         
+         var controls = setUpOrbitalControls(camera, renderer, controls);
+   
+         var keyLight = new THREE.DirectionalLight(new THREE.Color('hsl(30, 100%, 75%)'), 1.0);
+         keyLight.position.set(-100, 0, 100);
+         
+         var ambientLight = new THREE.AmbientLight(0xFFFFFF, 1);
+         
+         scene.add(keyLight);
+        scene.add(ambientLight);
+        
+        var loader = new THREE.GLTFLoader();
+        
+        var pancakeModel = null;
+        var waffleModel = null;
+        var crepeModel = null;
+        
+        loader.load(
+        // resource URL
+         'https://cdn.glitch.com/6e01319e-6ca6-47f7-9b4e-aaca43f9cc11%2Fpancake.glb?v=1569554379174',
+          // called when the resource is loaded
+          function ( gltf ) {
+  
+           pancakeModel = gltf.scene;
+            gtlf.name = "pancake";
+            gltf.animations; // Array<THREE.AnimationClip>
+          gltf.scene; // THREE.Scene
+          gltf.scenes; // Array<THREE.Scene>
+          gltf.cameras; // Array<THREE.Camera>
+          gltf.asset; // Object
+  
+          },
+          
+          // called while loading is progressing
+          function ( xhr ) {
+            console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+          },
+          // called when loading has errors
+          function ( error ) {
+            console.log( 'An error happened' );
+          }
+        );
+              
+        
+        loader.load(
+        // resource URL
+          'https://cdn.glitch.com/6e01319e-6ca6-47f7-9b4e-aaca43f9cc11%2Fwaffle.glb?v=1569557723572',
+          // called when the resource is loaded
+          function ( gltf ) {
+  
+            waffleModel = gltf.scene; 
+            gtlf.name = "waffle";
+            gltf.animations; // Array<THREE.AnimationClip>
+          gltf.scene; // THREE.Scene
+          gltf.scenes; // Array<THREE.Scene>
+          gltf.cameras; // Array<THREE.Camera>
+          gltf.asset; // Object
+  
+          },
+          
+          // called while loading is progressing
+          function ( xhr ) {
+            console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+          },
+          // called when loading has errors
+          function ( error ) {
+            console.log( 'An error happened' );
+          }
+        );
+              
+        loader.load(
+        // resource URL
+          'https://cdn.glitch.com/6e01319e-6ca6-47f7-9b4e-aaca43f9cc11%2Fcrepe.glb?v=1569561402390',
+          // called when the resource is loaded
+          function ( gltf ) {
+  
+            crepeModel = gltf.scene;
+            gtlf.name = "crepe";
+            gltf.animations; // Array<THREE.AnimationClip>
+            gltf.scene; // THREE.Scene
+            gltf.scenes; // Array<THREE.Scene>
+            gltf.cameras; // Array<THREE.Camera>
+            gltf.asset; // Object
+  
+          },
+          
+          // called while loading is progressing
+          function ( xhr ) {
+            console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+          },
+          // called when loading has errors
+          function ( error ) {
+            console.log( 'An error happened' );
+          }
+        );
+         
+        
+        var animate = function () {
+          requestAnimationFrame( animate );
+          renderer.render( scene, camera );
+        }
+        
+        animate();
+        
+  
+        var gui = createGUIInDiv('controls');
+  
+        var f1 = gui.addFolder('Foods');
+        
+        
+       var currentModel = null;
+        
+        var obj = { Pancakes:function(){
+          
+          if (existsModel(pancakeModel)) {
+            scene.remove(waffleModel);
+            scene.remove(crepeModel);
+            scene.remove(pancakeModel);
+            scene.add(pancakeModel);
+            currentModel = pancakeModel;
+          } 
+          
+        }};
+        
+        var obj2 = { Waffles:function(){
+          if (existsModel(waffleModel)) {
+            scene.remove(pancakeModel);
+            scene.remove(crepeModel);
+            scene.remove(waffleModel);
+            scene.add(waffleModel);
+            currentModel = waffleModel;
+          }
+        }};
+        
+        
+        var obj3 = { Crepes:function(){
+          if (existsModel(crepeModel)) {
+            scene.remove(waffleModel);
+            scene.remove(pancakeModel);
+            scene.remove(crepeModel);
+            scene.add(crepeModel);
+            currentModel = crepeModel;
+          }
+        }};
+        
+        f1.add(obj2,'Waffles');
+        f1.add(obj,'Pancakes');
+        f1.add(obj3,'Crepes');
+        
+  
+        var f2 = gui.addFolder('Flavor');
+  
+        
+        var obj3 = { Chocolate:function(){ 
+            ambientLight.color = new THREE.Color( 0x654321 );
+        }};
+        var obj4 = {Plain:function(){
+          ambientLight.color = new THREE.Color( 0xFFFFFF); 
+        }};
+        
+        
+        var obj5 = {Blueberry:function(){
+          ambientLight.color = new THREE.Color( 'blue' ); 
+        }};
+        f2.add(obj3,'Chocolate');
+        f2.add(obj4,'Plain');
+        f2.add(obj5,'Blueberry');
+  
+        var f3 = gui.addFolder('Help');
+        
+         function instructions(){
+          alert("In this interface you can interact wiith certain menu items and choose the toppings you would like to see on your order. In the menu on the left of the screen you can select the item you would like and see what toppings you can put on it. If you need to see the instructons again you can click the help button at the bottom of the page.');")
+        }
+        
+        var obj5 = {Instructions:function(){ instructions() }};
+        f3.add(obj5,'Instructions');
+        
+      
+          </script>
+      </body>
+  </html>

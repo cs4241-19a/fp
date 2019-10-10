@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </head>
+
+      <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+<header>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="index.html">Doughboyz Catering</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="login.html">Log In <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="results.html">Results</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="userInfo.html">Order</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="visualizer.html">Visualizer</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+</header>
+  
+ <main role="main">
+
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">Welcome to Doughboyz Catering!</h1>
+      <p class="lead text-muted">Flapjacks and Good Snacks.</p>
+    </div>
+  </section>
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <img src="https://cdn.glitch.com/18fef328-486b-4e80-b387-bcf91cabcef3%2Fpancakes.webp?v=1568612179218" alt="Pancakes" width="100%" height="225">
+            <div class="card-body">
+              <p class="card-text">Our world's famous pancakes. Each order comes in a short stack of three, get them while there hot!</p>
+               <button onclick="window.location.href = 'userInfo.html'">Order Now!</button>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <img src="https://cdn.glitch.com/18fef328-486b-4e80-b387-bcf91cabcef3%2Fwaffles.jpg?v=1568614367378" alt="Waffles" width="100%" height="225">                             
+            <div class="card-body">
+              <p class="card-text">Obviously not as good as the pancakes but still a great meal to start your day.</p>
+               <button onclick="window.location.href = 'userInfo.html'">Order Now!</button>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <img src="https://cdn.glitch.com/18fef328-486b-4e80-b387-bcf91cabcef3%2Fcrepes.jpg?v=1568641834820" alt="Crepes" width="100%" height="225">                             
+            <div class="card-body">
+              <p class="card-text">Try our all natural brand new crepes prepared fresh for you by Chef Zeph!</p>
+              <button onclick="window.location.href = 'userInfo.html'">Order Now!</button>
+              <script>
+              function myFunction() {
+                document.getElementById("demo").innerHTML = window.open(userInfo.html);
+                      }
+              </script>
+            </div>
+          </div>
+        </div>
+        <p> Browse our selection of options then place your order on the "Order" page.</p>
+
+ 
+              </div>
+            </div>
+          </div>
+
+</main> 
+
+
+</html>

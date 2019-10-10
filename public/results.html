@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </head>
+<header>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="index.html">Doughboyz Catering</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="login.html">Log In <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="results.html">Results</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="userInfo.html">Order</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="visualizer.html">Visualizer</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+</header>
+  <body>
+    
+  
+<table id="fullTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Order</th>
+                <th>Condiments</th>
+                <th>Additional Information </th>
+                <th>Message</th>
+            </tr>
+        </thead>
+    </table>
+  
+  <br><br>
+  <h> User Table</h>
+  
+  <table id="userTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Order</th>
+                <th>Condiments</th>
+                <th>Additional Information </th>
+                <th>Message</th>
+            </tr>
+        </thead>
+    </table>
+    
+      <div class= "modify">
+      
+    <form action="">
+      <b>Remove Order:</b> <br>
+      Order ID: <input type="text" id="delID"> <br>
+    
+
+      <button id="buttonDelete">Submit</button>
+      
+    </form>
+    <br><br>
+      
+     <form action="" id="modForm">
+       <b>Modify Order:</b> <br>
+         Order ID: <input type="text" id="modID"> <br>
+        <label><input type="radio" name="column" value="nam" checked /> Name</label>
+        <label><input type="radio" name="column" value="num" /> Phone number</label>
+        <label><input type="radio" name="column" value="add" /> Email</label>
+        <label><input type="radio" name="column" value="ord" /> Address</label>
+        <label><input type="radio" name="column" value="con" /> Order</label> 
+        <label><input type="radio" name="column" value="inf" /> Condiments</label> 
+<!--         <label><input type="radio" name="column" value="mes" /> Message</label>  -->
+       <br>
+       New Value: <input type="text" id="modVal"> <br>
+  
+      <button id="buttonModify">Submit</button>
+    </form>
+  
+    </div>
+
+    
+    <script>
+           function getRadioVal(form, name) {
+    var val;
+    // get list of radio buttons with specified name
+    var radios = form.elements[name];
+    
+    // loop through list of radio buttons
+    for (var i=0, len=radios.length; i<len; i++) {
+        if ( radios[i].checked ) { // radio checked?
+            val = radios[i].value; // if so, hold its value in val
+            break; // and break out of for loop
+        }
+    }
+    return val; // return value of checked radio or undefined if none checked
+}
+      
+      const submit = function( e ) {
+    // prevent default form action from being carried out
+    e.preventDefault()
+    if(document.getElementById('utext').checked === true) { 
+      umethod = 'text'
+    } else {
+      umethod = 'email'
+    }
+    
+
+     uname = document.querySelector( '#uname' ),
+     unum = document.querySelector(  '#unum' ),
+     umail = document.querySelector(  '#umail' ),
+     uaddress = document.querySelector( '#uaddress' ),
+     uorder = document.querySelector( '#uorder'),
+     uaddinfo = document.querySelector( '#uaddinfo' ),
+       
+       
+       
+          json = { name: uname.value, 
+                   num: unum.value,
+                   mail: umail.value,
+                   address: uaddress.value, 
+                   order: uorder.value, 
+                   condiment: $('#ucondiment').find("option:selected").text(),
+                   addinfo:   uaddinfo.value,
+                   method: umethod
+                 },
+          body = JSON.stringify( json )
+    
+    fetch( '/submit', {
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body 
+    })
+    .then( function( response ) {
+      console.log( response )
+    })
+    
+    location.reload();
+
+    return false
+  }
+      
+      const delID = function( e ) {
+    // prevent default form action from being carried out
+    e.preventDefault()
+
+     const delName = document.querySelector( '#delID' ),
+      json = { name: delName.value },
+      body = JSON.stringify( json )
+
+    fetch( '/delete', {
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body 
+    })
+    .then( function( response ) {
+      console.log( response )
+    })
+    
+    location.reload();
+
+    return false
+  }
+      
+ 
+      
+      const modID = function( e ) {
+    // prevent default form action from being carried out
+    e.preventDefault()
+
+     const modIDName = document.querySelector( '#modID' );
+     const column =  getRadioVal(document.getElementById('modForm'), "column");
+        
+     const modIDVal = document.querySelector( '#modVal' ),
+      json = { id: modIDName.value,
+              column: column,
+              newVal: modIDVal.value
+             },
+      body = JSON.stringify( json )
+    fetch( '/modify', {
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body 
+    })
+    .then( function( response ) {
+      console.log( response )
+    })
+    
+    location.reload();
+
+    return false
+  }
+
+  window.onload = function() {
+    const button = document.querySelector( '#buttonDelete' )
+    button.onclick = delID
+    
+    //const button2 = document.querySelector( '#buttonSubmit' )
+   // button2.onclick = submit
+    
+    const button3 = document.querySelector( '#buttonModify' )
+    button3.onclick = modID
+  }
+      
+    </script>
+    
+  </body>
+  
+</html>
+
+    
