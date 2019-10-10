@@ -72,8 +72,8 @@ let variables = {
   countdownTimerCount: 3,
   countdownTimer: null,
   recordingPiano: false,
-  databaseTracks:  [],
-  databaseIndex: 0,
+  databaseTracks: [],
+  databaseIndex: 0
 };
 
 ////////////////////////////////////////
@@ -91,10 +91,11 @@ PS.init = function(system, options) {
   PS.gridColor(PS.COLOR_GRAY);
   PS.borderColor(PS.ALL, PS.ALL, PS.COLOR_BLACK);
 
-  window.alert("Use the arrow keys to navigate existing tracks")
-  PS.debug("Use the arrow keys to navigate existing tracks. Press Load track to load into audio player");
-  
-  
+  window.alert("Use the arrow keys to navigate existing tracks");
+  PS.debug(
+    "Use the arrow keys to navigate existing tracks. Press Load track to load into audio player\n"
+  );
+
   pianoSetup();
 
   drumSetup();
@@ -142,7 +143,7 @@ PS.init = function(system, options) {
   PS.visible(31, 18, false);
 
   PS.statusText("Shitty Garageband");
-  
+
   //loadSongs()
 };
 
@@ -158,7 +159,7 @@ PS.touch = function(x, y, data, options) {
   playAudio(data[0]);
 };
 
- /*
+/*
 PS.keyDown ( key, shift, ctrl, options )
 Called when a key on the keyboard is pressed.
 This function doesn't have to do anything. Any value returned is ignored.
@@ -167,28 +168,42 @@ This function doesn't have to do anything. Any value returned is ignored.
 [ctrl : Boolean] = true if control key is held down, else false.
 [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
 */
-  // UNCOMMENT the following code BLOCK to expose the PS.keyDown() event handler:
-  
+// UNCOMMENT the following code BLOCK to expose the PS.keyDown() event handler:
 
-PS.keyDown = function( key, shift, ctrl, options ) {
-	"use strict"; // Do not remove this directive!
-  
-  if(key == PS.KEY_ARROW_LEFT){
-    variables.databaseIndex += 1
-    if(variables.databaseIndex >= variables.databaseTracks.length){
-          variables.databaseIndex = 0
+PS.keyDown = function(key, shift, ctrl, options) {
+  "use strict"; // Do not remove this directive!
+
+  if (key === PS.KEY_ARROW_RIGHT) {
+    variables.databaseIndex += 1;
+    if (variables.databaseIndex >= variables.databaseTracks.length) {
+      variables.databaseIndex = 0;
     }
-    
+    PS.debug("Track " + variables.databaseIndex + ": " +  
+      variables.databaseTracks[variables.databaseIndex].songname +
+        " by " +
+        variables.databaseTracks[variables.databaseIndex].username
+                           + "\n"
+
+    );
   }
-  if(key == PS.KEY_ARROW_RIGHT){
-    
+  if (key == PS.KEY_ARROW_RIGHT) {
+    variables.databaseIndex -= 1;
+    if (variables.databaseIndex < 0) {
+      variables.databaseIndex = variables.databaseTracks.length - 1;
+    }
+    PS.debug("Track " + variables.databaseIndex + ": " +  
+      variables.databaseTracks[variables.databaseIndex].songname +
+        " by " +
+        variables.databaseTracks[variables.databaseIndex].username
+              + "\n"
+    );
   }
 
-	// Uncomment the following code line to inspect first three parameters:
+  // Uncomment the following code line to inspect first three parameters:
 
-	// PS.debug( "PS.keyDown(): key=" + key + ", shift=" + shift + ", ctrl=" + ctrl + "\n" );
+  // PS.debug( "PS.keyDown(): key=" + key + ", shift=" + shift + ", ctrl=" + ctrl + "\n" );
 
-	// Add code here for when a key is pressed.
+  // Add code here for when a key is pressed.
 };
 
 ////////////////////////////////////////
@@ -1313,8 +1328,8 @@ function playAudio(data) {
 
 //LOAD SONG
 function loadTrack() {
-  console.log("LOADING")
-  variables.dataArray = JSON.parse(document.getElementById("songDropdown").value);
+  console.log("LOADING");
+  variables.dataArray = variables.databaseTracks[variables.databaseIndex]
 }
 
 //SAVE SONG
@@ -1329,9 +1344,9 @@ function saveTrack() {
       songdata: variables.dataArray,
       username: getCookie("TestCookie")
     };
-    
+
     let json = JSON.stringify(body);
-    console.log(json)
+    console.log(json);
     fetch("/addSong", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -1339,7 +1354,7 @@ function saveTrack() {
     }).then(function(res) {
       if (res.status === 200) {
         window.alert("Successfully added to database");
-        loadSongs()
+        loadSongs();
       }
     });
   });
@@ -1351,11 +1366,10 @@ function getCookie(name) {
   return val != null ? unescape(val[1]) : null;
 }
 
-
 function loadSongs() {
-  console.log("LOAD SONGS")
-  var select = document.getElementById("songDropdown");
-  select.innerHTML = "";
+  console.log("LOAD SONGS");
+  variables.databaseTracks = [];
+
   fetch("/allData", {
     method: "GET",
     headers: { "Content-Type": "application/json" }
@@ -1363,13 +1377,10 @@ function loadSongs() {
     .then(function(ret) {
       return ret.json();
     })
-    .then(function(res) {     
+    .then(function(res) {
       res.forEach(function(single) {
-        var opt = document.createElement('option')
-        opt.value = JSON.stringify(single.songdata)
-        opt.label = single.songname + " by " + single.username
-        select.appendChild(opt)
+        variables.databaseTracks.push(single);
+        variables.databaseIndex = 0;
       });
     });
 }
-
