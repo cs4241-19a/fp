@@ -2,7 +2,7 @@
 
 http://fp-percyjiang.glitch.me
 
-- **Brief Description**: An online dating software for aquatic creatures.
+**Brief Description**: An online dating software for aquatic creatures.
 
 - **Instructions**:
  - npm i
