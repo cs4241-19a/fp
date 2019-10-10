@@ -13,9 +13,22 @@ const express = require("express"),
   StatsD = require("node-statsd"), // middleware for HTTP request response time
   mongodb = require("mongodb"),
   mime = require("mime"),
-  dotenv = require("dotenv");
+  dotenv = require("dotenv"),
+  firebase = require("firebase");
 
 dotenv.config();
+
+var firebaseConfig = {
+  apiKey: process.env.apiKey,
+    authDomain: process.env.authDomain,
+    databaseURL: process.env.databaseURL,
+    projectId: process.env.projectId,
+    storageBucket: process.env.storageBucket,
+    messagingSenderId: "422112306586",
+    appId: process.env.appId
+}
+
+firebase.initializeApp(firebaseConfig);
 
 const uri =
   "mongodb+srv://anagha:" +
