@@ -67,9 +67,10 @@ function updateChat() {
           (ret[i].to == currentConvo && ret[i].from == getCookie("username"))
         ) {
           if (ret[i].to == getCookie("username")) {
+            makeToTextBubble()
           }
           if (ret[i].from == getCookie("username")) {
-            //PLACE IN RIGHT
+            makeFromTextBubble()
           }
         }
       }
@@ -90,5 +91,14 @@ function sendMessage(){
 }
 
 
-function makeTextBubble(str){
+function makeToTextBubble(str){
+  let bubble = document.createElement("div");
+  bubble.setHTML = str;
+  bubble.style = "background-color: #70dafa; width:20%; height:10%; float:right; font-weight:bold"
+}
+
+function makeFromTextBubble(str){
+  let bubble = document.createElement("div");
+  bubble.setHTML = str;
+  bubble.style = "background-color: #6df299; width:20%; height:10%; float:left; font-weight:bold"
 }
