@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Classroom Questions</title>
+    <meta name="description" content="login page for both students and teachers" />
+    <link
+      id="favicon"
+      rel="icon"
+      href="https://glitch.com/edit/favicon-app.ico"
+      type="image/x-icon"
+    />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="/css/teacherView.css" />
+
+
+  </head>
+  <body>
+
+    
+    <main> <!-- Question List -->
+      <ul id="question-list">        
+        <!-- Occupied by Database -->
+      </ul>
+    </main>
+    
+    <div class="classcodeBar"> <!-- Upper bar for displaying Class Code -->
+      <label>Class Code: </label>
+      <label class="classcode">12345</label>
+    </div>
+    
+    <header> <!-- Display of Current Question -->
+       <h2>
+         Current Question:
+        </h2>
+        <div class="start">
+            <!-- Occupied by Database -->
+        </div>
+
+    </header>
+    
+    <script src = "./questions.js" defer> </script>
+    <script> 
+      window.onload = function() {
+        rememberHostSession()
+        window.setInterval(rememberHostSession, 5000)
+      }
+    </script>
+  </body>
+</html>
+
+<!--             <label class="question">How do you find the square root of pi?</label>
+            <div class="right">
+              <label class="upvotes">43</label>
+              <button class="resolveButton" onsubmit="resolveQuestion()">
+                  <img src="https://cdn.glitch.com/33f61a64-3dc4-418d-b67f-1456d58e0a6f%2Fcheckmark.png?v=1570583137096" width="40" height="40">          
+              </button>
+            </div> -->

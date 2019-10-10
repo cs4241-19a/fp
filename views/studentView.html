@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Classroom Questions</title>
+    <meta name="description" content="login page for both students and teachers" />
+    <link
+      id="favicon"
+      rel="icon"
+      href="https://glitch.com/edit/favicon-app.ico"
+      type="image/x-icon"
+    />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="/css/studentView.css" />
+    <link rel="stylesheet" href="/css/studentViewMobile.css" />
+
+  </head>
+  <body>
+    
+    <main> <!-- Question List -->
+      <ul id="question-list">
+        <!-- Will be Occupied by Database -->
+      </ul>
+    </main> 
+    
+    <!-- Upper bar for inputting Class Code --> 
+    <div class="classcodeBar"> 
+      <label>Class Code: </label>
+      <label id="classcode"></label>
+      <input type="text" class="classcodeInput">
+      <button class="classcodeButton" onclick="setRoomCode()">
+        Enter
+      </button>
+    </div>
+    
+    <!-- Bar for Asking Question -->
+    <footer for="askingQuestions" class="askBar"> 
+      <input class="questionInput" type="text" placeholder="Enter Your Question">
+      <button class="askButton" onclick="askQ()">
+        Ask
+      </button>
+    </footer>
+    
+    <script src = "./questions.js" defer> </script>
+    <script> 
+
+      window.onload = function() {
+        rememberSession()
+        window.setInterval(rememberSession, 5000)
+      }
+    </script>
+  </body>
+</html>
+
