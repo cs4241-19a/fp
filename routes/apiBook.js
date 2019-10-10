@@ -5,15 +5,10 @@ var router = express.Router();
 /* ### DB QUERIES ### */
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
 
 // adds a book to the book database, assigning the user adding it as an owner
 function dbBookAdd(username, name, crn, location) {
     console.log("adding new book to the database...");
-
-    const MongoClient = require('mongodb').MongoClient;
-    const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
-
     MongoClient.connect(uri, { useNewUrlParser: true }, function(err, db) {
         if (err) throw err;
         var dbo = db.db("finalproject");
@@ -24,7 +19,6 @@ function dbBookAdd(username, name, crn, location) {
             db.close();
         });
     });
-
 }
 
 // check if someone has the book and who owns it
@@ -89,9 +83,6 @@ let dbBookLookup = function(arr) {
 
 // delete book given username, bookName, and crn
 function dbBookDeleteBook(username, bookName, crn) {
-    const MongoClient = require('mongodb').MongoClient;
-    const uri = "mongodb+srv://test:test@cluster0-k0fe1.mongodb.net/admin?retryWrites=true&w=majority";
-    const client = new MongoClient(uri, { useNewUrlParser: true });
     try {
         MongoClient.connect(uri, { useNewUrlParser: true }, function(err, client) {
             const db = client.db('finalproject');
@@ -124,7 +115,6 @@ let dbBookGetAll = function() {
 
 // get all books from a user
 let dbBookGetFromUser = function(arr) {
-    console.log("getbookuser")
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             try {
@@ -143,7 +133,7 @@ let dbBookGetFromUser = function(arr) {
 
 // /* ### ROUTES ### */
 router.post('/addBook', function (req, res) {
-    console.log("attempting to add new book...");
+    console.log("adding new book...");
     const username = req.body.username; // going to have to get this from cookie
     const bookName = req.body.name;
     const crn = req.body.crn;
@@ -187,7 +177,6 @@ router.post('/getBooks', function (req,res){
 });
 
 router.post('/getBooksFromUser', function(req, res) {
-    console.log(req.body.username)
     const username = req.body.username;
     console.log("getting books from user " + username + "...");
 
