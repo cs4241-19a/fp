@@ -9,6 +9,7 @@ var logger = require('morgan'),
     low = require('lowdb'),
     aNum = 5,
     database,
+    leaderboard,
     user;
 
 var FileSync = require('lowdb/adapters/FileSync');
@@ -19,6 +20,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var gameRouter = require('./routes/game');
+var scoresRouter = require('./routes/scores');
+var leaderboardRouter = require('./routes/leaderboard');
 
 passport.use(new Strategy(
   function(username, password, cb) {
@@ -63,10 +66,14 @@ app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/users/create', usersRouter);
 app.use('/game', gameRouter);
+app.use('/scores', scoresRouter);
+app.use('/leaderboard',leaderboardRouter);
+app.use('login/profile', loginRouter);
 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  console.log(req.url)
   next(createError(404));
 });
 

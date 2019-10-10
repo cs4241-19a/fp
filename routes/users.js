@@ -19,6 +19,8 @@ router.post('/create', function (req, res, next) {
   else {
     var count = app.database.get("idCount").value();
     newUser.id = count+1;
+    newUser.highscore = 0;
+    newUser.games = [];
     app.database.set('idCount', count+1)
     .write();
     app.database.get("users")
