@@ -6,7 +6,6 @@ import FeedItem from './FeedItem';
 
 export default function App(props) {
 
-    const store = createStore(model);
 
     const song = {title: "asdf", artist: "asdf", file: 0},
           user = {username: "XxX_420_newbRekr_69_XxX", name: "Bob"},
@@ -14,10 +13,8 @@ export default function App(props) {
 
     return (
         <div className="w-full">
-        <StoreProvider store={store}>
             <FeedContainer className="w-full padder"/>
             <div className="lg:text-center bottomBanner w-full"> Designed and developed in Worcester, Massachusetts </div>
-        </StoreProvider>
         </div>
     )
 
