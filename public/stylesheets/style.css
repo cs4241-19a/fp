@@ -4,7 +4,7 @@ body {
     background-color: rgba(0, 0, 0, 0.87) !important;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 500px) {
     body {
         overflow: hidden;
     }
@@ -89,27 +89,18 @@ img {
     background-color: #391A3F;
 }
 
-.circular {
-    width: 100px;
-    height: 100px;
-    position: relative;
-    overflow: hidden;
-    border-radius: 50%;
-}
-
 #current-track {
-    display: inline;
-    height: 110%;
-    width: 110%;
+    height: auto;
+    width: 20%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
 }
 
 .hidden-data {
     visibility: hidden;
-}
-
-.songInput {
-    float: left;
-    margin: 1em;
 }
 
 .leftJustify {
@@ -197,10 +188,15 @@ img {
 }
 
 #play-pause-button {
-    height: 5%;
-    width: 5%;
+    height: 25px;
+    width: 25px;
     color: rgba(0, 0, 0, 0.87) !important;
-    float: right;
+}
+
+#play-pause-button-player {
+    height: 30px;
+    width: 30px;
+    color: rgba(0, 0, 0, 0.87) !important;
 }
 .background{
     position: absolute;
