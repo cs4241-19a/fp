@@ -1,3 +1,7 @@
+@font-face {
+    font-family: "Pixel";
+    src: url("PixelEmulator.ttf");
+}
 :root{
     --black: #000000;
     --orange: #FFB53C;
@@ -5,6 +9,7 @@
     --red: #AD3F3D;
     --gray: #848F9C;
     --white: #FFFFFF;
+    --x: #ff0030;
 }
 
 #login {
@@ -20,29 +25,90 @@
     font-family: 'Cambria', sans-serif;
     font-size: 20px;
     display: none;
+    height: 100%;
     width: 100%;
     text-align: center;
     flex-direction: column;
     align-items: center;
 }
 
-#main-button-container{
+#main-container{
     position: relative;
     display: none;
     width: 100%;
     height: 100%;
     justify-content: center;
+}
+
+.game{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.enemy{
+    position: absolute;
+    right: 5%;
+}
+
+progress[value] {
+    -webkit-appearance: none;
+    appearance: none;
 
 }
 
-#main-button{
-    position: absolute;
-    box-shadow: 0 5px 10px 5px;
-    border-radius: 20px;
-    width: 100px;
-    height: 50px;
-    margin-top: 100px;
+.enemy progress[value]::-webkit-progress-bar {
+    background-color: var(--red);
+    transition: width 1s ease;
+}
 
+#health{
+    margin-top: 600px;
+    margin-right: 50px;
+    width: 250px;
+}
+
+.button-container{
+    position: absolute;
+    top: 150px;
+    justify-content: center;
+}
+
+#main-button{
+    box-shadow: 0 5px 10px 5px #000000;
+    border-radius: 500px;
+    margin-left: 50px;
+    width: 100px;
+    height: 100px;
+    font-size: 1.5em;
+    background-color: #AD3F3D;
+    color: var(--white);
+
+}
+
+#main-button:hover{
+    background: var(--blue);
+}
+
+#main-button:active{
+    background: var(--orange);
+}
+
+.upgrade-button{
+    box-shadow: 0 5px 10px 5px;
+    margin-top: 20px;
+    border-radius: 100px;
+    width: 200px;
+    height: 50px;
+
+}
+
+#upgrade-button:hover{
+    background: var(--blue);
+}
+
+#upgrade-button:active{
+    background: var(--orange);
 }
 
 #leaderboard-button{
@@ -54,24 +120,83 @@
 
 #back-button {
     display: none;
+    font-size: 1.5em;
 }
 
 #current-username {
     display: none;
 }
 
-#main-button:hover{
-    background: var(--blue);
+.coins{
+    position: absolute;
+    display: flex;
+    top: 50px;
+    left: 2%;
+}
+
+.coins p{
+    font-family: "Pixel";
+    color: var(--white);
+    font-size: 1.1em;
+    margin-left: 5px;
+    margin-right: 10px;
+}
+
+.currency p{
+    text-align: center;
+    font-family: "Pixel";
+    color: var(--white);
+}
+
+.stats{
+    position: absolute;
+    left: 2%;
+    width: 50%;
+    display: flex;
+    color: var(--white);
+
+}
+.stats p{
+
+    display: flex;
+    margin-right: 20px;
+    margin-left: 20px;
+
 }
 
 .point{
     position: absolute;
-    margin-top: 70px;
-    animation-duration: 1s;
+    top: 0;
 }
 
 h3 {
     font-size: 17px;
     margin-top: 0;
     margin-bottom: 10px;
+    font-family: "Pixel";
+
+}
+
+p{
+    font-family: "Pixel";
+
+}
+th{
+    font-family: "Pixel";
+
+}
+td{
+    font-family: "Pixel";
+
+}
+h2{
+    font-family: "Pixel";
+
+}
+label{
+    font-family: "Pixel";
+
+}
+button{
+    font-family: "Pixel";
 }

@@ -3,20 +3,42 @@
     {
       "username": "jarod",
       "password": "hello",
-      "score": 100,
-      "gameState": {}
+      "gameState": {
+        "score": 7697,
+        "currency": 3017,
+        "PlayerObj": {
+          "attack": 535,
+          "crit": 5.261972627395668,
+          "level": 15
+        },
+        "EnemyObj": {
+          "health": 4262,
+          "filepath": "../img/met.png",
+          "tier": 1
+        },
+        "attackCost": 6250,
+        "critCost": 12500
+      }
     },
     {
       "username": "cem",
       "password": "hello",
-      "score": 75,
-      "gameState": {}
-    },
-    {
-      "username": "alp",
-      "password": "hello",
-      "score": 87,
-      "gameState": {}
+      "gameState": {
+        "score": 28,
+        "currency": 28,
+        "PlayerObj": {
+          "attack": 10,
+          "crit": 0,
+          "level": 2
+        },
+        "EnemyObj": {
+          "health": 158,
+          "filepath": "../img/bokoblin.png",
+          "tier": 1
+        },
+        "attackCost": 10,
+        "critCost": 20
+      }
     }
   ]
 }

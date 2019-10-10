@@ -50,14 +50,29 @@ app.post("/update", function(req, res) {
 
     req.on( 'end', function() {
         const updatedUser = JSON.parse(dataString);
-        const currentUser = db.get('users').find({ username: updatedUser.username}).value();
-        const newScore = updatedUser.score + currentUser.score;
         db.get('users')
             .find({ username: updatedUser.username })
-            .assign({ score: newScore, gameState: updatedUser.gameState})
+            .assign({ gameState: updatedUser.gameState})
             .write();
 
         res.writeHead( 200, "OK", {'Content-Type': 'text/plain' });
+        res.end();
+    })
+});
+
+app.post("/getGameState", function(req, res) {
+    let dataString = '';
+    req.on( 'data', function( data ) {
+        dataString += data
+    });
+
+    req.on( 'end', function() {
+        const username = JSON.parse(dataString);
+        const user = db.get('users').find({ username: username.username}).value();
+        const gameState = JSON.stringify({ data: user.gameState });
+        const type = mime.getType(user.gameState);
+        res.writeHead( 200, {'Content-Type': type });
+        res.write(gameState);
         res.end();
     })
 });
@@ -82,8 +97,7 @@ const myLocalStrategy = function(username, password, done) {
         const newUser = {
             'username': username,
             'password': password,
-            'score': 0,
-            'gameState': {}
+            'gameState': {'score': 0}
         };
 
         db.get( 'users' ).push(newUser).write();
