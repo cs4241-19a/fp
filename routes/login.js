@@ -7,7 +7,6 @@ router.post('/',
     passport.authenticate('local', {failureRedirect: '/'}),
     function(req,res){
         app.user = req.user;
-        
         res.render( 'profile' , { user: app.user.username });
     });
 

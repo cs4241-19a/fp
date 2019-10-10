@@ -10,7 +10,7 @@ function setTrue() {
     createdAccount = true;
     setTimeout(function(){
         window.location.href = "/login";
-    }, 2000);
+    }, 1000);
     //window.location.href = "/login";
 }
 
