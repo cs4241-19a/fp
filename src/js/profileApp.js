@@ -5,7 +5,7 @@ export default function ProfileApp(props) {
 
     return (
         <React.Fragment>
-            <FeedContainer items={items}/>
+            <FeedContainer />
             <div className="lg:text-center bottomBanner"> Designed and developed in Worcester, Massachusetts </div>
         </React.Fragment>
     )

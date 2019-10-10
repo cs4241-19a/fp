@@ -29,7 +29,18 @@ export default function FeedContainer(props) {
     // }
 
     const [items, setItems] = useState( () => {
-        let list = []
+        let list = [{
+            title: "yo",
+            user: "yoyo"
+        },
+        {
+            title: "noo",
+            user: "nono"
+        },
+        {
+            title: "yaaay",
+            user: "yayayay"
+        }]
 
         fetch( '/feed')
             .then( function( response ) {
