@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import BarGraph from '../Graph/Graph';
 
 class Home extends Component {
     constructor(props) {
@@ -56,22 +57,26 @@ class Home extends Component {
         const { users, budgets } = this.state;
         return (
             <div className="App">
-                <div>
-                    <ul>
-                        {users.map(this.showUsers)}
-                    </ul>
-                </div>
-                <br />
-                <div>
-                    <ul>
-                        {
-                            budgets.map(this.showBudgets)
-                        }
-                    </ul>
+                {/* <p>{this.state.response}</p> */}
+                <div class='ct-chart-bar ct-golden-section'>
+                    <BarGraph/>
                 </div>
             </div>
         );
     }
 }
+/*
+<div>
+    <ul>
+        {users.map(this.showUsers)}
+    </ul>
+</div>
+<div>
+     <ul>
+        {budgets.map(this.showBudgets)}
+     </ul>
+</div>
+
+ */
 
 export default Home;

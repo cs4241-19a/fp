@@ -5,7 +5,6 @@ import 'react-tabulator/lib/css/bulma/tabulator_bulma.min.css'; // theme
 import { ReactTabulator } from 'react-tabulator'; // for React 15.x, use import { React15Tabulator }
 import * as tableFunctions from './TableFunctions.js'
 
-
 class Table extends Component {
     constructor(props) {
         super(props);
@@ -29,14 +28,7 @@ class Table extends Component {
     columns = [
         { title: "ID", field: "id", visible: false },
         {
-            title: "Name", field: "name", headerFilter: "input", editor: "input", bottomCalc: "count", cellEdited: function (cell) {
-                console.log(cell.getRow());
-                tableFunctions.modifyRow(cell.getRow(), (isModified) => {
-                    if(isModified) {
-                        console.log('Was modified successfully');
-                    }
-                });
-            }
+            title: "Name", field: "name", headerFilter: "input", bottomCalc: "count"
         },
         {
             title: "Requested Amount", field: "requested", formatter: "money", editor: "input", bottomCalc: "sum", bottomCalcFormatter: "money", headerFilter: "input",
@@ -94,7 +86,7 @@ class Table extends Component {
             <section class="section table">
                 <ReactTabulator columns={this.columns} data={this.props.data} options={this.options} />
             </section>
-        );
+        ); 
     }
 }
 

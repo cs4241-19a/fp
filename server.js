@@ -68,10 +68,10 @@ app.post('/api/addBudget', (req, res) => {
  */
 app.post('/api/editBudget', (req, res) => {
     let id = parseInt(req.body.id);
+    console.log("Id: " + id)
     console.log(req.body);
-    con.query(`UPDATE budgets SET name=${req.body.name}, requested=${req.body.requested}, approved=${req.body.approved}
-    WHERE id = ${id};`, function (err, result) {
-        console.log(result);
+    con.query(`UPDATE budgets SET requested = ${req.body.requested}, approved = ${req.body.approved} WHERE id = ${id};`, function (err, result) {
+        console.log("Result: " + result);
         (err) ? res.send(err) : res.send(true);
     })
 });

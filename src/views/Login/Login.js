@@ -17,13 +17,11 @@ class Login extends Component {
         };
     }
 
-    componentDidMount() {
-    }
-
     updateUsername = (e) => {
         this.setState({
             username: e.target.value
         });
+        
     }
     updatePassword = (e) => {
         this.setState({
@@ -38,38 +36,39 @@ class Login extends Component {
     render() {
         return (
             <div className="outer notification background-light">
-                <div className="center titleContainer has-background-white">
-                    <p className="title">Sign In</p>
+                <div className="center titleContainer has-background-dark">
+                    <p className="has-text-white title">Sign In</p>
                 </div>
                 <div className="vessel">
                     <div className="columns">
                         <div className="column is-one-third">
-                            <FontAwesomeIcon icon="user-lock" size="2x" />
-                            <input
+                            <FontAwesomeIcon className = "right" icon="user-lock" size="2x" />
+                        </div>
+                        <div className="column is-one-third">
+                            <input className = { this.state.username === '' ? 'input' : 'input is-success'}
                                 type="text"
                                 name={this.state.username}
                                 placeholder="Username"
-                                onChange={this.updateUsername}
-                            />
+                                onChange={this.updateUsername}/>
                         </div>
-
-
-
+                    </div>
+                    <div className="columns">
                         <div className="column is-one-third">
-                            <FontAwesomeIcon icon="key" size="2x" />
-                            <input
+                            <FontAwesomeIcon className = "right" icon="key" size="2x" />
+                        </div>
+                        <div className="column is-one-third">
+                            <input className = { this.state.password === '' ? 'input' : 'input is-success'}
                                 type="password"
                                 name={this.state.password}
                                 placeholder="Password"
-                                onChange={this.updatePassword}
-
-                            />
+                                onChange={this.updatePassword}/>
                         </div>
-
                     </div>
                 </div>
                 <div className="vessel">
-                    <button className="button is-success" onClick={this.login}>Submit</button>
+                    <button 
+                        className={ (this.state.username === '' || this.state.password === '') ? 'button submit-button' : 'button is-danger submit-button'} onClick={this.login}
+                        disabled={this.state.username === '' || this.state.password === ''}>Submit</button>
                 </div>
             </div>
         );

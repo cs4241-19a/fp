@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Field from '../../components/Field.js'
-import Table from './Table.js'
+import BarGraph from '../Graph/Graph';
+import Field from '../../components/Field.js';
+import Table from './Table.js';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -26,6 +27,7 @@ class Dashboard extends Component {
         console.log(this.props.session);
         return(
             <div>
+                <BarGraph></BarGraph>
                 <Field getData={this.getData}></Field>
                 <Table data={this.state.budgets}></Table>
             </div>

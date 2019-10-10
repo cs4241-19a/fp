@@ -20,9 +20,14 @@
     font-size: 40px;
     margin-right: 20px;
     margin-left: 20px;
+    margin-top: 8px;
 }
 
 .move-right {
     display: flex;
     justify-content: right;
 }
+
+a:hover {
+    color: red;
+  }
