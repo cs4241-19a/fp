@@ -232,10 +232,10 @@ class Chat extends React.Component {
     return (
       <div className="chat">
         <div className="chat-container">
-          {this.state.log.map(hint => {
+          {this.state.log.map((hint, index) => {
             return (
               <div
-                key={hint.clue + hint.amt}
+                key={index}
                 className="clue"
                 style={{ color: hint.sender }}
               >

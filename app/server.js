@@ -120,7 +120,7 @@ io.on("connection", function(socket) {
   socket.on("hintSubmission", (sender, clue, amt) => {
     console.log("hello");
     hints.push({ sender: sender, clue: clue, amt: amt });
-    socket.emit("hintHistory", hints);
+    io.sockets.emit("hintHistory", hints);
   });
 
   socket.on("send hint", function(msg) {
