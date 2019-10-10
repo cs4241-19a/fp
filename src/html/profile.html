@@ -16,7 +16,7 @@
       <div id="homeDiv" class="w-1/5 px-4">
         <img id="homeGo" src="../media/logoNav.png" alt="Logo" width="284" height="50">
       </div>
-      <div class="w-3/5 px-4"></div>
+      <div class="w-2/5 px-4"></div>
       <div class="w-1/5 flex px-4">
         <div id="profileGo" class="w-1/2 items-center rounded flex">
           <div class="w-1/2">
@@ -34,15 +34,51 @@
           <button id="logoutBtn" class="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">Logout</button>
         </div>
       </div>
+      <div class="w-1/5 flex px-4"></div>
     </div>
     <div class="w-full flex">
       <div class="w-4/5 flex flex-col">
         <div id="visEdit" class="flex-shrink-0 flex w-full flex-col overflow-y-scroll">
           <div id="canvas" class="w-full flex flex-shrink-0"></div>
-          <div class="flex p-5 rounded-t flex-shrink-0 bg-white ">
-            <button id='newBtn' class="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-              New Post
-            </button>
+          <div class="flex flex-col p-5 rounded-t flex-shrink-0 bg-white w-full ">
+            <div class="flex mb-5 flex-grow-0">
+              <button id='newBtn' class="text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                New Post
+              </button>
+            </div>
+            <form class="bg-white topMar shadow-md rounded-b px-8 pt-6 pb-8 mb-4">
+              <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                         for="songTest">
+                    Music Track
+                  </label>
+                  <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="songTest">
+                    <option disabled selected>Choose a Music Track</option>
+                    <option>Back in Black (AC/DC)</option>
+                    <option>Deutschland (Rammstein)</option>
+                    <option>Bangarang (Skrillex)</option>
+                    <option>Exploder (Audioslave)</option>
+                    <option>Divenire (Ludovico Einaudi)</option>
+                    <option>Shelter (Porter Robinson)</option>
+                    <option>Divenire (Ludovico Einaudi)</option>
+                  </select>
+                </div>
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                         for="colorTest">
+                    Color
+                  </label>
+                  <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="colorTest">
+                    <option disabled selected>Choose a color</option>
+                    <option>Blue - Green</option>
+                    <option>Green - Red</option>
+                    <option>Pink - Green</option>
+                    <option>Red - Green</option>
+                  </select>
+                </div>
+              </div>
+            </form>
           </div>
           <form class="bg-white topMar border-t-2 border-gray-400 shadow-md rounded-b px-8 pt-6 pb-8 mb-4">
             <div class="flex flex-wrap -mx-3 mb-6">

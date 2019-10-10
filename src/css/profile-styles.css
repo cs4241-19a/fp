@@ -11403,7 +11403,7 @@ html {
 }
 
 div {
-  min-height: 0 !important;
+  min-height: 0;
 }
 
 #canvas {
@@ -11565,6 +11565,18 @@ button:hover {
   padding-right: 15px;
   border-radius: 30px;
   box-shadow: 0 5px 10px #999;
+}
+
+ul {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  clear: both !important;
+}
+
+li {
+  font: 11px 'Lucida Grande', sans-serif !important;
 }
 
 @media (min-width: 640px) {
@@ -54614,3 +54626,4 @@ button:hover {
     z-index: auto;
   }
 }
+

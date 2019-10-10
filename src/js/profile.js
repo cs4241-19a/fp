@@ -4,6 +4,62 @@ import React from "react";
 import ReactDOM from "react-dom";
 import ProfileApp from "./profileApp";
 import Toast from "./show-toast";
+import * as dat from 'dat.gui'
+import {audioGraph, audioInit, getCanvas} from "./setUpModule";
+import {visualizer} from "./visualizerModule";
+
+let gui = new dat.GUI;
+
+let currColor = 0
+
+const blue = function () {
+    currColor = 0
+}
+
+const green = function () {
+    currColor = 1
+}
+
+const pink = function () {
+    currColor = 2
+}
+
+const red = function () {
+    currColor = 3
+}
+
+const changeParam = new function () {
+    this.barHeight = 1
+    this.barWidth = 4
+    this.barFit = 2
+    this.canvasClr = '#000000'
+}()
+
+const newPost = function(e) {
+    e.preventDefault();
+
+    console.log('paper has been clicked');
+
+    //TODO pull song
+
+    console.log("yoooooooo")
+    const canvas = getCanvas()
+
+    const jsonAudioInit = audioInit(canvas)
+    const jsonAudioGraph = audioGraph(canvas, jsonAudioInit)
+
+    jsonAudioInit.audioElement.src = 'music/shelter.mp3'
+    jsonAudioInit.audioElement.controls = true;
+    jsonAudioInit.audioElement.play()
+
+    const results = new Uint8Array(jsonAudioGraph.analyser.frequencyBinCount)
+
+    const draw = function () {
+        window.requestAnimationFrame(draw)
+        visualizer(canvas, jsonAudioInit, jsonAudioGraph, results, currColor, changeParam.barHeight, changeParam.barWidth, changeParam.barFit, changeParam.canvasClr)
+    }
+    draw()
+}
 
 window.onload = function () {
     fetch( '/receive')
@@ -27,6 +83,14 @@ window.onload = function () {
     document.getElementById("logoutBtn").onclick = logout
     document.getElementById("profileGo").onclick = myProfile
     document.getElementById("updatePassBtn").onclick = updatePass
+    document.getElementById("shareBtn").onclick = home
+    document.getElementById("newBtn").onclick = newPost
+
+    gui.add(changeParam, 'barHeight', 0, 3).name('Bar Height')
+    gui.add(changeParam, 'barWidth', 0, 6).name('Bar Width')
+    gui.add(changeParam, 'barFit', 0.5, 5).name('Visualizer Fit')
+    gui.addColor(changeParam, 'canvasClr').name('Canvas Color')
+
 }
 
 function updatePass(e) {
