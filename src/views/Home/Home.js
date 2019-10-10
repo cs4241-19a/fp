@@ -58,23 +58,25 @@ class Home extends Component {
         return (
             <div className="App">
                 {/* <p>{this.state.response}</p> */}
-                <BarGraph/>
-                <div>
-                    <ul>
-                        {users.map(this.showUsers)}
-                    </ul>
-                </div>
-                <br />
-                <div>
-                    <ul>
-                        {
-                            budgets.map(this.showBudgets)
-                        }
-                    </ul>
+                <div class='ct-chart-bar ct-golden-section'>
+                    <BarGraph/>
                 </div>
             </div>
         );
     }
 }
+/*
+<div>
+    <ul>
+        {users.map(this.showUsers)}
+    </ul>
+</div>
+<div>
+     <ul>
+        {budgets.map(this.showBudgets)}
+     </ul>
+</div>
+
+ */
 
 export default Home;

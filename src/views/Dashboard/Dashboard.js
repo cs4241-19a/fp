@@ -3,22 +3,6 @@ import BarGraph from '../Graph/Graph';
 import Field from '../../components/Field.js';
 import Table from './Table.js';
 
-class Graphy extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
-    componentDidMount() {
-    }
-
-    render() {
-        return(
-                <BarGraph/>
-        )
-    }
-}
-
 class Dashboard extends Component {
     constructor(props) {
         super(props);
@@ -35,13 +19,13 @@ class Dashboard extends Component {
         const response = await fetch('/api/home');
         const body = await response.json();
         if (response.status !== 200) throw Error(body.message);
-        this.setState({ budgetes: body.budgets });
+        this.setState({ budgets: body.budgets });
     }
 
     render() {
         return(
             <div>
-                <Graphy data={this.state.budgets}></Graphy>
+                <BarGraph></BarGraph>
                 <Field getData={this.getData}></Field>
                 <Table data={this.state.budgets}></Table>
             </div>

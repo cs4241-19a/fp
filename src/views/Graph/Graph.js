@@ -4,31 +4,54 @@ import ChartistGraph from 'react-chartist';
 class BarGraph extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            budgets: []
+        };
     }
     componentDidMount() {
+        this.getData();
     }
 
-    badData= this.props.data;
-
+    getData = async () => {
+        const response = await fetch('/api/home');
+        const body = await response.json();
+        if (response.status !== 200) throw Error(body.message);
+        this.setState({ budgets: body.budgets });
+    }
 
     render() {
-        var data = {
-            labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8', 'W9', 'W10'],
-            series: [ [1000, 2000, 4000, 8000, 6000, 1000, 1000, 1000, 1000, 1000], [2000, 1000, 6000, 7000, 9000, 30000, 2000, 6000, 3000, 1000]]
+
+        var clubnames = []
+        var requesteds = []
+        var approveds = []
+        var badData= this.state.budgets;
+        for (var i = 0; i < badData.length; i++){
+            var obj = badData[i];
+            clubnames.push(obj.name)
+            requesteds.push(obj.requested)
+            approveds.push(obj.approved)
+        }
+
+        var gooddata = {
+            labels: clubnames,
+            series: [ requesteds, approveds]
         };
 
+        var biggest = Math.max.apply(Math, requesteds);
         var options = {
-           //high is the biggest number plus one
         //<section className="center">
-            high: 10000,
-            low: 0
+            high: biggest + 1000,
+            low: 0,
+            axisY: {
+                showGrid: true,
+                scaleMinSpace: 10
+            }
         };
 
         console.log(this.badData);
         return (
-            <div id="myGraph">
-                <ChartistGraph data={data} options={options} type={"Bar"} />
+            <div id="chart">
+                <ChartistGraph data={gooddata} options={options} type={"Bar"} />
             </div>
         );
     };
