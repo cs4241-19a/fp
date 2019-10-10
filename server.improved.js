@@ -254,5 +254,14 @@ app.get("/allData", function(req, res) {
     });
 });
 
+app.get('/logout', function(req, res){
+  req.logOut()
+  res.status(200).clearCookie('TestCookie', {
+    path: '/'
+  })
+  req.session.destroy(function(err){
+    res.redirect('/')
+  })
+
 //STARTING SERVER HERE
 app.listen(process.env.PORT || port);

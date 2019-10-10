@@ -91,9 +91,8 @@ PS.init = function(system, options) {
   PS.gridColor(PS.COLOR_GRAY);
   PS.borderColor(PS.ALL, PS.ALL, PS.COLOR_BLACK);
 
-  window.alert("Use the arrow keys to navigate existing tracks");
   PS.debug(
-    "Use the arrow keys to navigate existing tracks. Press Load track to load into audio player\n"
+    "Use the arrow keys to navigate existing tracks.\n Press Load track to load into audio player.\nPress Enter to clear the current data.\n"
   );
 
   pianoSetup();
@@ -183,10 +182,9 @@ PS.keyDown = function(key, shift, ctrl, options) {
         " by " +
         variables.databaseTracks[variables.databaseIndex].username
                            + "\n"
-
     );
   }
-  if (key == PS.KEY_ARROW_RIGHT) {
+  if (key === PS.KEY_ARROW_LEFT) {
     variables.databaseIndex -= 1;
     if (variables.databaseIndex < 0) {
       variables.databaseIndex = variables.databaseTracks.length - 1;
@@ -196,6 +194,12 @@ PS.keyDown = function(key, shift, ctrl, options) {
         " by " +
         variables.databaseTracks[variables.databaseIndex].username
               + "\n"
+    );
+  }
+  
+  if(key === PS.KEY_ENTER){
+    variables.dataArray = [[], [], [], [], [], [], [], []]
+    PS.debug("All Tracks Cleared!\n"
     );
   }
 
@@ -1328,8 +1332,11 @@ function playAudio(data) {
 
 //LOAD SONG
 function loadTrack() {
+  if(!variables.playingBack){
   console.log("LOADING");
-  variables.dataArray = variables.databaseTracks[variables.databaseIndex]
+  variables.dataArray = variables.databaseTracks[variables.databaseIndex].songdata
+  console.log(variables.dataArray)
+  }
 }
 
 //SAVE SONG
@@ -1383,4 +1390,17 @@ function loadSongs() {
         variables.databaseIndex = 0;
       });
     });
+}
+
+function logOut(){
+  let result = window.confirm("Are you sure you wish to log out?")
+  if(result){
+    fetch('/logout', {
+      method:'GET',
+      headers: {'Content-Type': 'application/json'},
+    })
+      .then(function(res){
+      window.location = res.url
+    })
+  }
 }
