@@ -130,7 +130,7 @@ app.ticker.add(function(delta) {
             victory.visible = true;
             start = false;
             let body = {
-                time: time.toString()
+                time: time
             };
             body = JSON.stringify(body);
             fetch('/newLeaderboardTime', {
