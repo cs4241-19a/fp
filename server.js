@@ -164,6 +164,16 @@ response:
 }
 */
 
+app.post('/newPost', function(request, response) {
+  let json = request.body;
+  let user = JSON.stringify(json.user).replace(/^"(.*)"$/, '$1');
+  fs_service.addPost(user, json);
+
+  response.writeHead( 200, { 'Content-Type': 'application/json'})
+  response.end( JSON.stringify( request.body ) )
+})
+
+
 app.post('/post_music', function(request, response) {
   let body = request.body;
   let song = body.song_bytes;

@@ -75,6 +75,15 @@ exports.updateUserPassword = function (username, password) {
 }
 
 
+exports.addPost = function (user, json) {
+    let profiles_coll = this.firestore.collection("music_profiles")
+    profiles_coll.doc(user).set(json).then(r => console.log(r))
+}
+
+
+
+
+
 exports.addSongData = async function(byte_string){
     songs = await this.firestore.collection("song_data").get()
     n_songs = songs.size

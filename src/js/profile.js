@@ -19,6 +19,43 @@ const changeParam = new function () {
     this.canvasClr = '#000000'
 }()
 
+const shareSong = function(e) {
+    e.preventDefault();
+
+    let color = document.getElementById("colorTest").value;
+    let song = document.getElementById("songTrack").value;
+    let title = document.getElementById("songTitle").value;
+    let desc = document.getElementById("songDesc").value;
+    let barH = changeParam.barHeight;
+    let barW = changeParam.barWidth;
+    let barF = changeParam.barFit;
+    let canClr = changeParam.canvasClr;
+
+    window.localStorage;
+    let user = localStorage.getItem('currUser');
+
+    const json = {user: user, color: color, song: song, title: title, desc: desc, barH: barH, barW: barW, barF: barF, canClr: canClr}
+
+    console.log('paper has been clicked');
+
+    const body = JSON.stringify(json);
+
+    fetch('/newPost', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body
+    })
+        .then(function(res) {
+            Toast ({
+                str: "Post Shared",
+                time: 2000,
+                position: 'bottom'
+            });
+            console.log( "post response: ", res )
+            window.location = "/profile.html"
+        })
+}
+
 const colorChange = function(e) {
     e.preventDefault();
 
@@ -114,7 +151,7 @@ window.onload = function () {
     document.getElementById("logoutBtn").onclick = logout
     document.getElementById("profileGo").onclick = myProfile
     document.getElementById("updatePassBtn").onclick = updatePass
-    document.getElementById("shareBtn").onclick = home
+    document.getElementById("shareBtn").onclick = shareSong
     document.getElementById("songTest").onchange = songChange
     document.getElementById("colorTest").onchange = colorChange
 
