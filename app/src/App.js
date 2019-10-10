@@ -338,7 +338,7 @@ function getClueState(newHint){
 
 socket.on("updateCluestate", function(cs){
   let chatCont = document.getElementsByClassName('chat-container')[0];
-  chatCont.innerHTML = '';
+  //chatCont.innerHTML = '';
   cs.forEach(function(msg){
     let final_message = document.createElement('p');
     console.log(msg);
