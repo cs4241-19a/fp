@@ -180,17 +180,16 @@ app.post("/addSong", function(req, res) {
     .ref("/data/")
     .once("value")
     .then(function(snapshot) {
-      var tempArray = []
-      for(var i = 0; i< 8; i++){
-        if(req.body.songdata[i].length === 0){
-          console.log("IN EMPTY CASE")
-          tempArray.push([{noteVal : -1, timeVal: 0}])
-        }
-        else{
-          tempArray.push(req.body.songdata[i])
+      var tempArray = [];
+      for (var i = 0; i < 8; i++) {
+        if (req.body.songdata[i].length === 0) {
+          console.log("IN EMPTY CASE");
+          tempArray.push([{ noteVal: -1, timeVal: 0 }]);
+        } else {
+          tempArray.push(req.body.songdata[i]);
         }
       }
-      console.log(tempArray)
+      console.log(tempArray);
       fdb
         .ref("/data/")
         .push({
@@ -254,14 +253,15 @@ app.get("/allData", function(req, res) {
     });
 });
 
-app.get('/logout', function(req, res){
-  req.logOut()
-  res.status(200).clearCookie('TestCookie', {
-    path: '/'
-  })
-  req.session.destroy(function(err){
-    res.redirect('/')
-  })
+app.get("/logout", function(req, res) {
+  req.logOut();
+  res.status(200).clearCookie("TestCookie", {
+    path: "/"
+  });
+  req.session.destroy(function(err) {
+    res.redirect("/");
+  });
+});
 
 //STARTING SERVER HERE
 app.listen(process.env.PORT || port);
