@@ -17,7 +17,7 @@ const gamePlayState = new Phaser.Class({
         this.pause = false;
 
         this.score = 0;
-        this.money = 600;
+        this.money = 400;
         this.lives = 10;
 
         // Create objects
@@ -78,7 +78,7 @@ const gamePlayState = new Phaser.Class({
         // wave values
         this.waveIdx = 0;
         this.waveAmount = 3;
-        this.spacingChoices = [60, 40, 30, 20, 15, 10, 5];
+        this.spacingChoices = [40, 30, 20, 15];
 
         // ui text
         this.waveText = scene.add.text(0, 0, `Wave: ${this.waveIdx}`, {fontSize: 22, color: "#000000", backgroundColor: "#ffffff"});
@@ -92,9 +92,9 @@ const gamePlayState = new Phaser.Class({
         uiContainer.add(this.waveText);
         uiContainer.add(this.livesText);
 
-        this.sandText = scene.add.text(0, 0, "Sandbag\n$65", {fontSize: 12, color: "#ffffff", backgroundColor: "#000000"});
-        this.mgText = scene.add.text(cellSize.width , 0, "Machine Gun\n$220", {fontSize: 12, color: "#ffffff", backgroundColor: "#000000"});
-        this.cannonText = scene.add.text(cellSize.width * 2, 0, "Cannon\n$370", {fontSize: 12, color: "#ffffff", backgroundColor: "#000000"});
+        this.sandText = scene.add.text(0, 0, `Sandbag\n$${scene.Towers.SandBags.price}`, {fontSize: 12, color: "#ffffff", backgroundColor: "#000000"});
+        this.mgText = scene.add.text(cellSize.width , 0, `Machine Gun\n$${scene.Towers.MachineGuns.price}`, {fontSize: 12, color: "#ffffff", backgroundColor: "#000000"});
+        this.cannonText = scene.add.text(cellSize.width * 2, 0, `Cannon\n$${scene.Towers.Cannons.price}`, {fontSize: 12, color: "#ffffff", backgroundColor: "#000000"});
 
         const towerUiContainer = scene.add.container(6 * cellSize.width, (playArea.height - 1) * cellSize.height);
         towerUiContainer.add(this.sandText);
@@ -509,7 +509,7 @@ function Truck(events, scene) {
      * @returns {{damage: (function(number)), move: Function, sprite: *}}
      */
     function create(sprite, waveIndex) {
-        return Enemy(sprite, waveIndex, 0.03 + (0.005 * scene.waveIdx * (difInc + 1)), 55 + (5 * scene.waveIdx * (difInc + 1)), events.onDeath, events.onBase, scene);
+        return Enemy(sprite, waveIndex, 0.03 + (0.002 * scene.waveIdx * (difInc + 1)), 65 + (20 * scene.waveIdx * (difInc + 1) * (scene.towers.length / 3)), events.onDeath, events.onBase, scene);
     }
 
     function Truck3b(scene) {
@@ -525,7 +525,7 @@ function Truck(events, scene) {
 // TOWERS //
 
 function SandBag() {
-    const price = 65;
+    const price = 30;
     /**
      * Create the Tower at the coordinates.
      * @returns {{resetTargets: *, sprite: *, shoot: *}}
@@ -549,7 +549,7 @@ function SandBag() {
 }
 
 function MachineGun() {
-    const price = 220;
+    const price = 180;
     /**
      * Create the Tower at the coordinates.
      * @returns {{resetTargets: *, sprite: *, shoot: *}}
@@ -573,7 +573,7 @@ function MachineGun() {
 }
 
 function Cannon() {
-    const price = 370;
+    const price = 300;
     /**
      * Create the Tower at the coordinates.
      * @returns {{resetTargets: *, sprite: *, shoot: *}}
