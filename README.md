@@ -12,7 +12,7 @@ For our Final Project, we implemented a multiplayer game called "Codenames", an 
 Using JavaScript's Socket.io and Socket.io-client libraries we were able to create an application that communicates with a Node.js server, 
 and updates client real-time. This was mainly used for implementing a constant game state (and storing that information on the server), 
 as well as updating player's turn order. Maintaining game state, as well as ensuring it was consistent among multiple clients (as well as
-updating that information real-time) was very challenging, as it was something none of us had any prior experience with. Ensuring all socket
+updating that information real-time) was very challenging, as it was something none of us had any prior experience with. Ensuring 
 all socket information was kept up-to-date in addition to random board setup generation was a task which we struggled with tackling at first,
 however we were able to overcome our difficulties!
 
