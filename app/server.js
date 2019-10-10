@@ -133,7 +133,7 @@ io.on("connection", function(socket) {
   });
 
   socket.on("roleSelection", function(role) {
-    console.log(role);
+    console.log('JUST SELECTED ROLE', role);
 
     setRole(socket.id, role);
     greyRole(role);
@@ -154,6 +154,16 @@ io.on("connection", function(socket) {
   socket.on("startGame", function() {
     socket.broadcast.emit("closeModal");
     //logic to start the game
+  });
+
+  socket.on("resetRoles", ()=>{
+      roleState = {
+          bspymaster: "",
+          rspymaster: "",
+          bdetective: "",
+          rdetective: ""
+      };
+      io.sockets.emit("resetRoles");
   });
 });
 

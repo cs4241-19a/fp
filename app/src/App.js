@@ -499,6 +499,8 @@ function resetMenu(play) {
   bluedet.style.backgroundColor = "#4d79ff";
   bluedet.style.borderColor = "black";
   bluedet.disabled = false;
+
+  socket.emit("resetRoles");
 }
 
 function closeMenu(play) {
@@ -578,7 +580,7 @@ window.onload = function() {
 };
 
 function getBrowserData() {
-  return { user: sessionStorage.getItem("userInfo")  || 'USER'};
+  return { user: sessionStorage.getItem("userInfo")  || 'USER' + Math.random()};
 }
 
 function clickHint(hintbtn) {
@@ -696,8 +698,25 @@ socket.on("updateRoleState", function(rs){
 
 });
 
-socket.on("closeModal", ()=>{
-    //document.getElementById("playBtn").click();
+socket.on("resetRoles", ()=>{
+    var redspy = document.getElementById("rspymaster");
+    var reddet = document.getElementById("rdetective");
+    var bluespy = document.getElementById("bspymaster");
+    var bluedet = document.getElementById("bdetective");
+    redspy.style.backgroundColor = "#ff6666";
+    redspy.style.borderColor = "black";
+    redspy.disabled = false;
+    bluespy.style.backgroundColor = "#4d79ff";
+    bluespy.style.borderColor = "black";
+    bluespy.disabled = false;
+    reddet.style.backgroundColor = "#ff6666";
+    reddet.style.borderColor = "black";
+    reddet.disabled = false;
+    bluedet.style.backgroundColor = "#4d79ff";
+    bluedet.style.borderColor = "black";
+    bluedet.disabled = false;
+
+    allReady = false;
 });
 
 export default App;
