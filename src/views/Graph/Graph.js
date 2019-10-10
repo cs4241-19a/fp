@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import ChartistGraph from 'react-chartist';
+import Legend from "chartist-plugin-legend";
+import './GraphLegend.css';
 
 class BarGraph extends Component {
     constructor(props) {
@@ -45,13 +47,20 @@ class BarGraph extends Component {
             axisY: {
                 showGrid: true,
                 scaleMinSpace: 10
-            }
+            },
+            height: 500,
+            plugins: [
+                Legend({
+                    clickable: false,
+                    legendNames: ['Requested', 'Approved']
+                })
+            ]
         };
 
         console.log(this.badData);
         return (
-            <div id="chart" class='ct-chart-bar ct-golden-section'>
-                <ChartistGraph data={gooddata} options={options} type={"Bar"} />
+            <div id="chart">
+                <ChartistGraph data={gooddata} options={options} type={"Bar"}/>
             </div>
         );
     };

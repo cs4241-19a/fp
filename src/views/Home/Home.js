@@ -58,9 +58,9 @@ class Home extends Component {
         return (
             <div className="App">
                 {/* <p>{this.state.response}</p> */}
-                <div class='ct-chart-bar ct-golden-section'>
-                    <BarGraph/>
-                </div>
+                <br/>
+                <br/>
+                <BarGraph/>
             </div>
         );
     }

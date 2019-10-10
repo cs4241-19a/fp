@@ -25,6 +25,7 @@ class Dashboard extends Component {
     render() {
         return(
             <div>
+                <br/>
                 <BarGraph></BarGraph>
                 <Field getData={this.getData}></Field>
                 <Table data={this.state.budgets}></Table>
