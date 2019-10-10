@@ -136,6 +136,8 @@ PS.init = function(system, options) {
   PS.visible(31, 18, false);
 
   PS.statusText("Shitty Garageband");
+  
+  loadSongs()
 };
 
 PS.touch = function(x, y, data, options) {
@@ -1803,6 +1805,7 @@ function getCookie(name) {
 
 
 function loadSongs() {
+  console.log("LOAD SONGS")
   var select = document.getElementById("songDropdown");
   select.innerHTML = "";
   fetch("/allData", {

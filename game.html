@@ -99,7 +99,7 @@ along with the Perlenspiel devkit. If not, see <http://www.gnu.org/licenses/>.
     <footer>
       <div class="DATABASE_BUTTONS">
         <!--POPULATE BASED ON DATABASE SHOW TRACKNAME VALUE = trackArray -->
-        <select id="songDropdown">
+        <select id="songDropdown" onclick="interaction()">
         </select>
         <button onclick="loadTrack()">LOAD TRACK</button>
         <button onclick="saveTrack()">SAVE TRACK</button>
@@ -108,6 +108,9 @@ along with the Perlenspiel devkit. If not, see <http://www.gnu.org/licenses/>.
     </footer>
     
     <script>
+      function interaction(){
+        console.log("TOUCHING SELECT")
+      }
         loadSongs()
         </script>
   </body>

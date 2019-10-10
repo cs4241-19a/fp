@@ -1,4 +1,5 @@
 footer {
+    z-index: 1000;
     position: absolute;
     display: flex;
     bottom: 0;
@@ -7,11 +8,6 @@ footer {
     text-align: center;
     width: 100%;
 }
-
-.METRONOME {
-    flex-basis: 100%;
-}
-
 .DATABASE_BUTTONS {
     flex-basis: 100%;
 }
