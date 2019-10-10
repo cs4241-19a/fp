@@ -6,35 +6,25 @@ class Selector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cells: [],
-      event: null
+      cells: []
     };
-    let event;
-    if (this.props.loadedEvent != null) {
-      event = this.props.loadedEvent;
-    } else {
-      event = {
-        startTime: 9,
-        stopTime: 12,
-        days: [1, 0, 2, 1]
-      };
-    }
-    this.state.event = event;
 
-    const rows =
-      1 +
-      2 * (event.stopTime - event.startTime) +
-      (event.startTime % 1 === 0 ? 0 : 1);
-    const cols = event.days.length;
-    this.state.cells = new Array(rows)
-      .fill(false)
-      .map(() => new Array(cols).fill(false));
+    // const rows =
+    //   1 +
+    //   2 * (props.event.stopTime - props.event.startTime) +
+    //   (props.event.startTime % 1 === 0 ? 0 : 1);
+    // const cols = props.event.heading.length;
+    // this.state.cells = new Array(rows)
+    //   .fill(false)
+    //   .map(() => new Array(cols).fill(false));
+    this.state.cells = props.event.selectorCells;
+    console.log("done with constructor");
   }
 
   renderTableHeader() {
     return (
       <tr key="selectorHeader">
-        {this.state.event.days.map((heading, index) => {
+        {this.props.event.heading.map((heading, index) => {
           return (
             <td key={index} disabled>
               {heading}
@@ -48,8 +38,8 @@ class Selector extends React.Component {
   renderTableBody() {
     let times = [];
     for (
-      let i = this.state.event.startTime;
-      i < this.state.event.stopTime;
+      let i = this.props.event.startTime;
+      i < this.props.event.stopTime;
       i += 0.5
     ) {
       const ending = i < 13 ? "AM" : "PM";
@@ -62,13 +52,16 @@ class Selector extends React.Component {
     return times.map((time, index) => {
       return (
         <tr key={"selectorBody" + index}>
-          {this.state.event.days.map((heading, index) => {
-            const value = index === 0 ? time : "";
-            return (
-              <td key={index} disabled={index === 0}>
-                {value}
-              </td>
-            );
+          {this.props.event.heading.map((heading, index) => {
+            if (index === 0) {
+              return (
+                <td key={index} disabled={index === 0}>
+                  {time}
+                </td>
+              );
+            } else {
+              return <td key={index} disabled={index === 0}></td>;
+            }
           })}
         </tr>
       );

@@ -15,51 +15,55 @@ export default class Viewer extends React.Component {
       active_users: [],
       event: null
     };
-    let event;
-    if (this.props.loadedEvent != null) {
-      event = this.props.loadedEvent;
-    } else {
-      event = {
-        startTime: 9,
-        stopTime: 12,
-        days: [0, 0, 0],
-        cells: [],
-        users: [],
-        headings: ["", "Mon", "Tues"]
-      };
-    }
 
-    const rows =
-      1 +
-      2 * (event.stopTime - event.startTime) +
-      (event.startTime % 1 === 0 ? 0 : 1);
-    const cols = event.days.length;
-
-    event.cells = new Array(rows).fill("").map(() => new Array(cols).fill(""));
-
-    this.state.event = event;
-
-    this.state.free_count = new Array(rows)
-      .fill("")
-      .map(() => new Array(cols).fill(""));
+    const rows = this.props.event.viewerCells.length;
+    const cols = this.props.event.viewerCells[0].length;
+    const hasNew = typeof newCells !== "undefined";
+    const stridx = this.props.event.users.length - 1;
+    let free_count = new Array(rows).fill(0).map(() => new Array(cols).fill(0));
+    this.state.active_users = new Array(props.event.users.length).fill(true);
+    let min_count = 10000,
+      max_count = -10000;
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
-        const current_count = this.state.event.cells[i][j].count("1");
-        if (current_count < this.state.min_count) {
-          this.state.min_count = current_count;
+        if (hasNew) {
+          this.props.event.viewerCells[i][j] =
+            this.props.event.viewerCells[i][j].substring(0, stridx) +
+            (newCells[i][j] ? "1" : "0");
         }
-        this.state.max_count = Math.max(current_count, this.state.max_count);
-        this.state.free_count[i][j] = current_count;
+        const current_cell = this.props.event.viewerCells[i][j];
+        const current_count = 0;
+        for (let k = 0; k < current_cell.length; k++) {
+          if (current_cell[k] === "1" && this.state.active_users[k]) {
+            current_count += 1;
+          }
+        }
+        if (current_count < min_count) {
+          min_count = current_count;
+        }
+        if (current_count > max_count) {
+          max_count = current_count;
+        }
+        free_count[i][j] = current_count;
       }
     }
-    this.state.gradient_array = computeGradient(0, this.state.max_count);
+    if (max_count < 1) {
+      max_count = 1;
+    }
+    const gradient_array = computeGradient(0, max_count);
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
-        this.state.free_count[i][j] = this.state.gradient_array[
-          this.state.free_count[i][j]
-        ];
+        free_count[i][j] = gradient_array[free_count[i][j]];
       }
     }
+    // console.log(min_count, max_count);
+    // console.log(gradient_array);
+    // console.log(free_count);
+
+    this.state.free_count = free_count;
+    this.state.gradient_array = gradient_array;
+    this.state.min_count = min_count;
+    this.state.max_count = max_count;
   }
 
   componentDidMount = () => {
@@ -77,7 +81,7 @@ export default class Viewer extends React.Component {
   renderTableHeader() {
     return (
       <tr key="tableHeader">
-        {this.state.event.headings.map((heading, index) => {
+        {this.props.event.heading.map((heading, index) => {
           return (
             <td key={"viewheader" + index} disabled>
               {heading}
@@ -91,8 +95,8 @@ export default class Viewer extends React.Component {
   renderTableBody() {
     let times = [];
     for (
-      let i = this.state.event.startTime;
-      i < this.state.event.stopTime;
+      let i = this.props.event.startTime;
+      i < this.props.event.stopTime;
       i += 0.5
     ) {
       const ending = i < 13 ? "AM" : "PM";
@@ -105,7 +109,7 @@ export default class Viewer extends React.Component {
     return times.map((time, index) => {
       return (
         <tr key={"tbtr" + index}>
-          {this.state.event.headings.map((heading, index) => {
+          {this.props.event.heading.map((heading, index) => {
             const value = index === 0 ? time : "";
             return (
               <td key={"tablebody" + index} disabled={index === 0}>
@@ -132,11 +136,11 @@ export default class Viewer extends React.Component {
   };
 
   renderPeople() {
-    return this.state.event.users.map((user, index) => {
+    return this.props.event.users.map((user, index) => {
       const [i, j] = this.state.current_cell;
 
       let text_color =
-        this.state.event.cells[i][j][index] === "0"
+        this.props.event.viewerCells[i][j][index] === "0"
           ? "busy-user"
           : "available-user";
       if (!this.state.mouse_in) {
@@ -165,7 +169,7 @@ export default class Viewer extends React.Component {
     return (
       <div className="row">
         <div className="col-lg-4 text-right">
-          0/{this.state.event.users.length} Available
+          0/{this.props.event.users.length} Available
         </div>
         <div className="col-lg-4 text-center">
           <table className="availability-gradient">
@@ -195,7 +199,7 @@ export default class Viewer extends React.Component {
   render() {
     let current_value = 0;
     const [i, j] = this.state.current_cell;
-    const current_cell = this.state.event.cells[i][j];
+    const current_cell = this.props.event.viewerCells[i][j];
     for (let k = 0; k < current_cell.length; k++) {
       if (current_cell[k] === "1" && this.state.active_users[k]) {
         current_value += 1;
@@ -212,7 +216,6 @@ export default class Viewer extends React.Component {
         <div className="row">
           <div className="col-lg-3">
             <h2>Individual Availability</h2>
-            {/* <ul>{this.renderPeople()}</ul> */}
             {this.renderPeople()}
           </div>
           <div className="col-lg-9" id="table-view">
@@ -234,21 +237,21 @@ export default class Viewer extends React.Component {
   }
 
   updateGrid = newCells => {
-    const rows = this.state.event.cells.length;
-    const cols = this.state.event.cells[0].length;
+    const rows = this.props.event.viewerCells.length;
+    const cols = this.props.event.viewerCells[0].length;
     const hasNew = typeof newCells !== "undefined";
-    const stridx = this.state.event.users.length - 1;
+    const stridx = this.props.event.users.length - 1;
     let free_count = new Array(rows).fill(0).map(() => new Array(cols).fill(0));
     let min_count = 10000,
       max_count = -10000;
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
         if (hasNew) {
-          this.state.event.cells[i][j] =
-            this.state.event.cells[i][j].substring(0, stridx) +
+          this.props.event.viewerCells[i][j] =
+            this.props.event.viewerCells[i][j].substring(0, stridx) +
             (newCells[i][j] ? "1" : "0");
         }
-        const current_cell = this.state.event.cells[i][j];
+        const current_cell = this.props.event.viewerCells[i][j];
         const current_count = 0;
         for (let k = 0; k < current_cell.length; k++) {
           if (current_cell[k] === "1" && this.state.active_users[k]) {
@@ -264,44 +267,19 @@ export default class Viewer extends React.Component {
         free_count[i][j] = current_count;
       }
     }
-
+    if (max_count < 1) {
+      max_count = 1;
+    }
     const gradient_array = computeGradient(0, max_count);
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
         free_count[i][j] = gradient_array[free_count[i][j]];
       }
     }
-
+    // console.log(min_count, max_count);
+    // console.log(gradient_array);
+    // console.log(free_count);
     this.setState({ gradient_array, free_count, min_count, max_count });
-    // const rows = this.state.event.cells.length;
-    // const cols = this.state.event.cells[0].length;
-    // const k = this.state.event.users.length - 1;
-    // let fCount = new Array(rows).fill(0).map(() => new Array(cols).fill(0));
-    // this.setState({ min_count: 10000, max_count: -10000 });
-    // for (let i = 0; i < rows; i++) {
-    //   for (let j = 0; j < cols; j++) {
-    //     this.state.event.cells[i][j] =
-    //       this.state.event.cells[i][j].substring(0, k) + (newCells[i][j] ? "1" : "0");
-    //     const current_count = this.state.event.cells[i][j].count("1");
-    //     if (current_count < this.state.min_count) {
-    //       this.setState({ min_count: current_count });
-    //     }
-    //     if (current_count > this.state.max_count) {
-    //       this.setState({ max_count: current_count });
-    //     }
-    //     // console.log("current count " + current_count);
-    //     fCount[i][j] = current_count;
-    //   }
-    // }
-
-    // const gradient_array = computeGradient(0, this.state.max_count);
-    // for (let i = 0; i < rows; i++) {
-    //   for (let j = 0; j < cols; j++) {
-    //     fCount[i][j] = gradient_array[fCount[i][j]];
-    //   }
-    // }
-
-    // this.setState({ gradient_array: gradient_array, free_count: fCount });
   };
 
   handleChange = (row, col) =>

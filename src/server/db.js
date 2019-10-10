@@ -30,10 +30,10 @@ export const passwordSchema = new mongoose.Schema({
 });
 
 export const eventSchema = new mongoose.Schema({
-    name: String,
+    title: String,
     days: Array,
-    start: String,
-    stop: String,
+    startTime: String,
+    stopTime: String,
     availabilities: Object
 });
 

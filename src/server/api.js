@@ -64,7 +64,7 @@ const api = db => {
         res.redirect("/");
     });
 
-    router.post('/user/update', ensureLoggedIn, async (req, res, next) => {
+    router.post('/user/update', ensureLoggedIn('/login'), async (req, res, next) => {
         const {
             user,
             body
@@ -114,12 +114,14 @@ const api = db => {
             stopTime,
             days,
             availabilities: {}
+        }, {
+            minimize: false
         });
 
         await newEvent.save();
         res.redirect(`/event/${newEvent._id}`);
     })
-    router.get('/event/:eventId', ensureLoggedIn, async (req, res) => {
+    router.get('/event/:eventId', ensureLoggedIn('/login'), async (req, res) => {
         const {
             user,
             params
@@ -127,11 +129,16 @@ const api = db => {
         const {
             eventId
         } = params;
-
-        const event = await Event.findById(eventId);
-        event.currentUser = user._id;
+        console.log("GETTING EVENT")
+        let event = await Event.findById(eventId);
         if (event) {
-            res.json(event);
+            let eventMerged = {
+                ...event._doc,
+                currentUserId: String(user._id),
+                currentUserName: user.name
+            }
+            console.log(eventMerged)
+            res.json(eventMerged);
         } else {
             res.status(404).json({
                 message: "Event not found."
@@ -139,7 +146,7 @@ const api = db => {
         }
     })
 
-    router.post('/event/:eventId/update', ensureLoggedIn, async (req, res) => {
+    router.post('/event/:eventId/update', ensureLoggedIn('/login'), async (req, res) => {
         const {
             user,
             body,
@@ -148,10 +155,23 @@ const api = db => {
         const {
             userAvailability
         } = body;
-
+        // console.log('attempting to update', userAvailability)
+        // console.log('for event id', params.eventId)
+        // console.log('for user', user)
         const event = await Event.findById(params.eventId);
-        event.availabilities[user._id] = userAvailability;
-        await event.save();
+        // console.log('found event', event)
+        event.availabilities[user._id] = {
+            name: user.name,
+            userAvailability
+        };
+        // console.log('updated event', event)
+        // await event.save();
+        await Event.updateOne({
+            _id: params.eventId
+        }, event, {
+            upsert: true
+        })
+        // console.log('saved event')
     })
 
 

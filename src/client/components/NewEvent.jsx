@@ -97,7 +97,7 @@ export default class NewEvent extends React.Component {
               }}
               onSubmit={async (values, { setSubmitting }) => {
                 console.log("calling create");
-                values.days = this.state.cells;
+                values.days = this.state.cells[1];
                 console.log(values);
                 await request("POST", "/api/event/create", values);
                 setSubmitting(false);

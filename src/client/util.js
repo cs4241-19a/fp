@@ -1,6 +1,7 @@
 export const request = async (method, endpoint, json = {}) => {
     const res = await fetch(endpoint, {
         method,
+        credentials: "same-origin",
         headers: {
             "Content-Type": "application/json"
         },
