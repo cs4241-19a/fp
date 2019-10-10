@@ -2,6 +2,8 @@
 
 [Try it now!](https://jcharante.com/your-final-grade)
 
+![qr-code-200](https://user-images.githubusercontent.com/13973198/66542565-eb329980-eb00-11e9-9984-0c6c51c5b9f6.png)
+
 ## The Team
 **Yicheng Yang** <yyang17@wpi.edu>
 
