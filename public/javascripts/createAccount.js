@@ -1,4 +1,5 @@
-import { createdAccount, setTrue } from './global.js'
+//import { setTrue } from './global.js'
+var global = require('./global.js');
 
 const clearForm = function() {
     document.querySelector( '#username' ).value = ""
@@ -25,7 +26,7 @@ const newAccount = function() {
       headers: {'Content-Type':'application/json'}
     }).then(function ( response ) {
         console.log( response );
-        setTrue();
+        global.setTrue();
         //if (createdAccount) {
           //console.log("idk man");
         //}
