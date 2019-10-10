@@ -1,15 +1,23 @@
 footer {
     z-index: 1000;
-    position: absolute;
-    display: flex;
-    bottom: 0;
-    justify-content: center;
+  position: fixed;
+  overflow: visible;
+  bottom: 0;
+  width: 100%;
+  justify-content: center;
     flex-wrap: wrap;
     text-align: center;
-    width: 100%;
 }
 .DATABASE_BUTTONS {
     flex-basis: 100%;
+}
+
+select{
+  overflow: visible;
+}
+
+option{
+  display: visible;
 }
 
 #login {
@@ -20,6 +28,7 @@ footer {
   text-align: center;
   flex-direction: column;
 }
+
 
 [type="text"],
 textarea {

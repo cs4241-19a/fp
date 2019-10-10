@@ -137,7 +137,7 @@ PS.init = function(system, options) {
 
   PS.statusText("Shitty Garageband");
   
-  loadSongs()
+  //loadSongs()
 };
 
 PS.touch = function(x, y, data, options) {
