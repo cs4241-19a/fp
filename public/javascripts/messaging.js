@@ -113,7 +113,7 @@ function makeToTextBubble(str) {
   let container = document.createElement("div");
   let bubble = document.createElement("div");
   let pad = document.createElement("div");
-  container.style = "display:block; margin:5px; height:10%";
+  container.style = "display:block; margin:5px;";
   pad.style = "width:35%";
   bubble.innerHTML = str;
   bubble.style =
@@ -127,7 +127,7 @@ function makeFromTextBubble(str) {
   let container = document.createElement("div");
   let bubble = document.createElement("div");
   let pad = document.createElement("div");
-  container.style = "display:block; margin:5px; height:10%";
+  container.style = "display:block; margin:5px;";
   pad.style = "width:35%";
   bubble.innerHTML = str;
   bubble.style =
