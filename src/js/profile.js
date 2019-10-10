@@ -12,28 +12,35 @@ let gui = new dat.GUI;
 
 let currColor = 0
 
-const blue = function () {
-    currColor = 0
-}
-
-const green = function () {
-    currColor = 1
-}
-
-const pink = function () {
-    currColor = 2
-}
-
-const red = function () {
-    currColor = 3
-}
-
 const changeParam = new function () {
     this.barHeight = 1
     this.barWidth = 4
     this.barFit = 2
     this.canvasClr = '#000000'
 }()
+
+const colorChange = function(e) {
+    e.preventDefault();
+
+    console.log('paper has been clicked');
+
+    let color = document.getElementById("colorTest").value;
+
+    switch (color) {
+        case 'Blue - Green':
+            currColor = 0;
+            break;
+        case 'Green - Red':
+            currColor = 1;
+            break;
+        case 'Pink - Green':
+            currColor = 2;
+            break;
+        case 'Red - Green':
+            currColor = 3;
+            break;
+    }
+}
 
 const songChange = function(e) {
     e.preventDefault();
@@ -109,6 +116,7 @@ window.onload = function () {
     document.getElementById("updatePassBtn").onclick = updatePass
     document.getElementById("shareBtn").onclick = home
     document.getElementById("songTest").onchange = songChange
+    document.getElementById("colorTest").onchange = colorChange
 
     gui.add(changeParam, 'barHeight', 0, 3).name('Bar Height')
     gui.add(changeParam, 'barWidth', 0, 6).name('Bar Width')
