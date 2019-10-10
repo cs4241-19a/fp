@@ -14,6 +14,7 @@ const gamePlayState = new Phaser.Class({
         const scene = this;
         console.log(scene);
         scene.menuSelection = null;  // set to {type, add} when has a value of types cellTypes, function
+        this.pause = false;
 
         this.score = 0;
         this.money = 400;
@@ -91,10 +92,22 @@ const gamePlayState = new Phaser.Class({
         uiContainer.add(this.waveText);
         uiContainer.add(this.livesText);
 
+        scene.pauseKey = scene.input.keyboard.addKey("P");
+        scene.prevPauseDown = false;
+
     },
 
     update: function() {
         const scene = this;
+        if (scene.pauseKey.isDown) {
+            scene.prevPauseDown = true;
+        }
+        if (scene.pauseKey.isUp && scene.prevPauseDown) {
+            scene.pause = !scene.pause;
+            scene.prevPauseDown = false;
+        }
+
+        if (scene.pause) return;
         // console.log(scene.enemies);
         if (scene.enemies.length === 0) {
             waveSpacingDur = this.spacingChoices[Math.floor(Math.random() * this.spacingChoices.length + (this.waveIdx / 5)) % this.spacingChoices.length];
