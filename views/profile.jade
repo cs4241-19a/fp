@@ -1,11 +1,13 @@
 extends layout 
 
 block content
+    script(src="/javascripts/profile.js")
     #profile
         hi Welcome #{user}
-        p(id='leaderBoard')
+        p(id='hsMessage') Your Highest Score is: 
+        p(id='highscore')
         p(id='stats')
         form(action="/game" method="get")
             button(type="submit" id="play") Play!
-        form(action="/users" method="get")
-            button(type="submit" id="play") User test
+        p(id='leaderBoard')
+        

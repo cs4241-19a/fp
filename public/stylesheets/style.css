@@ -6,9 +6,14 @@ body {
   background-size: cover;
 }
 
+#leaderBoard{
+  color: #095588;
+  font-family: 'Press Start 2P', cursive;
+}
+
 #profile{
   background-color:rgb(223, 222, 222);
-  width: 300px;
+  width: 500px;
   border: 15px solid #053c61;
   padding: 50px;
   margin: 10px;
@@ -21,6 +26,23 @@ body {
   font-weight: bold;
 }
 
+#highscore{
+
+  font-size: 25px;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter";
+ 
+  color: #056114;
+  font-weight: bold;
+}
+
+#hsMessage{
+  
+  font-size: 25px;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter";
+ 
+  color: #053c61;
+  font-weight: bold;
+}
 
 
 #content{
