@@ -28,27 +28,35 @@ export default function FeedContainer(props) {
     //     return list
     // }
 
-    const [items, setItems] = useState( () => {
-        let list = []
+    const [data, setData] = useState( { items: [] });
 
-        fetch( '/feed')
-            .then( function( response ) {
-                return response.json();
-            }).then(function (response) {
-            window.localStorage;
-            let userN = localStorage.getItem('currUser');
-            console.log(userN)
-            for(let i = 0; i < response.length; i++) {
-                if(response[i].user === userN) {
-                    list.push(response[i])
+    useEffect(() => {
+        
+        async function getItems() {
+
+            console.log('abc')
+            let list = []
+
+            await fetch( '/feed')
+                .then( function( response ) {
+                    return response.json();
+                }).then(function (response) {
+                window.localStorage;
+                let userN = localStorage.getItem('currUser');
+                console.log(userN)
+                for(let i = 0; i < response.length; i++) {
+                    if(response[i].user === userN) {
+                        list.push(response[i])
+                    }
                 }
-            }
-        })
-
-        return list
+            })
+            console.log(list)
+            setData(list);
+        }
+        // getItems()
     })
 
-    console.log(items)
+    // console.log(data)
 
 
     // useEffect( () => {
@@ -86,7 +94,7 @@ export default function FeedContainer(props) {
 
 
 
-            {items.map(item => {
+            {/*{data.map(item => {
                 return (
                     <div key={item.title + item.user}>
                         <FeedItem
@@ -96,7 +104,7 @@ export default function FeedContainer(props) {
                         />
                     </div>
                 )
-            })}
+            })}*/}
         </Grid>
     )
 
