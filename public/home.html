@@ -13,9 +13,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css" rel="stylesheet">
     <script src="https://sdk.scdn.co/spotify-player.js"></script>
     <script
-            src="https://code.jquery.com/jquery-3.4.1.js"
+            crossorigin="anonymous"
             integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-            crossorigin="anonymous"></script>
+            src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <link href="stylesheets/style.css" rel="stylesheet">
@@ -38,10 +38,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
-                    </li>
+                <ul class="nav navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="/logout" id="logoutLink">Log out<span class="sr-only">(current)</span></a>
                     </li>
@@ -51,12 +48,19 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-sm-4 col-xs-12 side-container mb-2">
-                    <form class="form-inline my-2 my-lg-0 leftJustify">
-                        <input aria-label="Search" class="form-control mb-2 mt-lg-2 float-left col-12 songInput" id="songName"
-                               placeholder="Search for a Song" type="search">
-                        <button class="btn btn-outline-danger my-2 my-sm-0 mb-lg-2 searchButton" id="songSearch" type="button">
-                            Search
-                        </button>
+
+                    <form class="form-inline my-2 my-lg-0 leftJustify col-12">
+                        <div class="input-group mt-2 mb-2 col-12">
+                            <input aria-label="Search" class="form-control  float-left col-12 songInput"
+                                   id="songName"
+                                   placeholder="Search for a Song" type="search">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-danger  searchButton" id="songSearch"
+                                        type="button">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
                     </form>
                     <div class="table-wrapper-scroll-y my-custom-scrollbar results-table">
                         <table class="table table-dark" id="scrollable-table">
@@ -64,25 +68,27 @@
                             </tbody>
                         </table>
                     </div>
-                    <textarea class="form-control" id="exampleFormControlTextarea2"
+                    <label class="invisible" for="caption-text-area"></label>
+                    <textarea class="form-control"
+                              id="caption-text-area"
                               placeholder="Write a note about the song here"
-                              rows="3"></textarea>
+                              rows="1"></textarea>
                     <div class="star-rating">
                         <div class="rate">
-                            <input type="radio" id="star5" name="rate" value="5"/>
+                            <input id="star5" name="rate" type="radio" value="5"/>
                             <label for="star5" title="5">5 stars</label>
-                            <input type="radio" id="star4" name="rate" value="4"/>
+                            <input id="star4" name="rate" type="radio" value="4"/>
                             <label for="star4" title="4">4 stars</label>
-                            <input type="radio" id="star3" name="rate" value="3"/>
+                            <input id="star3" name="rate" type="radio" value="3"/>
                             <label for="star3" title="3">3 stars</label>
-                            <input type="radio" id="star2" name="rate" value="2"/>
+                            <input id="star2" name="rate" type="radio" value="2"/>
                             <label for="star2" title="2">2 stars</label>
-                            <input type="radio" id="star1" name="rate" value="1"/>
+                            <input id="star1" name="rate" type="radio" value="1"/>
                             <label for="star1" title="1">1 star</label>
                         </div>
                     </div>
                     <div class="post">
-                        <button class="btn btn-danger recommendationButton" type="button" id="add-rec-btn">Make
+                        <button class="btn btn-danger recommendationButton" id="add-rec-btn" type="button">Make
                             Recomendation
                         </button>
                     </div>
@@ -90,17 +96,18 @@
 
                 <div class="col-md-8 col-sm-8 col-xs-12">
                     <nav class="navbar navbar-expand-lg navbar-light bg-light player-header">
-                        <img class="float-left" alt="image of song cover" id="current-track"
+                        <img alt="image of song cover" class="float-left" id="current-track"
                              src="images/songnotfound.png"/>
                         <h5 class="card-title col-4" id="current-track-name">Song Name, Artist, Album</h5>
                         <h5 class="card-title col-4" id="current-track-artist"></h5>
                         <div class="nav-right row col-2">
-                            <input type="image" src="images/pause.png" id="play-pause-button-player" name="play button"
-                                   onclick="togglePlayPause()"/>
+                            <input alt="Play/Pause Button" id="play-pause-button-player" name="play button"
+                                   onclick="togglePlayPause()"
+                                   src="images/pause.png" type="image"/>
                         </div>
                     </nav>
                     <div class="card">
-                        <div id="recommendation-list" class="overflow-auto recommendations-container"></div>
+                        <div class="overflow-auto recommendations-container" id="recommendation-list"></div>
                     </div>
                 </div>
             </div>

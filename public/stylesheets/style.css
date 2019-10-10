@@ -50,7 +50,7 @@ label {
 
 .post {
     text-align: center;
-    margin: 2em;
+    margin: 0;
 }
 
 img {
@@ -81,6 +81,10 @@ img {
     overflow: auto;
 }
 
+table {
+    max-height: 20%;
+}
+
 .table-wrapper-scroll-y {
     display: block;
 }
@@ -94,8 +98,6 @@ img {
     width: 20%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
     border-radius: 50%;
 }
 
@@ -104,7 +106,6 @@ img {
 }
 
 .leftJustify {
-    /*float: left;*/
     text-align: center;
 }
 
@@ -113,7 +114,6 @@ img {
     float: left;
     margin-bottom: 1em;
 }
-
 
 .id-data {
     visibility: hidden;
@@ -149,14 +149,12 @@ img {
 }
 
 .rate > input:checked ~ label {
-    /*color: #ffc700;*/
     color: #6a3075;
 }
 
 .rate:not(:checked) > label:hover,
 .rate:not(:checked) > label:hover ~ label {
     color: #5a2963;
-    /*color: #deb217;*/
 }
 
 .rate > input:checked + label:hover,
@@ -165,7 +163,6 @@ img {
 .rate > input:checked ~ label:hover ~ label,
 .rate > label:hover ~ input:checked ~ label {
     color: #492151;
-    /*color: #c59b08;*/
 }
 
 .invisible {
@@ -174,7 +171,7 @@ img {
 
 .player-header {
     position: sticky;
-    top: 0px;
+    top: 0;
 }
 
 .recommendations-container {
@@ -197,7 +194,8 @@ img {
     width: 30px;
     color: rgba(0, 0, 0, 0.87) !important;
 }
-.background{
+
+.background {
     position: absolute;
     width: 1000px;
     height: 1000px;
@@ -206,10 +204,11 @@ img {
     z-index: -100;
 }
 
-.content{
+.content {
     position: relative;
     z-index: 100;
 }
+
 .nav-right {
     float: right;
 }
@@ -255,4 +254,3 @@ table::-webkit-scrollbar-thumb {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
     background-color: #555;
 }
-
