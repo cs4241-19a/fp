@@ -2,7 +2,12 @@ body {
     padding: 25px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     background-color: rgba(0, 0, 0, 0.87) !important;
-    overflow: hidden;
+}
+
+@media (min-width: 1200px) {
+    body {
+        overflow: hidden;
+    }
 }
 
 nav {
@@ -197,7 +202,19 @@ img {
     color: rgba(0, 0, 0, 0.87) !important;
     float: right;
 }
+.background{
+    position: absolute;
+    width: 1000px;
+    height: 1000px;
+    top: 0;
+    left: 0;
+    z-index: -100;
+}
 
+.content{
+    position: relative;
+    z-index: 100;
+}
 .nav-right {
     float: right;
 }

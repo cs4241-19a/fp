@@ -9,10 +9,14 @@ const scopes = [
 let _token
 let player
 let playerData
+let currentTrackID = "3n3Ppam7vgaVa1iaRUc9Lp"
+let currentlyPlaying = true
+let interval
+
 
 window.onSpotifyPlayerAPIReady = () => {
     console.log("player API is ready")
-    createPlayerForSong("3n3Ppam7vgaVa1iaRUc9Lp")
+    createPlayerForSong(currentTrackID)
 }
 
 function createPlayerForSong(track) {
@@ -77,8 +81,6 @@ function createPlayerForSong(track) {
     )
 }
 
-let interval
-
 function turningRecord(turn) {
     let counter = 0
     if (turn) {
@@ -98,11 +100,15 @@ function turningRecord(turn) {
     }
 }
 
-let currentlyPlaying = true
 turningRecord(currentlyPlaying)
 
 function togglePlayPause() {
     currentlyPlaying = !currentlyPlaying
+    if(!currentlyPlaying){
+        $("canvas").remove()
+    }else{
+        trackInfo()
+    }
     console.log("currentlyplaying is " + currentlyPlaying)
     turningRecord(currentlyPlaying)
     player.togglePlay()
@@ -123,12 +129,29 @@ function playSomeTrackID(track) {
         playPauseButton.setAttribute('src', "images/pause.png");
     }
 
+    updateCurrentTrack(track)
     player.disconnect()
     console.log("player disconnected")
-    console.log("trying to play " + track)
-    createPlayerForSong(track)
+    console.log("trying to play " + currentTrackID)
+    createPlayerForSong(currentTrackID)
     if (!currentlyPlaying) {
         currentlyPlaying = true
         turningRecord(currentlyPlaying)
     }
+}
+
+function updateCurrentTrack(track) {
+    $("canvas").remove()
+    currentTrackID = track
+    const json = {track: currentTrackID}
+    fetch('/currentTrack', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(json)
+    })
+    clearTimeout(timeout)
+    trackInfo()
 }
