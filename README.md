@@ -3,18 +3,13 @@
 Our project: https://fp-ekirschner-agarza.glitch.me/
 
 ### Our Team 
-Elizabeth Kirschner 
-Alejandra Garza
-
-3. An outline of the technologies you used and how you used them.
-4. What challenges you faced in completing the project.
-5. What each group member was responsible for designing / developing.
+Elizabeth Kirschner and Alejandra Garza
 
 ## Decription
 
-Since we are bot CS and IMGD double majors, we wanted to make a game that will serve as a portfolio piece using the mini-game engine Perlenspiel, which was by WPI's very own Professor Brian Moriarty: https://perlenspiel.net/
+Since we are bot CS and IMGD double majors, we wanted to make a game that will serve as a portfolio piece using the mini-game engine Perlenspiel, which was created by WPI's very own Professor Brian Moriarty: https://perlenspiel.net/
 
-Our original goal was to created our ownversion of the Impossible Game: 
+Our original goal was to created our own version of the Impossible Game: 
 
 ![alt text](https://github.com/elizabethkirschner/fp/blob/master/screenshots/impossible_game.gif)
 
@@ -24,7 +19,7 @@ However, as we began implementing our idea, we realized that our game was more s
 
 ![alt text](https://github.com/elizabethkirschner/fp/blob/master/screenshots/dinosaur_game.gif)
 
-***Our Game (as your score increases, so does the speed of the obstacles!)
+***Our Game ( as your score increases, so does the speed of the obstacles!)
 
 ![alt text](https://github.com/elizabethkirschner/fp/blob/master/screenshots/our_game.gif)
 
@@ -42,9 +37,9 @@ However, in case anything goes wrong, you can use this account:
 
 ## Technologies Used 
 For the server side of the project, we used the following technologies: 
-- **lowdb**: used to maintain users information including username and password, user scores of every game scoring more than 0 points and a user high score, updated every time the user achieves a new highschore.
-- **passport local**: for authentication 
-- **express**: used for the server framework
+- **lowdb** used to maintain users information including username and password, user scores of every game scoring more than 0 points and a user high score, updated every time the user achieves a new highschore.
+- **passport local**  used for authentication 
+- **express** used for the server framework
 
 In the front-end side, we used the following resources: 
 - **Font**: https://fonts.google.com/specimen/Press+Start+2P?selection.family=Press+Start+2P
@@ -55,7 +50,7 @@ And of course, we used Perlenspiel for our game: https://perlenspiel.net/
 
 ## Challenges
 ### Back-End
-One of the biggest challenges in the server-side was definitely working with Passport, since it is a little strict and can cause a lot of problems if things are not done a specific way.
+One of the biggest challenges in the server-side was definitely working with Passport, since it as hard to configure unless used with very specific front end forms.
 
 ### Front-End
 In the front-end side, we wanted to challenge ourselves to create a "good-looking" website without using any CSS Framework, and we think we were very successful!
@@ -74,4 +69,4 @@ For the game, Alejandra implemented the scoring feature, helped with jumping, pl
 
 ## Conclusion
 This was definitely a fun challenge for both of us! Since one of us enjoys back-end programming and the other front-end programming, we decided to work together in a project that would allows us to push ourselves in the areas we enjoyed.
-While we would have enjoyed adding more to our game (we had a lot of goals, such as different types of obsticles,"stair" mechanic, and sound), we decided it was best to focus on the project's overall functionality and are really proud of how it turned out!
+While we would have liked to add more to our game (we had a lot of goals, such as different types of obsticles,"stair" mechanic, and sound), we decided it was best to focus on the project's overall functionality and we are really proud of how it turned out!
