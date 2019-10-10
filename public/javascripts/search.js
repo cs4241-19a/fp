@@ -1,18 +1,10 @@
+const capitalize = (s) => {
+  if (typeof s !== 'string') return ''
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
 function query() {
   document.getElementById("results").innerHTML = "";
-  
-  let tdNode = document.createElement("th");
-  let tdNode2 = document.createElement("th");
-  let tdNode3 = document.createElement("th");
-  let trNode = document.createElement("tr");
-  tdNode.innerHTML = "Book";
-  tdNode2.innerHTML= "CRN";
-  tdNode3.innerHTML = "Location";
-  trNode.appendChild(tdNode);
-  trNode.appendChild(tdNode2);
-  trNode.appendChild(tdNode3);
-  document.getElementById("results").appendChild(trNode);
-
   let str = document.querySelector("#search").value;
   fetch("api/books/getBooks", {
     headers: {
@@ -22,7 +14,7 @@ function query() {
   }).then(function(res) {
     res.json().then(function(ret) {
       for (let i = 0; i < ret.length; i++) {
-        if (ret[i].name.includes(str)) {
+        if (ret[i].name.includes(str) || ret[i].name.includes(capitalize(str))) {
           let tdNode = document.createElement("td");
           let tdNode2 = document.createElement("td");
           let tdNode3 = document.createElement("td");
