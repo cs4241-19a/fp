@@ -2,6 +2,9 @@
 <p>
 Made by: <strong>Javier Marcos, Rafael Pimentel, Daniel Caffrey and Paris Lopez</strong>
 </p>
+<p>
+  <em>https://cs4241final.glitch.me/</em>
+</p>
 
 <p>
 This is an application that allows a user to become the host of a room. Attendants who join this room can then anonymously 
