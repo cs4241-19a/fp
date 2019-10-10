@@ -15,31 +15,51 @@ class TaskCardEntry extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			show: false,
+		}
+		this.updated = {
 			taskTitle: "",
 			dueDate: new Date(),
 			priority: 0,
 			description: "",
-			show: false
 		};
     }
 	
 	// handle the date day changing (seperate from the rest of the data changing
 	handleDateChange = date => {
-		this.setState({
-		  dueDate: date
-		});
+		this.updated.dueDate = moment(date).format("MM-DD-YYYY")
 	};
   
 	
   
     // default data updating
-    handleChange = event => {
-		this.setState({
-		  [event.target.id]: event.target.value
-		});
-		console.log(event.target.value);
+	handleChange = (id, event) => {
+		if (id === 'title'){
+			this.updated.title = event.target.value;
+		}
+		if (id === 'description'){
+			this.updated.description = event.target.value;
+		}
+		if (id === 'priority'){
+			let text = "";
+			switch(event.target.value){
+				case "0":
+					text = 'Low';
+					break;
+				case "1":
+					text = 'Medium';
+					break;
+				case "2":
+					text = 'High';
+					break;
+				default:
+					text = 'Medium';
+					break;
+			}
+			this.updated.priority_text = text;
+		}
 	}
-  
+
 	// on submit click
    handleSubmit = event => {
 		event.preventDefault();
@@ -51,10 +71,10 @@ class TaskCardEntry extends React.Component {
 			"method": "POST",
 			"body": JSON.stringify(
 			{
-				"title": this.state.taskTitle,
-				"dueDate": this.state.dueDate,
-				"priority": this.state.priority,
-				"description": this.state.description,
+				"title": this.updated.taskTitle,
+				"dueDate": this.updated.dueDate,
+				"priority": this.updated.priority,
+				"description": this.updated.description,
 				"completed": false,
 				"uhoh": false,
 				"doLater": false,
@@ -90,8 +110,7 @@ class TaskCardEntry extends React.Component {
 									autoFocus
 									type="text"
 									placeholder="Input Task Title"
-									value={this.state.taskTitle}
-									onChange={this.handleChange}
+									onChange={(e) => this.handleChange("title", e)}
 								/>
 							</Form.Group>
 						</Form>
@@ -102,7 +121,7 @@ class TaskCardEntry extends React.Component {
 				   </Card.Header>
 				  <Card.Body>
 					<Form>						
-						<div className = "mb-3 text-center" onChange={this.handleChange}>
+						<div className = "mb-3 text-center" onChange={(e) => this.handleChange("piority", e)}>
 							<input type="radio" value='0' name="priority" style={{ margin: '5px' }}/> Low
 							<input type="radio" value='1' name="priority" style={{ margin: '5px' }}/> Medium
 							<input type="radio" value='2' name="priority" style={{ margin: '5px' }}/> High
@@ -114,8 +133,8 @@ class TaskCardEntry extends React.Component {
 								as="textarea"
 								rows="4"
 								autoFocus
-								value={this.state.description}
-								onChange={this.handleChange}
+								placeholder="Type a description for your task."
+								onChange={(e) => this.handleChange("description", e)}
 								/>
 						</Form.Group>
 					</Form>

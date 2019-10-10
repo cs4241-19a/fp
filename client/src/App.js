@@ -14,26 +14,41 @@ class App extends React.Component{
     this.state = {
       task_head : 0,
       tasks: [
-        {title: "hi", z: 3, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333", hidden: false},
-        {title: "hola", z: 2, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333", hidden: false},
-        {title: "ohio", z: 1, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333", hidden: false},
-        {title: "yo", z: 0, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333", hidden: false},
-        {title: "yooooooo", z: -1, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333", hidden: true},
+        {title: "hi", z: 3, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333", hidden: false, id: 0},
+        {title: "hola", z: 2, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333", hidden: false, id: 1},
+        {title: "ohio", z: 1, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333", hidden: false, id: 2},
+        {title: "yo", z: 0, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333", hidden: false, id: 3},
+        {title: "yooooooo", z: -1, description: "Take your time back.", priority_text: "Medium", date: "11-22-3333", hidden: true, id:4},
       ],
     }
   }
 
-  handleClick(){
-    // Testing, we are just going to shuffle the front to the back
-    let tasks = this.state.tasks.slice();
-    let task_head = this.state.task_head;
-    task_head += 1;
-    task_head %= 4;
-    tasks.forEach(task => {
-      task.z += 1;
-      task.z %= 4;
+  fetchTasks(){
+    fetch("/gettasks",{
+      method: "POST",
+    }).then(res => {
+      let cards = res.json();
+      for(let i=0; i<cards.length; i++){
+        cards[i].z = -1;
+        cards[i].hidden = true;
+        if(i<4){
+          cards[i].z = 3-i;
+          cards[i].hidden = false;
+        }
+
+        let text = "";
+        if(cards[i] == '0'){
+          text = "Low"
+        }else if (cards[i] == '1'){
+          text = "Medium"
+        }else{
+          text = "High"
+        }
+        cards[i].priority_text = text;
+        cards[i].date = cards[i].dueDate;
+      }
+      this.setState({tasks: cards})
     });
-    this.setState({tasks: tasks, task_index: task_head});
   }
 
   removeTopTask(){
@@ -56,27 +71,59 @@ class App extends React.Component{
     this.setState({tasks: tasks, task_head: task_head});
   }
 
+  updateFrontCard(data){
+    let tasks = this.state.tasks.slice();
+    data.z = 3;
+    data.hidden = false;
+    tasks[this.state.task_head] = data;
+    this.setState({tasks : tasks});
+  }
+
   /**
    * Do different things based on the button that has been clicked
-   * @param {Int} button_code 0 done 1 Do Later(not implemented) 2 More Time 3 Edit 4 Delete
+   * @param {Int} button_code 0 done 1 Do Later(not implemented) 2 More Time (not implemented) 3 Edit 4 Delete
    * @param {Object} data additional data to be used
    */
   handleButton(button_code, data=null){
     switch(button_code){
       case 0:
         this.removeTopTask();
+        fetch("/edittask", {
+          method: "POST",
+          body: JSON.stringify({
+            id: data,
+            completed: true,
+          }),
+          headers: {"Content-Type": "application/json"},
+        })
         break;
       case 1:
         break;
       case 2:
         break;
       case 3:
+        fetch("/edittask", {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {"Content-Type": "application/json"}
+        })
+        .then(console.log);
+        this.updateFrontCard(data);
         break;
       case 4:
+        this.removeTopTask();
+        fetch("/detetask", {
+          method: "POST",
+          body: JSON.stringify({
+            id: data,
+          }),
+          headers: {"Content-Type": "application/json"},
+        })
         break;
       default:
         break;
     }
+    this.fetchTasks();
   }
 
   renderTaskCard(num){

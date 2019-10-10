@@ -20,19 +20,43 @@ class TaskCard extends React.Component {
 		
 		this.updated = {
 			title: "",
-			date: new Date(),
+			date: new moment().format('MM-DD-YYYY'),
 			priority_text: 'Low',
 			description: "",
+			id: this.props.data.id,
 		};
     }
 	
 	
-	handleChange = event => {
-		this.updated.event.target.id = event.target.value;
+	handleChange = (id, event) => {
+		if (id === 'title'){
+			this.updated.title = event.target.value;
+		}
+		if (id === 'description'){
+			this.updated.description = event.target.value;
+		}
+		if (id === 'priority'){
+			let text = "";
+			switch(event.target.value){
+				case "0":
+					text = 'Low';
+					break;
+				case "1":
+					text = 'Medium';
+					break;
+				case "2":
+					text = 'High';
+					break;
+				default:
+					text = 'Medium';
+					break;
+			}
+			this.updated.priority_text = text;
+		}
 	}
 	
 	handleDateChange = event => {
-		this.updated.date = event.target.value;
+		this.updated.date = moment(event.target.value).format("MM-DD-YYYY");
 	}
   
 	handleSubmit = event => {
@@ -126,9 +150,8 @@ class TaskCard extends React.Component {
 										<Form.Control 
 											autoFocus
 											type="text"
-											placeholder="Input Task Title"
-											value= {this.props.data.title}
-											onChange={this.handleChange}
+											placeholder={this.props.data.title}
+											onChange={event => this.handleChange("title", event)}
 										/>
 									</Form.Group>
 								</Form>
@@ -139,7 +162,7 @@ class TaskCard extends React.Component {
 						   </Card.Header>
 						  <Card.Body>
 							<Form>						
-								<div className = "mb-3 text-center" onChange={this.handleChange}>
+								<div className = "mb-3 text-center" onChange={(e) => this.handleChange('priority', e)}>
 									<input type="radio" value='0' name="priority" style={{ margin: '5px' }}/> Low
 									<input type="radio" value='1' name="priority" style={{ margin: '5px' }}/> Medium
 									<input type="radio" value='2' name="priority" style={{ margin: '5px' }}/> High
@@ -151,13 +174,13 @@ class TaskCard extends React.Component {
 										as="textarea"
 										rows="4"
 										autoFocus
-										value={this.props.data.description}
-										onChange={this.handleChange}
+										placeholder={this.props.data.description}
+										onChange={(e) => this.handleChange("description", e)}
 										/>
 								</Form.Group>
 							</Form>
 							<ButtonToolbar>
-								<Button variant="outline-secondary" style={{ margin: '5px' }} type = "submit" onClick = {this.handleSubmit}> Add Task</Button>
+								<Button variant="outline-secondary" style={{ margin: '5px' }} type = "submit" onClick = {this.handleSubmit}> Confirm </Button>
 								<Button variant="outline-secondary" style={{ margin: '5px' }}onClick = {this.handleClose}>Cancel</Button>
 							</ButtonToolbar>
 						  </Card.Body>
