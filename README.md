@@ -3,7 +3,7 @@ Team Members: Randy Agudelo, René Borner, Caitlin Enright, Elie Hess
 
 ## 1. A brief description of what you created, and a link to the project itself.
 
-Glitch: https://cs4241-best-group-fp.glitch.me/ <br>
+Glitch: https://cs4241-best-group-fp-7.glitch.me/ <br>
 Youtube video: https://youtu.be/rDX6Nd-vVTE <br>
 
 We created a song recomendation sharing applications. Each user has their own account. When they sign in they see a feed of all song recomendations made. Song recomendations include the user who made it, the song name and artist, a comment about the song and a rating from 0-5 stars. Users can also add their on rating to the feed by used the bar on the left side of the page. They can search for any song on spotify using the seach bar and add their comment and rating. There is a song player at the top of the feed that allows the currently playing song to be paused or played. It also displays the album cover. When the song is playing there is a 3d vsualization in the background of the app that is in time with the current song. The album cover also spins like a record player. Any of the songs in the feed can be selected and then become the currently playing song. This allows users to hear the songs that they are reading recomentdations about.
