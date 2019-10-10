@@ -839,7 +839,8 @@ function playbackSound() {
         for (var i = 0; i < 8; i++) {
             if (variables.playbackIndicies[i] < variables.playbackLength[i]) {
                 if (variables.dataArray[i][variables.playbackIndicies[i]].timeVal === variables.currentPlaybackTime) {
-                    playAudio(variables.dataArray[i][variables.currentPlaybackIndex].noteVal)
+                  console.log(variables.dataArray[i][variables.currentPlaybackIndex].noteVal)  
+                  playAudio(variables.dataArray[i][variables.currentPlaybackIndex].noteVal)
                     //PS.audioPlay(PS.piano(variables.dataArray[i][variables.playbackIndicies[i]].noteVal, false));
                     variables.playbackIndicies[i]++;
                 }
@@ -1778,6 +1779,7 @@ function playAudio(data) {
 
 //LOAD SONG
 function loadTrack() {
+  variables.dataArray = document.getElementById("songDropdown").value
     //SAVE TRACK UNDER USERNAME
     //TRACK IS variables.dataArray
     console.log("LOADING TRACK");
@@ -1796,12 +1798,4 @@ function saveTrack() {
         console.log(variables.dataArray);
         //WRITE TO DB HERE
     })
-}
-
-//POPULATE DROPDOWN
-function populateDropdown() {
-    //DELETE ALL EXISTING OPTIONS
-    var select = document.getElementById("songDropdown").length = 0;
-    //THEN POPULATE FROM DATABASE
-    //SET TEXT TO USERNAME - TRACKNAME
 }

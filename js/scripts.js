@@ -31,8 +31,7 @@ function doLogin() {
   fetch("/login", {
     method: "POST",
     body,
-    headers: { "Content-Type": "application/json" },
-    
+    headers: { "Content-Type": "application/json" }
   }).then(function(res) {
     if (res.status === 200) {
       window.location = res.url;
@@ -82,28 +81,29 @@ function returnHome() {
   });
 }
 
-function loadSongs(){
+function loadSongs() {
   var select = document.getElementById("songDropdown");
-  select.innerHTML = ""
+  select.innerHTML = "";
   fetch("/allData", {
     method: "GET",
     headers: { "Content-Type": "application/json" }
-  }).then(function (ret){
-    return ret.json()
   })
-    .then(function(res) {
-    console.log(res.body())
-    var html = ""
-    res.forEach(function(single){
-      html = "<option value=\""
-      html += single.songdata
-      html += "\">"
-      html += single.songname
-      html += " by "
-      html += single.username
-      html += "</option>"
-      
+    .then(function(ret) {
+      return ret.json();
     })
-    
-  });
+    .then(function(res) {
+      console.log(res);
+      var html = "";
+      res.forEach(function(single) {
+        html = '<option value="';
+        html += single.songdata;
+        html += '">';
+        html += single.songname;
+        html += " by ";
+        html += single.username;
+        html += "</option>";
+      });
+    select.innerHTML = html
+    });
 }
+
