@@ -51,7 +51,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       modalOpen: true,
-      selectedRole: '',
+      selectedRole: ""
     };
 
     socket.on("closeModal", this.closeModal.bind(this));
@@ -62,21 +62,21 @@ class App extends React.Component {
   }
 
   selectRole(role) {
-    this.setState({selectedRole: role})
+    this.setState({ selectedRole: role });
   }
 
   render() {
     return (
-        <div className="App">
-          <header className="App-header">
-            <h1>Codenames</h1>
-            <Modals/>
-          </header>
-          {this.state.modalOpen &&
-          <Menu selectRole={this.selectRole.bind(this)}/>
-          }
-          <Game selectedRole={this.state.selectedRole}/>
-        </div>
+      <div className="App">
+        <header className="App-header">
+          <h1>Codenames</h1>
+          <Modals />
+        </header>
+        {this.state.modalOpen && (
+          <Menu selectRole={this.selectRole.bind(this)} />
+        )}
+        <Game selectedRole={this.state.selectedRole} />
+      </div>
     );
   }
 }
@@ -250,17 +250,17 @@ class Chat extends React.Component {
               </div>
             );
           })}
-          {this.props.role.endsWith("spymaster") &&
+          {this.props.role.endsWith("spymaster") && (
             <div className={"hintSubmission"}>
               <input
-                  placeholder="Clue"
-                  onChange={e => this.setState({clue: e.target.value})}
-                  id="msg"
+                placeholder="Clue"
+                onChange={e => this.setState({ clue: e.target.value })}
+                id="msg"
               />
               <div className={"amountInput"}>{this.createAmounts()}</div>
             </div>
-          }
-            </div>
+          )}
+        </div>
       </div>
     );
   }
@@ -333,7 +333,7 @@ class Game extends React.Component {
     this.state = {
       boardWords: ingameCards,
       boardTeams: ingameTeams,
-      firstteam: firstteam,
+      firstteam: firstteam
     };
   }
 
@@ -347,11 +347,8 @@ class Game extends React.Component {
     }
     return (
       <div className="game">
-        <Board
-          words={this.state.boardWords}
-          teams={this.state.boardTeams}
-        />
-        <Chat role={this.props.selectedRole}  team={status} wordsLeft={9} />
+        <Board words={this.state.boardWords} teams={this.state.boardTeams} />
+        <Chat role={this.props.selectedRole} team={status} wordsLeft={9} />
         <br />
         <br />
       </div>
@@ -364,7 +361,6 @@ class Menu extends React.Component {
     super(props);
 
     this.selectRole = props.selectRole;
-
     this.state = {
       modalIsOpen: true,
       selectedRole: null
@@ -373,7 +369,6 @@ class Menu extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
-
 
   openModal() {
     this.setState({ modalIsOpen: true });
@@ -574,12 +569,12 @@ function setBoard(order) {
 
 //send out message to set initial state if it hasnt already
 window.onload = function() {
-  console.log('the sessionstorage: ', sessionStorage.getItem("userInfo"));
+  console.log("the sessionstorage: ", sessionStorage.getItem("userInfo"));
   socket.emit("setInitState", getBoardState(), getBrowserData());
 };
 
 function getBrowserData() {
-  return { user: sessionStorage.getItem("userInfo")  || 'USER'};
+  return { user: sessionStorage.getItem("userInfo") || "USER" };
 }
 
 function getBoardState() {
@@ -634,20 +629,19 @@ socket.on("allSelectedStatus", function(status) {
   }
 });
 
-socket.on("updateRoleState", function(rs){
-  for(let role in rs){
-    if(rs.hasOwnProperty(role) && rs[role]){
-      console.log('greying role', role);
-      let button  = document.getElementById(role);
+socket.on("updateRoleState", function(rs) {
+  for (let role in rs) {
+    if (rs.hasOwnProperty(role) && rs[role]) {
+      console.log("greying role", role);
+      let button = document.getElementById(role);
       button.style.backgroundColor = "grey";
       button.disabled = true;
     }
   }
-
 });
 
-socket.on("closeModal", ()=>{
-    //document.getElementById("playBtn").click();
+socket.on("closeModal", () => {
+  //document.getElementById("playBtn").click();
 });
 
 export default App;
