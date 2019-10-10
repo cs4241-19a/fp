@@ -264,18 +264,32 @@ const pixiInit = async function () {
     game.ticker.add(playerAnim);
 
     let anim = new PIXI.Graphics();
+    let damageText = new PIXI.Text('0',{fontFamily : 'Arial', fontSize: 24, fill : 0xff0030, align : 'center'});
     let animCounter = 0;
+    //damageText = damageAnim(damageText);
     anim = attackAnim(anim, enemy);
+
     game.stage.addChild(anim);
+    game.stage.addChild(damageText);
 
     function animate() {
 
         if(attacking === false){
             anim.clear();
+            damageText.visible = false;
         }
 
         else if(attacking === true ){
             anim = attackAnim(anim, enemy, critting);
+            if(damageArray.length > 0){
+
+                damageText = damageAnim(damageText, critting);
+
+            }
+
+            damageText.visible = true;
+            damageText.position.y -= 5;
+            damageText.position.x += getRandomInt(10) - 5;
             animCounter += 1;
         }
         if(animCounter > 10){
@@ -358,6 +372,8 @@ const pixiInit = async function () {
     function resetAnimation(){
         enemy.x = enemyInitialPosX;
         enemy.y = enemyInitialPosY;
+        damageText.position.x = enemyInitialPosX;
+        damageText.position.y = enemyInitialPosY;
         player.x = playerInitialPosX;
         player.y = playerInitialPosY;
     }
@@ -431,6 +447,7 @@ function getRandomInt(max) {
 const mainClick = function () {
     const enemyHealth = document.getElementById('health');
     const buttonContainer = document.querySelector('.button-container');
+    let damageText = new PIXI.Text('0',{fontFamily : 'Arial', fontSize: 24, fill : 0xff0030, align : 'center'});
 
     attacking = true;
 
@@ -445,11 +462,14 @@ const mainClick = function () {
         }
         attackCounter += 1;
         enemyHealth.value -= totalDamage;
-        damageAnim()
+        damageText.text = totalDamage.toString();
+
+        updateDamageText(totalDamage);
+        //damageAnim(damageText);
     }
 };
 
-const attackAnim = function (animation, enemy, crit, damage) {
+const attackAnim = function (animation, enemy, crit) {
     let enemyPos = enemy.position;
 
     if(crit === false) {
@@ -470,8 +490,30 @@ const attackAnim = function (animation, enemy, crit, damage) {
     return animation;
 };
 
-const damageAnim = function (animation, damage, enemy, crit){
+let damageArray = [];
+const updateDamageText = function (damage){
+    damageArray.push(damage);
+};
 
-    let damageText = new PIXI.Text('none',{fontFamily : 'Arial', fontSize: 24, fill : 0xff1010, align : 'center'});
+
+const damageAnim = function (animation, crit){
+    let damageText = new PIXI.Text('0',{fontFamily : 'Arial', fontSize: 40, fill : 0xff0030, align : 'center'});
+    let damage = damageArray.pop();
+
+    damageText = animation;
+
+    animation.text = damage.toString();
+
+
+    if(crit === false) {
+        animation.style.fill = 0xFFFFFF;
+        animation.style.fontSize = 40;
+    }
+    else {
+        animation.style.fill = 0xFF0030;
+        animation.style.fontSize = 60;
+    }
+
+    return animation;
 };
 

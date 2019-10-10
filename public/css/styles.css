@@ -9,6 +9,7 @@
     --red: #AD3F3D;
     --gray: #848F9C;
     --white: #FFFFFF;
+    --x: #ff0030;
 }
 
 #login {
@@ -74,13 +75,14 @@ progress[value] {
 }
 
 #main-button{
-    box-shadow: 0 5px 10px 5px;
+    box-shadow: 0 5px 10px 5px #000000;
     border-radius: 500px;
     margin-left: 50px;
     width: 100px;
     height: 100px;
     font-size: 1.5em;
     background-color: #AD3F3D;
+    color: var(--white);
 
 }
 
@@ -134,23 +136,31 @@ progress[value] {
 
 .coins p{
     font-family: "Pixel";
+    color: var(--white);
     font-size: 1.1em;
     margin-left: 5px;
     margin-right: 10px;
 }
 
-.currency{
+.currency p{
+    text-align: center;
+    font-family: "Pixel";
+    color: var(--white);
+}
+
+.stats{
     position: absolute;
     left: 2%;
     width: 50%;
     display: flex;
+    color: var(--white);
 
 }
-.currency p{
+.stats p{
 
     display: flex;
-    margin-right: 15px;
-    margin-left: 15px;
+    margin-right: 20px;
+    margin-left: 20px;
 
 }
 
@@ -163,4 +173,30 @@ h3 {
     font-size: 17px;
     margin-top: 0;
     margin-bottom: 10px;
+    font-family: "Pixel";
+
+}
+
+p{
+    font-family: "Pixel";
+
+}
+th{
+    font-family: "Pixel";
+
+}
+td{
+    font-family: "Pixel";
+
+}
+h2{
+    font-family: "Pixel";
+
+}
+label{
+    font-family: "Pixel";
+
+}
+button{
+    font-family: "Pixel";
 }
