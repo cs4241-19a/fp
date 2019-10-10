@@ -3,10 +3,13 @@ var low = require('lowdb');
 
 const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('data/userData.json');
-const database = low(adapter);
+//const database = low(adapter);
 
 exports.findById = function(id, cb) {
-  var records = database.get(database.get(id));
+  if (app.database == undefined) {
+    app.database = low(adapter);
+  }
+  var records = app.database.get(app.database.get(id));
   process.nextTick(function() {
     var idx = id - 1;
     if (records[idx]) {
@@ -18,7 +21,10 @@ exports.findById = function(id, cb) {
 }
 
 exports.findByUsername = function(username, cb) {
-  var records = database.get( "users" )
+  if (app.database == undefined) {
+    app.database = low(adapter);
+  }
+  var records = app.database.get( "users" )
   .find({ "username": username })
   .value();
 

@@ -6,7 +6,14 @@ var logger = require('morgan'),
     passport = require('passport'),
     Strategy = require('passport-local').Strategy,
     db = require('./db'),
+    low = require('lowdb'),
+    aNum = 5,
+    database,
     user;
+
+var FileSync = require('lowdb/adapters/FileSync');
+var adapter = new FileSync('./data/userData.json');
+var database = low(adapter);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -54,7 +61,7 @@ app.use(express.static('public'));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
-app.use('/login/create', loginRouter);
+app.use('/users/create', usersRouter);
 app.use('/game', gameRouter);
 
 

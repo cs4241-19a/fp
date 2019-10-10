@@ -1,18 +1,25 @@
 var express = require('express');
 var router = express.Router();
-const low = require('lowdb');
+var low = require('lowdb');
+var FileSync = require('lowdb/adapters/FileSync');
+var adapter = new FileSync('data/userData.json');
 var app = require('../app');
 
-const FileSync = require('lowdb/adapters/FileSync');
-const adapter = new FileSync('data/userData.json');
-//const leaderboard = new FileSync('data/leaderboard.json');
+router.post('/create', function (req, res, next) {
+  if (app.database == undefined) {
+    app.database = low(adapter);
+  }
 
-const database = low(adapter);
+  var newUser = req.body;
+  var count = app.database.get("idCount").value();
+  newUser.id = count+1;
+  app.database.set('idCount', count+1)
+  .write();
+  app.database.get("users")
+  .push(newUser)
+  .write();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  var userData = database.get(app.user.username);
-  res.json(userData);
-});
+  res.end()
+  });
 
 module.exports = router;

@@ -1,4 +1,4 @@
-
+import { createdAccount, setTrue } from './global.js'
 
 const clearForm = function() {
     document.querySelector( '#username' ).value = ""
@@ -19,19 +19,19 @@ const newAccount = function() {
 
     //add code here to check for null entries
   
-    fetch( '/login/create', {
+    fetch( '/users/create', {
       method:'POST',
       body, 
       headers: {'Content-Type':'application/json'}
+    }).then(function ( response ) {
+        console.log( response );
+        setTrue();
+        //if (createdAccount) {
+          //console.log("idk man");
+        //}
+        //console.log(createdAccount)
+
     })
-    /*
-    .then( function( response ) {
-      console.log( response )
-      return response.json()
-    }).then( function( json ) {
-      displayTable( json )
-    })
-    */
     return false
   }
 
@@ -39,11 +39,13 @@ window.onload = function() {
     const showFormButton = document.getElementById("createFormButton");
 
     document.getElementById( "createForm" ).style.display = "none"
-    showFormButton.onclick = function(){
+
+    const showForm = function() {
         document.getElementById( "createForm" ).style.display = "block"
-    };
+    }
+
+    showFormButton.onclick = showForm;
     const submitNewAccount = document.getElementById("submitNewAccount");
     submitNewAccount.onclick = newAccount;
-
 
 }
