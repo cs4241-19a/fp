@@ -1,5 +1,4 @@
 let currentConvo = "";
-let default
 
 function getCookie(cname) {
   var name = cname + "=";
@@ -46,7 +45,12 @@ window.onload = function() {
           a.style = "color:white; text-decoration: none";
           l.appendChild(a);
           document.getElementById("people").appendChild(l);
+          currentConvo = ret[i].username;
         }
+        document.getElementById("t").innerHTML =
+          "Messages with " + ret[i].username;
+
+        updateChat();
       }
     });
   });
@@ -54,15 +58,15 @@ window.onload = function() {
 };
 
 function updateChat() {
-  clearChat()
-  let packet = {from:getCookie("username"), to:currentConvo}
-  let body = JSON.stringify(packet)
+  clearChat();
+  let packet = { from: getCookie("username"), to: currentConvo };
+  let body = JSON.stringify(packet);
   fetch("messaging/getConversation/", {
     headers: {
       "Content-Type": "application/json"
     },
     method: "POST",
-    body:body
+    body: body
   }).then(function(res) {
     res.json().then(function(ret) {
       //alert(ret)
@@ -101,7 +105,7 @@ function sendMessage() {
   });
 
   updateChat();
-  document.getElementById("msg").value = ""
+  document.getElementById("msg").value = "";
   window.reload();
 }
 
@@ -133,6 +137,6 @@ function makeFromTextBubble(str) {
   document.getElementById("board").appendChild(container);
 }
 
-function clearChat(){
-  document.getElementById("board").innerHTML = ""
+function clearChat() {
+  document.getElementById("board").innerHTML = "";
 }
