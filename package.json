@@ -1,0 +1,32 @@
+{
+  "name": "lh-4241-simple-node",
+  "version": "0.1.0",
+  "description": "WPI CS 4241 first assignment",
+  "author": "Lane Harrison",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cool-ascii-faces": "1.3.4",
+    "ejs": "^2.5.6",
+    "express": "^4.15.2",
+    "nodejs": "0.0.0",
+    "pg": "6.4.2"
+  },
+  "engines": {
+    "node": "6.11.4",
+    "npm": "3.10.10"
+  },
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sundong212/final-project.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sundong212/final-project/issues"
+  },
+  "homepage": "https://github.com/sundong212/final-project#readme"
+}
