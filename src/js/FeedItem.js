@@ -63,7 +63,7 @@ export default function FeedItem(props) {
         const jsonAudioInit = audioInit(canvas)
         const jsonAudioGraph = audioGraph(canvas, jsonAudioInit)
 
-        jsonAudioInit.audioElement.src = '../media/music/mello.mp3'
+        jsonAudioInit.audioElement.src = 'mello.mp3'
         jsonAudioInit.audioElement.play()
 
         const results = new Uint8Array(jsonAudioGraph.analyser.frequencyBinCount)
