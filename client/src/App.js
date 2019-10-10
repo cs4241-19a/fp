@@ -9,10 +9,10 @@ class App extends React.Component{
     super(props);
     this.state = {
       tasks: [
-        {title: "Task Card"},
-        {title: "Task Card"},
-        {title: "Task Card"},
-        {title: "Task Card"},
+        {},
+        {},
+        {},
+        {},
       ]
     }
   }
