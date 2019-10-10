@@ -1,4 +1,18 @@
-- When beginners try playing a rhythm game like DDR, they may often fumble with the controls a bit. Though there is 
+1. A brief description of what you created, and a link to the project itself.
+
+https://starstep.glitch.me/
+
+*** STARSTEP, a next-gen rhythm game web app ***
+
+    In the a video game arcade, the rhythm game machine that reigned supreme would have to be Dance Dance Revolution. This
+phenomenon soon spread to homes through the Playstation consoles and as a child, I also had the pleasure of owning on of
+these titles. As the years have passed, the game has faded in popularity but the genre still draws fans regularly. There
+are a few clones of this game for the PC the most notable of which is Stepmania, a C++ based desktop app. When it comes 
+to online versions, however, there are few quality implementations. My goal for this project was to create a DDR-like
+rhythm game that could be fully accessible through a webpage and to improve upon the mechanics presented in the original
+DDR arcade games.
+
+    When beginners try playing a rhythm game like DDR, they may often fumble with the controls a bit. Though there is 
 definitely some level of skill that must be developed over time, anyone should be able to easily pick up a rhythm game.
 In my experience, the issues that people have with many rhythm games are *Timing* and *Coordination*. Coordination here 
 refers to the player pressing the right button corresponding to the visual indicator on screen while Timing refers to 
@@ -18,13 +32,21 @@ Zone" in the direction the arrows are pointing: asteroids coming from the top of
 key, asteroids coming from the right of the screen are destroyed with the "Right" key, etc. I also apply color, the 
 second most potent visual categorization, by adding color to each "lane" and all arrows in said "lane".    
 
-- Built using an "object-oriented" state machine pattern. Pressing "Enter" will attempt to change to the next state while 
-pressing "Esc" will attempt to change to the previous state.
-- AntiMicro: tool used to map game pad to directional keys
+***TECHNICAL DETAILS***
+- Built using an "object-oriented" state machine pattern. Pressing confirm ("Enter" on a keyboard, "X" on a dance pad)
+will attempt to change to the next state while pressing back ("Esc" on a keyboard, "△" on a dance pad) will attempt to 
+change to the previous state. In the final version, the buttons can be cycled through by pressing the arrow keys.
+- AntiMicro: tool used to map a dance pad to keyboard keys
 - MongoDB: database tool
     - Store users
-        - Username and pass
-        - High score
+        - Username and password
+        - Personal high score
         - Favorited songs
     - Store high scores (universally) for specific songs
-        
+- Passport: User authentication
+- Express: Server
+- D3: Drawing game graphics
+    - Timer: timing for game events
+    - Transition: sprite animation and simple button animation
+    
+

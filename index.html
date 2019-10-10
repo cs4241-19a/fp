@@ -13,6 +13,9 @@
 <svg id="backgroundSvg" style="z-index: -1; position: absolute; width: 100%; height: 100%; pointer-events: none; display: flex; justify-content: center; align-items: center">
     <image id="backgroundImg" style="position: inherit; width: 100%; height: auto"></image>
 </svg>
+<svg id="notearea" style="z-index: -1; position: absolute; width: 300px; height: 100%; margin-left: auto; margin-right: auto; left: 0; right: 0;">
+</svg>
+
 <!--
 <div class="tooltip">
     HELP
@@ -54,37 +57,19 @@
     /** START SCREEN **/
     let Startscreen = function(){
     this.drawAll = function(){
-        //get currently selected menu option
-        let notearea = document.createElement("svg");
-        notearea.setAttribute("style", "height: 100%; width: 300px; z-index: 1;");
-        notearea.id = "notearea";
-        // let noteareaContainer = document.createElement("div");
-        // noteareaContainer.className = "row content";
-        // noteareaContainer.appendChild(notearea);
-        document.querySelector("#bottom").appendChild(notearea);
-        d3.select("#notearea")
-            .append("image")
-            .attr("y", 400)
-            .attr("x", 0)
-            .attr("xlink:href", "./resources/images/blank_arrow_left.png");
+        let logo = document.createElement("svg");
+        logo.id = "logo";
+        logo.width = 1044;
+        logo.height = 434;
+        let img = document.createElement("img");
+        img.src = "./resources/images/starstepLogo.png";
+        img.width = 1044;
+        logo.appendChild(img);
+        document.querySelector("#banner").appendChild(logo);
 
-        d3.select("#notearea")
-            .append("image")
-            .attr("y", 400)
-            .attr("x", 72)
-            .attr("xlink:href", "./resources/images/blank_arrow_down.png");
-
-        d3.select("#notearea")
-            .append("image")
-            .attr("y", 400)
-            .attr("x", 144)
-            .attr("xlink:href", "./resources/images/blank_arrow_up.png");
-
-        d3.select("#notearea")
-            .append("image")
-            .attr("y", 400)
-            .attr("x", 216)
-            .attr("xlink:href", "./resources/images/blank_arrow_right.png");
+        d3.select("#backgroundImg")
+            .attr("xlink:href", "./resources/images/backgrounds/space.jpg")
+            .style("position: inherit; width: 100%; height: auto");
     };
         this.drawAll();
         this.prevStates = this;
@@ -238,7 +223,7 @@
                     let newOption = document.createElement('button');
                     newOption.innerText = allCharts[j]["diff"];
                     console.log(allCharts[j]["diff"]);
-                    newOption.value = i.toString();
+                    newOption.value = j.toString();
                     newOption.onclick = selectMenuOption;
                     container.appendChild(newOption);
                 }
@@ -268,35 +253,37 @@
     let Registermenu;
     /**Gameplay state**/
     let Gameplaying = function(prevStates, dir, difficulty){
+        console.log(difficulty);
         this.drawAll = function (){
-            //get currently selected menu option
-            let notearea = document.createElement("svg");
-            notearea.setAttribute("style", "height: 100%; width: 300px; z-index: 1;");
-            notearea.id = "notearea";
-            // let noteareaContainer = document.createElement("div");
-            // noteareaContainer.className = "row content";
-            // noteareaContainer.appendChild(notearea);
-            document.querySelector("#bottom").appendChild(notearea);
+            // //get currently selected menu option
+            // let notearea = document.createElemefnt("svg");
+            // let bottom = document.querySelector("#bottom");
+            // notearea.setAttribute("style", "height: " + bottom.clientHeight + "px; width: 300px; display: flex; justify-content: center; align-items: center");
+            // notearea.id = "notearea";
+            // // let noteareaContainer = document.createElement("div");
+            // // noteareaContainer.className = "row content";
+            // // noteareaContainer.appendChild(notearea);
+            // document.querySelector("#bottom").appendChild(notearea);
             d3.select("#notearea")
-                .append("image")
+                .append("svg:image")
                 .attr("y", 400)
                 .attr("x", 0)
                 .attr("xlink:href", "./resources/images/blank_arrow_left.png");
 
             d3.select("#notearea")
-                .append("image")
+                .append("svg:image")
                 .attr("y", 400)
                 .attr("x", 72)
                 .attr("xlink:href", "./resources/images/blank_arrow_down.png");
 
             d3.select("#notearea")
-                .append("image")
+                .append("svg:image")
                 .attr("y", 400)
                 .attr("x", 144)
                 .attr("xlink:href", "./resources/images/blank_arrow_up.png");
 
             d3.select("#notearea")
-                .append("image")
+                .append("svg:image")
                 .attr("y", 400)
                 .attr("x", 216)
                 .attr("xlink:href", "./resources/images/blank_arrow_right.png");
@@ -309,32 +296,32 @@
         this.prevStates = prevStates;
         this.next = function (){
             //get currently selected menu option
-            let notearea = document.createElement("svg");
-            notearea.setAttribute("style", "height: 100%; width: 300px");
-            notearea.id = "notearea";
-            let noteareaContainer = document.createElement("div");
-            noteareaContainer.className = "row content";
-            noteareaContainer.appendChild(notearea);
+            // let notearea = document.createElement("svg");
+            // notearea.setAttribute("style", "height: 100%; width: 300px");
+            // notearea.id = "notearea";
+            // let noteareaContainer = document.createElement("div");
+            // noteareaContainer.className = "row content";
+            // noteareaContainer.appendChild(notearea);
             d3.select("#notearea")
-                .append("image")
+                .append("svg:image")
                 .attr("y", 400)
                 .attr("x", 0)
                 .attr("xlink:href", "./resources/images/blank_arrow_left.png");
 
             d3.select("#notearea")
-                .append("image")
+                .append("svg:image")
                 .attr("y", 400)
                 .attr("x", 72)
                 .attr("xlink:href", "./resources/images/blank_arrow_down.png");
 
             d3.select("#notearea")
-                .append("image")
+                .append("svg:image")
                 .attr("y", 400)
                 .attr("x", 144)
                 .attr("xlink:href", "./resources/images/blank_arrow_up.png");
 
             d3.select("#notearea")
-                .append("image")
+                .append("svg:image")
                 .attr("y", 400)
                 .attr("x", 216)
                 .attr("xlink:href", "./resources/images/blank_arrow_right.png");
@@ -480,7 +467,7 @@
                 currCombo++;
             }
             score += getComboMultiplier(currCombo);
-            document.getElementById('score').innerText = score;
+            // document.getElementById('score').innerText = score;
             if(!calculateLife(collisionScore)){
                 timerStatus = "dead";
             }
@@ -498,7 +485,7 @@
                 currCombo++;
             }
             score += getComboMultiplier(currCombo);
-            document.getElementById('score').innerText = score;
+            // document.getElementById('score').innerText = score;
             if(!calculateLife(collisionScore)){
                 timerStatus = "dead";
             }
@@ -517,7 +504,7 @@
                 currCombo++;
             }
             score += getComboMultiplier(currCombo);
-            document.getElementById('score').innerText = score;
+            // document.getElementById('score').innerText = score;
             if(!calculateLife(collisionScore)){
                 timerStatus = "dead";
             }
@@ -546,7 +533,7 @@
                 currCombo++;
             }
             score += getComboMultiplier(currCombo);
-            document.getElementById('score').innerText = score;
+            // document.getElementById('score').innerText = score;
             if(!calculateLife(collisionScore)){
                 timerStatus = "dead";
             }
@@ -649,6 +636,7 @@
         score = 0;
 
         let charts = songJson["charts"];
+        console.log(charts);
         let noteArea = d3.select("#notearea");
         charts.forEach(function(chart, index){
             console.log(chart);
@@ -661,13 +649,14 @@
 
         let speed = 1;
         let notes = songJson["charts"][difficulty]["notes"]; //aka notes of the selected chart
+        console.log(notes);
         let currMeasure = 0;
         let currBeat = -1;
         let currNumBeat = notes[0][1].length - 1;
         let bpm = songJson["changes"]["bpm"][0][1];
         let barTimeToAdd = 60/bpm*4/notes[0][1].length * 1000;
         let nextBarTime = barTimeToAdd - barTimeToAdd*speed;
-        let offset = songJson["times"]["offset"] * 1000 + 100;
+        let offset = songJson["times"]["offset"] * 1000;
         let bar;
         console.log(barTimeToAdd);
         audio.src = dir+'.mp3';
@@ -685,7 +674,7 @@
                             currNotes[i].shift();
                             calculateLife(0);
                         }else{
-                            note.arrowShape.attr("y", 400 - time/1000*400);
+                            note.arrowShape.attr("y", /*400 - */ time/1000*400);
                         }
                     })
                 }

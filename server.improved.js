@@ -101,7 +101,6 @@ app.get("/index", function (request, response) {
 });
 
 app.post("/songRequest", function (request, response) {
-    console.log("songrec");
     response.json(parseSongDirectory());
 });
 
