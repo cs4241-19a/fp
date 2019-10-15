@@ -18,7 +18,7 @@ Our final project will be a web application for a food catering service. The Dou
 FINAL README
 
 
-https://glitch.com/~fp-jamevor-tpatterson
+https://fp-jamevor-tpatterson.glitch.me/
 Justin Amevor
 Tyrone Patterson
 Doughboyz Catering
